@@ -1,5 +1,15 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { FaChild } from "react-icons/fa";
+import { RiParentFill } from "react-icons/ri";
+import { BsMap } from "react-icons/bs";
+import { AiOutlineBook, AiFillCalendar, AiOutlineFileText } from "react-icons/ai";
+import { FaPaintBrush } from "react-icons/fa";
+import { MdSchool } from "react-icons/md";
+import { GiVideoConference } from "react-icons/gi";
+import { BsCashCoin } from "react-icons/bs";
+import { TbDeviceGamepad2 } from "react-icons/tb";
 
 const LeftMenu: React.FC = () => {
 
@@ -35,42 +45,135 @@ const LeftMenu: React.FC = () => {
 
                 <li className="nav-item active">
 
-                    <Link className="nav-link" to="Home">
+                    <Link className="nav-link" to="/Home">
                         <i className="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
+                        <span>Trang chủ</span>
                     </Link>
                 </li>
 
                 <hr className="sidebar-divider" />
                 <div className="sidebar-heading">
-                    Warehouse
+                    Quản lý người dùng
                 </div>
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/products`}>
-                        <i className="fas fa-fw fa-warehouse"></i>
-                        <span>Products</span>
+                    <Link className="nav-link" to={`/teachers`}>
+                        <FaChalkboardTeacher />
+                        <span> Giáo viên</span>
                     </Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/orders`}>
-                        <i className="fas fa-fw fa-dollar-sign"></i>
-                        <span>Orders</span>
+                    <Link className="nav-link" to={`/students`}>
+                        <FaChild />
+                        <span> Học sinh</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/parents`}>
+                        <RiParentFill />
+                        <span> Phụ huynh</span>
                     </Link>
                 </li>
 
                 <hr className="sidebar-divider" />
 
                 <div className="sidebar-heading">
-                    Admin
+                    Quản lý hệ thống
                 </div>
 
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/users`}>
-                        <i className="fas fa-fw fa-user"></i>
-                        <span>Users</span>
+                    <Link className="nav-link" to={`/semesters`}>
+                        <BsMap />
+                        <span> Học kì</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/lessons`}>
+                        <AiOutlineBook />
+                        <span> Tiết học</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/schedules`}>
+                        <AiFillCalendar />
+                        <span>Lịch học</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/arts`}>
+                        <FaPaintBrush />
+                        <span> Nghệ thuật</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/courses`}>
+                        <MdSchool />
+                        <span> Khóa học</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/class`}>
+                        <GiVideoConference />
+                        <span> Lớp</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/contests`}>
+                        <AiOutlineFileText />
+                        <span> Cuộc thi</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/revenues`}>
+                        <BsCashCoin />
+                        <span> Doanh thu</span>
+                    </Link>
+                </li>
+
+                <hr className="sidebar-divider" />
+
+                <div className="sidebar-heading">
+                    Trò chơi
+                </div>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/game`}>
+                        <TbDeviceGamepad2 />
+                        <span> Game nhận biết màu sắc</span>
+                    </Link>
+                </li>
+
+                <hr className="sidebar-divider" />
+
+                <div className="sidebar-heading">
+                    Yêu cầu người dùng
+                </div>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/request-student-off`}>
+                        <span>Nghỉ học</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/request-teacher-off`}>
+                        <span>Nghỉ dạy</span>
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="nav-link" to={`/request-level`}>
+                        <span>Xác nhận trình độ</span>
                     </Link>
                 </li>
 

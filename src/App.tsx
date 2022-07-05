@@ -19,7 +19,7 @@ const App: React.FC = () => {
           </PrivateRoute>
           <AccountRoute path="/login"><Login /></AccountRoute> */}
           <Route path={`/aut`}><Login /></Route>
-          <Route path={`/kids-drawing`}><Routers /></Route>
+          <Route path={`/`}><Routers /></Route>
           <Route path={`/landing-page`}><LandingPage /></Route>
           <Route path={`/`}>
             <Redirect to="/landing-page" />

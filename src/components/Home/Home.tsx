@@ -6,57 +6,6 @@ import { IProductState, IStateType } from "../../store/models/root.interface";
 import ProductList from "../Products/ProductsList";
 import { IOrder } from "../../store/models/order.interface";
 import OrderList from "../Orders/OrderList";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import faker from 'faker';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Doanh thu',
-    },
-  },
-};
-
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
 
 const Home: React.FC = () => {
   const products: IProductState = useSelector((state: IStateType) => state.products);
@@ -85,12 +34,6 @@ const Home: React.FC = () => {
       <div className="row">
         <TopCard title="HỌC VIÊN" text={totalSales.toString()} icon="donate" class="primary" />
         <TopCard title="GIÁO VIÊN" text={totalOrderAmount.toString()} icon="calculator" class="danger" />
-      </div>
-
-      <div className="row">
-        <div className="col-xl-12 col-lg-12">
-          <Bar options={options} data={data} />
-        </div>
       </div>
 
       <div className="row">

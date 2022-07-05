@@ -7,6 +7,7 @@ import Products from "../components/Products/Products";
 import Orders from "../components/Orders/Orders";
 import Home from "../components/Home/Home";
 import Notifications from "../common/components/Notification";
+import Teacher from "../components/Teachers/Teacher";
 
 const Routers: React.FC = () => {
     return (
@@ -21,6 +22,7 @@ const Routers: React.FC = () => {
                             <Route path={`/users`}><Users /></Route>
                             <Route path={`/products`}><Products /></Route>
                             <Route path={`/orders`}><Orders /></Route>
+                            <Route path={`/teachers`}><Teacher /></Route>
                             <Route path="/home"><Home /></Route>
                         </Switch>
                     </div>

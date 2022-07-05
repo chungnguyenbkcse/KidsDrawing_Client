@@ -19,8 +19,8 @@ const App: React.FC = () => {
           </PrivateRoute>
           <AccountRoute path="/login"><Login /></AccountRoute> */}
           <Route path={`/aut`}><Login /></Route>
-          <Route path={`/`}><Routers /></Route>
           <Route path={`/landing-page`}><LandingPage /></Route>
+          <Route path={`/`}><Routers /></Route>
           <Route path={`/`}>
             <Redirect to="/landing-page" />
           </Route>

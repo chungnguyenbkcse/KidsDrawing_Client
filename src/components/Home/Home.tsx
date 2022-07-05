@@ -6,6 +6,7 @@ import { IProductState, IStateType } from "../../store/models/root.interface";
 import ProductList from "../Products/ProductsList";
 import { IOrder } from "../../store/models/order.interface";
 import OrderList from "../Orders/OrderList";
+import { ChartBar } from "../../common/components/ChartBar";
 
 const Home: React.FC = () => {
   const products: IProductState = useSelector((state: IStateType) => state.products);
@@ -34,6 +35,12 @@ const Home: React.FC = () => {
       <div className="row">
         <TopCard title="HỌC VIÊN" text={totalSales.toString()} icon="donate" class="primary" />
         <TopCard title="GIÁO VIÊN" text={totalOrderAmount.toString()} icon="calculator" class="danger" />
+      </div>
+
+      <div className="row">
+      <div className="col-xl-12 col-lg-12">
+        <ChartBar />
+      </div>
       </div>
 
       <div className="row">

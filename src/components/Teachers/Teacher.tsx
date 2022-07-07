@@ -33,9 +33,7 @@ const Teacher: React.FC = () => {
     }
 
     function onProductRemove() {
-        if (products.selectedProduct) {
-            setPopup(true);
-        }
+        setPopup(true);
     }
 
     return (
@@ -65,16 +63,12 @@ const Teacher: React.FC = () => {
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green">Danh sách giáo viên</h6>
                             <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>
-                                    dispatch(setModificationState(ProductModificationStatus.Create))}>
+                                <button className="btn btn-success btn-green" onClick={() =>{
+                                    dispatch(setModificationState(ProductModificationStatus.Create))
+                                    onProductRemove()
+                                }}>
                                     <i className="fas fa fa-plus"></i>
-                                </button>
-                                <button className="btn btn-success btn-blue" onClick={() =>
-                                    dispatch(setModificationState(ProductModificationStatus.Edit))}>
-                                    <i className="fas fa fa-pen"></i>
-                                </button>
-                                <button className="btn btn-success btn-red" onClick={() => onProductRemove()}>
-                                    <i className="fas fa fa-times"></i>
+                                    Thêm giáo viên
                                 </button>
                             </div>
                         </div>
@@ -85,36 +79,16 @@ const Teacher: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                {((products.modificationState === ProductModificationStatus.Create)
-                    || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ?
-                    <TeacherForm /> : null}
             </div>
 
 
             <Popup
-                className="popup-modal"
                 open={popup}
                 onClose={() => setPopup(false)}
                 closeOnDocumentClick
             >
-                <div className="popup-modal">
-                    <div className="popup-title">
-                        Are you sure?
-                    </div>
-                    <div className="popup-content">
-                        <button type="button"
-                            className="btn btn-danger"
-                            onClick={() => {
-                                if (!products.selectedProduct) {
-                                    return;
-                                }
-                                dispatch(addNotification("Product removed", `Product ${products.selectedProduct.name} was removed`));
-                                dispatch(removeProduct(products.selectedProduct.id));
-                                dispatch(clearSelectedProduct());
-                                setPopup(false);
-                            }}>Remove
-                        </button>
-                    </div>
+                <div className="row text-left">
+                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeacherForm /> : null}
                 </div>
             </Popup>
         </Fragment >

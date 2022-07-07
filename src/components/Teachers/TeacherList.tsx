@@ -2,27 +2,61 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { IStateType, IProductState } from "../../store/models/root.interface";
 import { IProduct } from "../../store/models/product.interface";
+import { useHistory } from "react-router-dom";
 
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
   children?: React.ReactNode;
 };
 
+const data = [
+  {
+    'id': 1,
+    'first_name': 'Chung',
+    'last_name': 'Nguyễn',
+    'username': 'chungnguyen123',
+    'status': 'Đang hoạt động'
+  },
+  {
+    'id': 2,
+    'first_name': 'Thanh',
+    'last_name': 'Nguyễn',
+    'username': 'thanhnguyen123',
+    'status': 'Đang hoạt động'
+  },
+  {
+    'id': 3,
+    'first_name': 'Thao',
+    'last_name': 'Nguyễn',
+    'username': 'thaonguyen123',
+    'status': 'Đang hoạt động'
+  }
+]
+
 function TeacherList(props: productListProps): JSX.Element  {
   const products: IProductState = useSelector((state: IStateType) => state.products);
+  const history = useHistory();
+  
+  const routeChange = () =>{ 
+    let path = '/teachers/detail'; 
+    history.push(path);
+  }
 
-  const productElements: (JSX.Element | null)[] = products.products.map(product => {
+  const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }
     return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      onClick={() => {
-        if(props.onSelect) props.onSelect(product);
-      }}
+      onClick={routeChange}
       key={`product_${product.id}`}>
       <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
-      <td>{product.category}</td>
-      <td>{product.amount}</td>
-      <td>{product.price}</td>
+      <td>{product.first_name} {product.last_name}</td>
+      <td>{product.username}</td>
+      <td>{product.status}</td>
+      <td>
+        <button type="button" className="btn btn-primary">Chỉnh sửa</button>
+      </td>
+      <td>
+        <button type="button" className="btn btn-danger">Xóa</button>
+      </td>
     </tr>);
   });
 
@@ -37,6 +71,7 @@ function TeacherList(props: productListProps): JSX.Element  {
             <th scope="col">Tài khoản</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Hành động</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>

@@ -78,10 +78,10 @@ const TeacherForm: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="col-xl-7 col-lg-7">
+      <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
-            <h6 className="m-0 font-weight-bold text-green">Product {(isCreate ? "create" : "edit")}</h6>
+            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} giáo viên</h6>
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
@@ -93,62 +93,68 @@ const TeacherForm: React.FC = () => {
                     onChange={hasFormValueChanged}
                     required={true}
                     maxLength={20}
-                    label="Name"
-                    placeholder="Name" />
+                    label="Họ"
+                    placeholder="" />
+                </div>
+                <div className="form-group col-md-6">
+                  <TextInput id="input_email"
+                    value={formState.name.value}
+                    field="name"
+                    onChange={hasFormValueChanged}
+                    required={true}
+                    maxLength={20}
+                    label="Tên"
+                    placeholder="" />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <TextInput id="input_description"
+                  field = "description"
+                    value={formState.description.value}
+                    onChange={hasFormValueChanged}
+                    required={false}
+                    maxLength={100}
+                    label="Tên đăng nhập"
+                    placeholder="" />
+                </div>
+                <div className="form-group col-md-6">
+                  <TextInput id="input_description"
+                    field = "description"
+                    value={formState.description.value}
+                    onChange={hasFormValueChanged}
+                    required={false}
+                    maxLength={100}
+                    label="Email"
+                    placeholder="" />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <SelectInput
+                    id="input_category"
+                    field="category"
+                    label="Thể loại dạy"
+                    options={["Chì màu", "Sáp màu", "Sơn dầu"]}
+                    required={true}
+                    onChange={hasFormValueChanged}
+                    value={formState.category.value}
+                  />
                 </div>
                 <div className="form-group col-md-6">
                   <SelectInput
                     id="input_category"
                     field="category"
-                    label="Category"
-                    options={["Fruit", "Sweet", "Kitchen"]}
+                    label="Độ tuổi dạy"
+                    options={["4-6 tuổi", "6-10 tuổi", "10-14 tuổi"]}
                     required={true}
                     onChange={hasFormValueChanged}
                     value={formState.category.value}
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <TextInput id="input_description"
-                field = "description"
-                  value={formState.description.value}
-                  onChange={hasFormValueChanged}
-                  required={false}
-                  maxLength={100}
-                  label="Description"
-                  placeholder="Description" />
-              </div>
-              <div className="form-row">
-                <div className="form-group col-md-6">
-                  <NumberInput id="input_amount"
-                    value={formState.amount.value}
-                    field="amount"
-                    onChange={hasFormValueChanged}
-                    max={1000}
-                    min={0}
-                    label="Amount" />
-                </div>
-                <div className="form-group col-md-6">
-                  <NumberInput id="input_price"
-                    value={formState.price.value}
-                    field="price"
-                    onChange={hasFormValueChanged}
-                    max={1000}
-                    min={0}
-                    label="Price" />
-                </div>
-              </div>
-              <div className="form-group">
-                <Checkbox
-                  id="checkbox_expiry"
-                  field="hasExpiryDate"
-                  value={formState.hasExpiryDate.value}
-                  label="Has expiry date"
-                  onChange={hasFormValueChanged}
-                />
-              </div>
-              <button className="btn btn-danger" onClick={() => cancelForm()}>Cancel</button>
-              <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Save</button>
+              <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+              <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
             </form>
           </div>
         </div>

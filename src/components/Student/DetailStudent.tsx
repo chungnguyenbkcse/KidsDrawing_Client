@@ -24,8 +24,7 @@ const data = {
     'phone': '0989439678',
     'sex': 'Nữ',
     'address': 'Thanh Hoa',
-    'teach_type':'Chì màu' ,
-    'teach_level': '4-6 tuổi'
+    'parent': 'Dien Do',
 }
 
 
@@ -160,7 +159,7 @@ const DetailStudent: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Phụ huynh"
-                                                            placeholder={data.teach_type} />
+                                                            placeholder={data.parent} />
                                                     </div>
                                                 </div>
                                             </form>

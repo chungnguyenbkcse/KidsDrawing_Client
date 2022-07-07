@@ -14,6 +14,7 @@ import DetailStudent from "../components/Student/DetailStudent";
 import Parent from "../components/Parent/Parent";
 import DetailParent from "../components/Parent/DetailParent";
 import Semester from "../components/Semester/Semester";
+import Lesson from "../components/Lesson/Lesson";
 
 const Routers: React.FC = () => {
     return (
@@ -33,6 +34,7 @@ const Routers: React.FC = () => {
                             <Route path={`/students/detail`}><DetailStudent /></Route>
                             <Route path={`/students`}><Student /></Route>
                             <Route path={`/semesters`}><Semester /></Route>
+                            <Route path={`/lessons`}><Lesson /></Route>
                             <Route path="/teachers/detail"><DetailTeacher /></Route>
                             <Route path={`/teachers`}><Teacher /></Route>
                             <Route path="/home"><Home /></Route>

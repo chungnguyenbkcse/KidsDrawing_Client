@@ -64,7 +64,7 @@ const DetailTeacher: React.FC = () => {
 
             <div className="row">
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" onClick={() => {
+                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
                         if (checked == false) {
                             setChecked(true)
                         }
@@ -73,7 +73,7 @@ const DetailTeacher: React.FC = () => {
                     }}>Thông tin giáo viên</h6>
                 </div>
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" onClick={() => {
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                         if (checked == true) {
                             setChecked(false)
                         }

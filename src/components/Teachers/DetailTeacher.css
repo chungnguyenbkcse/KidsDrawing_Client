@@ -10,6 +10,14 @@
 
 }
 
+#btn-type {
+    cursor: pointer;
+}
+
+#btn-level {
+    cursor: pointer;
+}
+
 .btn-green {
     background-color: cadetblue !important;
     border-color: cadetblue !important;

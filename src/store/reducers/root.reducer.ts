@@ -9,7 +9,7 @@ import accountReducer from "./account.reducer";
 
 
 const initialState: IRootStateType = {
-    page: {area: "home", subArea: ""}
+    page: {area: "Trang chủ", subArea: ""}
 };
 
 function rootReducer(state: IRootStateType = initialState, action: IActionBase): IRootStateType {

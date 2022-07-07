@@ -1,8 +1,7 @@
 import React, { Fragment, Dispatch, useState, useEffect } from "react";
-import TeacherList from "./TeacherList";
-import TeacherForm from "./TeacherForm";
+import StudentList from "./StudentList";
 import TopCard from "../../common/components/TopCard";
-import "./Teacher.css";
+import "./Student.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
@@ -15,7 +14,7 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
 
 
-const Teacher: React.FC = () => {
+const Student: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const products: IProductState = useSelector((state: IStateType) => state.products);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -24,7 +23,7 @@ const Teacher: React.FC = () => {
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
-        dispatch(updateCurrentPath("Giáo viên", "Danh sách"));
+        dispatch(updateCurrentPath("Học sinh", "Danh sách"));
     }, [path.area, dispatch]);
 
     function onProductSelect(product: IProduct): void {
@@ -38,7 +37,7 @@ const Teacher: React.FC = () => {
 
     return (
         <Fragment>
-            <h1 className="h3 mb-2 text-gray-800">Giáo viên</h1>
+            <h1 className="h3 mb-2 text-gray-800">Học sinh</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
                 <TopCard title="GIÁO VIÊN" text={`${numberItemsCount}`} icon="box" class="primary" />
@@ -61,19 +60,19 @@ const Teacher: React.FC = () => {
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Danh sách giáo viên</h6>
+                            <h6 className="m-0 font-weight-bold text-green">Danh sách học sinh</h6>
                             <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>{
+                                {/* <button className="btn btn-success btn-green" onClick={() =>{
                                     dispatch(setModificationState(ProductModificationStatus.Create))
                                     onProductRemove()
                                 }}>
                                     <i className="fas fa fa-plus"></i>
                                     Thêm giáo viên
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                         <div className="card-body">
-                            <TeacherList
+                            <StudentList
                                 onSelect={onProductSelect}
                             />
                         </div>
@@ -82,7 +81,7 @@ const Teacher: React.FC = () => {
             </div>
 
 
-            <Popup
+            {/* <Popup
                 open={popup}
                 onClose={() => setPopup(false)}
                 closeOnDocumentClick
@@ -90,9 +89,9 @@ const Teacher: React.FC = () => {
                 <div className="row text-left">
                     {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeacherForm /> : null}
                 </div>
-            </Popup>
+            </Popup> */}
         </Fragment >
     );
 };
 
-export default Teacher;
+export default Student;

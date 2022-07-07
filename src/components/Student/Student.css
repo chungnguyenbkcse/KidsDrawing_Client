@@ -1,0 +1,43 @@
+.header-buttons {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+
+.btn-green {
+    background-color: cadetblue !important;
+    border-color: cadetblue !important;
+    margin-right: 3px;
+    width: 150px;
+}
+
+.btn-blue {
+    background-color: lightblue !important;
+    border-color: lightblue !important;
+    margin-right: 3px;
+    width: 40px;
+}
+
+.btn-red {
+    background-color: indianred !important;
+    border-color: indianred !important;
+    margin-right: 3px;
+    width: 40px;
+}
+
+#search-box {
+    margin-bottom: 20px;
+}
+
+#search-content {
+    display: flex;
+    justify-content: center;
+}
+
+.table-row {
+    cursor: pointer;
+}
+
+.selected {
+    background-color: lavender;
+}

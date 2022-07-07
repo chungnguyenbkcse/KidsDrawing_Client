@@ -9,6 +9,8 @@ import Home from "../components/Home/Home";
 import Notifications from "../common/components/Notification";
 import Teacher from "../components/Teachers/Teacher";
 import DetailTeacher from "../components/Teachers/DetailTeacher";
+import Student from "../components/Student/Student";
+import DetailStudent from "../components/Student/DetailStudent";
 
 const Routers: React.FC = () => {
     return (
@@ -23,6 +25,8 @@ const Routers: React.FC = () => {
                             <Route path={`/users`}><Users /></Route>
                             <Route path={`/products`}><Products /></Route>
                             <Route path={`/orders`}><Orders /></Route>
+                            <Route path={`/students/detail`}><DetailStudent /></Route>
+                            <Route path={`/students`}><Student /></Route>
                             <Route path="/teachers/detail"><DetailTeacher /></Route>
                             <Route path={`/teachers`}><Teacher /></Route>
                             <Route path="/home"><Home /></Route>

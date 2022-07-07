@@ -38,7 +38,7 @@ const LeftMenu: React.FC = () => {
                     <div className="sidebar-brand-icon icon-green rotate-n-15">
                         <i className="fas fa-bolt"></i>
                     </div>
-                    <div className="sidebar-brand-text mx-3">REACT <sup>Admin</sup></div>
+                    <div className="sidebar-brand-text mx-3">Kids <sup>Drawing</sup></div>
                 </a>
 
                 <hr className="sidebar-divider my-0" />

@@ -17,6 +17,7 @@ import Semester from "../components/Semester/Semester";
 import Lesson from "../components/Lesson/Lesson";
 import Schedule from "../components/Schedule/Schedule";
 import Art from "../components/Art/Art";
+import Course from "../components/Course/Course";
 
 const Routers: React.FC = () => {
     return (
@@ -39,6 +40,7 @@ const Routers: React.FC = () => {
                             <Route path={`/lessons`}><Lesson /></Route>
                             <Route path={`/arts`}><Art /></Route>
                             <Route path={`/schedules`}><Schedule /></Route>
+                            <Route path={`/courses`}><Course /></Route>
                             <Route path="/teachers/detail"><DetailTeacher /></Route>
                             <Route path={`/teachers`}><Teacher /></Route>
                             <Route path="/home"><Home /></Route>

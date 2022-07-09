@@ -25,6 +25,7 @@ import Turnover from "../components/Turnover/Turnover";
 import StudentRequest from "../components/Request/StudentRequest";
 import TeacherRequest from "../components/Request/TeacherRequest";
 import RequestConfirmLevel from "../components/Request/RequestConfirmLevel";
+import LessonPlan from "../components/Course/LessonPlan";
 
 const Routers: React.FC = () => {
     return (
@@ -50,6 +51,7 @@ const Routers: React.FC = () => {
                             <Route path={`/class/detail`}><DetailClass /></Route>
                             <Route path={`/class`}><Class /></Route>
                             <Route path={`/schedules`}><Schedule /></Route>
+                            <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
                             <Route path={`/courses`}><Course /></Route>
                             <Route path={`/turnovers`}><Turnover /></Route>
                             <Route path={`/request-student-off`}><StudentRequest /></Route>

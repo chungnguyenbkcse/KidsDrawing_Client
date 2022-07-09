@@ -29,24 +29,28 @@ function CourseNomalList(props: productListProps): JSX.Element  {
   const history = useHistory();
   
   const routeChange = () =>{ 
-    let path = '/teachers/detail'; 
+    let path = '/courses/detail'; 
+    history.push(path);
+  }
+
+  const routeChange1 = () =>{ 
+    let path = '/courses/lesson-plan'; 
     history.push(path);
   }
 
   const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }
     return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      onClick={routeChange}
       key={`product_${product.id}`}>
       <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
+      <td onClick={routeChange}>{product.name}</td>
       <td>{product.art_type}</td>
       <td>{product.art_level}</td>
       <td>
         <button type="button" className="btn btn-primary">Chỉnh sửa thông tin</button>
       </td>
       <td>
-        <button type="button" className="btn btn-warning">Chỉnh sửa giáo án</button>
+        <button type="button" className="btn btn-warning" onClick={routeChange1}>Chỉnh sửa giáo án</button>
       </td>
       <td>
         <button type="button" className="btn btn-danger">Xóa</button>

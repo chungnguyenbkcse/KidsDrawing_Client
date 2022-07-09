@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
 import { IProductState, IStateType } from "../../store/models/root.interface";
-import ProductList from "../Products/ProductsList";
 import { IOrder } from "../../store/models/order.interface";
-import OrderList from "../Orders/OrderList";
 import { ChartBar } from "../../common/components/ChartBar";
-import CourseNomalList from "../Course/CourseNomalList";
+import CourseMaxSign from "./CourseMaxSign";
+import CourseMinSign from "./CourseMinSign";
 
 const Home: React.FC = () => {
   const products: IProductState = useSelector((state: IStateType) => state.products);
@@ -52,7 +51,7 @@ const Home: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Top khóa học được yêu thích</h6>
             </div>
             <div className="card-body">
-              <CourseNomalList />
+              <CourseMaxSign />
             </div>
           </div>
 
@@ -64,7 +63,7 @@ const Home: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Top khóa học ít người đăng ký</h6>
             </div>
             <div className="card-body">
-            <CourseNomalList />
+            <CourseMinSign />
             </div>
           </div>
         </div>

@@ -134,7 +134,7 @@ const LeftMenu: React.FC = () => {
                 </li>
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/revenues`}>
+                    <Link className="nav-link" to={`/turnovers`}>
                         <BsCashCoin />
                         <span> Doanh thu</span>
                     </Link>

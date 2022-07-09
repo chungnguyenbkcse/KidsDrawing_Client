@@ -21,6 +21,9 @@ import Course from "../components/Course/Course";
 import Class from "../components/Class/Class";
 import DetailClass from "../components/Class/DetailClass";
 import DetailLesson from "../components/Class/DetailLesson";
+import Turnover from "../components/Turnover/Turnover";
+import StudentRequest from "../components/Request/StudentRequest";
+import TeacherRequest from "../components/Request/TeacherRequest";
 
 const Routers: React.FC = () => {
     return (
@@ -47,6 +50,9 @@ const Routers: React.FC = () => {
                             <Route path={`/class`}><Class /></Route>
                             <Route path={`/schedules`}><Schedule /></Route>
                             <Route path={`/courses`}><Course /></Route>
+                            <Route path={`/turnovers`}><Turnover /></Route>
+                            <Route path={`/request-student-off`}><StudentRequest /></Route>
+                            <Route path={`/request-teacher-off`}><TeacherRequest /></Route>
                             <Route path="/teachers/detail"><DetailTeacher /></Route>
                             <Route path={`/teachers`}><Teacher /></Route>
                             <Route path="/home"><Home /></Route>

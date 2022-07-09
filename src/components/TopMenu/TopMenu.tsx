@@ -3,6 +3,7 @@ import TopMenuAccount from "./TopMenuAccount";
 import "./TopMenu.css";
 import { useSelector } from "react-redux";
 import { IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import TopMenuNotification from "./TopNotification";
 
 const TopMenu: React.FC = () => {
   const page: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -15,6 +16,7 @@ const TopMenu: React.FC = () => {
       </ol>
 
       <ul className="navbar-nav ml-auto">
+        <TopMenuNotification />
         <div className="topbar-divider d-none d-sm-block"></div>
         <TopMenuAccount />
       </ul>

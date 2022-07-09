@@ -16,6 +16,7 @@
     "faker": "^5.5.3",
     "rating-star": "^1.1.0",
     "react": "^16.10.2",
+    "react-activity-feed": "^1.4.0",
     "react-chartjs-2": "^4.0.0",
     "react-dom": "^16.10.2",
     "react-fontawesome": "^1.6.1",

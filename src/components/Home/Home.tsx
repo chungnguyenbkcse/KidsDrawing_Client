@@ -7,6 +7,7 @@ import ProductList from "../Products/ProductsList";
 import { IOrder } from "../../store/models/order.interface";
 import OrderList from "../Orders/OrderList";
 import { ChartBar } from "../../common/components/ChartBar";
+import CourseNomalList from "../Course/CourseNomalList";
 
 const Home: React.FC = () => {
   const products: IProductState = useSelector((state: IStateType) => state.products);
@@ -51,7 +52,7 @@ const Home: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Top khóa học được yêu thích</h6>
             </div>
             <div className="card-body">
-              <ProductList />
+              <CourseNomalList />
             </div>
           </div>
 
@@ -63,7 +64,7 @@ const Home: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Top khóa học ít người đăng ký</h6>
             </div>
             <div className="card-body">
-              <OrderList />
+            <CourseNomalList />
             </div>
           </div>
         </div>

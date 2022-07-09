@@ -10,7 +10,7 @@ import Checkbox from "../../common/components/Checkbox";
 import SelectInput from "../../common/components/Select";
 import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
 
-const CourseSemesterForm: React.FC = () => {
+const ContestForm: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const products: IProductState | null = useSelector((state: IStateType) => state.products);
   let product: IProduct | null = products.selectedProduct;
@@ -81,17 +81,52 @@ const CourseSemesterForm: React.FC = () => {
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
-            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} khóa học theo kì</h6>
+            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} cuộc thi</h6>
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
+              <div className="form-group">
+                  <TextInput id="input_email"
+                    value={formState.name.value}
+                    field="email"
+                    type="file"
+                    onChange={hasFormValueChanged}
+                    required={true}
+                    maxLength={20}
+                    label="Chọn ảnh"
+                    placeholder="" />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <TextInput id="input_description"
+                    field = "description"
+                    value={formState.description.value}
+                    onChange={hasFormValueChanged}
+                    required={false}
+                    maxLength={100}
+                    label="Tên khóa học"
+                    placeholder="" />
+                </div>
+                <div className="form-group col-md-6">
+                  <TextInput id="input_description"
+                    field = "description"
+                    value={formState.description.value}
+                    onChange={hasFormValueChanged}
+                    type="number"
+                    required={false}
+                    maxLength={100}
+                    label="Giá"
+                    placeholder="" />
+                </div>
+              </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
                 <SelectInput
                     id="input_category"
                     field="category"
-                    label="Học kì"
-                    options={["Học kì 1 năm học 2022", "Học kì 2 năm học 2022"]}
+                    label="Thể loại"
+                    options={["Chì màu", "Sáp màu", "Sơn dầu"]}
                     required={true}
                     onChange={hasFormValueChanged}
                     value={formState.category.value}
@@ -101,28 +136,64 @@ const CourseSemesterForm: React.FC = () => {
                 <SelectInput
                     id="input_category"
                     field="category"
-                    label="Khóa học chung"
-                    options={["Khóa học mầm chì màu", "Khóa học chồi chì màu"]}
+                    label="Độ tuổi"
+                    options={["4-6 tuổi", "6-10 tuổi", "10-14 tuổi"]}
                     required={true}
                     onChange={hasFormValueChanged}
                     value={formState.category.value}
                   />
                 </div>
               </div>
-                <div className="form-group">
-                <SelectInput
-                    id="input_category"
-                    field="category"
-                    label="Lịch học"
-                    options={["Lịch học khóa mầm chì màu học kì 1 năm học 2022", "Lịch học khóa chồi chì màu học kì 1 năm học 2022"]}
-                    required={true}
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                <TextInput id="input_description"
+                    field = "description"
+                    value={formState.description.value}
                     onChange={hasFormValueChanged}
-                    value={formState.category.value}
-                  />
-               </div>
+                    type="number"
+                    required={false}
+                    maxLength={100}
+                    label="Số người đăng kí tối đa"
+                    placeholder="" />
+                </div>
+                <div className="form-group col-md-6">
+                <TextInput id="input_description"
+                    field = "description"
+                    value={formState.description.value}
+                    onChange={hasFormValueChanged}
+                    type="number"
+                    required={false}
+                    maxLength={100}
+                    label="Số buổi học"
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div className="form-group">
+                  <TextInput id="input_email"
+                    value={formState.name.value}
+                    field="email"
+                    type="checkbox"
+                    onChange={hasFormValueChanged}
+                    required={true}
+                    maxLength={20}
+                    label="Mở"
+                    placeholder="" />
+              </div>
+
+              <div className="form-group">
+                  <TextInput id="input_email"
+                    value={formState.name.value}
+                    onChange={hasFormValueChanged}
+                    field = "description"
+                    required={true}
+                    maxLength={20}
+                    label="Miêu tả chi tiết"
+                    placeholder="" />
+              </div>
             
               <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-              <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+              <button type="submit" className={`btn btn-success left-margin`}>Lưu</button>
             </form>
           </div>
         </div>
@@ -131,4 +202,4 @@ const CourseSemesterForm: React.FC = () => {
   );
 };
 
-export default CourseSemesterForm;
+export default ContestForm;

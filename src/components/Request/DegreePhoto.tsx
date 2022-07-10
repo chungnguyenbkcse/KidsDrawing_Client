@@ -9,7 +9,7 @@ import OrderList from "../Orders/OrderList";
 import { ChartBar } from "../../common/components/ChartBar";
 import RequestConfirmLevelList from "./RequestConfirmLevelList";
 
-const RequestConfirmLevel: React.FC = () => {
+const DegreePhoto: React.FC = () => {
   const products: IProductState = useSelector((state: IStateType) => state.products);
   const numberItemsCount: number = products.products.length;
   const totalPrice: number = products.products.reduce((prev, next) => prev + ((next.price * next.amount) || 0), 0);
@@ -20,26 +20,22 @@ const RequestConfirmLevel: React.FC = () => {
   const totalOrderAmount: number = orders.reduce((prev, next) => prev + next.amount, 0);
 
   const dispatch: Dispatch<any> = useDispatch();
-  dispatch(updateCurrentPath("Yêu cầu xác nhận trình độ", ""));
+  dispatch(updateCurrentPath("Bằng cấp", ""));
 
   return (
     <Fragment>
-      <h1 className="h3 mb-2 text-gray-800">Yêu cầu xác nhận trình độ</h1>
+      <h1 className="h3 mb-2 text-gray-800">Bằng cấp</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
-      <div className="row">
-        <TopCard title="SỐ YÊU CẦU" text={`${numberItemsCount}`} icon="box" class="primary" />
-      </div>
 
       <div className="row">
 
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3">
-              <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
+              <h6 className="m-0 font-weight-bold text-green">Hình ảnh</h6>
             </div>
             <div className="card-body">
-              <RequestConfirmLevelList />
+            <img src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png"  alt="First slide" />
             </div>
           </div>
 
@@ -51,4 +47,4 @@ const RequestConfirmLevel: React.FC = () => {
   );
 };
 
-export default RequestConfirmLevel;
+export default DegreePhoto;

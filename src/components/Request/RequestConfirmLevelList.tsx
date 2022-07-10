@@ -25,14 +25,18 @@ const data = [
 function RequestConfirmLevelList(props: productListProps): JSX.Element  {
   const products: IProductState = useSelector((state: IStateType) => state.products);
   const history = useHistory();
+  const routeChange = () =>{ 
+    let path = '/teachers/request-level/degree-photo'; 
+    history.push(path);
+  }
 
   const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }
     return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
       key={`product_${product.id}`}>
       <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
-      <td>{product.level}</td>
+      <td onClick={routeChange}>{product.name}</td>
+      <td onClick={routeChange}>{product.level}</td>
       <td>
         <button type="button" className="btn btn-primary">Chấp nhận</button>
       </td>

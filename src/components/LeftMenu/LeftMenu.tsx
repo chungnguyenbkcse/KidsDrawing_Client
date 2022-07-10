@@ -171,12 +171,6 @@ const LeftMenu: React.FC = () => {
                     </Link>
                 </li>
 
-                <li className="nav-item">
-                    <Link className="nav-link" to={`/request-level`}>
-                        <span>Xác nhận trình độ</span>
-                    </Link>
-                </li>
-
                 <hr className="sidebar-divider d-none d-md-block" />
             </ul>
         </Fragment>

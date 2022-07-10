@@ -27,6 +27,7 @@ import TeacherRequest from "../components/Request/TeacherRequest";
 import RequestConfirmLevel from "../components/Request/RequestConfirmLevel";
 import LessonPlan from "../components/Course/LessonPlan";
 import Contest from "../components/Contest/Contest";
+import DegreePhoto from "../components/Request/DegreePhoto";
 
 const Routers: React.FC = () => {
     return (
@@ -58,7 +59,8 @@ const Routers: React.FC = () => {
                             <Route path={`/turnovers`}><Turnover /></Route>
                             <Route path={`/request-student-off`}><StudentRequest /></Route>
                             <Route path={`/request-teacher-off`}><TeacherRequest /></Route>
-                            <Route path={`/request-level`}><RequestConfirmLevel /></Route>
+                            <Route path={`/teachers/request-level/degree-photo`}><DegreePhoto /></Route>
+                            <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>
                             <Route path="/teachers/detail"><DetailTeacher /></Route>
                             <Route path={`/teachers`}><Teacher /></Route>
                             <Route path="/home"><Home /></Route>

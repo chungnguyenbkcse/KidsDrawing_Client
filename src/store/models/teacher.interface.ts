@@ -3,6 +3,9 @@ export interface ITeacher {
     username: string;
     first_name: string;
     last_name: string;
+    status: boolean;
+    request_level: number;
+    level: { art_type: string, art_level: string }[];
 }
 
 export enum TeacherModificationStatus {

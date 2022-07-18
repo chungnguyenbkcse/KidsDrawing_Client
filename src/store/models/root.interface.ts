@@ -4,6 +4,7 @@ import { IUser } from "./user.interface";
 import { IOrder } from "./order.interface";
 import { IAccount } from "./account.interface";
 import { ITeacher, TeacherModificationStatus } from "./teacher.interface";
+import { ISemester, SemesterModificationStatus } from "./semester.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -21,6 +22,7 @@ export interface IStateType {
     orders: IOrdersState;
     account: IAccount;
     teachers: ITeacherState;
+    semesters: ISemesterState;
 }
 
 export interface IProductState {
@@ -51,4 +53,10 @@ export interface ITeacherState {
     selectedTeacher: ITeacher | null;
     modificationState: TeacherModificationStatus;
     teachers: ITeacher[];
+}
+
+export interface ISemesterState {
+    selectedSemester: ISemester | null;
+    modificationState: SemesterModificationStatus;
+    semesters: ISemester[];
 }

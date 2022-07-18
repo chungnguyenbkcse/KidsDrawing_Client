@@ -5,34 +5,39 @@ import TopCard from "../../common/components/TopCard";
 import "./Semester.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { ISemesterState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
+    removeSemester, clearSelectedSemester, setModificationState,
+    changeSelectedSemester, addSemester, editSemester
+} from "../../store/actions/semester.actions";
 import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+import { SemesterModificationStatus, ISemester } from "../../store/models/semester.interface";
+import { getSemester } from "../../common/service/semester/GetSemester";
 
 
 const Semester: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
+    const numberItemsCount: number = semesters.semesters.length;
     const [popup, setPopup] = useState(false);
 
     useEffect(() => {
-        dispatch(clearSelectedProduct());
+        dispatch(getSemester())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(clearSelectedSemester());
         dispatch(updateCurrentPath("Học kì", "Danh sách"));
     }, [path.area, dispatch]);
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    function onSemesterSelect(semester: ISemester): void {
+        dispatch(changeSelectedSemester(semester));
+        dispatch(setModificationState(SemesterModificationStatus.None));
     }
 
-    function onProductRemove() {
+    function onSemesterRemove() {
         setPopup(true);
     }
 
@@ -64,8 +69,8 @@ const Semester: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green">Danh sách học kì</h6>
                             <div className="header-buttons">
                                 <button className="btn btn-success btn-green" onClick={() =>{
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove()
+                                    dispatch(setModificationState(SemesterModificationStatus.Create))
+                                    onSemesterRemove()
                                 }}>
                                     <i className="fas fa fa-plus"></i>
                                     Thêm học kì
@@ -74,7 +79,7 @@ const Semester: React.FC = () => {
                         </div>
                         <div className="card-body">
                             <SemesterList
-                                onSelect={onProductSelect}
+                                onSelect={onSemesterSelect}
                             />
                         </div>
                     </div>
@@ -88,7 +93,7 @@ const Semester: React.FC = () => {
                 closeOnDocumentClick
             >
                 <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <SemesterForm /> : null}
+                    {((semesters.modificationState === SemesterModificationStatus.Create) || (semesters.modificationState === SemesterModificationStatus.Edit && semesters.selectedSemester)) ? <SemesterForm /> : null}
                 </div>
             </Popup>
         </Fragment >

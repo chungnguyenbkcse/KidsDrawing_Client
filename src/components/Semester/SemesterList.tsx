@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import { IStateType, ISemesterState } from "../../store/models/root.interface";
+import { ISemester } from "../../store/models/semester.interface";
 import { useHistory } from "react-router-dom";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type semesterListProps = {
+  onSelect?: (semester: ISemester) => void;
   children?: React.ReactNode;
 };
 
@@ -28,20 +28,19 @@ const data = [
   }
 ]
 
-function SemesterList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+function SemesterList(props: semesterListProps): JSX.Element  {
+  const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
   const history = useHistory();
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
-      <td>{product.year}</td>
-      <td>{product.number}</td>
-      <td>{product.start_time}</td>
-      <td>{product.end_time}</td>
+  const semesterElements: (JSX.Element | null)[] = semesters.semesters.map(semester => {
+    if (!semester) { return null; }
+    return (<tr className={`table-row ${(semesters.selectedSemester && semesters.selectedSemester.id === semester.id) ? "selected" : ""}`}
+      key={`semester_${semester.id}`}>
+      <th scope="row">{semester.id}</th>
+      <td>{semester.name}</td>
+      <td>{semester.year}</td>
+      <td>{semester.number}</td>
+      <td>{semester.start_time}</td>
       <td>
         <button type="button" className="btn btn-primary">Chỉnh sửa</button>
       </td>
@@ -62,13 +61,12 @@ function SemesterList(props: productListProps): JSX.Element  {
             <th scope="col">Năm học</th>
             <th scope="col">Học kì</th>
             <th scope="col">Thời gian bắt đầu</th>
-            <th scope="col">Thời gian kết thúc</th>
             <th scope="col">Hành động</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {semesterElements}
         </tbody>
       </table>
     </div>

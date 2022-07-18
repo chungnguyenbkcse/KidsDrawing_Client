@@ -18,6 +18,14 @@ export interface IProductFormState {
     category: IFormStateField<string>;
 }
 
+export interface ISemesterFormState {
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+    number: IFormStateField<number>;
+    year: IFormStateField<number>;
+    start_time: IFormStateField<string>;
+}
+
 export  interface IOrderFormState {
     name: IFormStateField<string>;
     product: IFormStateField<IProduct | null>;

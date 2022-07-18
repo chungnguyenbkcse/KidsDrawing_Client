@@ -63,7 +63,7 @@ const Routers: React.FC = () => {
                             <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>
                             <Route path="/teachers/detail"><DetailTeacher /></Route>
                             <Route path={`/teachers`}><Teacher /></Route>
-                            <Route path="/home"><Home /></Route>
+                            <Route path="/"><Home /></Route>
                         </Switch>
                     </div>
                 </div>

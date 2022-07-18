@@ -4,12 +4,13 @@ import { useDispatch } from "react-redux";
 import { login } from "../../store/actions/account.actions";
 import TextInput from "../../common/components/TextInput";
 import '../../assets/css/Login.css'
+import jwt_decode from "jwt-decode"
 
 const Login: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
 
   const [formState, setFormState] = useState({
-    email: { error: "", value: "" },
+    username: { error: "", value: "" },
     password: { error: "", value: "" }
   });
 
@@ -20,12 +21,36 @@ const Login: React.FC = () => {
   function submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if(isFormInvalid()) { return; }
-    dispatch(login(formState.email.value));
+    fetch('https://kidsdrawing-backend-java.herokuapp.com/api/v1/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "username":formState.username.value,
+        "password": formState.password.value
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        localStorage.setItem('access_token', data.accessToken) // Authorization
+        localStorage.setItem('refresh_token', data.refreshToken)
+        localStorage.setItem('username', formState.username.value)
+        const token: string = data.accessToken;
+        const decoded: any = jwt_decode(token); 
+        console.log(decoded)
+        localStorage.setItem('role_privilege', decoded.role_privilege)
+        dispatch(login(formState.username.value));
+      })
+      .catch(() => {
+        alert('Đăng nhập không thành công!')
+      })
+    e.preventDefault(); 
   }
 
   function isFormInvalid() {
-    return (formState.email.error || formState.password.error
-      || !formState.email.value || !formState.password.value);
+    return (formState.username.error || formState.password.error
+      || !formState.username.value || !formState.password.value);
   }
 
   function getDisabledClass(): string {
@@ -57,9 +82,9 @@ const Login: React.FC = () => {
                     <form className="user" onSubmit={submit}>
                       <div className="form-group">
 
-                        <TextInput id="input_email"
-                          field="email"
-                          value={formState.email.value}
+                        <TextInput id="input_username"
+                          field="username"
+                          value={formState.username.value}
                           onChange={hasFormValueChanged}
                           required={true}
                           maxLength={100}

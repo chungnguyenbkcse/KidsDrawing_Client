@@ -6,7 +6,7 @@ import { IoNotificationsSharp } from "react-icons/io5"
 
 function TopMenuNotification(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const email: string = useSelector((state: IStateType) => state.account.email);
+  const username: string = useSelector((state: IStateType) => state.account.username);
   const [isShow, setShow] = useState(false);
 
   return (

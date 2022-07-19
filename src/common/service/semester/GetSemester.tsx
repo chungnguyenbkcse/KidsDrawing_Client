@@ -35,14 +35,26 @@ export function getSemester() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeSemesterAll())
-                console.log(data.body.semesters)
-                data.body.semesters.map((ele: semester, index: any) => {
-                    console.log(ele)
+                //console.log(data.body.semesters)
+                data.body.semesters.map((ele: any, index: any) => {
+                    var strDate = ele.start_time;
+                    var semester: semester = {
+                        id: ele.id,
+                        number: ele.number,
+                        year: ele.year,
+                        name: ele.name,
+                        creator_id: ele.creator_id,
+                        description: ele.description,
+                        start_time: strDate.substring(0, 16),
+                        create_time: ele.create_time,
+                        update_time: ele.update_time,
+                    }
+                    console.log(strDate.substring(0, 16))
                     if (index === 0){
-                        return dispatch(initialSemester(ele));
+                        return dispatch(initialSemester(semester));
                     }
                     else{
-                        return dispatch(addSemester(ele))
+                        return dispatch(addSemester(semester))
                     }
                 })
             })

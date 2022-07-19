@@ -30,6 +30,7 @@ const SemesterForm: React.FC = () => {
 
   function hasFormValueChanged(model: OnChangeModel): void {
     setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+    console.log(formState)
   }
 
   function saveUser(e: FormEvent<HTMLFormElement>): void {
@@ -95,15 +96,14 @@ const SemesterForm: React.FC = () => {
                 </div>
               <div className="form-row">
               <div className="form-group col-md-6">
-                  <TextInput id="input_description"
-                    value={formState.description.value}
-                    field="description"
-                    type="number"
+                  <NumberInput id="input_year"
+                    value={formState.year.value}
+                    field="year"
                     onChange={hasFormValueChanged}
-                    required={true}
-                    maxLength={20}
+                    max={1000}
+                    min={0}
                     label="Năm học"
-                    placeholder="" />
+                  />
                 </div>
               <div className="form-group col-md-6">
                   <NumberInput id="input_number"
@@ -122,7 +122,7 @@ const SemesterForm: React.FC = () => {
                     field = "start_time"
                     value={formState.start_time.value}
                     onChange={hasFormValueChanged}
-                    type="date"
+                    type="datetime-local"
                     required={false}
                     maxLength={100}
                     label="Thời gian bắt đầu"

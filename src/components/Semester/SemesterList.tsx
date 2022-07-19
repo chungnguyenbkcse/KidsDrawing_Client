@@ -1,8 +1,9 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { Dispatch } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { IStateType, ISemesterState } from "../../store/models/root.interface";
-import { ISemester } from "../../store/models/semester.interface";
+import { ISemester, SemesterModificationStatus } from "../../store/models/semester.interface";
 import { useHistory } from "react-router-dom";
+import { setModificationState } from "../../store/actions/semester.actions";
 
 export type semesterListProps = {
   onSelect?: (semester: ISemester) => void;
@@ -29,10 +30,13 @@ const data = [
 ]
 
 function SemesterList(props: semesterListProps): JSX.Element  {
+  const dispatch: Dispatch<any> = useDispatch();
   const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
   const history = useHistory();
 
   const semesterElements: (JSX.Element | null)[] = semesters.semesters.map(semester => {
+    var strDate = semester.start_time;
+    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!semester) { return null; }
     return (<tr className={`table-row ${(semesters.selectedSemester && semesters.selectedSemester.id === semester.id) ? "selected" : ""}`}
       key={`semester_${semester.id}`}>
@@ -40,9 +44,12 @@ function SemesterList(props: semesterListProps): JSX.Element  {
       <td>{semester.name}</td>
       <td>{semester.year}</td>
       <td>{semester.number}</td>
-      <td>{semester.start_time}</td>
+      <td>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</td>
       <td>
-        <button type="button" className="btn btn-primary">Chỉnh sửa</button>
+        <button type="button" className="btn btn-primary" onClick={()=> {
+          if(props.onSelect) props.onSelect(semester);
+          dispatch(setModificationState(SemesterModificationStatus.Edit))
+        }}>Chỉnh sửa</button>
       </td>
       <td>
         <button type="button" className="btn btn-danger">Xóa</button>

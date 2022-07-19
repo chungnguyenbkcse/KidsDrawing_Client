@@ -34,6 +34,7 @@ const Semester: React.FC = () => {
 
     function onSemesterSelect(semester: ISemester): void {
         dispatch(changeSelectedSemester(semester));
+        onSemesterRemove();
         dispatch(setModificationState(SemesterModificationStatus.None));
     }
 
@@ -93,7 +94,7 @@ const Semester: React.FC = () => {
                 closeOnDocumentClick
             >
                 <div className="row text-left">
-                    {((semesters.modificationState === SemesterModificationStatus.Create) || (semesters.modificationState === SemesterModificationStatus.Edit && semesters.selectedSemester)) ? <SemesterForm /> : null}
+                    {((semesters.modificationState === SemesterModificationStatus.Create) || (semesters.selectedSemester)) ? <SemesterForm /> : null}
                 </div>
             </Popup>
         </Fragment >

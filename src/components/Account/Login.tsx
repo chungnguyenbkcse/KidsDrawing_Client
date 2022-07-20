@@ -21,7 +21,7 @@ const Login: React.FC = () => {
   function submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if(isFormInvalid()) { return; }
-    fetch('https://kidsdrawing-backend-java.herokuapp.com/api/v1/auth', {
+    fetch(`${process.env.REACT_APP_API_URL}/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -40,6 +40,7 @@ const Login: React.FC = () => {
         const decoded: any = jwt_decode(token); 
         console.log(decoded)
         localStorage.setItem('role_privilege', decoded.role_privilege)
+        localStorage.setItem('id', decoded.id)
         dispatch(login(formState.username.value));
       })
       .catch(() => {

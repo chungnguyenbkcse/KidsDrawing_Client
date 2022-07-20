@@ -16,12 +16,12 @@ export function getSemester() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                "http://localhost:8080/api/v1/semester", {
+                `${process.env.REACT_APP_API_URL}/semester`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': 'http://localhost:3000',
+                        'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
                     }
                 }
@@ -49,7 +49,7 @@ export function getSemester() {
                         create_time: ele.create_time,
                         update_time: ele.update_time,
                     }
-                    console.log(strDate.substring(0, 16))
+                    //console.log(strDate.substring(0, 16))
                     if (index === 0){
                         return dispatch(initialSemester(semester));
                     }

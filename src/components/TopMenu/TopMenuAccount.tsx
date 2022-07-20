@@ -42,6 +42,7 @@ function TopMenuAccount(): JSX.Element {
           localStorage.removeItem('refresh_token')
           localStorage.removeItem('username')
           localStorage.removeItem('role_privilege')
+          localStorage.removeItem('id')
           dispatch(logout())
         }}
         href="/aut" 

@@ -107,9 +107,9 @@ const Semester: React.FC = () => {
                             if ((semesters.modificationState === SemesterModificationStatus.Create) || ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Edit))) {
                                 return <SemesterForm />
                             }
-                            else if ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Remove)) {
+                            /* else if ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Remove)) {
                                 return (
-                                    <div className="col-xl-12 col-lg-12">
+                                    <div className="col-xl-6 col-lg-6">
                                         <div className="card shadow mb-4">
                                             <div className="card-header py-3">
                                                 <h6 className="m-0 font-weight-bold text-green">Bạn có chắn chắn muốn xóa?</h6>
@@ -122,7 +122,7 @@ const Semester: React.FC = () => {
                                                     if (!semesters.selectedSemester) {
                                                         return;
                                                     }
-                                                    dispatch(deleteSemester())
+                                                    dispatch(deleteSemester(semesters.selectedSemester.id))
                                                     dispatch(addNotification("Semester removed", `Semester ${semesters.selectedSemester.name} was removed`));
                                                     dispatch(removeSemester(semesters.selectedSemester.id));
                                                     dispatch(clearSelectedSemester());
@@ -132,11 +132,45 @@ const Semester: React.FC = () => {
                                         </div>
                                     </div>
                                 )
-                            }
+                            } */
                         }()
                     }
                 </div>
             </Popup>
+            {
+                function () {
+                    if ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Are you sure?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (!semesters.selectedSemester) {
+                                                    return;
+                                                }
+                                                dispatch(addNotification("Semester removed", `Semester ${semesters.selectedSemester.name} was removed`));
+                                                dispatch(removeSemester(semesters.selectedSemester.id));
+                                                dispatch(clearSelectedSemester());
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
+
 
         </Fragment >
     );

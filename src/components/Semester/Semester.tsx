@@ -23,6 +23,12 @@ const Semester: React.FC = () => {
     const numberItemsCount: number = semesters.semesters.length;
     const [popup, setPopup] = useState(false);
 
+    const [popup_1, setPopup_1] = useState(false);
+
+    function onSemesterRemove_1() {
+        setPopup_1(true);
+    }
+
     useEffect(() => {
         dispatch(getSemester())
     }, [dispatch])
@@ -42,6 +48,7 @@ const Semester: React.FC = () => {
         setPopup(true);
     }
 
+
     return (
         <Fragment>
             <h1 className="h3 mb-2 text-gray-800">Học kì</h1>
@@ -54,7 +61,7 @@ const Semester: React.FC = () => {
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">
                         <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm"/>
+                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
                         </div>
                         <button type="button" className="btn btn-primary">
                             <i className="fas fa-search"></i>
@@ -69,7 +76,7 @@ const Semester: React.FC = () => {
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green">Danh sách học kì</h6>
                             <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>{
+                                <button className="btn btn-success btn-green" onClick={() => {
                                     dispatch(setModificationState(SemesterModificationStatus.Create))
                                     onSemesterRemove()
                                 }}>
@@ -94,9 +101,41 @@ const Semester: React.FC = () => {
                 closeOnDocumentClick
             >
                 <div className="row text-left">
-                    {((semesters.modificationState === SemesterModificationStatus.Create) || (semesters.selectedSemester)) ? <SemesterForm /> : null}
+                    {
+                        function () {
+                            if ((semesters.modificationState === SemesterModificationStatus.Create) || ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Edit))) {
+                                return <SemesterForm />
+                            }
+                            else if ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Remove)) {
+                                return (
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green">Bạn có chắn chắn muốn xóa?</h6>
+                                            </div>
+                                        </div>
+                                        <div className="card-body text-center">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    if (!semesters.selectedSemester) {
+                                                        return;
+                                                    }
+                                                    dispatch(addNotification("Semester removed", `Semester ${semesters.selectedSemester.name} was removed`));
+                                                    dispatch(removeSemester(semesters.selectedSemester.id));
+                                                    dispatch(clearSelectedSemester());
+                                                    setPopup(false);
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        }()
+                    }
                 </div>
             </Popup>
+
         </Fragment >
     );
 };

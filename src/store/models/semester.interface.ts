@@ -13,5 +13,6 @@ export interface ISemester {
 export enum SemesterModificationStatus {
     None = 0,
     Create = 1,
-    Edit = 2
+    Edit = 2,
+    Remove = 3
 }

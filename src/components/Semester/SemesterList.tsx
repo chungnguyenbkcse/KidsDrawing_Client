@@ -1,9 +1,11 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, ISemesterState } from "../../store/models/root.interface";
 import { ISemester, SemesterModificationStatus } from "../../store/models/semester.interface";
 import { useHistory } from "react-router-dom";
-import { setModificationState } from "../../store/actions/semester.actions";
+import { clearSelectedSemester, removeSemester, setModificationState } from "../../store/actions/semester.actions";
+import { addNotification } from "../../store/actions/notifications.action";
+import Popup from "reactjs-popup";
 
 export type semesterListProps = {
   onSelect?: (semester: ISemester) => void;
@@ -34,6 +36,7 @@ function SemesterList(props: semesterListProps): JSX.Element  {
   const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
   const history = useHistory();
 
+
   const semesterElements: (JSX.Element | null)[] = semesters.semesters.map(semester => {
     var strDate = semester.start_time;
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
@@ -52,14 +55,18 @@ function SemesterList(props: semesterListProps): JSX.Element  {
         }}>Chỉnh sửa</button>
       </td>
       <td>
-        <button type="button" className="btn btn-danger">Xóa</button>
+        <button type="button" className="btn btn-danger" onClick={() =>{
+          if(props.onSelect) props.onSelect(semester);
+          dispatch(setModificationState(SemesterModificationStatus.Remove))
+        }}>Xóa</button>
       </td>
     </tr>);
   });
 
 
   return (
-    <div className="table-responsive portlet">
+    <Fragment>
+      <div className="table-responsive portlet">
       <table className="table">
         <thead className="thead-light">
           <tr>
@@ -77,7 +84,7 @@ function SemesterList(props: semesterListProps): JSX.Element  {
         </tbody>
       </table>
     </div>
-
+    </Fragment> 
   );
 }
 

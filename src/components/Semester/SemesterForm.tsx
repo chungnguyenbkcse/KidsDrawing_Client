@@ -9,6 +9,7 @@ import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel, ISemesterFormState } from "../../common/types/Form.types";
 import { postSemester } from "../../common/service/semester/PostSemester";
 import { putSemester } from "../../common/service/semester/PutSemester";
+import Editor from "../../common/components/Quill/Editor";
 
 const SemesterForm: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -120,14 +121,8 @@ const SemesterForm: React.FC = () => {
                   placeholder="" />
               </div>
               <div className="form-group">
-                <TextInput id="input_description"
-                  value={formState.description.value}
-                  field="description"
-                  onChange={hasFormValueChanged}
-                  required={true}
-                  maxLength={20000}
-                  label="Mô tả"
-                  placeholder="" />
+                <label>Mô tả</label>
+              <Editor />
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -145,8 +140,8 @@ const SemesterForm: React.FC = () => {
                     field="number"
                     value={formState.number.value}
                     onChange={hasFormValueChanged}
-                    max={1000}
-                    min={0}
+                    max={10}
+                    min={1}
                     label="Học kì"
                   />
                 </div>

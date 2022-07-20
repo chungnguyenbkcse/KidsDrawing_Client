@@ -1,11 +1,9 @@
-import React, { Dispatch, Fragment, useState } from "react";
+import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, ISemesterState } from "../../store/models/root.interface";
 import { ISemester, SemesterModificationStatus } from "../../store/models/semester.interface";
 import { useHistory } from "react-router-dom";
-import { clearSelectedSemester, removeSemester, setModificationState } from "../../store/actions/semester.actions";
-import { addNotification } from "../../store/actions/notifications.action";
-import Popup from "reactjs-popup";
+import { setModificationState } from "../../store/actions/semester.actions";
 
 export type semesterListProps = {
   onSelect?: (semester: ISemester) => void;

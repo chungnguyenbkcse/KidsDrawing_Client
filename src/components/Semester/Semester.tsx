@@ -9,7 +9,7 @@ import { ISemesterState, IStateType, IRootPageStateType } from "../../store/mode
 import Popup from "reactjs-popup";
 import {
     removeSemester, clearSelectedSemester, setModificationState,
-    changeSelectedSemester, addSemester, editSemester
+    changeSelectedSemester
 } from "../../store/actions/semester.actions";
 import { addNotification } from "../../store/actions/notifications.action";
 import { SemesterModificationStatus, ISemester } from "../../store/models/semester.interface";
@@ -23,12 +23,6 @@ const Semester: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = semesters.semesters.length;
     const [popup, setPopup] = useState(false);
-
-    const [popup_1, setPopup_1] = useState(false);
-
-    function onSemesterRemove_1() {
-        setPopup_1(true);
-    }
 
     useEffect(() => {
         dispatch(getSemester())
@@ -107,32 +101,6 @@ const Semester: React.FC = () => {
                             if ((semesters.modificationState === SemesterModificationStatus.Create) || ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Edit))) {
                                 return <SemesterForm />
                             }
-                            /* else if ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Remove)) {
-                                return (
-                                    <div className="col-xl-6 col-lg-6">
-                                        <div className="card shadow mb-4">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green">Bạn có chắn chắn muốn xóa?</h6>
-                                            </div>
-                                        </div>
-                                        <div className="card-body text-center">
-                                            <button type="button"
-                                                className="btn btn-danger"
-                                                onClick={() => {
-                                                    if (!semesters.selectedSemester) {
-                                                        return;
-                                                    }
-                                                    dispatch(deleteSemester(semesters.selectedSemester.id))
-                                                    dispatch(addNotification("Semester removed", `Semester ${semesters.selectedSemester.name} was removed`));
-                                                    dispatch(removeSemester(semesters.selectedSemester.id));
-                                                    dispatch(clearSelectedSemester());
-                                                    setPopup(false);
-                                                }}>Remove
-                                            </button>
-                                        </div>
-                                    </div>
-                                )
-                            } */
                         }()
                     }
                 </div>
@@ -157,6 +125,7 @@ const Semester: React.FC = () => {
                                                 if (!semesters.selectedSemester) {
                                                     return;
                                                 }
+                                                dispatch(deleteSemester(semesters.selectedSemester.id))
                                                 dispatch(addNotification("Semester removed", `Semester ${semesters.selectedSemester.name} was removed`));
                                                 dispatch(removeSemester(semesters.selectedSemester.id));
                                                 dispatch(clearSelectedSemester());

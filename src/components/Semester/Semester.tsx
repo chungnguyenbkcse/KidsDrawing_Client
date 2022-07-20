@@ -14,6 +14,7 @@ import {
 import { addNotification } from "../../store/actions/notifications.action";
 import { SemesterModificationStatus, ISemester } from "../../store/models/semester.interface";
 import { getSemester } from "../../common/service/semester/GetSemester";
+import { deleteSemester } from "../../common/service/semester/DeleteSemester";
 
 
 const Semester: React.FC = () => {
@@ -121,6 +122,7 @@ const Semester: React.FC = () => {
                                                     if (!semesters.selectedSemester) {
                                                         return;
                                                     }
+                                                    dispatch(deleteSemester())
                                                     dispatch(addNotification("Semester removed", `Semester ${semesters.selectedSemester.name} was removed`));
                                                     dispatch(removeSemester(semesters.selectedSemester.id));
                                                     dispatch(clearSelectedSemester());

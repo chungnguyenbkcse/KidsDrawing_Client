@@ -43,6 +43,10 @@ const Semester: React.FC = () => {
         setPopup(true);
     }
 
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
+    }
+
 
     return (
         <Fragment>
@@ -90,20 +94,21 @@ const Semester: React.FC = () => {
             </div>
 
 
+
             <Popup
                 open={popup}
                 onClose={() => setPopup(false)}
                 closeOnDocumentClick
             >
-                <div className="row text-left">
+                <>
                     {
                         function () {
                             if ((semesters.modificationState === SemesterModificationStatus.Create) || ((semesters.selectedSemester) && (semesters.modificationState === SemesterModificationStatus.Edit))) {
-                                return <SemesterForm />
+                                return <SemesterForm isCheck={onRemovePopup}/>
                             }
                         }()
                     }
-                </div>
+                </>
             </Popup>
             {
                 function () {

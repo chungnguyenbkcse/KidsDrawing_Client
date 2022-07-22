@@ -11,7 +11,12 @@ import { postSemester } from "../../common/service/semester/PostSemester";
 import { putSemester } from "../../common/service/semester/PutSemester";
 import Editor from "../../common/components/Quill/Editor";
 
-const SemesterForm: React.FC = () => {
+export type semesterListProps = {
+  isCheck: (value: boolean) => void;
+  children?: React.ReactNode;
+};
+
+function SemesterForm(props: semesterListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const semesters: ISemesterState | null = useSelector((state: IStateType) => state.semesters);
   let semester: ISemester | null = semesters.selectedSemester;
@@ -41,6 +46,7 @@ const SemesterForm: React.FC = () => {
     }
 
     let saveUserFn: Function = (isCreate) ? addSemester : editSemester;
+    props.isCheck(false);
     saveForm(formState, saveUserFn);
   }
 
@@ -87,6 +93,7 @@ const SemesterForm: React.FC = () => {
   }
 
   function cancelForm(): void {
+    props.isCheck(false);
     dispatch(setModificationState(SemesterModificationStatus.None));
   }
 
@@ -103,6 +110,7 @@ const SemesterForm: React.FC = () => {
 
   return (
     <Fragment>
+      <div className="row text-left">
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
@@ -120,10 +128,10 @@ const SemesterForm: React.FC = () => {
                   label="Tên"
                   placeholder="" />
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>Mô tả</label>
               <Editor />
-              </div>
+              </div> */}
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <NumberInput id="input_year"
@@ -164,6 +172,7 @@ const SemesterForm: React.FC = () => {
             </form>
           </div>
         </div>
+      </div>
       </div>
     </Fragment>
   );

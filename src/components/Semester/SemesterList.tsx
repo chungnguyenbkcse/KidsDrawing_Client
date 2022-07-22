@@ -4,9 +4,11 @@ import { IStateType, ISemesterState } from "../../store/models/root.interface";
 import { ISemester, SemesterModificationStatus } from "../../store/models/semester.interface";
 import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/semester.actions";
+import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
 export type semesterListProps = {
   onSelect?: (semester: ISemester) => void;
+  value?: string;
   children?: React.ReactNode;
 };
 
@@ -33,9 +35,17 @@ function SemesterList(props: semesterListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
   const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
   const history = useHistory();
+  console.log(props.value)
 
 
-  const semesterElements: (JSX.Element | null)[] = semesters.semesters.map((semester, index) => {
+  const semesterElements: (JSX.Element | null)[] = semesters.semesters.filter((val) => {
+    if (props.value == ""){
+      return val;
+    }
+    else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
+      return val;
+    }
+  }).map((semester, index) => {
     var strDate = semester.start_time;
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!semester) { return null; }

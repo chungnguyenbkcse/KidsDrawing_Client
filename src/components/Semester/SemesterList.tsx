@@ -35,13 +35,13 @@ function SemesterList(props: semesterListProps): JSX.Element  {
   const history = useHistory();
 
 
-  const semesterElements: (JSX.Element | null)[] = semesters.semesters.map(semester => {
+  const semesterElements: (JSX.Element | null)[] = semesters.semesters.map((semester, index) => {
     var strDate = semester.start_time;
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!semester) { return null; }
     return (<tr className={`table-row ${(semesters.selectedSemester && semesters.selectedSemester.id === semester.id) ? "selected" : ""}`}
       key={`semester_${semester.id}`}>
-      <th scope="row">{semester.id}</th>
+      <th scope="row">{index + 1}</th>
       <td>{semester.name}</td>
       <td>{semester.year}</td>
       <td>{semester.number}</td>

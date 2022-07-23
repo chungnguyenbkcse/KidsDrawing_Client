@@ -7,6 +7,9 @@ import { ISemester, SemesterModificationStatus } from "./semester.interface";
 import { ILesson, LessonModificationStatus } from "./lesson.interface";
 import { IScheduleItem, ScheduleItemModificationStatus } from "./schedule_item.interface";
 import { ISchedule, ScheduleModificationStatus } from "./schedule.interface";
+import { ArtTypeModificationStatus, IArtType } from "./art_type.interface";
+import { ArtLevelModificationStatus, IArtLevel } from "./art_level.interface";
+import { ArtAgeModificationStatus, IArtAge } from "./art_age.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -27,6 +30,9 @@ export interface IStateType {
     lessons: ILessonState;
     schedules: IScheduleState;
     schedule_items: IScheduleItemState;
+    art_types: IArtTypeState;
+    art_levels: IArtLevelState;
+    art_ages: IArtAgeState;
 }
 
 export interface IProductState {
@@ -79,4 +85,22 @@ export interface IScheduleState {
     selectedSchedule: ISchedule | null;
     modificationState: ScheduleModificationStatus;
     schedules: ISchedule[];
+}
+
+export interface IArtTypeState {
+    selectedArtType: IArtType | null;
+    modificationState: ArtTypeModificationStatus;
+    artTypes: IArtType[];
+}
+
+export interface IArtLevelState {
+    selectedArtLevel: IArtLevel | null;
+    modificationState: ArtLevelModificationStatus;
+    artLevels: IArtLevel[];
+}
+
+export interface IArtAgeState {
+    selectedArtAge: IArtAge | null;
+    modificationState: ArtAgeModificationStatus;
+    artAges: IArtAge[];
 }

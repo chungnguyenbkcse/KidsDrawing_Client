@@ -10,6 +10,9 @@ import semestersReducer from "./semester.reducer";
 import lessonsReducer from "./lesson.reducer";
 import schedulesReducer from "./schedule.reducer";
 import schedule_itemsReducer from "./schedule_item.reducer";
+import artTypesReducer from "./art_type.reducer";
+import artLevelsReducer from "./art_level.reducer";
+import artAgesReducer from "./art_age.reducer";
 
 
 const initialState: IRootStateType = {
@@ -35,6 +38,9 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     lessons: lessonsReducer,
     schedules: schedulesReducer,
     schedule_items: schedule_itemsReducer,
+    art_types: artTypesReducer,
+    art_levels: artLevelsReducer,
+    art_ages: artAgesReducer
 });
 
 

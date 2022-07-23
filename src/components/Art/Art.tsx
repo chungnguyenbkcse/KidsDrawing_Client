@@ -16,6 +16,8 @@ import {
 import { addNotification } from "../../store/actions/notifications.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
 import TextInput from "../../common/components/TextInput";
+import TeachAgeList from "./TeachAgeList";
+import TeachAgeForm from "./TeachAgeForm";
 
 const data = {
     'id': 3,
@@ -27,13 +29,16 @@ const data = {
     'phone': '0989439678',
     'sex': 'Nữ',
     'address': 'Thanh Hoa',
-    'teach_type':'Chì màu' ,
+    'teach_type': 'Chì màu',
     'teach_level': '4-6 tuổi'
 }
 
 
 const Art: React.FC = () => {
     const [checked, setChecked] = useState(true);
+    const [checked1, setChecked1] = useState(true);
+    const [checked2, setChecked2] = useState(false);
+    const [checked3, setChecked3] = useState(false);
     const dispatch: Dispatch<any> = useDispatch();
     const products: IProductState = useSelector((state: IStateType) => state.products);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -66,13 +71,14 @@ const Art: React.FC = () => {
             <div className="row">
                 <TopCard title="THỂ LOẠI" text={`${numberItemsCount}`} icon="box" class="primary" />
                 <TopCard title="ĐỘ TUỔI" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="TRÌNH ĐỘ" text={`${numberItemsCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">
                         <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm"/>
+                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
                         </div>
                         <button type="button" className="btn btn-primary">
                             <i className="fas fa-search"></i>
@@ -81,122 +87,189 @@ const Art: React.FC = () => {
                 </div>
             </div>
 
+
             <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-3 text-center">
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked == false) {
-                            setChecked(true)
+                        if (checked1 == false) {
+                            setChecked1(true)
+                            setChecked2(false)
+                            setChecked3(false)
                         }
                     }} style={{
-                        color: checked ? "#F24E1E" : "#2F4F4F"
+                        color: checked1 ? "#F24E1E" : "#2F4F4F"
                     }}>Thể loại</h6>
-                    
+
                     <div style={{
                         height: "5px",
                         textAlign: "center",
                         margin: "auto",
                         width: "30%",
-                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                        backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
                     }}></div>
                 </div>
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-3 text-center">
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked == true) {
-                            setChecked(false)
+                        if (checked2 == false) {
+                            setChecked2(true)
+                            setChecked1(false)
+                            setChecked3(false)
                         }
                     }}
                         style={{
-                            color: checked ? "#2F4F4F" : "#F24E1E"
+                            color: checked2 ? "#F24E1E" : "#2F4F4F"
                         }}>Độ tuổi</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
-                    }}></div>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked2 ?  "#F24E1E" : "#ffffff"
+                        }}></div>
+                </div>
+
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked3 == false) {
+                            setChecked3(true)
+                            setChecked1(false)
+                            setChecked2(false)
+                        }
+                    }}
+                        style={{
+                            color: checked3 ? "#F24E1E" : "#2F4F4F"
+                        }}>Trình độ</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked3 ?  "#F24E1E" : "#ffffff"
+                        }}></div>
                 </div>
             </div>
+
 
             {
                 function () {
-                    if (checked == true) {
+                    if (checked1 == true) {
                         return (
                             <Fragment>
                                 <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Danh sách thể loại</h6>
-                            <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>{
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove1()
-                                }}>
-                                    <i className="fas fa fa-plus"></i>
-                                    Thêm thể loại
-                                </button>
-                            </div>
-                        </div>
-                        <div className="card-body">
-                            <TeachTypeList
-                                onSelect={onProductSelect}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green">Danh sách thể loại</h6>
+                                                <div className="header-buttons">
+                                                    <button className="btn btn-success btn-green" onClick={() => {
+                                                        dispatch(setModificationState(ProductModificationStatus.Create))
+                                                        onProductRemove1()
+                                                    }}>
+                                                        <i className="fas fa fa-plus"></i>
+                                                        Thêm thể loại
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="card-body">
+                                                <TeachTypeList
+                                                    onSelect={onProductSelect}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-            <Popup
-                open={popup1}
-                onClose={() => setPopup1(false)}
-                closeOnDocumentClick
-            >
-                <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachTypeForm /> : null}
-                </div>
-            </Popup>
+                                <Popup
+                                    open={popup1}
+                                    onClose={() => setPopup1(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="row text-left">
+                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachTypeForm /> : null}
+                                    </div>
+                                </Popup>
                             </Fragment>
                         )
                     }
-                    else {
+                    else if (checked2 == true) {
                         return (
                             <Fragment>
                                 <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Danh sách độ tuổi</h6>
-                            <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>{
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove2()
-                                }}>
-                                    <i className="fas fa fa-plus"></i>
-                                    Thêm độ tuổi
-                                </button>
-                            </div>
-                        </div>
-                        <div className="card-body">
-                            <TeachLevelList
-                                onSelect={onProductSelect}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green">Danh sách độ tuổi</h6>
+                                                <div className="header-buttons">
+                                                    <button className="btn btn-success btn-green" onClick={() => {
+                                                        dispatch(setModificationState(ProductModificationStatus.Create))
+                                                        onProductRemove2()
+                                                    }}>
+                                                        <i className="fas fa fa-plus"></i>
+                                                        Thêm độ tuổi
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="card-body">
+                                                <TeachAgeList
+                                                    onSelect={onProductSelect}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-            <Popup
-                open={popup2}
-                onClose={() => setPopup2(false)}
-                closeOnDocumentClick
-            >
-                <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachLevelForm /> : null}
-                </div>
-            </Popup>
+                                <Popup
+                                    open={popup2}
+                                    onClose={() => setPopup2(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="row text-left">
+                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachAgeForm /> : null}
+                                    </div>
+                                </Popup>
+                            </Fragment>
+                        )
+                    }
+
+                    else if (checked3 == true){
+                        return (
+                            <Fragment>
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green">Danh sách trình độ</h6>
+                                                <div className="header-buttons">
+                                                    <button className="btn btn-success btn-green" onClick={() => {
+                                                        dispatch(setModificationState(ProductModificationStatus.Create))
+                                                        onProductRemove2()
+                                                    }}>
+                                                        <i className="fas fa fa-plus"></i>
+                                                        Thêm trình độ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="card-body">
+                                                <TeachLevelList
+                                                    onSelect={onProductSelect}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <Popup
+                                    open={popup2}
+                                    onClose={() => setPopup2(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="row text-left">
+                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachLevelForm /> : null}
+                                    </div>
+                                </Popup>
                             </Fragment>
                         )
                     }

@@ -10,7 +10,7 @@ import Checkbox from "../../common/components/Checkbox";
 import SelectInput from "../../common/components/Select";
 import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
 
-const TeachLevelForm: React.FC = () => {
+const TeachAgeForm: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const products: IProductState | null = useSelector((state: IStateType) => state.products);
   let product: IProduct | null = products.selectedProduct;
@@ -55,7 +55,7 @@ const TeachLevelForm: React.FC = () => {
         category: formState.category.value
       }));
 
-      dispatch(addNotification("Trình độ ", `${formState.name.value} chỉnh bởi bạn`));
+      dispatch(addNotification("Thể loại ", `${formState.name.value} chỉnh bởi bạn`));
       dispatch(clearSelectedProduct());
       dispatch(setModificationState(ProductModificationStatus.None));
     }
@@ -81,7 +81,7 @@ const TeachLevelForm: React.FC = () => {
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
-            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} trình độ</h6>
+            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} độ tuổi</h6>
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
@@ -106,4 +106,4 @@ const TeachLevelForm: React.FC = () => {
   );
 };
 
-export default TeachLevelForm;
+export default TeachAgeForm;

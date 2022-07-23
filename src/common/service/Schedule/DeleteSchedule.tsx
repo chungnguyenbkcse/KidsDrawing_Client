@@ -1,11 +1,11 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeLesson } from "../../../store/actions/lesson.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedule.action";
 
-export function deleteLesson(id: any) {
+export function deleteSchedule(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-            `${process.env.REACT_APP_API_URL}/lesson-time/${id}`, {
+            `${process.env.REACT_APP_API_URL}/schedule/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': bearer,
@@ -23,7 +23,6 @@ export function deleteLesson(id: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(removeLesson(id))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

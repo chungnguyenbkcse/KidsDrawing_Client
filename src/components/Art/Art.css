@@ -10,6 +10,10 @@
 
 }
 
+hr #hr-x {
+    border: 1px solid red !important;
+}
+
 .btn-green {
     background-color: cadetblue !important;
     border-color: cadetblue !important;

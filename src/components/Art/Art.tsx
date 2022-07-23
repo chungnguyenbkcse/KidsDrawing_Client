@@ -82,7 +82,7 @@ const Art: React.FC = () => {
             </div>
 
             <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-3 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
                         if (checked == false) {
                             setChecked(true)
@@ -90,8 +90,16 @@ const Art: React.FC = () => {
                     }} style={{
                         color: checked ? "#F24E1E" : "#2F4F4F"
                     }}>Thể loại</h6>
+                    
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-3 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                         if (checked == true) {
                             setChecked(false)
@@ -100,6 +108,13 @@ const Art: React.FC = () => {
                         style={{
                             color: checked ? "#2F4F4F" : "#F24E1E"
                         }}>Độ tuổi</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                    }}></div>
                 </div>
             </div>
 

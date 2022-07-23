@@ -8,6 +8,8 @@ import orderReducer from "./order.reducer";
 import accountReducer from "./account.reducer";
 import semestersReducer from "./semester.reducer";
 import lessonsReducer from "./lesson.reducer";
+import schedulesReducer from "./schedule.reducer";
+import schedule_itemsReducer from "./schedule_item.reducer";
 
 
 const initialState: IRootStateType = {
@@ -31,6 +33,8 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     account: accountReducer,
     semesters: semestersReducer,
     lessons: lessonsReducer,
+    schedules: schedulesReducer,
+    schedule_items: schedule_itemsReducer,
 });
 
 

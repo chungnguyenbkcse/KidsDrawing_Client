@@ -1,11 +1,11 @@
-import { fetchDataRequest, fetchDataSuccess, editSemester, fetchDataError } from "../../../store/actions/semester.actions";
+import { fetchDataRequest, fetchDataSuccess, editLesson, fetchDataError } from "../../../store/actions/lesson.action";
 
-export function putSemester(id: any, data: any) {
+export function putLesson(id: any, data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/semester/${id}`, {
+                `${process.env.REACT_APP_API_URL}/lesson-time/${id}`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,

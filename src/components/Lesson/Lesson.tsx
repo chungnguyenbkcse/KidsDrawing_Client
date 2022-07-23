@@ -5,50 +5,66 @@ import TopCard from "../../common/components/TopCard";
 import "./Lesson.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { ILessonState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
+    removeLesson, clearSelectedLesson, setModificationState,
+    changeSelectedLesson
+} from "../../store/actions/lesson.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+import { LessonModificationStatus, ILesson } from "../../store/models/lesson.interface";
+import { getLesson } from "../../common/service/Lesson/GetLesson";
+import { deleteLesson } from "../../common/service/Lesson/DeleteLesson";
 
 
 const Lesson: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
+    const numberItemsCount: number = lessons.lessons.length;
     const [popup, setPopup] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        dispatch(clearSelectedProduct());
+        dispatch(getLesson())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(clearSelectedLesson());
         dispatch(updateCurrentPath("Tiết học", "Danh sách"));
     }, [path.area, dispatch]);
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    function onLessonSelect(lesson: ILesson): void {
+        dispatch(changeSelectedLesson(lesson));
+        onLessonRemove();
+        dispatch(setModificationState(LessonModificationStatus.None));
     }
 
-    function onProductRemove() {
+    function onLessonRemove() {
         setPopup(true);
     }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
+    }
+
 
     return (
         <Fragment>
             <h1 className="h3 mb-2 text-gray-800">Tiết học</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="SỐ TIẾT" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="SỐ HỌC KÌ" text={`${numberItemsCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">
                         <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm"/>
+                            <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                                setSearchTerm(event.target.value)
+                                console.log(searchTerm)
+                            }}/>
                         </div>
                         <button type="button" className="btn btn-primary">
                             <i className="fas fa-search"></i>
@@ -63,18 +79,18 @@ const Lesson: React.FC = () => {
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green">Danh sách tiết học</h6>
                             <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>{
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove()
+                                <button className="btn btn-success btn-green" onClick={() => {
+                                    dispatch(setModificationState(LessonModificationStatus.Create))
+                                    onLessonRemove()
                                 }}>
                                     <i className="fas fa fa-plus"></i>
-                                    Thêm tiết học
+                                    Thêm học kì
                                 </button>
                             </div>
                         </div>
                         <div className="card-body">
                             <LessonList
-                                onSelect={onProductSelect}
+                                onSelect={onLessonSelect} value={searchTerm}
                             />
                         </div>
                     </div>
@@ -82,15 +98,58 @@ const Lesson: React.FC = () => {
             </div>
 
 
+
             <Popup
                 open={popup}
                 onClose={() => setPopup(false)}
                 closeOnDocumentClick
             >
-                <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <LessonForm /> : null}
-                </div>
+                <>
+                    {
+                        function () {
+                            if ((lessons.modificationState === LessonModificationStatus.Create) || ((lessons.selectedLesson) && (lessons.modificationState === LessonModificationStatus.Edit))) {
+                                return <LessonForm isCheck={onRemovePopup}/>
+                            }
+                        }()
+                    }
+                </>
             </Popup>
+            {
+                function () {
+                    if ((lessons.selectedLesson) && (lessons.modificationState === LessonModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Are you sure?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (!lessons.selectedLesson) {
+                                                    return;
+                                                }
+                                                dispatch(deleteLesson(lessons.selectedLesson.id))
+                                                dispatch(addNotification("Thời gian tiết học ", `${lessons.selectedLesson.start_time} đã được xóa`));
+                                                dispatch(removeLesson(lessons.selectedLesson.id));
+                                                dispatch(clearSelectedLesson());
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
+
+
         </Fragment >
     );
 };

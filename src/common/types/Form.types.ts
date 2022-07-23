@@ -32,3 +32,20 @@ export  interface IOrderFormState {
     amount: IFormStateField<number>;
     totalPrice: IFormStateField<number>;
 };
+
+export interface IUserFormState {
+    username: IFormStateField<string>;
+    email: IFormStateField<string>;
+    password: IFormStateField<string>;
+}
+
+export interface ITeacherRegisterLevelFormState {
+    art_type_id: IFormStateField<number>;
+    art_age_id: IFormStateField<number>;
+    degree_photo_url: IFormStateField<string>;
+}
+
+export interface ILessonFormState {
+    start_time: IFormStateField<string>;
+    end_time: IFormStateField<string>;
+}

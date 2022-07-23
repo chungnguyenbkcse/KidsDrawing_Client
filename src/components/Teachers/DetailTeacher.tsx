@@ -1,17 +1,13 @@
 import React, { Fragment, Dispatch, useState, useEffect } from "react";
-import TeacherList from "./TeacherList";
-import TeacherForm from "./TeacherForm";
 import TopCard from "../../common/components/TopCard";
 import "./DetailTeacher.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
+    clearSelectedProduct, setModificationState,
     changeSelectedProduct
 } from "../../store/actions/products.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
 import TextInput from "../../common/components/TextInput";
 import HistoryTeach from "./HistoryTeach";
@@ -202,17 +198,6 @@ const DetailTeacher: React.FC = () => {
                     }
                 }()
             }
-
-
-            <Popup
-                open={popup}
-                onClose={() => setPopup(false)}
-                closeOnDocumentClick
-            >
-                <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeacherForm /> : null}
-                </div>
-            </Popup>
         </Fragment >
     );
 };

@@ -1,50 +1,51 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import React, { Dispatch, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IStateType, ILessonState } from "../../store/models/root.interface";
+import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
 import { useHistory } from "react-router-dom";
+import { setModificationState } from "../../store/actions/lesson.action";
+import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type lessonListProps = {
+  onSelect?: (lesson: ILesson) => void;
+  value?: string;
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'start_time': '7:00 AM',
-    'end_time': '8:00 AM'
-  },
-  {
-    'id': 2,
-    'start_time': '9:00 AM',
-    'end_time': '10:00 AM'
-  }
-]
-
-function LessonList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+function LessonList(props: lessonListProps): JSX.Element  {
+  const dispatch: Dispatch<any> = useDispatch();
+  const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
   const history = useHistory();
+  console.log(props.value)
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.start_time}</td>
-      <td>{product.end_time}</td>
+
+  const lessonElements: (JSX.Element | null)[] = lessons.lessons.map((lesson, index) => {
+    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    if (!lesson) { return null; }
+    return (<tr className={`table-row ${(lessons.selectedLesson && lessons.selectedLesson.id === lesson.id) ? "selected" : ""}`}
+      key={`lesson_${lesson.id}`}>
+      <th scope="row">{index + 1}</th>
+      <td>{lesson.start_time}</td>
+      <td>{lesson.end_time}</td>
       <td>
-        <button type="button" className="btn btn-primary">Chỉnh sửa</button>
+        <button type="button" className="btn btn-primary" onClick={()=> {
+          if(props.onSelect) props.onSelect(lesson);
+          dispatch(setModificationState(LessonModificationStatus.Edit))
+        }}>Chỉnh sửa</button>
       </td>
       <td>
-        <button type="button" className="btn btn-danger">Xóa</button>
+        <button type="button" className="btn btn-danger" onClick={() =>{
+          if(props.onSelect) props.onSelect(lesson);
+          dispatch(setModificationState(LessonModificationStatus.Remove))
+        }}>Xóa</button>
       </td>
     </tr>);
   });
 
 
   return (
-    <div className="table-responsive portlet">
+    <Fragment>
+      <div className="table-responsive portlet">
       <table className="table">
         <thead className="thead-light">
           <tr>
@@ -56,11 +57,11 @@ function LessonList(props: productListProps): JSX.Element  {
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {lessonElements}
         </tbody>
       </table>
     </div>
-
+    </Fragment> 
   );
 }
 

@@ -14,11 +14,9 @@ const initialState: ISemesterState = {
 function semestersReducer(state: ISemesterState = initialState, action: IActionBase): ISemesterState {
     switch (action.type) {
         case INITIAL_SEMESTER: {
-            let maxId: number = 0;
             return { ...state, semesters : [...state.semesters, action.semester]};
         }
         case ADD_SEMESTER: {
-            let maxId: number = Math.max.apply(Math, state.semesters.map(function(o) { return o.id; }));
             return { ...state, semesters: [...state.semesters, action.semester]};
         }
         case EDIT_SEMESTER: {

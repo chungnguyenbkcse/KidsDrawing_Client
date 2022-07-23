@@ -4,104 +4,48 @@ import TopCard from "../../common/components/TopCard";
 import "./Teacher.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { IUserState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
-import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct,
-    addProduct,
-    editProduct
-} from "../../store/actions/products.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
-import { IProductFormState, OnChangeModel } from "../../common/types/Form.types";
-import TextInput from "../../common/components/TextInput";
-import SelectInput from "../../common/components/Select";
+import {clearSelectedUser, setModificationState, changeSelectedUser, removeTeacher  } from "../../store/actions/users.action";
+import { IUser, UserModificationStatus } from "../../store/models/user.interface";
+import TeacherForm from "./TeacherForm";
+import { getTeacher } from "../../common/service/Teacher/GetTeacher";
+import { deleteTeacher } from "../../common/service/Teacher/DeleteTeacher";
+
 
 
 const Teacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const users: IUserState = useSelector((state: IStateType) => state.users);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
+    const numberItemsCount: number = users.teachers.length;
     const [popup, setPopup] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        dispatch(clearSelectedProduct());
+        dispatch(getTeacher())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(clearSelectedUser());
         dispatch(updateCurrentPath("Giáo viên", "Danh sách"));
     }, [path.area, dispatch]);
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    function onUserSelect(user: IUser): void {
+        dispatch(changeSelectedUser(user));
+        onUserRemove();
+        dispatch(setModificationState(UserModificationStatus.None));
     }
 
-    function onProductRemove() {
+    function onUserRemove() {
         setPopup(true);
     }
-    let product: IProduct | null = products.selectedProduct;
-    const isCreate: boolean = (products.modificationState === ProductModificationStatus.Create);
 
-    if (!product || isCreate) {
-        product = { id: 0, name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
-    }
-
-    const [formState, setFormState] = useState({
-        name: { error: "", value: product.name },
-        description: { error: "", value: product.description },
-        amount: { error: "", value: product.amount },
-        price: { error: "", value: product.price },
-        hasExpiryDate: { error: "", value: product.hasExpiryDate },
-        category: { error: "", value: product.category }
-    });
-
-    function hasFormValueChanged(model: OnChangeModel): void {
-        setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
-    }
-
-    function saveUser(e: FormEvent<HTMLFormElement>): void {
-        e.preventDefault();
-        if (isFormInvalid()) {
-            return;
-        }
-
-        let saveUserFn: Function = (isCreate) ? addProduct : editProduct;
-        saveForm(formState, saveUserFn);
-    }
-
-    function saveForm(formState: IProductFormState, saveFn: Function): void {
-        if (product) {
-            dispatch(saveFn({
-                ...product,
-                name: formState.name.value,
-                description: formState.description.value,
-                price: formState.price.value,
-                amount: formState.amount.value,
-                hasExpiryDate: formState.hasExpiryDate.value,
-                category: formState.category.value
-            }));
-
-            dispatch(addNotification("Product edited", `Product ${formState.name.value} edited by you`));
-            dispatch(clearSelectedProduct());
-            dispatch(setModificationState(ProductModificationStatus.None));
-        }
-    }
-
-    function cancelForm(): void {
-        dispatch(setModificationState(ProductModificationStatus.None));
+    function onRemovePopup(value: boolean) {
         setPopup(false);
     }
 
-    function getDisabledClass(): string {
-        let isError: boolean = isFormInvalid();
-        return isError ? "disabled" : "";
-    }
-
-    function isFormInvalid(): boolean {
-        return (formState.amount.error || formState.description.error
-            || formState.name.error || formState.price.error || formState.hasExpiryDate.error
-            || formState.category.error || !formState.name.value || !formState.category.value) as boolean;
-    }
 
     return (
         <Fragment>
@@ -115,7 +59,10 @@ const Teacher: React.FC = () => {
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">
                         <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
+                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                                setSearchTerm(event.target.value)
+                                console.log(searchTerm)
+                            }}/>
                         </div>
                         <button type="button" className="btn btn-primary">
                             <i className="fas fa-search"></i>
@@ -131,8 +78,8 @@ const Teacher: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green">Danh sách giáo viên</h6>
                             <div className="header-buttons">
                                 <button className="btn btn-success btn-green" onClick={() => {
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove()
+                                    dispatch(setModificationState(UserModificationStatus.Create))
+                                    onUserRemove()
                                 }}>
                                     <i className="fas fa fa-plus"></i>
                                     Thêm giáo viên
@@ -141,7 +88,7 @@ const Teacher: React.FC = () => {
                         </div>
                         <div className="card-body">
                             <TeacherList
-                                onSelect={onProductSelect}
+                                onSelect={onUserSelect} value={searchTerm}
                             />
                         </div>
                     </div>
@@ -154,92 +101,50 @@ const Teacher: React.FC = () => {
                 onClose={() => setPopup(false)}
                 closeOnDocumentClick
             >
-                <div className="row text-left">
-                    <Fragment>
-                        <div className="col-xl-12 col-lg-12">
-                            <div className="card mb-4">
-                                <div className="card-header py-3">
-                                    <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} giáo viên</h6>
-                                </div>
-                                <div className="card-body">
-                                    <form onSubmit={saveUser}>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-6">
-                                                <TextInput id="input_email"
-                                                    value={formState.name.value}
-                                                    field="name"
-                                                    onChange={hasFormValueChanged}
-                                                    required={true}
-                                                    maxLength={20}
-                                                    label="Họ"
-                                                    placeholder="" />
-                                            </div>
-                                            <div className="form-group col-md-6">
-                                                <TextInput id="input_email"
-                                                    value={formState.name.value}
-                                                    field="name"
-                                                    onChange={hasFormValueChanged}
-                                                    required={true}
-                                                    maxLength={20}
-                                                    label="Tên"
-                                                    placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-6">
-                                                <TextInput id="input_description"
-                                                    field="description"
-                                                    value={formState.description.value}
-                                                    onChange={hasFormValueChanged}
-                                                    required={false}
-                                                    maxLength={100}
-                                                    label="Tên đăng nhập"
-                                                    placeholder="" />
-                                            </div>
-                                            <div className="form-group col-md-6">
-                                                <TextInput id="input_description"
-                                                    field="description"
-                                                    value={formState.description.value}
-                                                    onChange={hasFormValueChanged}
-                                                    required={false}
-                                                    maxLength={100}
-                                                    label="Email"
-                                                    placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-6">
-                                                <SelectInput
-                                                    id="input_category"
-                                                    field="category"
-                                                    label="Thể loại dạy"
-                                                    options={["Chì màu", "Sáp màu", "Sơn dầu"]}
-                                                    required={true}
-                                                    onChange={hasFormValueChanged}
-                                                    value={formState.category.value}
-                                                />
-                                            </div>
-                                            <div className="form-group col-md-6">
-                                                <SelectInput
-                                                    id="input_category"
-                                                    field="category"
-                                                    label="Độ tuổi dạy"
-                                                    options={["4-6 tuổi", "6-10 tuổi", "10-14 tuổi"]}
-                                                    required={true}
-                                                    onChange={hasFormValueChanged}
-                                                    value={formState.category.value}
-                                                />
-                                            </div>
-                                        </div>
-                                        <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-                                        <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </Fragment>
-                </div>
+                <>
+                    {
+                        function () {
+                            if ((users.modificationState === UserModificationStatus.Create) || ((users.selectedUser) && (users.modificationState === UserModificationStatus.Edit))) {
+                                return <TeacherForm isCheck={onRemovePopup}/>
+                            }
+                        }()
+                    }
+                </>
             </Popup>
+            {
+                function () {
+                    if ((users.selectedUser) && (users.modificationState === UserModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Are you sure?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (!users.selectedUser) {
+                                                    return;
+                                                }
+                                                dispatch(deleteTeacher(users.selectedUser.id))
+                                                dispatch(addNotification("Giáo viên", `${users.selectedUser.username} đã được xóa!`));
+                                                dispatch(removeTeacher(users.selectedUser.id));
+                                                dispatch(clearSelectedUser());
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
         </Fragment >
     );
 };

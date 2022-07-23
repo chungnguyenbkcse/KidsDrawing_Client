@@ -1,6 +1,23 @@
 export interface IUser {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
+    id: number,
+    username: string,
+    email: string,
+    status: boolean,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string,
+    profile_image_url: string,
+    sex: string,
+    phone: string,
+    address: string,
+    parents: string[],
+    createTime: string
+}
+
+export enum UserModificationStatus {
+    None = 0,
+    Create = 1,
+    Edit = 2,
+    Remove = 3,
+    ClosePopup = 4
 }

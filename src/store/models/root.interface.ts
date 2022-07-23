@@ -1,10 +1,10 @@
 import { IProduct, ProductModificationStatus } from "./product.interface";
 import { INotification } from "./notification.interface";
-import { IUser } from "./user.interface";
+import { IUser, UserModificationStatus } from "./user.interface";
 import { IOrder } from "./order.interface";
 import { IAccount } from "./account.interface";
-import { ITeacher, TeacherModificationStatus } from "./teacher.interface";
 import { ISemester, SemesterModificationStatus } from "./semester.interface";
+import { ILesson, LessonModificationStatus } from "./lesson.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -21,8 +21,8 @@ export interface IStateType {
     users: IUserState;
     orders: IOrdersState;
     account: IAccount;
-    teachers: ITeacherState;
     semesters: ISemesterState;
+    lessons: ILessonState;
 }
 
 export interface IProductState {
@@ -45,18 +45,22 @@ export interface INotificationState {
 }
 
 export interface IUserState {
-    users: IUser[];
+    selectedUser: IUser | null;
+    modificationState: UserModificationStatus;
     admins: IUser[];
-}
-
-export interface ITeacherState {
-    selectedTeacher: ITeacher | null;
-    modificationState: TeacherModificationStatus;
-    teachers: ITeacher[];
+    teachers: IUser[];
+    students: IUser[];
+    parents: IUser[];
 }
 
 export interface ISemesterState {
     selectedSemester: ISemester | null;
     modificationState: SemesterModificationStatus;
     semesters: ISemester[];
+}
+
+export interface ILessonState {
+    selectedLesson: ILesson | null;
+    modificationState: LessonModificationStatus;
+    lessons: ILesson[];
 }

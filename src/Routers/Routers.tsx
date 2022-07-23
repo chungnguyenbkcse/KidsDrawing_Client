@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { Switch, Route } from "react-router";
 import LeftMenu from "../components/LeftMenu/LeftMenu";
 import TopMenu from "../components/TopMenu/TopMenu";
-import Users from "../components/Users/Users";
 import Products from "../components/Products/Products";
 import Orders from "../components/Orders/Orders";
 import Home from "../components/Home/Home";
@@ -39,7 +38,6 @@ const Routers: React.FC = () => {
                     <TopMenu />
                     <div className="container-fluid">
                         <Switch>
-                            <Route path={`/users`}><Users /></Route>
                             <Route path={`/products`}><Products /></Route>
                             <Route path={`/orders`}><Orders /></Route>
                             <Route path={`/parents/detail`}><DetailParent /></Route>

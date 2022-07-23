@@ -1,36 +1,39 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, IProductState } from "../../store/models/root.interface";
+import { IStateType, ILessonState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IProduct, ProductModificationStatus } from "../../store/models/product.interface";
+import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
 import TextInput from "../../common/components/TextInput";
-import { editProduct, clearSelectedProduct, setModificationState, addProduct } from "../../store/actions/products.action";
+import { editLesson, clearSelectedLesson, setModificationState, addLesson } from "../../store/actions/lesson.action";
 import { addNotification } from "../../store/actions/notifications.action";
 import NumberInput from "../../common/components/NumberInput";
-import Checkbox from "../../common/components/Checkbox";
-import SelectInput from "../../common/components/Select";
-import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
+import { OnChangeModel, ILessonFormState } from "../../common/types/Form.types";
+import { postLesson } from "../../common/service/Lesson/PostLesson";
+import { putLesson } from "../../common/service/Lesson/PutLesson";
+import Editor from "../../common/components/Quill/Editor";
 
-const LessonForm: React.FC = () => {
+export type lessonListProps = {
+  isCheck: (value: boolean) => void;
+  children?: React.ReactNode;
+};
+
+function LessonForm(props: lessonListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const products: IProductState | null = useSelector((state: IStateType) => state.products);
-  let product: IProduct | null = products.selectedProduct;
-  const isCreate: boolean = (products.modificationState === ProductModificationStatus.Create);
-  
-  if (!product || isCreate) {
-    product = { id: 0, name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
+  const lessons: ILessonState | null = useSelector((state: IStateType) => state.lessons);
+  let lesson: ILesson | null = lessons.selectedLesson;
+  const isCreate: boolean = (lessons.modificationState === LessonModificationStatus.Create);
+
+  if (!lesson || isCreate) {
+    lesson = { id: 0, start_time: "",end_time: ""};
   }
 
   const [formState, setFormState] = useState({
-    name: { error: "", value: product.name },
-    description: { error: "", value: product.description },
-    amount: { error: "", value: product.amount },
-    price: { error: "", value: product.price },
-    hasExpiryDate: { error: "", value: product.hasExpiryDate },
-    category: { error: "", value: product.category }
+    start_time: { error: "", value: lesson.start_time },
+    end_time: { error: "", value: lesson.end_time }
   });
 
   function hasFormValueChanged(model: OnChangeModel): void {
     setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+    //console.log(formState)
   }
 
   function saveUser(e: FormEvent<HTMLFormElement>): void {
@@ -39,30 +42,45 @@ const LessonForm: React.FC = () => {
       return;
     }
 
-    let saveUserFn: Function = (isCreate) ? addProduct : editProduct;
+    let saveUserFn: Function = (isCreate) ? addLesson : editLesson;
+    props.isCheck(false);
     saveForm(formState, saveUserFn);
   }
 
-  function saveForm(formState: IProductFormState, saveFn: Function): void {
-    if (product) {
+  function saveForm(formState: ILessonFormState, saveFn: Function): void {
+    if (lesson) {
       dispatch(saveFn({
-        ...product,
-        name: formState.name.value,
-        description: formState.description.value,
-        price: formState.price.value,
-        amount: formState.amount.value,
-        hasExpiryDate: formState.hasExpiryDate.value,
-        category: formState.category.value
+        ...lesson,
+        start_time: formState.start_time.value,
+        end_time: formState.end_time.value
       }));
 
-      dispatch(addNotification("Tiết học ", `${formState.name.value} chỉnh bởi bạn`));
-      dispatch(clearSelectedProduct());
-      dispatch(setModificationState(ProductModificationStatus.None));
+      
+
+      if (saveFn === addLesson) {
+        dispatch(postLesson({
+          start_time: formState.start_time.value,
+          end_time: formState.end_time.value
+        }));
+      }
+      else {
+        dispatch(putLesson(lesson.id, {
+          start_time: formState.start_time.value,
+          end_time: formState.end_time.value
+        }));
+      }
+
+      console.log(saveFn)
+
+      dispatch(addNotification("Tiết học ", `${formState.start_time.value} - ${formState.end_time.value} chỉnh bởi bạn`));
+      dispatch(clearSelectedLesson());
+      dispatch(setModificationState(LessonModificationStatus.None));
     }
   }
 
   function cancelForm(): void {
-    dispatch(setModificationState(ProductModificationStatus.None));
+    props.isCheck(false);
+    dispatch(setModificationState(LessonModificationStatus.None));
   }
 
   function getDisabledClass(): string {
@@ -71,38 +89,38 @@ const LessonForm: React.FC = () => {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.amount.error || formState.description.error
-      || formState.name.error || formState.price.error || formState.hasExpiryDate.error
-      || formState.category.error || !formState.name.value || !formState.category.value) as boolean;
-}
+    return (formState.start_time.error || formState.end_time.error
+      || !formState.start_time.value || !formState.end_time.value) as boolean;
+  }
 
   return (
     <Fragment>
+      <div className="row text-left">
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
-            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} tiết học</h6>
+            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} học kì</h6>
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
-            <div className="form-row">
+              <div className="form-row">
                 <div className="form-group col-md-6">
-                  <TextInput id="input_description"
-                    field = "description"
-                    value={formState.description.value}
+                  <TextInput id="input_start_time"
+                    field="start_time"
+                    value={formState.start_time.value}
                     onChange={hasFormValueChanged}
-                    type="date"
+                    type="time"
                     required={false}
                     maxLength={100}
                     label="Thời gian bắt đầu"
                     placeholder="" />
                 </div>
                 <div className="form-group col-md-6">
-                  <TextInput id="input_description"
-                    field = "description"
-                    value={formState.description.value}
+                  <TextInput id="input_end_time"
+                    field="end_time"
+                    value={formState.end_time.value}
                     onChange={hasFormValueChanged}
-                    type="date"
+                    type="time"
                     required={false}
                     maxLength={100}
                     label="Thời gian kết thúc"
@@ -114,6 +132,7 @@ const LessonForm: React.FC = () => {
             </form>
           </div>
         </div>
+      </div>
       </div>
     </Fragment>
   );

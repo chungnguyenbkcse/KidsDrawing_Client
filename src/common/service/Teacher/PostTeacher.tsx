@@ -1,12 +1,12 @@
-import { fetchDataRequest, fetchDataSuccess, editSemester, fetchDataError } from "../../../store/actions/semester.actions";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTeacher } from "../../../store/actions/users.action";
 
-export function putSemester(id: any, data: any) {
+export function postTeacher(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/semester/${id}`, {
-                    method: "PUT",
+                `${process.env.REACT_APP_API_URL}/user`, {
+                    method: "POST",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -24,7 +24,6 @@ export function putSemester(id: any, data: any) {
             })
             .then (data => {
                 console.log(data)
-                console.log(id)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -61,7 +61,7 @@ const Class: React.FC = () => {
                                         required={true}
                                         onChange={()=> {}}
                                         value=""
-                                      />
+                                    />
                                 </div>
                             </div>
                             <button type="submit" className={`btn btn-success left-margin`}>Xếp lớp</button>

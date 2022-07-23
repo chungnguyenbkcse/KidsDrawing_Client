@@ -1,16 +1,5 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemesterAll, initialSemester, addSemester, editSemester } from "../../../store/actions/semester.actions";
-import { ISemester } from "../../../store/models/semester.interface";
-interface semester {
-    id: number;
-    number: number;
-    year: number;
-    name: string;
-    creator_id: number;
-    description: string;
-    start_time: string;
-    create_time: string;
-    update_time: string;
-}
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, addSemester } from "../../../store/actions/semester.actions";
+
 export function postSemester(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
@@ -31,12 +20,10 @@ export function postSemester(data: any) {
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
-                return response.json()
+                return response
             })
             .then (data => {
                 console.log(data)
-                dispatch(fetchDataSuccess(data))
-                dispatch(addSemester(data))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

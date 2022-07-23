@@ -96,6 +96,13 @@ const Contest: React.FC = () => {
                     }} style={{
                         color: checked1 ? "#F24E1E" : "#2F4F4F"
                     }}>Cuộc thi đang diễn ra</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "50%",
+                        backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
@@ -108,6 +115,13 @@ const Contest: React.FC = () => {
                         style={{
                             color: checked2 ? "#F24E1E" : "#2F4F4F"
                         }}>Cuộc thi chưa diễn ra</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "50%",
+                            backgroundColor: checked2 ?  "#F24E1E" : "#ffffff"
+                        }}></div>
                 </div>
 
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
@@ -121,6 +135,13 @@ const Contest: React.FC = () => {
                         style={{
                             color: checked3 ? "#F24E1E" : "#2F4F4F"
                         }}>Cuộc thi đã kết thúc</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "50%",
+                            backgroundColor: checked3 ?  "#F24E1E" : "#ffffff"
+                        }}></div>
                 </div>
             </div>
 

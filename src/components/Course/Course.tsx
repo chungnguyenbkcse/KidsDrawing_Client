@@ -91,6 +91,13 @@ const Course: React.FC = () => {
                     }} style={{
                         color: checked ? "#F24E1E" : "#2F4F4F"
                     }}>Khóa học chung</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
@@ -101,6 +108,13 @@ const Course: React.FC = () => {
                         style={{
                             color: checked ? "#2F4F4F" : "#F24E1E"
                         }}>Khóa học theo kì</h6>
+                        <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                    }}></div>
                 </div>
             </div>
 

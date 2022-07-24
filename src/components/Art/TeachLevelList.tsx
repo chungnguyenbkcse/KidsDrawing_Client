@@ -1,57 +1,57 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import React, { Dispatch, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IStateType, IArtLevelState } from "../../store/models/root.interface";
+import { IArtLevel, ArtLevelModificationStatus } from "../../store/models/art_level.interface";
 import { useHistory } from "react-router-dom";
+import { setModificationStateArtLevel } from "../../store/actions/art_level.action";
+import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type artLevelListProps = {
+  onSelect?: (art_level: IArtLevel) => void;
+  value?: string;
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'name': '4-6 tuổi',
-  },
-  {
-    'id': 2,
-    'name': '6-10 tuổi',
-  },
-  {
-    'id': 3,
-    'name': '10-14 tuổi',
-  }
-]
-
-function TeachLevelList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+function ArtLevelList(props: artLevelListProps): JSX.Element  {
+  const dispatch: Dispatch<any> = useDispatch();
+  const art_levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
   const history = useHistory();
-  
-  const routeChange = () =>{ 
-    let path = '/teachers/detail'; 
-    history.push(path);
-  }
+  console.log(props.value)
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      onClick={routeChange}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
+
+  const artLevelElements: (JSX.Element | null)[] = art_levels.artLevels.filter((val) => {
+    if (props.value == ""){
+      return val;
+    }
+    else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
+      return val;
+    }
+    }).map((art_level, index) => {
+    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    if (!art_level) { return null; }
+    return (<tr className={`table-row ${(art_levels.selectedArtLevel && art_levels.selectedArtLevel.id === art_level.id) ? "selected" : ""}`}
+      key={`art_level_${art_level.id}`}>
+      <th scope="row">{index + 1}</th>
+      <td>{art_level.name}</td>
       <td>
-        <button type="button" className="btn btn-primary">Chỉnh sửa</button>
+        <button type="button" className="btn btn-primary" onClick={()=> {
+          if(props.onSelect) props.onSelect(art_level);
+          dispatch(setModificationStateArtLevel(ArtLevelModificationStatus.Edit))
+        }}>Chỉnh sửa</button>
       </td>
       <td>
-        <button type="button" className="btn btn-danger">Xóa</button>
+        <button type="button" className="btn btn-danger" onClick={() =>{
+          if(props.onSelect) props.onSelect(art_level);
+          dispatch(setModificationStateArtLevel(ArtLevelModificationStatus.Remove))
+        }}>Xóa</button>
       </td>
     </tr>);
   });
 
 
   return (
-    <div className="table-responsive portlet">
+    <Fragment>
+      <div className="table-responsive portlet">
       <table className="table">
         <thead className="thead-light">
           <tr>
@@ -62,12 +62,12 @@ function TeachLevelList(props: productListProps): JSX.Element  {
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {artLevelElements}
         </tbody>
       </table>
     </div>
-
+    </Fragment> 
   );
 }
 
-export default TeachLevelList;
+export default ArtLevelList;

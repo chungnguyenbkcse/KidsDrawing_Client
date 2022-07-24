@@ -1,32 +1,32 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, IProductState } from "../../store/models/root.interface";
+import { IStateType, IArtTypeState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IProduct, ProductModificationStatus } from "../../store/models/product.interface";
+import { IArtType, ArtTypeModificationStatus } from "../../store/models/art_type.interface";
 import TextInput from "../../common/components/TextInput";
-import { editProduct, clearSelectedProduct, setModificationState, addProduct } from "../../store/actions/products.action";
+import { editArtType, clearSelectedArtType, setModificationState, addArtType } from "../../store/actions/art_type.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import NumberInput from "../../common/components/NumberInput";
-import Checkbox from "../../common/components/Checkbox";
-import SelectInput from "../../common/components/Select";
-import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
+import { OnChangeModel, IArtTypeFormState } from "../../common/types/Form.types";
+import { postArtType } from "../../common/service/ArtType/PostArtType";
+import { putArtType } from "../../common/service/ArtType/PutArtType";
 
-const TeachTypeForm: React.FC = () => {
+export type artTypeListProps = {
+  isCheck: (value: boolean) => void;
+  children?: React.ReactNode;
+};
+
+function TeachTypeForm(props: artTypeListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const products: IProductState | null = useSelector((state: IStateType) => state.products);
-  let product: IProduct | null = products.selectedProduct;
-  const isCreate: boolean = (products.modificationState === ProductModificationStatus.Create);
+  const art_types: IArtTypeState | null = useSelector((state: IStateType) => state.art_types);
+  let art_type: IArtType | null = art_types.selectedArtType;
+  const isCreate: boolean = (art_types.modificationState === ArtTypeModificationStatus.Create);
   
-  if (!product || isCreate) {
-    product = { id: 0, name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
+  if (!art_type || isCreate) {
+    art_type = { id: 0, name: "", description: "" };
   }
 
   const [formState, setFormState] = useState({
-    name: { error: "", value: product.name },
-    description: { error: "", value: product.description },
-    amount: { error: "", value: product.amount },
-    price: { error: "", value: product.price },
-    hasExpiryDate: { error: "", value: product.hasExpiryDate },
-    category: { error: "", value: product.category }
+    name: { error: "", value: art_type.name },
+    description: { error: "", value: art_type.description },
   });
 
   function hasFormValueChanged(model: OnChangeModel): void {
@@ -38,31 +38,43 @@ const TeachTypeForm: React.FC = () => {
     if (isFormInvalid()) {
       return;
     }
+    props.isCheck(false);
 
-    let saveUserFn: Function = (isCreate) ? addProduct : editProduct;
+    let saveUserFn: Function = (isCreate) ? addArtType : editArtType;
     saveForm(formState, saveUserFn);
   }
 
-  function saveForm(formState: IProductFormState, saveFn: Function): void {
-    if (product) {
+  function saveForm(formState: IArtTypeFormState, saveFn: Function): void {
+    if (art_type) {
       dispatch(saveFn({
-        ...product,
+        ...art_type,
         name: formState.name.value,
         description: formState.description.value,
-        price: formState.price.value,
-        amount: formState.amount.value,
-        hasExpiryDate: formState.hasExpiryDate.value,
-        category: formState.category.value
       }));
 
+      if (saveFn == addArtType) {
+        dispatch(postArtType({
+          name: formState.name.value,
+          description: formState.description.value
+        }))
+      }
+
+      else if (saveFn == editArtType) {
+        dispatch(putArtType(art_type.id, {
+          name: formState.name.value,
+          description: formState.description.value
+        }))
+      }
+
       dispatch(addNotification("Thể loại ", `${formState.name.value} chỉnh bởi bạn`));
-      dispatch(clearSelectedProduct());
-      dispatch(setModificationState(ProductModificationStatus.None));
+      dispatch(clearSelectedArtType());
+      dispatch(setModificationState(ArtTypeModificationStatus.None));
     }
   }
 
   function cancelForm(): void {
-    dispatch(setModificationState(ProductModificationStatus.None));
+    props.isCheck(false);
+    dispatch(setModificationState(ArtTypeModificationStatus.None));
   }
 
   function getDisabledClass(): string {
@@ -71,13 +83,12 @@ const TeachTypeForm: React.FC = () => {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.amount.error || formState.description.error
-      || formState.name.error || formState.price.error || formState.hasExpiryDate.error
-      || formState.category.error || !formState.name.value || !formState.category.value) as boolean;
+    return (formState.name.error|| !formState.name.value) as boolean;
 }
 
   return (
     <Fragment>
+      <div className="row text-left">
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
@@ -111,6 +122,7 @@ const TeachTypeForm: React.FC = () => {
             </form>
           </div>
         </div>
+      </div>
       </div>
     </Fragment>
   );

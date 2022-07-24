@@ -60,7 +60,7 @@ export function clearSelectedArtLevel(): IClearSelectedArtLevelActionType {
     return { type: CLEAR_ART_LEVEL_PENDING_EDIT };
 }
 
-export function setModificationState(value: ArtLevelModificationStatus): ISetModificationStateActionType {
+export function setModificationStateArtLevel(value: ArtLevelModificationStatus): ISetModificationStateActionType {
     return { type: SET_MODIFICATION_STATE, value: value };
 }
 

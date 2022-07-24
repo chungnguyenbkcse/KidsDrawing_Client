@@ -14,15 +14,15 @@ const initialState: IArtTypeState = {
 function artTypesReducer(state: IArtTypeState = initialState, action: IActionBase): IArtTypeState {
     switch (action.type) {
         case INITIAL_ART_TYPE: {
-            return { ...state, artTypes : [...state.artTypes, action.artType]};
+            return { ...state, artTypes : [...state.artTypes, action.art_type]};
         }
         case ADD_ART_TYPE: {
-            return { ...state, artTypes: [...state.artTypes, action.artType]};
+            return { ...state, artTypes: [...state.artTypes, action.art_type]};
         }
         case EDIT_ART_TYPE: {
-            const foundIndex: number = state.artTypes.findIndex(pr => pr.id === action.artType.id);
+            const foundIndex: number = state.artTypes.findIndex(pr => pr.id === action.art_type.id);
             let artTypes: IArtType[] = state.artTypes;
-            artTypes[foundIndex] = action.artType;
+            artTypes[foundIndex] = action.art_type;
             return { ...state, artTypes: artTypes };
         }
         case REMOVE_ART_TYPE: {
@@ -32,7 +32,7 @@ function artTypesReducer(state: IArtTypeState = initialState, action: IActionBas
             return { ...state, artTypes: [] };
         }
         case CHANGE_ART_TYPE_PENDING_EDIT: {
-            return { ...state, selectedArtType: action.artType };
+            return { ...state, selectedArtType: action.art_type };
         }
         case CLEAR_ART_TYPE_PENDING_EDIT: {
             return { ...state, selectedArtType: null };

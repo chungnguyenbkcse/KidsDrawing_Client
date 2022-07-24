@@ -1,32 +1,32 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, IProductState } from "../../store/models/root.interface";
+import { IStateType, IArtLevelState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IProduct, ProductModificationStatus } from "../../store/models/product.interface";
+import { IArtLevel, ArtLevelModificationStatus } from "../../store/models/art_level.interface";
 import TextInput from "../../common/components/TextInput";
-import { editProduct, clearSelectedProduct, setModificationState, addProduct } from "../../store/actions/products.action";
+import { editArtLevel, clearSelectedArtLevel, setModificationStateArtLevel, addArtLevel } from "../../store/actions/art_level.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import NumberInput from "../../common/components/NumberInput";
-import Checkbox from "../../common/components/Checkbox";
-import SelectInput from "../../common/components/Select";
-import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
+import { OnChangeModel, IArtLevelFormState } from "../../common/types/Form.types";
+import { postArtLevel } from "../../common/service/ArtLevel/PostArtLevel";
+import { putArtLevel } from "../../common/service/ArtLevel/PutArtLevel";
 
-const TeachLevelForm: React.FC = () => {
+export type artLevelListProps = {
+  isCheck: (value: boolean) => void;
+  children?: React.ReactNode;
+};
+
+function TeachLevelForm(props: artLevelListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const products: IProductState | null = useSelector((state: IStateType) => state.products);
-  let product: IProduct | null = products.selectedProduct;
-  const isCreate: boolean = (products.modificationState === ProductModificationStatus.Create);
+  const art_levels: IArtLevelState | null = useSelector((state: IStateType) => state.art_levels);
+  let art_level: IArtLevel | null = art_levels.selectedArtLevel;
+  const isCreate: boolean = (art_levels.modificationState === ArtLevelModificationStatus.Create);
   
-  if (!product || isCreate) {
-    product = { id: 0, name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
+  if (!art_level || isCreate) {
+    art_level = { id: 0, name: "", description: "" };
   }
 
   const [formState, setFormState] = useState({
-    name: { error: "", value: product.name },
-    description: { error: "", value: product.description },
-    amount: { error: "", value: product.amount },
-    price: { error: "", value: product.price },
-    hasExpiryDate: { error: "", value: product.hasExpiryDate },
-    category: { error: "", value: product.category }
+    name: { error: "", value: art_level.name },
+    description: { error: "", value: art_level.description }
   });
 
   function hasFormValueChanged(model: OnChangeModel): void {
@@ -39,30 +39,43 @@ const TeachLevelForm: React.FC = () => {
       return;
     }
 
-    let saveUserFn: Function = (isCreate) ? addProduct : editProduct;
+    props.isCheck(false);
+
+    let saveUserFn: Function = (isCreate) ? addArtLevel : editArtLevel;
     saveForm(formState, saveUserFn);
   }
 
-  function saveForm(formState: IProductFormState, saveFn: Function): void {
-    if (product) {
+  function saveForm(formState: IArtLevelFormState, saveFn: Function): void {
+    if (art_level) {
       dispatch(saveFn({
-        ...product,
+        ...art_level,
         name: formState.name.value,
-        description: formState.description.value,
-        price: formState.price.value,
-        amount: formState.amount.value,
-        hasExpiryDate: formState.hasExpiryDate.value,
-        category: formState.category.value
+        description: formState.description.value
       }));
 
+      if (saveFn == addArtLevel) {
+        dispatch(postArtLevel({
+          name: formState.name.value,
+          description: formState.description.value
+        }))
+      }
+
+      else if (saveFn == editArtLevel) {
+        dispatch(putArtLevel(art_level.id, {
+          name: formState.name.value,
+          description: formState.description.value
+        }))
+      }
+
       dispatch(addNotification("Trình độ ", `${formState.name.value} chỉnh bởi bạn`));
-      dispatch(clearSelectedProduct());
-      dispatch(setModificationState(ProductModificationStatus.None));
+      dispatch(clearSelectedArtLevel());
+      dispatch(setModificationStateArtLevel(ArtLevelModificationStatus.None));
     }
   }
 
   function cancelForm(): void {
-    dispatch(setModificationState(ProductModificationStatus.None));
+    props.isCheck(false);
+    dispatch(setModificationStateArtLevel(ArtLevelModificationStatus.None));
   }
 
   function getDisabledClass(): string {
@@ -71,13 +84,12 @@ const TeachLevelForm: React.FC = () => {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.amount.error || formState.description.error
-      || formState.name.error || formState.price.error || formState.hasExpiryDate.error
-      || formState.category.error || !formState.name.value || !formState.category.value) as boolean;
+    return (formState.name.error || !formState.name.value) as boolean;
 }
 
   return (
     <Fragment>
+      <div className="row text-left">
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
@@ -85,7 +97,7 @@ const TeachLevelForm: React.FC = () => {
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
-              <div className="form-group">
+            <div className="form-group">
                   <TextInput id="input_email"
                     value={formState.name.value}
                     field="name"
@@ -95,12 +107,22 @@ const TeachLevelForm: React.FC = () => {
                     label="Tên"
                     placeholder="" />
               </div>
-            
+              <div className="form-group">
+                  <TextInput id="input_description"
+                  field = "description"
+                    value={formState.description.value}
+                    onChange={hasFormValueChanged}
+                    required={false}
+                    maxLength={100}
+                    label="Miêu tả"
+                    placeholder="" />
+              </div>
               <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
               <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
             </form>
           </div>
         </div>
+      </div>
       </div>
     </Fragment>
   );

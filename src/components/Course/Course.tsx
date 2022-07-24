@@ -10,13 +10,10 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
+    clearSelectedProduct, setModificationState,
     changeSelectedProduct
 } from "../../store/actions/products.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
-import TextInput from "../../common/components/TextInput";
-import SelectInput from "../../common/components/Select";
 
 const data = {
     'id': 3,

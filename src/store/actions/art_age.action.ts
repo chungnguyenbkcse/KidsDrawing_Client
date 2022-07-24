@@ -60,7 +60,7 @@ export function clearSelectedArtAge(): IClearSelectedArtAgeActionType {
     return { type: CLEAR_ART_AGE_PENDING_EDIT };
 }
 
-export function setModificationState(value: ArtAgeModificationStatus): ISetModificationStateActionType {
+export function setModificationStateArtAge(value: ArtAgeModificationStatus): ISetModificationStateActionType {
     return { type: SET_MODIFICATION_STATE, value: value };
 }
 

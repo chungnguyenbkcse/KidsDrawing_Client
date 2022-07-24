@@ -3,64 +3,114 @@ import TeachTypeList from "./TeachTypeList";
 import TeachTypeForm from "./TeachTypeForm";
 import TeachLevelList from "./TeachLevelList";
 import TeachLevelForm from "./TeachLevelForm";
+import TeachAgeList from "./TeachAgeList";
+import TeachAgeForm from "./TeachAgeForm";
 import TopCard from "../../common/components/TopCard";
 import "./Art.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
+import { IArtTypeState, IArtLevelState, IArtAgeState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
+    clearSelectedArtType, setModificationState,
+    changeSelectedArtType,
+    removeArtType
+} from "../../store/actions/art_type.action";
+import { ArtLevelModificationStatus, IArtLevel } from "../../store/models/art_level.interface";
+import {
+    clearSelectedArtLevel,
+    changeSelectedArtLevel,
+    setModificationStateArtLevel,
+    removeArtLevel
+} from "../../store/actions/art_level.action";
+import { ArtTypeModificationStatus, IArtType } from "../../store/models/art_type.interface";
+import {
+    clearSelectedArtAge,
+    changeSelectedArtAge,
+    setModificationStateArtAge,
+    removeArtAge
+} from "../../store/actions/art_age.action";
+import { ArtAgeModificationStatus, IArtAge } from "../../store/models/art_age.interface";
+import Popup from "reactjs-popup";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
-import TextInput from "../../common/components/TextInput";
-import TeachAgeList from "./TeachAgeList";
-import TeachAgeForm from "./TeachAgeForm";
-
-const data = {
-    'id': 3,
-    'first_name': 'Thao',
-    'last_name': 'Nguyễn',
-    'username': 'thaonguyen123',
-    'status': 'Đang hoạt động',
-    'date_of_birth': '10/10/2000',
-    'phone': '0989439678',
-    'sex': 'Nữ',
-    'address': 'Thanh Hoa',
-    'teach_type': 'Chì màu',
-    'teach_level': '4-6 tuổi'
-}
+import { deleteArtType } from "../../common/service/ArtType/DeleteArtType";
+import { deleteArtLevel } from "../../common/service/ArtLevel/DeleteArtLevel";
+import { deleteArtAge } from "../../common/service/ArtAge/DeleteArtAge";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 
 
 const Art: React.FC = () => {
-    const [checked, setChecked] = useState(true);
     const [checked1, setChecked1] = useState(true);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
-    const [popup1, setPopup1] = useState(false);
-    const [popup2, setPopup2] = useState(false);
 
     useEffect(() => {
-        dispatch(clearSelectedProduct());
-        dispatch(updateCurrentPath("Độ tuổi", "danh sách"));
+        dispatch(getArtType())
+        dispatch(getArtAge())
+        dispatch(getArtLevel())
+    }, [dispatch])
+    
+    
+    const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
+    const art_levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
+    const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    const numberArtTypeCount: number = art_types.artTypes.length;
+    const numberArtLevelCount: number = art_levels.artLevels.length;
+    const numberArtAgeCount: number = art_ages.artAges.length;
+    const [popup1, setPopup1] = useState(false);
+    const [popup2, setPopup2] = useState(false);
+    const [popup3, setPopup3] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        dispatch(clearSelectedArtType());
+        dispatch(clearSelectedArtLevel());
+        dispatch(clearSelectedArtAge());
+        dispatch(updateCurrentPath("Nghệ thuật", "danh sách"));
     }, [path.area, dispatch]);
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    function onArtTypeSelect(art_type: IArtType): void {
+        dispatch(changeSelectedArtType(art_type));
+        onArtTypeRemove()
+        dispatch(setModificationState(ArtTypeModificationStatus.None));
     }
 
-    function onProductRemove1() {
+    function onArtLevelSelect(art_level: IArtLevel): void {
+        dispatch(changeSelectedArtLevel(art_level));
+        onArtLevelRemove()
+        dispatch(setModificationStateArtLevel(ArtLevelModificationStatus.None));
+    }
+
+    function onArtAgeSelect(art_age: IArtAge): void {
+        dispatch(changeSelectedArtAge(art_age));
+        onArtAgeRemove()
+        dispatch(setModificationStateArtAge(ArtAgeModificationStatus.None));
+    }
+
+    function onArtTypeRemove() {
         setPopup1(true);
     }
-    function onProductRemove2() {
+    function onArtLevelRemove() {
+        setPopup3(true);
+    }
+
+    function onArtAgeRemove() {
         setPopup2(true);
+    }
+
+    function onRemovePopup1(value: boolean) {
+        setPopup1(false);
+    }
+
+    function onRemovePopup2(value: boolean) {
+        setPopup2(false);
+    }
+
+    function onRemovePopup3(value: boolean) {
+        setPopup3(false);
     }
 
 
@@ -69,16 +119,19 @@ const Art: React.FC = () => {
             <h1 className="h3 mb-2 text-gray-800">Nghệ thuật</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="THỂ LOẠI" text={`${numberItemsCount}`} icon="box" class="primary" />
-                <TopCard title="ĐỘ TUỔI" text={`${numberItemsCount}`} icon="box" class="primary" />
-                <TopCard title="TRÌNH ĐỘ" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="THỂ LOẠI" text={`${numberArtTypeCount}`} icon="box" class="primary" />
+                <TopCard title="ĐỘ TUỔI" text={`${numberArtAgeCount}`} icon="box" class="primary" />
+                <TopCard title="TRÌNH ĐỘ" text={`${numberArtLevelCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">
                         <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
+                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                                setSearchTerm(event.target.value)
+                                console.log(searchTerm)
+                            }} />
                         </div>
                         <button type="button" className="btn btn-primary">
                             <i className="fas fa-search"></i>
@@ -119,13 +172,13 @@ const Art: React.FC = () => {
                         style={{
                             color: checked2 ? "#F24E1E" : "#2F4F4F"
                         }}>Độ tuổi</h6>
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "30%",
-                            backgroundColor: checked2 ?  "#F24E1E" : "#ffffff"
-                        }}></div>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
 
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
@@ -139,13 +192,13 @@ const Art: React.FC = () => {
                         style={{
                             color: checked3 ? "#F24E1E" : "#2F4F4F"
                         }}>Trình độ</h6>
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "30%",
-                            backgroundColor: checked3 ?  "#F24E1E" : "#ffffff"
-                        }}></div>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
             </div>
 
@@ -162,8 +215,8 @@ const Art: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách thể loại</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationState(ProductModificationStatus.Create))
-                                                        onProductRemove1()
+                                                        dispatch(setModificationState(ArtTypeModificationStatus.Create))
+                                                        onArtTypeRemove()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
                                                         Thêm thể loại
@@ -172,7 +225,7 @@ const Art: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <TeachTypeList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onArtTypeSelect} value={searchTerm}
                                                 />
                                             </div>
                                         </div>
@@ -185,10 +238,50 @@ const Art: React.FC = () => {
                                     onClose={() => setPopup1(false)}
                                     closeOnDocumentClick
                                 >
-                                    <div className="row text-left">
-                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachTypeForm /> : null}
-                                    </div>
+                                    <>
+                                        {
+                                            function () {
+                                                if ((art_types.modificationState === ArtTypeModificationStatus.Create) || ((art_types.selectedArtType) && (art_types.modificationState === ArtTypeModificationStatus.Edit))) {
+                                                    return <TeachTypeForm isCheck={onRemovePopup1} />
+                                                }
+                                            }()
+                                        }
+                                    </>
                                 </Popup>
+                                {
+                                    function () {
+                                        if ((art_types.selectedArtType) && (art_types.modificationState === ArtTypeModificationStatus.Remove)) {
+                                            return (
+                                                <Popup
+                                                    open={popup1}
+                                                    onClose={() => setPopup1(false)}
+                                                    closeOnDocumentClick
+                                                >
+                                                    <div className="popup-modal" id="popup-modal">
+                                                        <div className="popup-title">
+                                                            Are you sure?
+                                                        </div>
+                                                        <div className="popup-content">
+                                                            <button type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => {
+                                                                    if (!art_types.selectedArtType) {
+                                                                        return;
+                                                                    }
+                                                                    dispatch(deleteArtType(art_types.selectedArtType.id))
+                                                                    dispatch(addNotification("Thể loại ", `${art_types.selectedArtType.name} đã được xóa`));
+                                                                    dispatch(removeArtType(art_types.selectedArtType.id));
+                                                                    dispatch(clearSelectedArtType());
+                                                                    setPopup1(false);
+                                                                }}>Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+                                            )
+                                        }
+                                    }()
+                                }
                             </Fragment>
                         )
                     }
@@ -202,8 +295,8 @@ const Art: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách độ tuổi</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationState(ProductModificationStatus.Create))
-                                                        onProductRemove2()
+                                                        dispatch(setModificationStateArtAge(ArtAgeModificationStatus.Create))
+                                                        onArtAgeRemove()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
                                                         Thêm độ tuổi
@@ -212,7 +305,7 @@ const Art: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <TeachAgeList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onArtAgeSelect} value={searchTerm}
                                                 />
                                             </div>
                                         </div>
@@ -225,15 +318,55 @@ const Art: React.FC = () => {
                                     onClose={() => setPopup2(false)}
                                     closeOnDocumentClick
                                 >
-                                    <div className="row text-left">
-                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachAgeForm /> : null}
-                                    </div>
+                                    <>
+                                        {
+                                            function () {
+                                                if ((art_ages.modificationState === ArtAgeModificationStatus.Create) || ((art_ages.selectedArtAge) && (art_ages.modificationState === ArtAgeModificationStatus.Edit))) {
+                                                    return <TeachAgeForm isCheck={onRemovePopup2} />
+                                                }
+                                            }()
+                                        }
+                                    </>
                                 </Popup>
+                                {
+                                    function () {
+                                        if ((art_ages.selectedArtAge) && (art_ages.modificationState === ArtAgeModificationStatus.Remove)) {
+                                            return (
+                                                <Popup
+                                                    open={popup2}
+                                                    onClose={() => setPopup2(false)}
+                                                    closeOnDocumentClick
+                                                >
+                                                    <div className="popup-modal" id="popup-modal">
+                                                        <div className="popup-title">
+                                                            Are you sure?
+                                                        </div>
+                                                        <div className="popup-content">
+                                                            <button type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => {
+                                                                    if (!art_ages.selectedArtAge) {
+                                                                        return;
+                                                                    }
+                                                                    dispatch(deleteArtAge(art_ages.selectedArtAge.id))
+                                                                    dispatch(addNotification("Độ tuổi ", `${art_ages.selectedArtAge.name} đã được xóa`));
+                                                                    dispatch(removeArtAge(art_ages.selectedArtAge.id));
+                                                                    dispatch(clearSelectedArtAge());
+                                                                    setPopup2(false);
+                                                                }}>Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+                                            )
+                                        }
+                                    }()
+                                }
                             </Fragment>
                         )
                     }
 
-                    else if (checked3 == true){
+                    else if (checked3 == true) {
                         return (
                             <Fragment>
                                 <div className="row">
@@ -243,8 +376,8 @@ const Art: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách trình độ</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationState(ProductModificationStatus.Create))
-                                                        onProductRemove2()
+                                                        dispatch(setModificationStateArtLevel(ArtLevelModificationStatus.Create))
+                                                        onArtLevelRemove()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
                                                         Thêm trình độ
@@ -253,7 +386,7 @@ const Art: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <TeachLevelList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onArtLevelSelect} value={searchTerm}
                                                 />
                                             </div>
                                         </div>
@@ -262,14 +395,54 @@ const Art: React.FC = () => {
 
 
                                 <Popup
-                                    open={popup2}
-                                    onClose={() => setPopup2(false)}
+                                    open={popup3}
+                                    onClose={() => setPopup3(false)}
                                     closeOnDocumentClick
                                 >
-                                    <div className="row text-left">
-                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeachLevelForm /> : null}
-                                    </div>
+                                    <>
+                                        {
+                                            function () {
+                                                if ((art_levels.modificationState === ArtLevelModificationStatus.Create) || ((art_levels.selectedArtLevel) && (art_levels.modificationState === ArtLevelModificationStatus.Edit))) {
+                                                    return <TeachLevelForm isCheck={onRemovePopup3} />
+                                                }
+                                            }()
+                                        }
+                                    </>
                                 </Popup>
+                                {
+                                    function () {
+                                        if ((art_levels.selectedArtLevel) && (art_levels.modificationState === ArtLevelModificationStatus.Remove)) {
+                                            return (
+                                                <Popup
+                                                    open={popup3}
+                                                    onClose={() => setPopup3(false)}
+                                                    closeOnDocumentClick
+                                                >
+                                                    <div className="popup-modal" id="popup-modal">
+                                                        <div className="popup-title">
+                                                            Are you sure?
+                                                        </div>
+                                                        <div className="popup-content">
+                                                            <button type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => {
+                                                                    if (!art_levels.selectedArtLevel) {
+                                                                        return;
+                                                                    }
+                                                                    dispatch(deleteArtLevel(art_levels.selectedArtLevel.id))
+                                                                    dispatch(addNotification("Trình độ ", `${art_levels.selectedArtLevel.name} đã được xóa`));
+                                                                    dispatch(removeArtLevel(art_levels.selectedArtLevel.id));
+                                                                    dispatch(clearSelectedArtLevel());
+                                                                    setPopup3(false);
+                                                                }}>Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+                                            )
+                                        }
+                                    }()
+                                }
                             </Fragment>
                         )
                     }

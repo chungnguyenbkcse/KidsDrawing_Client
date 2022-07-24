@@ -14,15 +14,15 @@ const initialState: IArtLevelState = {
 function artLevelsReducer(state: IArtLevelState = initialState, action: IActionBase): IArtLevelState {
     switch (action.type) {
         case INITIAL_ART_LEVEL: {
-            return { ...state, artLevels : [...state.artLevels, action.artLevel]};
+            return { ...state, artLevels : [...state.artLevels, action.art_level]};
         }
         case ADD_ART_LEVEL: {
-            return { ...state, artLevels: [...state.artLevels, action.artLevel]};
+            return { ...state, artLevels: [...state.artLevels, action.art_level]};
         }
         case EDIT_ART_LEVEL: {
-            const foundIndex: number = state.artLevels.findIndex(pr => pr.id === action.artLevel.id);
+            const foundIndex: number = state.artLevels.findIndex(pr => pr.id === action.art_level.id);
             let artLevels: IArtLevel[] = state.artLevels;
-            artLevels[foundIndex] = action.artLevel;
+            artLevels[foundIndex] = action.art_level;
             return { ...state, artLevels: artLevels };
         }
         case REMOVE_ART_LEVEL: {
@@ -32,7 +32,7 @@ function artLevelsReducer(state: IArtLevelState = initialState, action: IActionB
             return { ...state, artLevels: [] };
         }
         case CHANGE_ART_LEVEL_PENDING_EDIT: {
-            return { ...state, selectedArtLevel: action.artLevel };
+            return { ...state, selectedArtLevel: action.art_level };
         }
         case CLEAR_ART_LEVEL_PENDING_EDIT: {
             return { ...state, selectedArtLevel: null };

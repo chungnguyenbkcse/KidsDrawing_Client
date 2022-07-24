@@ -1,32 +1,32 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, IProductState } from "../../store/models/root.interface";
+import { IStateType, IArtAgeState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IProduct, ProductModificationStatus } from "../../store/models/product.interface";
+import { IArtAge, ArtAgeModificationStatus } from "../../store/models/art_age.interface";
 import TextInput from "../../common/components/TextInput";
-import { editProduct, clearSelectedProduct, setModificationState, addProduct } from "../../store/actions/products.action";
+import { editArtAge, clearSelectedArtAge, setModificationStateArtAge, addArtAge } from "../../store/actions/art_age.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import NumberInput from "../../common/components/NumberInput";
-import Checkbox from "../../common/components/Checkbox";
-import SelectInput from "../../common/components/Select";
-import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
+import { OnChangeModel, IArtAgeFormState } from "../../common/types/Form.types";
+import { postArtAge } from "../../common/service/ArtAge/PostArtAge";
+import { putArtAge } from "../../common/service/ArtAge/PutArtAge";
 
-const TeachAgeForm: React.FC = () => {
+export type artAgeListProps = {
+  isCheck: (value: boolean) => void;
+  children?: React.ReactNode;
+};
+
+function TeachAgeForm(props: artAgeListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const products: IProductState | null = useSelector((state: IStateType) => state.products);
-  let product: IProduct | null = products.selectedProduct;
-  const isCreate: boolean = (products.modificationState === ProductModificationStatus.Create);
+  const art_ages: IArtAgeState | null = useSelector((state: IStateType) => state.art_ages);
+  let art_age: IArtAge | null = art_ages.selectedArtAge;
+  const isCreate: boolean = (art_ages.modificationState === ArtAgeModificationStatus.Create);
   
-  if (!product || isCreate) {
-    product = { id: 0, name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
+  if (!art_age || isCreate) {
+    art_age = { id: 0, name: "", description: ""};
   }
 
   const [formState, setFormState] = useState({
-    name: { error: "", value: product.name },
-    description: { error: "", value: product.description },
-    amount: { error: "", value: product.amount },
-    price: { error: "", value: product.price },
-    hasExpiryDate: { error: "", value: product.hasExpiryDate },
-    category: { error: "", value: product.category }
+    name: { error: "", value: art_age.name },
+    description: { error: "", value: art_age.description },
   });
 
   function hasFormValueChanged(model: OnChangeModel): void {
@@ -38,31 +38,42 @@ const TeachAgeForm: React.FC = () => {
     if (isFormInvalid()) {
       return;
     }
-
-    let saveUserFn: Function = (isCreate) ? addProduct : editProduct;
+    props.isCheck(false);
+    let saveUserFn: Function = (isCreate) ? addArtAge : editArtAge;
     saveForm(formState, saveUserFn);
   }
 
-  function saveForm(formState: IProductFormState, saveFn: Function): void {
-    if (product) {
+  function saveForm(formState: IArtAgeFormState, saveFn: Function): void {
+    if (art_age) {
       dispatch(saveFn({
-        ...product,
+        ...art_age,
         name: formState.name.value,
         description: formState.description.value,
-        price: formState.price.value,
-        amount: formState.amount.value,
-        hasExpiryDate: formState.hasExpiryDate.value,
-        category: formState.category.value
       }));
 
+      if (saveFn == addArtAge) {
+        dispatch(postArtAge({
+          name: formState.name.value,
+          description: formState.description.value
+        }))
+      }
+
+      else if (saveFn == editArtAge) {
+        dispatch(putArtAge(art_age.id, {
+          name: formState.name.value,
+          description: formState.description.value
+        }))
+      }
+
       dispatch(addNotification("Thể loại ", `${formState.name.value} chỉnh bởi bạn`));
-      dispatch(clearSelectedProduct());
-      dispatch(setModificationState(ProductModificationStatus.None));
+      dispatch(clearSelectedArtAge());
+      dispatch(setModificationStateArtAge(ArtAgeModificationStatus.None));
     }
   }
 
   function cancelForm(): void {
-    dispatch(setModificationState(ProductModificationStatus.None));
+    props.isCheck(false);
+    dispatch(setModificationStateArtAge(ArtAgeModificationStatus.None));
   }
 
   function getDisabledClass(): string {
@@ -71,13 +82,12 @@ const TeachAgeForm: React.FC = () => {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.amount.error || formState.description.error
-      || formState.name.error || formState.price.error || formState.hasExpiryDate.error
-      || formState.category.error || !formState.name.value || !formState.category.value) as boolean;
+    return (formState.name.error || !formState.name.value ) as boolean;
 }
 
   return (
     <Fragment>
+      <div className="row text-left">
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
@@ -85,7 +95,7 @@ const TeachAgeForm: React.FC = () => {
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
-              <div className="form-group">
+            <div className="form-group">
                   <TextInput id="input_email"
                     value={formState.name.value}
                     field="name"
@@ -95,12 +105,23 @@ const TeachAgeForm: React.FC = () => {
                     label="Tên"
                     placeholder="" />
               </div>
+              <div className="form-group">
+                  <TextInput id="input_description"
+                  field = "description"
+                    value={formState.description.value}
+                    onChange={hasFormValueChanged}
+                    required={false}
+                    maxLength={100}
+                    label="Miêu tả"
+                    placeholder="" />
+              </div>
             
               <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
               <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
             </form>
           </div>
         </div>
+      </div>
       </div>
     </Fragment>
   );

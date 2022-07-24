@@ -1,12 +1,11 @@
 import React, { useState, Dispatch } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
-import { IStateType } from "../../store/models/root.interface";
 import { IoNotificationsSharp } from "react-icons/io5"
 
 function TopMenuNotification(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const username: string = useSelector((state: IStateType) => state.account.username);
+  //const username: string = useSelector((state: IStateType) => state.account.username);
   const [isShow, setShow] = useState(false);
 
   return (

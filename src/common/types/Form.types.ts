@@ -49,3 +49,18 @@ export interface ILessonFormState {
     start_time: IFormStateField<string>;
     end_time: IFormStateField<string>;
 }
+
+export interface IArtAgeFormState {
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+}
+
+export interface IArtLevelFormState {
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+}
+
+export interface IArtTypeFormState {
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+}

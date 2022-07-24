@@ -1,13 +1,17 @@
 import React from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from 'react-quill';
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import "react-quill/dist/quill.snow.css";
 import "./Style.css";
+import ImageResize from 'quill-image-resize-module-react';
+
+Quill.register('modules/imageResize', ImageResize);
 
 export const Editor = () => {
   const [state, setState] = React.useState({ value: null });
   const handleChange = value => {
     setState({ value });
+    console.log(value)
   };
   return (
     <div className="text-editor">

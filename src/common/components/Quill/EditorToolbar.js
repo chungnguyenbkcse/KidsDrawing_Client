@@ -52,6 +52,10 @@ Quill.register(Font, true);
 
 // Modules object for setting up the Quill editor
 export const modules = {
+  imageResize: {
+    parchment: Quill.import('parchment'),
+    modules: ['Resize', 'DisplaySize']
+  },
   toolbar: {
     container: "#toolbar",
     handlers: {

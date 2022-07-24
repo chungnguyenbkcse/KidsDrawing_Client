@@ -14,6 +14,7 @@ import {
     changeSelectedProduct
 } from "../../store/actions/products.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+import { useHistory } from "react-router-dom";
 
 const data = {
     'id': 3,
@@ -25,7 +26,7 @@ const data = {
     'phone': '0989439678',
     'sex': 'Nữ',
     'address': 'Thanh Hoa',
-    'teach_type':'Chì màu' ,
+    'teach_type': 'Chì màu',
     'teach_level': '4-6 tuổi'
 }
 
@@ -56,6 +57,13 @@ const Course: React.FC = () => {
         setPopup2(true);
     }
 
+    const history = useHistory();
+
+    const routeChange = () => {
+        let path = '/courses/create-course';
+        history.push(path);
+    }
+
 
     return (
         <Fragment>
@@ -70,7 +78,7 @@ const Course: React.FC = () => {
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">
                         <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm"/>
+                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
                         </div>
                         <button type="button" className="btn btn-primary">
                             <i className="fas fa-search"></i>
@@ -105,7 +113,7 @@ const Course: React.FC = () => {
                         style={{
                             color: checked ? "#2F4F4F" : "#F24E1E"
                         }}>Khóa học theo kì</h6>
-                        <div style={{
+                    <div style={{
                         height: "5px",
                         textAlign: "center",
                         margin: "auto",
@@ -121,39 +129,32 @@ const Course: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học chung</h6>
-                            <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>{
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove1()
-                                }}>
-                                    <i className="fas fa fa-plus"></i>
-                                    Thêm khóa học
-                                </button>
-                            </div>
-                        </div>
-                        <div className="card-body">
-                            <CourseNomalList
-                                onSelect={onProductSelect}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học chung</h6>
+                                                <div className="header-buttons">
+                                                    <button className="btn btn-success btn-green" onClick={() => {
+                                                        dispatch(setModificationState(ProductModificationStatus.Create))
+                                                        routeChange()
+                                                        onProductRemove1()
+                                                    }}>
+                                                        <i className="fas fa fa-plus"></i>
+                                                        Thêm khóa học
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="card-body">
+                                                <CourseNomalList
+                                                    onSelect={onProductSelect}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-            <Popup
-                open={popup1}
-                onClose={() => setPopup1(false)}
-                closeOnDocumentClick
-            >
-                <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <CourseNomalForm /> : null}
-                </div>
-            </Popup>
+                                
                             </Fragment>
                         )
                     }
@@ -161,39 +162,39 @@ const Course: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học theo kì</h6>
-                            <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() =>{
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove2()
-                                }}>
-                                    <i className="fas fa fa-plus"></i>
-                                    Thêm khóa học
-                                </button>
-                            </div>
-                        </div>
-                        <div className="card-body">
-                            <CourseSemesterList
-                                onSelect={onProductSelect}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học theo kì</h6>
+                                                <div className="header-buttons">
+                                                    <button className="btn btn-success btn-green" onClick={() => {
+                                                        dispatch(setModificationState(ProductModificationStatus.Create))
+                                                        onProductRemove2()
+                                                    }}>
+                                                        <i className="fas fa fa-plus"></i>
+                                                        Thêm khóa học
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="card-body">
+                                                <CourseSemesterList
+                                                    onSelect={onProductSelect}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-            <Popup
-                open={popup2}
-                onClose={() => setPopup2(false)}
-                closeOnDocumentClick
-            >
-                <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <CourseSemesterForm /> : null}
-                </div>
-            </Popup>
+                                <Popup
+                                    open={popup2}
+                                    onClose={() => setPopup2(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="row text-left">
+                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <CourseSemesterForm /> : null}
+                                    </div>
+                                </Popup>
                             </Fragment>
                         )
                     }

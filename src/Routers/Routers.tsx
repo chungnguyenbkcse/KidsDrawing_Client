@@ -27,6 +27,7 @@ import RequestConfirmLevel from "../components/Request/RequestConfirmLevel";
 import LessonPlan from "../components/Course/LessonPlan";
 import Contest from "../components/Contest/Contest";
 import DegreePhoto from "../components/Request/DegreePhoto";
+import CourseNomalForm from "../components/Course/CourseNomalForm";
 
 const Routers: React.FC = () => {
     return (
@@ -51,6 +52,7 @@ const Routers: React.FC = () => {
                             <Route path={`/class/detail`}><DetailClass /></Route>
                             <Route path={`/class`}><Class /></Route>
                             {/* <Route path={`/schedules`}><Schedule /></Route> */}
+                            <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
                             <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
                             <Route path={`/courses`}><Course /></Route>
                             <Route path={`/contests`}><Contest /></Route>

@@ -19,6 +19,7 @@ import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { useLocation, useParams } from "react-router-dom";
 import { getCourse } from "../../common/service/Course/GetCourse";
+import { postImage } from "../../common/service/Cloudinary/PostImage";
 
 type Options = {
     name: string;
@@ -30,12 +31,12 @@ const CourseNomalForm: React.FC = () => {
     //console.log(id)
     const dispatch: Dispatch<any> = useDispatch();
     const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-    console.log(courses)
+    //console.log(courses)
     const { state: { course_value } } = useLocation()
-    console.log(course_value)
+    //console.log(course_value)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     let course: ICourse | undefined = course_value;
-    console.log(course)
+    //console.log(course)
     const isCreate: boolean = (courses.modificationState === CourseModificationStatus.Create);
     useEffect(() => {
         dispatch(clearSelectedCourse());
@@ -99,17 +100,19 @@ const CourseNomalForm: React.FC = () => {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
 
-    function saveUser(e: FormEvent<HTMLFormElement>): void {
+    async function saveUser(e: FormEvent<HTMLFormElement>){
         e.preventDefault();
         if (isFormInvalid()) {
             return;
         }
 
+        var url = await setImageAction();
+
         let saveUserFn: Function = (isCreate) ? addCourse : editCourse;
-        saveForm(formState, saveUserFn);
+        saveForm(formState, saveUserFn, url);
     }
 
-    function saveForm(formState: ICourseNomalFormState, saveFn: Function): void {
+    function saveForm(formState: ICourseNomalFormState, saveFn: Function, url: string): void {
         if (course) {
             dispatch(saveFn({
                 ...course,
@@ -118,26 +121,26 @@ const CourseNomalForm: React.FC = () => {
                 max_participant: formState.max_participant.value,
                 num_of_section: formState.num_of_section.value,
                 price: formState.price.value,
-                image_url: formState.image_url.value,
+                image_url: url,
                 is_enabled: formState.is_enabled.value,
                 art_type_id: formState.art_type_id.value,
                 art_age_id: formState.art_age_id.value,
                 art_level_id: formState.art_level_id.value
             }));
 
-            //console.log({
-            //    ...course,
-            //    name: formState.name.value,
-            //    description: textHtml,
-            //    max_participant: formState.max_participant.value,
-            //    num_of_section: formState.num_of_section.value,
-            //    price: formState.price.value,
-            //    image_url: formState.image_url.value,
-            //    is_enabled: formState.is_enabled.value,
-            //    art_type_id: formState.art_type_id.value,
-            //    art_age_id: formState.art_age_id.value,
-            //    art_level_id: formState.art_level_id.value
-            //})
+            console.log({
+                ...course,
+                name: formState.name.value,
+                description: textHtml,
+                max_participant: formState.max_participant.value,
+                num_of_section: formState.num_of_section.value,
+                price: formState.price.value,
+                image_url: url,
+                is_enabled: formState.is_enabled.value,
+                art_type_id: formState.art_type_id.value,
+                art_age_id: formState.art_age_id.value,
+                art_level_id: formState.art_level_id.value
+            })
 
             dispatch(addNotification("Khóa học chung  ", `${formState.name.value} chỉnh bởi bạn`));
             dispatch(clearSelectedCourse());
@@ -165,6 +168,37 @@ const CourseNomalForm: React.FC = () => {
         setTextHtml(value);
     }
 
+    const [image, setImage] = useState<any>();
+
+    const uploadPicture = (e: any) => {
+        setImage({
+            /* contains the preview, if you want to show the picture to the user
+                you can access it with this.state.currentPicture
+           */
+            picturePreview : URL.createObjectURL(e.target.files[0]),
+            /* this contains the file we want to send */
+            pictureAsFile : e.target.files[0]
+        })
+    };
+
+    async function setImageAction(){
+        const formData = new FormData();
+        formData.append(
+            "gifFile",
+            image.pictureAsFile
+        );
+        // do your post request
+        const res = await fetch(
+            `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
+                method: "POST",
+                body: formData
+            }
+        )
+        const data = await res.json()
+        return data.url_image
+
+    };
+
     //console.log('Input',textHtml)
 
     return (
@@ -180,7 +214,7 @@ const CourseNomalForm: React.FC = () => {
                         <form onSubmit={saveUser}>
                             <div className="form-group">
                                 <label htmlFor="profile_image">Chọn ảnh:</label>
-                                <input type="file" id="profile_image" name="profile_image" />
+                                <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
                             </div>
 
                             <div className="form-row">
@@ -275,11 +309,11 @@ const CourseNomalForm: React.FC = () => {
 
                             <div className="form-group">
                                 <label>Miêu tả</label>
-                                <Editor getValue={getValue} setValue={formState.description.value}/>
+                                <Editor getValue={getValue} isCreate={isCreate} setValue={formState.description.value}/>
                             </div>
 
                             <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-                            <button type="submit" className={`btn btn-success left-margin`}>Lưu</button>
+                            <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
                         </form>
                     </div>
                 </div>

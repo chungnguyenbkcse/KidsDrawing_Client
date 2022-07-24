@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import { IStateType, ISemesterCourseState } from "../../store/models/root.interface";
+import { ISemesterCourse } from "../../store/models/semester_course.interface";
 import { useHistory } from "react-router-dom";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type semesterCourseListProps = {
+  onSelect?: (semester_course: ISemesterCourse) => void;
   children?: React.ReactNode;
 };
 
@@ -24,8 +24,8 @@ const data = [
   },
 ]
 
-function CourseSemesterList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+function CourseSemesterList(props: semesterCourseListProps): JSX.Element  {
+  const semester_courses: ISemesterCourseState = useSelector((state: IStateType) => state.semester_courses);
   const history = useHistory();
   
   const routeChange = () =>{ 
@@ -33,21 +33,21 @@ function CourseSemesterList(props: productListProps): JSX.Element  {
     history.push(path);
   }
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
+  const courseElements: (JSX.Element | null)[] = data.map(semester_course => {
+    if (!semester_course) { return null; }
+    return (<tr className={`table-row ${(semester_courses.selectedSemesterCourse && semester_courses.selectedSemesterCourse.id === semester_course.id) ? "selected" : ""}`}
       onClick={routeChange}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
+      key={`semester_course_${semester_course.id}`}>
+      <th scope="row">{semester_course.id}</th>
+      <td>{semester_course.name}</td>
       <td>
-        {product.schedule.map((val, index) => {
+        {semester_course.schedule.map((val, index) => {
             return (
                 <p>{val}</p>
             )
         })}
       </td>
-      <td>{product.semester}</td>
+      <td>{semester_course.semester}</td>
       <td>
         <button type="button" className="btn btn-primary">Chỉnh sửa</button>
       </td>
@@ -72,7 +72,7 @@ function CourseSemesterList(props: productListProps): JSX.Element  {
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {courseElements}
         </tbody>
       </table>
     </div>

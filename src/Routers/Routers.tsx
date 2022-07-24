@@ -53,6 +53,7 @@ const Routers: React.FC = () => {
                             <Route path={`/class`}><Class /></Route>
                             {/* <Route path={`/schedules`}><Schedule /></Route> */}
                             <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
+                            <Route path={`/courses/:id_course`}><CourseNomalForm /></Route>
                             <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
                             <Route path={`/courses`}><Course /></Route>
                             <Route path={`/contests`}><Contest /></Route>

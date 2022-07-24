@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, Fragment } from "react";
 import { SelectProps } from "../types/Select.types";
 
-function SelectInput(props: SelectProps): JSX.Element {
+function SelectKeyValue(props: SelectProps): JSX.Element {
     const [touched, setTouch] = useState(false);
     const [error, setError] = useState("");
     const [htmlClass, setHtmlClass] = useState("");
@@ -15,17 +15,19 @@ function SelectInput(props: SelectProps): JSX.Element {
             ["Value has to be selected", "is-invalid"] : ["", "is-valid"];
 
 
-        props.onChange({ value: elementValue, error: error, touched: touched, field: props.field });
+        props.onChange({ value: parseInt(elementValue), error: error, touched: touched, field: props.field });
 
         setTouch(true);
         setError(error);
         setHtmlClass(validClass);
-        setValue(elementValue);
+        setValue(parseInt(elementValue));
     }
 
-    const getOptions: (JSX.Element | null)[] = props.options.map((option: any, index: number) => {
+    //console.log(props.options)
+
+    const getOptions: (JSX.Element | null)[] = props.options.map( (option: any, index:number) => {
         return (
-            <option key={index} value={`${option}`}>{option}</option>
+            <option key={index} value={option.value}>{option.name}</option>
         )
     });
 
@@ -37,7 +39,7 @@ function SelectInput(props: SelectProps): JSX.Element {
                 id={`${props.id}`}
                 className={`form-control ${props.inputClass ? props.inputClass : ""} ${htmlClass}`}
                 onChange={onValueChanged}>
-                <option value="">Choose...</option>
+                <option value= {0}>Choose...</option>
                 {getOptions}
             </select>
 
@@ -50,4 +52,4 @@ function SelectInput(props: SelectProps): JSX.Element {
     );
 }
 
-export default SelectInput;
+export default SelectKeyValue;

@@ -15,6 +15,7 @@ export type artTypeListProps = {
 function ArtTypeList(props: artTypeListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
   const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
+  console.log(art_types)
   const history = useHistory();
   console.log(art_types)
 

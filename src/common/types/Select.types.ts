@@ -3,8 +3,8 @@ export type SelectProps = {
     onChange: Function,
     id: string,
     label: string,
-    value: string,
+    value: any,
     inputClass?: string,
-    options: string[],
+    options: any,
     field: string
 };

@@ -64,3 +64,25 @@ export interface IArtTypeFormState {
     name: IFormStateField<string>;
     description: IFormStateField<string>;
 }
+
+export interface ICourseNomalFormState {
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+    max_participant: IFormStateField<number>;
+    num_of_section: IFormStateField<number>;
+    price: IFormStateField<number>;
+    image_url: IFormStateField<string>;
+    is_enabled: IFormStateField<boolean>;
+    creator_id: IFormStateField<number>;
+    art_type_id: IFormStateField<number>;
+    art_level_id: IFormStateField<number>;
+    art_age_id: IFormStateField<number>;
+    create_time: IFormStateField<string>;
+    update_time: IFormStateField<string>;
+}
+
+export interface ISemesterCourseFormState {
+    creation_id: IFormStateField<number>;
+    course_id: IFormStateField<number>;
+    schedule_id: IFormStateField<number>;
+}

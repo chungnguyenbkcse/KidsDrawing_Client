@@ -1,39 +1,98 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, IProductState, IRootPageStateType } from "../../store/models/root.interface";
+import { IStateType, ICourseState, IRootPageStateType, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IProduct, ProductModificationStatus } from "../../store/models/product.interface";
+import { ICourse, CourseModificationStatus } from "../../store/models/course.interface";
 import TextInput from "../../common/components/TextInput";
-import { editProduct, clearSelectedProduct, setModificationState, addProduct } from "../../store/actions/products.action";
+import { editCourse, clearSelectedCourse, setModificationState, addCourse } from "../../store/actions/course.action";
 import { addNotification } from "../../store/actions/notifications.action";
 import NumberInput from "../../common/components/NumberInput";
 import Checkbox from "../../common/components/Checkbox";
-import SelectInput from "../../common/components/Select";
-import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
+import { OnChangeModel, ICourseNomalFormState } from "../../common/types/Form.types";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import Editor from "../../common/components/Quill/Editor";
+import { IArtLevel } from "../../store/models/art_level.interface";
+import { IArtType } from "../../store/models/art_type.interface";
+import { IArtAge } from "../../store/models/art_age.interface";
+import SelectKeyValue from "../../common/components/SelectKeyValue";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
+import { useLocation, useParams } from "react-router-dom";
+import { getCourse } from "../../common/service/Course/GetCourse";
+
+type Options = {
+    name: string;
+    value: any;
+}
+
 
 const CourseNomalForm: React.FC = () => {
+    //console.log(id)
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState | null = useSelector((state: IStateType) => state.products);
+    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+    console.log(courses)
+    const { state: { course_value } } = useLocation()
+    console.log(course_value)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    let product: IProduct | null = products.selectedProduct;
-    const isCreate: boolean = (products.modificationState === ProductModificationStatus.Create);
+    let course: ICourse | undefined = course_value;
+    console.log(course)
+    const isCreate: boolean = (courses.modificationState === CourseModificationStatus.Create);
     useEffect(() => {
-        dispatch(clearSelectedProduct());
+        dispatch(clearSelectedCourse());
         dispatch(updateCurrentPath("Khóa học chung", "Khóa học mầm chì màu"));
     }, [path.area, dispatch]);
 
-    if (!product || isCreate) {
-        product = { id: 0, name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
+    useEffect(() => {
+        dispatch(getCourse())
+        dispatch(getArtType())
+        dispatch(getArtLevel())
+        dispatch(getArtAge())
+
+    }, [dispatch])
+
+    if (!course || isCreate) {
+        course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
     }
 
+    const levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
+    const listLevel: IArtLevel[] = levels.artLevels
+    //console.log(listLevel)
+    const listLevels: Options[] = [];
+    listLevel.map((ele) => {
+        let item: Options = { "name": ele.name, "value": ele.id }
+        return listLevels.push(item)
+    })
+
+    const mytypes: IArtTypeState = useSelector((state: IStateType) => state.art_types);
+    const listMytype: IArtType[] = mytypes.artTypes
+    const listMytypes: Options[] = [];
+    listMytype.map((ele) => {
+        let item: Options = { "name": ele.name, "value": ele.id }
+        return listMytypes.push(item)
+    })
+
+    const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
+    const listArtAge: IArtAge[] = art_ages.artAges
+    const listArtAges: Options[] = [];
+    listArtAge.map((ele) => {
+        let item: Options = { "name": ele.name, "value": ele.id }
+        return listArtAges.push(item)
+    })
+
     const [formState, setFormState] = useState({
-        name: { error: "", value: product.name },
-        description: { error: "", value: product.description },
-        amount: { error: "", value: product.amount },
-        price: { error: "", value: product.price },
-        hasExpiryDate: { error: "", value: product.hasExpiryDate },
-        category: { error: "", value: product.category }
+        name: { error: "", value: course.name },
+        description: { error: "", value: course.description },
+        max_participant: { error: "", value: course.max_participant },
+        art_type_id: { error: "", value: course.art_type_id },
+        art_level_id: { error: "", value: course.art_level_id },
+        art_age_id: { error: "", value: course.art_age_id },
+        num_of_section: { error: "", value: course.num_of_section },
+        price: { error: "", value: course.price },
+        image_url: { error: "", value: course.image_url },
+        is_enabled: { error: "", value: course.is_enabled },
+        creator_id: { error: "", value: course.creator_id },
+        create_time: { error: "", value: course.create_time },
+        update_time: { error: "", value: course.update_time }
     });
 
     function hasFormValueChanged(model: OnChangeModel): void {
@@ -46,30 +105,48 @@ const CourseNomalForm: React.FC = () => {
             return;
         }
 
-        let saveUserFn: Function = (isCreate) ? addProduct : editProduct;
+        let saveUserFn: Function = (isCreate) ? addCourse : editCourse;
         saveForm(formState, saveUserFn);
     }
 
-    function saveForm(formState: IProductFormState, saveFn: Function): void {
-        if (product) {
+    function saveForm(formState: ICourseNomalFormState, saveFn: Function): void {
+        if (course) {
             dispatch(saveFn({
-                ...product,
+                ...course,
                 name: formState.name.value,
-                description: formState.description.value,
+                description: textHtml,
+                max_participant: formState.max_participant.value,
+                num_of_section: formState.num_of_section.value,
                 price: formState.price.value,
-                amount: formState.amount.value,
-                hasExpiryDate: formState.hasExpiryDate.value,
-                category: formState.category.value
+                image_url: formState.image_url.value,
+                is_enabled: formState.is_enabled.value,
+                art_type_id: formState.art_type_id.value,
+                art_age_id: formState.art_age_id.value,
+                art_level_id: formState.art_level_id.value
             }));
 
-            dispatch(addNotification("Giáo trình ", `${formState.name.value} chỉnh bởi bạn`));
-            dispatch(clearSelectedProduct());
-            dispatch(setModificationState(ProductModificationStatus.None));
+            //console.log({
+            //    ...course,
+            //    name: formState.name.value,
+            //    description: textHtml,
+            //    max_participant: formState.max_participant.value,
+            //    num_of_section: formState.num_of_section.value,
+            //    price: formState.price.value,
+            //    image_url: formState.image_url.value,
+            //    is_enabled: formState.is_enabled.value,
+            //    art_type_id: formState.art_type_id.value,
+            //    art_age_id: formState.art_age_id.value,
+            //    art_level_id: formState.art_level_id.value
+            //})
+
+            dispatch(addNotification("Khóa học chung  ", `${formState.name.value} chỉnh bởi bạn`));
+            dispatch(clearSelectedCourse());
+            dispatch(setModificationState(CourseModificationStatus.None));
         }
     }
 
     function cancelForm(): void {
-        dispatch(setModificationState(ProductModificationStatus.None));
+        dispatch(setModificationState(CourseModificationStatus.None));
     }
 
     function getDisabledClass(): string {
@@ -78,14 +155,21 @@ const CourseNomalForm: React.FC = () => {
     }
 
     function isFormInvalid(): boolean {
-        return (formState.amount.error || formState.description.error
-            || formState.name.error || formState.price.error || formState.hasExpiryDate.error
-            || formState.category.error || !formState.name.value || !formState.category.value) as boolean;
+        return (formState.max_participant.error || formState.description.error
+            || formState.name.error || formState.num_of_section.error || formState.price.error
+            || formState.image_url.error || !formState.name.value || !formState.num_of_section.value || !formState.max_participant.value) as boolean;
     }
+
+    const [textHtml, setTextHtml] = useState<string>("")
+    function getValue(value: string) {
+        setTextHtml(value);
+    }
+
+    //console.log('Input',textHtml)
 
     return (
         <Fragment>
-            <h1 className="h3 mb-2 text-gray-800">Soạn giáo trình chung</h1>
+            <h1 className="h3 mb-2 text-gray-800">Khóa học chung</h1>
 
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
@@ -101,9 +185,9 @@ const CourseNomalForm: React.FC = () => {
 
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <TextInput id="input_description"
-                                        field="description"
-                                        value={formState.description.value}
+                                    <TextInput id="input_name"
+                                        field="name"
+                                        value={formState.name.value}
                                         onChange={hasFormValueChanged}
                                         required={false}
                                         maxLength={100}
@@ -111,80 +195,87 @@ const CourseNomalForm: React.FC = () => {
                                         placeholder="" />
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <TextInput id="input_description"
-                                        field="description"
-                                        value={formState.description.value}
+                                    <NumberInput id="input_price"
+                                        value={formState.price.value}
+                                        field="price"
                                         onChange={hasFormValueChanged}
-                                        type="number"
-                                        required={false}
-                                        maxLength={100}
+                                        max={100000}
+                                        min={0}
                                         label="Giá"
-                                        placeholder="" />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <SelectInput
-                                        id="input_category"
-                                        field="category"
-                                        label="Thể loại"
-                                        options={["Chì màu", "Sáp màu", "Sơn dầu"]}
-                                        required={true}
-                                        onChange={hasFormValueChanged}
-                                        value={formState.category.value}
-                                    />
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <SelectInput
-                                        id="input_category"
-                                        field="category"
-                                        label="Độ tuổi"
-                                        options={["4-6 tuổi", "6-10 tuổi", "10-14 tuổi"]}
-                                        required={true}
-                                        onChange={hasFormValueChanged}
-                                        value={formState.category.value}
                                     />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <TextInput id="input_description"
-                                        field="description"
-                                        value={formState.description.value}
-                                        onChange={hasFormValueChanged}
-                                        type="number"
-                                        required={false}
-                                        maxLength={100}
-                                        label="Số người đăng kí tối đa"
-                                        placeholder="" />
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <TextInput id="input_description"
-                                        field="description"
-                                        value={formState.description.value}
-                                        onChange={hasFormValueChanged}
-                                        type="number"
-                                        required={false}
-                                        maxLength={100}
-                                        label="Số buổi học"
-                                        placeholder="" />
-                                </div>
-                            </div>
-
-                            <div className="form-group">
-                                <Checkbox 
-                                    id="input_description"
-                                    field="description"
-                                    value={true}
+                                <SelectKeyValue id="input_art_type_id"
+                                    field = "art_type_id"
+                                    value={formState.art_type_id.value}
                                     onChange={hasFormValueChanged}
-                                    required={false}
-                                    label="Mở"
+                                    required={true}
+                                    label="Thể loại"
+                                    options={listMytypes}
                                 />
                                 </div>
+                                <div className="form-group col-md-6">
+                                    <SelectKeyValue
+                                        id="input_art_level_id"
+                                        field="art_level_id"
+                                        label="Mức độ"
+                                        options={listLevels}
+                                        required={true}
+                                        onChange={hasFormValueChanged}
+                                        value={formState.art_level_id.value}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <SelectKeyValue
+                                        id="input_art_age_id"
+                                        field="art_age_id"
+                                        label="Mức độ"
+                                        options={listArtAges}
+                                        required={true}
+                                        onChange={hasFormValueChanged}
+                                        value={formState.art_age_id.value}
+                                    />
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <Checkbox
+                                        id="input_is_enabled"
+                                        field="is_enabled"
+                                        value={formState.is_enabled.value}
+                                        onChange={hasFormValueChanged}
+                                        required={false}
+                                        label="Mở"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <NumberInput id="input_max_participant"
+                                        value={formState.max_participant.value}
+                                        field="max_participant"
+                                        onChange={hasFormValueChanged}
+                                        max={1000}
+                                        min={0}
+                                        label="Số người đăng kí tối đa" />
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <NumberInput id="input_num_of_section"
+                                        value={formState.num_of_section.value}
+                                        field="num_of_section"
+                                        onChange={hasFormValueChanged}
+                                        max={1000}
+                                        min={0}
+                                        label="Số buổi học" 
+                                    />
+                                </div>
+                            </div>
 
                             <div className="form-group">
                                 <label>Miêu tả</label>
-                                <Editor />
+                                <Editor getValue={getValue} setValue={formState.description.value}/>
                             </div>
 
                             <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>

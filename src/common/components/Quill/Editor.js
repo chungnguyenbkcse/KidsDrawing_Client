@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import ReactQuill, { Quill } from 'react-quill';
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import "react-quill/dist/quill.snow.css";
@@ -7,16 +7,27 @@ import ImageResize from 'quill-image-resize-module-react';
 
 Quill.register('modules/imageResize', ImageResize);
 
-export const Editor = () => {
+export const Editor = (props) => {
+  const reactQuillRef = useRef(null);
+  React.useEffect(() => {
+    console.log(reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue));
+  }, [props]);
+  //console.log(reactQuillRef)
+  
+  //const quill = reactQuillRef.current.editor;
+  //console.log(quill)
+  //quill.clipboard.dangerouslyPasteHTML(props.setValue);
   const [state, setState] = React.useState({ value: null });
   const handleChange = value => {
     setState({ value });
-    console.log(value)
+    props.getValue(value)
+    //console.log(value)
   };
   return (
     <div className="text-editor">
       <EditorToolbar />
       <ReactQuill
+        ref={reactQuillRef}
         theme="snow"
         value={state.value}
         onChange={handleChange}

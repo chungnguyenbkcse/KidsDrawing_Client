@@ -60,7 +60,7 @@ export function clearSelectedSemesterCourse(): IClearSelectedSemesterCourseActio
     return { type: CLEAR_SEMESTER_COURSE_PENDING_EDIT };
 }
 
-export function setModificationState(value: SemesterCourseModificationStatus): ISetModificationStateActionType {
+export function setModificationStateSemesterCourse(value: SemesterCourseModificationStatus): ISetModificationStateActionType {
     return { type: SET_MODIFICATION_STATE, value: value };
 }
 

@@ -1,67 +1,80 @@
 import React, { Fragment, Dispatch, useState, useEffect } from "react";
 import CourseNomalList from "./CourseNomalList";
-import CourseNomalForm from "./CourseNomalForm";
 import CourseSemesterList from "./CourseSemesterList";
 import CourseSemesterForm from "./CourseSemesterForm";
 import TopCard from "../../common/components/TopCard";
 import "./Course.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { ICourseState, IStateType, IRootPageStateType, ISemesterCourseState } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
-    clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+    clearSelectedCourse, setModificationState,
+    changeSelectedCourse
+} from "../../store/actions/course.action";
+import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
-
-const data = {
-    'id': 3,
-    'first_name': 'Thao',
-    'last_name': 'Nguyễn',
-    'username': 'thaonguyen123',
-    'status': 'Đang hoạt động',
-    'date_of_birth': '10/10/2000',
-    'phone': '0989439678',
-    'sex': 'Nữ',
-    'address': 'Thanh Hoa',
-    'teach_type': 'Chì màu',
-    'teach_level': '4-6 tuổi'
-}
+import { ISemesterCourse, SemesterCourseModificationStatus } from "../../store/models/semester_course.interface";
+import { changeSelectedSemesterCourse, setModificationStateSemesterCourse } from "../../store/actions/semester_course.action";
+import { getCourse } from "../../common/service/Course/GetCourse";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 
 
 const Course: React.FC = () => {
     const [checked, setChecked] = useState(true);
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+    const semester_courses: ISemesterCourseState = useSelector((state: IStateType) => state.semester_courses);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
+    const numberCourseCount: number = courses.courses.length;
+    const numberSemesterCourseCount: number = semester_courses.semesterCourses.length;
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);
 
+    console.log(courses)
+
     useEffect(() => {
-        dispatch(clearSelectedProduct());
-        dispatch(updateCurrentPath("Khóa học chung", "danh sách"));
+        dispatch(clearSelectedCourse());
+        dispatch(updateCurrentPath("Khóa học", "danh sách"));
     }, [path.area, dispatch]);
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    useEffect(() => {
+        dispatch(getCourse())
+        dispatch(getArtType())
+        dispatch(getArtLevel())
+        dispatch(getArtAge())
+    }, [dispatch])
+
+    function onCourseSelect(course: ICourse): void {
+        dispatch(changeSelectedCourse(course));
+        dispatch(setModificationState(CourseModificationStatus.None));
     }
 
-    function onProductRemove1() {
+    function onSemesterCourseSelect(course: ISemesterCourse): void {
+        dispatch(changeSelectedSemesterCourse(course));
+        dispatch(setModificationStateSemesterCourse(SemesterCourseModificationStatus.None));
+    }
+
+    function onCourseRemove1() {
         setPopup1(true);
     }
-    function onProductRemove2() {
+    function onCourseRemove2() {
         setPopup2(true);
     }
 
     const history = useHistory();
 
     const routeChange = () => {
-        let path = '/courses/create-course';
-        history.push(path);
+        let path = `/courses/create-course`; 
+        const course: ICourse = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" }
+        history.push(
+            {
+                pathname: path,
+                state: {course_value: null} // your data array of objects
+            }
+        );
     }
 
 
@@ -70,8 +83,8 @@ const Course: React.FC = () => {
             <h1 className="h3 mb-2 text-gray-800">Khóa học</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="KHÓA HỌC CHUNG" text={`${numberItemsCount}`} icon="box" class="primary" />
-                <TopCard title="KHÓA HỌC THEO KÌ" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="KHÓA HỌC CHUNG" text={`${numberCourseCount}`} icon="box" class="primary" />
+                <TopCard title="KHÓA HỌC THEO KÌ" text={`${numberSemesterCourseCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">
@@ -135,9 +148,9 @@ const Course: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học chung</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationState(ProductModificationStatus.Create))
+                                                        dispatch(setModificationState(CourseModificationStatus.Create))
                                                         routeChange()
-                                                        onProductRemove1()
+                                                        onCourseRemove1()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
                                                         Thêm khóa học
@@ -146,7 +159,7 @@ const Course: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <CourseNomalList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onCourseSelect}
                                                 />
                                             </div>
                                         </div>
@@ -168,8 +181,8 @@ const Course: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học theo kì</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationState(ProductModificationStatus.Create))
-                                                        onProductRemove2()
+                                                        dispatch(setModificationState(CourseModificationStatus.Create))
+                                                        onCourseRemove2()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
                                                         Thêm khóa học
@@ -178,23 +191,12 @@ const Course: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <CourseSemesterList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onSemesterCourseSelect}
                                                 />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <Popup
-                                    open={popup2}
-                                    onClose={() => setPopup2(false)}
-                                    closeOnDocumentClick
-                                >
-                                    <div className="row text-left">
-                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <CourseSemesterForm /> : null}
-                                    </div>
-                                </Popup>
                             </Fragment>
                         )
                     }

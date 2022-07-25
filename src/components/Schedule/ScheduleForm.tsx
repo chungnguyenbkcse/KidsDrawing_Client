@@ -15,6 +15,7 @@ import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
 import { postScheduleItem } from "../../common/service/ScheduleItem/PostScheduleItem";
+import { putScheduleItem } from "../../common/service/ScheduleItem/PutScheduleItem";
 
 export type scheduleListProps = {
     isCheck: (value: boolean) => void;
@@ -63,53 +64,30 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
 
     const [listScheduleItemId, setListScheduleItemId] = useState<Option1s[]>([])
     const [listLessonId, setListLessonId] = useState<Option1s[]>([])
-
-    function initialDateOfWeek(value: number, index: number){
-        if (listScheduleItemId.length === 0){
-            setListScheduleItemId([...listScheduleItemId, {"key": index, "value": value}])
-        }
-        else {
-            let is_check = false
-            for (let idx = 0; idx < listScheduleItemId.length; idx++) {
-                if (listScheduleItemId[idx].key === index) {
-                    if (listScheduleItemId[idx].value != value){
-                        is_check = true
-                        setListScheduleItemId([...listScheduleItemId.filter((item, idx) => item.key !== index), {"key": index, "value": value}])
-                    }
-                    break
+    useEffect(() => {
+        let res_1: Option1s[] = []
+        if (total > 0){
+            for (let index = 0; index < total; index++) {
+                let date_of_week_obj: Option1s = {
+                    key: index,
+                    value: schedule_items_list[index].date_of_week
                 }
-                
-            }
-
-            if (is_check == false) {
-                setListScheduleItemId([...listScheduleItemId, {"key": index, "value": value}])
-            }
-        }
-    }
-
-    function initialLessonTime(value: number, index: number){
-        if (listLessonId.length === 0){
-            setListLessonId([...listLessonId, {"key": index, "value": value}])
-        }
-        else {
-            let is_check = false
-            for (let idx = 0; idx < listLessonId.length; idx++) {
-                if (listLessonId[idx].key === index) {
-                    if (listLessonId[idx].value != value){
-                        is_check = true
-                        setListLessonId([...listLessonId.filter((item, idx) => item.key !== index), {"key": index, "value": value}])
-                    }
-                    break
+                let lesson_time_obj: Option1s = {
+                    key: index,
+                    value: schedule_items_list[index].lesson_time
                 }
-                
-            }
-
-            if (is_check == false) {
-                setListLessonId([...listLessonId, {"key": index, "value": value}])
+                res_1.push(date_of_week_obj)
+                listScheduleItemId.push(date_of_week_obj)
+                listLessonId.push(lesson_time_obj)
+                //console.log(listScheduleItemId)
+                //setListScheduleItemId([...listScheduleItemId, date_of_week_obj])
+                //setListLessonId([...listLessonId, lesson_time_obj])
             }
         }
-    }
+        setListScheduleItemId([...listScheduleItemId])
+        setListLessonId([...listLessonId])
     
+    }, [total])
     function hasFormMutipleValueChanged1(value: number, index: number) {
         if (listScheduleItemId.length === 0){
             setListScheduleItemId([...listScheduleItemId, {"key": index, "value": value}])
@@ -205,13 +183,23 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
             }
 
             else if (saveFn == editSchedule){
-                let lesson_times: Option1s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
-                let date_of_weeks: Option1s[] = listScheduleItemId.filter((value, index) => value.key < formState.total_date_of_week.value)
-                
-                //dispatch(putSchedule(schedule.id,{
-                //    creator_id: localStorage.getItem('id'),
-                //    name: formState.name.value
-                //}));
+                dispatch(putSchedule(schedule.id,{
+                    creator_id: localStorage.getItem('id'),
+                    name: formState.name.value
+                }));
+
+                for (let idx = 0; idx < date_of_weeks.length; idx++) {
+                    for (let index = 0; index < lesson_times.length; index++) {
+                        if (date_of_weeks[idx].key === lesson_times[index].key){
+                            dispatch(putScheduleItem(schedule_items_list[idx].id,{
+                                schedule_id: localStorage.getItem('schedule_id'),
+                                lesson_time: lesson_times[index].value,
+                                date_of_week: date_of_weeks[idx].value
+                            }))
+                            break
+                        }
+                    }
+                }
             }
 
 
@@ -315,7 +303,6 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
                                                         inputClass={`schedule_item_date_of_week_${index}`}
                                                         onChange={hasFormMutipleValueChanged1}
                                                         required={true}
-                                                        initial={initialDateOfWeek}
                                                         label="Thứ trong tuần"
                                                         options={list_date_of_week}
                                                     />
@@ -325,7 +312,6 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
                                                         value={schedule_items_list[index].lesson_time}
                                                         inputClass={`schedule_item_lesson_time_${index}`}
                                                         index={index}
-                                                        initial={initialLessonTime}
                                                         onChange={hasFormMutipleValueChanged2}
                                                         required={true}
                                                         label="Tiết"

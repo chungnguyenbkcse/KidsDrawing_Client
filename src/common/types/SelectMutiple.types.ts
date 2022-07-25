@@ -4,7 +4,6 @@ export type SelectMutipleProps = {
     label: string,
     value: any,
     index: number,
-    initial: Function,
     inputClass?: string,
     options: any
 };

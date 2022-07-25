@@ -20,6 +20,8 @@ import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { useLocation, useParams } from "react-router-dom";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { postImage } from "../../common/service/Cloudinary/PostImage";
+import { postCourse } from "../../common/service/Course/PostCourse";
+import { putCourse } from "../../common/service/Course/PutCourse";
 
 type Options = {
     name: string;
@@ -32,10 +34,13 @@ const CourseNomalForm: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const courses: ICourseState = useSelector((state: IStateType) => state.courses);
     //console.log(courses)
-    const { state: { course_value } } = useLocation()
-    //console.log(course_value)
+    const { state } = useLocation()
+    console.log(state)
+    let course: ICourse | null = null;
+    if (typeof state != "undefined"){
+        course = state.course_value;
+    }
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    let course: ICourse | undefined = course_value;
     //console.log(course)
     const isCreate: boolean = (courses.modificationState === CourseModificationStatus.Create);
     useEffect(() => {
@@ -128,19 +133,37 @@ const CourseNomalForm: React.FC = () => {
                 art_level_id: formState.art_level_id.value
             }));
 
-            console.log({
-                ...course,
-                name: formState.name.value,
-                description: textHtml,
-                max_participant: formState.max_participant.value,
-                num_of_section: formState.num_of_section.value,
-                price: formState.price.value,
-                image_url: url,
-                is_enabled: formState.is_enabled.value,
-                art_type_id: formState.art_type_id.value,
-                art_age_id: formState.art_age_id.value,
-                art_level_id: formState.art_level_id.value
-            })
+            if (saveFn == addCourse) {
+                dispatch(postCourse({
+                    name: formState.name.value,
+                    description: textHtml,
+                    max_participant: formState.max_participant.value,
+                    num_of_section: formState.num_of_section.value,
+                    price: formState.price.value,
+                    image_url: url,
+                    is_enabled: formState.is_enabled.value,
+                    art_type_id: formState.art_type_id.value,
+                    art_age_id: formState.art_age_id.value,
+                    art_level_id: formState.art_level_id.value,
+                    creator_id: localStorage.getItem('id')
+                }))
+            }
+
+            else if (saveFn == editCourse) {
+                dispatch(putCourse(course.id, {
+                    name: formState.name.value,
+                    description: textHtml,
+                    max_participant: formState.max_participant.value,
+                    num_of_section: formState.num_of_section.value,
+                    price: formState.price.value,
+                    image_url: url,
+                    is_enabled: formState.is_enabled.value,
+                    art_type_id: formState.art_type_id.value,
+                    art_age_id: formState.art_age_id.value,
+                    art_level_id: formState.art_level_id.value,
+                    creator_id: localStorage.getItem('id')
+                }))
+            }
 
             dispatch(addNotification("Khóa học chung  ", `${formState.name.value} chỉnh bởi bạn`));
             dispatch(clearSelectedCourse());

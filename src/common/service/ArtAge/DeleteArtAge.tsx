@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataError, removeArtAge } from "../../../store/actions/art_age.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteArtAge(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -17,7 +18,13 @@ export function deleteArtAge(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(deleteArtAge(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response
             })

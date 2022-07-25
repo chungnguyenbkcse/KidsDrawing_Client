@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataError, removeScheduleItem } from "../../../store/actions/schedule_item.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteScheduleItem(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -17,7 +18,13 @@ export function deleteScheduleItem(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(deleteScheduleItem(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response
             })

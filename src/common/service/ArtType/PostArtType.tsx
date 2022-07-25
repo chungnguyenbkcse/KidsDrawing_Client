@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_type.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postArtType(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -18,12 +19,22 @@ export function postArtType(data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postArtType(data))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
-                console.log(data)
+                    console.log(data)
+                    //postRefreshToken()
+                    //postArtType(data)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

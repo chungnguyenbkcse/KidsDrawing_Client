@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedule.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postSchedule(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -18,12 +19,19 @@ export function postSchedule(data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postSchedule(data))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                return response.json()
             })
             .then (data => {
                 console.log(data)
+                localStorage.setItem('schedule_id', data.id)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

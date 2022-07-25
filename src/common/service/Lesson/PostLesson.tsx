@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addLesson } from "../../../store/actions/lesson.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postLesson(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -18,7 +19,13 @@ export function postLesson(data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postLesson(data))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response
             })

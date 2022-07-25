@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addCourse } from "../../../store/actions/course.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postCourse(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -18,7 +19,13 @@ export function postCourse(data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postCourse(data))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response
             })

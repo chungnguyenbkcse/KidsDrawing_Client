@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemester } from "../../../store/actions/semester.actions";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteSemester(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -17,7 +18,13 @@ export function deleteSemester(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(deleteSemester(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response.json()
             })

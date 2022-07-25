@@ -5,6 +5,7 @@ import { login } from "../../store/actions/account.actions";
 import TextInput from "../../common/components/TextInput";
 import '../../assets/css/Login.css'
 import jwt_decode from "jwt-decode"
+import { postAut } from "../../common/service/Aut/Login";
 
 const Login: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -21,31 +22,7 @@ const Login: React.FC = () => {
   function submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if(isFormInvalid()) { return; }
-    fetch(`${process.env.REACT_APP_API_URL}/auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "username":formState.username.value,
-        "password": formState.password.value
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        localStorage.setItem('access_token', data.accessToken) // Authorization
-        localStorage.setItem('refresh_token', data.refreshToken)
-        localStorage.setItem('username', formState.username.value)
-        const token: string = data.accessToken;
-        const decoded: any = jwt_decode(token); 
-        console.log(decoded)
-        localStorage.setItem('role_privilege', decoded.role_privilege)
-        localStorage.setItem('id', decoded.id)
-        dispatch(login(formState.username.value));
-      })
-      .catch(() => {
-        alert('Đăng nhập không thành công!')
-      })
+    dispatch(postAut(formState.username.value, formState.password.value))
     e.preventDefault(); 
   }
 

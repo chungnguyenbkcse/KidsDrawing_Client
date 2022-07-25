@@ -1,7 +1,13 @@
 import { IProduct } from "../../store/models/product.interface";
 
+export type ScheduleItem = {
+    schedule_id: number;
+    lesson_time: number;
+    date_of_week: number;
+}
+
 export type OnChangeModel = {
-    value: string | number | boolean,
+    value: string | number | boolean | ScheduleItem[],
     error: string,
     touched: boolean,
     field: string
@@ -85,4 +91,17 @@ export interface ISemesterCourseFormState {
     creation_id: IFormStateField<number>;
     course_id: IFormStateField<number>;
     schedule_id: IFormStateField<number>;
+}
+
+export interface IScheduleFormState {
+    creator_id: IFormStateField<number>;
+    name: IFormStateField<string>;
+    total_date_of_week: IFormStateField<number>;
+    list_schedule_item: IFormStateField<ScheduleItem[]>;
+}
+
+export interface IScheduleItemFormState {
+    schedule_id: IFormStateField<number>;
+    lesson_time: IFormStateField<number>;
+    date_of_week: IFormStateField<number>;
 }

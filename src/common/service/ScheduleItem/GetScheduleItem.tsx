@@ -10,7 +10,7 @@ export function getScheduleItem() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/schedule_item?page=0&size=5`, {
+                `${process.env.REACT_APP_API_URL}/schedule-item?page=0&size=5`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

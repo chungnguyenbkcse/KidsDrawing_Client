@@ -14,7 +14,7 @@ import Parent from "../components/Parent/Parent";
 import DetailParent from "../components/Parent/DetailParent";
 import Semester from "../components/Semester/Semester";
 import Lesson from "../components/Lesson/Lesson";
-//import Schedule from "../components/Schedule/Schedule";
+import Schedule from "../components/Schedule/Schedule";
 import Art from "../components/Art/Art";
 import Course from "../components/Course/Course";
 import Class from "../components/Class/Class";
@@ -51,7 +51,7 @@ const Routers: React.FC = () => {
                             <Route path={`/class/lesson`}><DetailLesson /></Route>
                             <Route path={`/class/detail`}><DetailClass /></Route>
                             <Route path={`/class`}><Class /></Route>
-                            {/* <Route path={`/schedules`}><Schedule /></Route> */}
+                            <Route path={`/schedules`}><Schedule /></Route>
                             <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
                             <Route path={`/courses/:id_course`}><CourseNomalForm /></Route>
                             <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>

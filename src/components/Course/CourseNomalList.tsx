@@ -19,84 +19,84 @@ type Options = {
 }
 
 
-function CourseNomalList(props: courseListProps): JSX.Element  {
+function CourseNomalList(props: courseListProps): JSX.Element {
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
   const history = useHistory();
   const dispatch: Dispatch<any> = useDispatch();
   const levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
-    const listLevel: IArtLevel[] = levels.artLevels
-    console.log(listLevel)
-    const listLevels: Options[] = [];
-    listLevel.map((ele) => {
-        let item: Options = { "name": ele.name, "value": ele.id }
-        return listLevels.push(item)
-    })
+  const listLevel: IArtLevel[] = levels.artLevels
+  console.log(listLevel)
+  const listLevels: Options[] = [];
+  listLevel.map((ele) => {
+    let item: Options = { "name": ele.name, "value": ele.id }
+    return listLevels.push(item)
+  })
 
-    const mytypes: IArtTypeState = useSelector((state: IStateType) => state.art_types);
-    const listMytype: IArtType[] = mytypes.artTypes
-    const listMytypes: Options[] = [];
-    listMytype.map((ele) => {
-        let item: Options = { "name": ele.name, "value": ele.id }
-        return listMytypes.push(item)
-    })
+  const mytypes: IArtTypeState = useSelector((state: IStateType) => state.art_types);
+  const listMytype: IArtType[] = mytypes.artTypes
+  const listMytypes: Options[] = [];
+  listMytype.map((ele) => {
+    let item: Options = { "name": ele.name, "value": ele.id }
+    return listMytypes.push(item)
+  })
 
-    const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
-    const listArtAge: IArtAge[] = art_ages.artAges
-    const listArtAges: Options[] = [];
-    listArtAge.map((ele) => {
-        let item: Options = { "name": ele.name, "value": ele.id }
-        return listArtAges.push(item)
-    })
+  const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
+  const listArtAge: IArtAge[] = art_ages.artAges
+  const listArtAges: Options[] = [];
+  listArtAge.map((ele) => {
+    let item: Options = { "name": ele.name, "value": ele.id }
+    return listArtAges.push(item)
+  })
 
-    let typeList: string[] = []
+  let typeList: string[] = []
 
-    courses.courses.map((course_item) => {
-      return mytypes.artTypes.forEach(element => {
-        if (element.id === course_item.art_type_id) {
-          return typeList.push(element.name)
-        }
-      });
-    })
+  courses.courses.map((course_item) => {
+    return mytypes.artTypes.forEach(element => {
+      if (element.id === course_item.art_type_id) {
+        return typeList.push(element.name)
+      }
+    });
+  })
 
-  
+
 
   let levelList: string[] = []
 
-    courses.courses.map((course_item) => {
-      return levels.artLevels.forEach(element => {
-        if (element.id === course_item.art_level_id) {
-          return levelList.push(element.name)
-        }
-      });
-    })
+  courses.courses.map((course_item) => {
+    return levels.artLevels.forEach(element => {
+      if (element.id === course_item.art_level_id) {
+        return levelList.push(element.name)
+      }
+    });
+  })
 
-    let ageList: string[] = []
-    courses.courses.map((course_item) => {
-      return art_ages.artAges.forEach(element => {
-        if (element.id === course_item.art_age_id) {
-          return ageList.push(element.name)
-        }
-      });
-    })
-  
-  const routeChange = () =>{ 
-    let path = '/courses/detail'; 
+  let ageList: string[] = []
+  courses.courses.map((course_item) => {
+    return art_ages.artAges.forEach(element => {
+      if (element.id === course_item.art_age_id) {
+        return ageList.push(element.name)
+      }
+    });
+  })
+
+  const routeChange = () => {
+    let path = '/courses/detail';
     history.push(path);
   }
 
-  const routeEdit = (course: ICourse) =>{ 
+  const routeEdit = (course: ICourse) => {
     dispatch(setModificationState(CourseModificationStatus.None));
-    let path = `/courses/create-course`; 
+    let path = `/courses/create-course`;
     history.push(
       {
         pathname: path,
-        state: {course_value: course} // your data array of objects
+        state: { course_value: course } // your data array of objects
       }
     );
   }
 
-  const routeChange1 = () =>{ 
-    let path = '/courses/lesson-plan'; 
+  const routeChange1 = () => {
+    let path = '/courses/lesson-plan';
     history.push(path);
   }
 
@@ -116,7 +116,10 @@ function CourseNomalList(props: courseListProps): JSX.Element  {
         <button type="button" className="btn btn-warning" onClick={routeChange1}>Chỉnh sửa giáo án</button>
       </td>
       <td>
-        <button type="button" className="btn btn-danger">Xóa</button>
+        <button type="button" className="btn btn-danger" onClick={() => {
+          if (props.onSelect) props.onSelect(course);
+          dispatch(setModificationState(CourseModificationStatus.Remove))
+        }}>Xóa</button>
       </td>
     </tr>);
   });

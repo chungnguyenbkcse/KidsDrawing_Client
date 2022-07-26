@@ -14,15 +14,15 @@ const initialState: ISemesterCourseState = {
 function semesterCoursesReducer(state: ISemesterCourseState = initialState, action: IActionBase): ISemesterCourseState {
     switch (action.type) {
         case INITIAL_SEMESTER_COURSE: {
-            return { ...state, semesterCourses : [...state.semesterCourses, action.semesterCourse]};
+            return { ...state, semesterCourses : [...state.semesterCourses, action.semester_course]};
         }
         case ADD_SEMESTER_COURSE: {
-            return { ...state, semesterCourses: [...state.semesterCourses, action.semesterCourse]};
+            return { ...state, semesterCourses: [...state.semesterCourses, action.semester_course]};
         }
         case EDIT_SEMESTER_COURSE: {
-            const foundIndex: number = state.semesterCourses.findIndex(pr => pr.id === action.semesterCourse.id);
+            const foundIndex: number = state.semesterCourses.findIndex(pr => pr.id === action.semester_course.id);
             let semesterCourses: ISemesterCourse[] = state.semesterCourses;
-            semesterCourses[foundIndex] = action.semesterCourse;
+            semesterCourses[foundIndex] = action.semester_course;
             return { ...state, semesterCourses: semesterCourses };
         }
         case REMOVE_SEMESTER_COURSE: {
@@ -32,7 +32,7 @@ function semesterCoursesReducer(state: ISemesterCourseState = initialState, acti
             return { ...state, semesterCourses: [] };
         }
         case CHANGE_SEMESTER_COURSE_PENDING_EDIT: {
-            return { ...state, selectedSemesterCourse: action.semesterCourse };
+            return { ...state, selectedSemesterCourse: action.semester_course };
         }
         case CLEAR_SEMESTER_COURSE_PENDING_EDIT: {
             return { ...state, selectedSemesterCourse: null };

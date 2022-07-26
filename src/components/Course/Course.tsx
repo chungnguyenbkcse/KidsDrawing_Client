@@ -10,16 +10,23 @@ import { ICourseState, IStateType, IRootPageStateType, ISemesterCourseState } fr
 import Popup from "reactjs-popup";
 import {
     clearSelectedCourse, setModificationState,
-    changeSelectedCourse
+    changeSelectedCourse,
+    removeCourse
 } from "../../store/actions/course.action";
 import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
 import { ISemesterCourse, SemesterCourseModificationStatus } from "../../store/models/semester_course.interface";
-import { changeSelectedSemesterCourse, setModificationStateSemesterCourse } from "../../store/actions/semester_course.action";
+import { changeSelectedSemesterCourse, clearSelectedSemesterCourse, removeSemesterCourse, setModificationStateSemesterCourse } from "../../store/actions/semester_course.action";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
+import { addNotification } from "../../store/actions/notifications.action";
+import { deleteCourse } from "../../common/service/Course/DeleteCourse";
+import { getSemester } from "../../common/service/semester/GetSemester";
+import { getSchedule } from "../../common/service/Schedule/GetSchedule";
+import { deleteSemesterCourse } from "../../common/service/SemesterCourse/DeleteSemesterCourse";
+import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
 
 
 const Course: React.FC = () => {
@@ -41,7 +48,10 @@ const Course: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
+        dispatch(getSemesterCourse())
         dispatch(getCourse())
+        dispatch(getSemester())
+        dispatch(getSchedule())
         dispatch(getArtType())
         dispatch(getArtLevel())
         dispatch(getArtAge())
@@ -49,11 +59,13 @@ const Course: React.FC = () => {
 
     function onCourseSelect(course: ICourse): void {
         dispatch(changeSelectedCourse(course));
+        onCourseRemove1()
         dispatch(setModificationState(CourseModificationStatus.None));
     }
 
     function onSemesterCourseSelect(course: ISemesterCourse): void {
         dispatch(changeSelectedSemesterCourse(course));
+        onCourseRemove2()
         dispatch(setModificationStateSemesterCourse(SemesterCourseModificationStatus.None));
     }
 
@@ -62,6 +74,10 @@ const Course: React.FC = () => {
     }
     function onCourseRemove2() {
         setPopup2(true);
+    }
+
+    function onRemovePopup2(value: boolean) {
+        setPopup2(value)
     }
 
     const history = useHistory();
@@ -76,6 +92,8 @@ const Course: React.FC = () => {
             }
         );
     }
+
+    console.log(courses.modificationState)
 
 
     return (
@@ -167,7 +185,40 @@ const Course: React.FC = () => {
                                 </div>
 
 
-                                
+                                {
+                                    function () {
+                                        if ((courses.selectedCourse) && (courses.modificationState === CourseModificationStatus.Remove)) {
+                                            return (
+                                                <Popup
+                                                    open={popup1}
+                                                    onClose={() => setPopup1(false)}
+                                                    closeOnDocumentClick
+                                                >
+                                                    <div className="popup-modal" id="popup-modal">
+                                                        <div className="popup-title">
+                                                            Are you sure?
+                                                        </div>
+                                                        <div className="popup-content">
+                                                            <button type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => {
+                                                                    if (!courses.selectedCourse) {
+                                                                        return;
+                                                                    }
+                                                                    dispatch(deleteCourse(courses.selectedCourse.id))
+                                                                    dispatch(addNotification("Khóa học ", `${courses.selectedCourse.id} đã được xóa`));
+                                                                    dispatch(removeCourse(courses.selectedCourse.id));
+                                                                    dispatch(clearSelectedCourse());
+                                                                    setPopup1(false);
+                                                                }}>Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+                                            )
+                                        }
+                                    }()
+                                }
                             </Fragment>
                         )
                     }
@@ -181,7 +232,7 @@ const Course: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học theo kì</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationState(CourseModificationStatus.Create))
+                                                        dispatch(setModificationStateSemesterCourse(SemesterCourseModificationStatus.Create))
                                                         onCourseRemove2()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
@@ -197,6 +248,56 @@ const Course: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                <Popup
+                                    open={popup2}
+                                    onClose={() => setPopup2(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <>
+                                        {
+                                            function () {
+                                                if ((semester_courses.modificationState === SemesterCourseModificationStatus.Create) || ((semester_courses.selectedSemesterCourse) && (semester_courses.modificationState === SemesterCourseModificationStatus.Edit))) {
+                                                    return <CourseSemesterForm isCheck={onRemovePopup2} />
+                                                }
+                                            }()
+                                        }
+                                    </>
+                                </Popup>
+                                {
+                                    function () {
+                                        if ((semester_courses.selectedSemesterCourse) && (semester_courses.modificationState === SemesterCourseModificationStatus.Remove)) {
+                                            return (
+                                                <Popup
+                                                    open={popup2}
+                                                    onClose={() => setPopup2(false)}
+                                                    closeOnDocumentClick
+                                                >
+                                                    <div className="popup-modal" id="popup-modal">
+                                                        <div className="popup-title">
+                                                            Are you sure?
+                                                        </div>
+                                                        <div className="popup-content">
+                                                            <button type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => {
+                                                                    if (!semester_courses.selectedSemesterCourse) {
+                                                                        return;
+                                                                    }
+                                                                    dispatch(deleteSemesterCourse(semester_courses.selectedSemesterCourse.id))
+                                                                    dispatch(addNotification("Khóa học theo kì ", `${semester_courses.selectedSemesterCourse.id} đã được xóa`));
+                                                                    dispatch(removeSemesterCourse(semester_courses.selectedSemesterCourse.id));
+                                                                    dispatch(clearSelectedSemesterCourse());
+                                                                    setPopup2(false);
+                                                                }}>Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+                                            )
+                                        }
+                                    }()
+                                }
                             </Fragment>
                         )
                     }

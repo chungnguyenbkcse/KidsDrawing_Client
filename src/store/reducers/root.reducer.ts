@@ -15,6 +15,7 @@ import artLevelsReducer from "./art_level.reducer";
 import artAgesReducer from "./art_age.reducer";
 import coursesReducer from "./course.reducer";
 import semesterCoursesReducer from "./semester_course.reducer";
+import contestsReducer from "./contest.reducer";
 
 
 const initialState: IRootStateType = {
@@ -44,7 +45,8 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     art_levels: artLevelsReducer,
     art_ages: artAgesReducer,
     courses: coursesReducer,
-    semester_courses: semesterCoursesReducer
+    semester_courses: semesterCoursesReducer,
+    contests: contestsReducer,
 });
 
 

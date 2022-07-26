@@ -9,7 +9,6 @@ import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel, ISemesterFormState } from "../../common/types/Form.types";
 import { postSemester } from "../../common/service/semester/PostSemester";
 import { putSemester } from "../../common/service/semester/PutSemester";
-import Editor from "../../common/components/Quill/Editor";
 
 export type semesterListProps = {
   isCheck: (value: boolean) => void;

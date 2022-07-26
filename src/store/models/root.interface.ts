@@ -12,6 +12,7 @@ import { ArtLevelModificationStatus, IArtLevel } from "./art_level.interface";
 import { ArtAgeModificationStatus, IArtAge } from "./art_age.interface";
 import { ISemesterCourse, SemesterCourseModificationStatus } from "./semester_course.interface";
 import { CourseModificationStatus, ICourse } from "./course.interface";
+import { ContestModificationStatus, IContest } from "./contest.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -37,6 +38,7 @@ export interface IStateType {
     art_ages: IArtAgeState;
     courses: ICourseState;
     semester_courses: ISemesterCourseState;
+    contests: IContestState;
 }
 
 export interface IProductState {
@@ -119,4 +121,10 @@ export interface ICourseState {
     selectedCourse: ICourse | null;
     modificationState: CourseModificationStatus;
     courses: ICourse[];
+}
+
+export interface IContestState {
+    selectedContest: IContest | null;
+    modificationState: ContestModificationStatus;
+    contests: IContest[];
 }

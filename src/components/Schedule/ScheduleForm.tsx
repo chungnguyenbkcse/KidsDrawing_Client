@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, Dispatch, Fragment, useRef, useEffect } from "react";
+import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
 import { IStateType, IScheduleState, IScheduleItemState, ILessonState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISchedule, ScheduleModificationStatus } from "../../store/models/schedule.interface";
@@ -9,9 +9,6 @@ import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel, IScheduleFormState, ScheduleItem } from "../../common/types/Form.types";
 import { postSchedule } from "../../common/service/Schedule/PostSchedule";
 import { putSchedule } from "../../common/service/Schedule/PutSchedule";
-import Editor from "../../common/components/Quill/Editor";
-import { IScheduleItem } from "../../store/models/schedule_item.interface";
-import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
 import { postScheduleItem } from "../../common/service/ScheduleItem/PostScheduleItem";

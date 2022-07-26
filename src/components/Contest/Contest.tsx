@@ -4,19 +4,25 @@ import TopCard from "../../common/components/TopCard";
 import "./Contest.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { IContestState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
+    removeContest, clearSelectedContest, setModificationState,
+    changeSelectedContest
+} from "../../store/actions/contest.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+import { ContestModificationStatus, IContest } from "../../store/models/contest.interface";
 import TextInput from "../../common/components/TextInput";
 import SelectInput from "../../common/components/Select";
 import ContestIsOnList from "./ContestIsOnList";
 import ContestEndList from "./ContestEndList";
 import ContestNotOnYetList from "./ContestNotOnYetList";
+import { useHistory } from "react-router-dom";
+import { deleteContest } from "../../common/service/Contest/DeleteContest";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
+import { getContest } from "../../common/service/Contest/GetContest";
 
 const data = {
     'id': 3,
@@ -38,27 +44,57 @@ const Contest: React.FC = () => {
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const contests: IContestState = useSelector((state: IStateType) => state.contests);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
+    const numberItemsCount: number = contests.contests.length;
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);
 
     useEffect(() => {
-        dispatch(clearSelectedProduct());
+        dispatch(clearSelectedContest());
         dispatch(updateCurrentPath("Cuộc thi", "danh sách"));
     }, [path.area, dispatch]);
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    useEffect(() => {
+        dispatch(getContest())
+        dispatch(getArtType())
+        dispatch(getArtLevel())
+        dispatch(getArtAge())
+    }, [dispatch])
+
+    function onContestSelectNotOnYetList(contest: IContest): void {
+        dispatch(changeSelectedContest(contest));
+        onContestRemove1()
+        dispatch(setModificationState(ContestModificationStatus.None));
     }
 
-    function onProductRemove1() {
+    function onContestSelectOnList(contest: IContest): void {
+        dispatch(changeSelectedContest(contest));
+        dispatch(setModificationState(ContestModificationStatus.None));
+    }
+
+    function onContestSelectEndList(contest: IContest): void {
+        dispatch(changeSelectedContest(contest));
+        dispatch(setModificationState(ContestModificationStatus.None));
+    }
+
+    function onContestRemove1() {
         setPopup1(true);
     }
-    function onProductRemove2() {
+    function onContestRemove2() {
         setPopup2(true);
+    }
+
+    const history = useHistory();
+
+    const routeChange = () => {
+        let path = `/contests/edit-contest`; 
+        history.push(
+            {
+                pathname: path,
+                state: {contest_value: null} // your data array of objects
+            }
+        );
     }
 
 
@@ -158,7 +194,7 @@ const Contest: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <ContestIsOnList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onContestSelectOnList}
                                                 />
                                             </div>
                                         </div>
@@ -177,8 +213,9 @@ const Contest: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách cuộc thi chưa diễn ra</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationState(ProductModificationStatus.Create))
-                                                        onProductRemove2()
+                                                        dispatch(setModificationState(ContestModificationStatus.Create))
+                                                        routeChange()
+                                                        onContestRemove2()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
                                                         Thêm cuộc thi
@@ -187,23 +224,47 @@ const Contest: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <ContestNotOnYetList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onContestSelectNotOnYetList}
                                                 />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-                                <Popup
-                                    open={popup2}
-                                    onClose={() => setPopup2(false)}
-                                    closeOnDocumentClick
-                                >
-                                    <div className="row text-left">
-                                        {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <ContestForm /> : null}
-                                    </div>
-                                </Popup>
+                                {
+                                    function () {
+                                        if ((contests.selectedContest) && (contests.modificationState === ContestModificationStatus.Remove)) {
+                                            return (
+                                                <Popup
+                                                    open={popup1}
+                                                    onClose={() => setPopup1(false)}
+                                                    closeOnDocumentClick
+                                                >
+                                                    <div className="popup-modal" id="popup-modal">
+                                                        <div className="popup-title">
+                                                            Are you sure?
+                                                        </div>
+                                                        <div className="popup-content">
+                                                            <button type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => {
+                                                                    if (!contests.selectedContest) {
+                                                                        return;
+                                                                    }
+                                                                    dispatch(deleteContest(contests.selectedContest.id))
+                                                                    dispatch(addNotification("Khóa học ", `${contests.selectedContest.id} đã được xóa`));
+                                                                    dispatch(removeContest(contests.selectedContest.id));
+                                                                    dispatch(clearSelectedContest());
+                                                                    setPopup1(false);
+                                                                }}>Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+                                            )
+                                        }
+                                    }()
+                                }
                             </Fragment>
                         )
                     }
@@ -219,7 +280,7 @@ const Contest: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <ContestEndList
-                                                    onSelect={onProductSelect}
+                                                    onSelect={onContestSelectEndList}
                                                 />
                                             </div>
                                         </div>

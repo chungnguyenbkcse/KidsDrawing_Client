@@ -28,6 +28,7 @@ import LessonPlan from "../components/Course/LessonPlan";
 import Contest from "../components/Contest/Contest";
 import DegreePhoto from "../components/Request/DegreePhoto";
 import CourseNomalForm from "../components/Course/CourseNomalForm";
+import ContestForm from "../components/Contest/ContestForm";
 
 const Routers: React.FC = () => {
     return (
@@ -52,10 +53,12 @@ const Routers: React.FC = () => {
                             <Route path={`/class/detail`}><DetailClass /></Route>
                             <Route path={`/class`}><Class /></Route>
                             <Route path={`/schedules`}><Schedule /></Route>
+                            <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
                             <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
                             <Route path={`/courses/:id_course`}><CourseNomalForm /></Route>
-                            <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
                             <Route path={`/courses`}><Course /></Route>
+                            <Route path={`/contests/edit-contest`}><ContestForm /></Route>
+                            <Route path={`/contests/:id_contest`}><ContestForm /></Route>
                             <Route path={`/contests`}><Contest /></Route>
                             <Route path={`/turnovers`}><Turnover /></Route>
                             <Route path={`/request-student-off`}><StudentRequest /></Route>

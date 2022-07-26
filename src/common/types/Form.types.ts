@@ -105,3 +105,19 @@ export interface IScheduleItemFormState {
     lesson_time: IFormStateField<number>;
     date_of_week: IFormStateField<number>;
 }
+
+export interface IContestFormState {
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+    max_participant: IFormStateField<number>;
+    registration_time: IFormStateField<string>;
+    image_url: IFormStateField<string>;
+    start_time: IFormStateField<string>;
+    end_time: IFormStateField<string>;
+    is_enabled: IFormStateField<boolean>;
+    creator_id: IFormStateField<number>;
+    art_type_id: IFormStateField<number>;
+    art_age_id: IFormStateField<number>;
+    create_time: IFormStateField<string>;
+    update_time: IFormStateField<string>;
+}

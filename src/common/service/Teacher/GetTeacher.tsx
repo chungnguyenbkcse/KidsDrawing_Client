@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTeacherAll, initialTeacher, addTeacher } from "../../../store/actions/users.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface user {
     id: number,
     username: string,
@@ -31,7 +32,13 @@ export function getTeacher() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getTeacher())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response.json()
             })

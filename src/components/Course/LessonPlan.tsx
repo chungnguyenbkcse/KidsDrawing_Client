@@ -10,6 +10,7 @@ import Checkbox from "../../common/components/Checkbox";
 import SelectInput from "../../common/components/Select";
 import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import Editor from "../../common/components/Quill/Editor";
 
 const LessonPlan: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -47,6 +48,11 @@ const LessonPlan: React.FC = () => {
 
     let saveUserFn: Function = (isCreate) ? addProduct : editProduct;
     saveForm(formState, saveUserFn);
+  }
+
+  const [textHtml, setTextHtml] = useState<string>("")
+  function getValue(value: string) {
+      setTextHtml(value);
   }
 
   function saveForm(formState: IProductFormState, saveFn: Function): void {
@@ -120,26 +126,23 @@ const LessonPlan: React.FC = () => {
                 <SelectInput
                     id="input_category"
                     field="category"
-                    label="Trang"
+                    label="Số trang"
                     options={["1", "2", "3", "4"]}
                     required={true}
                     onChange={hasFormValueChanged}
                     value={formState.category.value}
                   />
-               </div>
-               </div>
-               <div className="form-group">
-                  <TextInput id="input_email"
-                    value={formState.name.value}
-                    field="email"
-                    onChange={hasFormValueChanged}
-                    required={true}
-                    maxLength={20}
-                    label="Nội dung"
-                    placeholder="" />
+              </div>
+              </div>
+              <div className="form-group">
+                  <label>Nội dung</label>
+                  <Editor getValue={getValue} isCreate={isCreate} setValue={formState.description.value}/>
+              </div>
+              <div className="form-group">
+                <button className="btn btn-info right-margin" >Trang tiếp theo</button>
               </div>
             
-              <button className="btn btn-info" onClick={() => cancelForm()}>Lưu</button>
+              <button className="btn btn-warning">Lưu</button>
               <button type="submit" className={`btn btn-primary left-margin`}>Tiếp</button>
             </form>
           </div>

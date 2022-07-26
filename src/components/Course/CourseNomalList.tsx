@@ -96,6 +96,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
   }
 
   const routeChange1 = () => {
+    dispatch(setModificationState(CourseModificationStatus.None));
     let path = '/courses/lesson-plan';
     history.push(path);
   }

@@ -43,6 +43,8 @@ function TopMenuAccount(): JSX.Element {
           localStorage.removeItem('username')
           localStorage.removeItem('role_privilege')
           localStorage.removeItem('id')
+          localStorage.removeItem('contest_id')
+          localStorage.removeItem('schedule_id')
           dispatch(logout())
         }}
         href="/aut" 

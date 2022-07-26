@@ -13,6 +13,9 @@ import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
 import { postScheduleItem } from "../../common/service/ScheduleItem/PostScheduleItem";
 import { putScheduleItem } from "../../common/service/ScheduleItem/PutScheduleItem";
+import { getSchedule } from "../../common/service/Schedule/GetSchedule";
+import { getLesson } from "../../common/service/Lesson/GetLesson";
+import { getScheduleItem } from "../../common/service/ScheduleItem/GetScheduleItem";
 
 export type scheduleListProps = {
     isCheck: (value: boolean) => void;
@@ -30,6 +33,7 @@ type Option1s = {
 }
 
 function ScheduleForm(props: scheduleListProps): JSX.Element {
+
     const dispatch: Dispatch<any> = useDispatch();
     const schedules: IScheduleState | null = useSelector((state: IStateType) => state.schedules);
     let schedule: ISchedule | null = schedules.selectedSchedule;
@@ -160,23 +164,10 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
             let date_of_weeks: Option1s[] = listScheduleItemId.filter((value, index) => value.key < formState.total_date_of_week.value)
 
             if (saveFn == addSchedule){
-                dispatch(postSchedule({
+                dispatch(postSchedule(date_of_weeks, lesson_times, {
                     creator_id: localStorage.getItem('id'),
                     name: formState.name.value
                 }));
-                for (let idx = 0; idx < date_of_weeks.length; idx++) {
-                    for (let index = 0; index < lesson_times.length; index++) {
-                        if (date_of_weeks[idx].key === lesson_times[index].key){
-                            dispatch(postScheduleItem({
-                                schedule_id: localStorage.getItem('schedule_id'),
-                                lesson_time: lesson_times[index].value,
-                                date_of_week: date_of_weeks[idx].value
-                            }))
-                            break
-                        }
-                    }
-                }
-                localStorage.removeItem('schedule_id');
             }
 
             else if (saveFn == editSchedule){
@@ -257,6 +248,8 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
         return list_lessons.push(item)
     })
 
+    console.log(schedule_items_list)
+
     return (
         <Fragment>
             <div className="row text-left">
@@ -295,7 +288,7 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
                                             <div className="form-row" key={index}>
                                                 <div className="form-group col-md-6">
                                                     <SelectKeyValueMutiple 
-                                                        value={schedule_items_list[index].date_of_week}
+                                                        value={isCreate ? 0 : schedule_items_list[index].date_of_week}
                                                         index={index}
                                                         inputClass={`schedule_item_date_of_week_${index}`}
                                                         onChange={hasFormMutipleValueChanged1}
@@ -306,7 +299,7 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
                                                 </div>
                                                 <div className="form-group col-md-6">
                                                     <SelectKeyValueMutiple 
-                                                        value={schedule_items_list[index].lesson_time}
+                                                        value={isCreate ? 0 : schedule_items_list[index].lesson_time}
                                                         inputClass={`schedule_item_lesson_time_${index}`}
                                                         index={index}
                                                         onChange={hasFormMutipleValueChanged2}

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, IContestState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
+import { IStateType, IContestState, IArtTypeState, IArtAgeState, IUserState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { IContest, ContestModificationStatus } from "../../store/models/contest.interface";
 import TextInput from "../../common/components/TextInput";
@@ -17,10 +17,18 @@ import { IArtType } from "../../store/models/art_type.interface";
 import { IArtAge } from "../../store/models/art_age.interface";
 import Editor from "../../common/components/Quill/Editor";
 import { useLocation } from "react-router-dom";
+import ReactSelect from "../../common/components/ReactSelect";
+import { IUser } from "../../store/models/user.interface";
+import { postUserGradeContest } from "../../common/service/UserGradeContest/PostUserGradeContest";
 
 type Options = {
   name: string;
   value: any;
+}
+
+type Option1 = {
+  label: string;
+  value: number;
 }
 
 const ContestForm: React.FC = () => {
@@ -50,6 +58,14 @@ const ContestForm: React.FC = () => {
   listMytype.map((ele) => {
     let item: Options = { "name": ele.name, "value": ele.id }
     return listMytypes.push(item)
+  })
+
+  const users: IUserState = useSelector((state: IStateType) => state.users);
+  const listTeacher: IUser[] = users.teachers
+  const listTeachers: Option1[] = [];
+  listTeacher.map((ele) => {
+    let item: Option1 = { "label": ele.username, "value": ele.id }
+    return listTeachers.push(item)
   })
 
   const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
@@ -92,7 +108,7 @@ const ContestForm: React.FC = () => {
     saveForm(formState, saveUserFn, url);
   }
 
-  function saveForm(formState: IContestFormState, saveFn: Function, url: string): void {
+  function saveForm(formState: IContestFormState, saveFn: Function, url: string):void {
     if (contest) {
       dispatch(saveFn({
         ...contest,
@@ -110,7 +126,7 @@ const ContestForm: React.FC = () => {
       }));
 
       if (saveFn === addContest) {
-        dispatch(postContest({
+        dispatch(postContest(valueTeacher,{
           name: formState.name.value,
           description: textHtml,
           registration_time: formState.registration_time.value,
@@ -201,6 +217,12 @@ const ContestForm: React.FC = () => {
 
   };
 
+  const [valueTeacher, setValueTeacher] = useState<any[]>([])
+
+  function changeValueTeacher(value: any){
+    setValueTeacher(value)
+  }
+
   return (
     <Fragment>
       <div className="col-xl-12 col-lg-12">
@@ -248,7 +270,8 @@ const ContestForm: React.FC = () => {
                   />
                 </div>
               </div>
-              <div className="form-group">
+              <div className="form-row">
+                <div className="form-group col-md-6">
                   <Checkbox
                     id="input_is_enabled"
                     field="is_enabled"
@@ -257,6 +280,11 @@ const ContestForm: React.FC = () => {
                     required={false}
                     label="Mở"
                   />
+                </div>
+                  <div className="form-group col-md-6">
+                    <label>Giáo viên chấm</label>
+                    <ReactSelect setValue={listTeachers} changeValue={changeValueTeacher}/>
+                  </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">

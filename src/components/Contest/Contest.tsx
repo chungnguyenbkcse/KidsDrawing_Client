@@ -23,20 +23,7 @@ import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { getContest } from "../../common/service/Contest/GetContest";
-
-const data = {
-    'id': 3,
-    'first_name': 'Thao',
-    'last_name': 'Nguyễn',
-    'username': 'thaonguyen123',
-    'status': 'Đang hoạt động',
-    'date_of_birth': '10/10/2000',
-    'phone': '0989439678',
-    'sex': 'Nữ',
-    'address': 'Thanh Hoa',
-    'teach_type': 'Chì màu',
-    'teach_level': '4-6 tuổi'
-}
+import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 
 
 const Contest: React.FC = () => {
@@ -56,6 +43,7 @@ const Contest: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
+        dispatch(getTeacher())
         dispatch(getContest())
         dispatch(getArtType())
         dispatch(getArtLevel())

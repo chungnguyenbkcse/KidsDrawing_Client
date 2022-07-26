@@ -1,13 +1,12 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedule.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postScheduleItem } from "../ScheduleItem/PostScheduleItem";
 
-export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any) {
+export function postUserGradeContest(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/schedule`, {
+                `${process.env.REACT_APP_API_URL}/user-grade-contest`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,
@@ -22,28 +21,16 @@ export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSchedule(date_of_weeks, lesson_times, data))
+                        dispatch(postUserGradeContest(data))
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                return response
             })
             .then (data => {
                 console.log(data)
-                for (let idx = 0; idx < date_of_weeks.length; idx++) {
-                    for (let index = 0; index < lesson_times.length; index++) {
-                        if (date_of_weeks[idx].key === lesson_times[index].key){
-                            dispatch(postScheduleItem({
-                                schedule_id: data.id,
-                                lesson_time: lesson_times[index].value,
-                                date_of_week: date_of_weeks[idx].value
-                            }))
-                            break
-                        }
-                    }
-                }
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

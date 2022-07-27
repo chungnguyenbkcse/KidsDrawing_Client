@@ -15,7 +15,7 @@ export type teacherListProps = {
   children?: React.ReactNode;
 };
 
-function TeacherForm(props: teacherListProps): JSX.Element {
+function TeacherImportForm(props: teacherListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const users: IUserState = useSelector((state: IStateType) => state.users);
   let user: IUser | null = users.selectedUser;
@@ -103,12 +103,66 @@ function TeacherForm(props: teacherListProps): JSX.Element {
 
   function getDisabledClass(): string {
     let isError: boolean = isFormInvalid();
-    return isError ? "disabled" : "";
+    return !csvFile ? "disabled" : "";
   }
 
   function isFormInvalid(): boolean {
     return (formState.username.error || formState.email.error
       || !formState.email.value || !formState.username.value || !formState.password.value ) as boolean;
+  }
+
+  const [csvFile, setCsvFile] = useState<any>();
+
+  const processCSV = (str: string, delim = ',') => {
+    console.log('hello')
+    const headers = str.slice(0, str.indexOf('\n')).split(delim);
+    console.log(headers)
+    const rows = str.slice(str.indexOf('\n') + 1).split('\n');
+    const headerx = ["username", "email", "password"]
+
+    const newArray = rows.map(row => {
+      const values = row.split(delim);
+      const eachObject = headerx.reduce((obj: any, header, i) => {
+        obj[header] = values[i];
+        return obj;
+      }, {})
+      return eachObject;
+    })
+    console.log(newArray)
+    newArray.map((ele: any, index: any) => {
+      if (ele.username !== "") {
+        let x: IUserFormState = {
+            username: ele.username,
+            email: ele.email,
+            password: ele.password
+        };
+
+        console.log(x)
+        let saveUserFn: Function = addTeacher;
+        saveForm(x, saveUserFn);
+        dispatch(addNotification("Giáo viên", ` ${x.username} chỉnh bởi bạn`));
+        dispatch(clearSelectedUser());
+        dispatch(setModificationState(UserModificationStatus.None));
+        //let saveUserFn: Function = addTeacher;
+        //saveForm(x, saveUserFn);
+      }
+      return 0
+    })
+  }
+
+  const saveTeacherCSV = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    props.isCheck(false)
+    const file = csvFile;
+    const reader = new FileReader();
+
+    reader.onload = function (e: any) {
+        const text = e.target.result;
+        processCSV(text)
+    }
+
+    reader.readAsText(file);
+
   }
 
   return (
@@ -120,38 +174,20 @@ function TeacherForm(props: teacherListProps): JSX.Element {
               <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} giáo viên</h6>
             </div>
             <div className="card-body">
-              <form onSubmit={saveUser}>
-                <div className="form-row">
-                  <div className="form-group col-md-6">
-                    <TextInput id="input_username"
-                      field="username"
-                      value={formState.username.value}
-                      onChange={hasFormValueChanged}
-                      required={true}
-                      maxLength={100}
-                      label="Tên đăng nhập"
-                      placeholder="" />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <TextInput id="input_email"
-                      field="email"
-                      value={formState.email.value}
-                      onChange={hasFormValueChanged}
-                      required={true}
-                      maxLength={200}
-                      label="Email"
-                      placeholder="" />
-                  </div>
+              <form onSubmit={saveTeacherCSV}>
+                <div className="form-group">
+                  <label htmlFor="profile_image">Chọn file (.xml):</label>
+                  <input
+                  type={"file"}
+                  accept=".csv,.xlsx,.xls"
+                  id="csvFile"
+                  onChange={(e: any) => {
+                    setCsvFile(e.target.files[0])
+                  }}
+                />
                 </div>
                 <div className="form-group">
-                    <TextInput id="input_password"
-                      value={formState.password.value}
-                      field="password"
-                      onChange={hasFormValueChanged}
-                      required={true}
-                      maxLength={200}
-                      label="Mật khẩu"
-                      placeholder="" />
+                  <a href={`${process.env.REACT_APP_API_LOCAL}\\example.csv`}>File mẫu</a>
                 </div>
                 <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
                 <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
@@ -164,4 +200,4 @@ function TeacherForm(props: teacherListProps): JSX.Element {
   );
 };
 
-export default TeacherForm;
+export default TeacherImportForm;

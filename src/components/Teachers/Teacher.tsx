@@ -12,6 +12,7 @@ import { IUser, UserModificationStatus } from "../../store/models/user.interface
 import TeacherForm from "./TeacherForm";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { deleteUser } from "../../common/service/User/DeleteUser";
+import TeacherImportForm from "./TeacherImportForm";
 
 
 
@@ -43,7 +44,7 @@ const Teacher: React.FC = () => {
     }
 
     function onRemovePopup(value: boolean) {
-        setPopup(false);
+        setPopup(value);
     }
 
 
@@ -78,11 +79,18 @@ const Teacher: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green">Danh sách giáo viên</h6>
                             <div className="header-buttons">
                                 <button className="btn btn-success btn-green" onClick={() => {
+                                    dispatch(setModificationState(UserModificationStatus.ImportFile))
+                                    onUserRemove()
+                                }}>
+                                    <i className="fas fa fa-plus"></i>
+                                    Import file
+                                </button>
+                                <button className="btn btn-success btn-green" onClick={() => {
                                     dispatch(setModificationState(UserModificationStatus.Create))
                                     onUserRemove()
                                 }}>
                                     <i className="fas fa fa-plus"></i>
-                                    Thêm giáo viên
+                                    Thêm thủ công
                                 </button>
                             </div>
                         </div>
@@ -106,6 +114,10 @@ const Teacher: React.FC = () => {
                         function () {
                             if ((users.modificationState === UserModificationStatus.Create) || ((users.selectedUser) && (users.modificationState === UserModificationStatus.Edit))) {
                                 return <TeacherForm isCheck={onRemovePopup}/>
+                            }
+
+                            else if (users.modificationState === UserModificationStatus.ImportFile){
+                                return <TeacherImportForm isCheck={onRemovePopup}/>
                             }
                         }()
                     }

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISectionTemplateState, IRootPageStateType } from "../../store/models/root.interface";
+import { IStateType, ISectionTemplateState, IRootPageStateType, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store/models/section_template.interface";
 import TextInput from "../../common/components/TextInput";
@@ -7,7 +7,7 @@ import { editSectionTemplate, clearSelectedSectionTemplate, setModificationState
 import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import Editor from "../../common/components/Quill/Editor";
+import Editor from "../../common/components/Quill/EditorSection";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { getCourse } from "../../common/service/Course/GetCourse";
@@ -23,12 +23,15 @@ type PageContent = {
 
 type TutorialSectionTemplate = {
   number: number;
+  name: string;
+  teaching_form: boolean;
   tutorial: PageContent[];
 }
 
 const LessonPlan: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const section_templates: ISectionTemplateState | null = useSelector((state: IStateType) => state.section_templates);
+  const courses: ICourseState | null = useSelector((state: IStateType) => state.courses);
   const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
   let section_template: ISectionTemplate | null = section_templates.selectedSectionTemplate;
   const isCreate: boolean = (section_templates.modificationState === SectionTemplateModificationStatus.Create);
@@ -146,6 +149,7 @@ const LessonPlan: React.FC = () => {
     }
   ];
 
+
   const listTeachingForm: Options[] = [
     {
       "name": "Dạy thông qua Jitsi",
@@ -166,13 +170,19 @@ const LessonPlan: React.FC = () => {
     if (currentPage < totalPage){
       setCurrentPage(currentPage + 1)
     }
+    setTextHtml("")
   }
 
   function handleSaveTutorialTemplate() {
-    handleNextPage()
+    let contentPage: PageContent = {
+      page: currentPage,
+      content: textHtml
+    }
     let contentSection: TutorialSectionTemplate = {
       number: numberSection,
-      tutorial: contentTutorialPage
+      name: formState.name.value,
+      teaching_form: formState.teaching_form.value,
+      tutorial: [...contentTutorialPage, contentPage]
     }
     setContentTutorialSection([...contentTutorialSection, contentSection])
   }
@@ -181,10 +191,26 @@ const LessonPlan: React.FC = () => {
 
   function handleBackSection(){
     setNumberSection(numberSection - 1)
+    setTextHtml("")
   }
 
   function handleNextSection() {
     setNumberSection(numberSection + 1)
+    if (totalPage == 1) {
+      let contentPage: PageContent = {
+        page: currentPage,
+        content: textHtml
+      }
+      let contentSection: TutorialSectionTemplate = {
+        number: numberSection,
+        name: formState.name.value,
+        teaching_form: formState.teaching_form.value,
+        tutorial: [...contentTutorialPage, contentPage]
+      }
+      setContentTutorialSection([...contentTutorialSection, contentSection])
+    }
+    setTextHtml("")
+    setTotalPage(0)
   }
 
   //console.log(currentPage)
@@ -201,12 +227,12 @@ const LessonPlan: React.FC = () => {
             <form onSubmit={saveUser}>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <TextInput id="input_email"
+                  <TextInput id="input_name"
                     value={formState.name.value}
-                    field="email"
+                    field="name"
                     onChange={hasFormValueChanged}
                     required={true}
-                    maxLength={20}
+                    maxLength={2000}
                     label="Tiêu đề buổi học"
                     placeholder="" />
                 </div>
@@ -241,7 +267,7 @@ const LessonPlan: React.FC = () => {
                       <>
                       <div className="form-group">
                         <label>Nội dung trang {currentPage}</label>
-                        <Editor getValue={getValue} isCreate={textHtml} setValue={textHtml} />
+                        <Editor getValue={getValue} isCreate={textHtml} setValue="" />
                       </div>
                       <div className="form-group">
                       <button className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>
@@ -254,7 +280,7 @@ const LessonPlan: React.FC = () => {
                     return (
                       <div className="form-group">
                         <label>Nội dung trang {currentPage}</label>
-                        <Editor getValue={getValue} isCreate={textHtml} setValue={textHtml} />
+                        <Editor getValue={getValue} isCreate={textHtml} setValue="" />
                       </div>
                     )
                   }
@@ -264,7 +290,7 @@ const LessonPlan: React.FC = () => {
                       <>
                       <div className="form-group">
                         <label>Nội dung trang {currentPage}</label>
-                        <Editor getValue={getValue} isCreate={""} setValue={textHtml} />
+                        <Editor getValue={getValue} isCreate={textHtml} setValue="" />
                       </div>
                       <div className="form-group">
                       <button className="btn btn-info right-margin" onClick={handleSaveTutorialTemplate}>Lưu</button>
@@ -275,7 +301,7 @@ const LessonPlan: React.FC = () => {
                 }()
               }
               {numberSection > 1 ? <button className="btn btn-warning" onClick={handleBackSection}>Quay lại</button> : null}
-              {numberSection < 10 ? <button type="submit" className={`btn btn-primary left-margin`} onClick={handleNextSection}>Tiếp</button> : <button type="submit" className={`btn btn-primary left-margin`}>Hoàn thành</button>}
+              {numberSection < 10 ? <button className={`btn btn-primary left-margin`} onClick={handleNextSection}>Buổi tiếp theo</button> : <button type="submit" className={`btn btn-primary left-margin`}>Hoàn thành</button>}
             </form>
           </div>
         </div>

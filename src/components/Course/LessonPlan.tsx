@@ -11,6 +11,11 @@ import Editor from "../../common/components/Quill/EditorSection";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { getCourse } from "../../common/service/Course/GetCourse";
+import { useLocation } from "react-router-dom";
+import { ICourse } from "../../store/models/course.interface";
+import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
+import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
+import { addLesson } from "../../store/actions/lesson.action";
 type Options = {
   name: string;
   value: any;
@@ -31,19 +36,28 @@ type TutorialSectionTemplate = {
 const LessonPlan: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const section_templates: ISectionTemplateState | null = useSelector((state: IStateType) => state.section_templates);
-  const courses: ICourseState | null = useSelector((state: IStateType) => state.courses);
   const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-  let section_template: ISectionTemplate | null = section_templates.selectedSectionTemplate;
-  const isCreate: boolean = (section_templates.modificationState === SectionTemplateModificationStatus.Create);
+  const isCreate: boolean = section_templates.sectionTemplates.length > 0 ? false : true;
   useEffect(() => {
     dispatch(clearSelectedSectionTemplate());
     dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
   }, [path.area, dispatch]);
 
+  useEffect(() => {
+    if (course) {
+      dispatch(getSectionTemplateByCourseId(course.id));
+    }
+  }, [dispatch]);
 
-  if (!section_template || isCreate) {
-    section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+  const { state } = useLocation()
+  console.log(state)
+  let course: ICourse = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" }
+  if (typeof state != "undefined") {
+    course = state.course_value;
   }
+
+
+  let section_template: ISectionTemplate = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
 
   const [formState, setFormState] = useState({
     name: { error: "", value: section_template.name },
@@ -87,9 +101,10 @@ const LessonPlan: React.FC = () => {
     if (isFormInvalid()) {
       return;
     }
-
     let saveUserFn: Function = (isCreate) ? addSectionTemplate : editSectionTemplate;
-    saveForm(formState, saveUserFn);
+    //console.log(contentTutorialSection)
+    //console.log(saveUserFn)
+    saveForm(formState, saveUserFn, contentTutorialSection);
   }
 
   const [textHtml, setTextHtml] = useState<string>("")
@@ -97,7 +112,7 @@ const LessonPlan: React.FC = () => {
     setTextHtml(value);
   }
 
-  function saveForm(formState: ISectionTemplateFormState, saveFn: Function): void {
+  function saveForm(formState: ISectionTemplateFormState, saveFn: Function, contentTutorialSections: TutorialSectionTemplate[]): void {
     if (section_template) {
       dispatch(saveFn({
         ...section_template,
@@ -108,6 +123,20 @@ const LessonPlan: React.FC = () => {
         course_id: formState.course_id.value,
         creator_id: formState.creator_id.value
       }));
+
+      if (saveFn === addSectionTemplate){
+        console.log("hello")
+        contentTutorialSections.map((contentSection) => {
+          return dispatch(postSectionTemplate(contentSection.tutorial, {
+            name: contentSection.name,
+            number: contentSection.number,
+            description: "",
+            teaching_form: contentSection.teaching_form,
+            course_id: course.id,
+            creator_id: localStorage.getItem('id')
+          }))
+        })
+      }
 
       dispatch(addNotification("Giáo trình ", `${formState.name.value} chỉnh bởi bạn`));
       dispatch(clearSelectedSectionTemplate());
@@ -125,9 +154,8 @@ const LessonPlan: React.FC = () => {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.number.error || formState.description.error
-      || formState.name.error || formState.teaching_form.error || formState.course_id.error
-      || !formState.name.value || !formState.teaching_form.value) as boolean;
+    return (formState.number.error || formState.teaching_form.error 
+      || !formState.name.value || !formState.teaching_form.value || contentTutorialSection.length < course.num_of_section) as boolean;
   }
 
   const listTotalPage: Options[] = [
@@ -167,7 +195,7 @@ const LessonPlan: React.FC = () => {
       content: textHtml
     }
     setContentTutorialPage([...contentTutorialPage, contentPage])
-    if (currentPage < totalPage){
+    if (currentPage < totalPage) {
       setCurrentPage(currentPage + 1)
     }
     setTextHtml("")
@@ -187,9 +215,7 @@ const LessonPlan: React.FC = () => {
     setContentTutorialSection([...contentTutorialSection, contentSection])
   }
 
-  console.log(contentTutorialSection)
-
-  function handleBackSection(){
+  function handleBackSection() {
     setNumberSection(numberSection - 1)
     setTextHtml("")
   }
@@ -210,14 +236,12 @@ const LessonPlan: React.FC = () => {
       setContentTutorialSection([...contentTutorialSection, contentSection])
     }
     setTextHtml("")
-    setTotalPage(0)
   }
 
   //console.log(currentPage)
 
   return (
     <Fragment>
-      <h1 className="h3 mb-2 text-gray-800">Soạn giáo trình chung</h1>
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">
@@ -261,22 +285,22 @@ const LessonPlan: React.FC = () => {
                 </div>
               </div>
               {
-                function (){
-                  if (currentPage > 0 && totalPage > 1 && totalPage > currentPage){
+                function () {
+                  if (currentPage > 0 && totalPage > 1 && totalPage > currentPage) {
                     return (
                       <>
-                      <div className="form-group">
-                        <label>Nội dung trang {currentPage}</label>
-                        <Editor getValue={getValue} isCreate={textHtml} setValue="" />
-                      </div>
-                      <div className="form-group">
-                      <button className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>
-                    </div>
-                    </>
+                        <div className="form-group">
+                          <label>Nội dung trang {currentPage}</label>
+                          <Editor getValue={getValue} isCreate={textHtml} setValue="" />
+                        </div>
+                        <div className="form-group">
+                          <button type="button" className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>
+                        </div>
+                      </>
                     )
                   }
 
-                  else if (totalPage === 1){
+                  else if (totalPage === 1) {
                     return (
                       <div className="form-group">
                         <label>Nội dung trang {currentPage}</label>
@@ -285,23 +309,43 @@ const LessonPlan: React.FC = () => {
                     )
                   }
 
-                  else if (currentPage > 0  && totalPage === currentPage){
+                  else if (currentPage > 0 && totalPage === currentPage) {
                     return (
                       <>
-                      <div className="form-group">
-                        <label>Nội dung trang {currentPage}</label>
-                        <Editor getValue={getValue} isCreate={textHtml} setValue="" />
-                      </div>
-                      <div className="form-group">
-                      <button className="btn btn-info right-margin" onClick={handleSaveTutorialTemplate}>Lưu</button>
-                    </div>
-                    </>
+                        <div className="form-group">
+                          <label>Nội dung trang {currentPage}</label>
+                          <Editor getValue={getValue} isCreate={textHtml} setValue="" />
+                        </div>
+                        <button type="button" className="btn btn-info right-margin" onClick={handleSaveTutorialTemplate}>Lưu</button>
+                      </>
                     )
                   }
                 }()
               }
-              {numberSection > 1 ? <button className="btn btn-warning" onClick={handleBackSection}>Quay lại</button> : null}
-              {numberSection < 10 ? <button className={`btn btn-primary left-margin`} onClick={handleNextSection}>Buổi tiếp theo</button> : <button type="submit" className={`btn btn-primary left-margin`}>Hoàn thành</button>}
+              {
+                function () {
+                  if (numberSection > 1) {
+                    return (
+                      <button type="button" className="btn btn-warning" onClick={handleBackSection}>Về</button>
+                    )
+                  }
+                }()
+              }
+
+              {
+                function() {
+                  if (course && (numberSection < course.num_of_section)){
+                    return (
+                      <button type="button" className={`btn btn-primary left-margin`} onClick={handleNextSection}>Buổi tiếp theo</button>
+                    )
+                  }
+                  else if (course && (numberSection >= course.num_of_section)){
+                    return (
+                      <button type="submit" className={`btn btn-primary left-margin ${getDisabledClass()}`}>Hoàn thành</button>
+                    )
+                  }
+                }()
+              }
             </form>
           </div>
         </div>

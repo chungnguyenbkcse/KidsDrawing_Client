@@ -86,7 +86,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
 
   const routeEdit = (course: ICourse) => {
     dispatch(setModificationState(CourseModificationStatus.None));
-    let path = `/courses/create-course`;
+    let path = `/courses/edit-course`;
     history.push(
       {
         pathname: path,
@@ -95,10 +95,15 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     );
   }
 
-  const routeChange1 = () => {
+  const routeChange1 = (course: ICourse) => {
     dispatch(setModificationState(CourseModificationStatus.None));
     let path = '/courses/lesson-plan';
-    history.push(path);
+    history.push(
+      {
+        pathname: path,
+        state: { course_value: course } // your data array of objects
+      }
+    );
   }
 
   const courseElements: (JSX.Element | null)[] = courses.courses.map((course, index) => {
@@ -111,10 +116,10 @@ function CourseNomalList(props: courseListProps): JSX.Element {
       <td>{ageList[index]}</td>
       <td>{levelList[index]}</td>
       <td>
-        <button type="button" className="btn btn-primary" onClick={() => routeEdit(course)}>Chỉnh sửa thông tin</button>
+        <button type="button" className="btn btn-primary" onClick={() => routeEdit(course)}>Chỉnh thông tin</button>
       </td>
       <td>
-        <button type="button" className="btn btn-warning" onClick={routeChange1}>Chỉnh sửa giáo án</button>
+        <button type="button" className="btn btn-warning" onClick={() => routeChange1(course)}>Chỉnh giáo án</button>
       </td>
       <td>
         <button type="button" className="btn btn-danger" onClick={() => {

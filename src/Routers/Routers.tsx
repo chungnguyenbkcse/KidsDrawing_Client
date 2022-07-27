@@ -29,6 +29,7 @@ import Contest from "../components/Contest/Contest";
 import DegreePhoto from "../components/Request/DegreePhoto";
 import CourseNomalForm from "../components/Course/CourseNomalForm";
 import ContestForm from "../components/Contest/ContestForm";
+import CourseNomalFormEdit from "../components/Course/CourseNomalFormEdit";
 
 const Routers: React.FC = () => {
     return (
@@ -55,6 +56,7 @@ const Routers: React.FC = () => {
                             <Route path={`/schedules`}><Schedule /></Route>
                             <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
                             <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
+                            <Route path={`/courses/edit-course`}><CourseNomalFormEdit /></Route>
                             <Route path={`/courses/:id_course`}><CourseNomalForm /></Route>
                             <Route path={`/courses`}><Course /></Route>
                             <Route path={`/contests/edit-contest`}><ContestForm /></Route>

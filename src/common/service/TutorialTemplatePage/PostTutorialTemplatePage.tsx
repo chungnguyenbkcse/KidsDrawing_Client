@@ -1,13 +1,12 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/section_template.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postTutorialTemplate } from "../TutorialTemplate/PostTutorialTemplate";
 
-export function postSectionTemplate(tutorial: any[], data: any) {
+export function postTutorialTemplatePage(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/section-template`, {
+                `${process.env.REACT_APP_API_URL}/tutorial-template-page`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,
@@ -22,21 +21,16 @@ export function postSectionTemplate(tutorial: any[], data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSectionTemplate(tutorial,data))
+                        dispatch(postTutorialTemplatePage(data))
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                return response
             })
             .then (data => {
                 console.log(data)
-                dispatch(postTutorialTemplate(tutorial,{
-                        section_template_id: data.id,
-                        name: data.name,
-                        description: data.description,
-                }))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

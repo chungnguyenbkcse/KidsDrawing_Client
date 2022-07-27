@@ -29,7 +29,7 @@ type Options = {
 }
 
 
-const CourseNomalForm: React.FC = () => {
+const CourseNomalFormEdit: React.FC = () => {
     //console.log(id)
     const dispatch: Dispatch<any> = useDispatch();
     const courses: ICourseState = useSelector((state: IStateType) => state.courses);
@@ -40,9 +40,10 @@ const CourseNomalForm: React.FC = () => {
     if (typeof state != "undefined"){
         course = state.course_value;
     }
+    console.log(course)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     //console.log(course)
-    const isCreate: boolean = true;
+    const isCreate: boolean = false;
     useEffect(() => {
         dispatch(clearSelectedCourse());
         dispatch(updateCurrentPath("Khóa học", ""));
@@ -85,14 +86,6 @@ const CourseNomalForm: React.FC = () => {
         return listArtAges.push(item)
     })
 
-    const history = useHistory();
-
-    function routeHome() {
-        dispatch(setModificationState(CourseModificationStatus.None));
-        let path = `/courses`;
-        history.push(path);
-    }
-
     const [formState, setFormState] = useState({
         name: { error: "", value: course.name },
         description: { error: "", value: course.description },
@@ -109,6 +102,14 @@ const CourseNomalForm: React.FC = () => {
         update_time: { error: "", value: course.update_time }
     });
 
+    const history = useHistory();
+
+    function routeHome() {
+        dispatch(setModificationState(CourseModificationStatus.None));
+        let path = `/courses`;
+        history.push(path);
+    }
+
     function hasFormValueChanged(model: OnChangeModel): void {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
@@ -118,7 +119,6 @@ const CourseNomalForm: React.FC = () => {
         if (isFormInvalid()) {
             return;
         }
-
         var url = await setImageAction();
 
         let saveUserFn: Function = (isCreate) ? addCourse : editCourse;
@@ -200,7 +200,7 @@ const CourseNomalForm: React.FC = () => {
         setTextHtml(value);
     }
 
-    const [image, setImage] = useState<any>();
+    const [image, setImage] = useState<any>(null);
 
     const uploadPicture = (e: any) => {
         setImage({
@@ -214,21 +214,25 @@ const CourseNomalForm: React.FC = () => {
     };
 
     async function setImageAction(){
-        const formData = new FormData();
-        formData.append(
-            "gifFile",
-            image.pictureAsFile
-        );
-        // do your post request
-        const res = await fetch(
-            `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
-                method: "POST",
-                body: formData
-            }
-        )
-        const data = await res.json()
-        return data.url_image
-
+        if (image === null && course){
+            return course.image_url
+        }
+        else {
+            const formData = new FormData();
+            formData.append(
+                "gifFile",
+                image.pictureAsFile
+            );
+            // do your post request
+            const res = await fetch(
+                `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
+                    method: "POST",
+                    body: formData
+                }
+            )
+            const data = await res.json()
+            return data.url_image
+        }
     };
 
     //console.log('Input',textHtml)
@@ -353,4 +357,4 @@ const CourseNomalForm: React.FC = () => {
     );
 };
 
-export default CourseNomalForm;
+export default CourseNomalFormEdit;

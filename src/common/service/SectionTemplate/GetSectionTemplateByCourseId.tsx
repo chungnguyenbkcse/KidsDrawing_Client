@@ -1,27 +1,21 @@
-import { logout } from "../../../store/actions/account.actions";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeCourseAll, initialCourse, addCourse } from "../../../store/actions/course.action";
-interface Course {
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSectionTemplateAll, initialSectionTemplate, addSectionTemplate } from "../../../store/actions/section_template.action";
+interface SectionTemplate {
     id: number;
+    creator_id: number;
+    course_id: number;
     name: string;
     description: string;
-    max_participant: number;
-    num_of_section: number;
-    price: number;
-    image_url: string;
-    is_enabled: boolean;
-    creator_id: number;
-    art_type_id: number;
-    art_level_id: number;
-    art_age_id: number;
+    number: number;
+    teaching_form: boolean;
     create_time: string;
     update_time: string;
 }
-export function getCourse() {
+export function getSectionTemplateByCourseId(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/course?page=0&size=10`, {
+                `${process.env.REACT_APP_API_URL}/section-template/course/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -39,35 +33,28 @@ export function getCourse() {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeCourseAll())
-                //console.log(data.body.Courses)
-                data.body.courses.map((ele: any, index: any) => {
-                    var course: Course = {
+                dispatch(removeSectionTemplateAll())
+                //console.log(data.body.lessons)
+                data.body.SectionTemplate.map((ele: any, index: any) => {
+                    var section_template: SectionTemplate = {
                         id: ele.id,
+                        creator_id: ele.creator_id,
+                        course_id: ele.course_id,
                         name: ele.name,
                         description: ele.description,
-                        max_participant: ele.max_participant,
-                        num_of_section: ele.num_of_section,
-                        price: ele.price,
-                        image_url: ele.image_url,
-                        is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
-                        art_type_id: ele.art_type_id,
-                        art_level_id: ele.art_level_id,
-                        art_age_id: ele.art_age_id,
+                        number: ele.number,
+                        teaching_form: ele.teaching_form,
                         create_time: ele.create_time,
                         update_time: ele.update_time
-
                     }
-                    console.log(course)
+                    //console.log(strDate.substring(0, 16))
                     if (index === 0){
-                        return dispatch(initialCourse(course));
+                        return dispatch(initialSectionTemplate(section_template));
                     }
                     else{
-                        return dispatch(addCourse(course))
+                        return dispatch(addSectionTemplate(section_template))
                     }
                 })
-                dispatch(logout())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

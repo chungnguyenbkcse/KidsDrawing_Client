@@ -1,7 +1,8 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/tutorial_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { postTutorialTemplatePage } from "../TutorialTemplatePage/PostTutorialTemplatePage";
 
-export function postTutorialTemplate(data: any) {
+export function postTutorialTemplate(tutorial: any[], data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -21,16 +22,24 @@ export function postTutorialTemplate(data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postTutorialTemplate(data))
+                        dispatch(postTutorialTemplate(tutorial,data))
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                return response.json()
             })
             .then (data => {
                 console.log(data)
+                tutorial.map((value) => {
+                    return dispatch(postTutorialTemplatePage({
+                        tutorial_template_id: data.id,
+                        name: data.name,
+                        description: value.content,
+                        number: value.page
+                    }))
+                })
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

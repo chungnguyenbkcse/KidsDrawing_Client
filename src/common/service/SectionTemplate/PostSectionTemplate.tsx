@@ -1,12 +1,12 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_course.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postSemesterCourse(data: any) {
+export function postSectionTemplate(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/semester-course`, {
+                `${process.env.REACT_APP_API_URL}/section-template`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,
@@ -21,7 +21,7 @@ export function postSemesterCourse(data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSemesterCourse(data))
+                        dispatch(postSectionTemplate(data))
                     }
                     else {
                         throw Error(response.statusText);

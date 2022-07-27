@@ -1,85 +1,93 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import React, { Dispatch, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IStateType, IUserState } from "../../store/models/root.interface";
 import { useHistory } from "react-router-dom";
+import { setModificationState } from "../../store/actions/users.action";
+import { UserModificationStatus, IUser } from "../../store/models/user.interface";
+import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type userListProps = {
+  onSelect?: (user: IUser) => void;
+  value?: string;
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'first_name': 'Chung',
-    'last_name': 'Nguyễn',
-    'username': 'chungnguyen123',
-    'number_account_child': 1,
-    'status': 'Đang hoạt động'
-  },
-  {
-    'id': 2,
-    'first_name': 'Thanh',
-    'last_name': 'Nguyễn',
-    'username': 'thanhnguyen123',
-    'number_account_child': 3,
-    'status': 'Đang hoạt động'
-  },
-  {
-    'id': 3,
-    'first_name': 'Thao',
-    'last_name': 'Nguyễn',
-    'username': 'thaonguyen123',
-    'number_account_child': 2,
-    'status': 'Đang hoạt động'
-  }
-]
+function ParentList(props: userListProps): JSX.Element {
 
-function ParentList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+  const dispatch: Dispatch<any> = useDispatch();
+
+  const users: IUserState = useSelector((state: IStateType) => state.users);
   const history = useHistory();
-  
-  const routeChange = () =>{ 
-    let path = '/parents/detail'; 
+
+  const [popup, setPopup] = useState(false);
+
+  const routeChange = () => {
+    let path = '/parents/detail';
     history.push(path);
   }
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      onClick={routeChange}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.first_name} {product.last_name}</td>
-      <td>{product.username}</td>
-      <td>{product.number_account_child}</td>
-      <td>{product.status}</td>
+  function onUserRemove() {
+    setPopup(true);
+  }
+
+  const userElements: (JSX.Element | null)[] = users.parents.filter((val) => {
+    if (props.value == ""){
+      return val;
+    }
+    else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.username).toLowerCase().includes(props.value.toLowerCase()) || val.username.toLowerCase().includes(props.value.toLowerCase()))){
+      return val;
+    }
+  }).map((parent, index) => {
+    if (!parent) { return null; }
+    return (<tr className={`table-row ${(users.selectedUser && users.selectedUser.id === parent.id) ? "selected" : ""}`}
+
+      key={`user_${index}`}>
+      <th scope="row">{index + 1}</th>
+      <td onClick={routeChange}>{parent.firstName} {parent.lastName}</td>
+      <td>{parent.username}</td>
+      {
+        function () {
+          if (parent.status == true){
+            return (
+              <td style={{color: "#18AB56"}}>Đang hoạt động</td>
+            )
+          }
+          else { 
+            return (
+              <td style={{color:"#2F4F4F"}}>Không hoạt động</td>
+            )
+          }
+        }()
+      }
       <td>
-        <button type="button" className="btn btn-danger">Xóa</button>
+        <button type="button" className="btn btn-danger" onClick={() =>{
+          if(props.onSelect) props.onSelect(parent);
+          dispatch(setModificationState(UserModificationStatus.Remove))
+        }}>Xóa</button>
       </td>
     </tr>);
   });
 
 
   return (
-    <div className="table-responsive portlet">
-      <table className="table">
-        <thead className="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tên</th>
-            <th scope="col">Tài khoản</th>
-            <th scope="col">Số tài khoản con</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col">Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          {productElements}
-        </tbody>
-      </table>
-    </div>
+    <Fragment>
+      <div className="table-responsive portlet">
+        <table className="table">
+          <thead className="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tên</th>
+              <th scope="col">Tài khoản</th>
+              <th scope="col">Trạng thái</th>
+              <th scope="col">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userElements}
+          </tbody>
+        </table>
+      </div>
+    </Fragment>
 
   );
 }

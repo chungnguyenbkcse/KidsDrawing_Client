@@ -8,7 +8,7 @@ const options = [
 ];
 
 export default function ReactSelect(props) {
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState(props.value);
     const handleChange = (selectedOption) => {
         setSelectedOption(selectedOption);
         props.changeValue(selectedOption)

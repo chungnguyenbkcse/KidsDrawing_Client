@@ -1,27 +1,26 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_course.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postSemesterCourse(data: any) {
+export function deleteUser(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/semester-course`, {
-                    method: "POST",
-                    headers: {
-                        'Authorization': bearer,
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
-                        'Access-Control-Allow-Credentials': 'true'
-                    },
-                    body: JSON.stringify(data)
+            `${process.env.REACT_APP_API_URL}/user/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': bearer,
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
+                    'Access-Control-Allow-Credentials': 'true'
                 }
+            }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSemesterCourse(data))
+                        dispatch(deleteUser(id))
                     }
                     else {
                         throw Error(response.statusText);

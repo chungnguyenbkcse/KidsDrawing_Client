@@ -16,6 +16,9 @@ import artAgesReducer from "./art_age.reducer";
 import coursesReducer from "./course.reducer";
 import semesterCoursesReducer from "./semester_course.reducer";
 import contestsReducer from "./contest.reducer";
+import sectionTemplatesReducer from "./section_template.reducer";
+import tutorialTemplatesReducer from "./tutorial_template.reducer";
+import userGradeContestsReducer from "./user_grade_contest.reducer";
 
 
 const initialState: IRootStateType = {
@@ -47,6 +50,9 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     courses: coursesReducer,
     semester_courses: semesterCoursesReducer,
     contests: contestsReducer,
+    section_templates: sectionTemplatesReducer,
+    tutorial_templates: tutorialTemplatesReducer,
+    user_grade_contests: userGradeContestsReducer,
 });
 
 

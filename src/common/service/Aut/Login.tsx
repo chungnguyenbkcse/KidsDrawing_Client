@@ -7,7 +7,9 @@ export function postAut(username: string, password: string) {
                 `${process.env.REACT_APP_API_URL}/auth`, {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
+                        'Access-Control-Allow-Credentials': 'true'
                     },
                     body: JSON.stringify({
                         "username":username,

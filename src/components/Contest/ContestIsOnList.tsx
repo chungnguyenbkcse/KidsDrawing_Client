@@ -72,7 +72,7 @@ function ContestIsOnList(props: contestListProps): JSX.Element {
     }
     const date_0 = new Date();
     const date = date_0.toUTCString()
-    console.log(date)
+    //console.log(date)
     const date_now = formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16);
     console.log( formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16))
     

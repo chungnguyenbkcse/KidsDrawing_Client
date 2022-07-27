@@ -54,7 +54,7 @@ const Lesson: React.FC = () => {
             <h1 className="h3 mb-2 text-gray-800">Tiết học</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="SỐ HỌC KÌ" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="TIẾT HỌC" text={`${numberItemsCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">
@@ -84,7 +84,7 @@ const Lesson: React.FC = () => {
                                     onLessonRemove()
                                 }}>
                                     <i className="fas fa fa-plus"></i>
-                                    Thêm học kì
+                                    Thêm tiết học
                                 </button>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ const Lesson: React.FC = () => {
                                                     return;
                                                 }
                                                 dispatch(deleteLesson(lessons.selectedLesson.id))
-                                                dispatch(addNotification("Thời gian tiết học ", `${lessons.selectedLesson.start_time} đã được xóa`));
+                                                dispatch(addNotification("Tiết học ", `${lessons.selectedLesson.start_time} đã được xóa`));
                                                 dispatch(removeLesson(lessons.selectedLesson.id));
                                                 dispatch(clearSelectedLesson());
                                                 setPopup(false);

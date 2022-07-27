@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { Dispatch, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IContestState, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
 import { IContest } from "../../store/models/contest.interface";
 import { useHistory } from "react-router-dom";

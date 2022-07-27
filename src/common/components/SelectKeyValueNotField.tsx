@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, Fragment } from "react";
-import { SelectProps } from "../types/Select.types";
+import { SelectNotFieldProps } from "../types/SelectNotField";
 
-function SelectKeyValue(props: SelectProps): JSX.Element {
+function SelectKeyValueNotField(props: SelectNotFieldProps): JSX.Element {
     const [touched, setTouch] = useState(false);
     const [error, setError] = useState("");
     const [htmlClass, setHtmlClass] = useState("");
@@ -14,13 +14,13 @@ function SelectKeyValue(props: SelectProps): JSX.Element {
         [error, validClass] = (!elementValue && props.required) ?
             ["Value has to be selected", "is-invalid"] : ["", "is-valid"];
 
-
-        props.onChange({ value: elementValue, error: error, touched: touched, field: props.field });
+        console.log(value)
+        props.onChange({ value: parseInt(elementValue), error: error, touched: touched});
 
         setTouch(true);
         setError(error);
         setHtmlClass(validClass);
-        setValue(elementValue);
+        setValue(parseInt(elementValue));
     }
 
     //console.log(props.options)
@@ -52,4 +52,4 @@ function SelectKeyValue(props: SelectProps): JSX.Element {
     );
 }
 
-export default SelectKeyValue;
+export default SelectKeyValueNotField;

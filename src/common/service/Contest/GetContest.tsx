@@ -39,7 +39,7 @@ export function getContest() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeContestAll())
-                //console.log(data.body.Contests)
+                console.log(data.body.art_age)
                 data.body.art_age.map((ele: any, index: any) => {
                     var strDate1 = ele.start_time;
                     var strDate2 = ele.end_time;

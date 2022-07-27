@@ -14,7 +14,7 @@ export const Editor = (props) => {
         reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
     }
   }, [reactQuillRef.current]);
-  console.log(reactQuillRef)
+  //console.log(reactQuillRef)
   
   //const quill = reactQuillRef.current.editor;
   //console.log(quill)

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, IContestState, IArtTypeState, IArtAgeState, IUserState } from "../../store/models/root.interface";
+import { IStateType, IContestState, IArtTypeState, IArtAgeState, IUserState, IUserGradeContestState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { IContest, ContestModificationStatus } from "../../store/models/contest.interface";
 import TextInput from "../../common/components/TextInput";
@@ -20,6 +20,9 @@ import { useLocation } from "react-router-dom";
 import ReactSelect from "../../common/components/ReactSelect";
 import { IUser } from "../../store/models/user.interface";
 import { postUserGradeContest } from "../../common/service/UserGradeContest/PostUserGradeContest";
+import { getUserGradeContestByContestId } from "../../common/service/UserGradeContest/GetUserGradeContestByContestId";
+import { getTeacher } from "../../common/service/Teacher/GetTeacher";
+import { IUserGradeContest } from "../../store/models/user_grade_contest.interface";
 
 type Options = {
   name: string;
@@ -36,21 +39,28 @@ const ContestForm: React.FC = () => {
   const contests: IContestState | null = useSelector((state: IStateType) => state.contests);
   const { state } = useLocation()
     console.log(state)
-    let contest: IContest | null = null;
+  let contest: IContest | null = null;
     if (typeof state != "undefined"){
         contest = state.contest_value;
     }
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
-  if (!contest || isCreate) {
+  if (!contest || isCreate ) {
     contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "", art_age_id: 0, art_type_id: 0 };
   }
 
   useEffect(() => {
     dispatch(getArtType())
     dispatch(getArtAge())
-
+    dispatch(getTeacher())
+    if (contest != null){
+      if (contest.id != 0){
+        dispatch(getUserGradeContestByContestId(contest.id))
+      }
+    }
   }, [dispatch])
+
+  
 
   const mytypes: IArtTypeState = useSelector((state: IStateType) => state.art_types);
   const listMytype: IArtType[] = mytypes.artTypes
@@ -68,6 +78,19 @@ const ContestForm: React.FC = () => {
     return listTeachers.push(item)
   })
 
+  const user_grade_contests: IUserGradeContestState = useSelector((state: IStateType) => state.user_grade_contests);
+  const listTeacherGradeContest: IUserGradeContest[] = user_grade_contests.userGradeContests;
+  const listTeacherGradeContests: Option1[] = [];
+  listTeacherGradeContest.map((ele) => {
+    return  users.teachers.map((value) => {
+      if (value.id === ele.teacher_id){
+        let item: Option1 = { "label": value.username, "value": value.id }
+        return listTeacherGradeContests.push(item)
+      }
+    })
+  })
+
+  console.log(listTeacherGradeContests)
   const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
   const listArtAge: IArtAge[] = art_ages.artAges
   const listArtAges: Options[] = [];
@@ -283,7 +306,7 @@ const ContestForm: React.FC = () => {
                 </div>
                   <div className="form-group col-md-6">
                     <label>Giáo viên chấm</label>
-                    <ReactSelect setValue={listTeachers} changeValue={changeValueTeacher}/>
+                    <ReactSelect setValue={listTeachers} value={listTeacherGradeContests} changeValue={changeValueTeacher}/>
                   </div>
               </div>
               <div className="form-row">

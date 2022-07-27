@@ -45,8 +45,10 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
     }
     let shedule_id = schedule.id
     //const [schedule_items_list, setSchedule_items_list] = useState<IScheduleItem>([])
+    console.log(shedule_id)
 
     let total = schedule_items.schedule_items.filter((value) => value.schedule_id == shedule_id).length
+    console.log(schedule_items.schedule_items)
     let schedule_items_list = schedule_items.schedule_items.filter((value) => value.schedule_id == shedule_id)
     const [listScheduleItem, setListScheduleItem] = useState<ScheduleItem[]>([])
     const [totalDateOfWeek, setTotalDateOfWeek] = useState<number>(0);

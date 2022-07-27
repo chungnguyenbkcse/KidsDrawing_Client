@@ -11,7 +11,7 @@ import {clearSelectedUser, setModificationState, changeSelectedUser, removeTeach
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
 import TeacherForm from "./TeacherForm";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
-import { deleteTeacher } from "../../common/service/Teacher/DeleteTeacher";
+import { deleteUser } from "../../common/service/User/DeleteUser";
 
 
 
@@ -131,7 +131,7 @@ const Teacher: React.FC = () => {
                                                 if (!users.selectedUser) {
                                                     return;
                                                 }
-                                                dispatch(deleteTeacher(users.selectedUser.id))
+                                                dispatch(deleteUser(users.selectedUser.id))
                                                 dispatch(addNotification("Giáo viên", `${users.selectedUser.username} đã được xóa!`));
                                                 dispatch(removeTeacher(users.selectedUser.id));
                                                 dispatch(clearSelectedUser());

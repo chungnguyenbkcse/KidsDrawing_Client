@@ -1,53 +1,67 @@
-import React, { Fragment, Dispatch, useState, useEffect } from "react";
+import React, { Fragment, Dispatch, useState, useEffect, FormEvent } from "react";
 import StudentList from "./StudentList";
 import TopCard from "../../common/components/TopCard";
 import "./Student.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { IUserState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
-import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+import {clearSelectedUser, setModificationState, changeSelectedUser, removeStudent  } from "../../store/actions/users.action";
+import { IUser, UserModificationStatus } from "../../store/models/user.interface";
+import { deleteUser } from "../../common/service/User/DeleteUser";
+import { getStudent } from "../../common/service/Student/GetStudent";
+
 
 
 const Student: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const users: IUserState = useSelector((state: IStateType) => state.users);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
+    const numberItemsCount: number = users.teachers.length;
     const [popup, setPopup] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        dispatch(clearSelectedProduct());
+        dispatch(getStudent())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(clearSelectedUser());
         dispatch(updateCurrentPath("Học sinh", "Danh sách"));
     }, [path.area, dispatch]);
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    function onUserSelect(user: IUser): void {
+        dispatch(changeSelectedUser(user));
+        onUserRemove();
+        dispatch(setModificationState(UserModificationStatus.None));
     }
 
-    function onProductRemove() {
+    function onUserRemove() {
         setPopup(true);
     }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
+    }
+
 
     return (
         <Fragment>
             <h1 className="h3 mb-2 text-gray-800">Học sinh</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="GIÁO VIÊN" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="HỌC SINH" text={`${numberItemsCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">
                         <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm"/>
+                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                                setSearchTerm(event.target.value)
+                                console.log(searchTerm)
+                            }}/>
                         </div>
                         <button type="button" className="btn btn-primary">
                             <i className="fas fa-search"></i>
@@ -61,35 +75,49 @@ const Student: React.FC = () => {
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green">Danh sách học sinh</h6>
-                            <div className="header-buttons">
-                                {/* <button className="btn btn-success btn-green" onClick={() =>{
-                                    dispatch(setModificationState(ProductModificationStatus.Create))
-                                    onProductRemove()
-                                }}>
-                                    <i className="fas fa fa-plus"></i>
-                                    Thêm giáo viên
-                                </button> */}
-                            </div>
                         </div>
                         <div className="card-body">
                             <StudentList
-                                onSelect={onProductSelect}
+                                onSelect={onUserSelect} value={searchTerm}
                             />
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            {/* <Popup
-                open={popup}
-                onClose={() => setPopup(false)}
-                closeOnDocumentClick
-            >
-                <div className="row text-left">
-                    {((products.modificationState === ProductModificationStatus.Create) || (products.modificationState === ProductModificationStatus.Edit && products.selectedProduct)) ? <TeacherForm /> : null}
-                </div>
-            </Popup> */}
+            {
+                function () {
+                    if ((users.selectedUser) && (users.modificationState === UserModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Are you sure?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (!users.selectedUser) {
+                                                    return;
+                                                }
+                                                dispatch(deleteUser(users.selectedUser.id))
+                                                dispatch(addNotification("Phụ huynh", `${users.selectedUser.username} đã được xóa!`));
+                                                dispatch(removeStudent(users.selectedUser.id));
+                                                dispatch(clearSelectedUser());
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
         </Fragment >
     );
 };

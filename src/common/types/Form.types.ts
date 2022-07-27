@@ -13,6 +13,12 @@ export type OnChangeModel = {
     field: string
 };
 
+export type OnChangeModelNotFiled = {
+    value: number,
+    error: string,
+    touched: boolean
+};
+
 export interface IFormStateField<T> {error: string, value: T};
 
 export interface IProductFormState {
@@ -118,6 +124,25 @@ export interface IContestFormState {
     creator_id: IFormStateField<number>;
     art_type_id: IFormStateField<number>;
     art_age_id: IFormStateField<number>;
+    create_time: IFormStateField<string>;
+    update_time: IFormStateField<string>;
+}
+
+export interface ISectionTemplateFormState {
+    creator_id: IFormStateField<number>;
+    course_id: IFormStateField<number>;
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+    teaching_form: IFormStateField<boolean>;
+    number: IFormStateField<number>;
+    create_time: IFormStateField<string>;
+    update_time: IFormStateField<string>;
+}
+
+export interface ITutorialTemplateFormState {
+    section_template_id: IFormStateField<number>;
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
     create_time: IFormStateField<string>;
     update_time: IFormStateField<string>;
 }

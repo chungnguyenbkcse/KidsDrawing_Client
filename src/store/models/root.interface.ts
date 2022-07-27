@@ -13,6 +13,9 @@ import { ArtAgeModificationStatus, IArtAge } from "./art_age.interface";
 import { ISemesterCourse, SemesterCourseModificationStatus } from "./semester_course.interface";
 import { CourseModificationStatus, ICourse } from "./course.interface";
 import { ContestModificationStatus, IContest } from "./contest.interface";
+import { ISectionTemplate, SectionTemplateModificationStatus } from "./section_template.interface";
+import { ITutorialTemplate, TutorialTemplateModificationStatus } from "./tutorial_template.interface";
+import { IUserGradeContest, UserGradeContestModificationStatus } from "./user_grade_contest.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -39,6 +42,9 @@ export interface IStateType {
     courses: ICourseState;
     semester_courses: ISemesterCourseState;
     contests: IContestState;
+    section_templates: ISectionTemplateState;
+    tutorial_templates: ITutorialTemplateState;
+    user_grade_contests: IUserGradeContestState;
 }
 
 export interface IProductState {
@@ -127,4 +133,22 @@ export interface IContestState {
     selectedContest: IContest | null;
     modificationState: ContestModificationStatus;
     contests: IContest[];
+}
+
+export interface ISectionTemplateState {
+    selectedSectionTemplate: ISectionTemplate | null;
+    modificationState: SectionTemplateModificationStatus;
+    sectionTemplates: ISectionTemplate[];
+}
+
+export interface ITutorialTemplateState {
+    selectedTutorialTemplate: ITutorialTemplate | null;
+    modificationState: TutorialTemplateModificationStatus;
+    tutorialTemplates: ITutorialTemplate[];
+}
+
+export interface IUserGradeContestState {
+    selectedUserGradeContest: IUserGradeContest | null;
+    modificationState: UserGradeContestModificationStatus;
+    userGradeContests: IUserGradeContest[];
 }

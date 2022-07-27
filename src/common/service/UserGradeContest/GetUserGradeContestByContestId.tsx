@@ -1,16 +1,15 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleItemAll, initialScheduleItem, addScheduleItem } from "../../../store/actions/schedule_item.action";
-interface schedule_item {
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, initialUserGradeContest, addUserGradeContest} from "../../../store/actions/user_grade_contest.action";
+interface user_grade_contest {
     id: number;
-    schedule_id: number;
-    lesson_time: number;
-    date_of_week: number;
+    contest_id: number;
+    teacher_id: number;
 }
-export function getScheduleItem() {
+export function getUserGradeContestByContestId(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/schedule-item?page=0&size=100`, {
+                `${process.env.REACT_APP_API_URL}/user-grade-contest/contest/${id}?page=0&size=100`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -28,21 +27,19 @@ export function getScheduleItem() {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeScheduleItemAll())
-                //console.log(data.body.lessons)
-                data.body.schedule_items.map((ele: any, index: any) => {
-                    var schedule_item: schedule_item = {
+                console.log(data.body.teacher_grade_contest)
+                data.body.teacher_grade_contest.map((ele: any, index: any) => {
+                    var user_grade_contest: user_grade_contest = {
                         id: ele.id,
-                        schedule_id: ele.schedule_id,
-                        lesson_time: ele.lesson_time,
-                        date_of_week: ele.date_of_week
+                        contest_id: ele.contest_id,
+                        teacher_id: ele.teacher_id
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){
-                        return dispatch(initialScheduleItem(schedule_item));
+                        return dispatch(initialUserGradeContest(user_grade_contest));
                     }
                     else{
-                        return dispatch(addScheduleItem(schedule_item))
+                        return dispatch(addUserGradeContest(user_grade_contest))
                     }
                 })
             })

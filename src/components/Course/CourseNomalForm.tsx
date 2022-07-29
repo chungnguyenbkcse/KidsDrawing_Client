@@ -90,6 +90,10 @@ const CourseNomalForm: React.FC = () => {
         history.push(path);
     }
 
+    const src = "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg"
+
+    const [preview, setPreview] = useState(src)
+
     const [formState, setFormState] = useState({
         name: { error: "", value: course.name },
         description: { error: "", value: course.description },
@@ -208,7 +212,10 @@ const CourseNomalForm: React.FC = () => {
             /* this contains the file we want to send */
             pictureAsFile : e.target.files[0]
         })
+        setPreview(URL.createObjectURL(e.target.files[0]))
     };
+
+    console.log(image)
 
     async function setImageAction(){
         const formData = new FormData();
@@ -240,9 +247,14 @@ const CourseNomalForm: React.FC = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={saveUser}>
-                            <div className="form-group">
-                                <label htmlFor="profile_image">Chọn ảnh:</label>
-                                <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="profile_image">Chọn ảnh:</label>
+                                    <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <img src={preview} alt="Preview" id="avatar"/>
+                                </div>
                             </div>
 
                             <div className="form-row">

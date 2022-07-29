@@ -6,6 +6,7 @@ import '../../assets/css/Login.css'
 import { postAut } from "../../common/service/Aut/Login";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from "react-router-dom";
 
 const Login: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -42,12 +43,17 @@ const Login: React.FC = () => {
     return isError ? "disabled" : "";
   }
 
+  const history = useHistory()
+  const changeRoute = () => {
+    history.push('/landing-page')
+  }
+
   return (
 
     <div className="container-fluid " id="login-page">
       <div className="row justify-content-center">
         <div className="col-xl-10 col-lg-10 col-md-9">
-          <h2 id="text-logo">KidsDrawing</h2>
+          <h2 id="text-logo" onClick={changeRoute}>KidsDrawing</h2>
         </div>
       </div>
       <ToastContainer />

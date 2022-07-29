@@ -77,6 +77,10 @@ const CourseNomalFormEdit: React.FC = () => {
         return listArtAges.push(item)
     })
 
+    const src = course.image_url;
+
+    const [preview, setPreview] = useState(src)
+
     const [formState, setFormState] = useState({
         name: { error: "", value: course.name },
         description: { error: "", value: course.description },
@@ -238,9 +242,14 @@ const CourseNomalFormEdit: React.FC = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={saveUser}>
-                            <div className="form-group">
-                                <label htmlFor="profile_image">Chọn ảnh:</label>
-                                <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="profile_image">Chọn ảnh:</label>
+                                    <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <img src={preview} alt="Preview" id="avatar"/>
+                                </div>
                             </div>
 
                             <div className="form-row">

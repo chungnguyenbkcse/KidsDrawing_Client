@@ -45,7 +45,7 @@ const ContestForm: React.FC = () => {
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
   if (!contest || isCreate ) {
-    contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "", art_age_id: 0, art_type_id: 0 };
+    contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0 };
   }
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const ContestForm: React.FC = () => {
         dispatch(getUserGradeContestByContestId(contest.id))
       }
     }
-  }, [dispatch, contest])
+  }, [dispatch])
 
   
 
@@ -98,6 +98,10 @@ const ContestForm: React.FC = () => {
     let item: Options = { "name": ele.name, "value": ele.id }
     return listArtAges.push(item)
   })
+
+  const src = contest.image_url;
+
+  const [preview, setPreview] = useState(src)
 
   const [formState, setFormState] = useState({
     name: { error: "", value: contest.name },
@@ -220,6 +224,7 @@ const ContestForm: React.FC = () => {
       /* this contains the file we want to send */
       pictureAsFile: e.target.files[0]
     })
+    setPreview(URL.createObjectURL(e.target.files[0]))
   };
 
   async function setImageAction() {
@@ -255,9 +260,14 @@ const ContestForm: React.FC = () => {
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
-              <div className="form-group">
-                <label htmlFor="profile_image">Chọn ảnh:</label>
-                <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="profile_image">Chọn ảnh:</label>
+                  <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
+                </div>
+                <div className="form-group col-md-6">
+                  <img src={preview} alt="Preview" id="avatar" />
+                </div>
               </div>
 
               <div className="form-group">

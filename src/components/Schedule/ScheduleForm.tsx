@@ -11,11 +11,7 @@ import { postSchedule } from "../../common/service/Schedule/PostSchedule";
 import { putSchedule } from "../../common/service/Schedule/PutSchedule";
 import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
-import { postScheduleItem } from "../../common/service/ScheduleItem/PostScheduleItem";
 import { putScheduleItem } from "../../common/service/ScheduleItem/PutScheduleItem";
-import { getSchedule } from "../../common/service/Schedule/GetSchedule";
-import { getLesson } from "../../common/service/Lesson/GetLesson";
-import { getScheduleItem } from "../../common/service/ScheduleItem/GetScheduleItem";
 
 export type scheduleListProps = {
     isCheck: (value: boolean) => void;
@@ -47,11 +43,10 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
     //const [schedule_items_list, setSchedule_items_list] = useState<IScheduleItem>([])
     console.log(shedule_id)
 
-    let total = schedule_items.schedule_items.filter((value) => value.schedule_id == shedule_id).length
+    let total = schedule_items.schedule_items.filter((value) => value.schedule_id === shedule_id).length
     console.log(schedule_items.schedule_items)
-    let schedule_items_list = schedule_items.schedule_items.filter((value) => value.schedule_id == shedule_id)
-    const [listScheduleItem, setListScheduleItem] = useState<ScheduleItem[]>([])
-    const [totalDateOfWeek, setTotalDateOfWeek] = useState<number>(0);
+    let schedule_items_list = schedule_items.schedule_items.filter((value) => value.schedule_id === shedule_id)
+    const listScheduleItem: ScheduleItem[] = []
 
     const [formState, setFormState] = useState({
         creator_id: { error: "", value: schedule.creator_id },
@@ -99,7 +94,7 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
             let is_check = false
             for (let idx = 0; idx < listScheduleItemId.length; idx++) {
                 if (listScheduleItemId[idx].key === index) {
-                    if (listScheduleItemId[idx].value != value){
+                    if (listScheduleItemId[idx].value !== value){
                         is_check = true
                         setListScheduleItemId([...listScheduleItemId.filter((item, idx) => item.key !== index), {"key": index, "value": value}])
                     }
@@ -108,7 +103,7 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
                 
             }
 
-            if (is_check == false) {
+            if (is_check === false) {
                 setListScheduleItemId([...listScheduleItemId, {"key": index, "value": value}])
             }
         }
@@ -124,7 +119,7 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
             let is_check = false
             for (let idx = 0; idx < listLessonId.length; idx++) {
                 if (listLessonId[idx].key === index) {
-                    if (listLessonId[idx].value != value){
+                    if (listLessonId[idx].value !== value){
                         is_check = true
                         setListLessonId([...listLessonId.filter((item, idx) => item.key !== index), {"key": index, "value": value}])
                     }
@@ -133,7 +128,7 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
                 
             }
 
-            if (is_check == false) {
+            if (is_check === false) {
                 setListLessonId([...listLessonId, {"key": index, "value": value}])
             }
         }
@@ -165,14 +160,14 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
             let lesson_times: Option1s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
             let date_of_weeks: Option1s[] = listScheduleItemId.filter((value, index) => value.key < formState.total_date_of_week.value)
 
-            if (saveFn == addSchedule){
+            if (saveFn === addSchedule){
                 dispatch(postSchedule(date_of_weeks, lesson_times, {
                     creator_id: localStorage.getItem('id'),
                     name: formState.name.value
                 }));
             }
 
-            else if (saveFn == editSchedule){
+            else if (saveFn === editSchedule){
                 dispatch(putSchedule(schedule.id,{
                     creator_id: localStorage.getItem('id'),
                     name: formState.name.value

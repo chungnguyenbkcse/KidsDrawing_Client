@@ -1,18 +1,17 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
-interface schedule {
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage, addTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
+interface TutorialTemplatePage {
     id: number;
+    tutorial_template_id: number;
     name: string;
-    create_time: string;
-    update_time: string;
-    creator_id: number;
+    description: string;
+    number: number;
 }
-export function getSchedule() {
+export function getTutorialTemplatePageByTutorialTemplateId(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    var creator_id: number = Number(localStorage.getItem("id"));
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/schedule?page=0&size=5`, {
+                `${process.env.REACT_APP_API_URL}/tutorial-template-page/tutorial-template/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -30,21 +29,22 @@ export function getSchedule() {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeScheduleAll())
-                data.body.schedules.map((ele: any, index: any) => {
-                    var schedule: schedule = {
+                dispatch(removeTutorialTemplatePageAll())
+                //console.log(data.body.lessons)
+                data.body.TutorialTemplatePage.map((ele: any, index: any) => {
+                    var tutorial_template_page: TutorialTemplatePage = {
                         id: ele.id,
+                        tutorial_template_id: ele.tutorial_template_id,
                         name: ele.name,
-                        create_time: ele.create_time,
-                        update_time: ele.update_time,
-                        creator_id: creator_id
+                        description: ele.description,
+                        number: ele.number
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){
-                        return dispatch(initialSchedule(schedule));
+                        return dispatch(initialTutorialTemplatePage(tutorial_template_page));
                     }
                     else{
-                        return dispatch(addSchedule(schedule))
+                        return dispatch(addTutorialTemplatePage(tutorial_template_page))
                     }
                 })
             })

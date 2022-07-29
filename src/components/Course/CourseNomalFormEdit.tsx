@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ICourseState, IRootPageStateType, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, IArtLevelState, IArtTypeState, IArtAgeState, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ICourse, CourseModificationStatus } from "../../store/models/course.interface";
 import TextInput from "../../common/components/TextInput";
@@ -17,9 +17,9 @@ import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { getCourse } from "../../common/service/Course/GetCourse";
-import { postImage } from "../../common/service/Cloudinary/PostImage";
+
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
 
@@ -30,22 +30,17 @@ type Options = {
 
 
 const CourseNomalFormEdit: React.FC = () => {
-    //console.log(id)
     const dispatch: Dispatch<any> = useDispatch();
-    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-    //console.log(courses)
-    const { state } = useLocation()
-    console.log(state)
-    let course: ICourse | null = null;
-    if (typeof state != "undefined"){
-        course = state.course_value;
-    }
-    console.log(course)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
     //console.log(course)
     const isCreate: boolean = false;
+    let course: ICourse | null = courses.selectedCourse;
+    console.log(course)
+    if (!course || isCreate) {
+        course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
+    }
     useEffect(() => {
-        dispatch(clearSelectedCourse());
         dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch]);
 
@@ -56,10 +51,6 @@ const CourseNomalFormEdit: React.FC = () => {
         dispatch(getArtAge())
 
     }, [dispatch])
-
-    if (!course || isCreate) {
-        course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
-    }
 
     const levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
     const listLevel: IArtLevel[] = levels.artLevels
@@ -141,7 +132,7 @@ const CourseNomalFormEdit: React.FC = () => {
                 art_level_id: formState.art_level_id.value
             }));
 
-            if (saveFn == addCourse) {
+            if (saveFn === addCourse) {
                 dispatch(postCourse({
                     name: formState.name.value,
                     description: textHtml,
@@ -157,7 +148,7 @@ const CourseNomalFormEdit: React.FC = () => {
                 }))
             }
 
-            else if (saveFn == editCourse) {
+            else if (saveFn === editCourse) {
                 dispatch(putCourse(course.id, {
                     name: formState.name.value,
                     description: textHtml,

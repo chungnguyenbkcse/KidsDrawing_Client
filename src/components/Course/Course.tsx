@@ -48,13 +48,13 @@ const Course: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getSemesterCourse())
         dispatch(getCourse())
         dispatch(getSemester())
         dispatch(getSchedule())
         dispatch(getArtType())
         dispatch(getArtLevel())
         dispatch(getArtAge())
+        dispatch(getSemesterCourse())
     }, [dispatch])
 
     function onCourseSelect(course: ICourse): void {
@@ -84,7 +84,6 @@ const Course: React.FC = () => {
 
     const routeChange = () => {
         let path = `/courses/create-course`; 
-        const course: ICourse = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" }
         history.push(
             {
                 pathname: path,
@@ -121,7 +120,7 @@ const Course: React.FC = () => {
             <div className="row">
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked == false) {
+                        if (checked === false) {
                             setChecked(true)
                         }
                     }} style={{
@@ -137,7 +136,7 @@ const Course: React.FC = () => {
                 </div>
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked == true) {
+                        if (checked === true) {
                             setChecked(false)
                         }
                     }}
@@ -156,7 +155,7 @@ const Course: React.FC = () => {
 
             {
                 function () {
-                    if (checked == true) {
+                    if (checked === true) {
                         return (
                             <Fragment>
                                 <div className="row">

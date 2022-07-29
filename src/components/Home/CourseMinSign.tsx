@@ -33,11 +33,6 @@ function CourseMinSign(props: productListProps): JSX.Element  {
     history.push(path);
   }
 
-  const routeChange1 = () =>{ 
-    let path = '/courses/lesson-plan'; 
-    history.push(path);
-  }
-
   const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }
     return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}

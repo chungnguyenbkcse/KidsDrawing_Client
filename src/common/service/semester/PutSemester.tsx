@@ -29,9 +29,11 @@ export function putSemester(id: any, data: any) {
                 }
                 return response
             })
-            .then (data => {
-                console.log(data)
+            .then (val => {
+                console.log(val)
                 console.log(id)
+                dispatch(fetchDataSuccess(data))
+                dispatch(editSemester(data))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

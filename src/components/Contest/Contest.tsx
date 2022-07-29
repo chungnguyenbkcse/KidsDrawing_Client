@@ -1,5 +1,4 @@
 import React, { Fragment, Dispatch, useState, useEffect } from "react";
-import ContestForm from "./ContestForm";
 import TopCard from "../../common/components/TopCard";
 import "./Contest.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +11,6 @@ import {
 } from "../../store/actions/contest.action";
 import { addNotification } from "../../store/actions/notifications.action";
 import { ContestModificationStatus, IContest } from "../../store/models/contest.interface";
-import TextInput from "../../common/components/TextInput";
-import SelectInput from "../../common/components/Select";
 import ContestIsOnList from "./ContestIsOnList";
 import ContestEndList from "./ContestEndList";
 import ContestNotOnYetList from "./ContestNotOnYetList";
@@ -35,7 +32,6 @@ const Contest: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = contests.contests.length;
     const [popup1, setPopup1] = useState(false);
-    const [popup2, setPopup2] = useState(false);
 
     useEffect(() => {
         dispatch(clearSelectedContest());
@@ -68,9 +64,6 @@ const Contest: React.FC = () => {
 
     function onContestRemove1() {
         setPopup1(true);
-    }
-    function onContestRemove2() {
-        setPopup2(true);
     }
 
     const history = useHistory();
@@ -112,7 +105,7 @@ const Contest: React.FC = () => {
             <div className="row">
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked1 == false) {
+                        if (checked1 === false) {
                             setChecked1(true)
                             setChecked2(false)
                             setChecked3(false)
@@ -130,7 +123,7 @@ const Contest: React.FC = () => {
                 </div>
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked2 == false) {
+                        if (checked2 === false) {
                             setChecked2(true)
                             setChecked1(false)
                             setChecked3(false)
@@ -150,7 +143,7 @@ const Contest: React.FC = () => {
 
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked3 == false) {
+                        if (checked3 === false) {
                             setChecked3(true)
                             setChecked1(false)
                             setChecked2(false)
@@ -171,7 +164,7 @@ const Contest: React.FC = () => {
 
             {
                 function () {
-                    if (checked1 == true) {
+                    if (checked1 === true) {
                         return (
                             <Fragment>
                                 <div className="row">
@@ -191,7 +184,7 @@ const Contest: React.FC = () => {
                             </Fragment>
                         )
                     }
-                    else if (checked2 == true) {
+                    else if (checked2 === true) {
                         return (
                             <Fragment>
                                 <div className="row">
@@ -203,7 +196,6 @@ const Contest: React.FC = () => {
                                                     <button className="btn btn-success btn-green" onClick={() => {
                                                         dispatch(setModificationState(ContestModificationStatus.Create))
                                                         routeChange()
-                                                        onContestRemove2()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
                                                         Thêm cuộc thi
@@ -257,7 +249,7 @@ const Contest: React.FC = () => {
                         )
                     }
 
-                    else if (checked3 == true){
+                    else if (checked3 === true){
                         return (
                             <Fragment>
                                 <div className="row">

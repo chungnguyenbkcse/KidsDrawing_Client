@@ -93,7 +93,6 @@ function ContestNotOnYetList(props: contestListProps): JSX.Element {
         var strDate1 = contest.start_time;
         console.log(strDate1)
         var strDate2 = contest.end_time;
-        var strDate3 = contest.registration_time;
         if (!contest || strDate1 < date_now) { return null; }
         return (<tr className={`table-row ${(contests.selectedContest && contests.selectedContest.id === contest.id) ? "selected" : ""}`}
             key={`contest_${contest.id}`}>

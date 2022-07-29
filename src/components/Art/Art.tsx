@@ -144,7 +144,7 @@ const Art: React.FC = () => {
             <div className="row">
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked1 == false) {
+                        if (checked1 === false) {
                             setChecked1(true)
                             setChecked2(false)
                             setChecked3(false)
@@ -163,7 +163,7 @@ const Art: React.FC = () => {
                 </div>
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked2 == false) {
+                        if (checked2 === false) {
                             setChecked2(true)
                             setChecked1(false)
                             setChecked3(false)
@@ -183,7 +183,7 @@ const Art: React.FC = () => {
 
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked3 == false) {
+                        if (checked3 === false) {
                             setChecked3(true)
                             setChecked1(false)
                             setChecked2(false)
@@ -205,7 +205,7 @@ const Art: React.FC = () => {
 
             {
                 function () {
-                    if (checked1 == true) {
+                    if (checked1 === true) {
                         return (
                             <Fragment>
                                 <div className="row">
@@ -285,7 +285,7 @@ const Art: React.FC = () => {
                             </Fragment>
                         )
                     }
-                    else if (checked2 == true) {
+                    else if (checked2 === true) {
                         return (
                             <Fragment>
                                 <div className="row">
@@ -366,7 +366,7 @@ const Art: React.FC = () => {
                         )
                     }
 
-                    else if (checked3 == true) {
+                    else if (checked3 === true) {
                         return (
                             <Fragment>
                                 <div className="row">

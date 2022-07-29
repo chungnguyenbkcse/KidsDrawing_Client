@@ -1,7 +1,8 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_course.action";
+import { addTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postTutorialTemplatePage(data: any) {
+export function postTutorialTemplatePage(tutorialtemplatepage: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -14,14 +15,14 @@ export function postTutorialTemplatePage(data: any) {
                         'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(tutorialtemplatepage)
                 }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postTutorialTemplatePage(data))
+                        dispatch(postTutorialTemplatePage(tutorialtemplatepage))
                     }
                     else {
                         throw Error(response.statusText);
@@ -31,6 +32,7 @@ export function postTutorialTemplatePage(data: any) {
             })
             .then (data => {
                 console.log(data)
+                dispatch(addTutorialTemplatePage(tutorialtemplatepage))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

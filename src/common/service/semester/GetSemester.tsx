@@ -1,5 +1,4 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemesterAll, initialSemester, addSemester } from "../../../store/actions/semester.actions";
-import { ISemester } from "../../../store/models/semester.interface";
 interface semester {
     id: number;
     number: number;

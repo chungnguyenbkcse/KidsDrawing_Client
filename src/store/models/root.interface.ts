@@ -16,6 +16,9 @@ import { ContestModificationStatus, IContest } from "./contest.interface";
 import { ISectionTemplate, SectionTemplateModificationStatus } from "./section_template.interface";
 import { ITutorialTemplate, TutorialTemplateModificationStatus } from "./tutorial_template.interface";
 import { IUserGradeContest, UserGradeContestModificationStatus } from "./user_grade_contest.interface";
+import { ITutorialTemplatePage, TutorialTemplatePageModificationStatus } from "./tutorial_template_page.interface";
+import { ITeacherLeave, TeacherLeaveModificationStatus } from "./teacher_leave.interface";
+import { IStudentLeave, StudentLeaveModificationStatus } from "./student_leave.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -45,6 +48,9 @@ export interface IStateType {
     section_templates: ISectionTemplateState;
     tutorial_templates: ITutorialTemplateState;
     user_grade_contests: IUserGradeContestState;
+    tutorial_template_pages: ITutorialTemplatePageState;
+    teacher_leaves: ITeacherLeaveState;
+    student_leaves: IStudentLeaveState;
 }
 
 export interface IProductState {
@@ -151,4 +157,26 @@ export interface IUserGradeContestState {
     selectedUserGradeContest: IUserGradeContest | null;
     modificationState: UserGradeContestModificationStatus;
     userGradeContests: IUserGradeContest[];
+}
+
+export interface ITutorialTemplatePageState {
+    selectedTutorialTemplatePage: ITutorialTemplatePage | null;
+    modificationState: TutorialTemplatePageModificationStatus;
+    tutorialTemplatePages: ITutorialTemplatePage[];
+}
+
+export interface ITeacherLeaveState {
+    selectedTeacherLeave: ITeacherLeave | null;
+    modificationState: TeacherLeaveModificationStatus;
+    acceptLeaves: ITeacherLeave[];
+    removeLeaves: ITeacherLeave[];
+    leaves: ITeacherLeave[];
+}
+
+export interface IStudentLeaveState {
+    selectedStudentLeave: IStudentLeave | null;
+    modificationState: StudentLeaveModificationStatus;
+    acceptLeaves: IStudentLeave[];
+    removeLeaves: IStudentLeave[];
+    leaves: IStudentLeave[];
 }

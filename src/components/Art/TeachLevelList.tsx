@@ -2,7 +2,6 @@ import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IArtLevelState } from "../../store/models/root.interface";
 import { IArtLevel, ArtLevelModificationStatus } from "../../store/models/art_level.interface";
-import { useHistory } from "react-router-dom";
 import { setModificationStateArtLevel } from "../../store/actions/art_level.action";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
@@ -15,17 +14,17 @@ export type artLevelListProps = {
 function ArtLevelList(props: artLevelListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
   const art_levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
-  const history = useHistory();
   console.log(props.value)
 
 
   const artLevelElements: (JSX.Element | null)[] = art_levels.artLevels.filter((val) => {
-    if (props.value == ""){
+    if (props.value === ""){
       return val;
     }
     else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
       return val;
     }
+    return null
     }).map((art_level, index) => {
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!art_level) { return null; }

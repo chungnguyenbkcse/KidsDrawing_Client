@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useState, useEffect, FormEvent } from "react";
+import React, { Fragment, Dispatch, useState, useEffect } from "react";
 import ParentList from "./ParentList";
 import TopCard from "../../common/components/TopCard";
 import "./Parent.css";
@@ -40,11 +40,6 @@ const Parent: React.FC = () => {
     function onUserRemove() {
         setPopup(true);
     }
-
-    function onRemovePopup(value: boolean) {
-        setPopup(false);
-    }
-
 
     return (
         <Fragment>

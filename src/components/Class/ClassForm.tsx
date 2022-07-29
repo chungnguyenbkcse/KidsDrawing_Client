@@ -5,8 +5,6 @@ import { IProduct, ProductModificationStatus } from "../../store/models/product.
 import TextInput from "../../common/components/TextInput";
 import { editProduct, clearSelectedProduct, setModificationState, addProduct } from "../../store/actions/products.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import NumberInput from "../../common/components/NumberInput";
-import Checkbox from "../../common/components/Checkbox";
 import SelectInput from "../../common/components/Select";
 import { OnChangeModel, IProductFormState } from "../../common/types/Form.types";
 

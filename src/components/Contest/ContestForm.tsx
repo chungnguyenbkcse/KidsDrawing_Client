@@ -19,7 +19,6 @@ import Editor from "../../common/components/Quill/Editor";
 import { useLocation } from "react-router-dom";
 import ReactSelect from "../../common/components/ReactSelect";
 import { IUser } from "../../store/models/user.interface";
-import { postUserGradeContest } from "../../common/service/UserGradeContest/PostUserGradeContest";
 import { getUserGradeContestByContestId } from "../../common/service/UserGradeContest/GetUserGradeContestByContestId";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { IUserGradeContest } from "../../store/models/user_grade_contest.interface";
@@ -53,12 +52,12 @@ const ContestForm: React.FC = () => {
     dispatch(getArtType())
     dispatch(getArtAge())
     dispatch(getTeacher())
-    if (contest != null){
-      if (contest.id != 0){
+    if (contest !== null){
+      if (contest.id !== 0){
         dispatch(getUserGradeContestByContestId(contest.id))
       }
     }
-  }, [dispatch])
+  }, [dispatch, contest])
 
   
 
@@ -87,6 +86,7 @@ const ContestForm: React.FC = () => {
         let item: Option1 = { "label": value.username, "value": value.id }
         return listTeacherGradeContests.push(item)
       }
+      return null
     })
   })
 

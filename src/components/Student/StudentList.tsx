@@ -1,4 +1,4 @@
-import React, { Dispatch, Fragment, useState } from "react";
+import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IUserState } from "../../store/models/root.interface";
 import { useHistory } from "react-router-dom";
@@ -19,35 +19,38 @@ function StudentList(props: userListProps): JSX.Element {
   const users: IUserState = useSelector((state: IStateType) => state.users);
   const history = useHistory();
 
-  const [popup, setPopup] = useState(false);
 
-  const routeChange = () => {
+  function routeChange() {
     let path = '/students/detail';
     history.push(path);
   }
 
-  function onUserRemove() {
-    setPopup(true);
-  }
 
   const userElements: (JSX.Element | null)[] = users.students.filter((val) => {
-    if (props.value == ""){
+    if (props.value === ""){
       return val;
     }
     else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.username).toLowerCase().includes(props.value.toLowerCase()) || val.username.toLowerCase().includes(props.value.toLowerCase()))){
       return val;
     }
+    return null
   }).map((student, index) => {
     if (!student) { return null; }
     return (<tr className={`table-row ${(users.selectedUser && users.selectedUser.id === student.id) ? "selected" : ""}`}
 
       key={`user_${index}`}>
       <th scope="row">{index + 1}</th>
-      <td onClick={routeChange}>{student.firstName} {student.lastName}</td>
+      <td onClick={() => {
+        if(props.onSelect) props.onSelect(student);
+        routeChange()
+      }}
+      >
+        {student.firstName} {student.lastName}
+      </td>
       <td>{student.username}</td>
       {
         function () {
-          if (student.status == true){
+          if (student.status === true){
             return (
               <td style={{color: "#18AB56"}}>Đang hoạt động</td>
             )

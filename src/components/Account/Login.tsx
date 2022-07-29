@@ -1,11 +1,11 @@
 import React, { useState, FormEvent, Dispatch } from "react";
 import { OnChangeModel } from "../../common/types/Form.types";
 import { useDispatch } from "react-redux";
-import { login } from "../../store/actions/account.actions";
 import TextInput from "../../common/components/TextInput";
 import '../../assets/css/Login.css'
-import jwt_decode from "jwt-decode"
 import { postAut } from "../../common/service/Aut/Login";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -15,6 +15,12 @@ const Login: React.FC = () => {
     password: { error: "", value: "" }
   });
 
+  function notify() {
+    toast.success("Đăng nhập thành công!", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
+
   function hasFormValueChanged(model: OnChangeModel): void {
     setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
   }
@@ -23,7 +29,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     if(isFormInvalid()) { return; }
     dispatch(postAut(formState.username.value, formState.password.value))
-    e.preventDefault(); 
+    notify()
   }
 
   function isFormInvalid() {
@@ -44,6 +50,7 @@ const Login: React.FC = () => {
           <h2 id="text-logo">KidsDrawing</h2>
         </div>
       </div>
+      <ToastContainer />
       <div className="row justify-content-center">
         <div className="col-xl-10 col-lg-12 col-md-9">
           <div className="card o-hidden border-0  my-5">

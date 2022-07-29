@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useState, useEffect, FormEvent } from "react";
+import React, { Fragment, Dispatch, useState, useEffect } from "react";
 import TeacherList from "./TeacherList";
 import TopCard from "../../common/components/TopCard";
 import "./Teacher.css";

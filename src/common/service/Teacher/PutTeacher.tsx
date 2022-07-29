@@ -29,9 +29,11 @@ export function putTeacher(id: any, data: any) {
                 }
                 return response
             })
-            .then (data => {
-                console.log(data)
+            .then (val => {
+                console.log(val)
                 console.log(id)
+                dispatch(fetchDataSuccess(data))
+                dispatch(editTeacher(data))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

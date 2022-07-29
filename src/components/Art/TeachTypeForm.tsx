@@ -52,14 +52,14 @@ function TeachTypeForm(props: artTypeListProps): JSX.Element {
         description: formState.description.value,
       }));
 
-      if (saveFn == addArtType) {
+      if (saveFn === addArtType) {
         dispatch(postArtType({
           name: formState.name.value,
           description: formState.description.value
         }))
       }
 
-      else if (saveFn == editArtType) {
+      else if (saveFn === editArtType) {
         dispatch(putArtType(art_type.id, {
           name: formState.name.value,
           description: formState.description.value

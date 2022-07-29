@@ -1,5 +1,5 @@
-import React, { Dispatch, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { IStateType, IContestState, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
 import { IContest } from "../../store/models/contest.interface";
 import { useHistory } from "react-router-dom";
@@ -81,7 +81,6 @@ function ContestEndList(props: contestListProps): JSX.Element {
     const contestElements: (JSX.Element | null)[] = contests.contests.map((contest, index) => {
         var strDate1 = contest.start_time;
         var strDate2 = contest.end_time;
-        var strDate3 = contest.registration_time;
         var is_check = (strDate2 > date_now) ? true: false;
         console.log(strDate2)
         console.log(is_check)

@@ -2,7 +2,6 @@ import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, ISemesterState } from "../../store/models/root.interface";
 import { ISemester, SemesterModificationStatus } from "../../store/models/semester.interface";
-import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/semester.actions";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
@@ -12,39 +11,20 @@ export type semesterListProps = {
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'name': 'Học kì 1 năm học 2022',
-    'year': 2022,
-    'number': 1,
-    'start_time': '1/3/2022',
-    'end_time': '1/6/2022'
-  },
-  {
-    'id': 2,
-    'name': 'Học kì 1 năm học 2022',
-    'year': 2022,
-    'number': 2,
-    'start_time': '1/7/2022',
-    'end_time': '1/12/2022'
-  }
-]
-
 function SemesterList(props: semesterListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
   const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
-  const history = useHistory();
   console.log(props.value)
 
 
   const semesterElements: (JSX.Element | null)[] = semesters.semesters.filter((val) => {
-    if (props.value == ""){
+    if (props.value === ""){
       return val;
     }
     else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
       return val;
     }
+    return null
   }).map((semester, index) => {
     var strDate = semester.start_time;
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))

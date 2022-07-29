@@ -10,6 +10,14 @@
 
 }
 
+#infor_student {
+    cursor: pointer;
+}
+
+#history_student {
+    cursor: pointer;
+}
+
 .btn-green {
     background-color: cadetblue !important;
     border-color: cadetblue !important;

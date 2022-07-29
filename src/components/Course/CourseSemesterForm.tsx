@@ -2,12 +2,8 @@ import React, { useState, FormEvent, Dispatch, Fragment } from "react";
 import { IStateType, ISemesterCourseState, ICourseState, ISemesterState, IScheduleState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISemesterCourse, SemesterCourseModificationStatus } from "../../store/models/semester_course.interface";
-import TextInput from "../../common/components/TextInput";
 import { editSemesterCourse, clearSelectedSemesterCourse, setModificationStateSemesterCourse, addSemesterCourse } from "../../store/actions/semester_course.action"
 import { addNotification } from "../../store/actions/notifications.action";
-import NumberInput from "../../common/components/NumberInput";
-import Checkbox from "../../common/components/Checkbox";
-import SelectInput from "../../common/components/Select";
 import { OnChangeModel, ISemesterCourseFormState } from "../../common/types/Form.types";
 import { ICourse } from "../../store/models/course.interface";
 import { ISemester } from "../../store/models/semester.interface";
@@ -88,12 +84,6 @@ function CourseSemesterForm(props: semesterCourseListProps): JSX.Element {
 
   function saveForm(formState: ISemesterCourseFormState, saveFn: Function): void {
     if (semester_course) {
-      dispatch(saveFn({
-        ...semester_course,
-        creation_id: formState.creation_id.value,
-        schedule_id: formState.schedule_id.value,
-        course_id: formState.course_id.value
-      }));
 
       if (saveFn === addSemesterCourse){
         dispatch(postSemesterCourse({

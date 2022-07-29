@@ -24,13 +24,13 @@ function userReducer(state: IUserState = initialState, action: IActionBase): IUs
             return { ...state, admins: [...state.admins, action.user]};
         }
         case EDIT_ADMIN: {
-            const foundIndex: number = state.admins.findIndex(pr => pr.id === action.user.id);
+            const foundIndex: number = state.admins.findIndex(pr => pr.username === action.user.username);
             let admins: IUser[] = state.admins;
             admins[foundIndex] = action.user;
             return { ...state, admins: admins };
         }
         case REMOVE_ADMIN: {
-            return { ...state, admins: state.admins.filter(x=>x.id !== action.user.id)};
+            return { ...state, admins: state.admins.filter(x=>x.username !== action.user.username)};
         }
 
         case INITIAL_TEACHER: {
@@ -43,13 +43,13 @@ function userReducer(state: IUserState = initialState, action: IActionBase): IUs
             return { ...state, teachers: [...state.teachers, action.user]};
         }
         case EDIT_TEACHER: {
-            const foundIndex: number = state.teachers.findIndex(pr => pr.id === action.user.id);
+            const foundIndex: number = state.teachers.findIndex(pr => pr.username === action.user.username);
             let teachers: IUser[] = state.teachers;
             teachers[foundIndex] = action.user;
             return { ...state, teachers: teachers };
         }
         case REMOVE_TEACHER: {
-            return { ...state, teachers: state.teachers.filter(x=>x.id !== action.id)};
+            return { ...state, teachers: state.teachers.filter(x=>x.username !== action.user.username)};
         }
 
         case INITIAL_STUDENT: {
@@ -62,13 +62,13 @@ function userReducer(state: IUserState = initialState, action: IActionBase): IUs
             return { ...state, students: [...state.students, action.user]};
         }
         case EDIT_STUDENT: {
-            const foundIndex: number = state.students.findIndex(pr => pr.id === action.user.id);
+            const foundIndex: number = state.students.findIndex(pr => pr.username === action.user.username);
             let students: IUser[] = state.students;
             students[foundIndex] = action.user;
             return { ...state, students: students };
         }
         case REMOVE_STUDENT: {
-            return { ...state, students: state.students.filter(x=>x.id !== action.id)};
+            return { ...state, students: state.students.filter(x=>x.username !== action.user.username)};
         }
 
         case INITIAL_PARENT: {
@@ -81,13 +81,13 @@ function userReducer(state: IUserState = initialState, action: IActionBase): IUs
             return { ...state, parents: [...state.parents, action.user]};
         }
         case EDIT_PARENT: {
-            const foundIndex: number = state.parents.findIndex(pr => pr.id === action.user.id);
+            const foundIndex: number = state.parents.findIndex(pr => pr.username === action.user.username);
             let parents: IUser[] = state.parents;
             parents[foundIndex] = action.user;
             return { ...state, parents: parents };
         }
         case REMOVE_PARENT: {
-            return { ...state, parents: state.parents.filter(x=>x.id !== action.id)};
+            return { ...state, parents: state.parents.filter(x=>x.username !== action.user.username)};
         }
         
         case CHANGE_USER_PENDING_EDIT: {

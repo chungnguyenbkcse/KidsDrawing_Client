@@ -2,7 +2,6 @@ import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IArtAgeState } from "../../store/models/root.interface";
 import { IArtAge, ArtAgeModificationStatus } from "../../store/models/art_age.interface";
-import { useHistory } from "react-router-dom";
 import { setModificationStateArtAge } from "../../store/actions/art_age.action";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
@@ -15,17 +14,17 @@ export type artAgeListProps = {
 function ArtAgeList(props: artAgeListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
   const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
-  const history = useHistory();
   console.log(props.value)
 
 
   const artAgeElements: (JSX.Element | null)[] = art_ages.artAges.filter((val) => {
-    if (props.value == ""){
+    if (props.value === ""){
       return val;
     }
     else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
       return val;
     }
+    return null
     }).map((art_age, index) => {
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!art_age) { return null; }

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ICourseState, IRootPageStateType, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ICourse, CourseModificationStatus } from "../../store/models/course.interface";
 import TextInput from "../../common/components/TextInput";
@@ -17,9 +17,8 @@ import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { getCourse } from "../../common/service/Course/GetCourse";
-import { postImage } from "../../common/service/Cloudinary/PostImage";
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
 
@@ -32,7 +31,6 @@ type Options = {
 const CourseNomalForm: React.FC = () => {
     //console.log(id)
     const dispatch: Dispatch<any> = useDispatch();
-    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
     //console.log(courses)
     const { state } = useLocation()
     console.log(state)
@@ -44,7 +42,6 @@ const CourseNomalForm: React.FC = () => {
     //console.log(course)
     const isCreate: boolean = true;
     useEffect(() => {
-        dispatch(clearSelectedCourse());
         dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch]);
 
@@ -141,7 +138,7 @@ const CourseNomalForm: React.FC = () => {
                 art_level_id: formState.art_level_id.value
             }));
 
-            if (saveFn == addCourse) {
+            if (saveFn === addCourse) {
                 dispatch(postCourse({
                     name: formState.name.value,
                     description: textHtml,
@@ -157,7 +154,7 @@ const CourseNomalForm: React.FC = () => {
                 }))
             }
 
-            else if (saveFn == editCourse) {
+            else if (saveFn === editCourse) {
                 dispatch(putCourse(course.id, {
                     name: formState.name.value,
                     description: textHtml,

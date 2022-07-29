@@ -1,7 +1,7 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addSemester } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postSemester(data: any) {
+export function postSemester(semester: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -14,14 +14,14 @@ export function postSemester(data: any) {
                         'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(semester)
                 }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSemester(data))
+                        dispatch(postSemester(semester))
                     }
                     else {
                         throw Error(response.statusText);
@@ -30,6 +30,8 @@ export function postSemester(data: any) {
                 return response
             })
             .then (data => {
+                dispatch(fetchDataSuccess(semester))
+                dispatch(addSemester(semester))
                 console.log(data)
             })
             .catch(error => {

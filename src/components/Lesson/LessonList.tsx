@@ -2,9 +2,7 @@ import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, ILessonState } from "../../store/models/root.interface";
 import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
-import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/lesson.action";
-import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
 export type lessonListProps = {
   onSelect?: (lesson: ILesson) => void;
@@ -15,7 +13,6 @@ export type lessonListProps = {
 function LessonList(props: lessonListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
   const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
-  const history = useHistory();
   console.log(props.value)
 
 

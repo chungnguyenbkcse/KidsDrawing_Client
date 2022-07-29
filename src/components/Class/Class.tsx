@@ -1,16 +1,14 @@
-import React, { Fragment, Dispatch, useState, useEffect } from "react";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import ClassList from "./ClassList";
 import TopCard from "../../common/components/TopCard";
 import "./Class.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
+    clearSelectedProduct, setModificationState,
     changeSelectedProduct
 } from "../../store/actions/products.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
 import SelectInput from "../../common/components/Select";
 
@@ -19,8 +17,7 @@ const Class: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const products: IProductState = useSelector((state: IStateType) => state.products);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
-    const [popup, setPopup] = useState(false);
+    const numberItemsCount: number = products.products.length
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
@@ -30,10 +27,6 @@ const Class: React.FC = () => {
     function onProductSelect(product: IProduct): void {
         dispatch(changeSelectedProduct(product));
         dispatch(setModificationState(ProductModificationStatus.None));
-    }
-
-    function onProductRemove() {
-        setPopup(true);
     }
 
     return (

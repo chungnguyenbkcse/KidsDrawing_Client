@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { IStateType, IProductState } from "../../store/models/root.interface";
 import { IProduct } from "../../store/models/product.interface";
-import { useHistory } from "react-router-dom";
 
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
@@ -30,8 +29,6 @@ const data = [
 
 function TeacherRequestList(props: productListProps): JSX.Element  {
   const products: IProductState = useSelector((state: IStateType) => state.products);
-  const history = useHistory();
-
   const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }
     return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}

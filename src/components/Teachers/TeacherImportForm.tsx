@@ -2,13 +2,11 @@ import React, { useState, FormEvent, Dispatch, Fragment } from "react";
 import { IStateType, IUserState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
-import TextInput from "../../common/components/TextInput";
 import { editTeacher, clearSelectedUser, setModificationState, addTeacher } from "../../store/actions/users.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import SelectInput from "../../common/components/Select";
-import { OnChangeModel, IUserFormState } from "../../common/types/Form.types";
 import { postTeacher } from "../../common/service/Teacher/PostTeacher";
 import { putTeacher } from "../../common/service/Teacher/PutTeacher";
+import { IUserFormState } from "../../common/types/Form.types";
 
 export type teacherListProps = {
   isCheck: (value: boolean) => void;
@@ -23,27 +21,6 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
 
   if (!user || isCreate) {
     user = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
-  }
-
-  const [formState, setFormState] = useState({
-    username: { error: "", value: user.username },
-    email: { error: "", value: user.email },
-    password: { error: "", value: "" }
-  });
-
-
-  function hasFormValueChanged(model: OnChangeModel): void {
-    setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
-  }
-
-  function saveUser(e: FormEvent<HTMLFormElement>): void {
-    e.preventDefault();
-    if (isFormInvalid()) {
-      return;
-    }
-    props.isCheck(false);
-    let saveUserFn: Function = (isCreate) ? addTeacher : editTeacher;
-    saveForm(formState, saveUserFn);
   }
 
   function saveForm(formState: IUserFormState, saveFn: Function): void {
@@ -102,13 +79,7 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
   }
 
   function getDisabledClass(): string {
-    let isError: boolean = isFormInvalid();
     return !csvFile ? "disabled" : "";
-  }
-
-  function isFormInvalid(): boolean {
-    return (formState.username.error || formState.email.error
-      || !formState.email.value || !formState.username.value || !formState.password.value ) as boolean;
   }
 
   const [csvFile, setCsvFile] = useState<any>();

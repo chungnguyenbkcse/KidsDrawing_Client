@@ -1,21 +1,19 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISectionTemplateState, IRootPageStateType, ICourseState } from "../../store/models/root.interface";
+import { IStateType, ISectionTemplateState, IRootPageStateType, ITutorialTemplateState, ITutorialTemplatePageState, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store/models/section_template.interface";
 import TextInput from "../../common/components/TextInput";
-import { editSectionTemplate, clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
+import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate, removeSectionTemplateAll } from "../../store/actions/section_template.action";
 import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import Editor from "../../common/components/Quill/EditorSection";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import { getCourse } from "../../common/service/Course/GetCourse";
-import { useLocation } from "react-router-dom";
 import { ICourse } from "../../store/models/course.interface";
 import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
-import { addLesson } from "../../store/actions/lesson.action";
+import { clearSelectedCourse } from "../../store/actions/course.action";
 type Options = {
   name: string;
   value: any;
@@ -36,25 +34,23 @@ type TutorialSectionTemplate = {
 const LessonPlan: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const section_templates: ISectionTemplateState | null = useSelector((state: IStateType) => state.section_templates);
+  const tutorial_templates: ITutorialTemplateState | null = useSelector((state: IStateType) => state.tutorial_templates);
+  const tutorial_template_pages: ITutorialTemplatePageState | null = useSelector((state: IStateType) => state.tutorial_template_pages);
   const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-  const isCreate: boolean = section_templates.sectionTemplates.length > 0 ? false : true;
-  useEffect(() => {
-    dispatch(clearSelectedSectionTemplate());
-    dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
-  }, [path.area, dispatch]);
-
-  useEffect(() => {
-    if (course) {
-      dispatch(getSectionTemplateByCourseId(course.id));
-    }
-  }, [dispatch]);
-
-  const { state } = useLocation()
-  console.log(state)
-  let course: ICourse = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" }
-  if (typeof state != "undefined") {
-    course = state.course_value;
+  const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+  console.log(section_templates.sectionTemplates)
+  let course: ICourse | null = courses.selectedCourse;
+  console.log(course)
+  if (!course) {
+      course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
   }
+  let course_id = (course !== null ? course.id : 0)
+  console.log(course_id)
+
+  useEffect(() => {
+    dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
+  }, [path.area, dispatch, course_id]);
+
 
 
   let section_template: ISectionTemplate = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
@@ -69,7 +65,6 @@ const LessonPlan: React.FC = () => {
     create_time: { error: "", value: section_template.create_time },
     update_time: { error: "", value: section_template.update_time }
   });
-
   const [totalPage, setTotalPage] = useState(0);
   const [contentTutorialSection, setContentTutorialSection] = useState<TutorialSectionTemplate[]>([])
   const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
@@ -101,7 +96,7 @@ const LessonPlan: React.FC = () => {
     if (isFormInvalid()) {
       return;
     }
-    let saveUserFn: Function = (isCreate) ? addSectionTemplate : editSectionTemplate;
+    let saveUserFn: Function = addSectionTemplate;
     //console.log(contentTutorialSection)
     //console.log(saveUserFn)
     saveForm(formState, saveUserFn, contentTutorialSection);
@@ -124,15 +119,16 @@ const LessonPlan: React.FC = () => {
         creator_id: formState.creator_id.value
       }));
 
-      if (saveFn === addSectionTemplate){
+      if (saveFn === addSectionTemplate && course !== null){
         console.log("hello")
+        let course_id = (course !== null ? course.id : 0)
         contentTutorialSections.map((contentSection) => {
           return dispatch(postSectionTemplate(contentSection.tutorial, {
             name: contentSection.name,
             number: contentSection.number,
             description: "",
             teaching_form: contentSection.teaching_form,
-            course_id: course.id,
+            course_id: course_id,
             creator_id: localStorage.getItem('id')
           }))
         })
@@ -144,18 +140,15 @@ const LessonPlan: React.FC = () => {
     }
   }
 
-  function cancelForm(): void {
-    dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
-  }
-
   function getDisabledClass(): string {
     let isError: boolean = isFormInvalid();
     return isError ? "disabled" : "";
   }
 
   function isFormInvalid(): boolean {
+    let course_num_of_section = (course !== null ? course.num_of_section : 0)
     return (formState.number.error || formState.teaching_form.error 
-      || !formState.name.value || !formState.teaching_form.value || contentTutorialSection.length < course.num_of_section) as boolean;
+      || !formState.name.value || !formState.teaching_form.value || contentTutorialSection.length < course_num_of_section) as boolean;
   }
 
   const listTotalPage: Options[] = [
@@ -222,7 +215,7 @@ const LessonPlan: React.FC = () => {
 
   function handleNextSection() {
     setNumberSection(numberSection + 1)
-    if (totalPage == 1) {
+    if (totalPage === 1) {
       let contentPage: PageContent = {
         page: currentPage,
         content: textHtml
@@ -238,8 +231,11 @@ const LessonPlan: React.FC = () => {
     setTextHtml("")
   }
 
-  //console.log(currentPage)
-
+  useEffect(() => {
+    if (tutorial_template_pages.tutorialTemplatePages.length !== 0){
+      setTotalPage(tutorial_template_pages.tutorialTemplatePages.length)
+    }
+  }, [tutorial_template_pages])
   return (
     <Fragment>
       <div className="col-xl-12 col-lg-12">
@@ -275,7 +271,7 @@ const LessonPlan: React.FC = () => {
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <SelectKeyValueNotField
-                    value={totalPage}
+                    value={tutorial_template_pages.tutorialTemplatePages.length !== 0 ? tutorial_template_pages.tutorialTemplatePages.length : totalPage}
                     id="input_total_page"
                     onChange={hasFormValueChangedNotFiled}
                     required={true}

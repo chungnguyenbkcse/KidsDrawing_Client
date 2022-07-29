@@ -5,7 +5,6 @@ import { IUser, UserModificationStatus } from "../../store/models/user.interface
 import TextInput from "../../common/components/TextInput";
 import { editTeacher, clearSelectedUser, setModificationState, addTeacher } from "../../store/actions/users.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import SelectInput from "../../common/components/Select";
 import { OnChangeModel, IUserFormState } from "../../common/types/Form.types";
 import { postTeacher } from "../../common/service/Teacher/PostTeacher";
 import { putTeacher } from "../../common/service/Teacher/PutTeacher";
@@ -48,20 +47,6 @@ function TeacherForm(props: teacherListProps): JSX.Element {
 
   function saveForm(formState: IUserFormState, saveFn: Function): void {
     if (user) {
-      dispatch(saveFn({
-        username: formState.username.value,
-        email: formState.email.value,
-        password: formState.password.value,
-        firstName: null,
-        lastName: null,
-        dateOfBirth: null,
-        profile_image_url: null,
-        sex: null,
-        phone: null,
-        address: null,
-        parent_ids: [],
-        roleNames: ["TEACHER_USER"]
-      }));
 
       if (saveFn === addTeacher){
         dispatch(postTeacher({
@@ -82,11 +67,18 @@ function TeacherForm(props: teacherListProps): JSX.Element {
 
       else if (saveFn === editTeacher) {
         dispatch(putTeacher(user.id, {
-          ...user,
           username: formState.username.value,
           email: formState.email.value,
           password: formState.password.value,
-          creator_id: localStorage.getItem('id')
+          firstName: null,
+          lastName: null,
+          dateOfBirth: null,
+          profile_image_url: null,
+          sex: null,
+          phone: null,
+          address: null,
+          parent_ids: [],
+          roleNames: ["TEACHER_USER"]
         }));
       }
 

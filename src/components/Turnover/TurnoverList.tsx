@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { IStateType, IProductState } from "../../store/models/root.interface";
 import { IProduct } from "../../store/models/product.interface";
-import { useHistory } from "react-router-dom";
 
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
@@ -32,7 +31,6 @@ const data = [
 
 function TurnoverList(props: productListProps): JSX.Element  {
   const products: IProductState = useSelector((state: IStateType) => state.products);
-  const history = useHistory();
 
   const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }

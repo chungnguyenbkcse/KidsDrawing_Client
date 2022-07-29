@@ -2,7 +2,6 @@ import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IScheduleState } from "../../store/models/root.interface";
 import { ISchedule, ScheduleModificationStatus } from "../../store/models/schedule.interface";
-import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/schedule.action";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
@@ -15,17 +14,17 @@ export type scheduleListProps = {
 function ScheduleList(props: scheduleListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const schedules: IScheduleState = useSelector((state: IStateType) => state.schedules);
-    const history = useHistory();
     console.log(props.value)
 
 
     const scheduleElements: (JSX.Element | null)[] = schedules.schedules.filter((val) => {
-        if (props.value == ""){
+        if (props.value === ""){
           return val;
         }
         else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
           return val;
         }
+        return null
       }).map((schedule, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
         if (!schedule) { return null; }

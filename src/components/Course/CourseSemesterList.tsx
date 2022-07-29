@@ -23,11 +23,7 @@ function CourseSemesterList(props: semesterCourseListProps): JSX.Element  {
   const semester_courses: ISemesterCourseState = useSelector((state: IStateType) => state.semester_courses);
   const history = useHistory();
   const dispatch: Dispatch<any> = useDispatch();
-  
-  const routeChange = () =>{ 
-    let path = '/teachers/detail'; 
-    history.push(path);
-  }
+  console.log(semester_courses.semesterCourses)
 
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
   const listCourses: ICourse[] = courses.courses
@@ -69,7 +65,7 @@ function CourseSemesterList(props: semesterCourseListProps): JSX.Element  {
     if (!semester_course) { return null; }
     return (<tr className={`table-row ${(semester_courses.selectedSemesterCourse && semester_courses.selectedSemesterCourse.id === semester_course.id) ? "selected" : ""}`}
       key={`semester_course_${semester_course.id}`}>
-      <th scope="row" onClick={routeChange}>{semester_course.id}</th>
+      <th scope="row">{index + 1}</th>
       <td>{courseList[index]}</td>
       <td>{semeserList[index]}</td>
       <td>{scheduleList[index]}</td>

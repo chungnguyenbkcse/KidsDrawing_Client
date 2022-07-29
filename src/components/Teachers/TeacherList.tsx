@@ -1,4 +1,4 @@
-import React, { Dispatch, Fragment, useState } from "react";
+import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IUserState } from "../../store/models/root.interface";
 import { useHistory } from "react-router-dom";
@@ -19,8 +19,6 @@ function TeacherList(props: userListProps): JSX.Element {
   const users: IUserState = useSelector((state: IStateType) => state.users);
   const history = useHistory();
 
-  const [popup, setPopup] = useState(false);
-
   const routeChange = () => {
     let path = '/teachers/detail';
     history.push(path);
@@ -31,17 +29,14 @@ function TeacherList(props: userListProps): JSX.Element {
     history.push(path);
   }
 
-  function onUserRemove() {
-    setPopup(true);
-  }
-
   const userElements: (JSX.Element | null)[] = users.teachers.filter((val) => {
-    if (props.value == ""){
+    if (props.value === ""){
       return val;
     }
     else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.username).toLowerCase().includes(props.value.toLowerCase()) || val.username.toLowerCase().includes(props.value.toLowerCase()))){
       return val;
     }
+    return null
   }).map((teacher, index) => {
     if (!teacher) { return null; }
     return (<tr className={`table-row ${(users.selectedUser && users.selectedUser.id === teacher.id) ? "selected" : ""}`}
@@ -50,12 +45,12 @@ function TeacherList(props: userListProps): JSX.Element {
       <th scope="row">{index + 1}</th>
       <td onClick={routeChange}>{teacher.firstName} {teacher.lastName}</td>
       <td>{teacher.username}</td>
-      <td></td>
-
+      <td>{teacher.email}</td>
+      <th scope="col"></th>
       <td onClick={onChangeRequest}></td> 
       {
         function () {
-          if (teacher.status == true){
+          if (teacher.status === true){
             return (
               <td style={{color: "#18AB56"}}>Đang hoạt động</td>
             )
@@ -93,6 +88,7 @@ function TeacherList(props: userListProps): JSX.Element {
               <th scope="col">#</th>
               <th scope="col">Tên</th>
               <th scope="col">Tài khoản</th>
+              <th scope="col">Email</th>
               <th scope="col">Trình độ</th>
               <th scope="col">Xác nhận trình độ</th>
               <th scope="col">Trạng thái</th>

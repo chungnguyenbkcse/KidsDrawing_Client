@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent, Fragment } from "react";
 import { SelectMutipleProps } from "../types/SelectMutiple.types";
 
 function SelectKeyValueMutiple(props: SelectMutipleProps): JSX.Element {
-    const [touched, setTouch] = useState(false);
     const [error, setError] = useState("");
     const [htmlClass, setHtmlClass] = useState("");
     const [value, setValue] = useState(props.value);
@@ -15,8 +14,6 @@ function SelectKeyValueMutiple(props: SelectMutipleProps): JSX.Element {
 
 
         props.onChange(parseInt(elementValue), props.index);
-
-        setTouch(true);
         setError(error);
         setHtmlClass(validClass);
         setValue(parseInt(elementValue));

@@ -33,7 +33,6 @@ const DetailTeacher: React.FC = () => {
     const products: IProductState = useSelector((state: IStateType) => state.products);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = products.products.length;
-    const [popup, setPopup] = useState(false);
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
@@ -43,10 +42,6 @@ const DetailTeacher: React.FC = () => {
     function onProductSelect(product: IProduct): void {
         dispatch(changeSelectedProduct(product));
         dispatch(setModificationState(ProductModificationStatus.None));
-    }
-
-    function onProductRemove() {
-        setPopup(true);
     }
 
     return (
@@ -61,7 +56,7 @@ const DetailTeacher: React.FC = () => {
             <div className="row">
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked == false) {
+                        if (checked === false) {
                             setChecked(true)
                         }
                     }} style={{
@@ -70,7 +65,7 @@ const DetailTeacher: React.FC = () => {
                 </div>
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked == true) {
+                        if (checked === true) {
                             setChecked(false)
                         }
                     }}
@@ -82,7 +77,7 @@ const DetailTeacher: React.FC = () => {
 
             {
                 function () {
-                    if (checked == true) {
+                    if (checked === true) {
                         return (
                             <div className="row">
                                 <div className="col-xl-12 col-lg-12">

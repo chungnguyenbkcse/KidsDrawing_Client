@@ -3,51 +3,41 @@ import TopCard from "../../common/components/TopCard";
 import "./DetailStudent.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
+import { IUserState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
-import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+    clearSelectedUser, setModificationState,
+    changeSelectedUser
+} from "../../store/actions/users.action";
+import { UserModificationStatus, IUser } from "../../store/models/user.interface";
 import TextInput from "../../common/components/TextInput";
 import HistoryStudent from "./HistoryStudent";
-
-const data = {
-    'id': 3,
-    'first_name': 'Thao',
-    'last_name': 'Nguyễn',
-    'username': 'thaonguyen123',
-    'status': 'Đang hoạt động',
-    'date_of_birth': '10/10/2000',
-    'phone': '0989439678',
-    'sex': 'Nữ',
-    'address': 'Thanh Hoa',
-    'parent': 'Dien Do',
-}
-
 
 const DetailStudent: React.FC = () => {
     const [checked, setChecked] = useState(true);
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const users: IUserState = useSelector((state: IStateType) => state.users);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length;
-    const [popup, setPopup] = useState(false);
-
-    useEffect(() => {
-        dispatch(clearSelectedProduct());
-        dispatch(updateCurrentPath("products", "list"));
-    }, [path.area, dispatch]);
-
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    const numberItemsCount: number = users.students.length;
+    const parents: IUser[] = users.parents;
+    let user: IUser | null = users.selectedUser;
+    console.log(user)
+    if (!user || user === null) {
+        user = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
     }
 
-    function onProductRemove() {
-        setPopup(true);
+    let parent: IUser | undefined = parents.find((value) => user !== null && value.id === user.id)
+    let parent_name: string = ""
+    if (typeof parent !== undefined && parent !== undefined){
+        parent_name = parent.firstName + " " + parent.lastName
+    }
+    
+    useEffect(() => {
+        dispatch(updateCurrentPath("Học sinh", ""));
+    }, [path.area, dispatch]);
+
+    function onUserSelect(user: IUser): void {
+        dispatch(changeSelectedUser(user));
+        dispatch(setModificationState(UserModificationStatus.None));
     }
 
     return (
@@ -61,29 +51,43 @@ const DetailStudent: React.FC = () => {
 
             <div className="row">
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" onClick={() => {
-                        if (checked == false) {
+                    <h6 className="m-0 font-weight-bold" id="infor_student" onClick={() => {
+                        if (checked === false) {
                             setChecked(true)
                         }
                     }} style={{
                         color: checked ? "#F24E1E" : "#2F4F4F"
                     }}>Thông tin học sinh</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" onClick={() => {
-                        if (checked == true) {
+                    <h6 className="m-0 font-weight-bold" id="history_student" onClick={() => {
+                        if (checked === true) {
                             setChecked(false)
                         }
                     }}
                         style={{
                             color: checked ? "#2F4F4F" : "#F24E1E"
                         }}>Lịch sử học</h6>
+                        <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                    }}></div>
                 </div>
             </div>
 
             {
                 function () {
-                    if (checked == true) {
+                    if (checked === true) {
                         return (
                             <div className="row">
                                 <div className="col-xl-12 col-lg-12">
@@ -103,7 +107,7 @@ const DetailStudent: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Tên đăng nhập"
-                                                            placeholder={data.username} />
+                                                            placeholder={user.username} />
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
@@ -115,7 +119,7 @@ const DetailStudent: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Ngày sinh"
-                                                            placeholder={data.date_of_birth} />
+                                                            placeholder={user.dateOfBirth} />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <TextInput id="input_email"
@@ -125,7 +129,7 @@ const DetailStudent: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Giới tính"
-                                                            placeholder={data.sex} />
+                                                            placeholder={user.sex} />
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
@@ -137,7 +141,7 @@ const DetailStudent: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Số điện thoại"
-                                                            placeholder={data.phone} />
+                                                            placeholder={user.phone} />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <TextInput id="input_email"
@@ -147,7 +151,7 @@ const DetailStudent: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Địa chỉ"
-                                                            placeholder={data.address} />
+                                                            placeholder={user.address} />
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
@@ -159,7 +163,7 @@ const DetailStudent: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Phụ huynh"
-                                                            placeholder={data.parent} />
+                                                            placeholder={parent_name} />
                                                     </div>
                                                 </div>
                                             </form>
@@ -179,7 +183,7 @@ const DetailStudent: React.FC = () => {
                                         </div>
                                         <div className="card-body">
                                             <HistoryStudent
-                                                onSelect={onProductSelect}
+                                                onSelect={onUserSelect}
                                             />
                                         </div>
                                     </div>

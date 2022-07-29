@@ -6,10 +6,9 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
+    clearSelectedProduct, setModificationState,
     changeSelectedProduct
 } from "../../store/actions/products.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
 import TextInput from "../../common/components/TextInput";
 import LessonList from "./LessonList";
@@ -28,7 +27,6 @@ const data = {
 
 
 const DetailClass: React.FC = () => {
-    const [checked, setChecked] = useState(true);
     const dispatch: Dispatch<any> = useDispatch();
     const products: IProductState = useSelector((state: IStateType) => state.products);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -43,10 +41,6 @@ const DetailClass: React.FC = () => {
     function onProductSelect(product: IProduct): void {
         dispatch(changeSelectedProduct(product));
         dispatch(setModificationState(ProductModificationStatus.None));
-    }
-
-    function onProductRemove() {
-        setPopup(true);
     }
 
     return (

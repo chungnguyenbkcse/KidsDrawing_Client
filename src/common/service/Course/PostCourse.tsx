@@ -1,8 +1,7 @@
-import { logout } from "../../../store/actions/account.actions";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addCourse } from "../../../store/actions/course.action";
+import { fetchDataRequest, fetchDataError, addCourse } from "../../../store/actions/course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postCourse(data: any) {
+export function postCourse(course: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -15,14 +14,14 @@ export function postCourse(data: any) {
                         'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(course)
                 }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postCourse(data))
+                        dispatch(postCourse(course))
                     }
                     else {
                         throw Error(response.statusText);
@@ -33,6 +32,7 @@ export function postCourse(data: any) {
             .then (data => {
                 console.log(data)
                 dispatch(fetchDataRequest());
+                dispatch(addCourse(course))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

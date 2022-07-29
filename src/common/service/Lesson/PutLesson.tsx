@@ -29,9 +29,11 @@ export function putLesson(id: any, data: any) {
                 }
                 return response
             })
-            .then (data => {
-                console.log(data)
+            .then (val => {
+                console.log(val)
                 console.log(id)
+                dispatch(fetchDataSuccess(data))
+                dispatch(editLesson(data))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -29,8 +29,10 @@ export function postLesson(data: any) {
                 }
                 return response
             })
-            .then (data => {
-                console.log(data)
+            .then (val => {
+                console.log(val)
+                dispatch(fetchDataSuccess(data))
+                dispatch(addLesson(data))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

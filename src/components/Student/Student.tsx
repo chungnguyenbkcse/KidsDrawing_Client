@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useState, useEffect, FormEvent } from "react";
+import React, { Fragment, Dispatch, useState, useEffect } from "react";
 import StudentList from "./StudentList";
 import TopCard from "../../common/components/TopCard";
 import "./Student.css";
@@ -11,6 +11,7 @@ import {clearSelectedUser, setModificationState, changeSelectedUser, removeStude
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
 import { deleteUser } from "../../common/service/User/DeleteUser";
 import { getStudent } from "../../common/service/Student/GetStudent";
+import { getParent } from "../../common/service/Parent/GetParent";
 
 
 
@@ -24,6 +25,7 @@ const Student: React.FC = () => {
 
     useEffect(() => {
         dispatch(getStudent())
+        dispatch(getParent())
     }, [dispatch])
 
     useEffect(() => {
@@ -40,11 +42,6 @@ const Student: React.FC = () => {
     function onUserRemove() {
         setPopup(true);
     }
-
-    function onRemovePopup(value: boolean) {
-        setPopup(false);
-    }
-
 
     return (
         <Fragment>

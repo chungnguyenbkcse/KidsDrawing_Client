@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeLesson } from "../../../store/actions/lesson.action";
+import { fetchDataRequest, fetchDataError, removeLesson } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteLesson(id: any) {

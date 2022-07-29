@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import { IStateType, IUserState } from "../../store/models/root.interface";
+import { IUser } from "../../store/models/user.interface";
 import { useHistory } from "react-router-dom";
-import { RatingStar } from "rating-star";
 
-export type productListProps = {
-    onSelect?: (product: IProduct) => void;
+export type userListProps = {
+    onSelect?: (user: IUser) => void;
     children?: React.ReactNode;
 };
 
@@ -31,8 +30,8 @@ const data = [
     },
 ]
 
-function HistoryStudent(props: productListProps): JSX.Element {
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+function HistoryStudent(props: userListProps): JSX.Element {
+    const users: IUserState = useSelector((state: IStateType) => state.users);
     const history = useHistory();
 
     const routeChange = () => {
@@ -40,15 +39,15 @@ function HistoryStudent(props: productListProps): JSX.Element {
         history.push(path);
     }
 
-    const productElements: (JSX.Element | null)[] = data.map(product => {
-        if (!product) { return null; }
-        return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
+    const userElements: (JSX.Element | null)[] = data.map(user => {
+        if (!user) { return null; }
+        return (<tr className={`table-row ${(users.selectedUser && users.selectedUser.id === user.id) ? "selected" : ""}`}
             onClick={routeChange}
-            key={`product_${product.id}`}>
-            <th scope="row">{product.id}</th>
-            <td>{product.class_name}</td>
-            <td>{product.course_name}</td>
-            <td>{product.semester}</td>
+            key={`user_${user.id}`}>
+            <th scope="row">{user.id}</th>
+            <td>{user.class_name}</td>
+            <td>{user.course_name}</td>
+            <td>{user.semester}</td>
         </tr>);
     });
 
@@ -65,7 +64,7 @@ function HistoryStudent(props: productListProps): JSX.Element {
                     </tr>
                 </thead>
                 <tbody>
-                    {productElements}
+                    {userElements}
                 </tbody>
             </table>
         </div>

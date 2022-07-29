@@ -5,11 +5,9 @@ import { ILesson, LessonModificationStatus } from "../../store/models/lesson.int
 import TextInput from "../../common/components/TextInput";
 import { editLesson, clearSelectedLesson, setModificationState, addLesson } from "../../store/actions/lesson.action";
 import { addNotification } from "../../store/actions/notifications.action";
-import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel, ILessonFormState } from "../../common/types/Form.types";
 import { postLesson } from "../../common/service/Lesson/PostLesson";
 import { putLesson } from "../../common/service/Lesson/PutLesson";
-import Editor from "../../common/components/Quill/Editor";
 
 export type lessonListProps = {
   isCheck: (value: boolean) => void;

@@ -1,52 +1,25 @@
-import React, { Fragment, Dispatch, useState, useEffect } from "react";
-import ClassForm from "./ClassForm";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import TopCard from "../../common/components/TopCard";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
 import {
-    removeProduct, clearSelectedProduct, setModificationState,
-    changeSelectedProduct
+    clearSelectedProduct
 } from "../../store/actions/products.action";
-import { addNotification } from "../../store/actions/notifications.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
-import TextInput from "../../common/components/TextInput";
-import LessonList from "./LessonList";
 
-const data = {
-    'id': 3,
-    'class_id': 'CM-1',
-    'art_type': 'Chì màu',
-    'art_level': '4-6 tuổi',
-    'teacher': 'Chung Nguyễn',
-    'number_student': '6',
-    'course': 'Khóa học mầm chì màu học kì 1 năm học 2022',
-    'number_lesson': '10',
-}
+
 
 
 const DetailLesson: React.FC = () => {
-    const [checked, setChecked] = useState(true);
     const dispatch: Dispatch<any> = useDispatch();
     const products: IProductState = useSelector((state: IStateType) => state.products);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = products.products.length;
-    const [popup, setPopup] = useState(false);
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
         dispatch(updateCurrentPath("Lớp CM-1", "Buổi 1"));
     }, [path.area, dispatch]);
-
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
-    }
-
-    function onProductRemove() {
-        setPopup(true);
-    }
 
     return (
         <Fragment>

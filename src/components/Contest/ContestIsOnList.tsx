@@ -79,7 +79,6 @@ function ContestIsOnList(props: contestListProps): JSX.Element {
     const contestElements: (JSX.Element | null)[] = contests.contests.map((contest, index) => {
         var strDate1 = contest.start_time;
         var strDate2 = contest.end_time;
-        var strDate3 = contest.registration_time;
         if (!contest || strDate1 > date_now || date_now > strDate2) { return null; }
         return (<tr className={`table-row ${(contests.selectedContest && contests.selectedContest.id === contest.id) ? "selected" : ""}`}
             key={`contest_${contest.id}`}>

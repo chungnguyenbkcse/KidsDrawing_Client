@@ -1,8 +1,8 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addContest } from "../../../store/actions/contest.action";
+import { fetchDataRequest, fetchDataError, addContest } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postUserGradeContest } from "../UserGradeContest/PostUserGradeContest";
 
-export function postContest(lst: any[], data: any) {
+export function postContest(lst: any[], contest: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -15,14 +15,14 @@ export function postContest(lst: any[], data: any) {
                         'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(contest)
                 }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postContest(lst,data))
+                        dispatch(postContest(lst,contest))
                     }
                     else {
                         throw Error(response.statusText);
@@ -32,6 +32,7 @@ export function postContest(lst: any[], data: any) {
             })
             .then (data => {
                 console.log(data)
+                dispatch(addContest(contest))
                 lst.map((value, index) =>  {
                     return dispatch(postUserGradeContest({
                         contest_id: data.id,

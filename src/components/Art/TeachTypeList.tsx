@@ -2,7 +2,6 @@ import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IArtTypeState } from "../../store/models/root.interface";
 import { IArtType, ArtTypeModificationStatus } from "../../store/models/art_type.interface";
-import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/art_type.action";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 
@@ -16,17 +15,17 @@ function ArtTypeList(props: artTypeListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
   const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
   console.log(art_types)
-  const history = useHistory();
   console.log(art_types)
 
 
   const artTypeElements: (JSX.Element | null)[] = art_types.artTypes.filter((val) => {
-    if (props.value == ""){
+    if (props.value === ""){
       return val;
     }
     else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
       return val;
     }
+    return null
     }).map((art_type, index) => {
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!art_type) { return null; }

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useRef} from "react";
 import ReactQuill, { Quill } from 'react-quill';
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import "react-quill/dist/quill.snow.css";
@@ -14,7 +14,7 @@ export const Editor = (props) => {
     if (reactQuillRef.current.getEditor() && !props.isCreate){
         reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
     }
-  }, [reactQuillRef]);
+  }, [reactQuillRef, props.isCreate, props.setValue]);
   //console.log(reactQuillRef)
   
   //const quill = reactQuillRef.current.editor;

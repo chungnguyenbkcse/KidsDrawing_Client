@@ -1,11 +1,8 @@
-import React, { Dispatch, Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct, ProductModificationStatus } from "../../store/models/product.interface";
-import ClassForm from "./ClassForm";
+import { IProduct } from "../../store/models/product.interface";
 import { useHistory } from "react-router-dom";
-import { setModificationState } from "../../store/actions/products.action";
-import Popup from "reactjs-popup";
 
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
@@ -46,21 +43,15 @@ const data = [
 ]
 
 function LessonList(props: productListProps): JSX.Element  {
-  const dispatch: Dispatch<any> = useDispatch();
 
   const products: IProductState = useSelector((state: IStateType) => state.products);
   const history = useHistory();
-
-  const [popup, setPopup] = useState(false);
   
   const routeChange = () =>{ 
     let path = '/class/lesson'; 
     history.push(path);
   }
 
-  function onProductRemove() {
-    setPopup(true);
-}
 
   const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }

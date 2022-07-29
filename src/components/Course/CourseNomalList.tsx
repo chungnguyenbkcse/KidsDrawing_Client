@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, ICourseState, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
 import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
@@ -87,23 +87,12 @@ function CourseNomalList(props: courseListProps): JSX.Element {
   const routeEdit = (course: ICourse) => {
     dispatch(setModificationState(CourseModificationStatus.None));
     let path = `/courses/edit-course`;
-    history.push(
-      {
-        pathname: path,
-        state: { course_value: course } // your data array of objects
-      }
-    );
+    history.push(path);
   }
 
-  const routeChange1 = (course: ICourse) => {
-    dispatch(setModificationState(CourseModificationStatus.None));
+  function routeChange1 () {
     let path = '/courses/lesson-plan';
-    history.push(
-      {
-        pathname: path,
-        state: { course_value: course } // your data array of objects
-      }
-    );
+    history.push(path);
   }
 
   const courseElements: (JSX.Element | null)[] = courses.courses.map((course, index) => {
@@ -111,15 +100,24 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     return (<tr className={`table-row ${(courses.selectedCourse && courses.selectedCourse.id === course.id) ? "selected" : ""}`}
       key={`course_${index}`}>
       <th scope="row">{course.id}</th>
-      <td onClick={routeChange}>{course.name}</td>
+      <td onClick={() => {
+        if(props.onSelect) props.onSelect(course);
+        routeChange()
+      }}>{course.name}</td>
       <td>{typeList[index]}</td>
       <td>{ageList[index]}</td>
       <td>{levelList[index]}</td>
       <td>
-        <button type="button" className="btn btn-primary" onClick={() => routeEdit(course)}>Chỉnh thông tin</button>
+        <button type="button" className="btn btn-primary" onClick={() => {
+          if(props.onSelect) props.onSelect(course);
+          routeEdit(course)}}
+        >Chỉnh thông tin</button>
       </td>
       <td>
-        <button type="button" className="btn btn-warning" onClick={() => routeChange1(course)}>Chỉnh giáo án</button>
+        <button type="button" className="btn btn-warning" onClick={() => {
+          if(props.onSelect) props.onSelect(course);
+          routeChange1()}}
+        >Chỉnh giáo án</button>
       </td>
       <td>
         <button type="button" className="btn btn-danger" onClick={() => {

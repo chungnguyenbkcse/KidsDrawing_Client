@@ -19,6 +19,9 @@ import contestsReducer from "./contest.reducer";
 import sectionTemplatesReducer from "./section_template.reducer";
 import tutorialTemplatesReducer from "./tutorial_template.reducer";
 import userGradeContestsReducer from "./user_grade_contest.reducer";
+import tutorialTemplatePagesReducer from "./tutorial_template_page.reducer";
+import teacherLeaveReducer from "./teacher_leave.reducer";
+import studentLeaveReducer from "./student_leave.reducer";
 
 
 const initialState: IRootStateType = {
@@ -53,6 +56,9 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     section_templates: sectionTemplatesReducer,
     tutorial_templates: tutorialTemplatesReducer,
     user_grade_contests: userGradeContestsReducer,
+    tutorial_template_pages: tutorialTemplatePagesReducer,
+    teacher_leaves: teacherLeaveReducer,
+    student_leaves: studentLeaveReducer
 });
 
 

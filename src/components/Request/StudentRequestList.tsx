@@ -1,45 +1,24 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import { IStateType, IStudentLeaveState } from "../../store/models/root.interface";
+import { IStudentLeave } from "../../store/models/student_leave.interface";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type studentListProps = {
+  onSelect?: (student: IStudentLeave) => void;
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'name': 'Student 1',
-    'class': 'CM-1',
-    'lesson': 'Buổi 2',
-    'time': 'Thứ 2 (7:00 AM - 8:00 AM) 8/8/2022',
-    'teacher': 'Chung Nguyen',
-  },
-  {
-    'id': 2,
-    'name': 'Student 1',
-    'class': 'CM-2',
-    'lesson': 'Buổi 2',
-    'time': 'Thứ 3 (7:00 AM - 8:00 AM) 8/8/2022',
-    'teacher': 'Chung Nguyen',
-  }
-]
+function StudentRequestList(props: studentListProps): JSX.Element  {
+  const students: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
 
-function StudentRequestList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
-
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
-      <td>{product.class}</td>
-      <td>{product.lesson}</td>
-      <td>{product.time}</td>
-      <td>{product.teacher}</td>
+  const studentElements: (JSX.Element | null)[] = students.leaves.map(student => {
+    if (!student) { return null; }
+    return (<tr className={`table-row ${(students.selectedStudentLeave && students.selectedStudentLeave.id === student.id) ? "selected" : ""}`}
+      key={`student_${student.id}`}>
+      <th scope="row">{student.id}</th>
+      <td>{student.student_id}</td>
+      <td>{student.class_id}</td>
+      <td>{student.section_id}</td>
       <td>
         <button type="button" className="btn btn-primary">Chấp nhận</button>
       </td>
@@ -66,7 +45,7 @@ function StudentRequestList(props: productListProps): JSX.Element  {
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {studentElements}
         </tbody>
       </table>
     </div>

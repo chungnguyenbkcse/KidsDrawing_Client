@@ -2,12 +2,12 @@ import React, { Fragment, Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IProductState, IStateType } from "../../store/models/root.interface";
+import { ITeacherLeaveState, IStateType } from "../../store/models/root.interface";
 import TeacherRequestList from "./TeacherRequestList";
 
 const TeacherRequest: React.FC = () => {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
-  const numberItemsCount: number = products.products.length;
+  const teachers: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
+  const numberItemsCount: number = teachers.leaves.length;
 
 
   const dispatch: Dispatch<any> = useDispatch();

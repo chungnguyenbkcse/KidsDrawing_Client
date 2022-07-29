@@ -1,44 +1,24 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import { IStateType, ITeacherLeaveState } from "../../store/models/root.interface";
+import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type teacher_leaveListProps = {
+  onSelect?: (teacher_leave: ITeacherLeave) => void;
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'name': 'Teacher 1',
-    'class': 'CM-1',
-    'lesson': 'Buổi 2',
-    'time': 'Thứ 2 (7:00 AM - 8:00 AM) 8/8/2022',
-    'teacher': 'Chung Nguyen',
-  },
-  {
-    'id': 2,
-    'name': 'Teacher 2',
-    'class': 'CM-2',
-    'lesson': 'Buổi 2',
-    'time': 'Thứ 3 (7:00 AM - 8:00 AM) 8/8/2022',
-    'teacher': 'Chung Nguyen',
-  }
-]
-
-function TeacherRequestList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
-      <td>{product.class}</td>
-      <td>{product.lesson}</td>
-      <td>{product.time}</td>
-      <td>{product.teacher}</td>
+function TeacherRequestList(props: teacher_leaveListProps): JSX.Element  {
+  const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
+  const teacher_leaveElements: (JSX.Element | null)[] = teacher_leaves.leaves.map(teacher_leave => {
+    if (!teacher_leave) { return null; }
+    return (<tr className={`table-row ${(teacher_leaves.selectedTeacherLeave && teacher_leaves.selectedTeacherLeave.id === teacher_leave.id) ? "selected" : ""}`}
+      key={`teacher_leave_${teacher_leave.id}`}>
+      <th scope="row">{teacher_leave.id}</th>
+      <td>{teacher_leave.teacher_id}</td>
+      <td>{teacher_leave.class_id}</td>
+      <td>{teacher_leave.section_id}</td>
+      <td>{teacher_leave.substitute_teacher_id}</td>
       <td>
         <button type="button" className="btn btn-primary">Chấp nhận</button>
       </td>
@@ -65,7 +45,7 @@ function TeacherRequestList(props: productListProps): JSX.Element  {
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {teacher_leaveElements}
         </tbody>
       </table>
     </div>

@@ -18,7 +18,7 @@ const Parent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = users.teachers.length;
+    const numberItemsCount: number = users.parents.length;
     const [popup, setPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -46,7 +46,7 @@ const Parent: React.FC = () => {
             <h1 className="h3 mb-2 text-gray-800">Phụ huynh</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="PHỤ HUYNH" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="PHỤ HUYNH" text={`${numberItemsCount}`} icon="user" class="primary" />
             </div>
 
             <div className="row" id="search-box">

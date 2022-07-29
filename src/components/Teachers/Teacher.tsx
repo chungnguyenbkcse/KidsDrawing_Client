@@ -53,7 +53,7 @@ const Teacher: React.FC = () => {
             <h1 className="h3 mb-2 text-gray-800">Giáo viên</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="GIÁO VIÊN" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="GIÁO VIÊN" text={`${numberItemsCount}`} icon="user" class="primary" />
             </div>
 
             <div className="row" id="search-box">

@@ -1,25 +1,39 @@
-import React, { Fragment, Dispatch } from "react";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IProductState, IStateType } from "../../store/models/root.interface";
+import { IContestState, ICourseState, IStateType, IUserState } from "../../store/models/root.interface";
 import { IOrder } from "../../store/models/order.interface";
 import { ChartBar } from "../../common/components/ChartBar";
 import CourseMaxSign from "./CourseMaxSign";
 import CourseMinSign from "./CourseMinSign";
+import { getTeacher } from "../../common/service/Teacher/GetTeacher";
+import { getCourse } from "../../common/service/Course/GetCourse";
+import { getContest } from "../../common/service/Contest/GetContest";
+import { getStudent } from "../../common/service/Student/GetStudent";
 
 const Home: React.FC = () => {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
-  const numberItemsCount: number = products.products.length;
-  const totalPrice: number = products.products.reduce((prev, next) => prev + ((next.price * next.amount) || 0), 0);
-  const totalProductAmount: number = products.products.reduce((prev, next) => prev + (next.amount || 0), 0);
+  const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+  const totalCourseAmount: number =courses.courses.length;
+  //const numberItemsCount: number =courses.courses.length;
+  //const totalPrice: number =courses.courses.reduce((prev, next) => prev + ((next.price * next.amount) || 0), 0);
+  const contests: IContestState = useSelector((state: IStateType) => state.contests);
+  const totalContestAmount: number =contests.contests.length;
 
-  const orders: IOrder[] = useSelector((state: IStateType) => state.orders.orders);
-  const totalSales: number = orders.reduce((prev, next) => prev + next.totalPrice, 0);
-  const totalOrderAmount: number = orders.reduce((prev, next) => prev + next.amount, 0);
+  const users: IUserState = useSelector((state: IStateType) => state.users);
+  const numberStudentsCount: number = users.students.length;
+  const numberTeachersCount: number = users.teachers.length;
+  const numberParentsCount: number = users.parents.length;
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Trang chủ", ""));
+
+  useEffect(() => {
+    dispatch(getTeacher())
+    dispatch(getCourse())
+    dispatch(getContest())
+    dispatch(getStudent())
+  }, [dispatch])
 
   return (
     <Fragment>
@@ -27,14 +41,15 @@ const Home: React.FC = () => {
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
       <div className="row">
-        <TopCard title="KHÓA HỌC" text={`${numberItemsCount}`} icon="box" class="primary" />
-        <TopCard title="CUỘC THI" text={`${totalProductAmount}`} icon="warehouse" class="danger" />
-        <TopCard title="DOANH THU" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
+        <TopCard title="KHÓA HỌC" text={`${totalCourseAmount}`} icon="book" class="primary" />
+        <TopCard title="CUỘC THI" text={`${totalContestAmount}`} icon="book" class="danger" />
+        <TopCard title="DOANH THU" text={`$${0}`} icon="dollar-sign" class="success" />
       </div>
 
       <div className="row">
-        <TopCard title="HỌC VIÊN" text={totalSales.toString()} icon="donate" class="primary" />
-        <TopCard title="GIÁO VIÊN" text={totalOrderAmount.toString()} icon="calculator" class="danger" />
+        <TopCard title="HỌC VIÊN" text={`${numberStudentsCount}`} icon="user" class="primary" />
+        <TopCard title="GIÁO VIÊN" text={`${numberTeachersCount}`} icon="user" class="danger" />
+        <TopCard title="GIÁO VIÊN" text={`${numberParentsCount}`} icon="user" class="danger" />
       </div>
 
       <div className="row">

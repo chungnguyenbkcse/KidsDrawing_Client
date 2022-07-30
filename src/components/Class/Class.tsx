@@ -4,14 +4,20 @@ import TopCard from "../../common/components/TopCard";
 import "./Class.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { IProductState, IStateType, IRootPageStateType, ISemesterState } from "../../store/models/root.interface";
 import {
     clearSelectedProduct, setModificationState,
     changeSelectedProduct
 } from "../../store/actions/products.action";
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
-import SelectInput from "../../common/components/Select";
+import { getSemester } from "../../common/service/semester/GetSemester";
+import { ISemester } from "../../store/models/semester.interface";
+import SelectKeyValue from "../../common/components/SelectKeyValue";
 
+type Options = {
+    name: string;
+    value: any;
+}
 
 const Class: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -23,6 +29,19 @@ const Class: React.FC = () => {
         dispatch(clearSelectedProduct());
         dispatch(updateCurrentPath("Lớp học", "Danh sách"));
     }, [path.area, dispatch]);
+
+    useEffect(() => {
+        dispatch(getSemester())
+    }, [dispatch])
+
+    const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
+    const listSemester: ISemester[] = semesters.semesters
+    //console.log(listLevel)
+    const listSemesters: Options[] = [];
+    listSemester.map((ele) => {
+        let item: Options = { "name": ele.name, "value": ele.id }
+        return listSemesters.push(item)
+    })
 
     function onProductSelect(product: IProduct): void {
         dispatch(changeSelectedProduct(product));
@@ -46,15 +65,14 @@ const Class: React.FC = () => {
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <SelectInput
-                                        id="input_category"
-                                        field="category"
-                                        label="Học kì"
-                                        options={["Học kì 1 năm học 2022", "Học kì 2 năm học 2022"]}
-                                        required={true}
-                                        onChange={()=> {}}
-                                        value=""
-                                    />
+                                <SelectKeyValue id="input_creation_id"
+                                    field = "creation_id"
+                                    value={0}
+                                    onChange={() => {}}
+                                    required={true}
+                                    label="Học kì"
+                                    options={listSemesters}
+                                />
                                 </div>
                             </div>
                             <button type="submit" className={`btn btn-success left-margin`}>Xếp lớp</button>

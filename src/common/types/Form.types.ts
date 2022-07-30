@@ -51,6 +51,19 @@ export interface IUserFormState {
     password: IFormStateField<string>;
 }
 
+export interface IUser1FormState {
+    username: IFormStateField<string>;
+    email: IFormStateField<string>;
+    password: IFormStateField<string>;
+    firstName: IFormStateField<string>;
+    lastName: IFormStateField<string>;
+    dateOfBirth: IFormStateField<string>;
+    profile_image_url: IFormStateField<string>;
+    sex: IFormStateField<string>;
+    phone: IFormStateField<string>;
+    address: IFormStateField<string>;
+}
+
 export interface ITeacherRegisterLevelFormState {
     art_type_id: IFormStateField<number>;
     art_age_id: IFormStateField<number>;

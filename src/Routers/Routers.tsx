@@ -30,6 +30,8 @@ import DegreePhoto from "../components/Request/DegreePhoto";
 import CourseNomalForm from "../components/Course/CourseNomalForm";
 import ContestForm from "../components/Contest/ContestForm";
 import CourseNomalFormEdit from "../components/Course/CourseNomalFormEdit";
+import Account from "../components/Account/Account";
+import ChangePassword from "../components/Account/ChangePassword";
 
 const Routers: React.FC = () => {
     return (
@@ -43,6 +45,8 @@ const Routers: React.FC = () => {
                         <Switch>
                             <Route path={`/products`}><Products /></Route>
                             <Route path={`/orders`}><Orders /></Route>
+                            <Route path={`/change-password`}><ChangePassword /></Route>
+                            <Route path={`/account`}><Account /></Route>
                             <Route path={`/parents/detail`}><DetailParent /></Route>
                             <Route path={`/parents`}><Parent /></Route>
                             <Route path={`/students/detail`}><DetailStudent /></Route>

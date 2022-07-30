@@ -2,8 +2,10 @@ import { IActionBase } from "../models/root.interface";
 import { IAccount } from "../models/account.interface";
 import { LOG_IN, LOG_OUT } from "../actions/account.actions";
 
+var username = localStorage.getItem('username')
+
 const initialState: IAccount = {
-    username: ""
+    username: username !== null ? username : ""
 };
 
 function accountReducer(state: IAccount = initialState, action: IActionBase): IAccount {

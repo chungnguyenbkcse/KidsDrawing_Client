@@ -2,10 +2,9 @@ import React, { useState, Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
 import { IStateType } from "../../store/models/root.interface";
-
 function TopMenuAccount(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const username: string = useSelector((state: IStateType) => state.account.username);
+  const username: string | null = localStorage.getItem('username');
   const [isShow, setShow] = useState(false);
 
   return (
@@ -30,11 +29,19 @@ function TopMenuAccount(): JSX.Element {
         aria-labelledby="userDropdown">
         <a className="dropdown-item"
         onClick={() =>{}}
-        href="# " 
+        href="/account" 
         data-toggle="modal"
         data-target="#logoutModal">
           <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
           Chỉnh thông tin các nhân
+        </a>
+        <a className="dropdown-item"
+        onClick={() =>{}}
+        href="/change-password" 
+        data-toggle="modal"
+        data-target="#change-password">
+          <i className="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+          Thay đổi mật khẩu
         </a>
         <a className="dropdown-item"
         onClick={() => {

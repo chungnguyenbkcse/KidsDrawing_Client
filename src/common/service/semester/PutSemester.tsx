@@ -1,4 +1,6 @@
-import { fetchDataRequest, fetchDataSuccess, editSemester, fetchDataError } from "../../../store/actions/semester.actions";
+import { addNotification } from "../../../store/actions/notifications.action";
+import { fetchDataRequest, fetchDataSuccess, editSemester, fetchDataError, clearSelectedSemester, setModificationState } from "../../../store/actions/semester.actions";
+import { SemesterModificationStatus } from "../../../store/models/semester.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function putSemester(id: any, data: any) {
@@ -34,6 +36,9 @@ export function putSemester(id: any, data: any) {
                 console.log(id)
                 dispatch(fetchDataSuccess(data))
                 dispatch(editSemester(data))
+                dispatch(addNotification("Học kì ", `${data.name} chỉnh bởi bạn`));
+                dispatch(clearSelectedSemester());
+                dispatch(setModificationState(SemesterModificationStatus.None));
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

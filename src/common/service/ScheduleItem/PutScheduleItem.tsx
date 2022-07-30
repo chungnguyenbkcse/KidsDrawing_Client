@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedule_item.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getScheduleItem } from "./GetScheduleItem";
 
 export function putScheduleItem(id: any, data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,6 +33,7 @@ export function putScheduleItem(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
+                dispatch(getScheduleItem())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

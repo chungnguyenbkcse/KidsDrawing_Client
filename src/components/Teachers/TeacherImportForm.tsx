@@ -23,12 +23,12 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
     user = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
   }
 
-  function saveForm(formState: IUserFormState, saveFn: Function): void {
+  function saveForm(formState: any, saveFn: Function): void {
     if (user) {
-      dispatch(saveFn({
-        username: formState.username.value,
-        email: formState.email.value,
-        password: formState.password.value,
+      console.log({
+        username: formState.username,
+        email: formState.email,
+        password: formState.password,
         firstName: null,
         lastName: null,
         dateOfBirth: null,
@@ -38,13 +38,12 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
         address: null,
         parent_ids: [],
         roleNames: ["TEACHER_USER"]
-      }));
-
+      })
       if (saveFn === addTeacher){
         dispatch(postTeacher({
-          username: formState.username.value,
-          email: formState.email.value,
-          password: formState.password.value,
+          username: formState.username,
+          email: formState.email,
+          password: formState.password,
           firstName: null,
           lastName: null,
           dateOfBirth: null,
@@ -56,20 +55,6 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
           roleNames: ["TEACHER_USER"]
         }));
       }
-
-      else if (saveFn === editTeacher) {
-        dispatch(putTeacher(user.id, {
-          ...user,
-          username: formState.username.value,
-          email: formState.email.value,
-          password: formState.password.value,
-          creator_id: localStorage.getItem('id')
-        }));
-      }
-
-      dispatch(addNotification("Giáo viên", ` ${formState.username.value} chỉnh bởi bạn`));
-      dispatch(clearSelectedUser());
-      dispatch(setModificationState(UserModificationStatus.None));
     }
   }
 
@@ -102,7 +87,7 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
     console.log(newArray)
     newArray.map((ele: any, index: any) => {
       if (ele.username !== "") {
-        let x: IUserFormState = {
+        let x = {
             username: ele.username,
             email: ele.email,
             password: ele.password

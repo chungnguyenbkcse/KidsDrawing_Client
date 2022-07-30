@@ -14,27 +14,28 @@ import SelectInput from "../../common/components/Select";
 import { getUser } from "../../common/service/User/GetUserById";
 
 export type teacherListProps = {
-    isCheck: (value: boolean) => void;
+    value:IUser;
     children?: React.ReactNode;
 };
 
-const Account: React.FC = () => {
+function AccountForm(props: teacherListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const id = localStorage.getItem('id')
-    useEffect(() => {
-        dispatch(getUser(id))
-    }, [dispatch])
     var role_privilege = localStorage.getItem('role_privilege')
     var rolePrivilege:string[] =[]
     var roleUser :string =""
-    const [userRole, setUserRole] = useState("")
     if (role_privilege !== null) {
         rolePrivilege = role_privilege.split(',')
         roleUser = rolePrivilege[0]
     }
     let users: IUserState = useSelector((state: IStateType) => state.users);
+    let user: IUser | null = users.selectedUser;
 
-    const [user, setUser] = useState<IUser>({ id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] })
+    const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
+
+    if (!user || isCreate) {
+        user = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] }
+    }
 
     let [formState, setFormState] = useState({
         username: { error: "", value: user.username },
@@ -78,7 +79,7 @@ const Account: React.FC = () => {
                     phone: formState.phone.value,
                     address: formState.address.value,
                     parent_ids: user.parents,
-                    roleNames: [userRole]
+                    roleNames: [roleUser]
                 }));
             }
 
@@ -95,7 +96,7 @@ const Account: React.FC = () => {
                     phone: formState.phone.value,
                     address: formState.address.value,
                     parent_ids: user.parents,
-                    roleNames: [userRole]
+                    roleNames: [roleUser]
                 }));
             }
 
@@ -283,4 +284,4 @@ const Account: React.FC = () => {
     );
 };
 
-export default Account;
+export default AccountForm;

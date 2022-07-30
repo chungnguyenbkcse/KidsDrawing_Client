@@ -33,8 +33,10 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const schedules: IScheduleState | null = useSelector((state: IStateType) => state.schedules);
     let schedule: ISchedule | null = schedules.selectedSchedule;
+    console.log(schedule)
     const schedule_items: IScheduleItemState | null = useSelector((state: IStateType) => state.schedule_items);
     const isCreate: boolean = (schedules.modificationState === ScheduleModificationStatus.Create);
+    console.log(isCreate)
 
     if (!schedule || isCreate) {
         schedule = { id: 0, name: "", creator_id: 0, create_time: "", update_time: "" };
@@ -152,10 +154,6 @@ function ScheduleForm(props: scheduleListProps): JSX.Element {
 
     function saveForm(formState: IScheduleFormState, saveFn: Function): void {
         if (schedule) {
-            dispatch(saveFn({
-                ...schedule,
-                name: formState.name.value,
-            }));
 
             let lesson_times: Option1s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
             let date_of_weeks: Option1s[] = listScheduleItemId.filter((value, index) => value.key < formState.total_date_of_week.value)

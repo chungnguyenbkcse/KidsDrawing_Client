@@ -51,17 +51,6 @@ function SemesterForm(props: semesterListProps): JSX.Element {
 
   function saveForm(formState: ISemesterFormState, saveFn: Function): void {
     if (semester) {
-      dispatch(saveFn({
-        ...semester,
-        name: formState.name.value,
-        description: formState.description.value,
-        number: formState.number.value,
-        year: formState.year.value,
-        start_time: formState.start_time.value,
-      }));
-
-      
-
       if (saveFn === addSemester) {
         dispatch(postSemester({
           name: formState.name.value,
@@ -148,7 +137,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
                     value={formState.number.value}
                     onChange={hasFormValueChanged}
                     max={10}
-                    min={1}
+                    min={0}
                     label="Học kì"
                   />
                 </div>

@@ -21,6 +21,7 @@ import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { getContest } from "../../common/service/Contest/GetContest";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
+import { formatDate } from "../../common/components/ConverDate";
 
 
 const Contest: React.FC = () => {
@@ -33,6 +34,31 @@ const Contest: React.FC = () => {
     const numberItemsCount: number = contests.contests.length;
     const [popup1, setPopup1] = useState(false);
 
+    const date_0 = new Date();
+    const date = date_0.toUTCString()
+    console.log(date)
+    const date_now = formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16);
+    let numberContestEndCount: number = contests.contests.filter((contest) => {
+        var strDate2 = contest.end_time;
+        if (!(!contest || strDate2 > date_now)){
+            return contest
+        }
+    }).length
+
+    let numberContestOnCount: number = contests.contests.filter((contest) => {
+        var strDate1 = contest.start_time;
+        var strDate2 = contest.end_time;
+        if (!(!contest || strDate1 > date_now || date_now > strDate2)){
+            return contest
+        }
+    }).length
+
+    let numberContestNotStartCount: number = contests.contests.filter((contest) => {
+        var strDate1 = contest.start_time;
+        if (!(!contest || strDate1 < date_now)){
+            return contest
+        }
+    }).length
     useEffect(() => {
         dispatch(clearSelectedContest());
         dispatch(updateCurrentPath("Cuộc thi", "danh sách"));
@@ -84,9 +110,9 @@ const Contest: React.FC = () => {
             <h1 className="h3 mb-2 text-gray-800">Cuộc thi</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="ĐANG DIỄN RA" text={`${numberItemsCount}`} icon="box" class="primary" />
-                <TopCard title="ĐÃ KẾT THÚC" text={`${numberItemsCount}`} icon="box" class="primary" />
-                <TopCard title="CHƯA DIỄN RA" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="ĐANG DIỄN RA" text={`${numberContestOnCount}`} icon="box" class="primary" />
+                <TopCard title="ĐÃ KẾT THÚC" text={`${numberContestEndCount}`} icon="box" class="primary" />
+                <TopCard title="CHƯA DIỄN RA" text={`${numberContestNotStartCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">

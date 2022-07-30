@@ -1,17 +1,30 @@
-import React, { Fragment, Dispatch } from "react";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IProductState, IStateType } from "../../store/models/root.interface";
+import { IUserRegisterJoinSemesterState, IStateType } from "../../store/models/root.interface";
 import { ChartBar } from "../../common/components/ChartBar";
 import TurnoverList from "./TurnoverList";
+import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
+import { getCourse } from "../../common/service/Course/GetCourse";
+import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
+import { getStudent } from "../../common/service/Student/GetStudent";
+import { getParent } from "../../common/service/Parent/GetParent";
 
 const Turnover: React.FC = () => {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
-  const totalPrice: number = products.products.reduce((prev, next) => prev + ((next.price * next.amount) || 0), 0);
+  const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
+  const totalPrice: number = userRegisterJoinSemesters.userRegisterJoinSemesters.reduce((prev, next) => prev + ((next.price) || 0), 0);
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Doanh thu", ""));
+
+  useEffect(() => {
+    dispatch(getUserRegisterJoinSemester())
+    dispatch(getCourse())
+    dispatch(getSemesterCourse())
+    dispatch(getStudent())
+    dispatch(getParent())
+  }, [dispatch])
 
   return (
     <Fragment>

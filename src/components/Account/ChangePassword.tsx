@@ -11,7 +11,7 @@ import { putTeacher } from "../../common/service/Teacher/PutTeacher";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SelectInput from "../../common/components/Select";
-import { getUser } from "../../common/service/User/GetUserById";
+import { getUserById } from "../../common/service/User/GetUserById";
 
 export type teacherListProps = {
     isCheck: (value: boolean) => void;
@@ -30,7 +30,7 @@ function ChangePassword(): JSX.Element {
             setUserPrivilege(role_privilege.split(','))
             setUserRole(userPrivilege[0])
         }
-        getUser(id)
+        getUserById(id)
     }, [dispatch])
     let user: IUser = users.teachers[0];
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);

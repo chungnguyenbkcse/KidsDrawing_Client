@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTeacherAll, initialTeacher, addTeacher } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getTeacher } from "../Teacher/GetTeacher";
 interface user {
     id: number,
     username: string,
@@ -15,7 +16,7 @@ interface user {
     parents: number[],
     createTime: string
 }
-export function getUser(id: any) {
+export function getUserById(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -34,7 +35,7 @@ export function getUser(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUser(id))
+                        dispatch(getUserById(id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -62,7 +63,8 @@ export function getUser(id: any) {
                     createTime: ele.createTime
                 }
                     //console.log(strDate.substring(0, 16))
-                return dispatch(initialTeacher(user));
+                dispatch(initialTeacher(user));
+                dispatch(getTeacher())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

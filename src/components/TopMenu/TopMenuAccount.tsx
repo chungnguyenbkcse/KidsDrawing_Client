@@ -1,5 +1,6 @@
-import React, { useState, Dispatch } from "react";
+import React, { useState, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { IStateType } from "../../store/models/root.interface";
 function TopMenuAccount(): JSX.Element {

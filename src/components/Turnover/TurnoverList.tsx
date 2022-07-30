@@ -1,48 +1,70 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import { ICourse } from "../../store/models/course.interface";
+import { ICourseState, ISemesterCourseState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
+import { ISemesterCourse } from "../../store/models/semester_course.interface";
+import { IUser } from "../../store/models/user.interface";
+import { IUserRegisterJoinSemester } from "../../store/models/user_register_join_semester.interface"
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type userRegisterJoinSemesterListProps = {
+  onSelect?: (userRegisterJoinSemester: IUserRegisterJoinSemester) => void;
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'parent': 'parent1',
-    'child': 'child1',
-    'course': 'Khóa học mầm chì màu học kì 1 năm học 2022',
-    'price': 2000000,
-    'status': 'Đang tiến hành',
-    'date': '2022-07-07 30:20:10'
-  },
-  {
-    'id': 2,
-    'parent': 'parent2',
-    'child': 'child2',
-    'course': 'Khóa học chồi chì màu học kì 1 năm học 2022',
-    'price': 2000000,
-    'status': 'Đang tiến hành',
-    'date': '2022-07-07 30:20:10'
-  }
-]
+function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
+  const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
 
-function TurnoverList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+  const course_semesters: ISemesterCourseState = useSelector((state: IStateType) => state.semester_courses);
+  const listSemesterCourses: ISemesterCourse[] = course_semesters.semesterCourses
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td>{product.parent}</td>
-      <td>{product.child}</td>
-      <td>{product.course}</td>
-      <td>{product.price}</td>
-      <td>{product.status}</td>
-      <td>{product.date}</td>
+  const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+  const listCourses: ICourse[] = courses.courses
+  let courseList: string[] = []
+
+  const users: IUserState =  useSelector((state: IStateType) => state.users);
+  const listStudents: IUser[] = users.students
+  const listParents: IUser[] = users.parents
+  let studentList: string[] = []
+  let parentList: string[] = []
+
+  userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
+    return listSemesterCourses.forEach(element => {
+      if (element.id === user_register_join_semester.semester_course_id) {
+        return listCourses.forEach((ele) => {
+          if (ele.id === element.course_id){
+            return  courseList.push(ele.name)
+          }
+        })
+      }
+    });
+  })
+
+  userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
+    return listParents.forEach((element) => {
+      if (element.id === user_register_join_semester.payer_id){
+        return parentList.push(element.username)
+      }
+    })
+  })
+
+  userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
+    return listStudents.forEach((element) => {
+      if (element.id === user_register_join_semester.student_id){
+        return studentList.push(element.username)
+      }
+    })
+  })
+
+  const userRegisterJoinSemesterElements: (JSX.Element | null)[] = userRegisterJoinSemesters.userRegisterJoinSemesters.map((userRegisterJoinSemester, index) => {
+    if (!userRegisterJoinSemester) { return null; }
+    return (<tr className={`table-row ${(userRegisterJoinSemesters.selectedUserRegisterJoinSemester && userRegisterJoinSemesters.selectedUserRegisterJoinSemester.id === userRegisterJoinSemester.id) ? "selected" : ""}`}
+      key={`userRegisterJoinSemester_${userRegisterJoinSemester.id}`}>
+      <th scope="row">{userRegisterJoinSemester.id}</th>
+      <td>{parentList[index]}</td>
+      <td>{studentList[index]}</td>
+      <td>{courseList[index]}</td>
+      <td>{userRegisterJoinSemester.price}</td>
+      <td>{userRegisterJoinSemester.time}</td>
     </tr>);
   });
 
@@ -57,12 +79,11 @@ function TurnoverList(props: productListProps): JSX.Element  {
             <th scope="col">Học sinh</th>
             <th scope="col">Khóa học</th>
             <th scope="col">Giá tiền</th>
-            <th scope="col">Trạng thái</th>
             <th scope="col">Ngày giao dịch</th>
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {userRegisterJoinSemesterElements}
         </tbody>
       </table>
     </div>

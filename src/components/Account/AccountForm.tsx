@@ -11,7 +11,7 @@ import { putTeacher } from "../../common/service/Teacher/PutTeacher";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SelectInput from "../../common/components/Select";
-import { getUser } from "../../common/service/User/GetUserById";
+import { getUserById } from "../../common/service/User/GetUserById";
 
 export type teacherListProps = {
     value:IUser;

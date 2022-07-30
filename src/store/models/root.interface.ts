@@ -19,6 +19,7 @@ import { IUserGradeContest, UserGradeContestModificationStatus } from "./user_gr
 import { ITutorialTemplatePage, TutorialTemplatePageModificationStatus } from "./tutorial_template_page.interface";
 import { ITeacherLeave, TeacherLeaveModificationStatus } from "./teacher_leave.interface";
 import { IStudentLeave, StudentLeaveModificationStatus } from "./student_leave.interface";
+import { IUserRegisterJoinSemester, UserRegisterJoinSemesterModificationStatus } from "./user_register_join_semester.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -51,6 +52,7 @@ export interface IStateType {
     tutorial_template_pages: ITutorialTemplatePageState;
     teacher_leaves: ITeacherLeaveState;
     student_leaves: IStudentLeaveState;
+    user_register_join_semesters: IUserRegisterJoinSemesterState;
 }
 
 export interface IProductState {
@@ -179,4 +181,15 @@ export interface IStudentLeaveState {
     acceptLeaves: IStudentLeave[];
     removeLeaves: IStudentLeave[];
     leaves: IStudentLeave[];
+}
+
+export interface IUserRegisterJoinSemesterState {
+    selectedUserRegisterJoinSemester: IUserRegisterJoinSemester | null;
+    modificationState: UserRegisterJoinSemesterModificationStatus;
+    userRegisterJoinSemesters: IUserRegisterJoinSemester[];
+}
+export interface ITutorialTemplatePageState {
+    selectedTutorialTemplatePage: ITutorialTemplatePage | null;
+    modificationState: TutorialTemplatePageModificationStatus;
+    tutorialTemplatePages: ITutorialTemplatePage[];
 }

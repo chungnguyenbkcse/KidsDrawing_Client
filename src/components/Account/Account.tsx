@@ -11,7 +11,7 @@ import { putTeacher } from "../../common/service/Teacher/PutTeacher";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SelectInput from "../../common/components/Select";
-import { getUser } from "../../common/service/User/GetUserById";
+import { getUserById } from "../../common/service/User/GetUserById";
 
 export type teacherListProps = {
     isCheck: (value: boolean) => void;
@@ -22,7 +22,7 @@ const Account: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const id = localStorage.getItem('id')
     useEffect(() => {
-        dispatch(getUser(id))
+        dispatch(getUserById(id))
     }, [dispatch])
     var role_privilege = localStorage.getItem('role_privilege')
     var rolePrivilege:string[] =[]
@@ -33,9 +33,13 @@ const Account: React.FC = () => {
         roleUser = rolePrivilege[0]
     }
     let users: IUserState = useSelector((state: IStateType) => state.users);
+    console.log(users.teachers)
 
-    const [user, setUser] = useState<IUser>({ id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] })
-
+    let user = users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] }
+    useEffect(() => {
+        user =  users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] }
+    }, [dispatch, users])
+    console.log(user)
     let [formState, setFormState] = useState({
         username: { error: "", value: user.username },
         email: { error: "", value: user.email },

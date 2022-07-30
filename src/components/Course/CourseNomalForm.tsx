@@ -128,20 +128,6 @@ const CourseNomalForm: React.FC = () => {
 
     function saveForm(formState: ICourseNomalFormState, saveFn: Function, url: string): void {
         if (course) {
-            dispatch(saveFn({
-                ...course,
-                name: formState.name.value,
-                description: textHtml,
-                max_participant: formState.max_participant.value,
-                num_of_section: formState.num_of_section.value,
-                price: formState.price.value,
-                image_url: url,
-                is_enabled: formState.is_enabled.value,
-                art_type_id: formState.art_type_id.value,
-                art_age_id: formState.art_age_id.value,
-                art_level_id: formState.art_level_id.value
-            }));
-
             if (saveFn === addCourse) {
                 dispatch(postCourse({
                     name: formState.name.value,

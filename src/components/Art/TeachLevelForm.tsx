@@ -47,11 +47,6 @@ function TeachLevelForm(props: artLevelListProps): JSX.Element {
 
   function saveForm(formState: IArtLevelFormState, saveFn: Function): void {
     if (art_level) {
-      dispatch(saveFn({
-        ...art_level,
-        name: formState.name.value,
-        description: formState.description.value
-      }));
 
       if (saveFn === addArtLevel) {
         dispatch(postArtLevel({

@@ -47,12 +47,6 @@ function LessonForm(props: lessonListProps): JSX.Element {
 
   function saveForm(formState: ILessonFormState, saveFn: Function): void {
     if (lesson) {
-      dispatch(saveFn({
-        ...lesson,
-        start_time: formState.start_time.value,
-        end_time: formState.end_time.value
-      }));
-
       
 
       if (saveFn === addLesson) {

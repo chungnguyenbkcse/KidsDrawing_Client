@@ -46,12 +46,6 @@ function TeachTypeForm(props: artTypeListProps): JSX.Element {
 
   function saveForm(formState: IArtTypeFormState, saveFn: Function): void {
     if (art_type) {
-      dispatch(saveFn({
-        ...art_type,
-        name: formState.name.value,
-        description: formState.description.value,
-      }));
-
       if (saveFn === addArtType) {
         dispatch(postArtType({
           name: formState.name.value,

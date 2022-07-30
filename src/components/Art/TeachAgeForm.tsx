@@ -45,12 +45,6 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
 
   function saveForm(formState: IArtAgeFormState, saveFn: Function): void {
     if (art_age) {
-      dispatch(saveFn({
-        ...art_age,
-        name: formState.name.value,
-        description: formState.description.value,
-      }));
-
       if (saveFn === addArtAge) {
         dispatch(postArtAge({
           name: formState.name.value,

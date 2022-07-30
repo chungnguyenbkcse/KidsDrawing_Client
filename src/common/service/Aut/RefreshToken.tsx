@@ -1,6 +1,8 @@
+import { logout } from "../../../store/actions/account.actions";
+
 export function postRefreshToken() {
     var refresh_token = localStorage.getItem("refresh_token");
-    return () => {
+    return (dispatch: any) => {
         fetch(
                 `${process.env.REACT_APP_API_URL}/auth/refresh`, {
                     method: "POST",
@@ -14,7 +16,19 @@ export function postRefreshToken() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 500){
+                        localStorage.removeItem('access_token') // Authorization
+                        localStorage.removeItem('refresh_token')
+                        localStorage.removeItem('username')
+                        localStorage.removeItem('role_privilege')
+                        localStorage.removeItem('id')
+                        localStorage.removeItem('contest_id')
+                        localStorage.removeItem('schedule_id')
+                        dispatch(logout())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response.json()
             })

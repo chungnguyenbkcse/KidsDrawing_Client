@@ -101,7 +101,7 @@ const LeftMenu: React.FC = () => {
                 <li className="nav-item">
                     <Link className="nav-link" to={`/schedules`}>
                         <AiFillCalendar />
-                        <span>Lịch học</span>
+                        <span> Lịch học</span>
                     </Link>
                 </li>
 
@@ -142,7 +142,7 @@ const LeftMenu: React.FC = () => {
 
                 <hr className="sidebar-divider" />
 
-                <div className="sidebar-heading">
+                {/* <div className="sidebar-heading">
                     Trò chơi
                 </div>
 
@@ -151,7 +151,7 @@ const LeftMenu: React.FC = () => {
                         <TbDeviceGamepad2 />
                         <span> Game nhận biết màu sắc</span>
                     </Link>
-                </li>
+                </li> */}
 
                 <hr className="sidebar-divider" />
 

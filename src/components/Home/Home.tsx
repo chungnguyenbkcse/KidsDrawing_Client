@@ -5,14 +5,15 @@ import TopCard from "../../common/components/TopCard";
 import { IContestState, ICourseState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
 import { IOrder } from "../../store/models/order.interface";
 import { ChartBar } from "../../common/components/ChartBar";
-import CourseMaxSign from "./CourseMaxSign";
-import CourseMinSign from "./CourseMinSign";
+//import CourseMaxSign from "./CourseMaxSign";
+//import CourseMinSign from "./CourseMinSign";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getContest } from "../../common/service/Contest/GetContest";
 import { getStudent } from "../../common/service/Student/GetStudent";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
 import { getParent } from "../../common/service/Parent/GetParent";
+import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
 
 const Home: React.FC = () => {
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
@@ -35,6 +36,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     dispatch(getUserRegisterJoinSemester())
+    dispatch(getSemesterCourse())
     dispatch(getTeacher())
     dispatch(getCourse())
     dispatch(getContest())
@@ -65,7 +67,7 @@ const Home: React.FC = () => {
       </div>
       </div>
 
-      <div className="row">
+      {/* <div className="row">
 
         <div className="col-xl-6 col-lg-6">
           <div className="card shadow mb-4">
@@ -90,7 +92,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-      </div>
+      </div> */}
 
     </Fragment>
   );

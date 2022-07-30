@@ -58,8 +58,8 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
   const userRegisterJoinSemesterElements: (JSX.Element | null)[] = userRegisterJoinSemesters.userRegisterJoinSemesters.map((userRegisterJoinSemester, index) => {
     if (!userRegisterJoinSemester) { return null; }
     return (<tr className={`table-row ${(userRegisterJoinSemesters.selectedUserRegisterJoinSemester && userRegisterJoinSemesters.selectedUserRegisterJoinSemester.id === userRegisterJoinSemester.id) ? "selected" : ""}`}
-      key={`userRegisterJoinSemester_${userRegisterJoinSemester.id}`}>
-      <th scope="row">{userRegisterJoinSemester.id}</th>
+      key={`userRegisterJoinSemester_${index}`}>
+      <th scope="row">{index + 1}</th>
       <td>{parentList[index]}</td>
       <td>{studentList[index]}</td>
       <td>{courseList[index]}</td>

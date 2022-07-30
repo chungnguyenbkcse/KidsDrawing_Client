@@ -1,3 +1,4 @@
+import { logout } from "../../../store/actions/account.actions";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeStudentAll, initialStudent, addStudent } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user {
@@ -35,6 +36,16 @@ export function getStudent() {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
                         dispatch(getStudent())
+                    }
+                    else if (response.status === 500){
+                        localStorage.removeItem('access_token') // Authorization
+                        localStorage.removeItem('refresh_token')
+                        localStorage.removeItem('username')
+                        localStorage.removeItem('role_privilege')
+                        localStorage.removeItem('id')
+                        localStorage.removeItem('contest_id')
+                        localStorage.removeItem('schedule_id')
+                        dispatch(logout())
                     }
                     else {
                         throw Error(response.statusText);

@@ -32,6 +32,7 @@ import ContestForm from "../components/Contest/ContestForm";
 import CourseNomalFormEdit from "../components/Course/CourseNomalFormEdit";
 import Account from "../components/Account/Account";
 import ChangePassword from "../components/Account/ChangePassword";
+import ResultContest from "../components/Contest/ResultContest";
 
 const Routers: React.FC = () => {
     return (
@@ -63,6 +64,7 @@ const Routers: React.FC = () => {
                             <Route path={`/courses/edit-course`}><CourseNomalFormEdit /></Route>
                             <Route path={`/courses/:id_course`}><CourseNomalForm /></Route>
                             <Route path={`/courses`}><Course /></Route>
+                            <Route path={`/contests/result`}><ResultContest /></Route>
                             <Route path={`/contests/edit-contest`}><ContestForm /></Route>
                             <Route path={`/contests/:id_contest`}><ContestForm /></Route>
                             <Route path={`/contests`}><Contest /></Route>

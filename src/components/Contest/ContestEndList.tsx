@@ -68,7 +68,7 @@ function ContestEndList(props: contestListProps): JSX.Element {
     })
 
     const routeChange = () => {
-        let path = '/courses/detail';
+        let path = '/contests/result';
         history.push(path);
     }
 

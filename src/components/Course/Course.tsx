@@ -27,6 +27,7 @@ import { getSemester } from "../../common/service/semester/GetSemester";
 import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 import { deleteSemesterCourse } from "../../common/service/SemesterCourse/DeleteSemesterCourse";
 import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
+import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSectionTemplate";
 
 
 const Course: React.FC = () => {
@@ -55,6 +56,7 @@ const Course: React.FC = () => {
         dispatch(getArtLevel())
         dispatch(getArtAge())
         dispatch(getSemesterCourse())
+        dispatch(getSectionTemplate())
     }, [dispatch])
 
     function onCourseSelect(course: ICourse): void {

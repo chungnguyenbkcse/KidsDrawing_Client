@@ -33,6 +33,8 @@ import CourseNomalFormEdit from "../components/Course/CourseNomalFormEdit";
 import Account from "../components/Account/Account";
 import ChangePassword from "../components/Account/ChangePassword";
 import ResultContest from "../components/Contest/ResultContest";
+import SectionTemplate from "../components/Section/SectionTemplate";
+import SectionTemplateForm from "../components/Section/SectionTemplateForm";
 
 const Routers: React.FC = () => {
     return (
@@ -59,6 +61,8 @@ const Routers: React.FC = () => {
                             <Route path={`/class/detail`}><DetailClass /></Route>
                             <Route path={`/class`}><Class /></Route>
                             <Route path={`/schedules`}><Schedule /></Route>
+                            <Route path={`/section-template/edit`}><SectionTemplateForm /></Route>
+                            <Route path={`/courses/section-template`}><SectionTemplate /></Route>
                             <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
                             <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
                             <Route path={`/courses/edit-course`}><CourseNomalFormEdit /></Route>

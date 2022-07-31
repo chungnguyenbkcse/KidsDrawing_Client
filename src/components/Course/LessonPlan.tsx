@@ -236,6 +236,7 @@ const LessonPlan: React.FC = () => {
       setTotalPage(tutorial_template_pages.tutorialTemplatePages.length)
     }
   }, [tutorial_template_pages])
+  console.log(contentTutorialSection)
   return (
     <Fragment>
       <div className="col-xl-12 col-lg-12">

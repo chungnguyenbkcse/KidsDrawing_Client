@@ -34,8 +34,8 @@ export function getSectionTemplate() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeSectionTemplateAll())
-                //console.log(data.body.lessons)
-                data.body.section_templates.map((ele: any, index: any) => {
+                console.log(data.body.SectionTemplate)
+                data.body.SectionTemplate.map((ele: any, index: any) => {
                     var section_template: SectionTemplate = {
                         id: ele.id,
                         creator_id: ele.creator_id,

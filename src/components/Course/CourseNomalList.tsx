@@ -1,12 +1,14 @@
 import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ICourseState, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
+import { IStateType, ICourseState, IArtLevelState, IArtTypeState, IArtAgeState, ISectionTemplateState } from "../../store/models/root.interface";
 import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
 import { IArtLevel } from "../../store/models/art_level.interface";
 import { IArtType } from "../../store/models/art_type.interface";
 import { IArtAge } from "../../store/models/art_age.interface";
 import { setModificationState } from "../../store/actions/course.action";
+import { ISectionTemplate } from "../../store/models/section_template.interface";
+import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
 
 export type courseListProps = {
   onSelect?: (course: ICourse) => void;
@@ -39,6 +41,15 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     let item: Options = { "name": ele.name, "value": ele.id }
     return listMytypes.push(item)
   })
+
+  const section_templates: ISectionTemplateState = useSelector((state: IStateType) => state.section_templates);
+  const listSectionTemplate: ISectionTemplate[] = section_templates.sectionTemplates
+  let listCourse: number[] = []
+  listSectionTemplate.map((ele) => {
+    return listCourse.push(ele.course_id)
+  })
+
+  console.log(listCourse)
 
   const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
   const listArtAge: IArtAge[] = art_ages.artAges
@@ -79,9 +90,12 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     });
   })
 
-  const routeChange = () => {
-    let path = '/courses/detail';
-    history.push(path);
+  const routeChange = (id: number, number_of_sum: number) => {
+    let path = '/courses/section-template';
+    history.push({
+      pathname: path,
+      state: {id: id, number_of_sum: number_of_sum}
+    });
   }
 
   const routeEdit = (course: ICourse) => {
@@ -102,7 +116,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
       <th scope="row">{course.id}</th>
       <td onClick={() => {
         if(props.onSelect) props.onSelect(course);
-        routeChange()
+        routeChange(course.id, course.num_of_section)
       }}>{course.name}</td>
       <td>{typeList[index]}</td>
       <td>{ageList[index]}</td>
@@ -113,18 +127,21 @@ function CourseNomalList(props: courseListProps): JSX.Element {
           routeEdit(course)}}
         >Chỉnh thông tin</button>
       </td>
-      <td>
-        <button type="button" className="btn btn-warning" onClick={() => {
-          if(props.onSelect) props.onSelect(course);
-          routeChange1()}}
-        >Chỉnh giáo án</button>
-      </td>
-      <td>
-        <button type="button" className="btn btn-danger" onClick={() => {
-          if (props.onSelect) props.onSelect(course);
-          dispatch(setModificationState(CourseModificationStatus.Remove))
-        }}>Xóa</button>
-      </td>
+      {
+        function () {
+          if (!listCourse.includes(course.id)) {
+            return (
+              <td>
+                <button type="button" className="btn btn-warning" onClick={() => {
+                  if (props.onSelect) props.onSelect(course);
+                  routeChange1()
+                }}
+                >Tạo giáo án</button>
+              </td>
+            )
+          }
+        }()
+      }
     </tr>);
   });
 

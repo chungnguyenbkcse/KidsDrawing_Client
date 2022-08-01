@@ -44,6 +44,7 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element  {
       <td>
         <button type="button" className="btn btn-primary" onClick={()=> {
           if(props.onSelect) props.onSelect(section_template);
+          localStorage.setItem('section_template', (section_template.id).toString())
           dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.Edit))
           routeChange()
         }}>Chỉnh sửa</button>

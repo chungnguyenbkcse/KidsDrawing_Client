@@ -17,6 +17,7 @@ import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSect
 import { deleteSectionTemplate } from "../../common/service/SectionTemplate/DeleteSectionTemplate";
 import { useLocation } from "react-router-dom";
 import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
+import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 
 const SectionTemplate: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -31,6 +32,7 @@ const SectionTemplate: React.FC = () => {
     useEffect(() => {
         if (typeof state !== undefined){
             dispatch(getSectionTemplateByCourseId(parseInt(state.id)))
+            dispatch(getTutorialTemplatePage())
         }
         else {
             dispatch(getSectionTemplate())

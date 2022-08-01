@@ -9,7 +9,7 @@ import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
 import { putSectionTemplate } from "../../common/service/SectionTemplate/PutSectionTemplate";
-import Editor from "../../common/components/Quill/EditorSection";
+import Editor from "../../common/components/Quill/EditorSectionTemplate";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { ICourse } from "../../store/models/course.interface";
@@ -50,8 +50,13 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
     let course_id = (section_template !== null ? section_template.id : 0)
+
     console.log(course_id)
     console.log(tutorial_template_pages.tutorialTemplatePages)
+    //console.log(tutorial_template_pages.tutorialTemplatePages[0].description)
+    if (tutorial_template_pages.tutorialTemplatePages.length === 0){
+        section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+    }
 
     useEffect(() => {
         dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
@@ -69,6 +74,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         update_time: { error: "", value: section_template.update_time }
     });
     const [totalPage, setTotalPage] = useState(0);
+    const [index, setIndex] = useState(0);
     const [contentTutorialSection, setContentTutorialSection] = useState<TutorialSectionTemplate[]>([])
     const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
     const [currentPage, setCurrentPage] = useState<number>(0)
@@ -92,17 +98,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         }
     }, [totalPage])
 
-    useEffect(() => {
-        dispatch(getTutorialTemplateBySectionTemplate(course_id))
-    }, [currentPage, dispatch])
-
     const [textValue, setTextValue] = useState<string>("")
-    useEffect(() => {
-        if (tutorial_template_pages.tutorialTemplatePages.length > 0 && currentPage < tutorial_template_pages.tutorialTemplatePages.length){
-            setTextValue(tutorial_template_pages.tutorialTemplatePages[currentPage-1].description)
-            console.log(currentPage)
-        }
-    }, [currentPage, tutorial_template_pages, dispatch])
 
     //console.log(totalPage)
 
@@ -206,6 +202,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             page: currentPage,
             content: textHtml
         }
+        setIndex(index + 1)
         setContentTutorialPage([...contentTutorialPage, contentPage])
         if (currentPage < totalPage) {
             setCurrentPage(currentPage + 1)
@@ -301,7 +298,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                             </div>
                             <div className="form-group">
                                 <label>Nội dung trang {currentPage}</label>
-                                <Editor getValue={getValue} isCreate={textHtml} setValue={textValue} />
+                                <Editor getValue={getValue} isCreate={textHtml} setValue={tutorial_template_pages.tutorialTemplatePages.length === 0 ? "" : tutorial_template_pages.tutorialTemplatePages[index].description} />
                             </div>
                             <div className="form-group">
                                 <button type="button" className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>

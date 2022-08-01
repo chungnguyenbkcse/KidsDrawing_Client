@@ -13,12 +13,14 @@ export const Editor = (props) => {
   console.log(props.isCreate)
   console.log(props.setValue)
   React.useEffect(() => {
-    if (reactQuillRef.current.getEditor() && props.isCreate !== "" && state.value === null){
+    if (props.isCreate === ""){
         reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
     }
-    if (props.isCreate === ""){
-        setState({value: null})
-      }
+    else {
+        if (reactQuillRef.current.getEditor() && state.value === null){
+            reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
+        }
+    }
   }, [reactQuillRef, props]);
   //console.log(reactQuillRef)
   

@@ -20,6 +20,7 @@ import { ITutorialTemplatePage, TutorialTemplatePageModificationStatus } from ".
 import { ITeacherLeave, TeacherLeaveModificationStatus } from "./teacher_leave.interface";
 import { IStudentLeave, StudentLeaveModificationStatus } from "./student_leave.interface";
 import { IUserRegisterJoinSemester, UserRegisterJoinSemesterModificationStatus } from "./user_register_join_semester.interface";
+import { IMyClass, MyClassModificationStatus } from "./my_class.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -53,6 +54,7 @@ export interface IStateType {
     teacher_leaves: ITeacherLeaveState;
     student_leaves: IStudentLeaveState;
     user_register_join_semesters: IUserRegisterJoinSemesterState;
+    myclasses: IMyClassState;
 }
 
 export interface IProductState {
@@ -192,4 +194,10 @@ export interface ITutorialTemplatePageState {
     selectedTutorialTemplatePage: ITutorialTemplatePage | null;
     modificationState: TutorialTemplatePageModificationStatus;
     tutorialTemplatePages: ITutorialTemplatePage[];
+}
+
+export interface IMyClassState {
+    selectedMyClass: IMyClass | null;
+    modificationState: MyClassModificationStatus;
+    myClasses: IMyClass[];
 }

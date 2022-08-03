@@ -6,3 +6,15 @@
 .portlet {
     max-height: 350px;
 }
+
+#teacher_navbar {
+    background-color: #503E9D !important;
+}
+
+#teacher_breadcrumb {
+    background-color: #503E9D !important;
+}
+
+.teacher-breadcrumb-item a{
+    color: #ffffff !important;
+}

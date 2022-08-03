@@ -35,8 +35,36 @@ import ChangePassword from "../components/Account/ChangePassword";
 import ResultContest from "../components/Contest/ResultContest";
 import SectionTemplate from "../components/Section/SectionTemplate";
 import SectionTemplateForm from "../components/Section/SectionTemplateForm";
+import TeacherHome from "../components/Home/TeacherHome";
 
 const Routers: React.FC = () => {
+    var role_privilege = localStorage.getItem('role_privilege')
+    var rolePrivilege:string[] =[]
+    var roleUser :string =""
+    if (role_privilege !== null) {
+        rolePrivilege = role_privilege.split(',')
+        roleUser = rolePrivilege[0]
+    }
+    if (roleUser === "TEACHER_USER"){
+        return (
+            <Fragment>
+                <Notifications />
+                <LeftMenu />
+                <div id="content-wrapper" className="d-flex flex-column">
+                    <div id="content">
+                        <TopMenu />
+                        <div className="container-fluid">
+                            <Switch>
+                                <Route path={`/change-password`}><ChangePassword /></Route>
+                                <Route path={`/account`}><Account /></Route>
+                                <Route path="/"><TeacherHome /></Route>
+                            </Switch>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        )
+    }
     return (
         <Fragment>
             <Notifications />

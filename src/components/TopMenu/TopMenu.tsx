@@ -7,7 +7,46 @@ import TopMenuNotification from "./TopNotification";
 
 const TopMenu: React.FC = () => {
   const page: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+  var role_privilege = localStorage.getItem('role_privilege')
+  var rolePrivilege:string[] =[]
+  var roleUser :string =""
+  if (role_privilege !== null) {
+      rolePrivilege = role_privilege.split(',')
+      roleUser = rolePrivilege[0]
+  }
 
+  if (roleUser === "ADMIN_USER"){
+    return (
+      <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top shadow">
+        <ol className="breadcrumb dark-breadcrumb">
+          <li className="breadcrumb-item"><a href="# ">{page ? page.area : null}</a></li>
+          <li className="breadcrumb-item"><a href="# ">{page ? page.subArea : null}</a></li>
+        </ol>
+  
+        <ul className="navbar-nav ml-auto">
+          <TopMenuNotification />
+          <div className="topbar-divider d-none d-sm-block"></div>
+          <TopMenuAccount />
+        </ul>
+      </nav>
+    );
+  }
+  else if (roleUser === "TEACHER_USER"){
+    return (
+      <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top shadow" id="teacher_navbar">
+        <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">
+          <li className="breadcrumb-item teacher-breadcrumb-item"><a href="# ">{page ? page.area : null}</a></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><a href="# ">{page ? page.subArea : null}</a></li>
+        </ol>
+  
+        <ul className="navbar-nav ml-auto">
+          <TopMenuNotification />
+          <div className="topbar-divider d-none d-sm-block"></div>
+          <TopMenuAccount />
+        </ul>
+      </nav>
+    );
+  }
   return (
     <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top shadow">
       <ol className="breadcrumb dark-breadcrumb">
@@ -22,6 +61,7 @@ const TopMenu: React.FC = () => {
       </ul>
     </nav>
   );
+  
 };
 
 export default TopMenu;

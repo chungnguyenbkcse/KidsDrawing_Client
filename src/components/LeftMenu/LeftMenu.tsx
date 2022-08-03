@@ -10,6 +10,7 @@ import { MdSchool } from "react-icons/md";
 import { GiVideoConference } from "react-icons/gi";
 import { BsCashCoin } from "react-icons/bs";
 import { TbDeviceGamepad2 } from "react-icons/tb";
+import "./LeftMenu.css";
 
 const LeftMenu: React.FC = () => {
 
@@ -179,6 +180,7 @@ const LeftMenu: React.FC = () => {
                             <span>Nghỉ dạy</span>
                         </Link>
                     </li>
+
     
                     <hr className="sidebar-divider d-none d-md-block" />
                 </ul>
@@ -195,7 +197,7 @@ const LeftMenu: React.FC = () => {
                     </button>
                 </div>
     
-                <ul className={`navbar-nav bg-gradient-primary-green sidebar sidebar-dark accordion ${getCollapseClass()}`}
+                <ul className={`navbar-nav teacher-navbar-nav sidebar sidebar-dark accordion ${getCollapseClass()}`}
                     id="collapseMenu">
     
                     <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -216,34 +218,35 @@ const LeftMenu: React.FC = () => {
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/courses`}>
+                        <Link className="nav-link" to={``}>
                             <MdSchool />
                             <span> Khóa học</span>
                         </Link>
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/class`}>
+                        <Link className="nav-link" to={``}>
                             <GiVideoConference />
                             <span> Lớp</span>
                         </Link>
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/contests`}>
+                        <Link className="nav-link" to={``}>
                             <AiOutlineFileText />
                             <span> Cuộc thi</span>
                         </Link>
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/turnovers`}>
+                        <Link className="nav-link" to={``}>
                             <BsCashCoin />
                             <span> Thời khóa biểu</span>
                         </Link>
                     </li>
     
                     <hr className="sidebar-divider d-none d-md-block" />
+                    <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
                 </ul>
             </Fragment>
         );

@@ -4,15 +4,16 @@ import TopCard from "../../common/components/TopCard";
 import "./Class.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType, ISemesterState } from "../../store/models/root.interface";
+import { IMyClassState, IStateType, IRootPageStateType, ISemesterState } from "../../store/models/root.interface";
 import {
-    clearSelectedProduct, setModificationState,
-    changeSelectedProduct
-} from "../../store/actions/products.action";
-import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
+    clearSelectedMyClass, setModificationState,
+    changeSelectedMyClass
+} from "../../store/actions/my_class.action";
+import { MyClassModificationStatus, IMyClass } from "../../store/models/my_class.interface";
 import { getSemester } from "../../common/service/semester/GetSemester";
 import { ISemester } from "../../store/models/semester.interface";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
+import { getMyClass } from "../../common/service/MyClass/GetMyClass";
 
 type Options = {
     name: string;
@@ -21,17 +22,18 @@ type Options = {
 
 const Class: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const products: IProductState = useSelector((state: IStateType) => state.products);
+    const myclasss: IMyClassState = useSelector((state: IStateType) => state.myclasses);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = products.products.length
+    const numberItemsCount: number = myclasss.myClasses.length
 
     useEffect(() => {
-        dispatch(clearSelectedProduct());
+        dispatch(clearSelectedMyClass());
         dispatch(updateCurrentPath("Lớp học", "Danh sách"));
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getSemester())
+        dispatch(getMyClass())
+        getSemester()
     }, [dispatch])
 
     const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
@@ -43,9 +45,9 @@ const Class: React.FC = () => {
         return listSemesters.push(item)
     })
 
-    function onProductSelect(product: IProduct): void {
-        dispatch(changeSelectedProduct(product));
-        dispatch(setModificationState(ProductModificationStatus.None));
+    function onMyClassSelect(myclass: IMyClass): void {
+        dispatch(changeSelectedMyClass(myclass));
+        dispatch(setModificationState(MyClassModificationStatus.None));
     }
 
     return (
@@ -102,7 +104,7 @@ const Class: React.FC = () => {
                         </div>
                         <div className="card-body">
                             <ClassList
-                                onSelect={onProductSelect}
+                                onSelect={onMyClassSelect}
                             />
                         </div>
                     </div>

@@ -1,38 +1,21 @@
 import React, { Dispatch, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct, ProductModificationStatus } from "../../store/models/product.interface";
+import { IStateType, IMyClassState } from "../../store/models/root.interface";
+import { IMyClass, MyClassModificationStatus } from "../../store/models/my_class.interface";
 import ClassForm from "./ClassForm";
 import { useHistory } from "react-router-dom";
-import { setModificationState } from "../../store/actions/products.action";
+import { setModificationState } from "../../store/actions/my_class.action";
 import Popup from "reactjs-popup";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
+export type myclassListProps = {
+  onSelect?: (myclass: IMyClass) => void;
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'class_id': 'CM-1',
-    'course': 'Chì màu cho trẻ 4-6 tuổi',
-    'teacher': 'Thanh Trung',
-    'schedule': ['Thứ 2 (7:00 AM - 8:00 AM)', 'Thứ 4 (8:00 AM - 9:00 AM)'],
-  },
-  {
-    'id': 2,
-    'class_id': 'CM-1',
-    'course': 'Chì màu cho trẻ 4-6 tuổi',
-    'teacher': 'Le Thao',
-    'schedule': ['Thứ 3 (7:00 AM - 8:00 AM)', 'Thứ 5 (8:00 AM - 9:00 AM)'],
-  }
-]
-
-function ClassList(props: productListProps): JSX.Element  {
+function ClassList(props: myclassListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
 
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+  const myclasss: IMyClassState = useSelector((state: IStateType) => state.myclasses);
   const history = useHistory();
 
   const [popup, setPopup] = useState(false);
@@ -42,29 +25,25 @@ function ClassList(props: productListProps): JSX.Element  {
     history.push(path);
   }
 
-  function onProductRemove() {
+  function onMyClassRemove() {
     setPopup(true);
 }
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td onClick={routeChange}>{product.class_id}</td>
-      <td>{product.course}</td>
-      <td>{product.teacher}</td>
+  const myclassElements: (JSX.Element | null)[] = myclasss.myClasses.map((myclass, idx) => {
+    if (!myclass) { return null; }
+    return (<tr className={`table-row ${(myclasss.selectedMyClass && myclasss.selectedMyClass.id === myclass.id) ? "selected" : ""}`}
+      key={`myclass_${myclass.id}`}>
+      <th scope="row">{idx + 1}</th>
+      <td onClick={routeChange}>{myclass.security_code}</td>
+      <td></td>
+      <td>{myclass.registration_id}</td>
       <td>
-        {product.schedule.map((val, index) => {
-            return (
-                <p>{val}</p>
-            )
-        })}
+        
       </td>
       <td>
       <button type="button" className="btn btn-primary" onClick={() => {
-          dispatch(setModificationState(ProductModificationStatus.Create))
-          onProductRemove()
+          dispatch(setModificationState(MyClassModificationStatus.Create))
+          onMyClassRemove()
         }}>Chỉnh sửa</button>
       </td>
       <td>
@@ -90,7 +69,7 @@ function ClassList(props: productListProps): JSX.Element  {
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {myclassElements}
         </tbody>
       </table>
     </div>

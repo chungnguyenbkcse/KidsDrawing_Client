@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useEffect } from "react";
+import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import ClassList from "./ClassList";
 import TopCard from "../../common/components/TopCard";
 import "./Class.css";
@@ -14,17 +14,30 @@ import { getSemester } from "../../common/service/semester/GetSemester";
 import { ISemester } from "../../store/models/semester.interface";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { getMyClass } from "../../common/service/MyClass/GetMyClass";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 type Options = {
     name: string;
     value: any;
 }
 
+const format = "YYYY-MM-DD";
+
 const Class: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const myclasss: IMyClassState = useSelector((state: IStateType) => state.myclasses);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = myclasss.myClasses.length
+    const [value, setValue] = useState<any>([
+        new DateObject().set({ day: 4, format }),
+        new DateObject().set({ day: 25, format }),
+        new DateObject().set({ day: 20, format })
+    ]);
+
+    value.map((ele: any, index: any) => {
+        console.log(ele.toString())
+    })
 
     useEffect(() => {
         dispatch(clearSelectedMyClass());
@@ -33,7 +46,7 @@ const Class: React.FC = () => {
 
     useEffect(() => {
         dispatch(getMyClass())
-        getSemester()
+        dispatch(getSemester())
     }, [dispatch])
 
     const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
@@ -66,15 +79,28 @@ const Class: React.FC = () => {
                         </div>
                         <form>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                <SelectKeyValue id="input_creation_id"
-                                    field = "creation_id"
-                                    value={0}
-                                    onChange={() => {}}
-                                    required={true}
-                                    label="Học kì"
-                                    options={listSemesters}
-                                />
+                                <div className="form-group col-md-4">
+                                    <SelectKeyValue id="input_creation_id"
+                                        field = "creation_id"
+                                        value={0}
+                                        onChange={() => {}}
+                                        required={true}
+                                        label="Học kì: "
+                                        options={listSemesters}
+                                    />
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <label>Ngày nghỉ: </label>
+                                    <DatePicker 
+                                        multiple 
+                                        id="date-picker-class"
+                                        value={value} 
+                                        onChange={setValue} 
+                                        format={format}
+                                        plugins={[
+                                            <DatePanel />
+                                    ]}
+                                    />
                                 </div>
                             </div>
                             <button type="submit" className={`btn btn-success left-margin`}>Xếp lớp</button>

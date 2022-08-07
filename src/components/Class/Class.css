@@ -41,3 +41,16 @@
 .selected {
     background-color: lavender;
 }
+
+.rmdp-container  {
+    display: block !important;
+    width: 100%;
+}
+
+#date-picker-class {
+    border: 1px solid #c0c4d6 !important;
+    border-radius: 5px !important;
+    height: 36px !important;
+    margin: 1px 0 !important;
+    padding: 2px 5px !important;
+}

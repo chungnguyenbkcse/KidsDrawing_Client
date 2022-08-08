@@ -27,6 +27,9 @@ type Options = {
     value: any;
 }
 
+type Obj = {
+    time: string[]
+}
 const format = "YYYY-MM-DD";
 
 const Class: React.FC = () => {
@@ -40,10 +43,6 @@ const Class: React.FC = () => {
         new DateObject().set({ day: 20, format })
     ]);
     const [semesterId, setSemesterId] = useState(0);
-
-    value.map((ele: any, index: any) => {
-        console.log(ele.toString())
-    })
 
     useEffect(() => {
         dispatch(clearSelectedMyClass());
@@ -77,8 +76,14 @@ const Class: React.FC = () => {
 
     function saveUser(e: FormEvent<HTMLFormElement>): void {
         e.preventDefault();
+        let time: String[]= [];
+        value.map((ele: any, index: any) => {
+            time.push(ele.toString())
+        })
+        console.log(time)
+
         dispatch(postScheduleClass(semesterId));
-        dispatch(postCalendar(semesterId))
+        dispatch(postCalendar(semesterId, {time: time}))
         dispatch(addNotification("Xếp lớp", `Xếp lớp thành công!`));
         dispatch(clearSelectedMyClass());
         dispatch(setModificationState(MyClassModificationStatus.None));

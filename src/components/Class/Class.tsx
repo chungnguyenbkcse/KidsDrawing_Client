@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useEffect, useState } from "react";
+import React, { Fragment, Dispatch, useEffect, useState, FormEvent } from "react";
 import ClassList from "./ClassList";
 import TopCard from "../../common/components/TopCard";
 import "./Class.css";
@@ -16,6 +16,11 @@ import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { getMyClass } from "../../common/service/MyClass/GetMyClass";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
+import { OnChangeModelNotFiled } from "../../common/types/Form.types";
+import { addNotification } from "../../store/actions/notifications.action";
+import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClass";
+import { postCalendar } from "../../common/service/MyClass/PostCalendar";
 
 type Options = {
     name: string;
@@ -34,6 +39,7 @@ const Class: React.FC = () => {
         new DateObject().set({ day: 25, format }),
         new DateObject().set({ day: 20, format })
     ]);
+    const [semesterId, setSemesterId] = useState(0);
 
     value.map((ele: any, index: any) => {
         console.log(ele.toString())
@@ -63,6 +69,21 @@ const Class: React.FC = () => {
         dispatch(setModificationState(MyClassModificationStatus.None));
     }
 
+    function hasFormValueChangedNotFiled(model: OnChangeModelNotFiled): void {
+        setSemesterId(model.value);
+    }
+
+    console.log(semesterId)
+
+    function saveUser(e: FormEvent<HTMLFormElement>): void {
+        e.preventDefault();
+        dispatch(postScheduleClass(semesterId));
+        dispatch(postCalendar(semesterId))
+        dispatch(addNotification("Xếp lớp", `Xếp lớp thành công!`));
+        dispatch(clearSelectedMyClass());
+        dispatch(setModificationState(MyClassModificationStatus.None));
+    }
+
     return (
         <Fragment>
             <h1 className="h3 mb-2 text-gray-800">Lớp học</h1>
@@ -77,13 +98,13 @@ const Class: React.FC = () => {
                         <div className="py-3">
                             <h6 className="m-0 font-weight-bold text-green">Xếp lớp</h6>
                         </div>
-                        <form>
+                        <form onSubmit={saveUser}>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <SelectKeyValue id="input_creation_id"
-                                        field = "creation_id"
-                                        value={0}
-                                        onChange={() => {}}
+                                    <SelectKeyValueNotField
+                                        value={semesterId}
+                                        id="input_total_page"
+                                        onChange={hasFormValueChangedNotFiled}
                                         required={true}
                                         label="Học kì: "
                                         options={listSemesters}

@@ -53,7 +53,7 @@ const ClassForm: React.FC = () => {
         category: formState.category.value
       }));
 
-      dispatch(addNotification("Product edited", `Product ${formState.name.value} edited by you`));
+      dispatch(addNotification("Lớp", ` ${formState.name.value} chỉnh bỏi bạn`));
       dispatch(clearSelectedProduct());
       dispatch(setModificationState(ProductModificationStatus.None));
     }

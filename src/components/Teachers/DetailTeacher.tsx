@@ -119,7 +119,7 @@ const DetailTeacher: React.FC = () => {
                                                 <div className="form-row">
                                                     <div className="form-group col-md-6 text-center">
                                                     <img className="img-profile" id="img-profile" alt=""
-                                                        src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
+                                                        src={user.profile_image_url} />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <TextInput id="input_email"

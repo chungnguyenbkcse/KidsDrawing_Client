@@ -20,7 +20,7 @@ export function getParent() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user/parent?page=0&size=5`, {
+                `${process.env.REACT_APP_API_URL}/user/parent`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

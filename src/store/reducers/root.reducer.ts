@@ -24,6 +24,7 @@ import teacherLeaveReducer from "./teacher_leave.reducer";
 import studentLeaveReducer from "./student_leave.reducer";
 import userRegisterJoinSemestersReducer from "./user_register_join_semester.reducer";
 import myClassesReducer from "./my_class.reducer";
+import teacher_register_quantificationsReducer from "./teacher_register_quantification.reducer";
 
 
 const initialState: IRootStateType = {
@@ -63,6 +64,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     student_leaves: studentLeaveReducer,
     user_register_join_semesters: userRegisterJoinSemestersReducer,
     myclasses: myClassesReducer,
+    teacher_register_quantifications: teacher_register_quantificationsReducer,
 });
 
 

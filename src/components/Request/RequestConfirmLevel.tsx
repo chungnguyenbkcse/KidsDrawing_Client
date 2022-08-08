@@ -1,16 +1,30 @@
-import React, { Fragment, Dispatch } from "react";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IProductState, IStateType } from "../../store/models/root.interface";
+import { IProductState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import RequestConfirmLevelList from "./RequestConfirmLevelList";
+import { useLocation } from "react-router-dom";
+import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
+import { getTeacher } from "../../common/service/Teacher/GetTeacher";
+import { getCourse } from "../../common/service/Course/GetCourse";
 
 const RequestConfirmLevel: React.FC = () => {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
-  const numberItemsCount: number = products.products.length;
+  const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
+  const numberItemsCount: number = teacher_register_quantifications.teacherRegisterQuantifications.length;
+
+  const { state } = useLocation<any>();
+  console.log(state.teacher_id)
+
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu xác nhận trình độ", ""));
+
+  useEffect(() => {
+    dispatch(getTeacherRegisterQuantificationByTeacherId(state.teacher_id))
+    dispatch(getTeacher())
+    dispatch(getCourse())
+  }, [dispatch])
 
   return (
     <Fragment>

@@ -1,6 +1,6 @@
 import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IUserState } from "../../store/models/root.interface";
+import { IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/users.action";
 import { UserModificationStatus, IUser } from "../../store/models/user.interface";
@@ -17,6 +17,7 @@ function TeacherList(props: userListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
 
   const users: IUserState = useSelector((state: IStateType) => state.users);
+  const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
   const history = useHistory();
 
   const routeChange = () => {
@@ -24,9 +25,12 @@ function TeacherList(props: userListProps): JSX.Element {
     history.push(path);
   }
 
-  const onChangeRequest = () => {
+  const onChangeRequest = (teacher_id: number) => {
     let path = '/teachers/request-level';
-    history.push(path);
+    history.push({
+      pathname: path,
+      state: {teacher_id: teacher_id}
+    });
   }
 
   const userElements: (JSX.Element | null)[] = users.teachers.filter((val) => {
@@ -39,6 +43,16 @@ function TeacherList(props: userListProps): JSX.Element {
     return null
   }).map((teacher, index) => {
     if (!teacher) { return null; }
+    let total = 0;
+    let teacher_level = 0;
+    teacher_register_quantifications.teacherRegisterQuantifications.map((ele, index) => {
+      if (ele.teacher_id === teacher.id && ele.status === "Not approved yet"){
+        total ++;
+      }
+      else if (ele.teacher_id === teacher.id && ele.status === "Approved"){
+        teacher_level ++;
+      }
+    })
     return (<tr className={`table-row ${(users.selectedUser && users.selectedUser.id === teacher.id) ? "selected" : ""}`}
 
       key={`user_${index}`}>
@@ -46,8 +60,10 @@ function TeacherList(props: userListProps): JSX.Element {
       <td onClick={routeChange}>{teacher.firstName} {teacher.lastName}</td>
       <td>{teacher.username}</td>
       <td>{teacher.email}</td>
-      <th scope="col"></th>
-      <td onClick={onChangeRequest}></td> 
+      <td>{teacher_level}</td>
+      <td onClick={() => {
+        onChangeRequest(teacher.id)
+      }}>{total}</td> 
       {
         function () {
           if (teacher.status === true){

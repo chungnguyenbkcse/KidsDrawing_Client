@@ -21,6 +21,7 @@ import { ITeacherLeave, TeacherLeaveModificationStatus } from "./teacher_leave.i
 import { IStudentLeave, StudentLeaveModificationStatus } from "./student_leave.interface";
 import { IUserRegisterJoinSemester, UserRegisterJoinSemesterModificationStatus } from "./user_register_join_semester.interface";
 import { IMyClass, MyClassModificationStatus } from "./my_class.interface";
+import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "./teacher_register_quantification.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -55,6 +56,7 @@ export interface IStateType {
     student_leaves: IStudentLeaveState;
     user_register_join_semesters: IUserRegisterJoinSemesterState;
     myclasses: IMyClassState;
+    teacher_register_quantifications: ITeacherRegisterQuantificationState;
 }
 
 export interface IProductState {
@@ -200,4 +202,10 @@ export interface IMyClassState {
     selectedMyClass: IMyClass | null;
     modificationState: MyClassModificationStatus;
     myClasses: IMyClass[];
+}
+
+export interface ITeacherRegisterQuantificationState {
+    selectedTeacherRegisterQuantification: ITeacherRegisterQuantification | null;
+    modificationState: TeacherRegisterQuantificationModificationStatus;
+    teacherRegisterQuantifications: ITeacherRegisterQuantification[];
 }

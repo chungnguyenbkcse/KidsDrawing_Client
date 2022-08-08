@@ -1,11 +1,19 @@
 import React, { Fragment, Dispatch } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const DegreePhoto: React.FC = () => {
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Bằng cấp", ""));
+
+  const { state } = useLocation<any>();
+  let x = "";
+  if (typeof state !== undefined){
+    x= state.degree_photo
+  }
+  console.log(x)
 
   return (
     <Fragment>
@@ -20,7 +28,7 @@ const DegreePhoto: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Hình ảnh</h6>
             </div>
             <div className="card-body">
-            <img src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png"  alt="First slide" />
+            <img src={x} />
             </div>
           </div>
 

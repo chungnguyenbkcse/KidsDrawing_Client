@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
+import { IStateType, IProductState, ITeacherRegisterQuantificationState, ICourseState, IUserState } from "../../store/models/root.interface";
 import { IProduct } from "../../store/models/product.interface";
 import { useHistory } from "react-router-dom";
 
@@ -9,34 +9,40 @@ export type productListProps = {
   children?: React.ReactNode;
 };
 
-const data = [
-  {
-    'id': 1,
-    'name': 'Teacher 1',
-    'level': 'Chì màu 4-6 tuổi',
-  },
-  {
-    'id': 2,
-    'name': 'Teacher 2',
-    'level': 'Chì màu 6-10 tuổi',
-  }
-]
 
 function RequestConfirmLevelList(props: productListProps): JSX.Element  {
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+  const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
+  const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+  const teachers: IUserState = useSelector((state: IStateType) => state.users);
   const history = useHistory();
-  const routeChange = () =>{ 
+  const routeChange = (degree_photo: string) =>{ 
     let path = '/teachers/request-level/degree-photo'; 
-    history.push(path);
+    history.push({
+      pathname: path,
+      state: {degree_photo: degree_photo}
+    });
   }
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
+  const productElements: (JSX.Element | null)[] = teacher_register_quantifications.teacherRegisterQuantifications.map((product, index) => {
     if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`}>
-      <th scope="row">{product.id}</th>
-      <td onClick={routeChange}>{product.name}</td>
-      <td onClick={routeChange}>{product.level}</td>
+    let course_name = "";
+    courses.courses.map(ele => {
+      if (ele.id === product.course_id){
+        course_name = ele.name
+      }
+    })
+
+    let teacher_name = "";
+    teachers.teachers.map(ele => {
+      if (ele.id === product.teacher_id){
+        teacher_name = ele.username
+      }
+    })
+    return (<tr className={`table-row ${(teacher_register_quantifications.selectedTeacherRegisterQuantification && teacher_register_quantifications.selectedTeacherRegisterQuantification.id === product.id) ? "selected" : ""}`}
+      key={`product_${index}`}>
+      <th scope="row" onClick={() => {routeChange(product.degree_photo_url)}}>{index + 1}</th>
+      <td onClick={() => {routeChange(product.degree_photo_url)}}>{teacher_name}</td>
+      <td onClick={() => {routeChange(product.degree_photo_url)}}>{course_name}</td>
       <td>
         <button type="button" className="btn btn-primary">Chấp nhận</button>
       </td>

@@ -21,7 +21,7 @@ export function getStudent() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user/student?page=0&size=5`, {
+                `${process.env.REACT_APP_API_URL}/user/student`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

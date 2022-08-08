@@ -13,6 +13,7 @@ import TeacherForm from "./TeacherForm";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { deleteUser } from "../../common/service/User/DeleteUser";
 import TeacherImportForm from "./TeacherImportForm";
+import { getTeacherRegisterQuantification } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantification";
 
 
 
@@ -26,6 +27,7 @@ const Teacher: React.FC = () => {
 
     useEffect(() => {
         dispatch(getTeacher())
+        dispatch(getTeacherRegisterQuantification())
     }, [dispatch])
 
     useEffect(() => {

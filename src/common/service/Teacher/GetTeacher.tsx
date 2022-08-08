@@ -20,7 +20,7 @@ export function getTeacher() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user/teacher?page=0&size=100`, {
+                `${process.env.REACT_APP_API_URL}/user/teacher`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

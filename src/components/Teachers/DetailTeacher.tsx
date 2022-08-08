@@ -3,7 +3,7 @@ import TopCard from "../../common/components/TopCard";
 import "./DetailTeacher.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { IProductState, IStateType, IRootPageStateType, ICourseState, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import {
     clearSelectedProduct, setModificationState,
     changeSelectedProduct
@@ -11,20 +11,9 @@ import {
 import { ProductModificationStatus, IProduct } from "../../store/models/product.interface";
 import TextInput from "../../common/components/TextInput";
 import HistoryTeach from "./HistoryTeach";
-
-const data = {
-    'id': 3,
-    'first_name': 'Thao',
-    'last_name': 'Nguyễn',
-    'username': 'thaonguyen123',
-    'status': 'Đang hoạt động',
-    'date_of_birth': '10/10/2000',
-    'phone': '0989439678',
-    'sex': 'Nữ',
-    'address': 'Thanh Hoa',
-    'teach_type':'Chì màu' ,
-    'teach_level': '4-6 tuổi'
-}
+import { useLocation } from "react-router-dom";
+import { IUser } from "../../store/models/user.interface";
+import { getCourse } from "../../common/service/Course/GetCourse";
 
 
 const DetailTeacher: React.FC = () => {
@@ -33,6 +22,49 @@ const DetailTeacher: React.FC = () => {
     const products: IProductState = useSelector((state: IStateType) => state.products);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = products.products.length;
+    const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
+    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+
+    useEffect(() => {
+        dispatch(getCourse())
+    }, [dispatch])
+
+    const { state } = useLocation<any>();
+    let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
+    if (typeof state !== undefined){
+        user = state.user
+    }
+
+    console.log(user)
+
+    let course_ids: number[] = [];
+    teacher_register_quantifications.teacherRegisterQuantifications.map((ele, index) => {
+        if (ele.teacher_id === user.id && ele.status === "Approved"){
+            course_ids.push(ele.course_id)
+        }
+    })
+    console.log(course_ids)
+    console.log(courses.courses)
+
+    let course_name = "";
+    course_ids.map((ele, index) => {
+        return courses.courses.map(course => {
+            if (course.id === ele){
+                console.log("hello")
+                if (course_name !== ""){
+                    course_name = course_name + ", "+ course.name;
+                }
+                else {
+                    course_name = course_name + course.name;
+                    console.log("hello")
+                }
+            }
+        })
+    })
+
+
+
+
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
@@ -97,7 +129,7 @@ const DetailTeacher: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Tên đăng nhập"
-                                                            placeholder={data.username} />
+                                                            placeholder={user.username} />
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
@@ -109,7 +141,7 @@ const DetailTeacher: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Ngày sinh"
-                                                            placeholder={data.date_of_birth} />
+                                                            placeholder={user.dateOfBirth} />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <TextInput id="input_email"
@@ -119,7 +151,7 @@ const DetailTeacher: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Giới tính"
-                                                            placeholder={data.sex} />
+                                                            placeholder={user.sex} />
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
@@ -131,7 +163,7 @@ const DetailTeacher: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Số điện thoại"
-                                                            placeholder={data.phone} />
+                                                            placeholder={user.phone} />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <TextInput id="input_email"
@@ -141,29 +173,19 @@ const DetailTeacher: React.FC = () => {
                                                             required={true}
                                                             maxLength={20}
                                                             label="Địa chỉ"
-                                                            placeholder={data.address} />
+                                                            placeholder={user.address} />
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
-                                                <div className="form-group col-md-6">
-                                                        <TextInput id="input_email"
-                                                            value={''}
-                                                            field="name"
-                                                            onChange={()=>{}}
-                                                            required={true}
-                                                            maxLength={20}
-                                                            label="Thể loại dạy"
-                                                            placeholder={data.teach_type} />
-                                                    </div>
                                                     <div className="form-group col-md-6">
                                                         <TextInput id="input_email"
                                                             value={''}
                                                             field="name"
                                                             onChange={()=>{}}
                                                             required={true}
-                                                            maxLength={20}
-                                                            label="Độ tuổi dạy"
-                                                            placeholder={data.teach_level} />
+                                                            maxLength={100}
+                                                            label="Trình độ"
+                                                            placeholder={course_name} />
                                                     </div>
                                                 </div>
                                             </form>

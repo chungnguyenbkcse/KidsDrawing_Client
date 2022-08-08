@@ -20,9 +20,12 @@ function TeacherList(props: userListProps): JSX.Element {
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
   const history = useHistory();
 
-  const routeChange = () => {
+  const routeChange = (user: IUser) => {
     let path = '/teachers/detail';
-    history.push(path);
+    history.push({
+      pathname: path,
+      state: { user: user }
+    });
   }
 
   const onChangeRequest = (teacher_id: number) => {
@@ -56,10 +59,10 @@ function TeacherList(props: userListProps): JSX.Element {
     return (<tr className={`table-row ${(users.selectedUser && users.selectedUser.id === teacher.id) ? "selected" : ""}`}
 
       key={`user_${index}`}>
-      <th scope="row">{index + 1}</th>
-      <td onClick={routeChange}>{teacher.firstName} {teacher.lastName}</td>
-      <td>{teacher.username}</td>
-      <td>{teacher.email}</td>
+      <th scope="row" onClick={() => {routeChange(teacher)}}>{index + 1}</th>
+      <td onClick={() => {routeChange(teacher)}}>{teacher.firstName} {teacher.lastName}</td>
+      <td onClick={() => {routeChange(teacher)}}>{teacher.username}</td>
+      <td onClick={() => {routeChange(teacher)}}>{teacher.email}</td>
       <td>{teacher_level}</td>
       <td onClick={() => {
         onChangeRequest(teacher.id)

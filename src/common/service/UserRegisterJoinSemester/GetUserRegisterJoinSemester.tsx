@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, initialUserRegisterJoinSemester, addUserRegisterJoinSemester} from "../../../store/actions/user_register_join_semester.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, initialUserRegisterJoinSemester, addUserRegisterJoinSemester, removeUserRegisterJoinSemesterAll} from "../../../store/actions/user_register_join_semester.action";
 interface user_register_semester {
     id: number;
     student_id: number;
@@ -30,6 +30,7 @@ export function getUserRegisterJoinSemester() {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
+                dispatch(removeUserRegisterJoinSemesterAll())
                 console.log(data.body.user_register_semester)
                 data.body.user_register_semester.map((ele: any, index: any) => {
                     var user_register_semester: user_register_semester = {

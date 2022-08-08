@@ -26,6 +26,8 @@ const Turnover: React.FC = () => {
     dispatch(getParent())
   }, [dispatch])
 
+  
+
   return (
     <Fragment>
       <h1 className="h3 mb-2 text-gray-800">Doanh thu</h1>

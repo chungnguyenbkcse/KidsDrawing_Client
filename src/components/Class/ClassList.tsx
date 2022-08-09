@@ -20,25 +20,39 @@ function ClassList(props: myclassListProps): JSX.Element  {
 
   const [popup, setPopup] = useState(false);
   
-  const routeChange = () =>{ 
+  const routeChange = (class_id: number) =>{ 
     let path = '/class/detail'; 
-    history.push(path);
+    history.push({
+      pathname: path,
+      state: { class_id: class_id }
+    });
   }
 
   function onMyClassRemove() {
     setPopup(true);
 }
 
+const routeViewSchedule = (class_id: number) =>{ 
+  let path = '/class/schedule'; 
+  history.push({
+    pathname: path,
+    state: { class_id: class_id }
+  });
+}
+
   const myclassElements: (JSX.Element | null)[] = myclasss.myClasses.map((myclass, idx) => {
     if (!myclass) { return null; }
     return (<tr className={`table-row ${(myclasss.selectedMyClass && myclasss.selectedMyClass.id === myclass.id) ? "selected" : ""}`}
-      key={`myclass_${myclass.id}`}>
+      key={`myclass_${idx}`}>
       <th scope="row">{idx + 1}</th>
-      <td onClick={routeChange}>{myclass.security_code}</td>
+      <td onClick={() => {routeChange(myclass.id)}}>{myclass.security_code}</td>
       <td></td>
       <td>{myclass.registration_id}</td>
       <td>
-        
+        <button type="button" className="btn btn-primary" onClick={() => {
+          if(props.onSelect) props.onSelect(myclass);
+          routeViewSchedule(myclass.id)}}
+        >Chi tiết</button>
       </td>
       <td>
       <button type="button" className="btn btn-primary" onClick={() => {

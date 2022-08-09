@@ -21,6 +21,7 @@ import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { addNotification } from "../../store/actions/notifications.action";
 import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClass";
 import { postCalendar } from "../../common/service/MyClass/PostCalendar";
+import { getStudent } from "../../common/service/Student/GetStudent";
 
 type Options = {
     name: string;
@@ -82,8 +83,7 @@ const Class: React.FC = () => {
         })
         console.log(time)
 
-        dispatch(postScheduleClass(semesterId));
-        dispatch(postCalendar(semesterId, {time: time}))
+        dispatch(postScheduleClass(semesterId, {time: time}));
         dispatch(addNotification("Xếp lớp", `Xếp lớp thành công!`));
         dispatch(clearSelectedMyClass());
         dispatch(setModificationState(MyClassModificationStatus.None));

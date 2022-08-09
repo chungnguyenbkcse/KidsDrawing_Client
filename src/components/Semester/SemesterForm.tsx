@@ -136,7 +136,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
                     field="number"
                     value={formState.number.value}
                     onChange={hasFormValueChanged}
-                    max={10}
+                    max={10000}
                     min={0}
                     label="Học kì"
                   />

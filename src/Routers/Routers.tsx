@@ -36,6 +36,7 @@ import ResultContest from "../components/Contest/ResultContest";
 import SectionTemplate from "../components/Section/SectionTemplate";
 import SectionTemplateForm from "../components/Section/SectionTemplateForm";
 import TeacherHome from "../components/Home/TeacherHome";
+import ScheduleClass from "../components/Class/ScheduleClass";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -87,6 +88,7 @@ const Routers: React.FC = () => {
                             <Route path={`/arts`}><Art /></Route>
                             <Route path={`/class/lesson`}><DetailLesson /></Route>
                             <Route path={`/class/detail`}><DetailClass /></Route>
+                            <Route path={`/class/schedule`}><ScheduleClass /></Route>
                             <Route path={`/class`}><Class /></Route>
                             <Route path={`/schedules`}><Schedule /></Route>
                             <Route path={`/section-template/edit`}><SectionTemplateForm /></Route>

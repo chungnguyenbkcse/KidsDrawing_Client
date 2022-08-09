@@ -1,50 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState } from "../../store/models/root.interface";
-import { IProduct } from "../../store/models/product.interface";
+import { IStateType, IUserState } from "../../store/models/root.interface";
+import { IUser } from "../../store/models/user.interface";
 import { useHistory } from "react-router-dom";
 
-export type productListProps = {
-  onSelect?: (product: IProduct) => void;
-  children?: React.ReactNode;
-};
+function StudentList(): JSX.Element  {
 
-const data = [
-  {
-    'id': 1,
-    'name': 'X',
-    'year_old': '5',
-    'sex': 'Nam',
-  },
-  {
-    'id': 2,
-    'name': 'X',
-    'year_old': '5',
-    'sex': 'Nam',
-  },
-  {
-    'id': 3,
-    'name': 'X',
-    'year_old': '5',
-    'sex': 'Nam',
-  },
-  {
-    'id': 4,
-    'name': 'X',
-    'year_old': '5',
-    'sex': 'Nam',
-  },
-  {
-    'id': 5,
-    'name': 'X',
-    'year_old': '5',
-    'sex': 'Nam',
-  },
-]
-
-function StudentList(props: productListProps): JSX.Element  {
-
-  const products: IProductState = useSelector((state: IStateType) => state.products);
+  const students: IUserState = useSelector((state: IStateType) => state.users);
   const history = useHistory();
 
   
@@ -54,14 +16,14 @@ function StudentList(props: productListProps): JSX.Element  {
   }
 
 
-  const productElements: (JSX.Element | null)[] = data.map(product => {
-    if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
-      key={`product_${product.id}`} onClick={routeChange}>
-      <th scope="row">{product.id}</th>
-      <td>{product.name}</td>
-      <td>{product.year_old}</td>
-      <td>{product.sex}</td>
+  const studentElements: (JSX.Element | null)[] = students.students.map((student, idx) => {
+    if (!student) { return null; }
+    return (<tr className={`table-row ${(students.selectedUser && students.selectedUser.id === student.id) ? "selected" : ""}`}
+      key={`student_${idx}`} onClick={routeChange}>
+      <th scope="row">{idx + 1}</th>
+      <td>{student.username}</td>
+      <td>{student.dateOfBirth}</td>
+      <td>{student.sex}</td>
     </tr>);
   });
 
@@ -78,7 +40,7 @@ function StudentList(props: productListProps): JSX.Element  {
           </tr>
         </thead>
         <tbody>
-          {productElements}
+          {studentElements}
         </tbody>
       </table>
     </div>

@@ -27,7 +27,7 @@ export function postCalendar(id: any, holiday: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                return response
             })
             .then (val => {
                 console.log(val)

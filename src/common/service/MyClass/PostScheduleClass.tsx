@@ -1,7 +1,9 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getMyClass } from "./GetMyClass";
+import { postCalendar } from "./PostCalendar";
 
-export function postScheduleClass(id: any) {
+export function postScheduleClass(id: any, data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -20,7 +22,7 @@ export function postScheduleClass(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postScheduleClass(id))
+                        dispatch(postScheduleClass(id, data))
                     }
                     else {
                         throw Error(response.statusText);
@@ -31,6 +33,8 @@ export function postScheduleClass(id: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(id))
+                dispatch(postCalendar(id, data))
+                dispatch(getMyClass())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

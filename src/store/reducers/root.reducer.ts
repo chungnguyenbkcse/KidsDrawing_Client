@@ -25,6 +25,8 @@ import studentLeaveReducer from "./student_leave.reducer";
 import userRegisterJoinSemestersReducer from "./user_register_join_semester.reducer";
 import myClassesReducer from "./my_class.reducer";
 import teacher_register_quantificationsReducer from "./teacher_register_quantification.reducer";
+import informationClassesReducer from "./information_class.reducer";
+import time_schedulesReducer from "./time_schedule.reducer";
 
 
 const initialState: IRootStateType = {
@@ -65,6 +67,8 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     user_register_join_semesters: userRegisterJoinSemestersReducer,
     myclasses: myClassesReducer,
     teacher_register_quantifications: teacher_register_quantificationsReducer,
+    information_classes: informationClassesReducer,
+    time_schedules: time_schedulesReducer,
 });
 
 

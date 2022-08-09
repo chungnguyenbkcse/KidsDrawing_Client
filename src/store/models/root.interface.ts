@@ -22,6 +22,8 @@ import { IStudentLeave, StudentLeaveModificationStatus } from "./student_leave.i
 import { IUserRegisterJoinSemester, UserRegisterJoinSemesterModificationStatus } from "./user_register_join_semester.interface";
 import { IMyClass, MyClassModificationStatus } from "./my_class.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "./teacher_register_quantification.interface";
+import { IInformationClass, InformationClassModificationStatus } from "./information_class.interface";
+import { ITimeSchedule, TimeScheduleModificationStatus } from "./time_schedule.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -57,6 +59,8 @@ export interface IStateType {
     user_register_join_semesters: IUserRegisterJoinSemesterState;
     myclasses: IMyClassState;
     teacher_register_quantifications: ITeacherRegisterQuantificationState;
+    information_classes: IInformationClassState;
+    time_schedules: ITimeScheduleState;
 }
 
 export interface IProductState {
@@ -208,4 +212,16 @@ export interface ITeacherRegisterQuantificationState {
     selectedTeacherRegisterQuantification: ITeacherRegisterQuantification | null;
     modificationState: TeacherRegisterQuantificationModificationStatus;
     teacherRegisterQuantifications: ITeacherRegisterQuantification[];
+}
+
+export interface IInformationClassState {
+    selectedInformationClass: IInformationClass | null;
+    modificationState: InformationClassModificationStatus;
+    informationClasses: IInformationClass[];
+}
+
+export interface ITimeScheduleState {
+    selectedTimeSchedule: ITimeSchedule | null;
+    modificationState: TimeScheduleModificationStatus;
+    timeSchedules: ITimeSchedule[];
 }

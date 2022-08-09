@@ -255,7 +255,7 @@ const CourseNomalFormEdit: React.FC = () => {
                                         value={formState.price.value}
                                         field="price"
                                         onChange={hasFormValueChanged}
-                                        max={100000}
+                                        max={10000000}
                                         min={0}
                                         label="Giá"
                                     />

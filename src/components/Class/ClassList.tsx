@@ -1,6 +1,6 @@
 import React, { Dispatch, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IMyClassState } from "../../store/models/root.interface";
+import { IStateType, IMyClassState, ICourseState, IUserState } from "../../store/models/root.interface";
 import { IMyClass, MyClassModificationStatus } from "../../store/models/my_class.interface";
 import ClassForm from "./ClassForm";
 import { useHistory } from "react-router-dom";
@@ -16,6 +16,7 @@ function ClassList(props: myclassListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
 
   const myclasss: IMyClassState = useSelector((state: IStateType) => state.myclasses);
+
   const history = useHistory();
 
   const [popup, setPopup] = useState(false);
@@ -46,8 +47,6 @@ const routeViewSchedule = (class_id: number) =>{
       key={`myclass_${idx}`}>
       <th scope="row">{idx + 1}</th>
       <td onClick={() => {routeChange(myclass.id)}}>{myclass.security_code}</td>
-      <td></td>
-      <td>{myclass.registration_id}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={() => {
           if(props.onSelect) props.onSelect(myclass);
@@ -75,8 +74,6 @@ const routeViewSchedule = (class_id: number) =>{
           <tr>
             <th scope="col">#</th>
             <th scope="col">Mã lớp học</th>
-            <th scope="col">Khóa học</th>
-            <th scope="col">Giáo viên</th>
             <th scope="col">Lịch học</th>
             <th scope="col">Hành động</th>
             <th scope="col"></th>

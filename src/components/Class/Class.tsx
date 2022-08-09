@@ -22,6 +22,8 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClass";
 import { postCalendar } from "../../common/service/MyClass/PostCalendar";
 import { getStudent } from "../../common/service/Student/GetStudent";
+import { getTeacher } from "../../common/service/Teacher/GetTeacher";
+import { getCourse } from "../../common/service/Course/GetCourse";
 
 type Options = {
     name: string;

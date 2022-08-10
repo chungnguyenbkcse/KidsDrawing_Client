@@ -1,8 +1,5 @@
 import React from "react";
 import { Quill } from "react-quill";
-import VideoResize from 'quill-video-resize-module';
- 
-Quill.register('modules/VideoResize', VideoResize);
 
 
 // Custom Undo button icon component for Quill editor. You can import it directly
@@ -59,9 +56,6 @@ export const modules = {
   imageResize: {
     parchment: Quill.import('parchment'),
     modules: ['Resize', 'DisplaySize']
-  },
-  VideoResize: {
-    modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
   },
   toolbar: {
     container: "#toolbar",

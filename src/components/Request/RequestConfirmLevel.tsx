@@ -11,7 +11,9 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 
 const RequestConfirmLevel: React.FC = () => {
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-  const numberItemsCount: number = teacher_register_quantifications.teacherRegisterQuantifications.length;
+  const numberItemsCount: number = teacher_register_quantifications.teacherRegisterQuantifications.filter((ele) => 
+  ele.status === "Not approved yet"
+  ).length;
 
   const { state } = useLocation<any>();
   console.log(state.teacher_id)

@@ -1,5 +1,6 @@
 import { logout } from "../../../store/actions/account.actions";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeCourseAll, initialCourse, addCourse } from "../../../store/actions/course.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface Course {
     id: number;
     name: string;
@@ -33,7 +34,13 @@ export function getCourse() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getCourse())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response.json()
             })

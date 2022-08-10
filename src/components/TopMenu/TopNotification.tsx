@@ -22,7 +22,7 @@ function TopMenuNotification(): JSX.Element {
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false">
-        <IoNotificationsSharp color="white"/>
+        <IoNotificationsSharp color="#1E90FF"/>
       </a>
 
       <div className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${(isShow) ? "show" : ""}`}

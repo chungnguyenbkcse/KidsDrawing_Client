@@ -33,10 +33,9 @@ const TopMenu: React.FC = () => {
   }
   else if (roleUser === "TEACHER_USER"){
     return (
-      <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top shadow" id="teacher_navbar">
+      <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">
-          <li className="breadcrumb-item teacher-breadcrumb-item"><a href="# ">{page ? page.area : null}</a></li>
-          <li className="breadcrumb-item teacher-breadcrumb-item"><a href="# ">{page ? page.subArea : null}</a></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><h1 className="h3 mb-2 text-gray-800" id="home-teacher">{page ? page.area : null}</h1></li>
         </ol>
   
         <ul className="navbar-nav ml-auto">

@@ -8,13 +8,16 @@
 }
 
 #teacher_navbar {
-    background-color: #503E9D !important;
+    background-color: #ffffff !important;
+    border-radius: 50px !important;
 }
 
 #teacher_breadcrumb {
-    background-color: #503E9D !important;
+    background-color: #ffffff !important;
+    border-radius: 50px !important;
 }
 
 .teacher-breadcrumb-item a{
-    color: #ffffff !important;
+    color: #7A67C7 !important;
+    font-size: 50px;
 }

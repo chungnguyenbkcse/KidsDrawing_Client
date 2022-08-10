@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Switch, Route } from "react-router";
+import "./Routers.css"
 import LeftMenu from "../components/LeftMenu/LeftMenu";
 import TopMenu from "../components/TopMenu/TopMenu";
 import Products from "../components/Products/Products";
@@ -51,8 +52,8 @@ const Routers: React.FC = () => {
             <Fragment>
                 <Notifications />
                 <LeftMenu />
-                <div id="content-wrapper" className="d-flex flex-column">
-                    <div id="content">
+                <div id="content-wrapper" className="d-flex flex-column content-wrapper-teacher">
+                    <div id="content" className="teacher-content">
                         <TopMenu />
                         <div className="container-fluid">
                             <Switch>

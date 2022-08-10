@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTeacherRegisterQuatificationAll, initialTeacherRegisterQuatification, addTeacherRegisterQuatification } from "../../../store/actions/teacher_register_quantification.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherRegisterQuantification {
     id: number;
     teacher_id: number;
@@ -24,7 +25,13 @@ export function getTeacherRegisterQuantification() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getTeacherRegisterQuantification())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response.json()
             })

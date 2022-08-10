@@ -38,6 +38,7 @@ import SectionTemplate from "../components/Section/SectionTemplate";
 import SectionTemplateForm from "../components/Section/SectionTemplateForm";
 import TeacherHome from "../components/Home/TeacherHome";
 import ScheduleClass from "../components/Class/ScheduleClass";
+import CourseTeacher from "../components/Course/CourseTeacher";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -59,6 +60,7 @@ const Routers: React.FC = () => {
                             <Switch>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>
+                                <Route path={`/courses`}><CourseTeacher /></Route>
                                 <Route path="/"><TeacherHome /></Route>
                             </Switch>
                         </div>

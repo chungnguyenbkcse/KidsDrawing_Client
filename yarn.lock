@@ -8678,6 +8678,15 @@
     "quill" "^1.2.2"
     "raw-loader" "^0.5.1"
 
+"quill-video-resize-module@^1.0.2":
+  "integrity" "sha512-H5S0aTGmBYwI09qYT8XKBff6aAGAfBeVBydR77+cgZak0osGfOf407IGwLpHpaKFHnK9oFy/5CGnkgm29wsB3Q=="
+  "resolved" "https://registry.npmjs.org/quill-video-resize-module/-/quill-video-resize-module-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "lodash" "^4.17.4"
+    "quill" "^1.2.2"
+    "raw-loader" "^0.5.1"
+
 "quill@^1.2.2", "quill@^1.3.7":
   "integrity" "sha512-hG/DVzh/TiknWtE6QmWAF/pxoZKYxfe3J/d/+ShUWkDvvkZQVTPeVmUJVu1uE6DDooC4fWTiCLh84ul89oNz5g=="
   "resolved" "https://registry.npmjs.org/quill/-/quill-1.3.7.tgz"

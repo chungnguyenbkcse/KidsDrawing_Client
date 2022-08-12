@@ -1,24 +1,23 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TopCardLevel from "../../common/components/TopCardLevel";
 import TopCard from "../../common/components/TopCardUser";
-import { getCourse } from "../../common/service/Course/GetCourse";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
+import { ICourseTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import { IUser } from "../../store/models/user.interface";
 import "./CourseTeacher.css"
-import TeacherRegisterQuantificationList from "./CourseListTeacher";
+import CourseTeacherRegisterSuccessfullList from "./CourseTeacherRegisterSuccessfullList";
+import { getCourseTeacher } from "../../common/service/CourseTeacher/GetCourseTeacherByTeacher";
+import CourseTeacherNotRegisterList from "./CourseTeacherNotRegisterList";
 
 const CourseTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.filter((ele) => ele.status === "Approved").length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.filter((ele) => ele.status === "Not approved yet").length;
+    const numberTeacherRegisterSuccessfullCount: number = course_teachers.register_successfull_courses.length;
+    const numberTeacherNotRegisterCount: number = course_teachers.not_register_courses.length;
     const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
@@ -30,7 +29,7 @@ const CourseTeacher: React.FC = () => {
         dispatch(clearSelectedTeacherRegisterQuatification());
         dispatch(getTeacherRegisterQuantificationByTeacherId(id))
         dispatch(getUserById(id))
-        dispatch(getCourse())
+        dispatch(getCourseTeacher(id))
     }, [path.area, dispatch]);
 
     let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
@@ -41,7 +40,7 @@ const CourseTeacher: React.FC = () => {
     }
 
     function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
+        if (course_teachers.selectedCourseTeacher) {
             setPopup(true);
         }
     }
@@ -53,7 +52,7 @@ const CourseTeacher: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberApprovedCount}`} icon="book" class="primary" />
+                <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
@@ -119,7 +118,7 @@ const CourseTeacher: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                            <TeacherRegisterQuantificationList
+                                            <CourseTeacherRegisterSuccessfullList
                                                 onSelect={onTeacherRegisterQuantificationSelect}
                                             />
                                             
@@ -132,16 +131,9 @@ const CourseTeacher: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học</h6>
-                                            </div>
-                                            <div className="card-body">
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <CourseTeacherNotRegisterList
+                                        onSelect={onTeacherRegisterQuantificationSelect}
+                                    />
                                 </div>
                                 
                             </Fragment>

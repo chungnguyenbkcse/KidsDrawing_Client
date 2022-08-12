@@ -1,11 +1,9 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TopCardLevel from "../../common/components/TopCardLevel";
 import TopCard from "../../common/components/TopCardUser";
-import { getCourse } from "../../common/service/Course/GetCourse";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { changeSelectedTeacherRegisterQuatification, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import { IUser } from "../../store/models/user.interface";
@@ -17,8 +15,8 @@ const TeacherHome: React.FC = () => {
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.teacherRegisterQuantifications.filter((ele) => ele.status === "Approved").length;
-    const numberNotApprovedCount: number = teacherRegisterQuantifications.teacherRegisterQuantifications.filter((ele) => ele.status === "Not approved yet").length;
+    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.filter((ele) => ele.status === "Approved").length;
+    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.filter((ele) => ele.status === "Not approved yet").length;
     const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
@@ -30,13 +28,12 @@ const TeacherHome: React.FC = () => {
         dispatch(clearSelectedTeacherRegisterQuatification());
         dispatch(getTeacherRegisterQuantificationByTeacherId(id))
         dispatch(getUserById(id))
-        dispatch(getCourse())
     }, [path.area, dispatch]);
 
     let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatification(teacherRegisterQuantification));
+        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
         dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
     }
 
@@ -52,7 +49,7 @@ const TeacherHome: React.FC = () => {
 
             <div className="row">
                 <TopCard title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`${numberApprovedCount}`} icon="book" class="primary" />
-                <TopCard title="TRÌNH ĐỘ CHƯA DUYỆT" text={`${numberNotApprovedCount}`} icon="book" class="danger" />
+                <TopCard title="TRÌNH ĐỘ CHƯA DUYỆT" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>

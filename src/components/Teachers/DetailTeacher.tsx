@@ -38,7 +38,7 @@ const DetailTeacher: React.FC = () => {
     console.log(user)
 
     let course_ids: number[] = [];
-    teacher_register_quantifications.teacherRegisterQuantifications.map((ele, index) => {
+    teacher_register_quantifications.approveds.map((ele, index) => {
         if (ele.teacher_id === user.id && ele.status === "Approved"){
             course_ids.push(ele.course_id)
         }

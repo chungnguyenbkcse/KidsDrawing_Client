@@ -12,21 +12,11 @@ export type teacherRegisterQuantificationListProps = {
 
 function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationListProps): JSX.Element {
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-    const listCourses: ICourse[] = courses.courses
-    let courseList: string[] = []
-    teacherRegisterQuantifications.teacherRegisterQuantifications.map((course_item) => {
-        return listCourses.forEach(element => {
-            if (element.id === course_item.course_id) {
-                return courseList.push(element.name)
-            }
-        });
-    })
 
-    const teacherRegisterQuantificationElements: (JSX.Element | null)[] = teacherRegisterQuantifications.teacherRegisterQuantifications.map((teacherRegisterQuantification, index) => {
-        if (!teacherRegisterQuantification) { return null; }
+    const teacherRegisterQuantificationElements: (JSX.Element | null)[] = teacherRegisterQuantifications.approveds.map((ele, index) => {
+        if (!ele) { return null; }
         return (
-            <TopCardLevel title={courseList[index]} icon="book" class="primary" />
+            <TopCardLevel title={ele.course_name} icon="book" class="primary" />
         );
     });
 

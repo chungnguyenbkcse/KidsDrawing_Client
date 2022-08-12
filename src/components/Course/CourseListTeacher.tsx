@@ -13,19 +13,8 @@ export type teacherRegisterQuantificationListProps = {
 
 function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationListProps): JSX.Element {
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-    const listCourses: ICourse[] = courses.courses
-    let courseList: string[] = []
-    teacherRegisterQuantifications.teacherRegisterQuantifications.map((course_item) => {
-        return listCourses.forEach(element => {
-            if (element.id === course_item.course_id) {
-                return courseList.push(element.name)
-            }
-        });
-    })
-    let lst = [1,2,3,4,5,6]
 
-    const teacherRegisterQuantificationElements: (JSX.Element | null)[] = lst.map((teacherRegisterQuantification, index) => {
+    const teacherRegisterQuantificationElements: (JSX.Element | null)[] = teacherRegisterQuantifications.approveds.map((teacherRegisterQuantification, index) => {
         if (!teacherRegisterQuantification) { return null; }
         return (<tr className={`table-row`} key={`semester_course_${index}`}>
             <TopCardCourse title={"index"} icon="book" class="primary" />

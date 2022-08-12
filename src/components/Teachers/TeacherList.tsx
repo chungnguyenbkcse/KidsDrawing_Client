@@ -48,11 +48,13 @@ function TeacherList(props: userListProps): JSX.Element {
     if (!teacher) { return null; }
     let total = 0;
     let teacher_level = 0;
-    teacher_register_quantifications.teacherRegisterQuantifications.map((ele, index) => {
-      if (ele.teacher_id === teacher.id && ele.status === "Not approved yet"){
+    teacher_register_quantifications.not_approved_now.map((ele, index) => {
+      if (ele.teacher_id === teacher.id){
         total ++;
       }
-      else if (ele.teacher_id === teacher.id && ele.status === "Approved"){
+    })
+    teacher_register_quantifications.approveds.map((ele, index) => {
+      if (ele.teacher_id === teacher.id){
         teacher_level ++;
       }
     })

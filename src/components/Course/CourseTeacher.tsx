@@ -5,7 +5,7 @@ import TopCard from "../../common/components/TopCardUser";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { changeSelectedTeacherRegisterQuatification, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import { IUser } from "../../store/models/user.interface";
@@ -17,8 +17,8 @@ const CourseTeacher: React.FC = () => {
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.teacherRegisterQuantifications.filter((ele) => ele.status === "Approved").length;
-    const numberNotApprovedCount: number = teacherRegisterQuantifications.teacherRegisterQuantifications.filter((ele) => ele.status === "Not approved yet").length;
+    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.filter((ele) => ele.status === "Approved").length;
+    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.filter((ele) => ele.status === "Not approved yet").length;
     const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
@@ -36,7 +36,7 @@ const CourseTeacher: React.FC = () => {
     let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatification(teacherRegisterQuantification));
+        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
         dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
     }
 

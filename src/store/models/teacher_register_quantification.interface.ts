@@ -1,8 +1,13 @@
 export interface ITeacherRegisterQuantification {
     id: number;
     teacher_id: number;
+    teacher_name: string;
     reviewer_id: number;
     course_id: number;
+    course_name: string;
+    art_age_name: string;
+    art_type_name: string;
+    art_level_name: string;
     degree_photo_url: string;
     status: string;
 }

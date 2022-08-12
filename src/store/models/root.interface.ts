@@ -211,7 +211,9 @@ export interface IMyClassState {
 export interface ITeacherRegisterQuantificationState {
     selectedTeacherRegisterQuantification: ITeacherRegisterQuantification | null;
     modificationState: TeacherRegisterQuantificationModificationStatus;
-    teacherRegisterQuantifications: ITeacherRegisterQuantification[];
+    approveds: ITeacherRegisterQuantification[];
+    not_approves: ITeacherRegisterQuantification[];
+    not_approved_now: ITeacherRegisterQuantification[];
 }
 
 export interface IInformationClassState {

@@ -23,9 +23,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element  {
     });
   }
 
-  const productElements: (JSX.Element | null)[] = teacher_register_quantifications.teacherRegisterQuantifications.filter((ele) => 
-  ele.status === "Not approved yet"
-  ).map((product, index) => {
+  const productElements: (JSX.Element | null)[] = teacher_register_quantifications.not_approved_now.map((product, index) => {
     if (!product) { return null; }
     let course_name = "";
     courses.courses.map(ele => {

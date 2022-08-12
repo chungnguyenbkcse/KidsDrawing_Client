@@ -38,8 +38,8 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeTeacherRegisterQuatificationAll())
-                console.log(data.body.teacher_register_qualification)
-                data.body.teacher_register_qualification.map((ele: any, index: any) => {
+                console.log(data.body.approved)
+                data.body.approved.map((ele: any, index: any) => {
                     var TeacherRegisterQuantification: TeacherRegisterQuantification = {
                         id: ele.id,
                         teacher_id: ele.teacher_id,

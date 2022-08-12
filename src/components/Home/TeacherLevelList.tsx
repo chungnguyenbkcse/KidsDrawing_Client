@@ -23,6 +23,7 @@ function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationL
                 art_level_name={ele.art_level_name}
                 art_type_name={ele.art_type_name}
                 degree_photo_url={ele.degree_photo_url} 
+                teacher_level={ele}
             />
         );
     });

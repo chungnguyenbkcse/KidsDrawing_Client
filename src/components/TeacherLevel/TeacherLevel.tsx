@@ -57,6 +57,15 @@ const TeacherLevel: React.FC = () => {
         setPopup(true);
     }
 
+    useEffect(() => {
+        if (teacherRegisterQuantifications.modificationState === TeacherRegisterQuantificationModificationStatus.Edit){
+            setPopup(true)
+        }
+    }, [teacherRegisterQuantifications.modificationState, popup])
+
+    console.log(teacherRegisterQuantifications.modificationState)
+    console.log(popup)
+
     return (
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
@@ -108,13 +117,16 @@ const TeacherLevel: React.FC = () => {
 
             <Popup
                 open={popup}
-                onClose={() => setPopup(false)}
+                onClose={() => {
+                    setPopup(false)
+                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None))
+                }}
                 closeOnDocumentClick
             >
                 <>
                     {
                         function () {
-                            if ((teacherRegisterQuantifications.modificationState === TeacherRegisterQuantificationModificationStatus.Create) || ((teacherRegisterQuantifications.selectedTeacherRegisterQuantification) && (teacherRegisterQuantifications.modificationState === TeacherRegisterQuantificationModificationStatus.Edit))) {
+                            if ((teacherRegisterQuantifications.modificationState === TeacherRegisterQuantificationModificationStatus.Create) || ( teacherRegisterQuantifications.modificationState === TeacherRegisterQuantificationModificationStatus.Edit)) {
                                 return <TeacherLevelForm isCheck={onRemovePopup}/>
                             }
                         }()

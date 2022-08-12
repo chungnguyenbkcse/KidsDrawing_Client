@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, Dispatch, Fragment } from "react";
+import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
 import { ICourseState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
@@ -146,6 +146,11 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
     const src = "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg"
 
     const [preview, setPreview] = useState(src)
+    useEffect(() => {
+      if (isCreate == false && teacher_register_not_approved !== null) {
+        setPreview(teacher_register_not_approved.degree_photo_url)
+      }
+    }, [isCreate])
 
   return (
     <Fragment>

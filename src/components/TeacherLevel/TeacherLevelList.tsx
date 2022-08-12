@@ -15,22 +15,33 @@ function TeacherLevelList(props: teacherRegisterQuantificationListProps): JSX.El
     const teacherRegisterQuantificationElements: (JSX.Element | null)[] = teacherRegisterQuantifications.approveds.map((ele, index) => {
         if (!ele) { return null; }
         return (
+            <tr className={`table-row`} key={`semester_course_${index}`}>
             <TopCardLevel 
                 course_name={ele.course_name} 
-                icon="book" class="primary" 
+                icon="edit" class="warning" 
                 art_age_name={ele.art_age_name}
                 art_level_name={ele.art_level_name}
                 art_type_name={ele.art_type_name}
                 degree_photo_url={ele.degree_photo_url}
+                teacher_level={ele}
             />
+            </tr>
         );
     });
 
 
     return (
-        <>
-            {teacherRegisterQuantificationElements}
-        </>
+         <div className="table-responsive portlet">
+      <table className="table">
+        <thead className="thead-light">
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+        {teacherRegisterQuantificationElements}
+        </tbody>
+        </table>
+    </div>
     );
 }
 

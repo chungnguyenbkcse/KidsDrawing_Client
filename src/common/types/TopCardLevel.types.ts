@@ -1,3 +1,5 @@
+import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
+
 export interface ICardProperties {
     art_age_name: string;
     art_type_name: string;
@@ -6,4 +8,5 @@ export interface ICardProperties {
     degree_photo_url: string;
     icon: string;
     class: string;
+    teacher_level: ITeacherRegisterQuantification;
 }

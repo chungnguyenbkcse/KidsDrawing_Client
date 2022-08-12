@@ -47,8 +47,6 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeTeacherRegisterQuatificationApprovedAll())
-                dispatch(removeTeacherRegisterQuatificationNotApprovedAll())
-                dispatch(removeTeacherRegisterQuatificationNotApprovedNowAll())
                 console.log(data.body.approved)
                 console.log(data.body.not_approved)
                 console.log(data.body.not_approved_now)
@@ -75,6 +73,8 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
                     }
                 })
 
+                dispatch(removeTeacherRegisterQuatificationNotApprovedAll())
+                
                 data.body.not_approved.map((ele: any, index: any) => {
                     var TeacherRegisterQuantification: TeacherRegisterQuantification = {
                         id: ele.id,
@@ -98,6 +98,7 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
                     }
                 })
 
+                dispatch(removeTeacherRegisterQuatificationNotApprovedNowAll())
                 data.body.not_approved_now.map((ele: any, index: any) => {
                     var TeacherRegisterQuantification: TeacherRegisterQuantification = {
                         id: ele.id,

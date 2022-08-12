@@ -14,9 +14,10 @@ const TeacherHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
+    console.log(teacherRegisterQuantifications)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.filter((ele) => ele.status === "Approved").length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.filter((ele) => ele.status === "Not approved yet").length;
+    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
+    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
     const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;

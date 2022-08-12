@@ -47,7 +47,7 @@ export function getCourse() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeCourseAll())
-                //console.log(data.body.Courses)
+                console.log(data.body.courses)
                 data.body.courses.map((ele: any, index: any) => {
                     var course: Course = {
                         id: ele.id,

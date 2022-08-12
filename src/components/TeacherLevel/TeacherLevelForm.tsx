@@ -34,8 +34,9 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
       let item: Options = { "name": ele.name, "value": ele.id }
       return listCourses.push(item)
   })
+  console.log(listCourses)
   if (!teacher_register_not_approved || isCreate) {
-    teacher_register_not_approved = { id: 0, teacher_id: 2,teacher_name: "", reviewer_id: 1, course_id: 1, course_name: "", art_age_name: "", art_level_name: "", art_type_name: "", degree_photo_url: "", status: "Not approved now"};
+    teacher_register_not_approved = { id: 0, teacher_id: 2,teacher_name: "", reviewer_id: 1, course_id: 0, course_name: "", art_age_name: "", art_level_name: "", art_type_name: "", degree_photo_url: "", status: "Not approved now"};
   }
 
   const [formState, setFormState] = useState({
@@ -48,37 +49,40 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
   function hasFormValueChanged(model: OnChangeModel): void {
     setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     //console.log(formState)
+    console.log(formState.course_id)
   }
 
-  function saveUser(e: FormEvent<HTMLFormElement>): void {
+  async function saveUser(e: FormEvent<HTMLFormElement>){
     e.preventDefault();
     if (isFormInvalid()) {
       return;
     }
 
+    var url = await setImageAction();
+
     let saveUserFn: Function = (isCreate) ? addTeacherRegisterQuatificationNotApprovedNow : editTeacherRegisterQuatificationNotApproved;
     props.isCheck(false);
-    saveForm(formState, saveUserFn);
+    saveForm(formState, saveUserFn, url);
   }
 
-  function saveForm(formState: ITeacherRegisterLevelFormState, saveFn: Function): void {
+  function saveForm(formState: ITeacherRegisterLevelFormState, saveFn: Function, url: string): void {
     if (teacher_register_not_approved) {
       
 
       if (saveFn === addTeacherRegisterQuatificationNotApprovedNow) {
         dispatch(postTeaherLevel({
-            teacher_id: formState.teacher_id.value,
+            teacher_id: localStorage.getItem('id'),
             course_id: formState.course_id.value,
-            degree_photo_url: formState.degree_photo_url.value,
-            status: formState.status.value
+            degree_photo_url: url,
+            status: "Not approved now"
         }));
       }
       else {
         dispatch(putTeacherRegisterLevel(teacher_register_not_approved.id, {
-            teacher_id: formState.teacher_id.value,
+            teacher_id: localStorage.getItem('id'),
             course_id: formState.course_id.value,
-            degree_photo_url: formState.degree_photo_url.value,
-            status: formState.status.value
+            degree_photo_url: url,
+            status: "Not approved now"
         }));
       }
 
@@ -101,8 +105,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.course_id.error || formState.degree_photo_url.error
-      || formState.status.value || !formState.status.value || !formState.degree_photo_url.value
+    return (formState.course_id.error 
       || !formState.course_id.value) as boolean;
   }
 
@@ -161,7 +164,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
                       onChange={hasFormValueChanged}
                       required={true}
                       label="Khóa học"
-                      options={listCourse}
+                      options={listCourses}
                   />
                 </div>
                 <div className="form-row">

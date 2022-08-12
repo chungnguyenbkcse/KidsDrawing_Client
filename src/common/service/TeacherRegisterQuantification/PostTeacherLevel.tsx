@@ -1,8 +1,9 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTeacherRegisterQuatificationNotApproved } from "../../../store/actions/teacher_register_quantification.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTeacherRegisterQuatificationNotApprovedNow } from "../../../store/actions/teacher_register_quantification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postTeaherLevel(teacher_level: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    console.log(teacher_level)
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -31,7 +32,7 @@ export function postTeaherLevel(teacher_level: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(teacher_level))
-                dispatch(addTeacherRegisterQuatificationNotApproved(teacher_level))
+                dispatch(addTeacherRegisterQuatificationNotApprovedNow(teacher_level))
                 console.log(data)
             })
             .catch(error => {

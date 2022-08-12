@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import TopCardLevel from "../../common/components/TopCardLevel";
-import { ICourse } from "../../store/models/course.interface";
-import { ICourseState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
+import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 
 export type teacherRegisterQuantificationListProps = {
@@ -10,7 +9,7 @@ export type teacherRegisterQuantificationListProps = {
     children?: React.ReactNode;
 };
 
-function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationListProps): JSX.Element {
+function TeacherLevelList(props: teacherRegisterQuantificationListProps): JSX.Element {
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
 
     const teacherRegisterQuantificationElements: (JSX.Element | null)[] = teacherRegisterQuantifications.approveds.map((ele, index) => {
@@ -22,7 +21,7 @@ function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationL
                 art_age_name={ele.art_age_name}
                 art_level_name={ele.art_level_name}
                 art_type_name={ele.art_type_name}
-                degree_photo_url={ele.degree_photo_url} 
+                degree_photo_url={ele.degree_photo_url}
             />
         );
     });
@@ -35,4 +34,4 @@ function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationL
     );
 }
 
-export default TeacherRegisterQuantificationList;
+export default TeacherLevelList;

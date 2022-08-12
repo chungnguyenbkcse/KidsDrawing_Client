@@ -65,9 +65,10 @@ export interface IUser1FormState {
 }
 
 export interface ITeacherRegisterLevelFormState {
-    art_type_id: IFormStateField<number>;
-    art_age_id: IFormStateField<number>;
+    teacher_id: IFormStateField<number>;
+    course_id: IFormStateField<number>;
     degree_photo_url: IFormStateField<string>;
+    status: IFormStateField<string>;
 }
 
 export interface ILessonFormState {

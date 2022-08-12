@@ -26,6 +26,8 @@ function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListPr
               max_participant={ele.max_participant}
               num_of_section={ele.num_of_section}
               semester_name={ele.semester_name}
+              description={ele.description}
+              course_id={ele.course_id}
               schedule={ele.schedule}
               price={ele.price}
               registration_deadline={ele.registration_deadline}

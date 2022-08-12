@@ -28,6 +28,7 @@ import teacher_register_quantificationsReducer from "./teacher_register_quantifi
 import informationClassesReducer from "./information_class.reducer";
 import time_schedulesReducer from "./time_schedule.reducer";
 import courseTeachersReducer from "./course_teacher.reducer";
+import time_schedule_teachersReducer from "./time_schedule_teacher.reducer";
 
 
 const initialState: IRootStateType = {
@@ -71,6 +72,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     information_classes: informationClassesReducer,
     time_schedules: time_schedulesReducer,
     course_teachers: courseTeachersReducer,
+    time_schedule_teachers: time_schedule_teachersReducer,
 });
 
 

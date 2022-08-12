@@ -11,6 +11,7 @@ import "./CourseTeacher.css"
 import CourseTeacherRegisterSuccessfullList from "./CourseTeacherRegisterSuccessfullList";
 import { getCourseTeacher } from "../../common/service/CourseTeacher/GetCourseTeacherByTeacher";
 import CourseTeacherNotRegisterList from "./CourseTeacherNotRegisterList";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const CourseTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -28,6 +29,7 @@ const CourseTeacher: React.FC = () => {
     useEffect(() => {
         dispatch(clearSelectedTeacherRegisterQuatification());
         dispatch(getTeacherRegisterQuantificationByTeacherId(id))
+        dispatch(updateCurrentPath("Khóa học", ""));
         dispatch(getUserById(id))
         dispatch(getCourseTeacher(id))
     }, [path.area, dispatch]);

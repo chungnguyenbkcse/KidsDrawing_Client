@@ -1,9 +1,19 @@
 import React, { PropsWithChildren, ReactElement } from "react";
+import { useHistory } from "react-router-dom";
 import { ICardProperties } from "../types/TopCardCourse.types";
 
 function TopCardCourse(props: PropsWithChildren<ICardProperties>): ReactElement {
+    const history = useHistory();
+    const routeChange = (description: string, course_id: number) =>{ 
+        let path = '/courses/detail'; 
+        history.push({
+            pathname: path,
+            state: { description: description, course_id: course_id}
+        });
+    }
+
     return (
-        <div className="col-xl-12 col-md-12 mb-4">
+        <div className="col-xl-12 col-md-12 mb-4" onClick={() => {routeChange(props.description, props.course_id)}}>
             <div className={`card shadow h-100 py-0`} id="topcard-user">
                 <div className="card-body">
                     <div className="row">

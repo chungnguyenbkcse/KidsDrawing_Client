@@ -218,7 +218,7 @@ const LeftMenu: React.FC = () => {
                     </li>
 
                     <li className="nav-item">
-                        <Link className="nav-link" to={``}>
+                        <Link className="nav-link" to={`/teacher-level`}>
                             <MdSchool />
                             <span> Trình độ</span>
                         </Link>
@@ -246,9 +246,16 @@ const LeftMenu: React.FC = () => {
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={``}>
+                        <Link className="nav-link" to={`/schedule-teacher`}>
                             <BsCashCoin />
                             <span> Thời khóa biểu</span>
+                        </Link>
+                    </li>
+
+                    <li className="nav-item">
+                        <Link className="nav-link" to={`/schedule-teacher`}>
+                            <BsCashCoin />
+                            <span> Yêu cầu</span>
                         </Link>
                     </li>
     

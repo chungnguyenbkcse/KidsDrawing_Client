@@ -25,7 +25,9 @@ function CourseTeacherRegisterSuccessfullList(props: teacherRegisterQuantificati
               art_type_name={ele.art_type_name}
               max_participant={ele.max_participant}
               num_of_section={ele.num_of_section}
+              description={ele.description}
               semester_name={ele.semester_name}
+              course_id={ele.course_id}
               schedule={ele.schedule}
               price={ele.price}
               registration_deadline={ele.registration_deadline}

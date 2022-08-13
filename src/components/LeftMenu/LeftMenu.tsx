@@ -239,7 +239,7 @@ const LeftMenu: React.FC = () => {
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={``}>
+                        <Link className="nav-link" to={`/contests`}>
                             <AiOutlineFileText />
                             <span> Cuộc thi</span>
                         </Link>

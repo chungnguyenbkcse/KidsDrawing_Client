@@ -27,6 +27,7 @@ import { ITimeSchedule, TimeScheduleModificationStatus } from "./time_schedule.i
 import { CourseTeacherModificationStatus, ICourseTeacher } from "./course_teacher.interface";
 import { ITimeScheduleTeacher, TimeScheduleTeacherModificationStatus } from "./time_schedule_teacher.interface";
 import { ClassTeacherModificationStatus, IClassTeacher } from "./class_teacher.interface";
+import { ContestTeacherModificationStatus, IContestTeacher } from "./contest_teacher.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -67,6 +68,7 @@ export interface IStateType {
     course_teachers: ICourseTeacherState;
     time_schedule_teachers: ITimeScheduleTeacherState;
     class_teachers: IClassTeacherState;
+    contest_teachers: IContestTeacherState;
 }
 
 export interface IProductState {
@@ -252,4 +254,13 @@ export interface IClassTeacherState {
     modificationState: ClassTeacherModificationStatus;
     class_doing: IClassTeacher[];
     class_done: IClassTeacher[];
+}
+
+export interface IContestTeacherState {
+    selectedContestTeacher: IContestTeacher | null;
+    modificationState: ContestTeacherModificationStatus;
+    contest_opening: IContestTeacher[];
+    contest_not_open_now_not_teacher: IContestTeacher[];
+    contest_end: IContestTeacher[];
+    contest_not_open_now: IContestTeacher[];
 }

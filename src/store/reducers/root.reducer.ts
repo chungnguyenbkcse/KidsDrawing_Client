@@ -30,6 +30,7 @@ import time_schedulesReducer from "./time_schedule.reducer";
 import courseTeachersReducer from "./course_teacher.reducer";
 import time_schedule_teachersReducer from "./time_schedule_teacher.reducer";
 import classTeachersReducer from "./class_teacher.reducer";
+import contestTeachersReducer from "./contest_teacher.reducer";
 
 
 const initialState: IRootStateType = {
@@ -75,6 +76,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     course_teachers: courseTeachersReducer,
     time_schedule_teachers: time_schedule_teachersReducer,
     class_teachers: classTeachersReducer,
+    contest_teachers: contestTeachersReducer,
 });
 
 

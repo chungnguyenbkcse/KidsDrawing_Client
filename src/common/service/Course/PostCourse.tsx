@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataError, addCourse } from "../../../store/actions/course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getCourse } from "./GetCourse";
 
 export function postCourse(course: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,7 +33,7 @@ export function postCourse(course: any) {
             .then (data => {
                 console.log(data)
                 dispatch(fetchDataRequest());
-                dispatch(addCourse(course))
+                dispatch(getCourse())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addLesson } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getLesson } from "./GetLesson";
 
 export function postLesson(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,7 +33,7 @@ export function postLesson(data: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(data))
-                dispatch(addLesson(data))
+                dispatch(getLesson())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

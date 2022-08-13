@@ -1,8 +1,10 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getArtType } from "./GetArtType";
 
 export function putArtType(id: any, data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -32,6 +34,7 @@ export function putArtType(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
+                dispatch(getArtType())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

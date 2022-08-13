@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getSectionTemplate } from "./GetSectionTemplate";
 
 export function putSectionTemplate(id: any, data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,6 +33,7 @@ export function putSectionTemplate(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
+                dispatch(getSectionTemplate())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

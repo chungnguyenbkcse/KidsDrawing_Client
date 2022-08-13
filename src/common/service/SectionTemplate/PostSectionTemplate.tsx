@@ -1,9 +1,11 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postTutorialTemplate } from "../TutorialTemplate/PostTutorialTemplate";
+import { getSectionTemplate } from "./GetSectionTemplate";
 
 export function postSectionTemplate(tutorial: any[], data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -32,6 +34,7 @@ export function postSectionTemplate(tutorial: any[], data: any) {
             })
             .then (data => {
                 console.log(data)
+                dispatch(getSectionTemplate())
                 dispatch(postTutorialTemplate(tutorial,{
                         section_template_id: data.id,
                         name: data.name,

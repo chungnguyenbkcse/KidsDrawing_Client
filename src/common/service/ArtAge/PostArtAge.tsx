@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getArtAge } from "./GetArtAge";
 
 export function postArtAge(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -31,6 +32,7 @@ export function postArtAge(data: any) {
             })
             .then (data => {
                 console.log(data)
+                dispatch(getArtAge())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

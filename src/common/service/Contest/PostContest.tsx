@@ -1,6 +1,7 @@
 import { fetchDataRequest, fetchDataError, addContest } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postUserGradeContest } from "../UserGradeContest/PostUserGradeContest";
+import { getContest } from "./GetContest";
 
 export function postContest(lst: any[], contest: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,7 +33,7 @@ export function postContest(lst: any[], contest: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(addContest(contest))
+                dispatch(getContest())
                 lst.map((value, index) =>  {
                     return dispatch(postUserGradeContest({
                         contest_id: data.id,

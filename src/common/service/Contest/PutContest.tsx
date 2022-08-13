@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getContest } from "./GetContest";
 
 export function putContest(id: any,data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,6 +33,7 @@ export function putContest(id: any,data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
+                dispatch(getContest())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

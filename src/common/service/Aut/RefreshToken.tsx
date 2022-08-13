@@ -2,6 +2,7 @@ import { logout } from "../../../store/actions/account.actions";
 
 export function postRefreshToken() {
     var refresh_token = localStorage.getItem("refresh_token");
+
     return (dispatch: any) => {
         fetch(
                 `${process.env.REACT_APP_API_URL}/auth/refresh`, {

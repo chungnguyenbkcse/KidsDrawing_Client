@@ -1,6 +1,7 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/tutorial_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postTutorialTemplatePage } from "../TutorialTemplatePage/PostTutorialTemplatePage";
+import { getTutorialTemplate } from "./GetTutorialTemplate";
 
 export function postTutorialTemplate(tutorial: any[], data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,6 +33,7 @@ export function postTutorialTemplate(tutorial: any[], data: any) {
             })
             .then (data => {
                 console.log(data)
+                dispatch(getTutorialTemplate())
                 tutorial.map((value) => {
                     return dispatch(postTutorialTemplatePage({
                         tutorial_template_id: data.id,

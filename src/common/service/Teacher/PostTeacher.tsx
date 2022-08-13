@@ -2,9 +2,11 @@ import { addNotification } from "../../../store/actions/notifications.action";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTeacher, clearSelectedUser, setModificationState } from "../../../store/actions/users.action";
 import { UserModificationStatus } from "../../../store/models/user.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getTeacher } from "./GetTeacher";
 
 export function postTeacher(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -34,7 +36,7 @@ export function postTeacher(data: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(data))
-                dispatch(addTeacher(data))
+                dispatch(getTeacher())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

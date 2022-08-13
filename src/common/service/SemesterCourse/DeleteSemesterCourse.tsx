@@ -3,6 +3,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteSemesterCourse(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

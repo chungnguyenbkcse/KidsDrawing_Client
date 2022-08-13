@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/tutorial_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getTutorialTemplate } from "./GetTutorialTemplate";
 
 export function putTutorialTemplate(id: any, data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,6 +33,7 @@ export function putTutorialTemplate(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
+                dispatch(getTutorialTemplate())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

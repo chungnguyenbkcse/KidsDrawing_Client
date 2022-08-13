@@ -17,6 +17,7 @@ interface user {
 }
 export function getTeacher() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

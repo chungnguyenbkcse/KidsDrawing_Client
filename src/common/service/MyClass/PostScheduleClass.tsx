@@ -34,7 +34,6 @@ export function postScheduleClass(id: any, data: any) {
                 console.log(val)
                 dispatch(fetchDataSuccess(id))
                 dispatch(postCalendar(id, data))
-                dispatch(getMyClass())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

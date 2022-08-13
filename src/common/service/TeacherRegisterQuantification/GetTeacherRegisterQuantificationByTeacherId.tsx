@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, 
     removeTeacherRegisterQuatificationApprovedAll, initialTeacherRegisterQuatificationApproved, addTeacherRegisterQuatificationApproved,
     removeTeacherRegisterQuatificationNotApprovedAll, initialTeacherRegisterQuatificationNotApproved, addTeacherRegisterQuatificationNotApproved,
@@ -19,6 +20,7 @@ interface TeacherRegisterQuantification {
 }
 export function getTeacherRegisterQuantificationByTeacherId(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -33,6 +35,7 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
                 }
             )
             .then( response => {
+                console.log(response)
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
@@ -45,6 +48,7 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
                 return response.json()
             })
             .then (data => {
+                console.log(data)
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeTeacherRegisterQuatificationApprovedAll())
                 console.log(data.body.approved)

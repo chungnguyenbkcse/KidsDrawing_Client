@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
@@ -5,6 +6,7 @@ import TopCard from "../../common/components/TopCardUser";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
@@ -28,12 +30,42 @@ const TeacherLevel: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
-
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
-        dispatch(clearSelectedTeacherRegisterQuatification());
-        dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-        dispatch(getUserById(id))
-        dispatch(getCourse())
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time){
+                if (exp_refresh_token_decode < now_time){
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(clearSelectedTeacherRegisterQuatification());
+                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
+                    dispatch(getUserById(id))
+                    dispatch(getCourse())
+                }
+            }
+            else {
+                dispatch(clearSelectedTeacherRegisterQuatification());
+                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
+                dispatch(getUserById(id))
+                dispatch(getCourse())
+            }
+        }
     }, [path.area, dispatch]);
 
     let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };

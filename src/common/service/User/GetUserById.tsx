@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTeacherAll, initialTeacher, addTeacher } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacher } from "../Teacher/GetTeacher";
@@ -18,6 +19,7 @@ interface user {
 }
 export function getUserById(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

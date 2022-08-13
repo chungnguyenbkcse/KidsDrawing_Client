@@ -1,8 +1,10 @@
+import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteUser(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

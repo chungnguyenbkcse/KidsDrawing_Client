@@ -18,6 +18,7 @@ interface ClassTeacher {
 }
 export function getClassTeacher(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

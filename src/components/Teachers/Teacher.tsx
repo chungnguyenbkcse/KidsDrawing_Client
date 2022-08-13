@@ -28,6 +28,7 @@ const Teacher: React.FC = () => {
     useEffect(() => {
         dispatch(getTeacher())
         dispatch(getTeacherRegisterQuantification())
+        console.log("hello")
     }, [dispatch])
 
     useEffect(() => {

@@ -13,6 +13,7 @@ interface SectionTemplate {
 }
 export function getSectionTemplateByCourseId(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

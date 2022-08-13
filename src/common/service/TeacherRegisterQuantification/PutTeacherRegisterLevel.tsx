@@ -1,8 +1,11 @@
+import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, editTeacherRegisterQuatificationNotApprovedNow } from "../../../store/actions/teacher_register_quantification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getTeacherRegisterQuantificationByTeacherId } from "./GetTeacherRegisterQuantificationByTeacherId";
 
 export function putTeacherRegisterLevel(id: any, teacher_level: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -31,7 +34,7 @@ export function putTeacherRegisterLevel(id: any, teacher_level: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(teacher_level))
-                dispatch(editTeacherRegisterQuatificationNotApprovedNow(teacher_level))
+                dispatch(getTeacherRegisterQuantificationByTeacherId(teacher_level.teacher_id))
                 console.log(data)
             })
             .catch(error => {

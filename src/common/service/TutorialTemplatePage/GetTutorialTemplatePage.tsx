@@ -1,4 +1,6 @@
+import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage, addTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialTemplatePage {
     id: number;
     tutorial_template_id: number;
@@ -8,6 +10,7 @@ interface TutorialTemplatePage {
 }
 export function getTutorialTemplatePage() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

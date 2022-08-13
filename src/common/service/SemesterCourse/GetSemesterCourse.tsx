@@ -7,6 +7,7 @@ interface SemesterCourse {
 }
 export function getSemesterCourse() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

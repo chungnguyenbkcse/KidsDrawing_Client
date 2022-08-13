@@ -1,4 +1,6 @@
+import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, initialUserGradeContest, addUserGradeContest} from "../../../store/actions/user_grade_contest.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
     id: number;
     contest_id: number;
@@ -6,6 +8,7 @@ interface user_grade_contest {
 }
 export function getUserGradeContestByContestId(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

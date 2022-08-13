@@ -1,4 +1,6 @@
+import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTimeScheduleTeacher, removeTimeScheduleTeacherAll } from "../../../store/actions/time_schedule_teacher.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 interface TimeScheduleTeacher {
     class_name: string;
@@ -7,6 +9,7 @@ interface TimeScheduleTeacher {
 }
 export function getScheduleTeacher(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

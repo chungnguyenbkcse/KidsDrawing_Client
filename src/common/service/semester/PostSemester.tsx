@@ -2,6 +2,7 @@ import { addNotification } from "../../../store/actions/notifications.action";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addSemester, clearSelectedSemester, setModificationState } from "../../../store/actions/semester.actions";
 import { SemesterModificationStatus } from "../../../store/models/semester.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getSemester } from "./GetSemester";
 
 export function postSemester(semester: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -33,7 +34,7 @@ export function postSemester(semester: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(semester))
-                dispatch(addSemester(semester))
+                dispatch(getSemester())
                 console.log(data)
             })
             .catch(error => {

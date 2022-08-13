@@ -1,6 +1,7 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedule.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postScheduleItem } from "../ScheduleItem/PostScheduleItem";
+import { getSchedule } from "./GetSchedule";
 
 export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,6 +33,7 @@ export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any
             })
             .then (data => {
                 console.log(data)
+                dispatch(getSchedule())
                 for (let idx = 0; idx < date_of_weeks.length; idx++) {
                     for (let index = 0; index < lesson_times.length; index++) {
                         if (date_of_weeks[idx].key === lesson_times[index].key){

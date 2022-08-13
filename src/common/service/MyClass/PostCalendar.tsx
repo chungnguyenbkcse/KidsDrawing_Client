@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getMyClass } from "./GetMyClass";
 
 export function postCalendar(id: any, holiday: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -32,6 +33,7 @@ export function postCalendar(id: any, holiday: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(id))
+                dispatch(getMyClass())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

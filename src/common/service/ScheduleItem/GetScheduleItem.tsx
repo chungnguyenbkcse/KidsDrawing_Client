@@ -7,6 +7,7 @@ interface schedule_item {
 }
 export function getScheduleItem() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

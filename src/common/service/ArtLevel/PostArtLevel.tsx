@@ -1,5 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getArtLevel } from "./GetArtLevel";
 
 export function postArtLevel(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -31,6 +32,7 @@ export function postArtLevel(data: any) {
             })
             .then (data => {
                 console.log(data)
+                dispatch(getArtLevel())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

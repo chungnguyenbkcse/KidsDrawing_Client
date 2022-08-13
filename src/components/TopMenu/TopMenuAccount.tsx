@@ -44,7 +44,7 @@ function TopMenuAccount(): JSX.Element {
           <i className="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
           Thay đổi mật khẩu
         </a>
-        <a className="dropdown-item"
+        <p className="dropdown-item"
         onClick={() => {
           localStorage.removeItem('access_token') // Authorization
           localStorage.removeItem('refresh_token')
@@ -55,12 +55,11 @@ function TopMenuAccount(): JSX.Element {
           localStorage.removeItem('schedule_id')
           dispatch(logout())
         }}
-        href="/aut" 
         data-toggle="modal"
         data-target="#logoutModal">
           <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
           Logout
-        </a>
+        </p>
       </div>
     </li>
   );

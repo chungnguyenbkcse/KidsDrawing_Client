@@ -1,24 +1,23 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { ICourseTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { changeSelectedDoinglClass, clearSelectedDoinglClass, setModificationState } from "../../store/actions/class_teacher.action";
+import { IClassTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
+import { IClassTeacher, ClassTeacherModificationStatus } from "../../store/models/class_teacher.interface";
 import { IUser } from "../../store/models/user.interface";
-import "./CourseTeacher.css"
-import CourseTeacherRegisterSuccessfullList from "./CourseTeacherRegisterSuccessfullList";
-import { getCourseTeacher } from "../../common/service/CourseTeacher/GetCourseTeacherByTeacher";
-import CourseTeacherNotRegisterList from "./CourseTeacherNotRegisterList";
+import "./ClassTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import ClassDoingList from "./ClassTeachingTeacherList";
+import ClassDoneList from "./ClassDoneTeacherList";
+import { getClassTeacher } from "../../common/service/ClassTeacher/GetClassTeacher";
 
-const CourseTeacher: React.FC = () => {
+const ClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
+    const class_teachers: IClassTeacherState = useSelector((state: IStateType) => state.class_teachers);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberTeacherRegisterSuccessfullCount: number = course_teachers.register_successfull_courses.length;
-    const numberTeacherNotRegisterCount: number = course_teachers.register_successfull_courses.length;
+    const numberClassDoingCount: number = class_teachers.class_doing.length;
+    const numberClassDoneCount: number = class_teachers.class_done.length;
     const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
@@ -27,22 +26,21 @@ const CourseTeacher: React.FC = () => {
     }
 
     useEffect(() => {
-        dispatch(clearSelectedTeacherRegisterQuatification());
-        dispatch(getTeacherRegisterQuantificationByTeacherId(id))
+        dispatch(clearSelectedDoinglClass());
         dispatch(updateCurrentPath("Khóa học", ""));
         dispatch(getUserById(id))
-        dispatch(getCourseTeacher(id))
+        dispatch(getClassTeacher(id))
     }, [path.area, dispatch]);
 
     let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
 
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
+    function onClassTeacherSelect(class_teacher: IClassTeacher): void {
+        dispatch(changeSelectedDoinglClass(class_teacher));
+        dispatch(setModificationState(ClassTeacherModificationStatus.None));
     }
 
-    function onTeacherRegisterQuantificationRemove() {
-        if (course_teachers.selectedCourseTeacher) {
+    function onClassTeacherRemove() {
+        if (class_teachers.selectedClassTeacher) {
             setPopup(true);
         }
     }
@@ -54,10 +52,11 @@ const CourseTeacher: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
+                <TopCard title="SỐ LỚP ĐANG DẠY" text={`${numberClassDoingCount}`} icon="book" class="primary" />
+                <TopCard title="SỐ LỚP ĐÃ DẠY" text={`${numberClassDoneCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
+                    dispatch(setModificationState(ClassTeacherModificationStatus.Create))}>
                         <i className="fas fa fa-plus"></i>
                         Đăng kí trình độ
                     </button>
@@ -85,7 +84,7 @@ const CourseTeacher: React.FC = () => {
                         }
                     }} style={{
                         color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Khám phá</h6>
+                    }}>Đang dạy</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
@@ -102,7 +101,7 @@ const CourseTeacher: React.FC = () => {
                     }}
                         style={{
                             color: checked ? "#2F4F4F" : "#F24E1E"
-                        }}>Đã đăng kí</h6>
+                        }}>Đã dạy</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
@@ -120,8 +119,8 @@ const CourseTeacher: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    <CourseTeacherNotRegisterList
-                                        onSelect={onTeacherRegisterQuantificationSelect}
+                                    <ClassDoingList
+                                        onSelect={onClassTeacherSelect}
                                     />
 
 
@@ -134,8 +133,8 @@ const CourseTeacher: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    <CourseTeacherRegisterSuccessfullList
-                                        onSelect={onTeacherRegisterQuantificationSelect}
+                                    <ClassDoneList
+                                        onSelect={onClassTeacherSelect}
                                     />
                                 </div>
 
@@ -150,4 +149,4 @@ const CourseTeacher: React.FC = () => {
     );
 };
 
-export default CourseTeacher;
+export default ClassTeacher;

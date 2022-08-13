@@ -43,6 +43,7 @@ import ScheduleTeacher from "../components/Schedule/ScheduleTeacher";
 import CourseTeacherDetail from "../components/Course/CourseTeacherDetail";
 import TeacherLevel from "../components/TeacherLevel/TeacherLevel";
 import TeacherLevelDetail from "../components/TeacherLevel/TeacherLevelDetail";
+import ClassTeacher from "../components/Class/ClassTeacher";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -64,10 +65,11 @@ const Routers: React.FC = () => {
                             <Switch>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>
-                                <Route path={`/teacher-level/detail`}><TeacherLevelDetail /></Route>
+                                <Route path={`/teacher-level/detail`}><TeacherLevelDetail /></Route>                              
                                 <Route path={`/teacher-level`}><TeacherLevel /></Route>
                                 <Route path={`/courses/detail`}><CourseTeacherDetail /></Route>
                                 <Route path={`/courses`}><CourseTeacher /></Route>
+                                <Route path={`/classes`}><ClassTeacher /></Route>
                                 <Route path={`/schedule-teacher`}><ScheduleTeacher /></Route>
                                 <Route path="/"><TeacherHome /></Route>
                             </Switch>

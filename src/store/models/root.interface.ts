@@ -26,6 +26,7 @@ import { IInformationClass, InformationClassModificationStatus } from "./informa
 import { ITimeSchedule, TimeScheduleModificationStatus } from "./time_schedule.interface";
 import { CourseTeacherModificationStatus, ICourseTeacher } from "./course_teacher.interface";
 import { ITimeScheduleTeacher, TimeScheduleTeacherModificationStatus } from "./time_schedule_teacher.interface";
+import { ClassTeacherModificationStatus, IClassTeacher } from "./class_teacher.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -65,6 +66,7 @@ export interface IStateType {
     time_schedules: ITimeScheduleState;
     course_teachers: ICourseTeacherState;
     time_schedule_teachers: ITimeScheduleTeacherState;
+    class_teachers: IClassTeacherState;
 }
 
 export interface IProductState {
@@ -243,4 +245,11 @@ export interface ICourseTeacherState {
     modificationState: CourseTeacherModificationStatus;
     register_successfull_courses: ICourseTeacher[];
     not_register_courses: ICourseTeacher[];
+}
+
+export interface IClassTeacherState {
+    selectedClassTeacher: IClassTeacher | null;
+    modificationState: ClassTeacherModificationStatus;
+    class_doing: IClassTeacher[];
+    class_done: IClassTeacher[];
 }

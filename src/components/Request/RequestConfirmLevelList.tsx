@@ -1,53 +1,78 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { Dispatch } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IProductState, ITeacherRegisterQuantificationState, ICourseState, IUserState } from "../../store/models/root.interface";
 import { IProduct } from "../../store/models/product.interface";
 import { useHistory } from "react-router-dom";
-
+import { putTeacherRegisterLevel } from "../../common/service/TeacherRegisterQuantification/PutTeacherRegisterLevel";
+import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
   children?: React.ReactNode;
 };
 
 
-function RequestConfirmLevelList(props: productListProps): JSX.Element  {
+function RequestConfirmLevelList(props: productListProps): JSX.Element {
+  const dispatch: Dispatch<any> = useDispatch();
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
   const teachers: IUserState = useSelector((state: IStateType) => state.users);
   const history = useHistory();
-  const routeChange = (degree_photo: string) =>{ 
-    let path = '/teachers/request-level/degree-photo'; 
+  const routeChange = (degree_photo: string) => {
+    let path = '/teachers/request-level/degree-photo';
     history.push({
       pathname: path,
-      state: {degree_photo: degree_photo}
+      state: { degree_photo: degree_photo }
     });
   }
 
+  function approvedTeacherLevel(ele: ITeacherRegisterQuantification) {
+    dispatch(putTeacherRegisterLevel(ele.id, {
+      teacher_id: localStorage.getItem('id'),
+      course_id: ele.course_id,
+      degree_photo_url: ele.degree_photo_url,
+      status: "Approved"
+    }))
+  }
+
+  function notApprovedTeacherLevel(ele: ITeacherRegisterQuantification) {
+    dispatch(putTeacherRegisterLevel(ele.id, {
+      teacher_id: localStorage.getItem('id'),
+      course_id: ele.course_id,
+      degree_photo_url: ele.degree_photo_url,
+      status: "Not approved"
+    }))
+  }
+
   const productElements: (JSX.Element | null)[] = teacher_register_quantifications.not_approved_now.map((product, index) => {
+    
     if (!product) { return null; }
     let course_name = "";
     courses.courses.map(ele => {
-      if (ele.id === product.course_id){
+      if (ele.id === product.course_id) {
         course_name = ele.name
       }
     })
 
     let teacher_name = "";
     teachers.teachers.map(ele => {
-      if (ele.id === product.teacher_id){
+      if (ele.id === product.teacher_id) {
         teacher_name = ele.username
       }
     })
     return (<tr className={`table-row ${(teacher_register_quantifications.selectedTeacherRegisterQuantification && teacher_register_quantifications.selectedTeacherRegisterQuantification.id === product.id) ? "selected" : ""}`}
       key={`product_${index}`}>
-      <th scope="row" onClick={() => {routeChange(product.degree_photo_url)}}>{index + 1}</th>
-      <td onClick={() => {routeChange(product.degree_photo_url)}}>{teacher_name}</td>
-      <td onClick={() => {routeChange(product.degree_photo_url)}}>{course_name}</td>
+      <th scope="row" onClick={() => { routeChange(product.degree_photo_url) }}>{index + 1}</th>
+      <td onClick={() => { routeChange(product.degree_photo_url) }}>{teacher_name}</td>
+      <td onClick={() => { routeChange(product.degree_photo_url) }}>{course_name}</td>
       <td>
-        <button type="button" className="btn btn-primary">Chấp nhận</button>
+        <button type="button" className="btn btn-primary" onClick={() => {
+          approvedTeacherLevel(product)
+        }}>Chấp nhận</button>
       </td>
       <td>
-        <button type="button" className="btn btn-danger">Xóa</button>
+        <button type="button" className="btn btn-danger" onClick={() => {
+          notApprovedTeacherLevel(product)
+        }}>Xóa</button>
       </td>
     </tr>);
   });

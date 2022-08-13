@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getCourse } from "../../common/service/Course/GetCourse";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
 
 const RequestConfirmLevel: React.FC = () => {
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
@@ -20,10 +22,40 @@ const RequestConfirmLevel: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu xác nhận trình độ", ""));
 
+  let access_token = localStorage.getItem("access_token");
+  let refresh_token = localStorage.getItem("refresh_token");
   useEffect(() => {
-    dispatch(getTeacherRegisterQuantificationByTeacherId(state.teacher_id))
-    dispatch(getTeacher())
-    dispatch(getCourse())
+    if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
+      let access_token_decode: any = jwt_decode(access_token)
+      let refresh_token_decode: any = jwt_decode(refresh_token)
+      let exp_access_token_decode = access_token_decode.exp;
+      let exp_refresh_token_decode = refresh_token_decode.exp;
+      let now_time = Date.now() / 1000;
+      console.log(exp_access_token_decode)
+      console.log(now_time)
+      if (exp_access_token_decode < now_time) {
+        if (exp_refresh_token_decode < now_time) {
+          localStorage.removeItem('access_token') // Authorization
+          localStorage.removeItem('refresh_token')
+          localStorage.removeItem('username')
+          localStorage.removeItem('role_privilege')
+          localStorage.removeItem('id')
+          localStorage.removeItem('contest_id')
+          localStorage.removeItem('schedule_id')
+          dispatch(logout())
+        }
+        else {
+          dispatch(getTeacherRegisterQuantificationByTeacherId(state.teacher_id))
+          dispatch(getTeacher())
+          dispatch(getCourse())
+        }
+      }
+      else {
+        dispatch(getTeacherRegisterQuantificationByTeacherId(state.teacher_id))
+        dispatch(getTeacher())
+        dispatch(getCourse())
+      }
+    }
   }, [dispatch])
 
   return (

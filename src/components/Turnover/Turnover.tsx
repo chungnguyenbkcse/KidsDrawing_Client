@@ -10,6 +10,8 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
 import { getStudent } from "../../common/service/Student/GetStudent";
 import { getParent } from "../../common/service/Parent/GetParent";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
 
 const Turnover: React.FC = () => {
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
@@ -18,15 +20,47 @@ const Turnover: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Doanh thu", ""));
 
+  let access_token = localStorage.getItem("access_token");
+  let refresh_token = localStorage.getItem("refresh_token");
   useEffect(() => {
-    dispatch(getUserRegisterJoinSemester())
-    dispatch(getCourse())
-    dispatch(getSemesterCourse())
-    dispatch(getStudent())
-    dispatch(getParent())
+    if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
+      let access_token_decode: any = jwt_decode(access_token)
+      let refresh_token_decode: any = jwt_decode(refresh_token)
+      let exp_access_token_decode = access_token_decode.exp;
+      let exp_refresh_token_decode = refresh_token_decode.exp;
+      let now_time = Date.now() / 1000;
+      console.log(exp_access_token_decode)
+      console.log(now_time)
+      if (exp_access_token_decode < now_time) {
+        if (exp_refresh_token_decode < now_time) {
+          localStorage.removeItem('access_token') // Authorization
+          localStorage.removeItem('refresh_token')
+          localStorage.removeItem('username')
+          localStorage.removeItem('role_privilege')
+          localStorage.removeItem('id')
+          localStorage.removeItem('contest_id')
+          localStorage.removeItem('schedule_id')
+          dispatch(logout())
+        }
+        else {
+          dispatch(getUserRegisterJoinSemester())
+          dispatch(getCourse())
+          dispatch(getSemesterCourse())
+          dispatch(getStudent())
+          dispatch(getParent())
+        }
+      }
+      else {
+        dispatch(getUserRegisterJoinSemester())
+        dispatch(getCourse())
+        dispatch(getSemesterCourse())
+        dispatch(getStudent())
+        dispatch(getParent())
+      }
+    }
   }, [dispatch])
 
-  
+
 
   return (
     <Fragment>
@@ -38,9 +72,9 @@ const Turnover: React.FC = () => {
       </div>
 
       <div className="row">
-      <div className="col-xl-12 col-lg-12">
-        <ChartBar />
-      </div>
+        <div className="col-xl-12 col-lg-12">
+          <ChartBar />
+        </div>
       </div>
 
       <div className="row">

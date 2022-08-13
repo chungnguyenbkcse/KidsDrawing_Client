@@ -22,6 +22,8 @@ import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { getContest } from "../../common/service/Contest/GetContest";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { formatDate } from "../../common/components/ConverDate";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
 
 
 const Contest: React.FC = () => {
@@ -37,10 +39,10 @@ const Contest: React.FC = () => {
     const date_0 = new Date();
     const date = date_0.toUTCString()
     console.log(date)
-    const date_now = formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16);
+    const date_now = formatDate(new Date(date)).substring(0, 10) + "Z" + formatDate(new Date(date)).substring(11, 16);
     let numberContestEndCount: number = contests.contests.filter((contest) => {
         var strDate2 = contest.end_time;
-        if (!(!contest || strDate2 > date_now)){
+        if (!(!contest || strDate2 > date_now)) {
             return contest
         }
     }).length
@@ -48,14 +50,14 @@ const Contest: React.FC = () => {
     let numberContestOnCount: number = contests.contests.filter((contest) => {
         var strDate1 = contest.start_time;
         var strDate2 = contest.end_time;
-        if (!(!contest || strDate1 > date_now || date_now > strDate2)){
+        if (!(!contest || strDate1 > date_now || date_now > strDate2)) {
             return contest
         }
     }).length
 
     let numberContestNotStartCount: number = contests.contests.filter((contest) => {
         var strDate1 = contest.start_time;
-        if (!(!contest || strDate1 < date_now)){
+        if (!(!contest || strDate1 < date_now)) {
             return contest
         }
     }).length
@@ -64,12 +66,44 @@ const Contest: React.FC = () => {
         dispatch(updateCurrentPath("Cuộc thi", "danh sách"));
     }, [path.area, dispatch]);
 
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
-        dispatch(getTeacher())
-        dispatch(getContest())
-        dispatch(getArtType())
-        dispatch(getArtLevel())
-        dispatch(getArtAge())
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time) {
+                if (exp_refresh_token_decode < now_time) {
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(getTeacher())
+                    dispatch(getContest())
+                    dispatch(getArtType())
+                    dispatch(getArtLevel())
+                    dispatch(getArtAge())
+                }
+            }
+            else {
+                dispatch(getTeacher())
+                dispatch(getContest())
+                dispatch(getArtType())
+                dispatch(getArtLevel())
+                dispatch(getArtAge())
+            }
+        }
     }, [dispatch])
 
     function onContestSelectNotOnYetList(contest: IContest): void {
@@ -95,11 +129,11 @@ const Contest: React.FC = () => {
     const history = useHistory();
 
     const routeChange = () => {
-        let path = `/contests/edit-contest`; 
+        let path = `/contests/edit-contest`;
         history.push(
             {
                 pathname: path,
-                state: {contest_value: null} // your data array of objects
+                state: { contest_value: null } // your data array of objects
             }
         );
     }
@@ -158,13 +192,13 @@ const Contest: React.FC = () => {
                         style={{
                             color: checked2 ? "#F24E1E" : "#2F4F4F"
                         }}>Cuộc thi chưa diễn ra</h6>
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "50%",
-                            backgroundColor: checked2 ?  "#F24E1E" : "#ffffff"
-                        }}></div>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "50%",
+                        backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
 
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
@@ -178,13 +212,13 @@ const Contest: React.FC = () => {
                         style={{
                             color: checked3 ? "#F24E1E" : "#2F4F4F"
                         }}>Cuộc thi đã kết thúc</h6>
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "50%",
-                            backgroundColor: checked3 ?  "#F24E1E" : "#ffffff"
-                        }}></div>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "50%",
+                        backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
             </div>
 
@@ -275,7 +309,7 @@ const Contest: React.FC = () => {
                         )
                     }
 
-                    else if (checked3 === true){
+                    else if (checked3 === true) {
                         return (
                             <Fragment>
                                 <div className="row">

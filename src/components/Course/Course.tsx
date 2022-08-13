@@ -28,6 +28,8 @@ import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 import { deleteSemesterCourse } from "../../common/service/SemesterCourse/DeleteSemesterCourse";
 import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
 import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSectionTemplate";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
 
 
 const Course: React.FC = () => {
@@ -42,21 +44,55 @@ const Course: React.FC = () => {
     const [popup2, setPopup2] = useState(false);
 
     console.log(courses)
-
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
         dispatch(clearSelectedCourse());
         dispatch(updateCurrentPath("Khóa học", "danh sách"));
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getCourse())
-        dispatch(getSemester())
-        dispatch(getSchedule())
-        dispatch(getArtType())
-        dispatch(getArtLevel())
-        dispatch(getArtAge())
-        dispatch(getSemesterCourse())
-        dispatch(getSectionTemplate())
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time){
+                if (exp_refresh_token_decode < now_time){
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(getCourse())
+                    dispatch(getSemester())
+                    dispatch(getSchedule())
+                    dispatch(getArtType())
+                    dispatch(getArtLevel())
+                    dispatch(getArtAge())
+                    dispatch(getSemesterCourse())
+                    dispatch(getSectionTemplate())
+                }
+            }
+            else {
+                dispatch(getCourse())
+                dispatch(getSemester())
+                dispatch(getSchedule())
+                dispatch(getArtType())
+                dispatch(getArtLevel())
+                dispatch(getArtAge())
+                dispatch(getSemesterCourse())
+                dispatch(getSectionTemplate())
+            }
+        }
     }, [dispatch])
 
     function onCourseSelect(course: ICourse): void {

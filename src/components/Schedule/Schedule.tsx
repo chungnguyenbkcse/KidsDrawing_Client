@@ -17,6 +17,8 @@ import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 import { deleteSchedule } from "../../common/service/Schedule/DeleteSchedule";
 import { getLesson } from "../../common/service/Lesson/GetLesson";
 import { getScheduleItem } from "../../common/service/ScheduleItem/GetScheduleItem";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
 
 
 const Schedule: React.FC = () => {
@@ -27,10 +29,40 @@ const Schedule: React.FC = () => {
     const [popup, setPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
-        dispatch(getSchedule())
-        dispatch(getLesson())
-        dispatch(getScheduleItem())
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time){
+                if (exp_refresh_token_decode < now_time){
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(getSchedule())
+                    dispatch(getLesson())
+                    dispatch(getScheduleItem())
+                }
+            }
+            else {
+                dispatch(getSchedule())
+                dispatch(getLesson())
+                dispatch(getScheduleItem())
+            }
+        }
     }, [dispatch])
 
     useEffect(() => {

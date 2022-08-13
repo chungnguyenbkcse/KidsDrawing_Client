@@ -12,6 +12,8 @@ import { IUser, UserModificationStatus } from "../../store/models/user.interface
 import { deleteUser } from "../../common/service/User/DeleteUser";
 import { getStudent } from "../../common/service/Student/GetStudent";
 import { getParent } from "../../common/service/Parent/GetParent";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
 
 
 
@@ -23,12 +25,39 @@ const Student: React.FC = () => {
     const [popup, setPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
-    useEffect(() => {
-        dispatch(getStudent())
-        dispatch(getParent())
-    }, [dispatch])
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
 
     useEffect(() => {
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time){
+                if (exp_refresh_token_decode < now_time){
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(getStudent())
+                    dispatch(getParent())
+                }
+            }
+            else {
+                dispatch(getStudent())
+                dispatch(getParent())
+            }
+        }
         dispatch(clearSelectedUser());
         dispatch(updateCurrentPath("Học sinh", "Danh sách"));
     }, [path.area, dispatch]);

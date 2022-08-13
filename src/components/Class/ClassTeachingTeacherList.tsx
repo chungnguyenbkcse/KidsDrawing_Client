@@ -24,6 +24,7 @@ function ClassDoingList(props: classTeacherListProps): JSX.Element {
               semester_name={ele.semester_name}
               course_name={ele.course_name}
               schedule={ele.schedule}
+              class_id={ele.id}
               num_of_section={ele.num_of_section}
             />
         </tr>

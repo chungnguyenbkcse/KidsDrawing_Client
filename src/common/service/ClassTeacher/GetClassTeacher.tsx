@@ -51,7 +51,7 @@ export function getClassTeacher(id: any) {
                 console.log(data.body.classes_doning)
                 data.body.classes_done.map((ele: any, index: any) => {
                     var class_teacher: ClassTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
@@ -77,7 +77,7 @@ export function getClassTeacher(id: any) {
 
                 data.body.classes_doning.map((ele: any, index: any) => {
                     var class_teacher: ClassTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,

@@ -4,16 +4,16 @@ import { ICardProperties } from "../types/TopCardClass.types";
 
 function TopCardClass(props: PropsWithChildren<ICardProperties>): ReactElement {
     const history = useHistory();
-    const routeChange = (description: string, course_id: number) =>{ 
-        let path = '/courses/detail'; 
+    const routeChange = (class_id: number) =>{ 
+        let path = '/classes/detail'; 
         history.push({
             pathname: path,
-            state: { description: description, course_id: course_id}
+            state: { class_id: class_id }
         });
     }
 
     return (
-        <div className="col-xl-12 col-md-12 mb-4">
+        <div className="col-xl-12 col-md-12 mb-4" onClick={() => {routeChange(props.class_id)}}>
             <div className={`card shadow h-100 py-0`} id="topcard-user">
                 <div className="card-body">
                     <div className="row">

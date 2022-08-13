@@ -19,6 +19,7 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
               name={ele.name} 
               icon="book" 
               class="primary" 
+              class_id={ele.id}
               total_student={ele.total_student}
               security_code={ele.security_code}
               semester_name={ele.semester_name}

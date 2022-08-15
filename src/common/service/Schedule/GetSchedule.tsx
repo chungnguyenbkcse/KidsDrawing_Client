@@ -4,7 +4,7 @@ interface schedule {
     lesson_time: number;
     lesson_time_name: string;
     semester_class_id: number;
-    day_of_week: number;
+    date_of_week: number;
 }
 export function getSchedule() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -35,10 +35,10 @@ export function getSchedule() {
                 data.body.schedules.map((ele: any, index: any) => {
                     var schedule: schedule = {
                         id: ele.id,
-                        lesson_time: ele.lesson_time,
+                        lesson_time: ele.lesson_time_id,
                         lesson_time_name: ele.lesson_time,
                         semester_class_id: ele.semester_class_id,
-                        day_of_week: ele.day_of_week
+                        date_of_week: ele.date_of_week
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){

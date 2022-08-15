@@ -12,6 +12,7 @@ import { putSemesterClass } from "../../common/service/SemesterClass/PutSemester
 import TextInput from "../../common/components/TextInput";
 import NumberInput from "../../common/components/NumberInput";
 import { ILesson } from "../../store/models/lesson.interface";
+import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
 
 export type semesterCourseListProps = {
   isCheck: (value: boolean) => void;
@@ -53,6 +54,23 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
     return listCourses.push(item)
   })
 
+  const schedules: IScheduleState = useSelector((state: IStateType) => state.schedules);
+  let schedule_list: LessonTime[] = []
+  console.log(schedules.schedules)
+  if (semester_class_id !== 0){
+    schedules.schedules.forEach(element => {
+      if (element.semester_class_id === semester_class_id) {
+        schedule_list.push({
+          key: element.date_of_week,
+          value: element.lesson_time
+        })
+      }
+    })
+  }
+
+  console.log(schedule_list)
+
+
 
   const list_date_of_week: Options[] = [
     {
@@ -89,7 +107,6 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
     return list_lessons.push(item)
   })
 
-  const schedules: IScheduleState | null = useSelector((state: IStateType) => state.schedules);
   let total = schedules.schedules.filter((value) => value.semester_class_id === semester_class_id).length
 
   const [formState, setFormState] = useState({
@@ -137,7 +154,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
         }))
       }
 
-      dispatch(addNotification("Khóa học theo kì ", `chỉnh bởi bạn`));
+      dispatch(addNotification("Mở lớp đăng kí theo kì ", `chỉnh bởi bạn`));
       dispatch(clearSelectedSemesterClass());
       dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.None));
     }
@@ -159,36 +176,39 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
       || !formState.name.value || !formState.max_participant.value) as boolean;
   }
 
+
   return (
     <Fragment>
       <div className="row text-left">
         <div className="col-xl-12 col-lg-12">
-          <div className="card shadow mb-4">
-            <div className="card-header py-3">
+          <div className="card shadow mb-1">
+            <div className="card-header py-2">
               <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} lớp theo kì</h6>
             </div>
             <div className="card-body">
               <form onSubmit={saveUser}>
-                <div className="form-group">
-                  <TextInput id="input_name"
-                    field="name"
-                    value={formState.name.value}
-                    onChange={hasFormValueChanged}
-                    required={false}
-                    maxLength={1000}
-                    label="Tên"
-                    placeholder=""
-                  />
-                </div>
-                <div className="form-group">
-                  <NumberInput id="input_max_participant"
-                    value={formState.max_participant.value}
-                    field="max_participant"
-                    onChange={hasFormValueChanged}
-                    max={10000000}
-                    min={0}
-                    label="Đăng kí tối đa"
-                  />
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <TextInput id="input_name"
+                      field="name"
+                      value={formState.name.value}
+                      onChange={hasFormValueChanged}
+                      required={false}
+                      maxLength={1000}
+                      label="Tên"
+                      placeholder=""
+                    />
+                  </div>
+                  <div className="form-group col-md-6">
+                    <NumberInput id="input_max_participant"
+                      value={formState.max_participant.value}
+                      field="max_participant"
+                      onChange={hasFormValueChanged}
+                      max={10000000}
+                      min={0}
+                      label="Đăng kí tối đa"
+                    />
+                  </div>
                 </div>
                 <div className="form-row">
                   <div className="form-group col-md-6">
@@ -212,6 +232,50 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
                     />
                   </div>
                 </div>
+
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                  <NumberInput id="input_total_date_of_week"
+                    value={formState.total_date_of_week.value}
+                    field="total_date_of_week"
+                    onChange={hasFormValueChanged}
+                    max={3}
+                    min={0}
+                    label="Tổng số ngày học trong tuần"
+                  />
+                </div>
+              </div>
+
+                {
+                  Array.from(Array(formState.total_date_of_week.value).keys()).map((value, index) => {
+                    return (
+                      <div className="form-row" key={index}>
+                        <div className="form-group col-md-6">
+                          <SelectKeyValueMutiple
+                            value={isCreate ? 0 : schedule_list[index].key}
+                            index={index}
+                            inputClass={`schedule_item_date_of_week_${index}`}
+                            onChange={() => { }}
+                            required={true}
+                            label="Thứ trong tuần"
+                            options={list_date_of_week}
+                          />
+                        </div>
+                        <div className="form-group col-md-6">
+                          <SelectKeyValueMutiple
+                            value={isCreate ? 0 : schedule_list[index].value}
+                            inputClass={`schedule_item_lesson_time_${index}`}
+                            index={index}
+                            onChange={() => { }}
+                            required={true}
+                            label="Tiết"
+                            options={list_lessons}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })
+                }
 
                 <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
                 <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>

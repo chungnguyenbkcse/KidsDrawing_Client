@@ -1,12 +1,8 @@
 import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ISemesterClassState, ICourseState, IScheduleState, ISemesterState } from "../../store/models/root.interface";
+import { IStateType, ISemesterClassState, IScheduleState } from "../../store/models/root.interface";
 import { ISemesterClass, SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
-import { useHistory } from "react-router-dom";
 import { setModificationStateSemesterClass } from "../../store/actions/semester_class.action";
-import { ICourse } from "../../store/models/course.interface";
-import { ISchedule } from "../../store/models/schedule.interface";
-import { ISemester } from "../../store/models/semester.interface";
 
 export type semesterClassListProps = {
   onSelect?: (semester_course: ISemesterClass) => void;
@@ -22,12 +18,12 @@ type Options = {
 
 function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
   const dispatch: Dispatch<any> = useDispatch();
-  const semester_courses: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
+  const semester_classes: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
   const schedules: IScheduleState = useSelector((state: IStateType) => state.schedules);
   let schedule_list: Options[] = []
   console.log(schedules.schedules)
   if (schedules.schedules.length > 0){
-    semester_courses.semesterClasses.forEach(ele => {
+    semester_classes.semesterClasses.forEach(ele => {
       let item: string = "";
       schedules.schedules.forEach(element => {
         if (element.semester_class_id === ele.id) {
@@ -44,15 +40,15 @@ function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
 
   console.log(schedule_list)
 
-  const courseElements: (JSX.Element | null)[] = semester_courses.semesterClasses.map((semester_course, index) => {
+  const courseElements: (JSX.Element | null)[] = semester_classes.semesterClasses.map((semester_course, index) => {
     if (!semester_course) { return null; }
-    return (<tr className={`table-row ${(semester_courses.selectedSemesterClass && semester_courses.selectedSemesterClass.id === semester_course.id) ? "selected" : ""}`}
+    return (<tr className={`table-row ${(semester_classes.selectedSemesterClass && semester_classes.selectedSemesterClass.id === semester_course.id) ? "selected" : ""}`}
       key={`semester_course_${semester_course.id}`}>
       <th scope="row">{index + 1}</th>
       <td>{semester_course.name}</td>
       <td>{semester_course.course_name}</td>
       <td>{semester_course.semester_name}</td>
-      <td>{schedule_list[index].value}</td>
+      <td>{schedule_list.length ===0 ? "" : schedule_list[index].value}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={()=> {
           if(props.onSelect) props.onSelect(semester_course);

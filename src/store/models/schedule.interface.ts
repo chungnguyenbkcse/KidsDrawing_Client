@@ -3,7 +3,7 @@ export interface ISchedule {
     lesson_time: number;
     lesson_time_name: string;
     semester_class_id: number;
-    day_of_week: number;
+    date_of_week: number;
 }
 
 export enum ScheduleModificationStatus {

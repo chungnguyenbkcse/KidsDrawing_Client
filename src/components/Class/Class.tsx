@@ -32,6 +32,7 @@ import { deleteSemesterClass } from "../../common/service/SemesterClass/DeleteSe
 import ClassForm from "./ClassForm";
 import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
 import { getSchedule } from "../../common/service/Schedule/GetSchedule";
+import { getLesson } from "../../common/service/Lesson/GetLesson";
 type Options = {
     name: string;
     value: any;
@@ -94,6 +95,7 @@ const Class: React.FC = () => {
                     dispatch(getSemester())
                     dispatch(getSemesterClass())
                     dispatch(getSchedule())
+                    dispatch(getLesson())
                 }
             }
             else {
@@ -101,6 +103,7 @@ const Class: React.FC = () => {
                 dispatch(getSemester())
                 dispatch(getSemesterClass())
                 dispatch(getSchedule())
+                dispatch(getLesson())
             }
         }
     }, [dispatch])
@@ -324,7 +327,7 @@ const Class: React.FC = () => {
 
                                 <Popup
                                     open={popup1}
-                                    onClose={() => setPopup2(false)}
+                                    onClose={() => setPopup1(false)}
                                     closeOnDocumentClick
                                 >
                                     <>

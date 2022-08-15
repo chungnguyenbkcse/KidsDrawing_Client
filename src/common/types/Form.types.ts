@@ -36,6 +36,7 @@ export interface ISemesterFormState {
     number: IFormStateField<number>;
     year: IFormStateField<number>;
     start_time: IFormStateField<string>;
+    end_time: IFormStateField<string>;
 }
 
 export  interface IOrderFormState {

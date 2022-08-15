@@ -109,13 +109,6 @@ const LeftMenu: React.FC = () => {
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/schedules`}>
-                            <AiFillCalendar />
-                            <span> Lịch học</span>
-                        </Link>
-                    </li>
-    
-                    <li className="nav-item">
                         <Link className="nav-link" to={`/arts`}>
                             <FaPaintBrush />
                             <span> Nghệ thuật</span>

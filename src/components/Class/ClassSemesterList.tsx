@@ -8,9 +8,10 @@ import { ICourse } from "../../store/models/course.interface";
 import { ISchedule } from "../../store/models/schedule.interface";
 import { ISemester } from "../../store/models/semester.interface";
 
-export type semesterCourseListProps = {
+export type semesterClassListProps = {
   onSelect?: (semester_course: ISemesterClass) => void;
   children?: React.ReactNode;
+  value?: string;
 };
 
 type Options = {
@@ -19,7 +20,7 @@ type Options = {
 }
 
 
-function CourseSemesterList(props: semesterCourseListProps): JSX.Element  {
+function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
   const semester_courses: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
   const history = useHistory();
   const dispatch: Dispatch<any> = useDispatch();
@@ -54,7 +55,8 @@ function CourseSemesterList(props: semesterCourseListProps): JSX.Element  {
     return (<tr className={`table-row ${(semester_courses.selectedSemesterClass && semester_courses.selectedSemesterClass.id === semester_course.id) ? "selected" : ""}`}
       key={`semester_course_${semester_course.id}`}>
       <th scope="row">{index + 1}</th>
-      <td>{courseList[index]}</td>
+      <td>{semester_course.name}</td>
+      <td>{semester_course.course_name}</td>
       <td>{semeserList[index]}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={()=> {
@@ -78,6 +80,7 @@ function CourseSemesterList(props: semesterCourseListProps): JSX.Element  {
         <thead className="thead-light">
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Tên lớp</th>
             <th scope="col">Thuộc khóa học</th>
             <th scope="col">Học kì</th>
             <th scope="col">Hành động</th>
@@ -93,4 +96,4 @@ function CourseSemesterList(props: semesterCourseListProps): JSX.Element  {
   );
 }
 
-export default CourseSemesterList;
+export default ClassSemesterList;

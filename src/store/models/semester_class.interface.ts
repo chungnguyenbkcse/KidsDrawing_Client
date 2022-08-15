@@ -3,6 +3,7 @@ export interface ISemesterClass {
     name: string;
     creation_id: number;
     course_id: number;
+    course_name: string;
     max_participant: number;
 }
 

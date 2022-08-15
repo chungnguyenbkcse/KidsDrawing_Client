@@ -6,6 +6,7 @@ export interface ISemester {
     creator_id: number;
     description: string;
     start_time: string;
+    end_time: string;
     create_time: string;
     update_time: string;
 }

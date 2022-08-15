@@ -27,6 +27,7 @@ function SemesterList(props: semesterListProps): JSX.Element  {
     return null
   }).map((semester, index) => {
     var strDate = semester.start_time;
+    var strDate_1 = semester.end_time;
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!semester) { return null; }
     return (<tr className={`table-row ${(semesters.selectedSemester && semesters.selectedSemester.id === semester.id) ? "selected" : ""}`}
@@ -36,6 +37,7 @@ function SemesterList(props: semesterListProps): JSX.Element  {
       <td>{semester.year}</td>
       <td>{semester.number}</td>
       <td>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</td>
+      <td>{strDate_1.substring(0, 10) + " " + strDate_1.substring(11,19)}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={()=> {
           if(props.onSelect) props.onSelect(semester);
@@ -63,6 +65,7 @@ function SemesterList(props: semesterListProps): JSX.Element  {
             <th scope="col">Năm học</th>
             <th scope="col">Học kì</th>
             <th scope="col">Thời gian bắt đầu</th>
+            <th scope="col">Thời gian kết thúc</th>
             <th scope="col">Hành động</th>
             <th scope="col"></th>
           </tr>

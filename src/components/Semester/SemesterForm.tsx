@@ -22,7 +22,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
   const isCreate: boolean = (semesters.modificationState === SemesterModificationStatus.Create);
 
   if (!semester || isCreate) {
-    semester = { id: 0, name: "", description: "", number: 0, year: 0, start_time: "", create_time: "", update_time: "", creator_id: 0 };
+    semester = { id: 0, name: "", description: "", number: 0, year: 0, start_time: "", end_time: "", create_time: "", update_time: "", creator_id: 0 };
   }
 
   const [formState, setFormState] = useState({
@@ -30,7 +30,8 @@ function SemesterForm(props: semesterListProps): JSX.Element {
     description: { error: "", value: semester.description },
     number: { error: "", value: semester.number },
     year: { error: "", value: semester.year },
-    start_time: { error: "", value: semester.start_time }
+    start_time: { error: "", value: semester.start_time },
+    end_time: { error: "", value: semester.end_time }
   });
 
   function hasFormValueChanged(model: OnChangeModel): void {
@@ -58,6 +59,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           description: formState.description.value,
           number: formState.number.value,
           start_time: formState.start_time.value,
+          end_time: formState.end_time.value,
           creator_id: localStorage.getItem('id')
         }));
       }
@@ -68,6 +70,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           description: formState.description.value,
           number: formState.number.value,
           start_time: formState.start_time.value,
+          end_time: formState.end_time.value,
           creator_id: localStorage.getItem('id')
         }));
       }
@@ -92,8 +95,8 @@ function SemesterForm(props: semesterListProps): JSX.Element {
 
   function isFormInvalid(): boolean {
     return (formState.number.error || formState.description.error
-      || formState.name.error || formState.year.error || formState.start_time.error
-      || !formState.name.value || !formState.start_time.value) as boolean;
+      || formState.name.error || formState.year.error || formState.start_time.error || formState.end_time.error
+      || !formState.name.value || !formState.start_time.value || !formState.end_time.value) as boolean;
   }
 
   return (
@@ -152,6 +155,17 @@ function SemesterForm(props: semesterListProps): JSX.Element {
                     required={false}
                     maxLength={100}
                     label="Thời gian bắt đầu"
+                    placeholder="" />
+                </div>
+                <div className="form-group col-md-6">
+                  <TextInput id="input_end_time"
+                    field="end_time"
+                    value={formState.end_time.value}
+                    onChange={hasFormValueChanged}
+                    type="datetime-local"
+                    required={false}
+                    maxLength={100}
+                    label="Thời gian kết thúc"
                     placeholder="" />
                 </div>
               </div>

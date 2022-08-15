@@ -10,7 +10,7 @@ export function postTeacher(data: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user`, {
+                `${process.env.REACT_APP_API_URL}/user/teacher`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,

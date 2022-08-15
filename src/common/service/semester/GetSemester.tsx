@@ -7,6 +7,7 @@ interface semester {
     creator_id: number;
     description: string;
     start_time: string;
+    end_time: string;
     create_time: string;
     update_time: string;
 }
@@ -36,7 +37,8 @@ export function getSemester() {
                 dispatch(removeSemesterAll())
                 //console.log(data.body.semesters)
                 data.body.semesters.map((ele: any, index: any) => {
-                    var strDate = ele.start_time;
+                    var strDate_1 = ele.start_time;
+                    var strDate_2 = ele.end_time;
                     var semester: semester = {
                         id: ele.id,
                         number: ele.number,
@@ -44,7 +46,8 @@ export function getSemester() {
                         name: ele.name,
                         creator_id: ele.creator_id,
                         description: ele.description,
-                        start_time: strDate.substring(0, 16),
+                        start_time: strDate_1.substring(0, 16),
+                        end_time: strDate_2.substring(0, 16),
                         create_time: ele.create_time,
                         update_time: ele.update_time,
                     }

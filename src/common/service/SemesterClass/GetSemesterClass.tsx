@@ -3,6 +3,7 @@ interface SemesterClass {
     id: number;
     name: string;
     creation_id: number;
+    course_name: string;
     course_id: number;
     max_participant: number;
 }
@@ -32,12 +33,13 @@ export function getSemesterClass() {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeSemesterClassAll())
                 //console.log(data.body.lessons)
-                data.body.semester_classs.map((ele: any, index: any) => {
+                data.body.semester_classes.map((ele: any, index: any) => {
                     var class_ele: SemesterClass = {
                         id: ele.id,
                         name: ele.name,
                         creation_id: ele.creation_id,
                         course_id: ele.course_id,
+                        course_name: ele.course_name,
                         max_participant: ele.max_participant
                     }
                     //console.log(strDate.substring(0, 16))

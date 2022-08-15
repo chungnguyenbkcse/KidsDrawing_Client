@@ -9,6 +9,7 @@ import Popup from "reactjs-popup";
 
 export type myclassListProps = {
   onSelect?: (myclass: IMyClass) => void;
+  value?: string;
   children?: React.ReactNode;
 };
 

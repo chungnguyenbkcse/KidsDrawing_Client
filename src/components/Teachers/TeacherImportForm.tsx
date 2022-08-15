@@ -28,7 +28,7 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
       console.log({
         username: formState.username,
         email: formState.email,
-        password: formState.password,
+        password: null,
         firstName: null,
         lastName: null,
         dateOfBirth: null,
@@ -36,14 +36,13 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
         sex: null,
         phone: null,
         address: null,
-        parent_ids: [],
         roleNames: ["TEACHER_USER"]
       })
       if (saveFn === addTeacher){
         dispatch(postTeacher({
           username: formState.username,
           email: formState.email,
-          password: formState.password,
+          password: null,
           firstName: null,
           lastName: null,
           dateOfBirth: null,
@@ -51,7 +50,6 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
           sex: null,
           phone: null,
           address: null,
-          parent_ids: [],
           roleNames: ["TEACHER_USER"]
         }));
       }
@@ -74,7 +72,7 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
     const headers = str.slice(0, str.indexOf('\n')).split(delim);
     console.log(headers)
     const rows = str.slice(str.indexOf('\n') + 1).split('\n');
-    const headerx = ["username", "email", "password"]
+    const headerx = ["username", "email"]
 
     const newArray = rows.map(row => {
       const values = row.split(delim);
@@ -89,8 +87,7 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
       if (ele.username !== "") {
         let x = {
             username: ele.username,
-            email: ele.email,
-            password: ele.password
+            email: ele.email
         };
 
         console.log(x)

@@ -60,7 +60,6 @@ function TeacherForm(props: teacherListProps): JSX.Element {
           sex: null,
           phone: null,
           address: null,
-          parent_ids: [],
           roleNames: ["TEACHER_USER"]
         }));
       }
@@ -77,7 +76,6 @@ function TeacherForm(props: teacherListProps): JSX.Element {
           sex: null,
           phone: null,
           address: null,
-          parent_ids: [],
           roleNames: ["TEACHER_USER"]
         }));
       }
@@ -134,16 +132,6 @@ function TeacherForm(props: teacherListProps): JSX.Element {
                       label="Email"
                       placeholder="" />
                   </div>
-                </div>
-                <div className="form-group">
-                    <TextInput id="input_password"
-                      value={formState.password.value}
-                      field="password"
-                      onChange={hasFormValueChanged}
-                      required={true}
-                      maxLength={200}
-                      label="Mật khẩu"
-                      placeholder="" />
                 </div>
                 <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
                 <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>

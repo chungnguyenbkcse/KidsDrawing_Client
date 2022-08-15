@@ -24,14 +24,14 @@ type Options = {
   value: any;
 }
 
-function CourseSemesterForm(props: semesterCourseListProps): JSX.Element {
+function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const semester_classes: ISemesterClassState | null = useSelector((state: IStateType) => state.semester_classes);
   let semester_classe: ISemesterClass | null = semester_classes.selectedSemesterClass;
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
 
   if (!semester_classe || isCreate) {
-    semester_classe = { id: 0, max_participant: 0, course_id: 0, creation_id: 0, name: "" };
+    semester_classe = { id: 0, max_participant: 0, course_id: 0, course_name: "", creation_id: 0, name: "" };
   }
 
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
@@ -193,4 +193,4 @@ function CourseSemesterForm(props: semesterCourseListProps): JSX.Element {
   );
 };
 
-export default CourseSemesterForm;
+export default ClassSemesterForm;

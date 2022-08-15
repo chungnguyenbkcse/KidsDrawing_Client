@@ -36,7 +36,7 @@ function ChangePassword(): JSX.Element {
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
 
     if (!user || isCreate) {
-        user = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
+        user = { id: 0, username: "", email: "", password: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
     }
 
     const [formState, setFormState] = useState({

@@ -7,7 +7,7 @@ import { ChartBar } from "../../common/components/ChartBar";
 import TurnoverList from "./TurnoverList";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
 import { getCourse } from "../../common/service/Course/GetCourse";
-import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
+import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
 import { getStudent } from "../../common/service/Student/GetStudent";
 import { getParent } from "../../common/service/Parent/GetParent";
 import { logout } from "../../store/actions/account.actions";
@@ -45,7 +45,7 @@ const Turnover: React.FC = () => {
         else {
           dispatch(getUserRegisterJoinSemester())
           dispatch(getCourse())
-          dispatch(getSemesterCourse())
+          dispatch(getSemesterClass())
           dispatch(getStudent())
           dispatch(getParent())
         }
@@ -53,7 +53,7 @@ const Turnover: React.FC = () => {
       else {
         dispatch(getUserRegisterJoinSemester())
         dispatch(getCourse())
-        dispatch(getSemesterCourse())
+        dispatch(getSemesterClass())
         dispatch(getStudent())
         dispatch(getParent())
       }

@@ -4,15 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IInformationClass } from "../../store/models/information_class.interface";
 import { IInformationClassState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
-import { IUser } from "../../store/models/user.interface";
 import "./ClassTeacherDetail.css"
 import StudentList from "./StudentForTeacherList";
 
@@ -69,8 +65,6 @@ const ClassTeacherDetail: React.FC = () => {
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
     }, [path.area, dispatch]);
-
-    let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));

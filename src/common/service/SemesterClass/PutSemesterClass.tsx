@@ -1,14 +1,14 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_course.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getSemesterCourse } from "./GetSemesterCourse";
+import { getSemesterClass } from "./GetSemesterClass";
 
-export function putSemesterCourse(id: any, data: any) {
+export function putSemesterClass(id: any, data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/semester-course/${id}`, {
+                `${process.env.REACT_APP_API_URL}/semester-class/${id}`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,
@@ -23,7 +23,7 @@ export function putSemesterCourse(id: any, data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putSemesterCourse(id,data))
+                        dispatch(putSemesterClass(id,data))
                     }
                     else {
                         throw Error(response.statusText);
@@ -34,7 +34,7 @@ export function putSemesterCourse(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
-                dispatch(getSemesterCourse())
+                dispatch(getSemesterClass())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -1,5 +1,4 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_course.action";
-import { addTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTutorialTemplatePageByTutorialTemplateId } from "./GetTutorialTemplatePageByTutorialTemplateId";
 

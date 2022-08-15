@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { ICourse } from "../../store/models/course.interface";
-import { ICourseState, ISemesterCourseState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
-import { ISemesterCourse } from "../../store/models/semester_course.interface";
+import { ICourseState, ISemesterClassState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
+import { ISemesterClass } from "../../store/models/semester_class.interface";
 import { IUser } from "../../store/models/user.interface";
 import { IUserRegisterJoinSemester } from "../../store/models/user_register_join_semester.interface"
 
@@ -14,8 +14,8 @@ export type userRegisterJoinSemesterListProps = {
 function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
 
-  const course_semesters: ISemesterCourseState = useSelector((state: IStateType) => state.semester_courses);
-  const listSemesterCourses: ISemesterCourse[] = course_semesters.semesterCourses
+  const course_semesters: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
+  const listSemesterClasss: ISemesterClass[] = course_semesters.semesterClasses
 
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
   const listCourses: ICourse[] = courses.courses
@@ -28,7 +28,7 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
   let parentList: string[] = []
 
   userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
-    return listSemesterCourses.forEach(element => {
+    return listSemesterClasss.forEach(element => {
       if (element.id === user_register_join_semester.semester_course_id) {
         return listCourses.forEach((ele) => {
           if (ele.id === element.course_id){

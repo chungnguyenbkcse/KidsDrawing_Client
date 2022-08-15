@@ -6,7 +6,6 @@ import { getUserById } from "../../common/service/User/GetUserById";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IContestTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
-import { IUser } from "../../store/models/user.interface";
 import "./ContestTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
@@ -64,8 +63,6 @@ const ContestTeacher: React.FC = () => {
         dispatch(clearSelectedTeacherRegisterQuatification());
         dispatch(updateCurrentPath("Cuộc thi", ""));
     }, [path.area, dispatch]);
-
-    let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));

@@ -14,7 +14,6 @@ import artTypesReducer from "./art_type.reducer";
 import artLevelsReducer from "./art_level.reducer";
 import artAgesReducer from "./art_age.reducer";
 import coursesReducer from "./course.reducer";
-import semesterCoursesReducer from "./semester_course.reducer";
 import contestsReducer from "./contest.reducer";
 import sectionTemplatesReducer from "./section_template.reducer";
 import tutorialTemplatesReducer from "./tutorial_template.reducer";
@@ -31,6 +30,7 @@ import courseTeachersReducer from "./course_teacher.reducer";
 import time_schedule_teachersReducer from "./time_schedule_teacher.reducer";
 import classTeachersReducer from "./class_teacher.reducer";
 import contestTeachersReducer from "./contest_teacher.reducer";
+import semesterClassesReducer from "./semester_class.reducer";
 
 
 const initialState: IRootStateType = {
@@ -60,7 +60,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     art_levels: artLevelsReducer,
     art_ages: artAgesReducer,
     courses: coursesReducer,
-    semester_courses: semesterCoursesReducer,
+    semester_classes: semesterClassesReducer,
     contests: contestsReducer,
     section_templates: sectionTemplatesReducer,
     tutorial_templates: tutorialTemplatesReducer,

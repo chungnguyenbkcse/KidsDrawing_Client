@@ -4,6 +4,7 @@ interface user {
     id: number,
     username: string,
     email: string,
+    password: string,
     status: boolean,
     firstName: string,
     lastName: string,
@@ -46,11 +47,12 @@ export function getTeacher() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeTeacherAll())
-                data.body.users.map((ele: any, index: any) => {
+                data.body.teachers.map((ele: any, index: any) => {
                     var user: user = {
                         id: ele.id,
                         username: ele.username,
                         email: ele.email,
+                        password: ele.password,
                         status: ele.status,
                         firstName: ele.firstName,
                         lastName: ele.lastName,

@@ -1,13 +1,13 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_course.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function deleteSemesterCourse(id: any) {
+export function deleteSemesterClass(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-            `${process.env.REACT_APP_API_URL}/semester-course/${id}`, {
+            `${process.env.REACT_APP_API_URL}/semester-class/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': bearer,
@@ -21,7 +21,7 @@ export function deleteSemesterCourse(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteSemesterCourse(id))
+                        dispatch(deleteSemesterClass(id))
                     }
                     else {
                         throw Error(response.statusText);

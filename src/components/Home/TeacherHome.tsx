@@ -9,7 +9,6 @@ import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
-import { IUser } from "../../store/models/user.interface";
 import "./TeacherHome.css"
 import TeacherRegisterQuantificationList from "./TeacherLevelList";
 
@@ -62,8 +61,6 @@ const TeacherHome: React.FC = () => {
             }
         }
     }, [dispatch, access_token, refresh_token]);
-
-    let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));

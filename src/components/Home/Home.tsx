@@ -13,7 +13,7 @@ import { getContest } from "../../common/service/Contest/GetContest";
 import { getStudent } from "../../common/service/Student/GetStudent";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
 import { getParent } from "../../common/service/Parent/GetParent";
-import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
+import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
         }
         else {
           dispatch(getUserRegisterJoinSemester())
-          dispatch(getSemesterCourse())
+          dispatch(getSemesterClass())
           dispatch(getTeacher())
           dispatch(getCourse())
           dispatch(getContest())
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
       }
       else {
         dispatch(getUserRegisterJoinSemester())
-        dispatch(getSemesterCourse())
+        dispatch(getSemesterClass())
         dispatch(getTeacher())
         dispatch(getCourse())
         dispatch(getContest())

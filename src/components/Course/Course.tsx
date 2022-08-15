@@ -6,7 +6,7 @@ import TopCard from "../../common/components/TopCard";
 import "./Course.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { ICourseState, IStateType, IRootPageStateType, ISemesterCourseState } from "../../store/models/root.interface";
+import { ICourseState, IStateType, IRootPageStateType, ISemesterClassState } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
     clearSelectedCourse, setModificationState,
@@ -15,8 +15,8 @@ import {
 } from "../../store/actions/course.action";
 import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
-import { ISemesterCourse, SemesterCourseModificationStatus } from "../../store/models/semester_course.interface";
-import { changeSelectedSemesterCourse, clearSelectedSemesterCourse, removeSemesterCourse, setModificationStateSemesterCourse } from "../../store/actions/semester_course.action";
+import { ISemesterClass, SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
+import { changeSelectedSemesterClass, clearSelectedSemesterClass, removeSemesterClass, setModificationStateSemesterClass } from "../../store/actions/semester_class.action";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
@@ -25,8 +25,8 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { deleteCourse } from "../../common/service/Course/DeleteCourse";
 import { getSemester } from "../../common/service/semester/GetSemester";
 import { getSchedule } from "../../common/service/Schedule/GetSchedule";
-import { deleteSemesterCourse } from "../../common/service/SemesterCourse/DeleteSemesterCourse";
-import { getSemesterCourse } from "../../common/service/SemesterCourse/GetSemesterCourse";
+import { deleteSemesterClass } from "../../common/service/SemesterClass/DeleteSemesterClass";
+import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
 import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSectionTemplate";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
@@ -36,10 +36,10 @@ const Course: React.FC = () => {
     const [checked, setChecked] = useState(true);
     const dispatch: Dispatch<any> = useDispatch();
     const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-    const semester_courses: ISemesterCourseState = useSelector((state: IStateType) => state.semester_courses);
+    const semester_courses: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberCourseCount: number = courses.courses.length;
-    const numberSemesterCourseCount: number = semester_courses.semesterCourses.length;
+    const numberSemesterClassCount: number = semester_courses.semesterClasses.length;
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);
 
@@ -78,7 +78,7 @@ const Course: React.FC = () => {
                     dispatch(getArtType())
                     dispatch(getArtLevel())
                     dispatch(getArtAge())
-                    dispatch(getSemesterCourse())
+                    dispatch(getSemesterClass())
                     dispatch(getSectionTemplate())
                 }
             }
@@ -89,7 +89,7 @@ const Course: React.FC = () => {
                 dispatch(getArtType())
                 dispatch(getArtLevel())
                 dispatch(getArtAge())
-                dispatch(getSemesterCourse())
+                dispatch(getSemesterClass())
                 dispatch(getSectionTemplate())
             }
         }
@@ -101,10 +101,10 @@ const Course: React.FC = () => {
         dispatch(setModificationState(CourseModificationStatus.None));
     }
 
-    function onSemesterCourseSelect(course: ISemesterCourse): void {
-        dispatch(changeSelectedSemesterCourse(course));
+    function onSemesterClassSelect(course: ISemesterClass): void {
+        dispatch(changeSelectedSemesterClass(course));
         onCourseRemove2()
-        dispatch(setModificationStateSemesterCourse(SemesterCourseModificationStatus.None));
+        dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.None));
     }
 
     function onCourseRemove1() {
@@ -139,7 +139,7 @@ const Course: React.FC = () => {
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
                 <TopCard title="KHÓA HỌC CHUNG" text={`${numberCourseCount}`} icon="box" class="primary" />
-                <TopCard title="KHÓA HỌC THEO KÌ" text={`${numberSemesterCourseCount}`} icon="box" class="primary" />
+                <TopCard title="KHÓA HỌC THEO KÌ" text={`${numberSemesterClassCount}`} icon="box" class="primary" />
             </div>
 
             <div className="row" id="search-box">
@@ -269,7 +269,7 @@ const Course: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách khóa học theo kì</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
-                                                        dispatch(setModificationStateSemesterCourse(SemesterCourseModificationStatus.Create))
+                                                        dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Create))
                                                         onCourseRemove2()
                                                     }}>
                                                         <i className="fas fa fa-plus"></i>
@@ -279,7 +279,7 @@ const Course: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <CourseSemesterList
-                                                    onSelect={onSemesterCourseSelect}
+                                                    onSelect={onSemesterClassSelect}
                                                 />
                                             </div>
                                         </div>
@@ -294,7 +294,7 @@ const Course: React.FC = () => {
                                     <>
                                         {
                                             function () {
-                                                if ((semester_courses.modificationState === SemesterCourseModificationStatus.Create) || ((semester_courses.selectedSemesterCourse) && (semester_courses.modificationState === SemesterCourseModificationStatus.Edit))) {
+                                                if ((semester_courses.modificationState === SemesterClassModificationStatus.Create) || ((semester_courses.selectedSemesterClass) && (semester_courses.modificationState === SemesterClassModificationStatus.Edit))) {
                                                     return <CourseSemesterForm isCheck={onRemovePopup2} />
                                                 }
                                             }()
@@ -303,7 +303,7 @@ const Course: React.FC = () => {
                                 </Popup>
                                 {
                                     function () {
-                                        if ((semester_courses.selectedSemesterCourse) && (semester_courses.modificationState === SemesterCourseModificationStatus.Remove)) {
+                                        if ((semester_courses.selectedSemesterClass) && (semester_courses.modificationState === SemesterClassModificationStatus.Remove)) {
                                             return (
                                                 <Popup
                                                     open={popup2}
@@ -318,13 +318,13 @@ const Course: React.FC = () => {
                                                             <button type="button"
                                                                 className="btn btn-danger"
                                                                 onClick={() => {
-                                                                    if (!semester_courses.selectedSemesterCourse) {
+                                                                    if (!semester_courses.selectedSemesterClass) {
                                                                         return;
                                                                     }
-                                                                    dispatch(deleteSemesterCourse(semester_courses.selectedSemesterCourse.id))
-                                                                    dispatch(addNotification("Khóa học theo kì ", `${semester_courses.selectedSemesterCourse.id} đã được xóa`));
-                                                                    dispatch(removeSemesterCourse(semester_courses.selectedSemesterCourse.id));
-                                                                    dispatch(clearSelectedSemesterCourse());
+                                                                    dispatch(deleteSemesterClass(semester_courses.selectedSemesterClass.id))
+                                                                    dispatch(addNotification("Khóa học theo kì ", `${semester_courses.selectedSemesterClass.id} đã được xóa`));
+                                                                    dispatch(removeSemesterClass(semester_courses.selectedSemesterClass.id));
+                                                                    dispatch(clearSelectedSemesterClass());
                                                                     setPopup2(false);
                                                                 }}>Remove
                                                             </button>

@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IUserRegisterJoinSemesterState, ISemesterCourseState, ICourseState } from "../../store/models/root.interface";
+import { IStateType, IUserRegisterJoinSemesterState, ISemesterClassState, ICourseState } from "../../store/models/root.interface";
 import { IUserRegisterJoinSemester } from "../../store/models/user_register_join_semester.interface";
 import { useHistory } from "react-router-dom";
-import { ISemesterCourse } from "../../store/models/semester_course.interface";
+import { ISemesterClass } from "../../store/models/semester_class.interface";
 import { ICourse } from "../../store/models/course.interface";
 
 export type user_register_semesterListProps = {
@@ -27,9 +27,9 @@ function TopStudent(props: user_register_semesterListProps): JSX.Element {
 
     const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
 
-    const course_semesters: ISemesterCourseState = useSelector((state: IStateType) => state.semester_courses);
-    const listSemesterCourses: ISemesterCourse[] = course_semesters.semesterCourses
-    //console.log(listSemesterCourses)
+    const course_semesters: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
+    const listSemesterClasss: ISemesterClass[] = course_semesters.semesterClasses
+    //console.log(listSemesterClasss)
 
     const courses: ICourseState = useSelector((state: IStateType) => state.courses);
     const listCourses: ICourse[] = courses.courses

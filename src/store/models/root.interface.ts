@@ -10,7 +10,7 @@ import { ISchedule, ScheduleModificationStatus } from "./schedule.interface";
 import { ArtTypeModificationStatus, IArtType } from "./art_type.interface";
 import { ArtLevelModificationStatus, IArtLevel } from "./art_level.interface";
 import { ArtAgeModificationStatus, IArtAge } from "./art_age.interface";
-import { ISemesterCourse, SemesterCourseModificationStatus } from "./semester_course.interface";
+import { ISemesterClass, SemesterClassModificationStatus } from "./semester_class.interface";
 import { CourseModificationStatus, ICourse } from "./course.interface";
 import { ContestModificationStatus, IContest } from "./contest.interface";
 import { ISectionTemplate, SectionTemplateModificationStatus } from "./section_template.interface";
@@ -52,7 +52,7 @@ export interface IStateType {
     art_levels: IArtLevelState;
     art_ages: IArtAgeState;
     courses: ICourseState;
-    semester_courses: ISemesterCourseState;
+    semester_classes: ISemesterClassState;
     contests: IContestState;
     section_templates: ISectionTemplateState;
     tutorial_templates: ITutorialTemplateState;
@@ -141,10 +141,10 @@ export interface IArtAgeState {
     artAges: IArtAge[];
 }
 
-export interface ISemesterCourseState {
-    selectedSemesterCourse: ISemesterCourse | null;
-    modificationState: SemesterCourseModificationStatus;
-    semesterCourses: ISemesterCourse[];
+export interface ISemesterClassState {
+    selectedSemesterClass: ISemesterClass | null;
+    modificationState: SemesterClassModificationStatus;
+    semesterClasses: ISemesterClass[];
 }
 
 export interface ICourseState {

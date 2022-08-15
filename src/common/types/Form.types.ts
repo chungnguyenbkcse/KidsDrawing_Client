@@ -107,10 +107,11 @@ export interface ICourseNomalFormState {
     update_time: IFormStateField<string>;
 }
 
-export interface ISemesterCourseFormState {
+export interface ISemesterClassFormState {
     creation_id: IFormStateField<number>;
     course_id: IFormStateField<number>;
-    schedule_id: IFormStateField<number>;
+    max_participant: IFormStateField<number>;
+    name: IFormStateField<string>;
 }
 
 export interface IScheduleFormState {

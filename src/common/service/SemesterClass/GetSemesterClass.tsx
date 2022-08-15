@@ -1,17 +1,18 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemesterCourseAll, initialSemesterCourse, addSemesterCourse } from "../../../store/actions/semester_course.action";
-interface SemesterCourse {
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemesterClassAll, initialSemesterClass, addSemesterClass } from "../../../store/actions/semester_class.action";
+interface SemesterClass {
     id: number;
+    name: string;
     creation_id: number;
     course_id: number;
-    schedule_id: number;
+    max_participant: number;
 }
-export function getSemesterCourse() {
+export function getSemesterClass() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/semester-course?page=0&size=5`, {
+                `${process.env.REACT_APP_API_URL}/semester-class`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -29,21 +30,22 @@ export function getSemesterCourse() {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeSemesterCourseAll())
+                dispatch(removeSemesterClassAll())
                 //console.log(data.body.lessons)
-                data.body.semester_courses.map((ele: any, index: any) => {
-                    var course: SemesterCourse = {
+                data.body.semester_classs.map((ele: any, index: any) => {
+                    var class_ele: SemesterClass = {
                         id: ele.id,
+                        name: ele.name,
                         creation_id: ele.creation_id,
                         course_id: ele.course_id,
-                        schedule_id: ele.schedule_id
+                        max_participant: ele.max_participant
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){
-                        return dispatch(initialSemesterCourse(course));
+                        return dispatch(initialSemesterClass(class_ele));
                     }
                     else{
-                        return dispatch(addSemesterCourse(course))
+                        return dispatch(addSemesterClass(class_ele))
                     }
                 })
             })

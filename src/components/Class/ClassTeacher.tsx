@@ -5,7 +5,6 @@ import { getUserById } from "../../common/service/User/GetUserById";
 import { changeSelectedDoinglClass, clearSelectedDoinglClass, setModificationState } from "../../store/actions/class_teacher.action";
 import { IClassTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { IClassTeacher, ClassTeacherModificationStatus } from "../../store/models/class_teacher.interface";
-import { IUser } from "../../store/models/user.interface";
 import "./ClassTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import ClassDoingList from "./ClassTeachingTeacherList";
@@ -63,8 +62,6 @@ const ClassTeacher: React.FC = () => {
         }
         dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch]);
-
-    let user: IUser = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
 
     function onClassTeacherSelect(class_teacher: IClassTeacher): void {
         dispatch(changeSelectedDoinglClass(class_teacher));

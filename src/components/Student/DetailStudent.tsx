@@ -22,7 +22,7 @@ const DetailStudent: React.FC = () => {
     let user: IUser | null = users.selectedUser;
     console.log(user)
     if (!user || user === null) {
-        user = { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
+        user = { id: 0, username: "", email: "", password: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] };
     }
 
     let parent: IUser | undefined = parents.find((value) => user !== null && value.id === user.id)

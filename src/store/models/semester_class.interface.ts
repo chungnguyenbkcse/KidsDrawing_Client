@@ -1,11 +1,12 @@
-export interface ISemesterCourse {
+export interface ISemesterClass {
     id: number;
+    name: string;
     creation_id: number;
     course_id: number;
-    schedule_id: number;
+    max_participant: number;
 }
 
-export enum SemesterCourseModificationStatus {
+export enum SemesterClassModificationStatus {
     None = 0,
     Create = 1,
     Edit = 2,

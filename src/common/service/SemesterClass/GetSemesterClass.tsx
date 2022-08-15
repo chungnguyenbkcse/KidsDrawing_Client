@@ -3,6 +3,7 @@ interface SemesterClass {
     id: number;
     name: string;
     creation_id: number;
+    semester_name: string;
     course_name: string;
     course_id: number;
     max_participant: number;
@@ -38,6 +39,7 @@ export function getSemesterClass() {
                         id: ele.id,
                         name: ele.name,
                         creation_id: ele.creation_id,
+                        semester_name: ele.semester_name,
                         course_id: ele.course_id,
                         course_name: ele.course_name,
                         max_participant: ele.max_participant

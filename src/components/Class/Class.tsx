@@ -31,6 +31,7 @@ import ClassSemesterForm from "./ClassSemesterForm";
 import { deleteSemesterClass } from "../../common/service/SemesterClass/DeleteSemesterClass";
 import ClassForm from "./ClassForm";
 import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
+import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 type Options = {
     name: string;
     value: any;
@@ -92,12 +93,14 @@ const Class: React.FC = () => {
                     dispatch(getMyClass())
                     dispatch(getSemester())
                     dispatch(getSemesterClass())
+                    dispatch(getSchedule())
                 }
             }
             else {
                 dispatch(getMyClass())
                 dispatch(getSemester())
                 dispatch(getSemesterClass())
+                dispatch(getSchedule())
             }
         }
     }, [dispatch])
@@ -259,7 +262,7 @@ const Class: React.FC = () => {
                                             </div>
                                             <form onSubmit={saveUser}>
                                                 <div className="form-row">
-                                                    <div className="form-group col-md-4">
+                                                    <div className="form-group col-md-6">
                                                         <SelectKeyValueNotField
                                                             value={semesterId}
                                                             id="input_total_page"
@@ -269,7 +272,7 @@ const Class: React.FC = () => {
                                                             options={listSemesters}
                                                         />
                                                     </div>
-                                                    <div className="form-group col-md-4">
+                                                    <div className="form-group col-md-6">
                                                         <label>Ngày nghỉ: </label>
                                                         <DatePicker
                                                             multiple

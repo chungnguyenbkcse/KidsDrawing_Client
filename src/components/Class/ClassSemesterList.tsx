@@ -21,34 +21,28 @@ type Options = {
 
 
 function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
-  const semester_courses: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
-  const history = useHistory();
   const dispatch: Dispatch<any> = useDispatch();
-  console.log(semester_courses.semesterClasses)
+  const semester_courses: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
+  const schedules: IScheduleState = useSelector((state: IStateType) => state.schedules);
+  let schedule_list: Options[] = []
+  console.log(schedules.schedules)
+  if (schedules.schedules.length > 0){
+    semester_courses.semesterClasses.forEach(ele => {
+      let item: string = "";
+      schedules.schedules.forEach(element => {
+        if (element.semester_class_id === ele.id) {
+          console.log(element.lesson_time_name)
+          item += element.lesson_time_name
+        }
+      })
+      return schedule_list.push({
+        name: ele.name,
+        value: item
+      })
+    })
+  }
 
-  const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-  const listCourses: ICourse[] = courses.courses
-  let courseList: string[] = []
-
-  semester_courses.semesterClasses.map((course_item) => {
-    return listCourses.forEach(element => {
-      if (element.id === course_item.course_id) {
-        return courseList.push(element.name)
-      }
-    });
-  })
-
-  const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
-  const listSemesters: ISemester[] = semesters.semesters
-  let semeserList: string[] = []
-
-  semester_courses.semesterClasses.map((course_item) => {
-    return listSemesters.forEach(element => {
-      if (element.id === course_item.creation_id) {
-        return semeserList.push(element.name)
-      }
-    });
-  })
+  console.log(schedule_list)
 
   const courseElements: (JSX.Element | null)[] = semester_courses.semesterClasses.map((semester_course, index) => {
     if (!semester_course) { return null; }
@@ -57,7 +51,8 @@ function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
       <th scope="row">{index + 1}</th>
       <td>{semester_course.name}</td>
       <td>{semester_course.course_name}</td>
-      <td>{semeserList[index]}</td>
+      <td>{semester_course.semester_name}</td>
+      <td>{schedule_list[index].value}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={()=> {
           if(props.onSelect) props.onSelect(semester_course);
@@ -83,6 +78,7 @@ function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
             <th scope="col">Tên lớp</th>
             <th scope="col">Thuộc khóa học</th>
             <th scope="col">Học kì</th>
+            <th scope="col">Lịch học</th>
             <th scope="col">Hành động</th>
             <th scope="col"></th>
           </tr>

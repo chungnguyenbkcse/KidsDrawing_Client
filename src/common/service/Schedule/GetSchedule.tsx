@@ -1,10 +1,10 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
 interface schedule {
     id: number;
-    name: string;
-    create_time: string;
-    update_time: string;
-    creator_id: number;
+    lesson_time: number;
+    lesson_time_name: string;
+    semester_class_id: number;
+    day_of_week: number;
 }
 export function getSchedule() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -12,7 +12,7 @@ export function getSchedule() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/schedule?page=0&size=100`, {
+                `${process.env.REACT_APP_API_URL}/schedule`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -31,13 +31,14 @@ export function getSchedule() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeScheduleAll())
+                console.log(data.body.schedules)
                 data.body.schedules.map((ele: any, index: any) => {
                     var schedule: schedule = {
                         id: ele.id,
-                        name: ele.name,
-                        create_time: ele.create_time,
-                        update_time: ele.update_time,
-                        creator_id: creator_id
+                        lesson_time: ele.lesson_time,
+                        lesson_time_name: ele.lesson_time,
+                        semester_class_id: ele.semester_class_id,
+                        day_of_week: ele.day_of_week
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){

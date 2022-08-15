@@ -1,17 +1,18 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleItemAll, initialScheduleItem, addScheduleItem } from "../../../store/actions/schedule_item.action";
-interface schedule_item {
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
+interface schedule {
     id: number;
-    schedule_id: number;
     lesson_time: number;
-    date_of_week: number;
+    lesson_time_name: string;
+    semester_class_id: number;
+    day_of_week: number;
 }
-export function getByIdScheduleItem(id: any) {
+export function getScheduleBySemesterClass(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    
+    var creator_id: number = Number(localStorage.getItem("id"));
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/schedule_item/${id}`, {
+                `${process.env.REACT_APP_API_URL}/schedule/semester-class/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -29,21 +30,21 @@ export function getByIdScheduleItem(id: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeScheduleItemAll())
-                //console.log(data.body.lessons)
-                data.body.schedule_items.map((ele: any, index: any) => {
-                    var schedule_item: schedule_item = {
+                dispatch(removeScheduleAll())
+                data.body.schedules.map((ele: any, index: any) => {
+                    var schedule: schedule = {
                         id: ele.id,
-                        schedule_id: ele.schedule_id,
                         lesson_time: ele.lesson_time,
-                        date_of_week: ele.date_of_week
+                        lesson_time_name: ele.lesson_time,
+                        semester_class_id: ele.semester_class_id,
+                        day_of_week: ele.day_of_week
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){
-                        return dispatch(initialScheduleItem(schedule_item));
+                        return dispatch(initialSchedule(schedule));
                     }
                     else{
-                        return dispatch(addScheduleItem(schedule_item))
+                        return dispatch(addSchedule(schedule))
                     }
                 })
             })

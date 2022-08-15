@@ -1,9 +1,9 @@
 export interface ISchedule {
     id: number;
-    creator_id: number;
-    name: string;
-    create_time: string;
-    update_time: string;
+    lesson_time: number;
+    lesson_time_name: string;
+    semester_class_id: number;
+    day_of_week: number;
 }
 
 export enum ScheduleModificationStatus {

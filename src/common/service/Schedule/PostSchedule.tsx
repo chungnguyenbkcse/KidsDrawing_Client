@@ -1,6 +1,5 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedule.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postScheduleItem } from "../ScheduleItem/PostScheduleItem";
 import { getSchedule } from "./GetSchedule";
 
 export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any) {
@@ -34,18 +33,6 @@ export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any
             .then (data => {
                 console.log(data)
                 dispatch(getSchedule())
-                for (let idx = 0; idx < date_of_weeks.length; idx++) {
-                    for (let index = 0; index < lesson_times.length; index++) {
-                        if (date_of_weeks[idx].key === lesson_times[index].key){
-                            dispatch(postScheduleItem({
-                                schedule_id: data.id,
-                                lesson_time: lesson_times[index].value,
-                                date_of_week: date_of_weeks[idx].value
-                            }))
-                            break
-                        }
-                    }
-                }
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

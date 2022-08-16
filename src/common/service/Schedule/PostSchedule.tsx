@@ -2,7 +2,7 @@ import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedul
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getSchedule } from "./GetSchedule";
 
-export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any) {
+export function postSchedule(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -22,7 +22,7 @@ export function postSchedule(date_of_weeks: any[], lesson_times: any[],data: any
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSchedule(date_of_weeks, lesson_times, data))
+                        dispatch(postSchedule(data))
                     }
                     else {
                         throw Error(response.statusText);

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, Dispatch, Fragment } from "react";
+import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
 import { IStateType, ISemesterClassState, ISemesterState, ILessonState, IScheduleState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISemesterClass, SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
@@ -29,6 +29,17 @@ type LessonTime = {
   value: number;
 }
 
+type ScheduleType = {
+  lesson_time: number;
+  date_of_week: number;
+}
+
+type Option1s = {
+  key: number;
+  value: number;
+}
+
+
 function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const semester_classes: ISemesterClassState | null = useSelector((state: IStateType) => state.semester_classes);
@@ -55,12 +66,12 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   })
 
   const schedules: IScheduleState = useSelector((state: IStateType) => state.schedules);
-  let schedule_list: LessonTime[] = []
+  let lesson_time_list: LessonTime[] = []
   console.log(schedules.schedules)
-  if (semester_class_id !== 0){
+  if (semester_class_id !== 0) {
     schedules.schedules.forEach(element => {
       if (element.semester_class_id === semester_class_id) {
-        schedule_list.push({
+        lesson_time_list.push({
           key: element.date_of_week,
           value: element.lesson_time
         })
@@ -68,7 +79,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
     })
   }
 
-  console.log(schedule_list)
+  console.log(lesson_time_list)
 
 
 
@@ -108,6 +119,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   })
 
   let total = schedules.schedules.filter((value) => value.semester_class_id === semester_class_id).length
+  let schedule_list = schedules.schedules.filter((value) => value.semester_class_id === semester_class_id)
 
   const [formState, setFormState] = useState({
     creation_id: { error: "", value: semester_classe.creation_id },
@@ -135,14 +147,24 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
 
   function saveForm(formState: ISemesterClassFormState, saveFn: Function): void {
     if (semester_classe) {
+      let lesson_times: Option1s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
+      let date_of_weeks: Option1s[] = listScheduleItemId.filter((value, index) => value.key < formState.total_date_of_week.value)
+      let schedule_element: ScheduleType[] = [];
+      lesson_times.map((ele, idx) => {
+        return schedule_element.push({
+          lesson_time: ele.value,
+          date_of_week: date_of_weeks[idx].value
+        })
+      })
 
+      console.log(schedule_element)
       if (saveFn === addSemesterClass) {
         dispatch(postSemesterClass({
           creation_id: formState.creation_id.value,
           name: formState.name.value,
           max_participant: formState.max_participant.value,
           course_id: formState.course_id.value
-        }))
+        }, schedule_element))
       }
 
       else if (saveFn === editSemesterClass) {
@@ -157,6 +179,9 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
       dispatch(addNotification("Mở lớp đăng kí theo kì ", `chỉnh bởi bạn`));
       dispatch(clearSelectedSemesterClass());
       dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.None));
+
+
+
     }
   }
 
@@ -175,6 +200,81 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
       || formState.course_id.error || !formState.creation_id.value || !formState.course_id.value
       || !formState.name.value || !formState.max_participant.value) as boolean;
   }
+  const [listScheduleItemId, setListScheduleItemId] = useState<Option1s[]>([])
+  const [listLessonId, setListLessonId] = useState<Option1s[]>([])
+  useEffect(() => {
+    let res_1: Option1s[] = []
+    if (total > 0) {
+      for (let index = 0; index < total; index++) {
+        let date_of_week_obj: Option1s = {
+          key: index,
+          value: schedule_list[index].date_of_week
+        }
+        let lesson_time_obj: Option1s = {
+          key: index,
+          value: schedule_list[index].lesson_time
+        }
+        res_1.push(date_of_week_obj)
+        listScheduleItemId.push(date_of_week_obj)
+        listLessonId.push(lesson_time_obj)
+        //console.log(listScheduleItemId)
+        //setListScheduleItemId([...listScheduleItemId, date_of_week_obj])
+        //setListLessonId([...listLessonId, lesson_time_obj])
+      }
+    }
+    setListScheduleItemId([...listScheduleItemId])
+    setListLessonId([...listLessonId])
+
+  }, [total])
+  function hasFormMutipleValueChanged1(value: number, index: number) {
+    if (listScheduleItemId.length === 0) {
+      setListScheduleItemId([...listScheduleItemId, { "key": index, "value": value }])
+    }
+    else {
+      let is_check = false
+      for (let idx = 0; idx < listScheduleItemId.length; idx++) {
+        if (listScheduleItemId[idx].key === index) {
+          if (listScheduleItemId[idx].value !== value) {
+            is_check = true
+            setListScheduleItemId([...listScheduleItemId.filter((item, idx) => item.key !== index), { "key": index, "value": value }])
+          }
+          break
+        }
+
+      }
+
+      if (is_check === false) {
+        setListScheduleItemId([...listScheduleItemId, { "key": index, "value": value }])
+      }
+    }
+  }
+
+  console.log(listScheduleItemId)
+
+  function hasFormMutipleValueChanged2(value: number, index: number) {
+    if (listLessonId.length === 0) {
+      setListLessonId([...listLessonId, { "key": index, "value": value }])
+    }
+    else {
+      let is_check = false
+      for (let idx = 0; idx < listLessonId.length; idx++) {
+        if (listLessonId[idx].key === index) {
+          if (listLessonId[idx].value !== value) {
+            is_check = true
+            setListLessonId([...listLessonId.filter((item, idx) => item.key !== index), { "key": index, "value": value }])
+          }
+          break
+        }
+
+      }
+
+      if (is_check === false) {
+        setListLessonId([...listLessonId, { "key": index, "value": value }])
+      }
+    }
+  }
+
+  console.log(listLessonId)
 
 
   return (
@@ -204,7 +304,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
                       value={formState.max_participant.value}
                       field="max_participant"
                       onChange={hasFormValueChanged}
-                      max={10000000}
+                      max={1000}
                       min={0}
                       label="Đăng kí tối đa"
                     />
@@ -235,16 +335,16 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
 
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                  <NumberInput id="input_total_date_of_week"
-                    value={formState.total_date_of_week.value}
-                    field="total_date_of_week"
-                    onChange={hasFormValueChanged}
-                    max={3}
-                    min={0}
-                    label="Tổng số ngày học trong tuần"
-                  />
+                    <NumberInput id="input_total_date_of_week"
+                      value={formState.total_date_of_week.value}
+                      field="total_date_of_week"
+                      onChange={hasFormValueChanged}
+                      max={3}
+                      min={0}
+                      label="Tổng số ngày học trong tuần"
+                    />
+                  </div>
                 </div>
-              </div>
 
                 {
                   Array.from(Array(formState.total_date_of_week.value).keys()).map((value, index) => {
@@ -252,10 +352,10 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
                       <div className="form-row" key={index}>
                         <div className="form-group col-md-6">
                           <SelectKeyValueMutiple
-                            value={isCreate ? 0 : schedule_list[index].key}
+                            value={isCreate ? 0 : lesson_time_list[index].key}
                             index={index}
                             inputClass={`schedule_item_date_of_week_${index}`}
-                            onChange={() => { }}
+                            onChange={hasFormMutipleValueChanged1}
                             required={true}
                             label="Thứ trong tuần"
                             options={list_date_of_week}
@@ -263,10 +363,10 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
                         </div>
                         <div className="form-group col-md-6">
                           <SelectKeyValueMutiple
-                            value={isCreate ? 0 : schedule_list[index].value}
+                            value={isCreate ? 0 : lesson_time_list[index].value}
                             inputClass={`schedule_item_lesson_time_${index}`}
                             index={index}
-                            onChange={() => { }}
+                            onChange={hasFormMutipleValueChanged2}
                             required={true}
                             label="Tiết"
                             options={list_lessons}

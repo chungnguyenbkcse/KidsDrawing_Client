@@ -113,6 +113,7 @@ export interface ISemesterClassFormState {
     course_id: IFormStateField<number>;
     max_participant: IFormStateField<number>;
     name: IFormStateField<string>;
+    total_date_of_week: IFormStateField<number>;
 }
 
 export interface IScheduleFormState {

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISemesterClassState, ISemesterState, ILessonState, IScheduleState } from "../../store/models/root.interface";
+import { IStateType, ISemesterClassState, ISemesterState, ILessonState, IScheduleState, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISemesterClass, SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
 import { editSemesterClass, clearSelectedSemesterClass, setModificationStateSemesterClass, addSemesterClass } from "../../store/actions/semester_class.action"
@@ -43,6 +43,8 @@ type Option1s = {
 function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const semester_classes: ISemesterClassState | null = useSelector((state: IStateType) => state.semester_classes);
+  const semesters: ISemesterState | null = useSelector((state: IStateType) => state.semesters);
+  const courses: ICourseState | null = useSelector((state: IStateType) => state.courses);
   let semester_classe: ISemesterClass | null = semester_classes.selectedSemesterClass;
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
   let semester_class_id: number = 0;
@@ -54,14 +56,14 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   }
 
   const listSemesters: Options[] = [];
-  semester_classes.semesterClasses.map((ele) => {
-    let item: Options = { "name": ele.semester_name, "value": ele.creation_id }
+  semesters.semesters.map((ele) => {
+    let item: Options = { "name": ele.name, "value": ele.id }
     return listSemesters.push(item)
   })
 
   const listCourses: Options[] = [];
-  semester_classes.semesterClasses.map((ele) => {
-    let item: Options = { "name": ele.course_name, "value": ele.course_id }
+  courses.courses.map((ele) => {
+    let item: Options = { "name": ele.name, "value": ele.id }
     return listCourses.push(item)
   })
 

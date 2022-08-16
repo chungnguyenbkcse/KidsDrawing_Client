@@ -4,6 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseTeacher {
     id: number;
     name: string;
+    course_name: string;
     course_id: number;
     semester_course_id: number;
     description: string;
@@ -54,6 +55,7 @@ export function getCourseTeacher(id: any) {
                     var course: CourseTeacher = {
                         id: index,
                         name: ele.name,
+                        course_name: ele.course_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
                         semester_course_id: ele.semester_course_id,
@@ -82,6 +84,7 @@ export function getCourseTeacher(id: any) {
                     var course: CourseTeacher = {
                         id: index,
                         name: ele.name,
+                        course_name: ele.course_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
                         semester_course_id: ele.semester_course_id,

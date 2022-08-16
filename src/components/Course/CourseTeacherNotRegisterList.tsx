@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import TopCardCourse from "../../common/components/TopCardCourse";
 import { ICourseTeacherState, IStateType } from "../../store/models/root.interface";
@@ -14,9 +14,10 @@ function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListPr
 
     const teacherRegisterQuantificationElements: (JSX.Element | null)[] = course_teachers.not_register_courses.map((ele, index) => {
         if (!ele) { return null; }
-        return (<tr className={`table-row`} key={`semester_course_${index}`}>
+        return (
             <TopCardCourse 
-              course_name={ele.name} 
+              name={ele.name} 
+              course_name={ele.course_name} 
               icon="book" 
               class="primary" 
               url_image={ele.image_url}
@@ -32,23 +33,14 @@ function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListPr
               price={ele.price}
               registration_deadline={ele.registration_deadline}
             />
-        </tr>
         );
     });
 
 
     return (
-        <div className="table-responsive portlet">
-      <table className="table">
-        <thead className="thead-light">
-          <tr>
-          </tr>
-        </thead>
-        <tbody>
+        <Fragment>
           {teacherRegisterQuantificationElements}
-        </tbody>
-      </table>
-    </div>
+        </Fragment>
     );
 }
 

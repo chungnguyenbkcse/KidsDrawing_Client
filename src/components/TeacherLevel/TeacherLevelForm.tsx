@@ -174,7 +174,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
                 </div>
                 <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="profile_image">Chọn ảnh:</label>
+                                    <label htmlFor="profile_image">Băng cấp (Chấp nhận: jpg, svg, png):</label>
                                     <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
                                 </div>
                                 <div className="form-group col-md-6">

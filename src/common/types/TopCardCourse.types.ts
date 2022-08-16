@@ -2,6 +2,7 @@ export interface ICardProperties {
     url_image: string;
     schedule: string;
     course_name: string;
+    name: string;
     semester_name: string;
     art_type_name: string;
     price: number;

@@ -33,6 +33,7 @@ import ClassForm from "./ClassForm";
 import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
 import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 import { getLesson } from "../../common/service/Lesson/GetLesson";
+import { getCourse } from "../../common/service/Course/GetCourse";
 type Options = {
     name: string;
     value: any;
@@ -96,6 +97,7 @@ const Class: React.FC = () => {
                     dispatch(getSemesterClass())
                     dispatch(getSchedule())
                     dispatch(getLesson())
+                    dispatch(getCourse())
                 }
             }
             else {
@@ -104,6 +106,7 @@ const Class: React.FC = () => {
                 dispatch(getSemesterClass())
                 dispatch(getSchedule())
                 dispatch(getLesson())
+                dispatch(getCourse())
             }
         }
     }, [dispatch])

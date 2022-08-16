@@ -12,6 +12,8 @@ import ClassDoneList from "./ClassDoneTeacherList";
 import { getClassTeacher } from "../../common/service/ClassTeacher/GetClassTeacher";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { getCourse } from "../../common/service/Course/GetCourse";
+import { getSemester } from "../../common/service/semester/GetSemester";
 
 const ClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -52,12 +54,16 @@ const ClassTeacher: React.FC = () => {
                     dispatch(clearSelectedDoinglClass());
                     dispatch(getUserById(id))
                     dispatch(getClassTeacher(id))
+                    dispatch(getCourse())
+                    dispatch(getSemester())
                 }
             }
             else {
                 dispatch(clearSelectedDoinglClass());
                 dispatch(getUserById(id))
                 dispatch(getClassTeacher(id))
+                dispatch(getCourse())
+                dispatch(getSemester())
             }
         }
         dispatch(updateCurrentPath("Khóa học", ""));

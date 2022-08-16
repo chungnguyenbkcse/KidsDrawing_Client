@@ -61,7 +61,7 @@ const CourseTeacher: React.FC = () => {
             }
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
-        dispatch(updateCurrentPath("Khóa học", ""));
+        dispatch(updateCurrentPath("Lớp theo kì", ""));
     }, [path.area, dispatch]);
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {

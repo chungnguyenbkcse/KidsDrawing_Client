@@ -43,7 +43,7 @@ function courseTeachersReducer(state: ICourseTeacherState = initialState, action
             return { ...state, not_register_courses : [...state.not_register_courses, action.course]};
         }
         case ADD_NOT_REGISTER_COURSE: {
-            return { ...state, register_successfull_courses: [...state.register_successfull_courses, action.course]};
+            return { ...state, not_register_courses: [...state.not_register_courses, action.course]};
         }
         case EDIT_NOT_REGISTER_COURSE: {
             const foundIndex: number = state.not_register_courses.findIndex(pr => pr.id === action.course.id);

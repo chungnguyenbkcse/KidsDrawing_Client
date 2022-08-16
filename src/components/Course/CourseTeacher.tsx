@@ -20,6 +20,7 @@ const CourseTeacher: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberTeacherRegisterSuccessfullCount: number = course_teachers.register_successfull_courses.length;
     const numberTeacherNotRegisterCount: number = course_teachers.register_successfull_courses.length;
+    console.log(course_teachers)
     const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;

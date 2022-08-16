@@ -50,7 +50,7 @@ export function getCourseTeacher(id: any) {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeNotRegisterCourseAll())
                 dispatch(removeRegisterSuccessfullCourseAll())
-                //console.log(data.body.Courses)
+                console.log(data.body.register_successfull_courses.length)
                 data.body.register_successfull_courses.map((ele: any, index: any) => {
                     var course: CourseTeacher = {
                         id: index,
@@ -80,6 +80,7 @@ export function getCourseTeacher(id: any) {
                     }
                 })
 
+                console.log(data.body.not_register_courses.length)
                 data.body.not_register_courses.map((ele: any, index: any) => {
                     var course: CourseTeacher = {
                         id: index,

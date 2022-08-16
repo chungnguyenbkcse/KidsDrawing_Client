@@ -12,6 +12,10 @@
     border-radius: 50px !important;
 }
 
+.logout-btn {
+    cursor: pointer;
+}
+
 #teacher_breadcrumb {
     background-color: #ffffff !important;
     border-radius: 50px !important;

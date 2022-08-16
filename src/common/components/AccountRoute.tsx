@@ -21,7 +21,7 @@ export function AccountRoute({ children, ...rest }: RouteProps): JSX.Element {
                     />
                 ) : <Redirect
                 to={{
-                    pathname: "/aut"
+                    pathname: "/auth"
                 }}
             />
             }

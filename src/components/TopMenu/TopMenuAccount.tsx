@@ -44,7 +44,7 @@ function TopMenuAccount(): JSX.Element {
           <i className="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
           Thay đổi mật khẩu
         </a>
-        <p className="dropdown-item"
+        <p className="dropdown-item logout-btn"
         onClick={() => {
           localStorage.removeItem('access_token') // Authorization
           localStorage.removeItem('refresh_token')

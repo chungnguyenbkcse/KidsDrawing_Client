@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { IStateType } from "../../store/models/root.interface";
 import Login from "../../components/Account/Login";
+import { Redirect } from "react-router-dom";
 
 
 export function PrivateRoute({ children, ...rest }: RouteProps): JSX.Element {
@@ -15,7 +16,11 @@ export function PrivateRoute({ children, ...rest }: RouteProps): JSX.Element {
             render={() =>
                 localStorage.getItem('username') ? (
                     children
-                ) : <Login/>
+                ) : <Redirect
+                to={{
+                    pathname: "/auth"
+                }}
+            />
             }
         />
     );

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, Dispatch } from "react";
+import React, { useState, FormEvent, Dispatch, useEffect } from "react";
 import { OnChangeModel } from "../../common/types/Form.types";
 import { useDispatch } from "react-redux";
 import TextInput from "../../common/components/TextInput";
@@ -10,16 +10,17 @@ import { useHistory } from "react-router-dom";
 
 const Login: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
+  const history = useHistory()
 
   const [formState, setFormState] = useState({
     username: { error: "", value: "" },
     password: { error: "", value: "" }
   });
 
-  function notify() {
-    toast.success("Đăng nhập thành công!", {
-      position: toast.POSITION.TOP_CENTER
-    });
+  function changeRouteHome(value: boolean) {
+    if (value == true){
+      history.push('/')
+    }
   }
 
   function hasFormValueChanged(model: OnChangeModel): void {
@@ -29,8 +30,7 @@ const Login: React.FC = () => {
   function submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if(isFormInvalid()) { return; }
-    dispatch(postAut(formState.username.value, formState.password.value))
-    notify()
+    dispatch(postAut(formState.username.value, formState.password.value, changeRouteHome))
   }
 
   function isFormInvalid() {
@@ -43,7 +43,6 @@ const Login: React.FC = () => {
     return isError ? "disabled" : "";
   }
 
-  const history = useHistory()
   const changeRoute = () => {
     history.push('/landing-page')
   }

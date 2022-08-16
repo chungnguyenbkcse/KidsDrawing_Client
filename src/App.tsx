@@ -15,10 +15,10 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <Route path="/landing-page"><LandingPage /></Route>
+          <Route path="/auth"><Login /></Route>
           <PrivateRoute path="/">
             <Routers />
           </PrivateRoute>
-          <AccountRoute path="/login"><Login /></AccountRoute>
           {/* <Route path={`/aut`}><Login /></Route>
           <Route path={`/landing-page`}><LandingPage /></Route>
           <Route path={`/`}><Routers /></Route>

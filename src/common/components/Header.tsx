@@ -5,7 +5,7 @@ import '../../assets/css/Header.css'
 const Header: React.FC = () => {
     let history = useHistory()
     function handlerStart() {
-        history.push('/aut')
+        history.push('/auth')
     }
     return (
         <div className="header">

@@ -36,6 +36,7 @@ function NumberInput(props: NumberInputProps): JSX.Element {
             <input
                 value={props.value}
                 type="number"
+                max={props.max}
                 onChange={onValueChanged}
                 className={`form-control ${props.inputClass} ${htmlClass}`}
                 id={`id_${props.label}`}/>

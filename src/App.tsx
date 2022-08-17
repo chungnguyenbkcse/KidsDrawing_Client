@@ -9,7 +9,24 @@ import { AccountRoute } from "./common/components/AccountRoute";
 import Routers from "./Routers/Routers";
 import LandingPage from "./components/LandingPage/LandingPage";
 
+import firebase from "./firebase";
+
+
 const App: React.FC = () => {
+  // Handle incoming messages. Called when:
+// - a message is received while the app has focus
+// - the user clicks on an app notification created by a service worker
+//   `messaging.onBackgroundMessage` handler.
+
+React.useEffect(()=>{
+  const msg=firebase.messaging();
+  msg.requestPermission().then(()=>{
+    return msg.getToken({vapidKey: "BFGgI654DXnQc4a5KvcZqfSZaq-f3828-2z2839DCR52BpWlAA9eACK5QrSIrFNf-DcEsP75PCUB74aGLRn3znc"});
+  }).then((data: any)=>{
+    console.warn("token",data)
+  })
+})
+
   return (
     <div className="App" id="wrapper">
       <Router>

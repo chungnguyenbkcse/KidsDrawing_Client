@@ -25,6 +25,10 @@ React.useEffect(()=>{
   }).then((data: any)=>{
     console.warn("token",data)
   })
+
+  msg.onMessage(res => {
+    console.log(res)
+  })
 })
 
   return (

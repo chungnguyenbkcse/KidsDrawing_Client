@@ -49,7 +49,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 localStorage.setItem('id', decoded.id)
                 dispatch(login(username));
                 dispatch(putStatusUser(localStorage.getItem('id'), {
-                    status: localStorage.getItem('token_divice')
+                    status: localStorage.getItem('token_device')
                 }))
                 notify_success();
                 setTimeout(function () {

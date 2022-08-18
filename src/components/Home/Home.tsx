@@ -97,6 +97,15 @@ const Home: React.FC = () => {
         <TopCard title="PHỤ HUYNH" text={`${numberParentsCount}`} icon="user" class="danger" />
       </div>
 
+      <div className="row">
+        <div className="col-xl-6 col-md-4 mb-4">
+            <button className="btn btn-success btn-green">
+                <i className="fas fa fa-plus"></i>
+                Gửi thông báo
+            </button>
+        </div>
+      </div>
+
       {/* <div className="row">
         <div className="col-xl-12 col-lg-12">
           <ChartBar />

@@ -1,6 +1,7 @@
 import jwt_decode from "jwt-decode";
 import { login } from "../../../store/actions/account.actions";
 import { ToastContainer, toast } from 'react-toastify';
+import { putStatusUser } from "../User/UpdateStatusUser";
 
 export function postAut(username: string, password: string, changeRouteHome: any) {
     function notify_success() {
@@ -47,6 +48,9 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 localStorage.setItem('role_privilege', decoded.role_privilege)
                 localStorage.setItem('id', decoded.id)
                 dispatch(login(username));
+                dispatch(putStatusUser(localStorage.getItem('id'), {
+                    status: localStorage.getItem('token_divice')
+                }))
                 notify_success();
                 setTimeout(function () {
                     changeRouteHome(true);

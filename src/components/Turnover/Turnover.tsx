@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useEffect } from "react";
+import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
@@ -19,6 +19,10 @@ const Turnover: React.FC = () => {
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Doanh thu", ""));
+
+  const [checked1, setChecked1] = useState(true);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
 
   let access_token = localStorage.getItem("access_token");
   let refresh_token = localStorage.getItem("refresh_token");
@@ -60,20 +64,102 @@ const Turnover: React.FC = () => {
     }
   }, [dispatch])
 
+  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septempber', 'October', 'November', 'December'];
+
+const data = {
+    labels,
+    datasets: [
+        {
+            label: 'Dataset 1',
+            data: [1,2,3,4,5],
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        },
+        {
+            label: 'Dataset 2',
+            data: [2,3,4,5,6],
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        },
+    ],
+};
+
 
 
   return (
     <Fragment>
-      <h1 className="h3 mb-2 text-gray-800">Doanh thu</h1>
+      <h1 className="h3 mb-2 text-gray-800">Phân tích</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
       <div className="row">
         <TopCard title="DOANH THU" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
+        <TopCard title="KHÓA HỌC" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
+        <TopCard title="CUỘC THI" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
+        <TopCard title="NGƯỜI DÙNG MỚI" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
       </div>
 
       <div className="row">
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                        if (checked1 === false) {
+                            setChecked1(true)
+                            setChecked2(false)
+                            setChecked3(false)
+                        }
+                    }} style={{
+                        color: checked1 ? "#F24E1E" : "#2F4F4F"
+                    }}>Doanh thu</h6>
+
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+                    }}></div>
+                </div>
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked2 === false) {
+                            setChecked2(true)
+                            setChecked1(false)
+                            setChecked3(false)
+                        }
+                    }}
+                        style={{
+                            color: checked2 ? "#F24E1E" : "#2F4F4F"
+                        }}>Khóa học</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                    }}></div>
+                </div>
+
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked3 === false) {
+                            setChecked3(true)
+                            setChecked1(false)
+                            setChecked2(false)
+                        }
+                    }}
+                        style={{
+                            color: checked3 ? "#F24E1E" : "#2F4F4F"
+                        }}>Người dùng</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                    }}></div>
+                </div>
+            </div>
+
+      <div className="row">
         <div className="col-xl-12 col-lg-12">
-          <ChartBar />
+          <ChartBar data={data}/>
         </div>
       </div>
 

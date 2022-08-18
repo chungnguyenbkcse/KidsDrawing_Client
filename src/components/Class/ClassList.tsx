@@ -74,7 +74,7 @@ const routeViewSchedule = (class_id: number) =>{
         <thead className="thead-light">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Mã lớp học</th>
+            <th scope="col">Tên lớp</th>
             <th scope="col">Lịch học</th>
             <th scope="col">Hành động</th>
             <th scope="col"></th>

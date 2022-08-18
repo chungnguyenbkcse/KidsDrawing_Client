@@ -139,7 +139,7 @@ const LeftMenu: React.FC = () => {
                     <li className="nav-item">
                         <Link className="nav-link" to={`/turnovers`}>
                             <BsCashCoin />
-                            <span> Doanh thu</span>
+                            <span> Phân tích</span>
                         </Link>
                     </li>
     

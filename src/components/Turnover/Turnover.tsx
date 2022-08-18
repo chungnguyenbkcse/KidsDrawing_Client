@@ -12,6 +12,8 @@ import { getStudent } from "../../common/service/Student/GetStudent";
 import { getParent } from "../../common/service/Parent/GetParent";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import CourseAnalytis from "./CourseAnalytis";
+import UserAnalytis from "./UserAnalytis";
 
 const Turnover: React.FC = () => {
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
@@ -66,21 +68,21 @@ const Turnover: React.FC = () => {
 
   const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septempber', 'October', 'November', 'December'];
 
-const data = {
+  const data = {
     labels,
     datasets: [
-        {
-            label: 'Dataset 1',
-            data: [1,2,3,4,5],
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-        {
-            label: 'Dataset 2',
-            data: [2,3,4,5,6],
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        },
+      {
+        label: 'Dataset 1',
+        data: [1, 2, 3, 4, 5],
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Dataset 2',
+        data: [2, 3, 4, 5, 6],
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
     ],
-};
+  };
 
 
 
@@ -97,87 +99,139 @@ const data = {
       </div>
 
       <div className="row">
-                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked1 === false) {
-                            setChecked1(true)
-                            setChecked2(false)
-                            setChecked3(false)
-                        }
-                    }} style={{
-                        color: checked1 ? "#F24E1E" : "#2F4F4F"
-                    }}>Doanh thu</h6>
+        <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+          <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+            if (checked1 === false) {
+              setChecked1(true)
+              setChecked2(false)
+              setChecked3(false)
+            }
+          }} style={{
+            color: checked1 ? "#F24E1E" : "#2F4F4F"
+          }}>Doanh thu</h6>
 
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
-                    }}></div>
-                </div>
-                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked2 === false) {
-                            setChecked2(true)
-                            setChecked1(false)
-                            setChecked3(false)
-                        }
-                    }}
-                        style={{
-                            color: checked2 ? "#F24E1E" : "#2F4F4F"
-                        }}>Khóa học</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
-                    }}></div>
-                </div>
+          <div style={{
+            height: "5px",
+            textAlign: "center",
+            margin: "auto",
+            width: "30%",
+            backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+          }}></div>
+        </div>
+        <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+          <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+            if (checked2 === false) {
+              setChecked2(true)
+              setChecked1(false)
+              setChecked3(false)
+            }
+          }}
+            style={{
+              color: checked2 ? "#F24E1E" : "#2F4F4F"
+            }}>Khóa học</h6>
+          <div style={{
+            height: "5px",
+            textAlign: "center",
+            margin: "auto",
+            width: "30%",
+            backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+          }}></div>
+        </div>
 
-                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked3 === false) {
-                            setChecked3(true)
-                            setChecked1(false)
-                            setChecked2(false)
-                        }
-                    }}
-                        style={{
-                            color: checked3 ? "#F24E1E" : "#2F4F4F"
-                        }}>Người dùng</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
-                    }}></div>
-                </div>
-            </div>
-
-      <div className="row">
-        <div className="col-xl-12 col-lg-12">
-          <ChartBar data={data}/>
+        <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+          <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+            if (checked3 === false) {
+              setChecked3(true)
+              setChecked1(false)
+              setChecked2(false)
+            }
+          }}
+            style={{
+              color: checked3 ? "#F24E1E" : "#2F4F4F"
+            }}>Người dùng</h6>
+          <div style={{
+            height: "5px",
+            textAlign: "center",
+            margin: "auto",
+            width: "30%",
+            backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+          }}></div>
         </div>
       </div>
 
-      <div className="row">
+      {
+        function () {
+          if (checked1 === true) {
+            return (
+              <Fragment>
+                <div className="row">
+                  <div className="col-xl-12 col-lg-12">
+                    <ChartBar data={data} />
+                  </div>
+                </div>
 
-        <div className="col-xl-12 col-lg-12">
-          <div className="card shadow mb-4">
-            <div className="card-header py-3">
-              <h6 className="m-0 font-weight-bold text-green">Danh sách giao dịch</h6>
-            </div>
-            <div className="card-body">
-              <TurnoverList />
-            </div>
-          </div>
+                <div className="row">
 
-        </div>
+                  <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                      <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-green">Danh sách giao dịch</h6>
+                      </div>
+                      <div className="card-body">
+                        <TurnoverList />
+                      </div>
+                    </div>
 
-      </div>
+                  </div>
+
+                </div>
+              </Fragment>
+            )
+          }
+          else if (checked2 === true) {
+            return (
+              <Fragment>
+                <div className="row">
+
+                  <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                      <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-green">Phân tích khóa học</h6>
+                      </div>
+                      <div className="card-body">
+                        <CourseAnalytis />
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </Fragment>
+            )
+          }
+          else {
+            return (
+              <Fragment>
+                <div className="row">
+
+                  <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                      <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-green">Phân tích giáo viên</h6>
+                      </div>
+                      <div className="card-body">
+                        <UserAnalytis />
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </Fragment>
+            )
+          }
+        }()
+      }
 
     </Fragment>
   );

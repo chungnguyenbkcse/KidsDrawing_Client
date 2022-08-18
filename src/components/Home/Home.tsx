@@ -1,8 +1,8 @@
-import React, { Fragment, Dispatch, useEffect } from "react";
+import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IContestState, ICourseState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IContestState, ICourseState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
 import { IOrder } from "../../store/models/order.interface";
 import { ChartBar } from "../../common/components/ChartBar";
 //import CourseMaxSign from "./CourseMaxSign";
@@ -16,16 +16,31 @@ import { getParent } from "../../common/service/Parent/GetParent";
 import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
+import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
+import NotificationForm from "./NotificationForm";
+import Popup from "reactjs-popup";
 
 const Home: React.FC = () => {
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
   const totalCourseAmount: number = courses.courses.length;
+
+  const [popup1, setPopup1] = useState(false);
+
+  function onAnonymousNotificationRemove() {
+    setPopup1(true);
+  }
+
+  function onRemovePopup1(value: boolean) {
+    setPopup1(false);
+  }
 
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
   const totalPrice: number = userRegisterJoinSemesters.userRegisterJoinSemesters.reduce((prev, next) => prev + ((next.price) || 0), 0);
   //const numberItemsCount: number =courses.courses.length;
   //const totalPrice: number =courses.courses.reduce((prev, next) => prev + ((next.price * next.amount) || 0), 0);
   const contests: IContestState = useSelector((state: IStateType) => state.contests);
+  const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
   const totalContestAmount: number = contests.contests.length;
 
   const users: IUserState = useSelector((state: IStateType) => state.users);
@@ -99,12 +114,34 @@ const Home: React.FC = () => {
 
       <div className="row">
         <div className="col-xl-6 col-md-4 mb-4">
-            <button className="btn btn-success btn-green">
+            <button 
+              className="btn btn-success btn-green" 
+              onClick={() => {
+                dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Create))
+                onAnonymousNotificationRemove()
+              }}
+            >
                 <i className="fas fa fa-plus"></i>
                 Gửi thông báo
             </button>
         </div>
       </div>
+
+      <Popup
+        open={popup1}
+        onClose={() => setPopup1(false)}
+        closeOnDocumentClick
+      >
+        <>
+          {
+            function () {
+              if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
+                return <NotificationForm isCheck={onRemovePopup1} />
+              }
+            }()
+          }
+        </>
+      </Popup>
 
       {/* <div className="row">
         <div className="col-xl-12 col-lg-12">

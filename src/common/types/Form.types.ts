@@ -116,6 +116,12 @@ export interface ISemesterClassFormState {
     total_date_of_week: IFormStateField<number>;
 }
 
+export interface IAnonymousNotificationFormState {
+    name: IFormStateField<string>;
+    description: IFormStateField<string>;
+    type_send: IFormStateField<string>;
+}
+
 export interface IScheduleFormState {
     creator_id: IFormStateField<number>;
     name: IFormStateField<string>;

@@ -38,6 +38,7 @@
                 })
                 .then(function (token) {
                     console.log("Token : " + token);
+                    localStorage.setItem("token_divice", token);
                     //document.getElementById("token").innerHTML = token;
                 })
                 .catch(function (reason) {

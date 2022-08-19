@@ -16,6 +16,7 @@ const TeacherHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
+    console.log(users.teachers)
     console.log(teacherRegisterQuantifications)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
@@ -107,7 +108,7 @@ const TeacherHome: React.FC = () => {
                                     <i className={`fas fa-user fa-10x`} id="icon-user"></i>
                                 </div>
                                 <div className="row no-gutters justify-content-center">
-                                    <h4 id="full-name">{users.teachers.length === 0 ? "" : (users.teachers[0].firstName + users.teachers[0].lastName)}</h4>
+                                    <h4 id="full-name">{users.teachers.length === 0 ? "" : (users.teachers[0].firstName + " "+ users.teachers[0].lastName)}</h4>
                                 </div>
                                 <div className="row no-gutters justify-content-center">
                                     <p id="username-teacher">{users.teachers.length === 0 ? "" : users.teachers[0].username}</p>

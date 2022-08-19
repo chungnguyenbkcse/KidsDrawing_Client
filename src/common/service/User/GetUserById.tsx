@@ -68,7 +68,6 @@ export function getUserById(id: any) {
                 }
                     //console.log(strDate.substring(0, 16))
                 dispatch(initialTeacher(user));
-                dispatch(getTeacher())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

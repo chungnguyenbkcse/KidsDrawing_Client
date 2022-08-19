@@ -48,9 +48,41 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 localStorage.setItem('role_privilege', decoded.role_privilege)
                 localStorage.setItem('id', decoded.id)
                 dispatch(login(username));
-                dispatch(putStatusUser(localStorage.getItem('id'), {
-                    status: localStorage.getItem('token_device')
-                }))
+                let openRequest = indexedDB.open("firebase-messaging-database", 1);
+                openRequest.onerror = function() {
+                    console.error("Error", openRequest.error);
+                };
+                
+                openRequest.onsuccess = function() {
+                    let db = openRequest.result;
+                    db.onversionchange = function() {
+                        db.close();
+                        alert("Database is outdated, please reload the page.")
+                    };
+                    // continue working with database using db object
+                    console.log(db)
+                    const txn = db.transaction('firebase-messaging-store', 'readwrite');
+                    const store = txn.objectStore('firebase-messaging-store');
+
+                    let query = store.getAll();
+
+                    query.onerror = function() {
+                        console.error("Error", openRequest.error);
+                    };
+
+                    query.onsuccess = (event: any) => {
+                        if (!event.target.result) {
+                            console.log(`The firebase device token with 0 not found`);
+                        } else {
+                            console.log(event.target.result);
+                            let token_object = event.target.result[0];
+                            dispatch(putStatusUser(localStorage.getItem('id'), {
+                                status: token_object.token
+                            }))
+                        }
+                    };
+                };
+
                 notify_success();
                 setTimeout(function () {
                     changeRouteHome(true);

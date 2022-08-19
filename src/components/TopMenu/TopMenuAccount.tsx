@@ -1,6 +1,7 @@
 import React, { useState, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { putStatusUser } from "../../common/service/User/UpdateStatusUser";
 import { logout } from "../../store/actions/account.actions";
 import { IStateType } from "../../store/models/root.interface";
 function TopMenuAccount(): JSX.Element {
@@ -46,6 +47,7 @@ function TopMenuAccount(): JSX.Element {
         </a>
         <p className="dropdown-item logout-btn"
         onClick={() => {
+          let id = localStorage.getItem('id');
           localStorage.removeItem('access_token') // Authorization
           localStorage.removeItem('refresh_token')
           localStorage.removeItem('username')
@@ -54,6 +56,9 @@ function TopMenuAccount(): JSX.Element {
           localStorage.removeItem('contest_id')
           localStorage.removeItem('schedule_id')
           dispatch(logout())
+          dispatch(putStatusUser(id, {
+            status: null
+          }))
         }}
         data-toggle="modal"
         data-target="#logoutModal">

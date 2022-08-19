@@ -42,7 +42,7 @@ function ParentList(props: userListProps): JSX.Element {
       <td>{parent.username}</td>
       {
         function () {
-          if (parent.status === true){
+          if (parent.status !== "" && parent.status !== null){
             return (
               <td style={{color: "#18AB56"}}>Đang hoạt động</td>
             )

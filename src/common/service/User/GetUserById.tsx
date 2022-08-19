@@ -6,7 +6,7 @@ interface user {
     id: number,
     username: string,
     email: string,
-    status: boolean,
+    status: string,
     password: string,
     firstName: string,
     lastName: string,

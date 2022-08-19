@@ -1,4 +1,5 @@
 import { logout } from "../../../store/actions/account.actions";
+import { putStatusUser } from "../User/UpdateStatusUser";
 
 export function postRefreshToken() {
     var refresh_token = localStorage.getItem("refresh_token");
@@ -18,6 +19,10 @@ export function postRefreshToken() {
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 500){
+                        let id = localStorage.getItem('id');
+                        dispatch(putStatusUser(id, {
+                            status: null
+                          }))
                         localStorage.removeItem('access_token') // Authorization
                         localStorage.removeItem('refresh_token')
                         localStorage.removeItem('username')

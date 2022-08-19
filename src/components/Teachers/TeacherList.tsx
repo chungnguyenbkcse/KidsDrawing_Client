@@ -71,7 +71,8 @@ function TeacherList(props: userListProps): JSX.Element {
       }}>{total}</td> 
       {
         function () {
-          if (teacher.status === true){
+          console.log(teacher.status)
+          if (teacher.status !== "" && teacher.status !== null){
             return (
               <td style={{color: "#18AB56"}}>Đang hoạt động</td>
             )

@@ -50,7 +50,7 @@ function StudentList(props: userListProps): JSX.Element {
       <td>{student.username}</td>
       {
         function () {
-          if (student.status === true){
+          if (student.status !== "" && student.status !== null){
             return (
               <td style={{color: "#18AB56"}}>Đang hoạt động</td>
             )

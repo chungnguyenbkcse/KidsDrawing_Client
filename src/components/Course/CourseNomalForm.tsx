@@ -97,7 +97,6 @@ const CourseNomalForm: React.FC = () => {
     const [formState, setFormState] = useState({
         name: { error: "", value: course.name },
         description: { error: "", value: course.description },
-        max_participant: { error: "", value: course.max_participant },
         art_type_id: { error: "", value: course.art_type_id },
         art_level_id: { error: "", value: course.art_level_id },
         art_age_id: { error: "", value: course.art_age_id },
@@ -132,7 +131,6 @@ const CourseNomalForm: React.FC = () => {
                 dispatch(postCourse({
                     name: formState.name.value,
                     description: textHtml,
-                    max_participant: formState.max_participant.value,
                     num_of_section: formState.num_of_section.value,
                     price: formState.price.value,
                     image_url: url,
@@ -148,7 +146,6 @@ const CourseNomalForm: React.FC = () => {
                 dispatch(putCourse(course.id, {
                     name: formState.name.value,
                     description: textHtml,
-                    max_participant: formState.max_participant.value,
                     num_of_section: formState.num_of_section.value,
                     price: formState.price.value,
                     image_url: url,
@@ -177,9 +174,9 @@ const CourseNomalForm: React.FC = () => {
     }
 
     function isFormInvalid(): boolean {
-        return (formState.max_participant.error || formState.description.error
+        return (formState.description.error
             || formState.name.error || formState.num_of_section.error || formState.price.error
-            || formState.image_url.error || !formState.name.value || !formState.num_of_section.value || !formState.max_participant.value) as boolean;
+            || formState.image_url.error || !formState.name.value || !formState.num_of_section.value ) as boolean;
     }
 
     const [textHtml, setTextHtml] = useState<string>("")
@@ -312,15 +309,6 @@ const CourseNomalForm: React.FC = () => {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <NumberInput id="input_max_participant"
-                                        value={formState.max_participant.value}
-                                        field="max_participant"
-                                        onChange={hasFormValueChanged}
-                                        max={1000}
-                                        min={0}
-                                        label="Số người đăng kí tối đa" />
-                                </div>
                                 <div className="form-group col-md-6">
                                     <NumberInput id="input_num_of_section"
                                         value={formState.num_of_section.value}

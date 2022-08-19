@@ -95,7 +95,6 @@ export interface IArtTypeFormState {
 export interface ICourseNomalFormState {
     name: IFormStateField<string>;
     description: IFormStateField<string>;
-    max_participant: IFormStateField<number>;
     num_of_section: IFormStateField<number>;
     price: IFormStateField<number>;
     image_url: IFormStateField<string>;

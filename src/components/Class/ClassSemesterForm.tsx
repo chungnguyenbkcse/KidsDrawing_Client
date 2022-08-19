@@ -164,7 +164,6 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
         dispatch(postSemesterClass({
           creation_id: formState.creation_id.value,
           name: formState.name.value,
-          max_participant: formState.max_participant.value,
           course_id: formState.course_id.value
         }, schedule_element))
       }
@@ -173,7 +172,6 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
         dispatch(putSemesterClass(semester_classe.id, {
           creation_id: formState.creation_id.value,
           name: formState.name.value,
-          max_participant: formState.max_participant.value,
           course_id: formState.course_id.value
         }))
       }
@@ -289,8 +287,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
             </div>
             <div className="card-body">
               <form onSubmit={saveUser}>
-                <div className="form-row">
-                  <div className="form-group col-md-6">
+                <div className="form-group">
                     <TextInput id="input_name"
                       field="name"
                       value={formState.name.value}
@@ -300,17 +297,6 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
                       label="Tên"
                       placeholder=""
                     />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <NumberInput id="input_max_participant"
-                      value={formState.max_participant.value}
-                      field="max_participant"
-                      onChange={hasFormValueChanged}
-                      max={1000}
-                      min={0}
-                      label="Đăng kí tối đa"
-                    />
-                  </div>
                 </div>
                 <div className="form-row">
                   <div className="form-group col-md-6">

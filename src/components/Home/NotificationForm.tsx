@@ -116,6 +116,7 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
                                         placeholder="" />
                                 </div>
 
+                                <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <SelectKeyValue id="input_type_send"
                                         field="type_send"
@@ -138,6 +139,7 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
                                             }
                                         ]}
                                     />
+                                </div>
                                 </div>
 
                                 <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>

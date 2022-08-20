@@ -20,19 +20,14 @@ export function postScheduleClass(id: any, data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(postScheduleClass(id, data))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                    throw Error(response.statusText);
                 }
                 return response
             })
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(id))
+                dispatch(getMyClass())
                 dispatch(postCalendar(id, data))
             })
             .catch(error => {

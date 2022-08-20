@@ -196,9 +196,9 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.name.error || formState.max_participant.error || formState.creation_id.error
+    return (formState.name.error  || formState.creation_id.error
       || formState.course_id.error || !formState.creation_id.value || !formState.course_id.value
-      || !formState.name.value || !formState.max_participant.value) as boolean;
+      || !formState.name.value ) as boolean;
   }
   const [listScheduleItemId, setListScheduleItemId] = useState<Option1s[]>([])
   const [listLessonId, setListLessonId] = useState<Option1s[]>([])

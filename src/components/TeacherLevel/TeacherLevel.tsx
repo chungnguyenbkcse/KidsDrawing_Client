@@ -65,7 +65,7 @@ const TeacherLevel: React.FC = () => {
                 dispatch(getCourse())
             }
         }
-    }, [path.area, dispatch]);
+    }, [dispatch]);
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));

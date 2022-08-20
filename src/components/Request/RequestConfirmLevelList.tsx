@@ -5,6 +5,8 @@ import { IProduct } from "../../store/models/product.interface";
 import { useHistory } from "react-router-dom";
 import { putTeacherRegisterLevel } from "../../common/service/TeacherRegisterQuantification/PutTeacherRegisterLevel";
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
+import { putTeacherRegisterLevelAdmin } from "../../common/service/TeacherRegisterQuantification/PutTeacherRegisterLevelAdmin";
+import { addNotification } from "../../store/actions/notifications.action";
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
   children?: React.ReactNode;
@@ -26,21 +28,16 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
   }
 
   function approvedTeacherLevel(ele: ITeacherRegisterQuantification) {
-    dispatch(putTeacherRegisterLevel(ele.id, {
-      teacher_id: localStorage.getItem('id'),
-      course_id: ele.course_id,
-      degree_photo_url: ele.degree_photo_url,
+    dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
       status: "Approved"
     }))
   }
 
   function notApprovedTeacherLevel(ele: ITeacherRegisterQuantification) {
-    dispatch(putTeacherRegisterLevel(ele.id, {
-      teacher_id: localStorage.getItem('id'),
-      course_id: ele.course_id,
-      degree_photo_url: ele.degree_photo_url,
+    dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
       status: "Not approved"
     }))
+    dispatch(addNotification("Trình độ ", `${ele.course_name} - Đã được chấp nhận bởi bạn`));
   }
 
   const productElements: (JSX.Element | null)[] = teacher_register_quantifications.not_approved_now.map((product, index) => {

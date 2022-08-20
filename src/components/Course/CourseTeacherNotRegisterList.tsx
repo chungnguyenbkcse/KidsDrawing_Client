@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import TopCardCourse from "../../common/components/TopCardCourse";
-import { ICourseTeacherState, IStateType } from "../../store/models/root.interface";
+import { ICourseTeacherState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 
 export type teacherRegisterQuantificationListProps = {
@@ -11,12 +11,18 @@ export type teacherRegisterQuantificationListProps = {
 
 function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListProps): JSX.Element {
   const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
+  const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
+  let quantifications: number[] = [];
+  teacherRegisterQuantifications.approveds.map((ele, index) => {
+    return quantifications.push(ele.course_id);
+  })
 
     const teacherRegisterQuantificationElements: (JSX.Element | null)[] = course_teachers.not_register_courses.map((ele, index) => {
-        if (!ele) { return null; }
+        if (!ele || !quantifications.includes(ele.course_id)) { return null; }
         return (
             <TopCardCourse 
               name={ele.name} 
+              semester_class_id = {ele.semester_course_id}
               course_name={ele.course_name} 
               icon="book" 
               class="primary" 

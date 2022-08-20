@@ -48,6 +48,10 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 localStorage.setItem('role_privilege', decoded.role_privilege)
                 localStorage.setItem('id', decoded.id)
                 dispatch(login(username));
+                notify_success();
+                setTimeout(function () {
+                    changeRouteHome(true);
+                }, 3000); 
                 let openRequest = indexedDB.open("firebase-messaging-database", 1);
                 openRequest.onerror = function() {
                     console.error("Error", openRequest.error);
@@ -81,12 +85,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                             }))
                         }
                     };
-                };
-
-                notify_success();
-                setTimeout(function () {
-                    changeRouteHome(true);
-                }, 5000);             
+                };            
             })
             .catch(error => {
                 notify_error();

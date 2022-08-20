@@ -53,12 +53,12 @@ export function getCourseTeacher(id: any) {
                 console.log(data.body.register_successfull_courses.length)
                 data.body.register_successfull_courses.map((ele: any, index: any) => {
                     var course: CourseTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         course_name: ele.course_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
-                        semester_course_id: ele.semester_course_id,
+                        semester_course_id: ele.semster_course_id,
                         description: ele.description,
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,
@@ -83,12 +83,12 @@ export function getCourseTeacher(id: any) {
                 console.log(data.body.not_register_courses.length)
                 data.body.not_register_courses.map((ele: any, index: any) => {
                     var course: CourseTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         course_name: ele.course_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
-                        semester_course_id: ele.semester_course_id,
+                        semester_course_id: ele.semster_course_id,
                         description: ele.description,
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,

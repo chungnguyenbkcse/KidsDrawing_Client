@@ -16,7 +16,7 @@ import { useLocation } from "react-router-dom";
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
     children?: React.ReactNode;
-    data: any;
+    data?: any;
 };
 
 

@@ -8,15 +8,14 @@ import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IInformationClassState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
-import "./ClassTeacherDetail.css"
-import NotificationClassTeacher from "./NotificationClassTeacher";
-import StudentList from "./StudentForTeacherList";
+import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 
-const ClassTeacherDetail: React.FC = () => {
+import NotificationClassTeacher from "../Class/NotificationClassTeacher";
+import StudentList from "../Class/StudentForTeacherList";
+
+const ResultGradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
@@ -57,12 +56,12 @@ const ClassTeacherDetail: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());       
-                    dispatch(getInfoMyClass(state.class_id))
+                    dispatch(getInfoMyClass(3))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());       
-                dispatch(getInfoMyClass(state.class_id))
+                dispatch(getInfoMyClass(3))
             }
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
@@ -93,38 +92,9 @@ const ClassTeacherDetail: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberStudentsCount}`} icon="book" class="primary" />
-                <TopCard title="SỐ HỌC SINH" text={`${numberStudentsCount}`} icon="book" class="danger" />
-                <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button 
-                        className="btn btn-success btn-green" 
-                        id="btn-create-teacher-level" 
-                        onClick={() => {
-                            dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Create))
-                            onAnonymousNotificationRemove()
-                        }}
-                    >
-                        <i className="fas fa fa-plus"></i>
-                        Gửi thông báo
-                    </button>
-                </div>
+                <TopCard title="ĐIỂM CAO NHẤT" text={`${numberStudentsCount}`} icon="book" class="primary" />
+                <TopCard title="ĐIỂM THẤP NHẤT" text={`${numberStudentsCount}`} icon="book" class="danger" />
             </div>
-
-            <Popup
-                open={popup1}
-                onClose={() => setPopup1(false)}
-                closeOnDocumentClick
-            >
-                <>
-                    {
-                        function () {
-                            if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
-                                return <NotificationClassTeacher isCheck={onRemovePopup1} data={state}/>
-                            }
-                        }()
-                    }
-                </>
-            </Popup>
 
             <div className="row">
 
@@ -143,7 +113,7 @@ const ClassTeacherDetail: React.FC = () => {
                     <div className="row justify-content-center">
                         <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
                         onRouteChange()}}>
-                            Vào lớp
+                            Nộp điểm
                             <i className="fas fa fa-arrow-right"></i>
                     </button>
                     </div>
@@ -156,4 +126,4 @@ const ClassTeacherDetail: React.FC = () => {
     );
 };
 
-export default ClassTeacherDetail;
+export default ResultGradeExamTeacher;

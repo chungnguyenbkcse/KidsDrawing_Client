@@ -229,7 +229,21 @@ const LessonPlan: React.FC = () => {
       setContentTutorialSection([...contentTutorialSection, contentSection])
     }
     setTextHtml("")
+    setFormState({
+      name: { error: "", value: "" },
+      description: { error: "", value: "" },
+      number: { error: "", value: 0 },
+      teaching_form: { error: "", value: true },
+      course_id: { error: "", value: section_template.course_id },
+      creator_id: { error: "", value: section_template.creator_id },
+      create_time: { error: "", value: section_template.create_time },
+      update_time: { error: "", value: section_template.update_time }
+    })
+    setTotalPage(0)
   }
+
+  console.log(tutorial_template_pages.tutorialTemplatePages.length)
+  console.log(totalPage)
 
   useEffect(() => {
     if (tutorial_template_pages.tutorialTemplatePages.length !== 0){

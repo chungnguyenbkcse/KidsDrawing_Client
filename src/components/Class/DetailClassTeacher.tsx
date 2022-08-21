@@ -17,6 +17,7 @@ import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRe
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./DetailClassTeacher.css"
 import NotificationClassTeacher from "./NotificationClassTeacher";
+import RequestOffSectionForm from "./RequestOffSectionForm";
 
 const DetailClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -168,7 +169,7 @@ const DetailClassTeacher: React.FC = () => {
                     {
                         function () {
                             if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
-                                return <NotificationClassTeacher isCheck={onRemovePopup1} />
+                                return <RequestOffSectionForm isCheck={onRemovePopup1} />
                             }
                         }()
                     }

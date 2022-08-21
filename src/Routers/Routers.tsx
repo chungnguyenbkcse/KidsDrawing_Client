@@ -55,6 +55,7 @@ import AnalytisResultGradeExamTeacher from "../components/Exam/AnalytisScoreExam
 import SectionTeacher from "../components/SectionTeacher/SectionTeacher";
 import EditSectionTeacher from "../components/SectionTeacher/EditSectionTeacher";
 import ViewSectionTeacher from "../components/SectionTeacher/ViewSectionTeacher";
+import RequestTeacher from "../components/RequestTeacher/RequestTeacher";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -87,6 +88,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/classes/section`}><SectionTeacher /></Route>
                                 <Route path={`/section/edit`}><EditSectionTeacher /></Route>
                                 <Route path={`/section/view`}><ViewSectionTeacher /></Route>
+                                <Route path={`/request`}><RequestTeacher /></Route>
                                 <Route path={`/exercise/result-grade`}><ResultGradeExamTeacher /></Route>
                                 <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
                                 <Route path={`/classes/detail`}><ClassTeacherDetail /></Route>

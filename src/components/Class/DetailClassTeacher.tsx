@@ -128,6 +128,13 @@ const DetailClassTeacher: React.FC = () => {
             pathname: path
         });
     }
+
+    const onChangeRoute = () => {
+        let path = "/classes/section";
+        history.push({
+            pathname: path
+        })
+    }
     
     return (
         <Fragment>
@@ -147,7 +154,7 @@ const DetailClassTeacher: React.FC = () => {
                         }}
                     >
                         <i className="fas fa fa-plus"></i>
-                        Gửi thông báo
+                        Đăng kí nghỉ học
                     </button>
                 </div>
             </div>
@@ -170,9 +177,9 @@ const DetailClassTeacher: React.FC = () => {
             <div className="row">
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
-                    <div className="row">
+                    <div className="row row-section mb-4 ml-2" onClick={onChangeRoute}>
                         <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://upload.wikimedia.org/wikipedia/vi/9/90/Microsoft_Photos_Icon_on_Windows_10.png" alt="Card image cap" />
+                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
                         </div>
                         <div className="col-xl-8 col-md-8 mb-4">
                             <h3 className=" mb-2" id="level-teacher">Buổi 1</h3>
@@ -180,12 +187,12 @@ const DetailClassTeacher: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row row-section mb-4 ml-2">
                         <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://upload.wikimedia.org/wikipedia/vi/9/90/Microsoft_Photos_Icon_on_Windows_10.png" alt="Card image cap" />
+                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
                         </div>
                         <div className="col-xl-8 col-md-8 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Buổi 1</h3>
+                            <h3 className=" mb-2" id="level-teacher">Buổi 2</h3>
                             <h4 className=" mb-2" id="level-teacher">Giới thiệu</h4>
                         </div>
                     </div>
@@ -193,9 +200,9 @@ const DetailClassTeacher: React.FC = () => {
 
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Bài kiểm tra cần chấm</h3>
-                    <div className="row" onClick={routeChange1}>
+                    <div className="row row-section mb-4 ml-2" onClick={routeChange1}>
                         <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://upload.wikimedia.org/wikipedia/vi/9/90/Microsoft_Photos_Icon_on_Windows_10.png" alt="Card image cap" />
+                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="Card image cap" />
                         </div>
                         <div className="col-xl-8 col-md-8 mb-4">
                             <h3 className=" mb-2" id="level-teacher">Bài tập 1</h3>
@@ -203,9 +210,9 @@ const DetailClassTeacher: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row row-section mb-4 ml-2">
                         <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://upload.wikimedia.org/wikipedia/vi/9/90/Microsoft_Photos_Icon_on_Windows_10.png" alt="Card image cap" />
+                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="Card image cap" />
                         </div>
                         <div className="col-xl-8 col-md-8 mb-4">
                             <h3 className=" mb-2" id="level-teacher">Bài tập 2</h3>
@@ -216,9 +223,9 @@ const DetailClassTeacher: React.FC = () => {
 
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Buổi nghỉ</h3>
-                    <div className="row">
+                    <div className="row row-off-section mb-4 ml-2 mr-2">
                         <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://upload.wikimedia.org/wikipedia/vi/9/90/Microsoft_Photos_Icon_on_Windows_10.png" alt="Card image cap" />
+                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="Card image cap" />
                         </div>
                         <div className="col-xl-8 col-md-8 mb-4">
                             <h3 className=" mb-2" id="level-teacher">Buổi 1</h3>
@@ -226,13 +233,13 @@ const DetailClassTeacher: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row row-off-section-2 mb-4 ml-2 mr-2">
                         <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://upload.wikimedia.org/wikipedia/vi/9/90/Microsoft_Photos_Icon_on_Windows_10.png" alt="Card image cap" />
+                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="Card image cap" />
                         </div>
                         <div className="col-xl-8 col-md-8 mb-4">
                             <h3 className=" mb-2" id="level-teacher">Buổi 1</h3>
-                            <h4 className=" mb-2" id="level-teacher">Đã duyệt</h4>
+                            <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
                         </div>
                     </div>
                 </div>

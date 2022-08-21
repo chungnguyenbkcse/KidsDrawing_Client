@@ -79,17 +79,28 @@
     color: #B51CEB;
 }
 
-.row-section {
-    background: #CCEBF4;
-    border-radius: 20px;
+#btn-edit-tutorial {
+    background: #0466FA;
+    border-radius: 30px;
 }
 
-.row-off-section {
-    background: #C2EB80;
-    border-radius: 20px;
+#btn-add-exercise {
+    background: #18FA04;
+    border-radius: 30px;
 }
 
-.row-off-section-2 {
-    background: #C3C9BB;
-    border-radius: 20px;
+#normal-tutorial {
+    background: #C3DFF9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+}
+
+#btn-view-tutorial {
+    background: #E408E9;
+    border-radius: 30px;
+}
+
+.image-exercise {
+    max-height: 56px;
+    max-width: 100px;
 }

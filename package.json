@@ -26,6 +26,7 @@
     "react-activity-feed": "^1.4.0",
     "react-avatar-edit": "^1.2.0",
     "react-chartjs-2": "^4.0.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^16.10.2",
     "react-fontawesome": "^1.6.1",
     "react-icons": "^4.4.0",

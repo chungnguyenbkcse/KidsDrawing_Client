@@ -9265,6 +9265,11 @@
   "resolved" "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-4.0.0.tgz"
   "version" "4.0.0"
 
+"react-circular-progressbar@^2.1.0":
+  "integrity" "sha512-xp4THTrod4aLpGy68FX/k1Q3nzrfHUjUe5v6FsdwXBl3YVMwgeXYQKDrku7n/D6qsJA9CuunarAboC2xCiKs1g=="
+  "resolved" "https://registry.npmjs.org/react-circular-progressbar/-/react-circular-progressbar-2.1.0.tgz"
+  "version" "2.1.0"
+
 "react-date-object@^2.1.5":
   "integrity" "sha512-iAtF2nz+jZjy3w36qKx2MsxXqbiL7UgGljz9jPjLWxWCl4rDTZUMS/i7hKKiVbL1lJlmubz1Xu6W3i6CW06kTg=="
   "resolved" "https://registry.npmjs.org/react-date-object/-/react-date-object-2.1.5.tgz"
@@ -9534,7 +9539,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.0 || ^15.0.0-0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0", "react@^16.0.0", "react@^16.0.0 || ^17", "react@^16.10.2", "react@^16.13.1", "react@^16.14.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3", "react@^16.x || ^17 || ^18", "react@^17.0.0 || ^16.8.0", "react@^18.0.0 || ^17.0.0 || ^16.8.0", "react@>= 0.14.0", "react@>= 16.8", "react@>= 16.8.0", "react@>=0.12.0", "react@>=15", "react@>=16", "react@>=16.6.0", "react@>=16.8.0", "react@16.x || 17.x":
+"react@*", "react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^0.14.0 || ^15.0.0-0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0", "react@^16.0.0", "react@^16.0.0 || ^17", "react@^16.10.2", "react@^16.13.1", "react@^16.14.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3", "react@^16.x || ^17 || ^18", "react@^17.0.0 || ^16.8.0", "react@^18.0.0 || ^17.0.0 || ^16.8.0", "react@>= 0.14.0", "react@>= 16.8", "react@>= 16.8.0", "react@>=0.12.0", "react@>=15", "react@>=16", "react@>=16.6.0", "react@>=16.8.0", "react@16.x || 17.x":
   "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
   "version" "16.14.0"

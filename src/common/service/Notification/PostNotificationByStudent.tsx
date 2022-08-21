@@ -1,12 +1,12 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postNotification(data: any) {
+export function postNotificationByStudent(id: any,data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-            `${process.env.REACT_APP_API_URL}/sendEmail`, {
+            `${process.env.REACT_APP_API_URL}/sendEmail/class/${id}`, {
             method: "POST",
             headers: {
                 'Authorization': bearer,

@@ -2,26 +2,28 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
+import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IInformationClassState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
+import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
+import { IAnonymousNotificationState, IInformationClassState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./ClassTeacherDetail.css"
+import NotificationClassTeacher from "./NotificationClassTeacher";
 import StudentList from "./StudentForTeacherList";
 
 const ClassTeacherDetail: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     console.log(teacherRegisterQuantifications)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const students: IUserState = useSelector((state: IStateType) => state.users);
-    const information_classes: IInformationClassState = useSelector((state: IStateType) => state.information_classes);
     const numberStudentsCount: number = students.students.length;
-    const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -66,15 +68,16 @@ const ClassTeacherDetail: React.FC = () => {
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
     }, [path.area, dispatch]);
 
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
+
+    const [popup1, setPopup1] = useState(false);
+
+    function onAnonymousNotificationRemove() {
+        setPopup1(true);
     }
 
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
+
+    function onRemovePopup1(value: boolean) {
+        setPopup1(false);
     }
     return (
         <Fragment>
@@ -85,13 +88,36 @@ const ClassTeacherDetail: React.FC = () => {
                 <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberStudentsCount}`} icon="book" class="primary" />
                 <TopCard title="SỐ HỌC SINH" text={`${numberStudentsCount}`} icon="book" class="danger" />
                 <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
+                    <button 
+                        className="btn btn-success btn-green" 
+                        id="btn-create-teacher-level" 
+                        onClick={() => {
+                            dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Create))
+                            onAnonymousNotificationRemove()
+                        }}
+                    >
                         <i className="fas fa fa-plus"></i>
                         Gửi thông báo
                     </button>
                 </div>
             </div>
+
+            <Popup
+                open={popup1}
+                onClose={() => setPopup1(false)}
+                closeOnDocumentClick
+            >
+                <>
+                    {
+                        function () {
+                            if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
+                                return <NotificationClassTeacher isCheck={onRemovePopup1} data={state}/>
+                            }
+                        }()
+                    }
+                </>
+            </Popup>
+
             <div className="row">
 
                 <div className="col-xl-8 col-md-8 mb-4">

@@ -45,6 +45,9 @@ import TeacherLevelDetail from "../components/TeacherLevel/TeacherLevelDetail";
 import ClassTeacher from "../components/Class/ClassTeacher";
 import ClassTeacherDetail from "../components/Class/ClassTeacherDetail";
 import ContestTeacher from "../components/Contest/ContestTeacher";
+import ManageStudent from "../components/ManageStudent/ManageStudent";
+import ExerciseStudentList from "../components/ManageStudent/ExerciseStudentList";
+import DetailExerciseStudent from "../components/ManageStudent/DetailExerciseStudent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -71,9 +74,12 @@ const Routers: React.FC = () => {
                                 <Route path={`/courses/detail`}><CourseTeacherDetail /></Route>
                                 <Route path={`/courses`}><CourseTeacher /></Route>
                                 <Route path={`/contests`}><ContestTeacher /></Route>
+                                <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
                                 <Route path={`/classes/detail`}><ClassTeacherDetail /></Route>
                                 <Route path={`/classes`}><ClassTeacher /></Route>
                                 <Route path={`/schedule-teacher`}><ScheduleTeacher /></Route>
+                                <Route path={`/manage-student`}><ManageStudent /></Route>
+                                <Route path={`/exercise/detail`}><DetailExerciseStudent /></Route>
                                 <Route path="/"><TeacherHome /></Route>
                             </Switch>
                         </div>

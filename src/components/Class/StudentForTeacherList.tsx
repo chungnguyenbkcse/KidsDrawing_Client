@@ -11,7 +11,7 @@ function StudentList(): JSX.Element {
 
 
     const routeChange = () => {
-        let path = '/class/lesson';
+        let path = '/manage-student';
         history.push(path);
     }
 

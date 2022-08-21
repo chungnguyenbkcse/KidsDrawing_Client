@@ -7,18 +7,20 @@ import { editAnonymousNotification, clearSelectedAnonymousNotification, setModif
 import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IAnonymousNotificationFormState } from "../../common/types/Form.types";
 import { postAnonymousNotification } from "../../common/service/AnonymousNotification/PostAnonymousNotification";
+import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
+import SelectInput from "../../common/components/Select";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
+import { postNotificationByClass } from "../../common/service/Notification/PostNotificationByClass";
+import { useLocation } from "react-router-dom";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
     children?: React.ReactNode;
+    data: any;
 };
 
-const data =  [
-    
-]
 
-function TeachAgeForm(props: artAgeListProps): JSX.Element {
+function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     let notification: IAnonymousNotification | null = notifications.selectedAnonymousNotification;
@@ -38,6 +40,8 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
 
+
+
     function saveUser(e: FormEvent<HTMLFormElement>): void {
         e.preventDefault();
         if (isFormInvalid()) {
@@ -51,17 +55,22 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
     function saveForm(formState: IAnonymousNotificationFormState, saveFn: Function): void {
         if (notification) {
             if (saveFn === addAnonymousNotification) {
-                dispatch(postAnonymousNotification(formState.type_send.value, {
-                    name: formState.name.value,
-                    description: formState.description.value
-                }))
-            }
+                if (props.data === undefined || props.data === null) {
+                    return 
+                }
+                else {
+                    dispatch(postNotificationByClass(props.data.class_id,{
+                        name: formState.name.value,
+                        description: formState.description.value
+                    }))
 
-            console.log({
-                name: formState.name.value,
-                description: formState.description.value,
-                type_send: formState.type_send
-            })
+                    console.log({
+                        name: formState.name.value,
+                        description: formState.description.value,
+                        type_send: props.data.class_id
+                    })
+                }
+            }
 
             dispatch(addNotification("Thông báo ", `${formState.name.value} gửi bởi bạn`));
             dispatch(clearSelectedAnonymousNotification());
@@ -114,32 +123,6 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
                                         placeholder="" />
                                 </div>
 
-                                <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <SelectKeyValue id="input_type_send"
-                                        field="type_send"
-                                        value={formState.type_send.value}
-                                        onChange={hasFormValueChanged}
-                                        required={true}
-                                        label="Gửi tới"
-                                        options={[
-                                            {
-                                                name: "Toàn hệ thống",
-                                                value: "all"
-                                            },
-                                            {
-                                                name: "Chỉ giáo viên",
-                                                value: "teacher"
-                                            },
-                                            {
-                                                name: "Học viên và phụ huynh",
-                                                value: "student"
-                                            }
-                                        ]}
-                                    />
-                                </div>
-                                </div>
-
                                 <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
                                 <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
                             </form>
@@ -151,4 +134,4 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
     );
 };
 
-export default TeachAgeForm;
+export default NotificationClassTeacher;

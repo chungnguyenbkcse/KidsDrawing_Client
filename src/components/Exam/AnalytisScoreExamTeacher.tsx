@@ -3,6 +3,7 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import Popup from "reactjs-popup";
+import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
@@ -16,7 +17,26 @@ import NotificationClassTeacher from "../Class/NotificationClassTeacher";
 import StudentList from "../Class/StudentForTeacherList";
 import ScoreExamList from "./ScoreExamList";
 
-const ResultGradeExamTeacher: React.FC = () => {
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Dataset 1',
+                data: [1, 2, 3, 4, 5, 6],
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+                label: 'Dataset 2',
+                data: [1, 2, 3, 4, 5, 6],
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+        ],
+    };
+
+const AnalytisResultGradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
@@ -82,7 +102,7 @@ const ResultGradeExamTeacher: React.FC = () => {
 
     const history = useHistory();
     const onRouteChange = () =>{ 
-        let path = '/exercise/result-analytis'; 
+        let path = '/classes/detail-student'; 
         history.push({
             pathname: path
         });
@@ -99,7 +119,7 @@ const ResultGradeExamTeacher: React.FC = () => {
 
             <div className="row">
 
-                <div className="col-xl-8 col-md-8 mb-4">
+                <div className="col-xl-6 col-md-6 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
                     <div className="col-xl-12 col-md-12 mb-4">
                         <div className={`card shadow h-100 py-2`} id="topcard-user">
@@ -110,16 +130,10 @@ const ResultGradeExamTeacher: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="col-xl-4 col-md-4 mb-4">
+                <div className="col-xl-6 col-md-6 mb-4">
                     <div className="row justify-content-center">
-                        <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
-                        onRouteChange()}}>
-                            Nộp điểm
-                            <i className="fas fa fa-arrow-right"></i>
-                    </button>
+                        <ChartLine data={data} />
                     </div>
-                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
-                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
                 </div>
             </div>
 
@@ -127,4 +141,4 @@ const ResultGradeExamTeacher: React.FC = () => {
     );
 };
 
-export default ResultGradeExamTeacher;
+export default AnalytisResultGradeExamTeacher;

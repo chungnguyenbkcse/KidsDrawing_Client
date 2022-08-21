@@ -233,7 +233,7 @@ const LessonPlan: React.FC = () => {
       name: { error: "", value: "" },
       description: { error: "", value: "" },
       number: { error: "", value: 0 },
-      teaching_form: { error: "", value: true },
+      teaching_form: { error: "", value: false },
       course_id: { error: "", value: section_template.course_id },
       creator_id: { error: "", value: section_template.creator_id },
       create_time: { error: "", value: section_template.create_time },

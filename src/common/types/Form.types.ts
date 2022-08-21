@@ -7,7 +7,7 @@ export type ScheduleItem = {
 }
 
 export type OnChangeModel = {
-    value: string | number | boolean | ScheduleItem[],
+    value: string | number | boolean | ScheduleItem[] | any,
     error: string,
     touched: boolean,
     field: string
@@ -155,7 +155,7 @@ export interface ISectionTemplateFormState {
     course_id: IFormStateField<number>;
     name: IFormStateField<string>;
     description: IFormStateField<string>;
-    teaching_form: IFormStateField<boolean>;
+    teaching_form: IFormStateField<any>;
     number: IFormStateField<number>;
     create_time: IFormStateField<string>;
     update_time: IFormStateField<string>;

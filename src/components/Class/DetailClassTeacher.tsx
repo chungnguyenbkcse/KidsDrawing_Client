@@ -124,7 +124,7 @@ const DetailClassTeacher: React.FC = () => {
     }
 
     const routeChange1 = () =>{ 
-        let path = '/exercise/grade'; 
+        let path = '/exercise'; 
         history.push({
             pathname: path
         });

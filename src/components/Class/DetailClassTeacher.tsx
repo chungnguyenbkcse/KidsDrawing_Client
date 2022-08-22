@@ -150,7 +150,7 @@ const DetailClassTeacher: React.FC = () => {
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
                     {
-                        sections.sections.map((ele, index) => {
+                        sections.sections.sort((a,b) => a.number - b.number).map((ele, index) => {
                             return (
                                 <div className="row row-section mb-4 ml-2" onClick={onChangeRoute}>
                                     <div className="col-xl-4 col-md-4 mb-4">

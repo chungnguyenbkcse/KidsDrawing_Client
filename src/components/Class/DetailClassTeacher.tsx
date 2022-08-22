@@ -149,10 +149,18 @@ const DetailClassTeacher: React.FC = () => {
             <div className="row">
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
+                    <div className="table-responsive portlet">
+                        <table className="table">
+                            <thead className="thead-light">
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
                     {
                         sections.sections.sort((a,b) => a.number - b.number).map((ele, index) => {
                             return (
-                                <div className="row row-section mb-4 ml-2" onClick={onChangeRoute}>
+                                <tr className={`table-row`} key={`semester_course_${index}`}>
+                                <div className="row row-section mb-4 ml-2 mr-2" onClick={onChangeRoute}>
                                     <div className="col-xl-4 col-md-4 mb-4">
                                         <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
                                     </div>
@@ -161,9 +169,13 @@ const DetailClassTeacher: React.FC = () => {
                                         <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
                                     </div>
                                 </div>
+                                </tr>
                             )
                         })
                     }
+                    </tbody>
+                </table>
+                </div>
                 </div>
 
                 <div className="col-xl-4 col-md-4 mb-4">

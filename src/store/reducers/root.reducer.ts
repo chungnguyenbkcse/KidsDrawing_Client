@@ -33,6 +33,7 @@ import contestTeachersReducer from "./contest_teacher.reducer";
 import semesterClassesReducer from "./semester_class.reducer";
 import anonymousNotificationsReducer from "./anonymous_notification.reducer";
 import sectionsReducer from "./section.reducer";
+import tutorialPagesReducer from "./tutorial_page.reducer";
 
 
 const initialState: IRootStateType = {
@@ -80,7 +81,8 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     class_teachers: classTeachersReducer,
     contest_teachers: contestTeachersReducer,
     anonymous_notifications: anonymousNotificationsReducer,
-    sections: sectionsReducer
+    sections: sectionsReducer,
+    tutorial_pages: tutorialPagesReducer,
 });
 
 

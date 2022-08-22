@@ -1,33 +1,32 @@
 import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { ChartLine } from "../../common/components/CharLine";
-import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
+import { useHistory, useLocation } from "react-router-dom";
+import { getSectionById } from "../../common/service/Section/GetSectionById";
+import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
+import { ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
 import "./SectionTeacher.css"
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
+    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     console.log(users.teachers)
-    console.log(teacherRegisterQuantifications)
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
+    
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+    
+    let section_id = 0;
+    const { state } = useLocation<any>();
+    if (state !== undefined && state !== null) {
+        section_id = state.section_id;
+    }
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -52,60 +51,30 @@ const SectionTeacher: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getSectionById(section_id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getSectionById(section_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
-
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
-
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
 
     const history = useHistory();
     const routeChange2 = () =>{ 
         let path = '/section/view'; 
         history.push({
-            pathname: path
+            pathname: path,
+            state: { section_id: section_id }
         });
     }
 
     const onChangeRoute1 = () => {
         let path = "/section/edit";
         history.push({
-            pathname: path
+            pathname: path,
+            state: { section_id: section_id }
         })
     }
     
@@ -145,7 +114,16 @@ const SectionTeacher: React.FC = () => {
                                             <h4 id="full-name">Giáo án chung</h4>
                                         </div>
                                         <div className="row no-gutters">
-                                            <p id="phone">Tên: Giới thiệu</p>
+                                            <p id="phone">Tên: {
+                                                function () {
+                                                    if (sections.sections.length <= 0){
+                                                        return ""
+                                                    }
+                                                    else {
+                                                        return sections.sections[0].name;
+                                                    }
+                                                }()
+                                            }</p>
                                         </div>
 
                                         <div className="row no-gutters">
@@ -163,7 +141,23 @@ const SectionTeacher: React.FC = () => {
                                         </div>
 
                                         <div className="row no-gutters">
-                                            <p id="phone">Hình thức: Dạy thông qua jisti</p>
+                                            <p id="phone">Hình thức: 
+                                            {
+                                                function () {
+                                                    if (sections.sections.length <= 0){
+                                                        return ""
+                                                    }
+                                                    else {
+                                                        if (sections.sections[0].teach_form == true){
+                                                            return "Dạy bằng jitsi";
+                                                        }
+                                                        else {
+                                                            return "Dạy bằng giáo trình";
+                                                        }
+                                                    }
+                                                }()
+                                            }
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

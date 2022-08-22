@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_type.action";
+import { fetchDataRequest, fetchDataError, removeArtTypeAll, addArtType } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getArtType } from "./GetArtType";
 
@@ -33,9 +33,15 @@ export function postArtType(data: any) {
                     return response
                 }
             })
-            .then (data => {
-                    console.log(data)
-                    dispatch(getArtType())
+            .then (xx => {
+                    console.log(xx)
+                    let art_type = {
+                        id: data.id,
+                        name: data.name,
+                        description: data.description
+                    }
+                    dispatch(addArtType(art_type))
+                    //dispatch(getArtType())
                     //postRefreshToken()
                     //postArtType(data)
             })

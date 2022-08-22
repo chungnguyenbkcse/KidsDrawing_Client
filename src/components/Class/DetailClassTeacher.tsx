@@ -101,10 +101,11 @@ const DetailClassTeacher: React.FC = () => {
         });
     }
 
-    const onChangeRoute = () => {
+    const onChangeRoute = (section_id: number) => {
         let path = "/classes/section";
         history.push({
-            pathname: path
+            pathname: path,
+            state: { section_id: section_id}
         })
     }
     
@@ -160,7 +161,7 @@ const DetailClassTeacher: React.FC = () => {
                         sections.sections.sort((a,b) => a.number - b.number).map((ele, index) => {
                             return (
                                 <tr className={`table-row`} key={`semester_course_${index}`}>
-                                <div className="row row-section mb-4 ml-2 mr-2" onClick={onChangeRoute}>
+                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {onChangeRoute(ele.id)}}>
                                     <div className="col-xl-4 col-md-4 mb-4">
                                         <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
                                     </div>

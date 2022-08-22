@@ -2,18 +2,17 @@ import jwt_decode from "jwt-decode";
 import jwtDecode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
 import { Editor } from "../../common/components/Quill/EditorSection";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import TextInput from "../../common/components/TextInput";
-import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
+import { getSectionById } from "../../common/service/Section/GetSectionById";
+import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
+import { ISectionState, IStateType, ITutorialPageState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 
 type Options = {
@@ -23,19 +22,47 @@ type Options = {
 
 const EditSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
-    console.log(users.teachers)
-    console.log(teacherRegisterQuantifications)
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
+    const TutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
+    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+
+    const [count, setCount] = useState(1);
+
+    const [textHtml, setTextHtml] = useState<string>("")
+    function getValue(value: string) {
+        setTextHtml(value);
+    }
+
+    function setChangeCount() {
+        let x = count;
+        let y = x + 1;
+        if (x < TutorialPages.tutorialPages.length){
+            console.log("Count")
+            setCount(y);
+        }
+        console.log(count)
+    }
+
+    function setChangeCountBack() {
+        let x = count;
+        let y = x -1;
+        if (x > 1){
+            setCount(y);
+        }
+    }
+
+
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    let section_id = 0;
+    const { state } = useLocation<any>();
+    if (state !== undefined && state !== null) {
+        section_id = state.section_id;
+    }
+    
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -60,47 +87,17 @@ const EditSectionTeacher: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getSectionById(section_id))
+                    dispatch(getTutorialPageBySection(section_id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getSectionById(section_id))
+                dispatch(getTutorialPageBySection(section_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
-
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
-
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
 
     const history = useHistory();
     const routeChange = () =>{ 
@@ -155,7 +152,7 @@ const EditSectionTeacher: React.FC = () => {
                                         <div className="row no-gutters">
                                             <div className="col-xl-12 col-md-12 col-xs-12">
                                                 <TextInput id="input_name"
-                                                    value=""
+                                                    value={sections.sections.length > 0 ? sections.sections[0].name : ""}
                                                     field="name"
                                                     onChange={() => {}}
                                                     required={true}
@@ -175,12 +172,12 @@ const EditSectionTeacher: React.FC = () => {
                                                     options={listTeachingForm}
                                                     required={true}
                                                     onChange={() => {}}
-                                                    value=""
+                                                    value={sections.sections.length > 0 ? sections.sections[0].teach_form : 0}
                                                 />
                                             </div>
                                             <div className="col-xl-6 col-md-6 col-xs-6">
                                                 <SelectKeyValueNotField
-                                                    value=""
+                                                    value={TutorialPages.tutorialPages.length}
                                                     id="input_total_page"
                                                     onChange={() => {}}
                                                     required={true}
@@ -192,9 +189,33 @@ const EditSectionTeacher: React.FC = () => {
 
                                         <div className="row no-gutters">
                                             <label>Nội dung trang</label>
-                                            <Editor getValue="" isCreate="" setValue="" />
-                                            <button className="btn btn-danger" onClick={() => {}}>Lưu</button>
-                                            <button className={`btn btn-success left-margin`} onClick={() => {routeChange()}}>Bài tiếp</button>
+                                            <Editor getValue={getValue} isCreate="{textHtml}" setValue={TutorialPages.tutorialPages.length === 0 ? "" : TutorialPages.tutorialPages[count-1].description} />
+                                            {
+                                                function () {
+                                                    if (count < TutorialPages.tutorialPages.length) {
+                                                        if (count === 1){
+                                                            return (
+                                                                <button className={`btn btn-success left-margin`} onClick={() => {setChangeCount()}}>Trang tiếp</button>
+                                                            )
+                                                        }
+                                                        else if (count > 1){
+                                                            return (
+                                                                <> 
+                                                                    <button className={`btn btn-warning left-margin`} onClick={() => {setChangeCountBack()}}>Trở về</button>
+                                                                    <button className={`btn btn-success left-margin`} onClick={() => {setChangeCount()}}>Trang tiếp</button>
+                                                                </>
+                                                            )
+                                                        }
+                                                        
+                                                    }
+                                                    else {
+                                                        return (
+                                                            <button className={`btn btn-success left-margin`} onClick={() => {routeChange()}}>Gửi</button>
+                                                        )
+                                                    }
+                                                }()
+                                            }
+                                            
                                         </div>
                                     </div>
                                 </div>

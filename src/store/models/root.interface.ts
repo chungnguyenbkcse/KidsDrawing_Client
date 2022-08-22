@@ -30,6 +30,7 @@ import { ClassTeacherModificationStatus, IClassTeacher } from "./class_teacher.i
 import { ContestTeacherModificationStatus, IContestTeacher } from "./contest_teacher.interface";
 import { AnonymousNotificationModificationStatus, IAnonymousNotification } from "./anonymous_notification.interface";
 import { ISection, SectionModificationStatus } from "./section.interface";
+import { ITutorialPage, TutorialPageModificationStatus } from "./tutorial_page.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -73,6 +74,7 @@ export interface IStateType {
     contest_teachers: IContestTeacherState;
     anonymous_notifications: IAnonymousNotificationState;
     sections: ISectionState;
+    tutorial_pages: ITutorialPageState;
 }
 
 export interface IProductState {
@@ -185,6 +187,12 @@ export interface ITutorialTemplatePageState {
     selectedTutorialTemplatePage: ITutorialTemplatePage | null;
     modificationState: TutorialTemplatePageModificationStatus;
     tutorialTemplatePages: ITutorialTemplatePage[];
+}
+
+export interface ITutorialPageState {
+    selectedTutorialPage: ITutorialPage | null;
+    modificationState: TutorialPageModificationStatus;
+    tutorialPages: ITutorialPage[];
 }
 
 export interface ITeacherLeaveState {

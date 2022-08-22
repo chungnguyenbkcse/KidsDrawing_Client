@@ -1,41 +1,46 @@
 import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { ChartLine } from "../../common/components/CharLine";
-import { Editor } from "../../common/components/Quill/EditorSection";
-import SelectKeyValue from "../../common/components/SelectKeyValue";
-import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import TextInput from "../../common/components/TextInput";
-import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
+import {  useLocation } from "react-router-dom";
+import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
-
-type Options = {
-    name: string;
-    value: any;
-}
+import { IStateType, ITutorialPageState } from "../../store/models/root.interface";
 
 const ViewSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
-    console.log(users.teachers)
-    console.log(teacherRegisterQuantifications)
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
+    const TutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    let section_id = 0;
+    const { state } = useLocation<any>();
+    if (state !== undefined && state !== null) {
+        section_id = state.section_id;
+    }
+
+    const [count, setCount] = useState(1);
+
+    function setChangeCount() {
+        let x = count;
+        let y = x + 1;
+        if (x < TutorialPages.tutorialPages.length){
+            console.log("Count")
+            setCount(y);
+        }
+        console.log(count)
+    }
+
+    function setChangeCountBack() {
+        let x = count;
+        let y = x - 1;
+        if (x > 1){
+            setCount(y);
+        }
+    }
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -59,86 +64,14 @@ const ViewSectionTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getTutorialPageBySection(section_id))
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getTutorialPageBySection(section_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
-
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
-
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
-
-    const history = useHistory();
-    const routeChange = () =>{ 
-        let path = '/class/exercise-student'; 
-        history.push({
-            pathname: path,
-        });
-    }
-
-    const listTeachingForm: Options[] = [
-        {
-            "name": "Dạy thông qua Jitsi",
-            "value": true
-        },
-        {
-            "name": "Tự đọc giáo trình",
-            "value": false
-        }
-    ]
-
-    const listTotalPage: Options[] = [
-        {
-            "name": "1 trang",
-            "value": 1
-        },
-        {
-            "name": "2 trang",
-            "value": 2
-        },
-        {
-            "name": "3 trang",
-            "value": 3
-        },
-        {
-            "name": "4 trang",
-            "value": 4
-        }
-    ];
     
     return (
         <Fragment>
@@ -150,12 +83,48 @@ const ViewSectionTeacher: React.FC = () => {
                                 <div className={`card shadow h-100 py-2`}>
                                     <div className="card-body">
                                         <div className="row no-gutters justify-content-left">
-                                            <h4 id="full-name">Bài 1: Giới thiệu</h4>
+                                            <h4 id="full-name">{TutorialPages.tutorialPages.length !== 0 ? TutorialPages.tutorialPages[0].name : ""}</h4>
                                         </div>
                                         <div className="row no-gutters">
-                                            <div className="col-xl-12 col-md-12 col-xs-12">
-                                                <p>Lớp dạy học vẽ Online cho bé trẻ em, thiếu nhi (từ 5 đến 15 tuổi) là lớp học trực tuyến dành riêng cho các học viên ở xa Hà Nội và các tỉnh khác. Nhiều năm hoạt động, rất nhiều phụ huynh yêu thích chương trình học vẽ mỹ thuật của ART TREE nhưng nhà quá xa Hà Nội. Đáp ứng nhu cầu đó ART TREE ra đời lớp học vẽ Online cho bé trẻ em, thiếu nhi từ cơ bản đến nâng cao với công nghệ học trực tuyến xóa nhòa mọi khoảng cách. Biến ngôi nhà của bé thành xưởng vẽ đích thực.</p>
-                                            </div>
+                                            {
+                                                function () {
+                                                    if (TutorialPages.tutorialPages.length < 1) {
+                                                        return ""
+                                                    }
+                                                    else {
+                                                        console.log(state)
+                                                        return <div className="card-body" dangerouslySetInnerHTML={{ __html: TutorialPages.tutorialPages[count-1].description }}>
+                                                        </div>
+                                                    }
+                                                }()
+                                            }
+                                        </div>
+                                        <div className="row no-gutters justify-content-right">
+                                            {
+                                                function () {
+                                                    if (count < TutorialPages.tutorialPages.length) {
+                                                        if (count === 1){
+                                                            return (
+                                                                <button className={`btn btn-success left-margin`} onClick={() => {setChangeCount()}}>Trang tiếp</button>
+                                                            )
+                                                        }
+                                                        else if (count > 1){
+                                                            return (
+                                                                <> 
+                                                                    <button className={`btn btn-warning left-margin`} onClick={() => {setChangeCountBack()}}>Trở về</button>
+                                                                    <button className={`btn btn-success left-margin`} onClick={() => {setChangeCount()}}>Trang tiếp</button>
+                                                                </>
+                                                            )
+                                                        }
+                                                        
+                                                    }
+                                                    else {
+                                                        return (
+                                                            <button className={`btn btn-warning left-margin`} onClick={() => {setChangeCountBack()}}>Trở về</button>
+                                                        )
+                                                    }
+                                                }()
+                                            }
                                         </div>
                                     </div>
                                 </div>

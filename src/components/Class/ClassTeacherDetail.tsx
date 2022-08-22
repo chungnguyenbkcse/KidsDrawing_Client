@@ -32,6 +32,11 @@ const ClassTeacherDetail: React.FC = () => {
 
     const { state } = useLocation<any>();
 
+    let class_id = 1;
+    if (state !== undefined && state !== null) {
+        class_id = state.class_id;
+    }
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -57,12 +62,12 @@ const ClassTeacherDetail: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());       
-                    dispatch(getInfoMyClass(state.class_id))
+                    dispatch(getInfoMyClass(class_id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());       
-                dispatch(getInfoMyClass(state.class_id))
+                dispatch(getInfoMyClass(class_id))
             }
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
@@ -84,7 +89,8 @@ const ClassTeacherDetail: React.FC = () => {
     const onRouteChange = () =>{ 
         let path = '/classes/detail-student'; 
         history.push({
-            pathname: path
+            pathname: path,
+            state: {class_id: class_id}
         });
     }
     return (

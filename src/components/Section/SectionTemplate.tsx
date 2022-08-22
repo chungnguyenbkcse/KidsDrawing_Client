@@ -58,6 +58,8 @@ const SectionTemplate: React.FC = () => {
         setPopup(false);
     }
 
+    console.log(SectionTemplates.sectionTemplates)
+
 
     return (
         <Fragment>

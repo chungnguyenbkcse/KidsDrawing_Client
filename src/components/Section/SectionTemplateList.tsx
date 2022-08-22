@@ -18,9 +18,13 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element  {
   console.log(props.value)
   
   const history = useHistory();
-  const routeChange = () => {
+  const routeChange = (section_template_id: number) => {
     let path = '/section-template/edit';
-    history.push(path);
+    console.log(section_template_id)
+    history.push({
+      pathname: path,
+      state: { section_template_id: section_template_id }
+    });
   }
 
 
@@ -46,7 +50,7 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element  {
           if(props.onSelect) props.onSelect(section_template);
           localStorage.setItem('section_template', (section_template.id).toString())
           dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.Edit))
-          routeChange()
+          routeChange(section_template.id)
         }}>Chỉnh sửa</button>
       </td>
     </tr>);

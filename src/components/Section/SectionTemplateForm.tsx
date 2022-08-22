@@ -45,6 +45,10 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     console.log(section_templates.sectionTemplates)
     let section_template: ISectionTemplate | null = section_templates.selectedSectionTemplate;
+    const { state } = useLocation<any>();
+    if (state !== undefined && state !== null) {
+        console.log(state.section_template_id)
+    }
     console.log(section_template)
     if (!section_template) {
         section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };

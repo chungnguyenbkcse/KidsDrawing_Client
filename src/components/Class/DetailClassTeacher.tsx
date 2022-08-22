@@ -1,40 +1,41 @@
 import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
+import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { IAnonymousNotificationState, IRootPageStateType, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
-import NotificationClassTeacher from "./NotificationClassTeacher";
 import RequestOffSectionForm from "./RequestOffSectionForm";
 
 const DetailClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
-    console.log(users.teachers)
-    console.log(teacherRegisterQuantifications)
+
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
+    const numberApprovedCount: number = sections.sections.length;
+    const numberNotApprovedNowCount: number = sections.sections.length;
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    const { state } = useLocation<any>();
+    
+    let class_id = 1;
+    if (state !== undefined && state !== null) {
+        class_id = state.class_id;
+    }
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -59,13 +60,13 @@ const DetailClassTeacher: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
+                    dispatch(getSectionByClass(class_id))
                     dispatch(getUserById(id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
+                dispatch(getSectionByClass(class_id))
                 dispatch(getUserById(id))
             }
         }
@@ -74,17 +75,6 @@ const DetailClassTeacher: React.FC = () => {
     useEffect(() => {
         dispatch(updateCurrentPath("Lớp học", "Buổi học"));
     }, [path.area, dispatch]);
-
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
 
     const [popup1, setPopup1] = useState(false);
 
@@ -95,25 +85,6 @@ const DetailClassTeacher: React.FC = () => {
     function onRemovePopup1(value: boolean) {
         setPopup1(false);
     }
-
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
 
     const history = useHistory();
     const routeChange = () =>{ 
@@ -178,25 +149,21 @@ const DetailClassTeacher: React.FC = () => {
             <div className="row">
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
-                    <div className="row row-section mb-4 ml-2" onClick={onChangeRoute}>
-                        <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
-                        </div>
-                        <div className="col-xl-8 col-md-8 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Buổi 1</h3>
-                            <h4 className=" mb-2" id="level-teacher">Giới thiệu</h4>
-                        </div>
-                    </div>
-
-                    <div className="row row-section mb-4 ml-2">
-                        <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
-                        </div>
-                        <div className="col-xl-8 col-md-8 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Buổi 2</h3>
-                            <h4 className=" mb-2" id="level-teacher">Giới thiệu</h4>
-                        </div>
-                    </div>
+                    {
+                        sections.sections.map((ele, index) => {
+                            return (
+                                <div className="row row-section mb-4 ml-2" onClick={onChangeRoute}>
+                                    <div className="col-xl-4 col-md-4 mb-4">
+                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                    </div>
+                                    <div className="col-xl-8 col-md-8 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
+                                        <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
 
                 <div className="col-xl-4 col-md-4 mb-4">

@@ -2,29 +2,33 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
-import { ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
 import "./SectionTeacher.css"
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+    const exercises: IExerciseState = useSelector((state: IStateType) => state.exercises);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     console.log(users.teachers)
-    
+
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
-    
-    let section_id = 0;
-    const { state } = useLocation<any>();
-    if (state !== undefined && state !== null) {
-        section_id = state.section_id;
+
+    var id_y = localStorage.getItem('section_id');
+
+    let section_id = 1;
+
+    if (id_y !== null) {
+        section_id = parseInt(id_y);
     }
 
     let access_token = localStorage.getItem("access_token");
@@ -52,18 +56,20 @@ const SectionTeacher: React.FC = () => {
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
                     dispatch(getSectionById(section_id))
+                    dispatch(getExerciseBySection(section_id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
                 dispatch(getSectionById(section_id))
+                dispatch(getExerciseBySection(section_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
 
     const history = useHistory();
-    const routeChange2 = () =>{ 
-        let path = '/section/view'; 
+    const routeChange2 = () => {
+        let path = '/section/view';
         history.push({
             pathname: path,
             state: { section_id: section_id }
@@ -77,14 +83,14 @@ const SectionTeacher: React.FC = () => {
             state: { section_id: section_id }
         })
     }
-    
+
     return (
         <Fragment>
             <div className="row mb-2">
                 <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
-                    <button 
-                        className="btn btn-success ml-3" 
-                        id="btn-edit-tutorial" 
+                    <button
+                        className="btn btn-success ml-3"
+                        id="btn-edit-tutorial"
                         onClick={onChangeRoute1}
                     >
                         <i className="fas fa-edit"></i>
@@ -93,10 +99,10 @@ const SectionTeacher: React.FC = () => {
                 </div>
 
                 <div className="col-xl-6 col-md-6 col-xs-6 md-4">
-                    <button 
-                        className="btn btn-success ml-3" 
-                        id="btn-add-exercise" 
-                        onClick={() => {}}
+                    <button
+                        className="btn btn-success ml-3"
+                        id="btn-add-exercise"
+                        onClick={() => { }}
                     >
                         <i className="fas fa fa-plus"></i>
                         Thêm bài tập
@@ -116,7 +122,7 @@ const SectionTeacher: React.FC = () => {
                                         <div className="row no-gutters">
                                             <p id="phone">Tên: {
                                                 function () {
-                                                    if (sections.sections.length <= 0){
+                                                    if (sections.sections.length <= 0) {
                                                         return ""
                                                     }
                                                     else {
@@ -131,32 +137,32 @@ const SectionTeacher: React.FC = () => {
                                         </div>
 
                                         <div className="row  justify-content-center">
-                                            <button 
-                                                className="btn btn-success ml-2" 
-                                                id="btn-view-tutorial" 
+                                            <button
+                                                className="btn btn-success ml-2"
+                                                id="btn-view-tutorial"
                                                 onClick={routeChange2}
-                                            >                                           
+                                            >
                                                 Xem nội dung
                                             </button>
                                         </div>
 
                                         <div className="row no-gutters">
-                                            <p id="phone">Hình thức: 
-                                            {
-                                                function () {
-                                                    if (sections.sections.length <= 0){
-                                                        return ""
-                                                    }
-                                                    else {
-                                                        if (sections.sections[0].teach_form == true){
-                                                            return "Dạy bằng jitsi";
+                                            <p id="phone">Hình thức:
+                                                {
+                                                    function () {
+                                                        if (sections.sections.length <= 0) {
+                                                            return ""
                                                         }
                                                         else {
-                                                            return "Dạy bằng giáo trình";
+                                                            if (sections.sections[0].teach_form == true) {
+                                                                return "Dạy bằng jitsi";
+                                                            }
+                                                            else {
+                                                                return "Dạy bằng giáo trình";
+                                                            }
                                                         }
-                                                    }
-                                                }()
-                                            }
+                                                    }()
+                                                }
                                             </p>
                                         </div>
                                     </div>
@@ -170,28 +176,36 @@ const SectionTeacher: React.FC = () => {
                     <div className="row">
                         <div className="col-xl-12 col-md-12 mb-4">
                             <div className="col-xl-12 col-md-12 mb-4">
-                                <div className={`card shadow h-100 py-2`} id="normal-tutorial">
+                                <div className={`card shadow h-100 py-2`} >
                                     <div className="card-body">
                                         <div className="row no-gutters justify-content-left">
                                             <h4 id="full-name">Bài tập</h4>
-                                        </div>
-                                        <div className="row no-gutters">
-                                            <div className="col-xl-4 col-md-4 col-xs-4 mb-4">
-                                                <img className="card-img image-exercise"  src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="Card image cap" />
-                                            </div>
-                                            <div className="col-xl-8 col-md-8 col-xs-8 mb-4">
-                                                <h3 className=" mb-2" id="level-teacher">Bài tập 1</h3>
-                                                <h4 className=" mb-2" id="level-teacher">Vẽ con mèo</h4>
-                                            </div>
-                                        </div>
-
-                                        <div className="row no-gutters">
-                                            <div className="col-xl-4 col-md-4 col-xs-4 mb-4">
-                                                <img className="card-img image-exercise" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="Card image cap" />
-                                            </div>
-                                            <div className="col-xl-8 col-md-8 col-xs-8 mb-4">
-                                                <h3 className=" mb-2" id="level-teacher">Bài tập 1</h3>
-                                                <h4 className=" mb-2" id="level-teacher">Vẽ con mèo</h4>
+                                            <div className="table-responsive portlet">
+                                                <table className="table">
+                                                    <thead className="thead-light">
+                                                        <tr>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
+                                                                return (
+                                                                    <tr className={`table-row`} key={`semester_course_${index}`}>
+                                                                        <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { }}>
+                                                                            <div className="col-xl-4 col-md-4 mb-4">
+                                                                                <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                                                            </div>
+                                                                            <div className="col-xl-8 col-md-8 mb-4">
+                                                                                <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>
+                                                                                <h4 className=" mb-2" id="level-teacher">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

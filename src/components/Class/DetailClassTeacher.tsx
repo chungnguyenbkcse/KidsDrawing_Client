@@ -29,11 +29,12 @@ const DetailClassTeacher: React.FC = () => {
         id = parseInt(id_x);
     }
 
-    const { state } = useLocation<any>();
+    var id_y = localStorage.getItem('class_id');
     
     let class_id = 1;
-    if (state !== undefined && state !== null) {
-        class_id = state.class_id;
+
+    if (id_y !== null) {
+        class_id = parseInt(id_y);
     }
 
     let access_token = localStorage.getItem("access_token");
@@ -103,6 +104,8 @@ const DetailClassTeacher: React.FC = () => {
 
     const onChangeRoute = (section_id: number) => {
         let path = "/classes/section";
+        localStorage.removeItem("section_id");
+        localStorage.setItem("section_id", section_id.toString())
         history.push({
             pathname: path,
             state: { section_id: section_id}

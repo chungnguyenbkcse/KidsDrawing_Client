@@ -31,6 +31,7 @@ import { ContestTeacherModificationStatus, IContestTeacher } from "./contest_tea
 import { AnonymousNotificationModificationStatus, IAnonymousNotification } from "./anonymous_notification.interface";
 import { ISection, SectionModificationStatus } from "./section.interface";
 import { ITutorialPage, TutorialPageModificationStatus } from "./tutorial_page.interface";
+import { ExerciseModificationStatus, IExercise } from "./exercise.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -75,6 +76,7 @@ export interface IStateType {
     anonymous_notifications: IAnonymousNotificationState;
     sections: ISectionState;
     tutorial_pages: ITutorialPageState;
+    exercises: IExerciseState;
 }
 
 export interface IProductState {
@@ -109,6 +111,12 @@ export interface ISemesterState {
     selectedSemester: ISemester | null;
     modificationState: SemesterModificationStatus;
     semesters: ISemester[];
+}
+
+export interface IExerciseState {
+    selectedExercise: IExercise | null;
+    modificationState: ExerciseModificationStatus;
+    exercises: IExercise[];
 }
 
 export interface ILessonState {

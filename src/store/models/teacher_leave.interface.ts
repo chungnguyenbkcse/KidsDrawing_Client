@@ -1,12 +1,16 @@
 export interface ITeacherLeave {
     id: number;
     section_id: number;
+    section_name: string;
     class_id: number;
+    class_name: string;
     teacher_id: number;
+    teacher_name: string;
     reviewer_id: number;
     substitute_teacher_id: number;
+    substitute_teacher_name: string;
     description: string;
-    status: boolean;
+    status: string;
     create_time: string;
     update_time: string;
 }

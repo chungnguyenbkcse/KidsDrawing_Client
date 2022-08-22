@@ -20,7 +20,7 @@ type Options = {
     value: any;
 }
 
-const EditSectionTeacher: React.FC = () => {
+const ExerciseForm: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const TutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
@@ -231,4 +231,4 @@ const EditSectionTeacher: React.FC = () => {
     );
 };
 
-export default EditSectionTeacher;
+export default ExerciseForm;

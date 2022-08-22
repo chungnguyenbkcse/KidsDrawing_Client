@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
+import { getParent } from "../../common/service/Parent/GetParent";
+import { getParentById } from "../../common/service/Parent/GetParentById";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
@@ -27,6 +29,18 @@ const ManageStudent: React.FC = () => {
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
+    }
+
+    
+    var id_z = localStorage.getItem('parent_id');
+    var parent_id: number = 0;
+    if (id_z !== null) {
+        parent_id = parseInt(id_z);
+    }
+    var id_y = localStorage.getItem('student_id');
+    var student_id: number = 0;
+    if (id_y !== null) {
+        student_id = parseInt(id_y);
     }
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -52,14 +66,14 @@ const ManageStudent: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getUserById(student_id))
+                    dispatch(getParentById(parent_id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getUserById(student_id))
+                dispatch(getParentById(parent_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
@@ -123,29 +137,29 @@ const ManageStudent: React.FC = () => {
                 <div className="col-xl-6 col-md-6 mb-4">
                     <div className="row">
                         <div className="col-xl-12 col-md-12 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Trình độ học sinh</h3>
+                            <h3 className=" mb-2" id="level-teacher">Thông tin học sinh</h3>
                             <div className="col-xl-12 col-md-12 mb-4">
                                 <div className={`card shadow h-100 py-2`} id="topcard-user">
                                     <div className="card-body">
                                         <div className="row no-gutters justify-content-center">
-                                            <h4 id="full-name">Tên : Nguyen Chung</h4>
+                                            <h4 id="full-name">Tên : {users.teachers.length > 0 ? users.teachers[0].username : ""}</h4>
                                         </div>
                                         <div className="row no-gutters justify-content-center">
-                                            <p id="username-teacher">Giới tính: Nam</p>
+                                            <p id="username-teacher">Giới tính: {users.teachers.length > 0 ? users.teachers[0].sex : ""}</p>
                                         </div>
                                         <div className="row no-gutters">
                                             <i className={`fas fa-phone fa-2x`} id="icon-phone"></i>
-                                            <p id="phone">Số điện thoại: {users.teachers.length === 0 ? "" : users.teachers[0].phone}</p>
+                                            <p id="phone">Số điện thoại: {users.teachers.length > 0 ? users.teachers[0].phone : ""}</p>
                                         </div>
 
                                         <div className="row no-gutters">
                                             <i className={`fas fa-envelope fa-2x`} id="icon-phone"></i>
-                                            <p id="phone">Ngày sinh: 10/10/2012</p>
+                                            <p id="phone">Ngày sinh: {users.teachers.length > 0 ? users.teachers[0].dateOfBirth : ""}</p>
                                         </div>
 
                                         <div className="row no-gutters">
                                             <i className={`fas fa-envelope fa-2x`} id="icon-phone"></i>
-                                            <p id="phone">Email: nvchung00@gmail.com</p>
+                                            <p id="phone">Email: {users.teachers.length > 0 ? users.teachers[0].email : ""}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -159,24 +173,24 @@ const ManageStudent: React.FC = () => {
                                 <div className={`card shadow h-100 py-2`} id="topcard-user">
                                     <div className="card-body">
                                         <div className="row no-gutters justify-content-center">
-                                            <h4 id="full-name">Tên : Nguyen Chung</h4>
+                                            <h4 id="full-name">Tên : {users.parents.length > 0 ? users.parents[0].username : ""}</h4>
                                         </div>
                                         <div className="row no-gutters justify-content-center">
-                                            <p id="username-teacher">Giới tính: Nam</p>
+                                            <p id="username-teacher">Giới tính: {users.parents.length > 0 ? users.parents[0].sex : ""}</p>
                                         </div>
                                         <div className="row no-gutters">
                                             <i className={`fas fa-phone fa-2x`} id="icon-phone"></i>
-                                            <p id="phone">Số điện thoại: {users.teachers.length === 0 ? "" : users.teachers[0].phone}</p>
+                                            <p id="phone">Số điện thoại: {users.parents.length > 0 ? users.parents[0].phone : ""}</p>
                                         </div>
 
                                         <div className="row no-gutters">
                                             <i className={`fas fa-calendar fa-2x`} id="icon-phone"></i>
-                                            <p id="phone">Ngày sinh: 10/10/2012</p>
+                                            <p id="phone">Ngày sinh: {users.parents.length > 0 ? users.parents[0].dateOfBirth : ""}</p>
                                         </div>
 
                                         <div className="row no-gutters">
                                             <i className={`fas fa-envelope fa-2x`} id="icon-phone"></i>
-                                            <p id="phone">Email: nvchung00@gmail.com</p>
+                                            <p id="phone">Email: {users.parents.length > 0 ? users.parents[0].email : ""}</p>
                                         </div>
                                     </div>
                                 </div>

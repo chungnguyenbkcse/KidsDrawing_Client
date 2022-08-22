@@ -34,6 +34,7 @@ import semesterClassesReducer from "./semester_class.reducer";
 import anonymousNotificationsReducer from "./anonymous_notification.reducer";
 import sectionsReducer from "./section.reducer";
 import tutorialPagesReducer from "./tutorial_page.reducer";
+import exercisesReducer from "./exercise.reducer";
 
 
 const initialState: IRootStateType = {
@@ -83,6 +84,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     anonymous_notifications: anonymousNotificationsReducer,
     sections: sectionsReducer,
     tutorial_pages: tutorialPagesReducer,
+    exercises: exercisesReducer,
 });
 
 

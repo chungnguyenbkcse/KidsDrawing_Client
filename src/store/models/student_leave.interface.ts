@@ -1,11 +1,14 @@
 export interface IStudentLeave {
     id: number;
     section_id: number;
+    section_name: string;
     class_id: number;
+    class_name: string;
     student_id: number;
+    student_name: string;
     reviewer_id: number;
     description: string;
-    status: boolean;
+    status: string;
     create_time: string;
     update_time: string;
 }

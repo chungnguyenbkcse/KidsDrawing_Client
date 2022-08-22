@@ -35,9 +35,9 @@ const Account: React.FC = () => {
     let users: IUserState = useSelector((state: IStateType) => state.users);
     console.log(users.teachers)
 
-    let user = users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] }
+    let user = users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
     useEffect(() => {
-        user =  users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: [] }
+        user =  users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
     }, [dispatch, users])
     console.log(user)
     let [formState, setFormState] = useState({

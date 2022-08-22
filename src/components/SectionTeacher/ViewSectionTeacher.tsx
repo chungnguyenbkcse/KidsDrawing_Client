@@ -15,10 +15,12 @@ const ViewSectionTeacher: React.FC = () => {
         id = parseInt(id_x);
     }
 
-    let section_id = 0;
-    const { state } = useLocation<any>();
-    if (state !== undefined && state !== null) {
-        section_id = state.section_id;
+    var id_y = localStorage.getItem('section_id');
+    
+    let section_id = 1;
+
+    if (id_y !== null) {
+        section_id = parseInt(id_y);
     }
 
     const [count, setCount] = useState(1);
@@ -92,7 +94,6 @@ const ViewSectionTeacher: React.FC = () => {
                                                         return ""
                                                     }
                                                     else {
-                                                        console.log(state)
                                                         return <div className="card-body" dangerouslySetInnerHTML={{ __html: TutorialPages.tutorialPages[count-1].description }}>
                                                         </div>
                                                     }

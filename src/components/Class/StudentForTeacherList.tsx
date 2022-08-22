@@ -10,7 +10,11 @@ function StudentList(): JSX.Element {
     const history = useHistory();
 
 
-    const routeChange = () => {
+    const routeChange = (student_id: number, parent_id: number) => {
+        localStorage.removeItem('student_id');
+        localStorage.setItem('student_id', student_id.toString());
+        localStorage.removeItem('parent_id');
+        localStorage.setItem('parent_id', parent_id.toString());
         let path = '/manage-student';
         history.push(path);
     }
@@ -19,26 +23,7 @@ function StudentList(): JSX.Element {
     const studentElements: (JSX.Element | null)[] = students.students.map((student, idx) => {
         if (!student) { return null; }
         return (<tr className={`table-row ${(students.selectedUser && students.selectedUser.id === student.id) ? "selected" : ""}`}
-            key={`student_${idx}`} onClick={routeChange}>
-            {/* <div className="col-xl-12 col-md-12 col-xs-12 mb-4 content-student-teacher">
-                <div className="row justify-content-center">
-                    <div className="col-xl-2 col-md-2 col-xs-2">
-                        <div className="row justify-content-center">
-                            <p className="infor-student-teacher" id="index-infor-student-teacher">{idx + 1}</p>
-                        </div>
-                    </div>
-                    <div className="col-xl-4 col-md-2 col-xs-2">
-                        <div className="row justify-content-center">
-                            <i className={`fas fa-user-circle fa-2x`} id="icon-user"></i>
-                        </div>
-                    </div>
-                    <div className="col-xl-6 col-md-6 col-xs-6">
-                        <div className="row justify-content-center">
-                            <p className="infor-student-teacher" id="name-infor-student-teacher">{student.username}</p>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+            key={`student_${idx}`} onClick={() => {routeChange(student.id, student.parents)}}>
             <div className="col-xl-12 col-md-12 mb-4" >
             <div className={`card shadow h-100 py-0 content-student-teacher`} id="topcard-user">
                 <div className="card-body">

@@ -14,7 +14,7 @@ interface user {
     sex: string,
     phone: string,
     address: string,
-    parents: number[],
+    parents: number,
     createTime: string
 }
 export function getStudent() {

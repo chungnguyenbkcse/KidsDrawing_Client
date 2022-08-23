@@ -84,6 +84,19 @@ const SectionTeacher: React.FC = () => {
         })
     }
 
+    const routeChange3 = (description:  string, name: string, level_name: string) => {
+        let path = '/exercise';
+        localStorage.removeItem('exercise_description');
+        localStorage.removeItem('exercise_name');
+        localStorage.removeItem('exercise_level_name');
+        localStorage.setItem('exercise_description', description);
+        localStorage.setItem('exercise_name', name);
+        localStorage.setItem('exercise_level_name', level_name);
+        history.push({
+            pathname: path
+        });
+    }
+
     return (
         <Fragment>
             <div className="row mb-2">
@@ -191,7 +204,7 @@ const SectionTeacher: React.FC = () => {
                                                             exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_course_${index}`}>
-                                                                        <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { }}>
+                                                                        <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange3(ele.description, ele.name, ele.level_name)}}>
                                                                             <div className="col-xl-4 col-md-4 mb-4">
                                                                                 <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
                                                                             </div>

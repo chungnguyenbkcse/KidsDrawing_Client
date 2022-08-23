@@ -21,12 +21,27 @@ const ExamTeacher: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
     const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
-    if (id_x !== null) {
-        id = parseInt(id_x);
+
+
+    var exercise_description = localStorage.getItem('exercise_description');
+    var exercise_description_: string = "";
+    if (exercise_description !== null) {
+        exercise_description_ = exercise_description;
     }
+
+    var exercise_name = localStorage.getItem('exercise_name');
+    var exercise_name_: string = "";
+    if (exercise_name !== null) {
+        exercise_name_ = exercise_name;
+    }
+
+    var exercise_level_name = localStorage.getItem('exercise_level_name');
+    var exercise_level_name_: string = "";
+    if (exercise_level_name !== null) {
+        exercise_level_name_ = exercise_level_name;
+    }
+
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -49,49 +64,11 @@ const ExamTeacher: React.FC = () => {
                     localStorage.removeItem('schedule_id')
                     dispatch(logout())
                 }
-                else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
-                }
-            }
-            else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
 
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
-
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
+    
 
     const history = useHistory();
     const routeChange = () =>{ 
@@ -121,11 +98,11 @@ const ExamTeacher: React.FC = () => {
                                             <h4 id="full-name">Đề bài</h4>
                                         </div>
                                         <div className="row no-gutters">
-                                            <img className="card-img-top" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1656344895/tranh-bao-ve-moi-truong-01_gpsyin.png" alt="Card image cap" />
-                                            <p id="phone">Vẽ hình tam giác</p>
+                                            <p id="phone">{exercise_name_}</p>
                                         </div>
+                                        <div className="row no-gutters" dangerouslySetInnerHTML={{ __html: exercise_description_ }}></div>
                                         <div className="row">
-                                            <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Phần trăm đánh giá:</span> <span className="header-card-course-value-teacher">10%</span></p>
+                                            <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Phần trăm đánh giá:</span> <span className="header-card-course-value-teacher">{exercise_level_name_}%</span></p>
                                         </div>
                                     </div>
                                 </div>

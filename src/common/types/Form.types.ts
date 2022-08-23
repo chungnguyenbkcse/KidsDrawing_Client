@@ -46,6 +46,11 @@ export  interface IOrderFormState {
     totalPrice: IFormStateField<number>;
 };
 
+export interface IGradeExerciseSubmissionFormState {
+    feedback: IFormStateField<string>;
+    score: IFormStateField<number>;
+}
+
 export interface IUserFormState {
     username: IFormStateField<string>;
     email: IFormStateField<string>;

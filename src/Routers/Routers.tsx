@@ -91,13 +91,13 @@ const Routers: React.FC = () => {
                                 <Route path={`/section/view`}><ViewSectionTeacher /></Route>
                                 <Route path={`/request`}><RequestTeacher /></Route>
                                 <Route path={`/exercise/result-grade`}><ResultGradeExamTeacher /></Route>
-                                <Route path={`/exercise`}><ExamTeacher /></Route>
                                 <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
                                 <Route path={`/classes/detail`}><ClassTeacherDetail /></Route>
                                 <Route path={`/classes`}><ClassTeacher /></Route>
                                 <Route path={`/schedule-teacher`}><ScheduleTeacher /></Route>
                                 <Route path={`/manage-student`}><ManageStudent /></Route>
                                 <Route path={`/exercise/detail`}><DetailExerciseStudent /></Route>
+                                <Route path={`/exercise`}><ExamTeacher /></Route>
                                 <Route path="/"><TeacherHome /></Route>
                             </Switch>
                         </div>

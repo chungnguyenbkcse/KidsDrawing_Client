@@ -32,6 +32,7 @@ import { AnonymousNotificationModificationStatus, IAnonymousNotification } from 
 import { ISection, SectionModificationStatus } from "./section.interface";
 import { ITutorialPage, TutorialPageModificationStatus } from "./tutorial_page.interface";
 import { ExerciseModificationStatus, IExercise } from "./exercise.interface";
+import { ExerciseSubmissionModificationStatus, IExerciseSubmission } from "./exercise_submission.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -77,6 +78,7 @@ export interface IStateType {
     sections: ISectionState;
     tutorial_pages: ITutorialPageState;
     exercises: IExerciseState;
+    exercise_submissions: IExerciseSubmissionState;
 }
 
 export interface IProductState {
@@ -209,6 +211,13 @@ export interface ITeacherLeaveState {
     acceptLeaves: ITeacherLeave[];
     removeLeaves: ITeacherLeave[];
     leaves: ITeacherLeave[];
+}
+
+export interface IExerciseSubmissionState {
+    selectedExerciseSubmission: IExerciseSubmission | null;
+    modificationState: ExerciseSubmissionModificationStatus;
+    exercise_not_gradeds: IExerciseSubmission[];
+    exercise_gradeds: IExerciseSubmission[];
 }
 
 export interface IStudentLeaveState {

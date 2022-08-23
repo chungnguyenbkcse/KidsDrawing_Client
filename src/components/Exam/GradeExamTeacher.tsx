@@ -1,38 +1,81 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Editor from "../../common/components/Quill/Editor";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
+import { IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./GradeExamTeacher.css"
-import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import TextInput from "../../common/components/TextInput";
 import { useHistory } from "react-router-dom";
+import { OnChangeModel, IGradeExerciseSubmissionFormState } from "../../common/types/Form.types";
+import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
+import NumberInput from "../../common/components/NumberInput";
+import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
+import { addNotification } from "../../store/actions/notifications.action";
 
 const GradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
-    console.log(users.teachers)
-    console.log(teacherRegisterQuantifications)
+    const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
-    if (id_x !== null) {
-        id = parseInt(id_x);
+    let user_grade_exercise_submission = {
+        feedback: "",
+        score: 0
+    }
+
+    const [formState, setFormState] = useState({
+        feedback: { error: "", value: user_grade_exercise_submission.feedback },
+        score: { error: "", value: user_grade_exercise_submission.score },
+    });
+
+    function hasFormValueChanged(model: OnChangeModel): void {
+        setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+    }
+
+    function saveForm(){
+        if (student_id === 0 && exercise_submission_id === 0){
+            let x = exercise_submissions.exercise_not_gradeds[0].student_id;
+            let y = exercise_submissions.exercise_not_gradeds[0].id;
+            console.log({
+                student_id: x,
+                exercise_submission_id: y,
+                score: formState.score.value,
+                feedback: formState.feedback.value
+            })
+
+            dispatch(postUserGradeExercise({
+                student_id: student_id,
+                exercise_submission_id: exercise_submission_id,
+                score: formState.score.value,
+                feedback: formState.feedback.value
+            }))
+        }
+        else {
+            dispatch(postUserGradeExercise({
+                student_id: student_id,
+                exercise_submission_id: exercise_submission_id,
+                score: formState.score.value,
+                feedback: formState.feedback.value
+            }))
+        }
+        /* dispatch(postUserGradeExercise({
+            student_id: student_id,
+            exercise_submission_id: exercise_submission_id,
+            score: formState.score.value,
+            description: formState.feedback.value
+        }))
+        */
+        dispatch(addNotification("Chấm bài thành công ", ``));
+    }
+    
+    var class_id = localStorage.getItem('class_id');
+    var class_id_: number = 0;
+    if (class_id !== null) {
+        class_id_ = parseInt(class_id);
     }
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
-    const percentage = 66;
     useEffect(() => {
         if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
             let access_token_decode: any = jwt_decode(access_token)
@@ -54,96 +97,124 @@ const GradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getExerciseSubmissionByClass(class_id_));
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getExerciseSubmissionByClass(class_id_));
             }
         }
     }, [dispatch, access_token, refresh_token]);
-
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
 
     useEffect(() => {
         dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
     }, [path.area, dispatch]);
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
-
     const history = useHistory();
-    const routeChange = () =>{ 
-        let path = '/exercise/result-grade'; 
+    const routeChange = () => {
+        let x = count + 1;
+        setCount(x);
+        if (x < exercise_submissions.exercise_not_gradeds.length){
+            let image_url_ = exercise_submissions.exercise_not_gradeds[x].image_url;
+            let student_name_ = exercise_submissions.exercise_not_gradeds[x].student_name;
+            let time_submit_ = exercise_submissions.exercise_not_gradeds[x].update_time;
+            let student_id_ = exercise_submissions.exercise_not_gradeds[x].student_id;
+            let exercise_submission_id_ = exercise_submissions.exercise_not_gradeds[x].id;
+            setImageUrl(image_url_);
+            setStudentName(student_name_);
+            setTimeSubmit(time_submit_);
+            setStudentId(student_id_);
+            setExerciseSubmissionId(exercise_submission_id_);
+        }
+    }
+
+    const routeChange1 = () => {
+        let path = '/exercise/result-grade';
         history.push({
             pathname: path,
         });
     }
+
+    const [count, setCount] = useState(0);
+    const [image_url, setImageUrl] = useState("");
+    const [student_name, setStudentName] = useState("");
+    const [student_id, setStudentId] = useState(0);
+    const [exercise_submission_id, setExerciseSubmissionId] = useState(0);
+    const [time_submit, setTimeSubmit] = useState("");
     return (
         <Fragment>
 
             <div className="row">
                 <div className="col-xl-6 col-lg-6">
                     <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
+                        <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Bài làm của bé</h6>
                     </div>
-                    <img className="card-img-top" src="https://thumbs.dreamstime.com/b/little-child-baby-girl-drawing-picture-pencils-watercolor-sitting-table-kid-activity-art-class-learning-how-to-194571709.jpg" alt="Card image cap" />
+                    {
+                        function () {
+                            if (count > 0)
+                                return (
+                                    <img className="card-img-top" src={image_url} alt="Card image cap" />
+                                )
+                            else {
+                                if (exercise_submissions.exercise_not_gradeds.length > 0) {
+                                    return (
+                                        <img className="card-img-top" src={exercise_submissions.exercise_not_gradeds[0].image_url} alt="Card image cap" />
+                                    )
+                                }
+                            }
+                        }()
+                    }
                 </div>
                 <div className="col-xl-6 col-lg-6">
                     <div className="row">
-                        <div className={`card shadow h-100 py-2`} id="topcard-user">
-                            <div className="card-body">
-                                <div className="row no-gutters justify-content-center">
-                                    <h4 id="full-name">Thông tin bài nộp</h4>
-                                </div>
-                                <div className="row no-gutters justify-content-center">
-                                    <p id="username-teacher">Tên học sinh: Nguyễn Văn Chung</p>
-                                </div>
-                                <div className="row no-gutters justify-content-center">
-                                    <p id="username-teacher">Thời gian nộp: 2022-10-10 19:00:00</p>
-                                </div>
-                            </div>
+                        <div className={`card shadow h-100 py-2 ml-4 mr-4`} id="topcard-user">
+                            {
+                                function () {
+                                    if (count > 0)
+                                        return (
+                                            <div className="card-body">
+                                                <div className="row no-gutters justify-content-left">
+                                                    <h4 id="full-name">Thông tin bài nộp</h4>
+                                                </div>
+                                                <div className="row no-gutters justify-content-left">
+                                                    <p id="username-teacher">Tên học sinh: {student_name}</p>
+                                                </div>
+                                                <div className="row no-gutters justify-content-left">
+                                                    <p id="username-teacher">Thời gian nộp: {time_submit}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    else {
+                                        if (exercise_submissions.exercise_not_gradeds.length > 0) {
+                                            return (
+                                                <div className="card-body">
+                                                    <div className="row no-gutters justify-content-left">
+                                                        <h4 id="full-name">Thông tin bài nộp</h4>
+                                                    </div>
+                                                    <div className="row no-gutters justify-content-left">
+                                                        <p id="username-teacher">Tên học sinh: {exercise_submissions.exercise_not_gradeds[0].student_name}</p>
+                                                    </div>
+                                                    <div className="row no-gutters justify-content-left">
+                                                        <p id="username-teacher">Thời gian nộp: {exercise_submissions.exercise_not_gradeds[0].update_time}</p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                    }
+                                }()
+                            }
                         </div>
                     </div>
-                    <div className="row">
-                            <TextInput id="input_name"
-                                field="name"
-                                value=""
-                                onChange={() => {}}
-                                required={false}
-                                maxLength={100}
-                                label="Nhập điểm"
-                                placeholder="" 
-                            />
+                    <div className="row mt-4 ml-4">
+                        <NumberInput 
+                            id="input_score"
+                            value={formState.score.value}
+                            field="score"
+                            onChange={hasFormValueChanged}
+                            max={10}
+                            min={0}
+                            label="Nhập điểm"
+                        />
                     </div>
                 </div>
             </div>
@@ -153,14 +224,36 @@ const GradeExamTeacher: React.FC = () => {
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Nhận xét</h6>
+                            <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Nhận xét</h6>
                         </div>
                         <div className="card-body">
                             <div className="form-group">
-                                <Editor getValue={10} isCreate={""} setValue={""}/>
+                                <TextInput id="input_feedback"
+                                    field="feedback"
+                                    value={formState.feedback.value}
+                                    onChange={hasFormValueChanged}
+                                    required={false}
+                                    maxLength={100}
+                                    label=""
+                                    placeholder=""
+                                />
                             </div>
-                            <button className="btn btn-danger" onClick={() => {}}>Lưu</button>
-                            <button className={`btn btn-success left-margin`} onClick={() => {routeChange()}}>Bài tiếp</button>
+                            <button className="btn btn-warning" onClick={() => {saveForm()}}>Lưu</button>
+                            {
+                                function () {
+                                    if (count === exercise_submissions.exercise_not_gradeds.length - 1) {
+                                        return (
+                                            <button className={`btn btn-success left-margin`} onClick={() => { routeChange1() }}>Hoàn thành</button>
+                                        )
+                                    }
+                                    else {
+                                        return (
+                                            <button className={`btn btn-success left-margin`} onClick={() => { routeChange() }}>Bài tiếp</button>
+                                        )
+                                    }
+                                }()
+                            }
+
                         </div>
                     </div>
                 </div>

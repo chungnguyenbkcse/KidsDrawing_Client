@@ -7,7 +7,7 @@ import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addS
 import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import Editor from "../../common/components/Quill/EditorSection";
+import Editor from "../../common/components/Quill/EditorSection1";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { ICourse } from "../../store/models/course.interface";

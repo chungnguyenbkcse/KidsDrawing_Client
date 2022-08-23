@@ -15,7 +15,8 @@ export function postScheduleClass(id: any, data: any) {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
-                    }
+                    },
+                    body: JSON.stringify(data)
                 }
             )
             .then( response => {
@@ -27,8 +28,6 @@ export function postScheduleClass(id: any, data: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(id))
-                dispatch(getMyClass())
-                dispatch(postCalendar(id, data))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

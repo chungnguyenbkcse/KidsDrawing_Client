@@ -9522,10 +9522,10 @@
     "prop-types" "^15.6.0"
     "react-transition-group" "^4.3.0"
 
-"react-toastify@^7.0.4":
-  "integrity" "sha512-Rol7+Cn39hZp5hQ/k6CbMNE2CKYV9E5OQdC/hBLtIQU2xz7DdAm7xil4NITQTHR6zEbE5RVFbpgSwTD7xRGLeQ=="
-  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-7.0.4.tgz"
-  "version" "7.0.4"
+"react-toastify@^8.0.0":
+  "integrity" "sha512-7a5uhwbJ5Ivp5QyJN8P9M8g+7wksJt51QuYAZW0c3pDOh0Jx8lH7XzNHzzJg4NHup9n4zcqH9rwXknnyzYg2OA=="
+  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-8.0.0.tgz"
+  "version" "8.0.0"
   dependencies:
     "clsx" "^1.1.1"
 

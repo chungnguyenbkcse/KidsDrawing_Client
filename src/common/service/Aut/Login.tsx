@@ -3,7 +3,7 @@ import { login } from "../../../store/actions/account.actions";
 import { ToastContainer, toast } from 'react-toastify';
 import { putStatusUser } from "../User/UpdateStatusUser";
 
-export function postAut(username: string, password: string, changeRouteHome: any) {
+export function postAut(username: string, password: string, changeRouteHome: any, id: any) {
     function notify_success() {
         toast.success("Đăng nhập thành công!", {
             position: toast.POSITION.TOP_CENTER
@@ -48,7 +48,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 localStorage.setItem('role_privilege', decoded.role_privilege)
                 localStorage.setItem('id', decoded.id)
                 dispatch(login(username));
-                notify_success();
+                toast.update(id, { render: "Đăng nhập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 setTimeout(function () {
                     changeRouteHome(true);
                 }, 3000); 

@@ -2,7 +2,7 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IUserRegisterJoinSemesterState, IStateType } from "../../store/models/root.interface";
+import { IUserRegisterJoinSemesterState, IStateType, ITurnoverState } from "../../store/models/root.interface";
 import { ChartBar } from "../../common/components/ChartBar";
 import TurnoverList from "./TurnoverList";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
@@ -14,9 +14,11 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import CourseAnalytis from "./CourseAnalytis";
 import UserAnalytis from "./UserAnalytis";
+import { getTurnOverReport } from "../../common/service/TurnOver/GetTurnoverReport";
 
 const Turnover: React.FC = () => {
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
+  const turnovers: ITurnoverState = useSelector((state: IStateType) => state.turnovers);
   const totalPrice: number = userRegisterJoinSemesters.userRegisterJoinSemesters.reduce((prev, next) => prev + ((next.price) || 0), 0);
 
   const dispatch: Dispatch<any> = useDispatch();
@@ -54,6 +56,7 @@ const Turnover: React.FC = () => {
           dispatch(getSemesterClass())
           dispatch(getStudent())
           dispatch(getParent())
+          dispatch(getTurnOverReport())
         }
       }
       else {
@@ -62,23 +65,39 @@ const Turnover: React.FC = () => {
         dispatch(getSemesterClass())
         dispatch(getStudent())
         dispatch(getParent())
+        dispatch(getTurnOverReport())
       }
     }
   }, [dispatch])
 
   const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septempber', 'October', 'November', 'December'];
 
+  let now_data: number[] = [];
+  let last_data: number[] = [];
+  if (turnovers.turnover_now.length > 0 && turnovers.turnover_last.length > 0){
+    turnovers.turnover_now.map(ele => {
+      now_data.push(ele.turnover)
+    })
+
+    turnovers.turnover_last.map(ele => {
+      last_data.push(ele.turnover)
+    })
+  }
+  const currentYear = new Date().getFullYear();
+
+  console.log(turnovers)
+
   const data = {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
-        data: [1, 2, 3, 4, 5],
+        label: `Năm ${currentYear-1}`,
+        data: last_data,
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
-        label: 'Dataset 2',
-        data: [2, 3, 4, 5, 6],
+        label: `Năm ${currentYear}`,
+        data: now_data,
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],

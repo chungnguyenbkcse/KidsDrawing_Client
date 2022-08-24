@@ -33,6 +33,7 @@ import { ISection, SectionModificationStatus } from "./section.interface";
 import { ITutorialPage, TutorialPageModificationStatus } from "./tutorial_page.interface";
 import { ExerciseModificationStatus, IExercise } from "./exercise.interface";
 import { ExerciseSubmissionModificationStatus, IExerciseSubmission } from "./exercise_submission.interface";
+import { ITurnover, TurnoverModificationStatus } from "./turnover.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -79,6 +80,7 @@ export interface IStateType {
     tutorial_pages: ITutorialPageState;
     exercises: IExerciseState;
     exercise_submissions: IExerciseSubmissionState;
+    turnovers: ITurnoverState;
 }
 
 export interface IProductState {
@@ -226,6 +228,13 @@ export interface IStudentLeaveState {
     acceptLeaves: IStudentLeave[];
     removeLeaves: IStudentLeave[];
     leaves: IStudentLeave[];
+}
+
+export interface ITurnoverState {
+    selectedTurnover: ITurnover | null;
+    modificationState: TurnoverModificationStatus;
+    turnover_now: ITurnover[];
+    turnover_last: ITurnover[];
 }
 
 export interface IUserRegisterJoinSemesterState {

@@ -34,6 +34,7 @@ import { ITutorialPage, TutorialPageModificationStatus } from "./tutorial_page.i
 import { ExerciseModificationStatus, IExercise } from "./exercise.interface";
 import { ExerciseSubmissionModificationStatus, IExerciseSubmission } from "./exercise_submission.interface";
 import { ITurnover, TurnoverModificationStatus } from "./turnover.interface";
+import { IReportUser, ReportUserModificationStatus } from "./report_user.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -81,6 +82,7 @@ export interface IStateType {
     exercises: IExerciseState;
     exercise_submissions: IExerciseSubmissionState;
     turnovers: ITurnoverState;
+    report_users: IReportUserState;
 }
 
 export interface IProductState {
@@ -115,6 +117,12 @@ export interface ISemesterState {
     selectedSemester: ISemester | null;
     modificationState: SemesterModificationStatus;
     semesters: ISemester[];
+}
+
+export interface IReportUserState {
+    selectedReportUser: IReportUser | null;
+    modificationState: ReportUserModificationStatus;
+    report_users: IReportUser[];
 }
 
 export interface IExerciseState {

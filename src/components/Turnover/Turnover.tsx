@@ -15,6 +15,7 @@ import jwt_decode from "jwt-decode";
 import CourseAnalytis from "./CourseAnalytis";
 import UserAnalytis from "./UserAnalytis";
 import { getTurnOverReport } from "../../common/service/TurnOver/GetTurnoverReport";
+import { getReportUser } from "../../common/service/ReportUser/GetUserReport";
 
 const Turnover: React.FC = () => {
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
@@ -57,6 +58,7 @@ const Turnover: React.FC = () => {
           dispatch(getStudent())
           dispatch(getParent())
           dispatch(getTurnOverReport())
+          dispatch(getReportUser())
         }
       }
       else {
@@ -66,6 +68,7 @@ const Turnover: React.FC = () => {
         dispatch(getStudent())
         dispatch(getParent())
         dispatch(getTurnOverReport())
+        dispatch(getReportUser())
       }
     }
   }, [dispatch])

@@ -40,6 +40,7 @@ import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
 
 
 const Art: React.FC = () => {

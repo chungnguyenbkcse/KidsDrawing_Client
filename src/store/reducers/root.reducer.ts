@@ -39,6 +39,7 @@ import exerciseSubmissionsReducer from "./exercise_submission.reducer";
 import turnoversReducer from "./turnover.reducer";
 import report_usersReducer from "./report_user.reducer";
 import course_reportsReducer from "./course_report.reducer";
+import exercise_levelsReducer from "./exercise_level.reducer";
 
 
 const initialState: IRootStateType = {
@@ -93,6 +94,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     turnovers: turnoversReducer,
     report_users: report_usersReducer,
     course_reports: course_reportsReducer,
+    exercise_levels: exercise_levelsReducer,
 });
 
 

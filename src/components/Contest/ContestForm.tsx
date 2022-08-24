@@ -156,7 +156,7 @@ const ContestForm: React.FC = () => {
 
       else if (saveFn === editContest) {
         dispatch(putContest(contest.id, {
-           name: formState.name.value,
+          name: formState.name.value,
           description: textHtml,
           registration_time: formState.registration_time.value,
           image_url: url,

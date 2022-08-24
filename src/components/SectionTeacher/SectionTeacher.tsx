@@ -1,13 +1,17 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import Popup from "reactjs-popup";
 import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
+import { setModificationState } from "../../store/actions/exercise.action";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
+import { ExerciseModificationStatus } from "../../store/models/exercise.interface";
 import { IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
+import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
 
 const SectionTeacher: React.FC = () => {
@@ -16,6 +20,16 @@ const SectionTeacher: React.FC = () => {
     const exercises: IExerciseState = useSelector((state: IStateType) => state.exercises);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     console.log(users.teachers)
+
+    const [popup, setPopup] = useState(false);
+
+    function onExerciseRemove() {
+        setPopup(true);
+    }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
+    }
 
     var id_x = localStorage.getItem('id');
     var id: number = 2;
@@ -115,13 +129,32 @@ const SectionTeacher: React.FC = () => {
                     <button
                         className="btn btn-success ml-3"
                         id="btn-add-exercise"
-                        onClick={() => { }}
+                        onClick={() => {
+                            dispatch(setModificationState(ExerciseModificationStatus.Create))
+                            onExerciseRemove()
+                        }}
                     >
                         <i className="fas fa fa-plus"></i>
                         Thêm bài tập
                     </button>
                 </div>
             </div>
+
+            <Popup
+                open={popup}
+                onClose={() => setPopup(false)}
+                closeOnDocumentClick
+            >
+                <>
+                    {
+                        function () {
+                            if ((exercises.modificationState === ExerciseModificationStatus.Create) || (exercises.modificationState === ExerciseModificationStatus.Edit)) {
+                                return <ExerciseForm isCheck={onRemovePopup}/>
+                            }
+                        }()
+                    }
+                </>
+            </Popup>
             <div className="row">
                 <div className="col-xl-6 col-md-6 mb-4">
                     <div className="row">

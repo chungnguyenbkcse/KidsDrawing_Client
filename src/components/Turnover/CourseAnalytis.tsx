@@ -1,6 +1,6 @@
 import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IArtAgeState } from "../../store/models/root.interface";
+import { IStateType, IArtAgeState, ICourseReportState } from "../../store/models/root.interface";
 import { IArtAge, ArtAgeModificationStatus } from "../../store/models/art_age.interface";
 import { setModificationStateArtAge } from "../../store/actions/art_age.action";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
@@ -13,12 +13,24 @@ export type artAgeListProps = {
 };
 
 function CourseAnalytis(props: artAgeListProps): JSX.Element {
+  const course_reports: ICourseReportState = useSelector((state: IStateType) => state.course_reports); 
+
+  let data_list: number[] = []
+  let data_name_list: string[] = []
+  if (course_reports.course_reports.length > 0){
+    course_reports.course_reports.map(ele => {
+          data_list.push(ele.total_register)
+          data_name_list.push(ele.name)
+    })
+  }
+
+  const currentYear = new Date().getFullYear();
     const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: data_name_list,
         datasets: [
           {
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: data_list,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',

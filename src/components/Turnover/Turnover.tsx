@@ -2,7 +2,7 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IUserRegisterJoinSemesterState, IStateType, ITurnoverState } from "../../store/models/root.interface";
+import { IUserRegisterJoinSemesterState, IStateType, ITurnoverState, IReportUserState, ICourseReportState } from "../../store/models/root.interface";
 import { ChartBar } from "../../common/components/ChartBar";
 import TurnoverList from "./TurnoverList";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
@@ -16,12 +16,17 @@ import CourseAnalytis from "./CourseAnalytis";
 import UserAnalytis from "./UserAnalytis";
 import { getTurnOverReport } from "../../common/service/TurnOver/GetTurnoverReport";
 import { getReportUser } from "../../common/service/ReportUser/GetUserReport";
+import { getCourseReport } from "../../common/service/CourseReport/GetCourseReport";
 
 const Turnover: React.FC = () => {
-  const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
   const turnovers: ITurnoverState = useSelector((state: IStateType) => state.turnovers);
-  const totalPrice: number = userRegisterJoinSemesters.userRegisterJoinSemesters.reduce((prev, next) => prev + ((next.price) || 0), 0);
+  const report_users: IReportUserState = useSelector((state: IStateType) => state.report_users); 
+  const course_reports: ICourseReportState = useSelector((state: IStateType) => state.course_reports); 
 
+  const totalPrice: number = turnovers.turnover_now.reduce((prev, next) => prev + ((next.turnover) || 0), 0);
+  const totalUserNew: number = report_users.report_users.reduce((prev, next) => prev + ((next.total) || 0), 0);
+  const totalCourse: number = course_reports.course_reports.reduce((prev, next) => prev + ((next.total_register) || 0), 0);
+  
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Doanh thu", ""));
 
@@ -59,6 +64,7 @@ const Turnover: React.FC = () => {
           dispatch(getParent())
           dispatch(getTurnOverReport())
           dispatch(getReportUser())
+          dispatch(getCourseReport())
         }
       }
       else {
@@ -69,6 +75,7 @@ const Turnover: React.FC = () => {
         dispatch(getParent())
         dispatch(getTurnOverReport())
         dispatch(getReportUser())
+        dispatch(getCourseReport())
       }
     }
   }, [dispatch])
@@ -115,9 +122,8 @@ const Turnover: React.FC = () => {
 
       <div className="row">
         <TopCard title="DOANH THU" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
-        <TopCard title="KHÓA HỌC" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
-        <TopCard title="CUỘC THI" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
-        <TopCard title="NGƯỜI DÙNG MỚI" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
+        <TopCard title="KHÓA HỌC" text={`${totalCourse}`} icon="warehouse" class="success" />
+        <TopCard title="NGƯỜI DÙNG MỚI" text={`${totalUserNew}`} icon="user" class="success" />
       </div>
 
       <div className="row">

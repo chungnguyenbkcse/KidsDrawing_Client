@@ -7,6 +7,7 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { postTeacher } from "../../common/service/Teacher/PostTeacher";
 import { putTeacher } from "../../common/service/Teacher/PutTeacher";
 import { IUserFormState } from "../../common/types/Form.types";
+import { toast } from "react-toastify";
 
 export type teacherListProps = {
   isCheck: (value: boolean) => void;
@@ -24,6 +25,10 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
   }
 
   function saveForm(formState: any, saveFn: Function): void {
+    const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+      position: toast.POSITION.TOP_CENTER
+    });
+
     if (user) {
       console.log({
         username: formState.username,
@@ -51,7 +56,7 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
           phone: null,
           address: null,
           roleNames: ["TEACHER_USER"]
-        }));
+        }, id));
       }
     }
   }

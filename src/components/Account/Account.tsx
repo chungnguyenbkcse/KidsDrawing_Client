@@ -68,7 +68,9 @@ const Account: React.FC = () => {
 
     function saveForm(formState: IUser1FormState, saveFn: Function): void {
         if (user) {
-
+            const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
             if (saveFn === addTeacher) {
                 dispatch(postTeacher({
                     username: formState.username.value,
@@ -83,7 +85,7 @@ const Account: React.FC = () => {
                     address: formState.address.value,
                     parent_ids: user.parents,
                     roleNames: [userRole]
-                }));
+                }, id));
             }
 
             else if (saveFn === editTeacher) {
@@ -100,7 +102,7 @@ const Account: React.FC = () => {
                     address: formState.address.value,
                     parent_ids: user.parents,
                     roleNames: [userRole]
-                }));
+                }, id));
             }
 
             dispatch(addNotification("Thông tin cá nhân", ` ${formState.username.value} chỉnh bởi bạn`));

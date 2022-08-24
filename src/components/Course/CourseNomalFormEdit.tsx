@@ -22,6 +22,7 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
+import { toast } from "react-toastify";
 
 type Options = {
     name: string;
@@ -121,6 +122,9 @@ const CourseNomalFormEdit: React.FC = () => {
 
     function saveForm(formState: ICourseNomalFormState, saveFn: Function, url: string): void {
         if (course) {
+            const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
 
             if (saveFn === addCourse) {
                 dispatch(postCourse({
@@ -134,7 +138,7 @@ const CourseNomalFormEdit: React.FC = () => {
                     art_age_id: formState.art_age_id.value,
                     art_level_id: formState.art_level_id.value,
                     creator_id: localStorage.getItem('id')
-                }))
+                }, id))
             }
 
             else if (saveFn === editCourse) {
@@ -149,10 +153,9 @@ const CourseNomalFormEdit: React.FC = () => {
                     art_age_id: formState.art_age_id.value,
                     art_level_id: formState.art_level_id.value,
                     creator_id: localStorage.getItem('id')
-                }))
+                }, id))
             }
 
-            dispatch(addNotification("Khóa học ", `${formState.name.value} chỉnh bởi bạn`));
             dispatch(clearSelectedCourse());
             dispatch(setModificationState(CourseModificationStatus.None));
             routeHome()

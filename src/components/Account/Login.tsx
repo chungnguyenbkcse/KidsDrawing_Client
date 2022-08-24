@@ -30,7 +30,7 @@ const Login: React.FC = () => {
   function submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if(isFormInvalid()) { return; }
-    const id = toast.loading("Đang xác thực...", {
+    const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
       position: toast.POSITION.TOP_CENTER
     });
     dispatch(postAut(formState.username.value, formState.password.value, changeRouteHome, id))

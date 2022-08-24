@@ -1,8 +1,9 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError, addCourse } from "../../../store/actions/course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getCourse } from "./GetCourse";
 
-export function postCourse(course: any) {
+export function postCourse(course: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -20,31 +21,18 @@ export function postCourse(course: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(postCourse(course))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                    throw Error(response.statusText);
                 }
                 return response
             })
             .then (data => {
                 console.log(data)
-                dispatch(fetchDataRequest());
+                toast.update(idx, { render: "Thêm khóa học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 dispatch(getCourse())
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Thêm khóa học không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
-                localStorage.removeItem('access_token') // Authorization
-                localStorage.removeItem('refresh_token')
-                localStorage.removeItem('username')
-                localStorage.removeItem('role_privilege')
-                localStorage.removeItem('id')
-                localStorage.removeItem('contest_id')
-                localStorage.removeItem('schedule_id')
             });
     };
 }

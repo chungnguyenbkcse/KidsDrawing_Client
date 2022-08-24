@@ -14,6 +14,7 @@ import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmi
 import NumberInput from "../../common/components/NumberInput";
 import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
 import { addNotification } from "../../store/actions/notifications.action";
+import { toast } from "react-toastify";
 
 const GradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -34,6 +35,10 @@ const GradeExamTeacher: React.FC = () => {
     }
 
     function saveForm(){
+        const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+        
         if (student_id === 0 && exercise_submission_id === 0){
             let x = exercise_submissions.exercise_not_gradeds[0].student_id;
             let y = exercise_submissions.exercise_not_gradeds[0].id;
@@ -49,7 +54,7 @@ const GradeExamTeacher: React.FC = () => {
                 exercise_submission_id: exercise_submission_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value
-            }))
+            }, id))
         }
         else {
             dispatch(postUserGradeExercise({
@@ -57,7 +62,7 @@ const GradeExamTeacher: React.FC = () => {
                 exercise_submission_id: exercise_submission_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value
-            }))
+            }, id))
         }
         /* dispatch(postUserGradeExercise({
             student_id: student_id,

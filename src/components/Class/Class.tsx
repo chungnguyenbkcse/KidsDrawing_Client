@@ -34,6 +34,7 @@ import { getSemesterClass } from "../../common/service/SemesterClass/GetSemester
 import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 import { getLesson } from "../../common/service/Lesson/GetLesson";
 import { getCourse } from "../../common/service/Course/GetCourse";
+import { toast } from "react-toastify";
 type Options = {
     name: string;
     value: any;
@@ -145,8 +146,11 @@ const Class: React.FC = () => {
         })
         console.log(time)
 
-        dispatch(postScheduleClass(semesterId, { time: time }));
-        dispatch(addNotification("Xếp lớp", `Xếp lớp thành công!`));
+        const id = toast.loading("Đang xếp lớp. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+
+        dispatch(postScheduleClass(semesterId, { time: time }, id));
         dispatch(clearSelectedMyClass());
         dispatch(setModificationState(MyClassModificationStatus.None));
     }

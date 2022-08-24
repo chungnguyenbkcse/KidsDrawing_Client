@@ -1,9 +1,10 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/tutorial_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postTutorialTemplatePage } from "../TutorialTemplatePage/PostTutorialTemplatePage";
 import { getTutorialTemplate } from "./GetTutorialTemplate";
 
-export function postTutorialTemplate(tutorial: any[], data: any) {
+export function postTutorialTemplate(tutorial: any[], data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -21,13 +22,7 @@ export function postTutorialTemplate(tutorial: any[], data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(postTutorialTemplate(tutorial,data))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                    throw Error(response.statusText);
                 }
                 return response.json()
             })
@@ -42,9 +37,10 @@ export function postTutorialTemplate(tutorial: any[], data: any) {
                         number: value.page
                     }))
                 })
+                toast.update(idx, { render: "Thêm giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Thêm giáo án không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
             });
     };

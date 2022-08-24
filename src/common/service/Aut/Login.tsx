@@ -1,22 +1,10 @@
 import jwt_decode from "jwt-decode";
 import { login } from "../../../store/actions/account.actions";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { putStatusUser } from "../User/UpdateStatusUser";
 
 export function postAut(username: string, password: string, changeRouteHome: any, id: any) {
-    function notify_success() {
-        toast.success("Đăng nhập thành công!", {
-            position: toast.POSITION.TOP_CENTER
-        });
-    }
-
-    function notify_error() {
-        toast.error("Đăng nhập không thành công!", {
-            position: toast.POSITION.TOP_CENTER
-        });
-    }
-
-
+    
     return (dispatch: any) => {
         fetch(
             `${process.env.REACT_APP_API_URL}/auth`, {
@@ -88,7 +76,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 };            
             })
             .catch(error => {
-                notify_error();
+                toast.update(id, { render: "Đăng nhập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
             });
     };
 }

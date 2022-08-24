@@ -1,8 +1,9 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getArtLevel } from "./GetArtLevel";
 
-export function putArtLevel(id: any, data: any) {
+export function putArtLevel(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -20,23 +21,18 @@ export function putArtLevel(id: any, data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(putArtLevel(id,data))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                    throw Error(response.statusText);
                 }
                 return response
             })
             .then (data => {
                 console.log(data)
                 console.log(id)
+                toast.update(idx, { render: "Chỉnh trình độ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 dispatch(getArtLevel())
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Chỉnh trình độ không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
             });
     };

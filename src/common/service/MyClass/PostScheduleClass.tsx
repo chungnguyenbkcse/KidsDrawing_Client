@@ -1,9 +1,10 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getMyClass } from "./GetMyClass";
 import { postCalendar } from "./PostCalendar";
 
-export function postScheduleClass(id: any, data: any) {
+export function postScheduleClass(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -27,10 +28,10 @@ export function postScheduleClass(id: any, data: any) {
             })
             .then (val => {
                 console.log(val)
-                dispatch(fetchDataSuccess(id))
+                toast.update(id, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(id, { render: "Xếp lớp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
             });
     };

@@ -1,8 +1,9 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getArtAge } from "./GetArtAge";
 
-export function postArtAge(data: any) {
+export function postArtAge(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -20,22 +21,18 @@ export function postArtAge(data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(postArtAge(data))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                    throw Error(response.statusText);
                 }
                 return response
             })
             .then (data => {
                 console.log(data)
+                toast.update(idx, { render: "Thêm độ tuổi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 dispatch(getArtAge())
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Thêm độ tuổi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
             });
     };

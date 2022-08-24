@@ -1,8 +1,9 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError, removeArtTypeAll, addArtType } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getArtType } from "./GetArtType";
 
-export function postArtType(data: any) {
+export function postArtType(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return (dispatch: any) => {
@@ -21,13 +22,7 @@ export function postArtType(data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(postArtType(data))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                    throw Error(response.statusText);
                 }
                 else {
                     return response
@@ -41,12 +36,13 @@ export function postArtType(data: any) {
                         description: data.description
                     }
                     dispatch(addArtType(art_type))
+                    toast.update(idx, { render: "Thêm thể loại thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
                     //dispatch(getArtType())
                     //postRefreshToken()
                     //postArtType(data)
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Thêm thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
             });
     };

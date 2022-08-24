@@ -3,7 +3,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { postTutorialTemplate } from "../TutorialTemplate/PostTutorialTemplate";
 import { getSectionTemplate } from "./GetSectionTemplate";
 
-export function postSectionTemplate(tutorial: any[], data: any) {
+export function postSectionTemplate(tutorial: any[], data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
@@ -22,13 +22,7 @@ export function postSectionTemplate(tutorial: any[], data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(postSectionTemplate(tutorial,data))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                    throw Error(response.statusText);
                 }
                 return response.json()
             })
@@ -39,7 +33,7 @@ export function postSectionTemplate(tutorial: any[], data: any) {
                         section_template_id: data.id,
                         name: data.name,
                         description: data.description,
-                }))
+                }, idx))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -14,6 +14,7 @@ import { ICourse } from "../../store/models/course.interface";
 import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
 import { clearSelectedCourse } from "../../store/actions/course.action";
+import { toast } from "react-toastify";
 type Options = {
   name: string;
   value: any;
@@ -109,6 +110,10 @@ const LessonPlan: React.FC = () => {
 
   function saveForm(formState: ISectionTemplateFormState, saveFn: Function, contentTutorialSections: TutorialSectionTemplate[]): void {
     if (section_template) {
+      const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      
       dispatch(saveFn({
         ...section_template,
         name: formState.name.value,
@@ -130,11 +135,10 @@ const LessonPlan: React.FC = () => {
             teaching_form: contentSection.teaching_form,
             course_id: course_id,
             creator_id: localStorage.getItem('id')
-          }))
+          }, id))
         })
       }
 
-      dispatch(addNotification("Giáo trình ", `${formState.name.value} chỉnh bởi bạn`));
       dispatch(clearSelectedSectionTemplate());
       dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
     }

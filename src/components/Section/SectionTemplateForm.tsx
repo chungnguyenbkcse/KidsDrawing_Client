@@ -16,6 +16,7 @@ import { ICourse } from "../../store/models/course.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getTutorialTemplateBySectionTemplate } from "../../common/service/TutorialTemplate/GetTutorialTemplateBySectionTemplate";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export type SectionTemplateListProps = {
     children?: React.ReactNode;
@@ -130,15 +131,10 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function saveForm(formState: ISectionTemplateFormState, saveFn: Function, contentTutorialSections: TutorialSectionTemplate[]): void {
         if (section_template) {
-            dispatch(saveFn({
-                ...section_template,
-                name: formState.name.value,
-                description: formState.description.value,
-                number: formState.number.value,
-                teaching_form: formState.teaching_form.value,
-                course_id: formState.course_id.value,
-                creator_id: formState.creator_id.value
-            }));
+
+            const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
 
             if (saveFn === addSectionTemplate && section_template !== null) {
                 console.log("hello")
@@ -151,11 +147,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                         teaching_form: contentSection.teaching_form,
                         course_id: course_id,
                         creator_id: localStorage.getItem('id')
-                    }))
+                    }, id))
                 })
             }
-
-            dispatch(addNotification("Giáo trình ", `${formState.name.value} chỉnh bởi bạn`));
             dispatch(clearSelectedSectionTemplate());
             dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
         }

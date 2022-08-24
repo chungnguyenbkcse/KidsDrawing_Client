@@ -1,10 +1,11 @@
+import { toast } from "react-toastify";
 import { addNotification } from "../../../store/actions/notifications.action";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTeacher, clearSelectedUser, setModificationState } from "../../../store/actions/users.action";
 import { UserModificationStatus } from "../../../store/models/user.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacher } from "./GetTeacher";
 
-export function postTeacher(data: any) {
+export function postTeacher(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
@@ -25,7 +26,7 @@ export function postTeacher(data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postTeacher(data))
+                        dispatch(postTeacher(data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -35,12 +36,11 @@ export function postTeacher(data: any) {
             })
             .then (val => {
                 console.log(val)
-                dispatch(fetchDataSuccess(data))
+                toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 dispatch(getTeacher())
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
-                console.log("error")
+                toast.update(idx, { render: "Chỉnh thông tin tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
             });
     };
 }

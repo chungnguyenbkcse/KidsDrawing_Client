@@ -8,6 +8,7 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IArtTypeFormState } from "../../common/types/Form.types";
 import { postArtType } from "../../common/service/ArtType/PostArtType";
 import { putArtType } from "../../common/service/ArtType/PutArtType";
+import { toast } from "react-toastify";
 
 export type artTypeListProps = {
   isCheck: (value: boolean) => void;
@@ -46,18 +47,22 @@ function TeachTypeForm(props: artTypeListProps): JSX.Element {
 
   function saveForm(formState: IArtTypeFormState, saveFn: Function): void {
     if (art_type) {
+      const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      
       if (saveFn === addArtType) {
         dispatch(postArtType({
           name: formState.name.value,
           description: formState.description.value
-        }))
+        }, id))
       }
 
       else if (saveFn === editArtType) {
         dispatch(putArtType(art_type.id, {
           name: formState.name.value,
           description: formState.description.value
-        }))
+        }, id))
       }
 
       dispatch(addNotification("Thể loại ", `${formState.name.value} chỉnh bởi bạn`));

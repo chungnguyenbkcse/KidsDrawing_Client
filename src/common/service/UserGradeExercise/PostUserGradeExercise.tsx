@@ -1,7 +1,8 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postUserGradeExercise(data: any) {
+export function postUserGradeExercise(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -25,9 +26,10 @@ export function postUserGradeExercise(data: any) {
             })
             .then (data => {
                 console.log(data)
+                toast.update(idx, { render: "Chấm điểm bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Chấm điểm bài tập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
             });
     };

@@ -65,6 +65,9 @@ function AccountForm(props: teacherListProps): JSX.Element {
 
     function saveForm(formState: IUser1FormState, saveFn: Function): void {
         if (user) {
+            const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
 
             if (saveFn === addTeacher) {
                 dispatch(postTeacher({
@@ -80,7 +83,7 @@ function AccountForm(props: teacherListProps): JSX.Element {
                     address: formState.address.value,
                     parent_ids: user.parents,
                     roleNames: [roleUser]
-                }));
+                }, id));
             }
 
             else if (saveFn === editTeacher) {
@@ -97,10 +100,8 @@ function AccountForm(props: teacherListProps): JSX.Element {
                     address: formState.address.value,
                     parent_ids: user.parents,
                     roleNames: [roleUser]
-                }));
+                }, id));
             }
-
-            dispatch(addNotification("Thông tin cá nhân", ` ${formState.username.value} chỉnh bởi bạn`));
             dispatch(clearSelectedUser());
             dispatch(setModificationState(UserModificationStatus.None));
             notify()

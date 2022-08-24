@@ -8,6 +8,7 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IArtLevelFormState } from "../../common/types/Form.types";
 import { postArtLevel } from "../../common/service/ArtLevel/PostArtLevel";
 import { putArtLevel } from "../../common/service/ArtLevel/PutArtLevel";
+import { toast } from "react-toastify";
 
 export type artLevelListProps = {
   isCheck: (value: boolean) => void;
@@ -47,22 +48,24 @@ function TeachLevelForm(props: artLevelListProps): JSX.Element {
 
   function saveForm(formState: IArtLevelFormState, saveFn: Function): void {
     if (art_level) {
-
+      const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      
       if (saveFn === addArtLevel) {
         dispatch(postArtLevel({
           name: formState.name.value,
           description: formState.description.value
-        }))
+        }, id))
       }
 
       else if (saveFn === editArtLevel) {
         dispatch(putArtLevel(art_level.id, {
           name: formState.name.value,
           description: formState.description.value
-        }))
+        }, id))
       }
 
-      dispatch(addNotification("Trình độ ", `${formState.name.value} chỉnh bởi bạn`));
       dispatch(clearSelectedArtLevel());
       dispatch(setModificationStateArtLevel(ArtLevelModificationStatus.None));
     }

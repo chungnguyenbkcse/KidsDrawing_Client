@@ -8,6 +8,7 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IUserFormState } from "../../common/types/Form.types";
 import { postTeacher } from "../../common/service/Teacher/PostTeacher";
 import { putTeacher } from "../../common/service/Teacher/PutTeacher";
+import { toast } from "react-toastify";
 
 export type teacherListProps = {
   isCheck: (value: boolean) => void;
@@ -48,6 +49,10 @@ function TeacherForm(props: teacherListProps): JSX.Element {
   function saveForm(formState: IUserFormState, saveFn: Function): void {
     if (user) {
 
+      const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+
       if (saveFn === addTeacher){
         dispatch(postTeacher({
           username: formState.username.value,
@@ -61,7 +66,7 @@ function TeacherForm(props: teacherListProps): JSX.Element {
           phone: null,
           address: null,
           roleNames: ["TEACHER_USER"]
-        }));
+        }, id));
       }
 
       else if (saveFn === editTeacher) {
@@ -77,7 +82,7 @@ function TeacherForm(props: teacherListProps): JSX.Element {
           phone: null,
           address: null,
           roleNames: ["TEACHER_USER"]
-        }));
+        }, id));
       }
 
       dispatch(addNotification("Giáo viên", ` ${formState.username.value} chỉnh bởi bạn`));

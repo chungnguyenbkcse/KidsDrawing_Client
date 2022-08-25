@@ -34,7 +34,7 @@ import { getSemesterClass } from "../../common/service/SemesterClass/GetSemester
 import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 import { getLesson } from "../../common/service/Lesson/GetLesson";
 import { getCourse } from "../../common/service/Course/GetCourse";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 type Options = {
     name: string;
     value: any;
@@ -151,8 +151,6 @@ const Class: React.FC = () => {
         });
 
         dispatch(postScheduleClass(semesterId, { time: time }, id));
-        dispatch(clearSelectedMyClass());
-        dispatch(setModificationState(MyClassModificationStatus.None));
     }
 
     function onSemesterClassRemove() {
@@ -180,7 +178,7 @@ const Class: React.FC = () => {
                 <TopCard title="SỐ LỚP THEO KÌ" text={`${numberSemesterClassesCount}`} icon="box" class="primary" />
                 <TopCard title="SỐ LỚP HỌC" text={`${numberItemsCount}`} icon="box" class="primary" />
             </div>
-
+            <ToastContainer />
             <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">

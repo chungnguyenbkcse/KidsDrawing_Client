@@ -17,6 +17,8 @@ function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListPr
     return quantifications.push(ele.course_id);
   })
 
+  console.log(course_teachers.not_register_courses)
+
     const teacherRegisterQuantificationElements: (JSX.Element | null)[] = course_teachers.not_register_courses.map((ele, index) => {
         if (!ele || !quantifications.includes(ele.course_id)) { return null; }
         return (

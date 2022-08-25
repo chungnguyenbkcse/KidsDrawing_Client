@@ -8,6 +8,7 @@ import { OnChangeModel, IExerciseFormState } from "../../common/types/Form.types
 import { IExerciseLevel } from "../../store/models/exercise_level.interface";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { postExercise } from "../../common/service/Exercise/PostExercise";
+import { toast } from "react-toastify";
 
 export type exerciseListProps = {
     isCheck: (value: boolean) => void;
@@ -72,13 +73,16 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
 
     function saveForm(formState: IExerciseFormState, saveFn: Function): void {
         if (exercise) {
+            const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
             if (saveFn === addExercise) {
                 dispatch(postExercise({
                     section_id: section_id,
                     level_id: formState.level_id.value ,
                     name: formState.name.value,
                     description: formState.description.value 
-                }))
+                }, id))
             }
 
             dispatch(clearSelectedExercise());

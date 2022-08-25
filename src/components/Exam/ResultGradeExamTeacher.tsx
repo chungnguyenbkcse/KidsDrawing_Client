@@ -4,20 +4,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
+import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExeerciseAndClass";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserState } from "../../store/models/root.interface";
+import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import ScoreExamList from "./ScoreExamList";
 
 const ResultGradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const students: IUserState = useSelector((state: IStateType) => state.users);
-    const numberStudentsCount: number = students.students.length;
+    const user_grade_exercise_submissions: IUserGradeExerciseSubmissionState  = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const max = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
+    const min = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.min(a, b.score), 0);
     var class_id = localStorage.getItem('class_id');
     var class_id_: number = 2;
     if (class_id !== null) {
         class_id_ = parseInt(class_id);
+    }
+
+    var id_y = localStorage.getItem('exercise_id');
+    let exercise_id = 0;
+
+    if (id_y !== null) {
+        exercise_id = parseInt(id_y);
     }
 
 
@@ -45,11 +55,11 @@ const ResultGradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {    
-                    dispatch(getInfoMyClass(class_id_))
+                    dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id))
                 }
             }
             else {     
-                dispatch(getInfoMyClass(class_id_))
+                dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id))
             }
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
@@ -67,8 +77,8 @@ const ResultGradeExamTeacher: React.FC = () => {
         <Fragment>
             
             <div className="row">
-                <TopCard title="ĐIỂM CAO NHẤT" text={`${numberStudentsCount}`} icon="book" class="primary" />
-                <TopCard title="ĐIỂM THẤP NHẤT" text={`${numberStudentsCount}`} icon="book" class="danger" />
+                <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
+                <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
             </div>
 
             <div className="row">
@@ -88,7 +98,7 @@ const ResultGradeExamTeacher: React.FC = () => {
                     <div className="row justify-content-center">
                         <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
                         onRouteChange()}}>
-                            Nộp điểm
+                            Xem review
                             <i className="fas fa fa-arrow-right"></i>
                     </button>
                     </div>

@@ -2,6 +2,7 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
@@ -97,7 +98,7 @@ const ClassTeacherDetail: React.FC = () => {
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
+            <ToastContainer />
             <div className="row">
                 <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberStudentsCount}`} icon="book" class="primary" />
                 <TopCard title="SỐ HỌC SINH" text={`${numberStudentsCount}`} icon="book" class="danger" />

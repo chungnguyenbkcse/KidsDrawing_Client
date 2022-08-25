@@ -6,44 +6,62 @@ import Popup from "reactjs-popup";
 import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
+import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExeerciseAndClass";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 
 import NotificationClassTeacher from "../Class/NotificationClassTeacher";
 import StudentList from "../Class/StudentForTeacherList";
 import ScoreExamList from "./ScoreExamList";
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
+
 
 const AnalytisResultGradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
-    console.log(teacherRegisterQuantifications)
+    const user_grade_exercise_submissions: IUserGradeExerciseSubmissionState  = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const max = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
+    const min = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.min(a, b.score), 0);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const students: IUserState = useSelector((state: IStateType) => state.users);
-    const numberStudentsCount: number = students.students.length;
+
+    let student: string[] = []
+    let scores: number[] = []
+    if (user_grade_exercise_submissions.user_grade_exercise_submissions.length > 0){
+        user_grade_exercise_submissions.user_grade_exercise_submissions.map(ele => {
+            student.push(ele.student_name)
+            scores.push(ele.score)
+        })
+    }
+
+    var class_id = localStorage.getItem('class_id');
+    var class_id_: number = 2;
+    if (class_id !== null) {
+        class_id_ = parseInt(class_id);
+    }
+
+    var id_y = localStorage.getItem('exercise_id');
+    let exercise_id = 0;
+
+    if (id_y !== null) {
+        exercise_id = parseInt(id_y);
+    }
+
+    const labels = student;
+    let data = {
+        labels,
+        datasets: [
+            {
+                label: 'Điêm',
+                data: scores,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ],
+    };
+
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -76,13 +94,11 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());       
-                    dispatch(getInfoMyClass(3))
+                    dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id))
                 }
             }
-            else {
-                dispatch(clearSelectedTeacherRegisterQuatification());       
-                dispatch(getInfoMyClass(3))
+            else {   
+                dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id)) 
             }
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
@@ -113,8 +129,8 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="ĐIỂM CAO NHẤT" text={`${numberStudentsCount}`} icon="book" class="primary" />
-                <TopCard title="ĐIỂM THẤP NHẤT" text={`${numberStudentsCount}`} icon="book" class="danger" />
+                <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
+                <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
             </div>
 
             <div className="row">
@@ -142,3 +158,7 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
 };
 
 export default AnalytisResultGradeExamTeacher;
+function dispatch(arg0: (dispatch: any) => void) {
+    throw new Error("Function not implemented.");
+}
+

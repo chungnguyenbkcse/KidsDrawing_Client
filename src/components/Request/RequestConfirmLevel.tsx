@@ -10,6 +10,7 @@ import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { ToastContainer } from "react-toastify";
 
 const RequestConfirmLevel: React.FC = () => {
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
@@ -62,7 +63,7 @@ const RequestConfirmLevel: React.FC = () => {
     <Fragment>
       <h1 className="h3 mb-2 text-gray-800">Yêu cầu xác nhận trình độ</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
+      <ToastContainer />
       <div className="row">
         <TopCard title="SỐ YÊU CẦU" text={`${numberItemsCount}`} icon="box" class="primary" />
       </div>

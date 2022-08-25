@@ -1,9 +1,10 @@
 import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, editTeacherRegisterQuatificationNotApprovedNow } from "../../../store/actions/teacher_register_quantification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacherRegisterQuantificationByTeacherId } from "./GetTeacherRegisterQuantificationByTeacherId";
 
-export function putTeacherRegisterLevel(id: any, teacher_level: any) {
+export function putTeacherRegisterLevel(id: any, teacher_level: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
@@ -22,23 +23,18 @@ export function putTeacherRegisterLevel(id: any, teacher_level: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    if (response.status === 403) {
-                        dispatch(postRefreshToken())
-                        dispatch(putTeacherRegisterLevel(teacher_level, id))
-                    }
-                    else {
-                        throw Error(response.statusText);
-                    }
+                   throw Error(response.statusText);
                 }
                 return response
             })
             .then (data => {
+                toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 dispatch(fetchDataSuccess(teacher_level))
                 dispatch(getTeacherRegisterQuantificationByTeacherId(teacher_level.teacher_id))
                 console.log(data)
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Gửi yêu cầu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 console.log("error")
             });
     };

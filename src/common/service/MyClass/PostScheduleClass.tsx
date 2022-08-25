@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 
 export function postScheduleClass(id: any, data: any, idx: any) {
+    console.log("post ++")
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         fetch(
@@ -8,16 +9,24 @@ export function postScheduleClass(id: any, data: any, idx: any) {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
-                        'Access-Control-Allow-Credentials': 'true'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
                 }
             )
             .then( response => {
+                if (response.status === 503) {
+                    toast.update(idx, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 100 });
+                    return 1
+                }
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 503) {
+                        toast.update(idx, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 100 });
+                        return 1;
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 return response
             })

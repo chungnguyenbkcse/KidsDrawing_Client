@@ -4,14 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
+import { getExerciseByClass } from "../../common/service/Exercise/GetExerciseByClass";
+import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
 import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
+import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IRootPageStateType, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 
@@ -20,9 +23,11 @@ const DetailClassTeacher: React.FC = () => {
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
 
+    const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
+
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = sections.sections.length;
-    const numberNotApprovedNowCount: number = sections.sections.length;
+    const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -63,12 +68,16 @@ const DetailClassTeacher: React.FC = () => {
                     dispatch(clearSelectedTeacherRegisterQuatification());
                     dispatch(getSectionByClass(class_id))
                     dispatch(getUserById(id))
+                    dispatch(getTeacher())
+                    dispatch(getExerciseSubmissionByClass(class_id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
                 dispatch(getSectionByClass(class_id))
                 dispatch(getUserById(id))
+                dispatch(getTeacher())
+                dispatch(getExerciseSubmissionByClass(class_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
@@ -130,7 +139,7 @@ const DetailClassTeacher: React.FC = () => {
                         }}
                     >
                         <i className="fas fa fa-plus"></i>
-                        Đăng kí nghỉ học
+                        Đăng kí nghỉ dạy
                     </button>
                 </div>
             </div>
@@ -184,26 +193,35 @@ const DetailClassTeacher: React.FC = () => {
 
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Bài kiểm tra cần chấm</h3>
-                    <div className="row row-section mb-4 ml-2" onClick={routeChange1}>
-                        <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="Card image cap" />
-                        </div>
-                        <div className="col-xl-8 col-md-8 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Bài tập 1</h3>
-                            <h4 className=" mb-2" id="level-teacher">Vẽ con mèo</h4>
+                    <div className="table-responsive portlet">
+                        <table className="table">
+                            <thead className="thead-light">
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {
+                        exercise_submissions.exercise_not_gradeds.map((ele, index) => {
+                            return (
+                                <tr className={`table-row`} key={`semester_course_${index}`}>
+                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange1()}}>
+                                    <div className="col-xl-4 col-md-4 mb-4">
+                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                    </div>
+                                    <div className="col-xl-8 col-md-8 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
+                                        <h3 className=" mb-2" id="level-teacher">Học sinh: {ele.student_name}</h3>
+                                    </div>
+                                </div>
+                                </tr>
+                            )
+                        })
+                    }
+                            </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <div className="row row-section mb-4 ml-2">
-                        <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="Card image cap" />
-                        </div>
-                        <div className="col-xl-8 col-md-8 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Bài tập 2</h3>
-                            <h4 className=" mb-2" id="level-teacher">Vẽ con chó</h4>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Buổi nghỉ</h3>

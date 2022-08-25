@@ -5,22 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
+import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
+import { IExerciseSubmissionState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 
 const ExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
+    const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     console.log(users.teachers)
     console.log(teacherRegisterQuantifications)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
+    const numberApprovedCount: number = exercise_submissions.exercise_not_gradeds.length;
+    const numberNotApprovedNowCount: number = exercise_submissions.exercise_gradeds.length;
 
 
     var exercise_description = localStorage.getItem('exercise_description');
@@ -40,6 +42,14 @@ const ExamTeacher: React.FC = () => {
     if (exercise_level_name !== null) {
         exercise_level_name_ = exercise_level_name;
     }
+
+    var id_y = localStorage.getItem('exercise_id');
+    let exercise_id = 0;
+
+    if (id_y !== null) {
+        exercise_id = parseInt(id_y);
+    }
+
 
 
     let access_token = localStorage.getItem("access_token");
@@ -64,6 +74,12 @@ const ExamTeacher: React.FC = () => {
                     localStorage.removeItem('schedule_id')
                     dispatch(logout())
                 }
+                else {
+                    dispatch(getExerciseSubmissionByExercise(exercise_id))
+                }
+            }
+            else {
+                dispatch(getExerciseSubmissionByExercise(exercise_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
@@ -84,7 +100,7 @@ const ExamTeacher: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="SỐ BÀI NỘP" text={`${numberApprovedCount}`} icon="book" class="primary" />
+                <TopCard title="SỐ BÀI ĐÃ CHẤM" text={`${numberApprovedCount}`} icon="book" class="primary" />
                 <TopCard title="CHƯA CHẤM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
             </div>
             <div className="row">

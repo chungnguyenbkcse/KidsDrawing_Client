@@ -1,17 +1,14 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, IAnonymousNotificationState } from "../../store/models/root.interface";
+import { IStateType, ITeacherLeaveState, IUserState, ISectionState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IAnonymousNotification, AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import TextInput from "../../common/components/TextInput";
-import { editAnonymousNotification, clearSelectedAnonymousNotification, setModificationStateAnonymousNotification, addAnonymousNotification } from "../../store/actions/anonymous_notification.action";
-import { addNotification } from "../../store/actions/notifications.action";
-import { OnChangeModel, IAnonymousNotificationFormState } from "../../common/types/Form.types";
-import { postAnonymousNotification } from "../../common/service/AnonymousNotification/PostAnonymousNotification";
-import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import SelectInput from "../../common/components/Select";
+import { addLeaves } from "../../store/actions/teacher_leave.action";
+import { OnChangeModel, ITeacherLeaveFormState } from "../../common/types/Form.types";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
-import { postNotificationByClass } from "../../common/service/Notification/PostNotificationByClass";
-import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { IUser } from "../../store/models/user.interface";
+import { ITeacherLeave, TeacherLeaveModificationStatus } from "../../store/models/teacher_leave.interface";
+import { postTeacherLeave } from "../../common/service/TeacherLeave/PostTeacherLeave";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -19,21 +16,54 @@ export type artAgeListProps = {
     data?: any;
 };
 
+type Option1 = {
+    name: string;
+    value: any;
+}
+
 
 function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
-    const notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
-    let notification: IAnonymousNotification | null = notifications.selectedAnonymousNotification;
-    const isCreate: boolean = (notifications.modificationState === AnonymousNotificationModificationStatus.Create);
+    const teacherleaves: ITeacherLeaveState | null = useSelector((state: IStateType) => state.teacher_leaves);
+    let teacher_leave: ITeacherLeave | null = teacherleaves.selectedTeacherLeave;
+    const isCreate: boolean = (teacherleaves.modificationState === TeacherLeaveModificationStatus.Create);
+    
+    if (!teacher_leave || isCreate){
+        teacher_leave = { id: 0, section_id: 0, class_id: 0, teacher_id: 0, substitute_teacher_id: 0, description: "", section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
+    }
+    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const listTeacher: IUser[] = users.teachers
+    const listTeachers: Option1[] = [];
+    const sections: ISectionState | null = useSelector((state: IStateType) => state.sections);
 
-    if (!notification || isCreate) {
-        notification = { id: 0, name: "", description: "", time: "" };
+    listTeacher.map((ele) => {
+        let item: Option1 = { "name": ele.username, "value": ele.id }
+        return listTeachers.push(item)
+    })
+
+    const listSections: Option1[] = [];
+    sections.sections.map((ele) => {
+        let item: Option1 = { "name": ele.name, "value": ele.id }
+        return listSections.push(item)
+    })
+
+    var id_y = localStorage.getItem('class_id');
+    let class_id = 0;
+    if (id_y !== null) {
+        class_id = parseInt(id_y);
     }
 
+    var id_x = localStorage.getItem('id');
+    var teacher_id: number = 0;
+    if (id_x !== null) {
+        teacher_id = parseInt(id_x);
+    }
+
+
     const [formState, setFormState] = useState({
-        name: { error: "", value: notification.name },
-        description: { error: "", value: notification.description },
-        type_send: { error: "", value: "Chon gửi tới" },
+        section_id: { error: "", value: teacher_leave.section_id },
+        substitute_teacher_id: { error: "", value: teacher_leave.substitute_teacher_id },
+        description: { error: "", value: teacher_leave.description },
     });
 
     function hasFormValueChanged(model: OnChangeModel): void {
@@ -48,39 +78,42 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
             return;
         }
         props.isCheck(false);
-        let saveUserFn: Function = (isCreate) ? addAnonymousNotification : editAnonymousNotification;
+        let saveUserFn: Function = addLeaves;
         saveForm(formState, saveUserFn);
     }
 
-    function saveForm(formState: IAnonymousNotificationFormState, saveFn: Function): void {
-        if (notification) {
-            if (saveFn === addAnonymousNotification) {
+    function saveForm(formState: ITeacherLeaveFormState, saveFn: Function): void {
+        if (teacher_leave) {
+            const id = toast.loading("Đang gửi yêu cầu. Vui lòng đợi trong giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
+            if (saveFn === addLeaves) {
                 if (props.data === undefined || props.data === null) {
-                    return 
+                    return
                 }
                 else {
-                    dispatch(postNotificationByClass(props.data.class_id,{
-                        name: formState.name.value,
+                    dispatch(postTeacherLeave({
+                        section_id: formState.section_id.value,
+                        substitute_teacher_id: formState.substitute_teacher_id.value,
+                        teacher_id: teacher_id,
+                        class_id: class_id,
                         description: formState.description.value
-                    }))
+                    }, id))
 
                     console.log({
-                        name: formState.name.value,
-                        description: formState.description.value,
-                        type_send: props.data.class_id
+                        section_id: formState.section_id.value,
+                        substitute_teacher_id: formState.substitute_teacher_id.value,
+                        teacher_id: teacher_id,
+                        class_id: class_id,
+                        description: formState.description.value
                     })
                 }
             }
-
-            dispatch(addNotification("Thông báo ", `${formState.name.value} gửi bởi bạn`));
-            dispatch(clearSelectedAnonymousNotification());
-            dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.None));
         }
     }
 
     function cancelForm(): void {
         props.isCheck(false);
-        dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.None));
     }
 
     function getDisabledClass(): string {
@@ -89,7 +122,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     }
 
     function isFormInvalid(): boolean {
-        return (formState.name.error || !formState.name.value) as boolean;
+        return (formState.description.error || !formState.description.value) as boolean;
     }
 
     return (
@@ -98,19 +131,33 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} yêu cầu nghỉ dạy</h6>
+                            <h6 className="m-0 font-weight-bold text-green">Gửi yêu cầu nghỉ dạy</h6>
                         </div>
                         <div className="card-body">
                             <form onSubmit={saveUser}>
                                 <div className="form-group">
-                                    <TextInput id="input_email"
-                                        value={formState.name.value}
-                                        field="name"
-                                        onChange={hasFormValueChanged}
-                                        required={true}
-                                        maxLength={20}
+                                    <SelectKeyValue
+                                        id="input_section_id"
+                                        field="section_id"
                                         label="Buổi học"
-                                        placeholder="" />
+                                        options={listSections}
+                                        required={true}
+                                        onChange={hasFormValueChanged}
+                                        value={formState.section_id.value}
+                                    />
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <SelectKeyValue
+                                            id="input_substitute_teacher_id"
+                                            field="asubstitute_teacher_id"
+                                            label="Giáo viên dạy thay"
+                                            options={listTeachers}
+                                            required={true}
+                                            onChange={hasFormValueChanged}
+                                            value={formState.substitute_teacher_id.value}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <TextInput id="input_description"

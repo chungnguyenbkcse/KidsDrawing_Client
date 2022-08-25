@@ -1,7 +1,8 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postNotificationByClass(id: any,data: any) {
+export function postNotificationByClass(id: any,data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -24,10 +25,11 @@ export function postNotificationByClass(id: any,data: any) {
                 return response
             })
             .then(data => {
+                toast.update(idx, { render: "Thông báo gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log(data)
             })
             .catch(error => {
-                dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Thông báo gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

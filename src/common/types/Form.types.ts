@@ -39,6 +39,12 @@ export interface ISemesterFormState {
     end_time: IFormStateField<string>;
 }
 
+export interface ITeacherLeaveFormState {
+    section_id: IFormStateField<number>;
+    substitute_teacher_id: IFormStateField<number>;
+    description: IFormStateField<string>;
+}
+
 export  interface IOrderFormState {
     name: IFormStateField<string>;
     product: IFormStateField<IProduct | null>;

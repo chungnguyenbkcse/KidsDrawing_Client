@@ -1,13 +1,16 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester.actions";
+import { addNotification } from "../../../store/actions/notifications.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, addLeaves } from "../../../store/actions/teacher_leave.action";
+import { UserModificationStatus } from "../../../store/models/user.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postUserGradeExercise(data: any, idx: any) {
+export function postTeacherLeave(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user-grade-exercise-submission`, {
+                `${process.env.REACT_APP_API_URL}/user/teacher`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,
@@ -24,13 +27,12 @@ export function postUserGradeExercise(data: any, idx: any) {
                 }
                 return response
             })
-            .then (data => {
-                console.log(data)
-                toast.update(idx, { render: "Chấm điểm bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+            .then (val => {
+                console.log(val)
+                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Chấm điểm bài tập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                console.log("error")
+                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             });
     };
 }

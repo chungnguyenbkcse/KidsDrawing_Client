@@ -138,8 +138,7 @@ const Class: React.FC = () => {
 
     console.log(semesterId)
 
-    function saveUser(e: FormEvent<HTMLFormElement>): void {
-        e.preventDefault();
+    async function handleScheduleClass() {
         let time: String[] = [];
         value.map((ele: any, index: any) => {
             time.push(ele.toString())
@@ -149,8 +148,20 @@ const Class: React.FC = () => {
         const id = toast.loading("Đang xếp lớp. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
-
-        dispatch(postScheduleClass(semesterId, { time: time }, id));
+        
+        var bearer = 'Bearer ' + localStorage.getItem("access_token");
+        const res = await fetch(
+            `${process.env.REACT_APP_API_URL}/semester/schedule-class/${semesterId}`, {
+                method: "POST",
+                headers: {
+                    'Authorization': bearer,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ time: time })
+            }
+        )
+        console.log(res)
+        //dispatch(postScheduleClass(semesterId, { time: time }, id));
     }
 
     function onSemesterClassRemove() {
@@ -268,7 +279,7 @@ const Class: React.FC = () => {
                                             <div className="py-3">
                                                 <h6 className="m-0 font-weight-bold text-green">Xếp lớp</h6>
                                             </div>
-                                            <form onSubmit={saveUser}>
+                                            <form>
                                                 <div className="form-row">
                                                     <div className="form-group col-md-6">
                                                         <SelectKeyValueNotField
@@ -294,8 +305,8 @@ const Class: React.FC = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <button type="submit" className={`btn btn-success left-margin`}>Xếp lớp</button>
                                             </form>
+                                            <button className={`btn btn-success left-margin`} onClick={() => {handleScheduleClass()}}>Xếp lớp</button>
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,7 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
 import { getCourse } from "../../common/service/Course/GetCourse";
@@ -112,6 +113,7 @@ const TeacherLevel: React.FC = () => {
                     </button>
                 </div> */}
             </div>
+            <ToastContainer />
             <div className="row">
                 <div className="col-xl-12 col-lg-12 mb-4">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() => 

@@ -7,6 +7,7 @@ import { putTeacherRegisterLevel } from "../../common/service/TeacherRegisterQua
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 import { putTeacherRegisterLevelAdmin } from "../../common/service/TeacherRegisterQuantification/PutTeacherRegisterLevelAdmin";
 import { addNotification } from "../../store/actions/notifications.action";
+import { toast } from "react-toastify";
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
   children?: React.ReactNode;
@@ -28,12 +29,20 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
   }
 
   function approvedTeacherLevel(ele: ITeacherRegisterQuantification) {
+    const id = toast.info("Chấp nhận trình độ cho giáo viên", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000
+    });
     dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
       status: "Approved"
     }))
   }
 
   function notApprovedTeacherLevel(ele: ITeacherRegisterQuantification) {
+    const id = toast.info("Không chấp nhận trình độ cho giáo viên", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000
+    });
     dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
       status: "Not approved"
     }))

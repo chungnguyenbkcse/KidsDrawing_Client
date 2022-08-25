@@ -2,15 +2,17 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
+import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationState } from "../../store/actions/exercise.action";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { ExerciseModificationStatus } from "../../store/models/exercise.interface";
-import { IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IExerciseLevelState, IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
 
@@ -71,12 +73,14 @@ const SectionTeacher: React.FC = () => {
                     dispatch(clearSelectedTeacherRegisterQuatification());
                     dispatch(getSectionById(section_id))
                     dispatch(getExerciseBySection(section_id))
+                    dispatch(getExerciseLevel())
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
                 dispatch(getSectionById(section_id))
                 dispatch(getExerciseBySection(section_id))
+                dispatch(getExerciseLevel())
             }
         }
     }, [dispatch, access_token, refresh_token]);
@@ -98,14 +102,16 @@ const SectionTeacher: React.FC = () => {
         })
     }
 
-    const routeChange3 = (description:  string, name: string, level_name: string) => {
+    const routeChange3 = (description:  string, name: string, level_name: string, id: number) => {
         let path = '/exercise';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
         localStorage.removeItem('exercise_level_name');
+        localStorage.removeItem('exercise_id');
         localStorage.setItem('exercise_description', description);
         localStorage.setItem('exercise_name', name);
         localStorage.setItem('exercise_level_name', level_name);
+        localStorage.setItem('exercise_id', id.toString());
         history.push({
             pathname: path
         });
@@ -113,6 +119,7 @@ const SectionTeacher: React.FC = () => {
 
     return (
         <Fragment>
+            <ToastContainer />
             <div className="row mb-2">
                 <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
                     <button
@@ -237,7 +244,7 @@ const SectionTeacher: React.FC = () => {
                                                             exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_course_${index}`}>
-                                                                        <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange3(ele.description, ele.name, ele.level_name)}}>
+                                                                        <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange3(ele.description, ele.name, ele.level_name, ele.id)}}>
                                                                             <div className="col-xl-4 col-md-4 mb-4">
                                                                                 <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
                                                                             </div>

@@ -12,6 +12,7 @@ import SelectInput from "../../common/components/Select";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { postNotificationByClass } from "../../common/service/Notification/PostNotificationByClass";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -54,6 +55,9 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
 
     function saveForm(formState: IAnonymousNotificationFormState, saveFn: Function): void {
         if (notification) {
+            const id = toast.loading("Đang gửi thông báo. Vui lòng đợi trong giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
             if (saveFn === addAnonymousNotification) {
                 if (props.data === undefined || props.data === null) {
                     return 
@@ -62,7 +66,7 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
                     dispatch(postNotificationByClass(props.data.class_id,{
                         name: formState.name.value,
                         description: formState.description.value
-                    }))
+                    }, id))
 
                     console.log({
                         name: formState.name.value,
@@ -72,7 +76,6 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
                 }
             }
 
-            dispatch(addNotification("Thông báo ", `${formState.name.value} gửi bởi bạn`));
             dispatch(clearSelectedAnonymousNotification());
             dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.None));
         }

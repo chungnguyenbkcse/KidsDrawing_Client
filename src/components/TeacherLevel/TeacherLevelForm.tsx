@@ -10,6 +10,7 @@ import { postTeaherLevel } from "../../common/service/TeacherRegisterQuantificat
 import { ICourse } from "../../store/models/course.interface";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { putTeacherRegisterLevel } from "../../common/service/TeacherRegisterQuantification/PutTeacherRegisterLevel";
+import { toast } from "react-toastify";
 
 export type lessonListProps = {
   isCheck: (value: boolean) => void;
@@ -68,14 +69,17 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
   function saveForm(formState: ITeacherRegisterLevelFormState, saveFn: Function, url: string): void {
     if (teacher_register_not_approved) {
       
-
+      const id = toast.loading("Yêu cầu đang được gửi. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      
       if (saveFn === addTeacherRegisterQuatificationNotApprovedNow) {
         dispatch(postTeaherLevel({
             teacher_id: localStorage.getItem('id'),
             course_id: formState.course_id.value,
             degree_photo_url: url,
             status: "Not approved now"
-        }));
+        }, id));
       }
       else {
         dispatch(putTeacherRegisterLevel(teacher_register_not_approved.id, {
@@ -83,12 +87,11 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
             course_id: formState.course_id.value,
             degree_photo_url: url,
             status: "Not approved now"
-        }));
+        }, id));
       }
 
       console.log(saveFn)
 
-      dispatch(addNotification("Trình độ ", ` chỉnh bởi bạn`));
       dispatch(clearSelectedTeacherRegisterNotQuatificationNow());
       dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
     }

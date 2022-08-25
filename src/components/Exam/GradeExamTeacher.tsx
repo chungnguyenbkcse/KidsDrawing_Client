@@ -14,7 +14,8 @@ import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmi
 import NumberInput from "../../common/components/NumberInput";
 import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
 import { addNotification } from "../../store/actions/notifications.action";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
 
 const GradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -50,8 +51,8 @@ const GradeExamTeacher: React.FC = () => {
             })
 
             dispatch(postUserGradeExercise({
-                student_id: student_id,
-                exercise_submission_id: exercise_submission_id,
+                student_id: x,
+                exercise_submission_id: y,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             }, id))
@@ -64,21 +65,15 @@ const GradeExamTeacher: React.FC = () => {
                 feedback: formState.feedback.value
             }, id))
         }
-        /* dispatch(postUserGradeExercise({
-            student_id: student_id,
-            exercise_submission_id: exercise_submission_id,
-            score: formState.score.value,
-            description: formState.feedback.value
-        }))
-        */
-        dispatch(addNotification("Chấm bài thành công ", ``));
     }
     
-    var class_id = localStorage.getItem('class_id');
-    var class_id_: number = 0;
-    if (class_id !== null) {
-        class_id_ = parseInt(class_id);
+    var id_y = localStorage.getItem('exercise_id');
+    let exercise_id = 0;
+
+    if (id_y !== null) {
+        exercise_id = parseInt(id_y);
     }
+    
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -102,11 +97,11 @@ const GradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getExerciseSubmissionByClass(class_id_));
+                    dispatch(getExerciseSubmissionByExercise(exercise_id))
                 }
             }
             else {
-                dispatch(getExerciseSubmissionByClass(class_id_));
+                dispatch(getExerciseSubmissionByExercise(exercise_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
@@ -148,7 +143,7 @@ const GradeExamTeacher: React.FC = () => {
     const [time_submit, setTimeSubmit] = useState("");
     return (
         <Fragment>
-
+            <ToastContainer />
             <div className="row">
                 <div className="col-xl-6 col-lg-6">
                     <div className="card-header py-3">

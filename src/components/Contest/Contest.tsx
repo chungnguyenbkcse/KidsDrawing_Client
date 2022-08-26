@@ -24,6 +24,7 @@ import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { formatDate } from "../../common/components/ConverDate";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { ToastContainer } from "react-toastify";
 
 
 const Contest: React.FC = () => {
@@ -141,6 +142,7 @@ const Contest: React.FC = () => {
 
     return (
         <Fragment>
+            <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Cuộc thi</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">

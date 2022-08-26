@@ -1,9 +1,12 @@
 import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ILessonState } from "../../store/models/root.interface";
+import { IStateType, ILessonState, ITeacherLeaveState } from "../../store/models/root.interface";
 import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
 import { setModificationState } from "../../store/actions/lesson.action";
 import { useHistory } from "react-router-dom";
+import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
+import { putTeacherLeaveStatus } from "../../common/service/TeacherLeave/PutTeacherLeave";
+import { toast } from "react-toastify";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -11,62 +14,80 @@ export type lessonListProps = {
     children?: React.ReactNode;
 };
 
-const data = [
-        {
-            "id": 1,
-            "name": "Vẽ con mèo",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        },
-        {
-            "id": 2,
-            "name": "Vẽ con lợn",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        },
-        {
-            "id": 3,
-            "name": "Vẽ con lợn",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        }
-]
 
 function TeacherLeaveList(props: lessonListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
-    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
-    console.log(props.value)
+    const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
 
     const history = useHistory();
-    const onChangeRoute = () =>{ 
-        let path = '/exercise/detail'; 
+    const onChangeRoute = (student_leave: ITeacherLeave) =>{ 
+        localStorage.removeItem("detail_resson")
+        localStorage.setItem('detail_resson', student_leave.description)
+        let path = '/student-leave/detail'; 
         history.push({
             pathname: path,
         });
     }
+
+    var id_x = localStorage.getItem('id');
+    var id: number = 2;
+    if (id_x !== null) {
+        id = parseInt(id_x);
+    }
+
+    const updateStatusTeacherLeave = (status: string) => {
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+
+        dispatch(putTeacherLeaveStatus(id, {
+            status: status
+        }, idx))
+    }
     
-    const lessonElements: (JSX.Element | null)[] = data.map((exercise, index) => {
+    const lessonElements: (JSX.Element | null)[] = teacher_leaves.leaves.map((exercise, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
         if (!exercise) { return null; }
-        return (<tr className={`table-row ${(lessons.selectedLesson && lessons.selectedLesson.id === exercise.id) ? "selected" : ""}`}
+        return (<tr className={`table-row`}
             key={`lesson_${exercise.id}`} >
             <th scope="row" className="data-table">{index + 1}</th>
-            <td className="data-table">{exercise.name}</td>
-            <td className="data-table">{exercise.deadline}</td>
-            <td className="data-table">{exercise.submission_time}</td>
-            <td className="data-table">{exercise.scrore}</td>
+            <td className="data-table">{exercise.class_name}</td>
+            <td className="data-table">{exercise.section_name}</td>
+            <td className="data-table">{exercise.teacher_name}</td>
+            <td className="data-table">{exercise.section_number}</td>
             <td>
                 <button 
                     type="button" 
                     className="btn btn-primary" 
                     onClick={() => {
-                        onChangeRoute()
+                        onChangeRoute(exercise)
                     }}
                 >
                     Chi tiết
+                </button>
+            </td>
+
+            <td>
+                <button 
+                    type="button" 
+                    className="btn btn-success" 
+                    onClick={() => {
+                        updateStatusTeacherLeave("Approved")
+                    }}
+                >
+                    Chấp nhận
+                </button>
+            </td>
+
+            <td>
+                <button 
+                    type="button" 
+                    className="btn btn-danger" 
+                    onClick={() => {
+                        updateStatusTeacherLeave("Not approved")
+                    }}
+                >
+                    Hủy
                 </button>
             </td>
         </tr>);
@@ -84,6 +105,8 @@ function TeacherLeaveList(props: lessonListProps): JSX.Element {
                             <th scope="col" className="name-row-table">Buổi</th>
                             <th scope="col" className="name-row-table">Giáo viên</th>
                             <th scope="col" className="name-row-table">Thời gian dạy</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>

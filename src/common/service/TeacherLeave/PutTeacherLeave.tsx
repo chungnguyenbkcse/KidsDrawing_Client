@@ -4,13 +4,13 @@ import { fetchDataRequest, fetchDataSuccess, fetchDataError, addLeaves } from ".
 import { UserModificationStatus } from "../../../store/models/user.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postTeacherLeave(data: any, idx: any) {
+export function putTeacherLeaveStatus(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/teacher-leave`, {
+                `${process.env.REACT_APP_API_URL}/teacher-leave/admin/${id}`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,
@@ -29,10 +29,10 @@ export function postTeacherLeave(data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             });
     };
 }

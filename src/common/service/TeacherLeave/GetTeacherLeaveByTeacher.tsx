@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeAcceptTeacherLeaveAll, initialAcceptTeacherLeave, addAcceptTeacherLeave, removeAcceptTeacherLeave, removeRemoveTeacherLeaveAll, addRemoveTeacherLeave, addLeaves, removeLeavesAll } from "../../../store/actions/teacher_leave.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeAcceptTeacherLeaveAll, removeLeavesAll,  addAcceptTeacherLeave, removeAcceptTeacherLeave, removeRemoveTeacherLeaveAll, addRemoveTeacherLeave, addLeaves } from "../../../store/actions/teacher_leave.action";
 interface TeacherLeave {
     id: number;
     section_id: number;
@@ -16,12 +16,12 @@ interface TeacherLeave {
     create_time: string;
     update_time: string;
 }
-export function getTeacherLeave(id: any) {
+export function getTeacherLeaveByTeacher(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/teacher-leave/class/${id}`, {
+                `${process.env.REACT_APP_API_URL}/teacher-leave/teacher/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

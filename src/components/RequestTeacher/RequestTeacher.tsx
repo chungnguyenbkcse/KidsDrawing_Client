@@ -15,12 +15,16 @@ import ExerciseSectionList from "../ManageStudent/ExerciseSectionList";
 import StudentLeaveList from "./StudentLeaveList";
 import TeacherLeaveList from "./TeacherLeaveList";
 import { getStudentLeave } from "../../common/service/StudentLeave/GetStudentLeaveByClass";
+import { getStudentLeaveByTeacher } from "../../common/service/StudentLeave/GetStudentLeaveByTeacher";
+import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
+import { ToastContainer } from "react-toastify";
 
 const RequestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
     const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
     console.log(student_leaves)
+    console.log(teacher_leaves)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberTeacherRegisterSuccessfullCount: number = student_leaves.leaves.length;
     const numberTeacherNotRegisterCount: number = teacher_leaves.leaves.length;
@@ -58,11 +62,13 @@ const RequestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getStudentLeave(class_id))
+                    dispatch(getStudentLeaveByTeacher(id))
+                    dispatch(getTeacherLeaveByTeacher(id))
                 }
             }
             else {
-                dispatch(getStudentLeave(class_id))
+                dispatch(getStudentLeaveByTeacher(id))
+                dispatch(getTeacherLeaveByTeacher(id))
             }
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
@@ -75,7 +81,7 @@ const RequestTeacher: React.FC = () => {
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
+            <ToastContainer />
             <div className="row">
                 <TopCard title="SỐ YÊU CẦU NGHỈ HỌC" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
                 <TopCard title="SỐ YÊU CẦU DẠY THAY" text={`${numberTeacherNotRegisterCount}`} icon="book" class="primary" />

@@ -38,6 +38,7 @@ import { IReportUser, ReportUserModificationStatus } from "./report_user.interfa
 import { CourseReportModificationStatus, ICourseReport } from "./course_report.interface";
 import { ExerciseLevelModificationStatus, IExerciseLevel } from "./exercise_level.interface";
 import { IUserGradeExerciseSubmission, UserGradeExerciseSubmissionModificationStatus } from "./user_grade_exercise_submission.interface";
+import { ExerciseStudentModificationStatus, IExerciseStudent } from "./exercise_student.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -89,6 +90,7 @@ export interface IStateType {
     course_reports: ICourseReportState;
     exercise_levels: IExerciseLevelState;
     user_grade_exercise_submissions: IUserGradeExerciseSubmissionState;
+    exercise_students: IExerciseStudentState;
 }
 
 export interface IProductState {
@@ -245,6 +247,13 @@ export interface ITeacherLeaveState {
     acceptLeaves: ITeacherLeave[];
     removeLeaves: ITeacherLeave[];
     leaves: ITeacherLeave[];
+}
+
+export interface IExerciseStudentState {
+    selectedExerciseStudent: IExerciseStudent | null;
+    modificationState: ExerciseStudentModificationStatus;
+    exercise_not_submit: IExerciseStudent[];
+    exercise_submitted: IExerciseStudent[];
 }
 
 export interface IExerciseSubmissionState {

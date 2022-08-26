@@ -24,7 +24,7 @@ const DetailClassTeacher: React.FC = () => {
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
 
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
-
+    console.log(exercise_submissions)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = sections.sections.length;
     const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;

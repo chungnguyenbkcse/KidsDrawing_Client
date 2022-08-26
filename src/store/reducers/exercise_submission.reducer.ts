@@ -43,7 +43,7 @@ function exerciseSubmissionsReducer(state: IExerciseSubmissionState = initialSta
             return { ...state, exercise_gradeds : [...state.exercise_gradeds, action.exercise_submission]};
         }
         case ADD_EXERCISE_SUBMISSION_GRADED: {
-            return { ...state, exercise_not_gradeds: [...state.exercise_not_gradeds, action.exercise_submission]};
+            return { ...state, exercise_gradeds: [...state.exercise_gradeds, action.exercise_submission]};
         }
         case EDIT_EXERCISE_SUBMISSION_GRADED: {
             const foundIndex: number = state.exercise_gradeds.findIndex(pr => pr.id === action.exercise_submission.id);

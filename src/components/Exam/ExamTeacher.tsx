@@ -93,6 +93,13 @@ const ExamTeacher: React.FC = () => {
             pathname: path
         });
     }
+
+    const routeChange1 = () => {
+        let path = '/exercise/result-grade';
+        history.push({
+            pathname: path,
+        });
+    }
     
     return (
         <Fragment>
@@ -128,16 +135,38 @@ const ExamTeacher: React.FC = () => {
                 </div>              
             </div>
 
-            <div className="row justify-content-center mb-4">
-                <button 
-                    className="btn btn-success btn-green" 
-                    id="btn-into-class-student"
-                    onClick={() => {routeChange()}}
-                >
-                    Chấm bài
-                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
-                </button>
-            </div>
+            {
+                function () {
+                    if (numberNotApprovedNowCount == 0){
+                        return (
+                            <div className="row justify-content-center mb-4">
+                                <button 
+                                    className="btn btn-success btn-green" 
+                                    id="btn-into-class-student"
+                                    onClick={() => {routeChange1()}}
+                                >
+                                    Xem điểm
+                                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                </button>
+                            </div>
+                        )
+                    }
+                    else {
+                        return (
+                            <div className="row justify-content-center mb-4">
+                                <button 
+                                    className="btn btn-success btn-green" 
+                                    id="btn-into-class-student"
+                                    onClick={() => {routeChange()}}
+                                >
+                                    Chấm bài
+                                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                </button>
+                            </div>
+                        )
+                    }
+                }()
+            }
 
         </Fragment>
     );

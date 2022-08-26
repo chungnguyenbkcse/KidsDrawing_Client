@@ -4,6 +4,7 @@ export interface IStudentLeave {
     section_name: string;
     class_id: number;
     class_name: string;
+    section_number: number;
     student_id: number;
     student_name: string;
     reviewer_id: number;

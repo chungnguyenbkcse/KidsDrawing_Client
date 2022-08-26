@@ -29,7 +29,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     const isCreate: boolean = (teacherleaves.modificationState === TeacherLeaveModificationStatus.Create);
     
     if (!teacher_leave || isCreate){
-        teacher_leave = { id: 0, section_id: 0, class_id: 0, teacher_id: 0, substitute_teacher_id: 0, description: "", section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
+        teacher_leave = { id: 0, section_id: 0, class_id: 0, section_number: 0, teacher_id: 0, substitute_teacher_id: 0, description: "", section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
     }
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listTeacher: IUser[] = users.teachers

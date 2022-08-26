@@ -8,6 +8,7 @@ interface StudentLeave {
     student_id: number;
     student_name: string;
     reviewer_id: number;
+    section_number: number;
     description: string;
     status: string;
     create_time: string;
@@ -38,7 +39,7 @@ export function getStudentLeave(id: any) {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeStudentLeaveApprovedAll())
                 dispatch(removeStudentLeaveNotApprovedAll())
-                dispatch(removeStudentLeaveNotApprovedNowAll)
+                dispatch(removeStudentLeaveNotApprovedNowAll())
                 //console.log(data.body.student_leaves)
                 data.body.student_leave.map((ele: any, index: any) => {
                     var strDate_1 = ele.create_time;
@@ -48,6 +49,7 @@ export function getStudentLeave(id: any) {
                         description: ele.description,
                         section_id: ele.section_id,
                         class_id: ele.class_id,
+                        section_number: ele.section_number,
                         class_name: ele.class_name,
                         student_id: ele.student_id,
                         reviewer_id: ele.reviewer_id,

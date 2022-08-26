@@ -1,9 +1,10 @@
 import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ILessonState } from "../../store/models/root.interface";
+import { IStateType, ILessonState, IStudentLeaveState } from "../../store/models/root.interface";
 import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
 import { setModificationState } from "../../store/actions/lesson.action";
 import { useHistory } from "react-router-dom";
+import { IStudentLeave } from "../../store/models/student_leave.interface";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -37,33 +38,35 @@ const data = [
 
 function StudentLeaveList(props: lessonListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
-    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
-    console.log(props.value)
+    const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
+
 
     const history = useHistory();
-    const onChangeRoute = () =>{ 
-        let path = '/exercise/detail'; 
+    const onChangeRoute = (student_leave: IStudentLeave) =>{ 
+        localStorage.removeItem("detail_resson")
+        localStorage.setItem('detail_resson', student_leave.description)
+        let path = '/student-leave/detail'; 
         history.push({
             pathname: path,
         });
     }
     
-    const lessonElements: (JSX.Element | null)[] = data.map((exercise, index) => {
+    const lessonElements: (JSX.Element | null)[] = student_leaves.leaves.map((exercise, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
         if (!exercise) { return null; }
-        return (<tr className={`table-row ${(lessons.selectedLesson && lessons.selectedLesson.id === exercise.id) ? "selected" : ""}`}
+        return (<tr className={`table-row `}
             key={`lesson_${exercise.id}`} >
             <th scope="row" className="data-table">{index + 1}</th>
-            <td className="data-table">{exercise.name}</td>
-            <td className="data-table">{exercise.deadline}</td>
-            <td className="data-table">{exercise.submission_time}</td>
-            <td className="data-table">{exercise.scrore}</td>
+            <td className="data-table">{exercise.class_name}</td>
+            <td className="data-table">{exercise.section_name}</td>
+            <td className="data-table">{exercise.student_name}</td>
+            <td className="data-table">{exercise.section_number}</td>
             <td>
                 <button 
                     type="button" 
                     className="btn btn-primary" 
                     onClick={() => {
-                        onChangeRoute()
+                        onChangeRoute(exercise)
                     }}
                 >
                     Chi tiết

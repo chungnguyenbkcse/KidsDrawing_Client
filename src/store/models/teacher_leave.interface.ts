@@ -6,6 +6,7 @@ export interface ITeacherLeave {
     class_name: string;
     teacher_id: number;
     teacher_name: string;
+    section_number: number;
     reviewer_id: number;
     substitute_teacher_id: number;
     substitute_teacher_name: string;

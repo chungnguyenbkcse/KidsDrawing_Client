@@ -57,6 +57,7 @@ import EditSectionTeacher from "../components/SectionTeacher/EditSectionTeacher"
 import ViewSectionTeacher from "../components/SectionTeacher/ViewSectionTeacher";
 import RequestTeacher from "../components/RequestTeacher/RequestTeacher";
 import ExamTeacher from "../components/Exam/ExamTeacher";
+import StudentLeaveDetail from "../components/RequestTeacher/StudentLeaveDetail";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -78,6 +79,7 @@ const Routers: React.FC = () => {
                             <Switch>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>
+                                <Route path={`/student-leave/detail`}><StudentLeaveDetail /></Route>
                                 <Route path={`/teacher-level/detail`}><TeacherLevelDetail /></Route>                              
                                 <Route path={`/teacher-level`}><TeacherLevel /></Route>
                                 <Route path={`/courses/detail`}><CourseTeacherDetail /></Route>

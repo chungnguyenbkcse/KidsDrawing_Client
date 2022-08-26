@@ -7,20 +7,20 @@ interface user_grade_contest {
     exercise_name: string;
     time_submit: string;
     image_url: string;
-    description: string;
     deadline: string;
+    description: string;
     exercise_submission_id: number;
     feedback: string;
     score: number;
     time: string;
 }
-export function getUserGradeExerciseByExerciseAndClass(exercise_id: any, class_id: any) {
+export function getUserGradeExerciseByStudentAndClass(class_id: any, student_id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user-grade-exercise-submission/exercise-class/${exercise_id}/${class_id}`, {
+                `${process.env.REACT_APP_API_URL}/user-grade-exercise-submission/class-student/${class_id}/${student_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -45,8 +45,8 @@ export function getUserGradeExerciseByExerciseAndClass(exercise_id: any, class_i
                         student_id: ele.student_id,
                         exercise_name: ele.exercise_name,
                         time_submit: ele.time_submit,
-                        deadline: ele.deadline,
                         description: ele.description,
+                        deadline: ele.deadline,
                         image_url: ele.image_url,
                         exercise_submission_id: ele.exercise_submission_id,
                         student_name: ele.student_name,

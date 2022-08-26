@@ -13,12 +13,12 @@ interface StudentLeave {
     create_time: string;
     update_time: string;
 }
-export function getStudentLeave(id: any) {
+export function getStudentLeaveByClassAndStudent(class_id: any, student_id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/student-leave/class/${id}`, {
+                `${process.env.REACT_APP_API_URL}/student-leave/class-student/${class_id}/${student_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -37,9 +37,9 @@ export function getStudentLeave(id: any) {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeStudentLeaveApprovedAll())
+                dispatch(removeStudentLeaveNotApprovedNowAll())
                 dispatch(removeStudentLeaveNotApprovedAll())
-                dispatch(removeStudentLeaveNotApprovedNowAll)
-                //console.log(data.body.student_leaves)
+                console.log(data.body.student_leave)
                 data.body.student_leave.map((ele: any, index: any) => {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
@@ -61,7 +61,7 @@ export function getStudentLeave(id: any) {
                     if (student_leave.status === "Approved"){
                         return dispatch(addStudentLeaveApproved(student_leave));
                     }
-                    else if (student_leave.status === "Not approved"){
+                    else if (student_leave.status === "Not Approved"){
                         return dispatch(addStudentLeaveNotApproved(student_leave));
                     }
                     else {

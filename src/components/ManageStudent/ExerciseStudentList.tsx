@@ -6,28 +6,42 @@ import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
+import { IExerciseStudentState, IRootPageStateType, IStateType, IStudentLeaveState, ITeacherRegisterQuantificationState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import ExerciseSectionList from "./ExerciseSectionList";
 import "./ManageStudent.css"
 
 const ExerciseStudentList: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
-    console.log(users.teachers)
-    console.log(teacherRegisterQuantifications)
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
+    const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
+    const student_leave: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
+    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const numberSubmittedCount: number = exercise_students.exercise_submitted.length;
+    const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
+    const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
+    
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    var id_y = localStorage.getItem('student_id');
+    var student_id: number = 0;
+    if (id_y !== null) {
+        student_id = parseInt(id_y);
+    }
+
+    var id_z = localStorage.getItem('class_id');
+    var class_id: number = 0;
+    if (id_z !== null) {
+        class_id = parseInt(id_z);
+    }
+    
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -51,57 +65,24 @@ const ExerciseStudentList: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
 
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
-
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
     return (
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="BÀI TẬP ĐÃ NỘP" text={`${numberApprovedCount}`} icon="book" class="primary" />
-                <TopCard title="BÀI TẬP CHƯA NỘP" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
-                <TopCard title="SỐ BUỔI NGHỈ" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
+                <TopCard title="BÀI TẬP ĐÃ NỘP" text={`${numberSubmittedCount}`} icon="book" class="primary" />
+                <TopCard title="BÀI TẬP CHƯA NỘP" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
+                <TopCard title="SỐ BUỔI NGHỈ" text={`${numberStudentLeaveCount}`} icon="book" class="danger" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>

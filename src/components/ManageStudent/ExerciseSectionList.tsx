@@ -1,9 +1,10 @@
 import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ILessonState } from "../../store/models/root.interface";
+import { IStateType, ILessonState, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
 import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
 import { setModificationState } from "../../store/actions/lesson.action";
 import { useHistory } from "react-router-dom";
+import { IUserGradeExerciseSubmission } from "../../store/models/user_grade_exercise_submission.interface";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -37,33 +38,44 @@ const data = [
 
 function ExerciseSectionList(props: lessonListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
+    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
     const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     console.log(props.value)
 
     const history = useHistory();
-    const onChangeRoute = () =>{ 
+    const onChangeRoute = (exercise: IUserGradeExerciseSubmission) =>{ 
+        localStorage.removeItem('image_url_exercise')
+        localStorage.setItem('image_url_exercise', exercise.image_url)
+        localStorage.removeItem('score')
+        localStorage.setItem('score', exercise.score.toString())
+        localStorage.removeItem('description')
+        localStorage.setItem('description', exercise.description)
+        localStorage.removeItem('time_submit')
+        localStorage.setItem('time_submit', exercise.time_submit)
+        localStorage.removeItem('feedback')
+        localStorage.setItem('feedback', exercise.feedback)
         let path = '/exercise/detail'; 
         history.push({
             pathname: path,
         });
     }
     
-    const lessonElements: (JSX.Element | null)[] = data.map((exercise, index) => {
+    const lessonElements: (JSX.Element | null)[] = user_grade_exercise_submission.user_grade_exercise_submissions.map((exercise, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
         if (!exercise) { return null; }
-        return (<tr className={`table-row ${(lessons.selectedLesson && lessons.selectedLesson.id === exercise.id) ? "selected" : ""}`}
-            key={`lesson_${exercise.id}`} >
+        return (<tr className={`table-row`}
+            key={`lesson_${index}`} >
             <th scope="row" className="data-table">{index + 1}</th>
-            <td className="data-table">{exercise.name}</td>
+            <td className="data-table">{exercise.exercise_name}</td>
             <td className="data-table">{exercise.deadline}</td>
-            <td className="data-table">{exercise.submission_time}</td>
-            <td className="data-table">{exercise.scrore}</td>
+            <td className="data-table">{exercise.time_submit}</td>
+            <td className="data-table">{exercise.score}</td>
             <td>
                 <button 
                     type="button" 
                     className="btn btn-primary" 
                     onClick={() => {
-                        onChangeRoute()
+                        onChangeRoute(exercise)
                     }}
                 >
                     Chi tiết

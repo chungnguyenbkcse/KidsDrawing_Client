@@ -1,31 +1,41 @@
 import { IStudentLeave, StudentLeaveModificationStatus } from "../models/student_leave.interface";
 
+// register_successfull_student_leaves
+export const ADD_STUDENT_LEAVE_NOT_APPROVED_NOW: string = "ADD_STUDENT_LEAVE_NOT_APPROVED_NOW";
+export const EDIT_STUDENT_LEAVE_NOT_APPROVED_NOW: string = "EDIT_STUDENT_LEAVE_NOT_APPROVED_NOW";
+export const REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW: string = "REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW";
+export const CHANGE_STUDENT_LEAVE_NOT_APPROVED_NOW_AMOUNT: string = "CHANGE_STUDENT_LEAVE_NOT_APPROVED_NOW_AMOUNT";
+export const CHANGE_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT: string = "CHANGE_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT";
+export const CLEAR_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT: string = "CLEAR_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT";
+export const REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW_ALL: string = "REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW_ALL";
+export const INITIAL_STUDENT_LEAVE_NOT_APPROVED_NOW: string = "INITIAL_STUDENT_LEAVE_NOT_APPROVED_NOW";
+
+// not_register_student_leaves
+export const ADD_STUDENT_LEAVE_APPROVED: string = "ADD_STUDENT_LEAVE_APPROVED";
+export const EDIT_STUDENT_LEAVE_APPROVED: string = "EDIT_STUDENT_LEAVE_APPROVED";
+export const REMOVE_STUDENT_LEAVE_APPROVED: string = "REMOVE_STUDENT_LEAVE_APPROVED";
+export const CHANGE_STUDENT_LEAVE_APPROVED_AMOUNT: string = "CHANGE_STUDENT_LEAVE_APPROVED_AMOUNT";
+export const CHANGE_STUDENT_LEAVE_APPROVED_PENDING_EDIT: string = "CHANGE_STUDENT_LEAVE_APPROVED_PENDING_EDIT";
+export const CLEAR_STUDENT_LEAVE_APPROVED_PENDING_EDIT: string = "CLEAR_STUDENT_LEAVE_APPROVED_PENDING_EDIT";
+export const REMOVE_STUDENT_LEAVE_APPROVED_ALL: string = "REMOVE_STUDENT_LEAVE_APPROVED_ALL";
+export const INITIAL_STUDENT_LEAVE_APPROVED: string = "INITIAL_STUDENT_LEAVE_APPROVED";
+
+
+// not_register_student_leaves
+export const ADD_STUDENT_LEAVE_NOT_APPROVED: string = "ADD_STUDENT_LEAVE_NOT_APPROVED";
+export const EDIT_STUDENT_LEAVE_NOT_APPROVED: string = "EDIT_STUDENT_LEAVE_NOT_APPROVED";
+export const REMOVE_STUDENT_LEAVE_NOT_APPROVED: string = "REMOVE_STUDENT_LEAVE_NOT_APPROVED";
+export const CHANGE_STUDENT_LEAVE_NOT_APPROVED_AMOUNT: string = "CHANGE_STUDENT_LEAVE_NOT_APPROVED_AMOUNT";
+export const CHANGE_STUDENT_LEAVE_NOT_APPROVED_PENDING_EDIT: string = "CHANGE_STUDENT_LEAVE_NOT_APPROVED_PENDING_EDIT";
+export const CLEAR_STUDENT_LEAVE_NOT_APPROVED_PENDING_EDIT: string = "CLEAR_STUDENT_LEAVE_NOT_APPROVED_PENDING_EDIT";
+export const REMOVE_STUDENT_LEAVE_NOT_APPROVED_ALL: string = "REMOVE_STUDENT_LEAVE_NOT_APPROVED_ALL";
+export const INITIAL_STUDENT_LEAVE_NOT_APPROVED: string = "INITIAL_STUDENT_LEAVE_NOT_APPROVED";
+
+
+export const SET_MODIFICATION_STATE: string = "SET_MODIFICATION_STATE";
 export const FETCH_DATA_REQUEST: string = "FETCH_DATA_REQUEST";
 export const FETCH_DATA_SUCCESS: string = "FETCH_DATA_SUCCESS";
 export const FETCH_DATA_ERROR: string = "FETCH_DATA_ERROR";
-
-export const REMOVE_REMOVE_LEAVE_ALL: string = "REMOVE_REMOVE_LEAVE_ALL";
-export const INITIAL_REMOVE_LEAVE: string = "INITIAL_REMOVE_LEAVE";
-export const ADD_REMOVE_LEAVE: string = "ADD_REMOVE_LEAVE";
-export const REMOVE_REMOVE_LEAVE: string = "REMOVE_REMOVE_LEAVE";
-export const EDIT_REMOVE_LEAVE: string = "EDIT_REMOVE_LEAVE";
-
-
-export const REMOVE_LEAVES_ALL: string = "REMOVE_LEAVES_ALL";
-export const INITIAL_LEAVES: string = "INITIAL_LEAVES";
-export const ADD_LEAVES: string = "ADD_LEAVES";
-export const EDIT_LEAVES: string = "EDIT_LEAVES";
-export const REMOVE_LEAVES: string = "REMOVE_LEAVES";
-
-export const REMOVE_ACCEPT_LEAVE_ALL: string = "REMOVE_ACCEPT_LEAVE_ALL";
-export const INITIAL_ACCEPT_LEAVE: string = "INITIAL_ACCEPT_LEAVE";
-export const ADD_ACCEPT_LEAVE: string = "ADD_ACCEPT_LEAVE";
-export const EDIT_ACCEPT_LEAVE: string = "EDIT_ACCEPT_LEAVE";
-export const REMOVE_ACCEPT_LEAVE: string = "REMOVE_ACCEPT_LEAVE";
-
-export const SET_MODIFICATION_STATE: string = "SET_MODIFICATION_STATE";
-export const CHANGE_USER_PENDING_EDIT: string = "CHANGE_USER_PENDING_EDIT";
-export const CLEAR_USER_PENDING_EDIT: string = "CLEAR_USER_PENDING_EDIT";
 
 export function fetchDataRequest() {
     return {
@@ -33,10 +43,10 @@ export function fetchDataRequest() {
     };
 }
 
-export function fetchDataSuccess(teacherLeave: IStudentLeave) {
+export function fetchDataSuccess(student_leave: IStudentLeave) {
     return {
         type: FETCH_DATA_SUCCESS,
-        teacherLeave
+        student_leave
     };
 }
 
@@ -47,82 +57,126 @@ export function fetchDataError(error: any) {
     };
 }
 
-export function initialRemoveStudentLeave(student_leave: IStudentLeave): IInitialRemoveStudentLeaveActionType {
-    return { type: INITIAL_REMOVE_LEAVE, student_leave: student_leave };
+export function initialStudentLeaveNotApprovedNow(student_leave: IStudentLeave): IInitialStudentLeaveNotApprovedNowActionType {
+    return { type: INITIAL_STUDENT_LEAVE_NOT_APPROVED_NOW, student_leave: student_leave };
 }
 
-export function removeRemoveStudentLeaveAll(): IRemoveRemoveStudentLeaveAllActionType {
-    return { type: REMOVE_REMOVE_LEAVE_ALL };
+export function removeStudentLeaveNotApprovedNowAll(): IRemoveStudentLeaveNotApprovedNowAllActionType {
+    return { type: REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW_ALL };
 }
 
-export function addRemoveStudentLeave(student_leave: IStudentLeave): IAddRemoveStudentLeaveActionType {
-    return { type: ADD_REMOVE_LEAVE, student_leave: student_leave };
+export function addStudentLeaveNotApprovedNow(student_leave: IStudentLeave): IAddStudentLeaveNotApprovedNowActionType {
+    return { type: ADD_STUDENT_LEAVE_NOT_APPROVED_NOW, student_leave: student_leave };
 }
 
-export function editRemoveStudentLeave(student_leave: IStudentLeave): IEditRemoveStudentLeaveActionType {
-    return { type: EDIT_REMOVE_LEAVE, student_leave: student_leave };
+export function editStudentLeaveNotApprovedNow(student_leave: IStudentLeave): IEditStudentLeaveNotApprovedNowActionType {
+    return { type: EDIT_STUDENT_LEAVE_NOT_APPROVED_NOW, student_leave: student_leave };
 }
 
-export function removeRemoveStudentLeave(id: number): IRemoveRemoveStudentLeaveActionType {
-    return { type: REMOVE_REMOVE_LEAVE, id: id };
+export function removeStudentLeaveNotApprovedNow(id: number): IRemoveStudentLeaveNotApprovedNowActionType {
+    return { type: REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW, id: id };
 }
 
-
-export function initialAcceptStudentLeave(student_leave: IStudentLeave): IInitialAcceptStudentLeaveActionType {
-    return { type: INITIAL_ACCEPT_LEAVE, student_leave: student_leave };
+export function changeSelectedStudentLeaveNotApprovedNow(student_leave: IStudentLeave): IChangeSelectedStudentLeaveNotApprovedNowActionType {
+    return { type: CHANGE_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT, student_leave: student_leave };
 }
 
-export function removeAcceptStudentLeaveAll(): IRemoveAcceptStudentLeaveAllActionType {
-    return { type: REMOVE_ACCEPT_LEAVE_ALL };
-}
-
-export function addAcceptStudentLeave(student_leave: IStudentLeave): IAddAcceptStudentLeaveActionType {
-    return { type: ADD_ACCEPT_LEAVE, student_leave: student_leave };
-}
-
-export function editAcceptStudentLeave(student_leave: IStudentLeave): IEditAcceptStudentLeaveActionType {
-    return { type: EDIT_ACCEPT_LEAVE, student_leave: student_leave };
-}
-
-export function removeAcceptStudentLeave(id: number): IRemoveAcceptStudentLeaveActionType {
-    return { type: REMOVE_ACCEPT_LEAVE, id: id };
+export function clearSelectedStudentLeaveNotApprovedNow(): IClearSelectedStudentLeaveNotApprovedNowActionType {
+    return { type: CLEAR_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT };
 }
 
 
-export function initialLeaves(student_leave: IStudentLeave): IInitialLeavesActionType {
-    return { type: INITIAL_LEAVES, student_leave: student_leave };
+export function initialStudentLeaveApproved(student_leave: IStudentLeave): IInitialStudentLeaveApprovedActionType {
+    return { type: INITIAL_STUDENT_LEAVE_APPROVED, student_leave: student_leave };
 }
 
-export function removeLeavesAll(): IRemoveLeavesAllActionType {
-    return { type: REMOVE_LEAVES_ALL };
+export function removeStudentLeaveApprovedAll(): IRemoveStudentLeaveApprovedAllActionType {
+    return { type: REMOVE_STUDENT_LEAVE_APPROVED_ALL };
 }
 
-export function addLeaves(student_leave: IStudentLeave): IAddLeavesActionType {
-    return { type: ADD_LEAVES, student_leave: student_leave };
+export function addStudentLeaveApproved(student_leave: IStudentLeave): IAddStudentLeaveApprovedActionType {
+    return { type: ADD_STUDENT_LEAVE_APPROVED, student_leave: student_leave };
 }
 
-export function editLeaves(student_leave: IStudentLeave): IEditLeavesActionType {
-    return { type: EDIT_LEAVES, student_leave: student_leave };
+export function editStudentLeaveApproved(student_leave: IStudentLeave): IEditStudentLeaveApprovedActionType {
+    return { type: EDIT_STUDENT_LEAVE_APPROVED, student_leave: student_leave };
 }
 
-export function removeLeaves(id: number): IRemoveLeavesActionType {
-    return { type: REMOVE_LEAVES, id: id };
+export function removeStudentLeaveApproved(id: number): IRemoveStudentLeaveApprovedActionType {
+    return { type: REMOVE_STUDENT_LEAVE_APPROVED, id: id };
 }
 
-interface IInitialLeavesActionType {type: string, student_leave: IStudentLeave};
-interface IRemoveLeavesAllActionType { type: string };
-interface IAddLeavesActionType { type: string, student_leave: IStudentLeave };
-interface IEditLeavesActionType { type: string, student_leave: IStudentLeave };
-interface IRemoveLeavesActionType { type: string, id: number };
+export function changeSelectedStudentLeaveApproved(student_leave: IStudentLeave): IChangeSelectedStudentLeaveApprovedActionType {
+    return { type: CHANGE_STUDENT_LEAVE_APPROVED_PENDING_EDIT, student_leave: student_leave };
+}
 
-interface IInitialAcceptStudentLeaveActionType {type: string, student_leave: IStudentLeave};
-interface IRemoveAcceptStudentLeaveAllActionType { type: string };
-interface IAddAcceptStudentLeaveActionType { type: string, student_leave: IStudentLeave };
-interface IEditAcceptStudentLeaveActionType { type: string, student_leave: IStudentLeave };
-interface IRemoveAcceptStudentLeaveActionType { type: string, id: number };
+export function clearSelectedStudentLeaveApproved(): IClearSelectedStudentLeaveApprovedActionType {
+    return { type: CLEAR_STUDENT_LEAVE_APPROVED_PENDING_EDIT };
+}
 
-interface IInitialRemoveStudentLeaveActionType {type: string, student_leave: IStudentLeave};
-interface IRemoveRemoveStudentLeaveAllActionType { type: string };
-interface IAddRemoveStudentLeaveActionType { type: string, student_leave: IStudentLeave };
-interface IEditRemoveStudentLeaveActionType { type: string, student_leave: IStudentLeave };
-interface IRemoveRemoveStudentLeaveActionType { type: string, id: number };
+export function setModificationState(value: StudentLeaveModificationStatus): ISetModificationStateActionType {
+    return { type: SET_MODIFICATION_STATE, value: value };
+}
+
+
+
+export function initialStudentLeaveNotApproved(student_leave: IStudentLeave): IInitialStudentLeaveNotApprovedActionType {
+    return { type: INITIAL_STUDENT_LEAVE_NOT_APPROVED, student_leave: student_leave };
+}
+
+export function removeStudentLeaveNotApprovedAll(): IRemoveStudentLeaveNotApprovedAllActionType {
+    return { type: REMOVE_STUDENT_LEAVE_NOT_APPROVED_ALL };
+}
+
+export function addStudentLeaveNotApproved(student_leave: IStudentLeave): IAddStudentLeaveNotApprovedActionType {
+    return { type: ADD_STUDENT_LEAVE_NOT_APPROVED, student_leave: student_leave };
+}
+
+export function editStudentLeaveNotApproved(student_leave: IStudentLeave): IEditStudentLeaveNotApprovedActionType {
+    return { type: EDIT_STUDENT_LEAVE_NOT_APPROVED, student_leave: student_leave };
+}
+
+export function removeStudentLeaveNotApproved(id: number): IRemoveStudentLeaveNotApprovedActionType {
+    return { type: REMOVE_STUDENT_LEAVE_NOT_APPROVED, id: id };
+}
+
+export function changeSelectedStudentLeaveNotApproved(student_leave: IStudentLeave): IChangeSelectedStudentLeaveNotApprovedActionType {
+    return { type: CHANGE_STUDENT_LEAVE_NOT_APPROVED_AMOUNT, student_leave: student_leave };
+}
+
+export function clearSelectedStudentLeaveNotApproved(): IClearSelectedStudentLeaveNotApprovedActionType {
+    return { type: CHANGE_STUDENT_LEAVE_NOT_APPROVED_PENDING_EDIT };
+}
+
+// register_successfull_student_leaves
+interface IAddStudentLeaveNotApprovedNowActionType { type: string, student_leave: IStudentLeave };
+interface IEditStudentLeaveNotApprovedNowActionType { type: string, student_leave: IStudentLeave };
+interface IRemoveStudentLeaveNotApprovedNowActionType { type: string, id: number };
+interface IChangeSelectedStudentLeaveNotApprovedNowActionType { type: string, student_leave: IStudentLeave };
+interface IClearSelectedStudentLeaveNotApprovedNowActionType { type: string };
+interface IRemoveStudentLeaveNotApprovedNowAllActionType { type: string }
+interface IInitialStudentLeaveNotApprovedNowActionType {type: string, student_leave: IStudentLeave}
+
+// not_register_student_leaves
+interface IAddStudentLeaveApprovedActionType { type: string, student_leave: IStudentLeave };
+interface IEditStudentLeaveApprovedActionType { type: string, student_leave: IStudentLeave };
+interface IRemoveStudentLeaveApprovedActionType { type: string, id: number };
+interface IChangeSelectedStudentLeaveApprovedActionType { type: string, student_leave: IStudentLeave };
+interface IClearSelectedStudentLeaveApprovedActionType { type: string };
+interface IRemoveStudentLeaveApprovedAllActionType { type: string }
+interface IInitialStudentLeaveApprovedActionType {type: string, student_leave: IStudentLeave}
+
+
+// register_successfull_student_leaves
+interface IAddStudentLeaveNotApprovedActionType { type: string, student_leave: IStudentLeave };
+interface IEditStudentLeaveNotApprovedActionType { type: string, student_leave: IStudentLeave };
+interface IRemoveStudentLeaveNotApprovedActionType { type: string, id: number };
+interface IChangeSelectedStudentLeaveNotApprovedActionType { type: string, student_leave: IStudentLeave };
+interface IClearSelectedStudentLeaveNotApprovedActionType { type: string };
+interface IRemoveStudentLeaveNotApprovedAllActionType { type: string }
+interface IInitialStudentLeaveNotApprovedActionType {type: string, student_leave: IStudentLeave}
+
+
+
+
+interface ISetModificationStateActionType { type: string, value:  StudentLeaveModificationStatus};

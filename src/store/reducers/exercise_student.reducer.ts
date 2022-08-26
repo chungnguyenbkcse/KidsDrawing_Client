@@ -43,7 +43,7 @@ function exerciseStudentsReducer(state: IExerciseStudentState = initialState, ac
             return { ...state, exercise_submitted : [...state.exercise_submitted, action.exercise_student]};
         }
         case ADD_EXERCISE_SUBMITTED: {
-            return { ...state, exercise_not_submit: [...state.exercise_not_submit, action.exercise_student]};
+            return { ...state, exercise_submitted: [...state.exercise_submitted, action.exercise_student]};
         }
         case EDIT_EXERCISE_SUBMITTED: {
             const foundIndex: number = state.exercise_submitted.findIndex(pr => pr.id === action.exercise_student.id);

@@ -1,9 +1,9 @@
 import { IStudentLeaveState, IActionBase } from "../models/root.interface";
 import { 
-    ADD_LEAVES, EDIT_LEAVES, REMOVE_LEAVES,INITIAL_LEAVES, REMOVE_LEAVES_ALL, 
-    ADD_ACCEPT_LEAVE, EDIT_ACCEPT_LEAVE, REMOVE_ACCEPT_LEAVE, INITIAL_ACCEPT_LEAVE, REMOVE_ACCEPT_LEAVE_ALL, 
-    ADD_REMOVE_LEAVE, EDIT_REMOVE_LEAVE, REMOVE_REMOVE_LEAVE , INITIAL_REMOVE_LEAVE, REMOVE_REMOVE_LEAVE_ALL,
-    CHANGE_USER_PENDING_EDIT, CLEAR_USER_PENDING_EDIT, SET_MODIFICATION_STATE
+    ADD_STUDENT_LEAVE_NOT_APPROVED_NOW, EDIT_STUDENT_LEAVE_NOT_APPROVED_NOW, REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW,INITIAL_STUDENT_LEAVE_NOT_APPROVED_NOW, REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW_ALL, 
+    ADD_STUDENT_LEAVE_APPROVED, EDIT_STUDENT_LEAVE_APPROVED, REMOVE_STUDENT_LEAVE_APPROVED, INITIAL_STUDENT_LEAVE_APPROVED, REMOVE_STUDENT_LEAVE_APPROVED_ALL, 
+    ADD_STUDENT_LEAVE_NOT_APPROVED, EDIT_STUDENT_LEAVE_NOT_APPROVED, REMOVE_STUDENT_LEAVE_NOT_APPROVED , INITIAL_STUDENT_LEAVE_NOT_APPROVED, REMOVE_STUDENT_LEAVE_NOT_APPROVED_ALL,
+    CLEAR_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT, CHANGE_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT, SET_MODIFICATION_STATE
 
 } from "../actions/student_leave.action";
 import { IStudentLeave, StudentLeaveModificationStatus } from "../models/student_leave.interface";
@@ -18,67 +18,67 @@ const initialState: IStudentLeaveState = {
 
 function studentLeaveReducer(state: IStudentLeaveState = initialState, action: IActionBase): IStudentLeaveState {
     switch (action.type) {
-        case INITIAL_LEAVES: {
+        case INITIAL_STUDENT_LEAVE_NOT_APPROVED_NOW: {
             return { ...state, leaves : [...state.leaves, action.student_leave]};
         }
-        case REMOVE_LEAVES_ALL: {
+        case REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW_ALL: {
             return { ...state, leaves: [] };
         }
-        case ADD_LEAVES: {
+        case ADD_STUDENT_LEAVE_NOT_APPROVED_NOW: {
             return { ...state, leaves: [...state.leaves, action.student_leave]};
         }
-        case EDIT_LEAVES: {
+        case EDIT_STUDENT_LEAVE_NOT_APPROVED_NOW: {
             const foundIndex: number = state.leaves.findIndex(pr => pr.id === action.student_leave.id);
             let leavess: IStudentLeave[] = state.leaves;
             leavess[foundIndex] = action.student_leave;
             return { ...state, leaves: leavess };
         }
-        case REMOVE_LEAVES: {
+        case REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW: {
             return { ...state, leaves: state.leaves.filter(x=>x.id !== action.student_leave.id)};
         }
 
-        case INITIAL_ACCEPT_LEAVE: {
+        case INITIAL_STUDENT_LEAVE_APPROVED: {
             return { ...state, acceptLeaves : [...state.acceptLeaves, action.student_leave]};
         }
-        case REMOVE_ACCEPT_LEAVE_ALL: {
+        case REMOVE_STUDENT_LEAVE_APPROVED_ALL: {
             return { ...state, acceptLeaves: [] };
         }
-        case ADD_ACCEPT_LEAVE: {
+        case ADD_STUDENT_LEAVE_APPROVED: {
             return { ...state, acceptLeaves: [...state.acceptLeaves, action.student_leave]};
         }
-        case EDIT_ACCEPT_LEAVE: {
+        case EDIT_STUDENT_LEAVE_APPROVED: {
             const foundIndex: number = state.acceptLeaves.findIndex(pr => pr.id === action.student_leave.id);
             let accept_leaves: IStudentLeave[] = state.acceptLeaves;
             accept_leaves[foundIndex] = action.student_leave;
             return { ...state, acceptLeaves: accept_leaves };
         }
-        case REMOVE_ACCEPT_LEAVE: {
+        case REMOVE_STUDENT_LEAVE_APPROVED: {
             return { ...state, acceptLeaves: state.acceptLeaves.filter(x=>x.id !== action.student_leave.id)};
         }
 
-        case INITIAL_REMOVE_LEAVE: {
+        case INITIAL_STUDENT_LEAVE_NOT_APPROVED: {
             return { ...state, removeLeaves : [...state.removeLeaves, action.student_leave]};
         }
-        case REMOVE_REMOVE_LEAVE_ALL: {
+        case REMOVE_STUDENT_LEAVE_NOT_APPROVED_ALL: {
             return { ...state, removeLeaves: [] };
         }
-        case ADD_REMOVE_LEAVE: {
+        case ADD_STUDENT_LEAVE_NOT_APPROVED: {
             return { ...state, removeLeaves: [...state.removeLeaves, action.student_leave]};
         }
-        case EDIT_REMOVE_LEAVE: {
+        case EDIT_STUDENT_LEAVE_NOT_APPROVED: {
             const foundIndex: number = state.removeLeaves.findIndex(pr => pr.id === action.student_leave.id);
             let remove_leaves: IStudentLeave[] = state.removeLeaves;
             remove_leaves[foundIndex] = action.student_leave;
             return { ...state, removeLeaves: remove_leaves };
         }
-        case REMOVE_REMOVE_LEAVE: {
+        case REMOVE_STUDENT_LEAVE_NOT_APPROVED: {
             return { ...state, removeLeaves: state.removeLeaves.filter(x=>x.id !== action.student_leave.id)};
         }
         
-        case CHANGE_USER_PENDING_EDIT: {
+        case CHANGE_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT: {
             return { ...state, selectedStudentLeave: action.student_leave };
         }
-        case CLEAR_USER_PENDING_EDIT: {
+        case CLEAR_STUDENT_LEAVE_NOT_APPROVED_NOW_PENDING_EDIT: {
             return { ...state, selectedStudentLeave: null };
         }
         case SET_MODIFICATION_STATE: {

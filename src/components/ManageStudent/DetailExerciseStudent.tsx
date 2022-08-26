@@ -24,13 +24,44 @@ const DetailExerciseStudent: React.FC = () => {
     const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
     const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: number = 0;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    var id_y = localStorage.getItem('image_url_exercise');
+    var image_url_exercise: string = "";
+    if (id_y !== null) {
+        image_url_exercise = id_y;
+    }
+
+    var id_z = localStorage.getItem('score');
+    var score: number = 0;
+    if (id_z !== null) {
+        score = parseInt(id_z);
+    }
+
+    var id_t = localStorage.getItem('description');
+    var description: string = "";
+    if (id_t !== null) {
+        description = id_t;
+    }
+
+    var id_h = localStorage.getItem('time_submit');
+    var time_submit: string = "";
+    if (id_h !== null) {
+        time_submit = id_h;
+    }
+
+    var id_k = localStorage.getItem('feedback');
+    var feedback: string = "";
+    if (id_k !== null) {
+        feedback = id_k;
+    }
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
-    const percentage = 66;
+    let percentage = score;
     useEffect(() => {
         if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
             let access_token_decode: any = jwt_decode(access_token)
@@ -52,52 +83,21 @@ const DetailExerciseStudent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                
             }
         }
     }, [dispatch, access_token, refresh_token]);
 
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
-    }
 
     useEffect(() => {
         dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
     }, [path.area, dispatch]);
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Dataset 2',
-                data: [1, 2, 3, 4, 5, 6],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
+
     return (
         <Fragment>
 
@@ -109,10 +109,10 @@ const DetailExerciseStudent: React.FC = () => {
                         </div>
                         <div className="card-body">
                             <p>
-                                Đây cũng là dịp để các cháu là con của CNVC-LĐ thể hiện tình cảm, lòng biết ơn và tri ân đối với các bậc cha mẹ mà mình yêu quý, trân trọng, cảm phục. Góp phần ngăn chặn, đẩy lùi các hiện tượng bạo lực trong gia đình và xã hội.
+                                {description}
                             </p>
 
-                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Thời gian nộp: <span> 2022-10-10 19:00:00</span></h6>
+                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Thời gian nộp: <span> {time_submit}</span></h6>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@ const DetailExerciseStudent: React.FC = () => {
                     <div className="card-header py-3">
                         <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
                     </div>
-                    <img className="card-img-top" src="https://thumbs.dreamstime.com/b/little-child-baby-girl-drawing-picture-pencils-watercolor-sitting-table-kid-activity-art-class-learning-how-to-194571709.jpg" alt="Card image cap" />
+                    <img className="card-img-top" src={image_url_exercise} alt="Card image cap" />
                 </div>
                 <div className="col-xl-6 col-lg-6">
                     <div className="card shadow mb-4">
@@ -145,10 +145,7 @@ const DetailExerciseStudent: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Nhận xét</h6>
                         </div>
                         <div className="card-body">
-                            <div className="form-group">
-                                <label>Miêu tả</label>
-                                <Editor getValue={10} isCreate={""} setValue={""}/>
-                            </div>
+                            {feedback}
                         </div>
                     </div>
                 </div>

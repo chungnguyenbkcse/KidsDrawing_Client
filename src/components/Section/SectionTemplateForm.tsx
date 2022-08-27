@@ -17,6 +17,12 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getTutorialTemplateBySectionTemplate } from "../../common/service/TutorialTemplate/GetTutorialTemplateBySectionTemplate";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import jwt_decode from "jwt-decode";
+import { logout } from "../../store/actions/account.actions";
+import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
+import { postTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage";
+import { postTutorialTemplate } from "../../common/service/TutorialTemplate/PostTutorialTemplate";
+import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
 
 export type SectionTemplateListProps = {
     children?: React.ReactNode;
@@ -46,17 +52,23 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     console.log(section_templates.sectionTemplates)
     let section_template: ISectionTemplate | null = section_templates.selectedSectionTemplate;
-    const { state } = useLocation<any>();
-    if (state !== undefined && state !== null) {
-        console.log(state.section_template_id)
+    
+    var id_x = localStorage.getItem('section_template_id');
+    let section_template_id: number = 0;
+    if (id_x !== null) {
+        section_template_id = parseInt(id_x)
     }
-    console.log(section_template)
+
+    var id_y = localStorage.getItem('course_id');
+    let course_id: number = 0;
+    if (id_y != null){
+        course_id = parseInt(id_y);
+    }
+    
     if (!section_template) {
         section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
-    let course_id = (section_template !== null ? section_template.id : 0)
 
-    console.log(course_id)
     console.log(tutorial_template_pages.tutorialTemplatePages)
     //console.log(tutorial_template_pages.tutorialTemplatePages[0].description)
     if (tutorial_template_pages.tutorialTemplatePages.length === 0){
@@ -78,9 +90,8 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         create_time: { error: "", value: section_template.create_time },
         update_time: { error: "", value: section_template.update_time }
     });
-    const [totalPage, setTotalPage] = useState(0);
+    const [totalPage, setTotalPage] = useState(tutorial_template_pages.tutorialTemplatePages.length);
     const [index, setIndex] = useState(0);
-    const [contentTutorialSection, setContentTutorialSection] = useState<TutorialSectionTemplate[]>([])
     const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
     const [currentPage, setCurrentPage] = useState<number>(0)
     const [numberSection, setNumberSection] = useState<number>(1)
@@ -113,9 +124,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             return;
         }
         let saveUserFn: Function = addSectionTemplate;
-        //console.log(contentTutorialSection)
+        console.log(contentTutorialPage)
         //console.log(saveUserFn)
-        saveForm(formState, saveUserFn, contentTutorialSection);
+        saveForm(formState, saveUserFn, contentTutorialPage);
     }
 
     const [textHtml, setTextHtml] = useState<string>("")
@@ -129,7 +140,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     //    }
     //}, [tutorial_template_pages, currentPage, textHtml])
 
-    function saveForm(formState: ISectionTemplateFormState, saveFn: Function, contentTutorialSections: TutorialSectionTemplate[]): void {
+    function saveForm(formState: ISectionTemplateFormState, saveFn: Function, contentTutorialPages: PageContent[]): void {
         if (section_template) {
 
             const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
@@ -137,17 +148,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             });
 
             if (saveFn === addSectionTemplate && section_template !== null) {
-                console.log("hello")
-                let course_id = (section_template !== null ? section_template.id : 0)
-                contentTutorialSections.map((contentSection) => {
-                    return dispatch(postSectionTemplate(contentSection.tutorial, {
-                        name: contentSection.name,
-                        number: contentSection.number,
-                        description: "",
-                        teaching_form: contentSection.teaching_form,
-                        course_id: course_id,
-                        creator_id: localStorage.getItem('id')
-                    }, id))
+                console.log(contentTutorialPages)
+                contentTutorialPages.map((content_tutorial_page) => {
+                    
                 })
             }
             dispatch(clearSelectedSectionTemplate());
@@ -157,6 +160,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function getDisabledClass(): string {
         let isError: boolean = isFormInvalid();
+        console.log(currentPage)
+        console.log(totalPage)
+        console.log(isError)
         return isError ? "disabled" : "";
     }
 
@@ -183,18 +189,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         }
     ];
 
-
-    const listTeachingForm: Options[] = [
-        {
-            "name": "Dạy thông qua Jitsi",
-            "value": true
-        },
-        {
-            "name": "Tự đọc giáo trình",
-            "value": false
-        }
-    ]
-
     function handleNextPage() {
         let contentPage: PageContent = {
             page: currentPage,
@@ -208,39 +202,46 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         setTextHtml("")
     }
 
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
+    useEffect(() => {
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time){
+                if (exp_refresh_token_decode < now_time){
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(getTutorialPageBySection(section_template_id))
+                }
+            }
+            else {
+                dispatch(getTutorialPageBySection(section_template_id))
+            }
+        }
+    }, [dispatch])
+
     function handleSaveTutorialTemplate() {
         let contentPage: PageContent = {
             page: currentPage,
             content: textHtml
         }
-        let contentSection: TutorialSectionTemplate = {
-            number: numberSection,
-            name: formState.name.value,
-            teaching_form: formState.teaching_form.value,
-            tutorial: [...contentTutorialPage, contentPage]
-        }
-        setContentTutorialSection([...contentTutorialSection, contentSection])
-    }
-
-    function handleBackSection() {
-        setNumberSection(numberSection - 1)
-        setTextHtml("")
-    }
-
-    function handleNextSection() {
-        setNumberSection(numberSection + 1)
-        if (totalPage === 1) {
-            let contentPage: PageContent = {
-                page: currentPage,
-                content: textHtml
-            }
-            let contentSection: TutorialSectionTemplate = {
-                number: numberSection,
-                name: formState.name.value,
-                teaching_form: formState.teaching_form.value,
-                tutorial: [...contentTutorialPage, contentPage]
-            }
-            setContentTutorialSection([...contentTutorialSection, contentSection])
+        setContentTutorialPage([...contentTutorialPage, contentPage])
+        if (currentPage < totalPage) {
+            setCurrentPage(currentPage + 1)
         }
         setTextHtml("")
     }
@@ -267,19 +268,8 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                         onChange={hasFormValueChanged}
                                         required={true}
                                         maxLength={2000}
-                                        label="Tiêu đề buổi học"
+                                        label="Tên giáo trình"
                                         placeholder="" />
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <SelectKeyValue
-                                        id="input_teaching_form"
-                                        field="teaching_form"
-                                        label="Hình thức dạy"
-                                        options={listTeachingForm}
-                                        required={true}
-                                        onChange={hasFormValueChanged}
-                                        value={formState.teaching_form.value}
-                                    />
                                 </div>
                             </div>
                             <div className="form-row">
@@ -296,13 +286,29 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                             </div>
                             <div className="form-group">
                                 <label>Nội dung trang {currentPage}</label>
-                                <Editor getValue={getValue} isCreate={textHtml} setValue={tutorial_template_pages.tutorialTemplatePages.length === 0 ? "" : tutorial_template_pages.tutorialTemplatePages[index].description} />
+                                <Editor getValue={getValue} isCreate={textHtml} setValue={tutorial_template_pages.tutorialTemplatePages.length === 0 ? "" : tutorial_template_pages.tutorialTemplatePages.sort((a,b) => a.number - b.number)[index].description} />
                             </div>
-                            <div className="form-group">
-                                <button type="button" className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>
-                            </div>
-                            <button type="button" className="btn btn-info right-margin" onClick={handleSaveTutorialTemplate}>Lưu</button>
-                            <button type="submit" className={`btn btn-primary left-margin ${getDisabledClass()}`}>Hoàn thành</button>
+                            {
+                                function () {
+                                    if (currentPage < totalPage){
+                                        return (
+                                            <div className="form-group">
+                                                <button type="button" className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>
+                                            </div>
+                                        )
+                                    }
+                                }()
+                            }
+                            {
+                                function () {
+                                    if (totalPage > 0){
+                                        return (
+                                            <button type="button" className="btn btn-info right-margin" onClick={handleSaveTutorialTemplate}>Lưu</button>
+                                        )
+                                    }
+                                }
+                            }
+                            <button type="submit" className={`btn btn-primary left-margin`}>Hoàn thành</button>
                         </form>
                     </div>
                 </div>

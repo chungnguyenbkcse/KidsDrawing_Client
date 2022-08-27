@@ -21,6 +21,8 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element  {
   const routeChange = (section_template_id: number) => {
     let path = '/section-template/edit';
     console.log(section_template_id)
+    localStorage.removeItem('section_template_id')
+    localStorage.setItem('section_template_id', section_template_id.toString())
     history.push({
       pathname: path,
       state: { section_template_id: section_template_id }

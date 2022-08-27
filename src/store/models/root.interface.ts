@@ -229,7 +229,9 @@ export interface ITutorialTemplateState {
 export interface ITutorialState {
     selectedTutorial: ITutorial | null;
     modificationState: TutorialModificationStatus;
-    tutorials: ITutorial[];
+    tutorial_not_approveds: ITutorial[];
+    tutorial_not_approved_nows: ITutorial[];
+    tutorial_approved: ITutorial[];
 }
 
 export interface IUserGradeContestState {

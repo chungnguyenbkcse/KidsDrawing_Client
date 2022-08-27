@@ -13,12 +13,12 @@ interface Tutorial {
     create_time: string;
     update_time: string;
 }
-export function getTutorialBySection(id: any) {
+export function getTutorial() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/tutorial/section/${id}`, {
+                `${process.env.REACT_APP_API_URL}/tutorial`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

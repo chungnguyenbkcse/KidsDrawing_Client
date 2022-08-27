@@ -91,6 +91,10 @@ function CourseNomalList(props: courseListProps): JSX.Element {
   })
 
   const routeChange = (id: number, number_of_sum: number) => {
+    localStorage.removeItem('course_id')
+    localStorage.setItem('course_id', id.toString())
+    localStorage.removeItem('number_of_sum')
+    localStorage.setItem('number_of_sum', number_of_sum.toString())
     let path = '/courses/section-template';
     history.push({
       pathname: path,

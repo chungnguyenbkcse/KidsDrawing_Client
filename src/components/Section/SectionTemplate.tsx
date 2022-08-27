@@ -26,18 +26,16 @@ const SectionTemplate: React.FC = () => {
     const numberItemsCount: number = SectionTemplates.sectionTemplates.length;
     const [popup, setPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const { state } = useLocation<any>();
-    console.log(state)
+    
+    var id_x = localStorage.getItem('course_id');
+    let course_id: number = 0;
+    if (id_x != null){
+        course_id = parseInt(id_x);
+    }
 
     useEffect(() => {
-        if (typeof state !== undefined){
-            dispatch(getSectionTemplateByCourseId(parseInt(state.id)))
-            dispatch(getTutorialTemplatePage())
-        }
-        else {
-            dispatch(getSectionTemplate())
-        }
-    }, [dispatch, state])
+        dispatch(getSectionTemplateByCourseId(course_id)) 
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(clearSelectedSectionTemplate());

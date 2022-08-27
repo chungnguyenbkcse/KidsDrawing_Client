@@ -2,15 +2,16 @@ import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IStudentLeaveState, IStateType } from "../../store/models/root.interface";
+import { IStudentLeaveState, IStateType, ITutorialState } from "../../store/models/root.interface";
 import TutorialEditRequestList from "./TutorialEditRequestList";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getStudentLeave } from "../../common/service/StudentLeave/GetStudentLeave";
+import { getTutorial } from "../../common/service/Tutorial/GetTutorial";
 
 const TutorialEditRequest: React.FC = () => {
-  const studentLeaveLeaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
-  const numberItemsCount: number = studentLeaveLeaves.leaves.length;
+  const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
+  const numberItemsCount: number = tutorials.tutorial_not_approved_nows.length;
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu chỉnh giáo án", ""));
@@ -38,11 +39,11 @@ const TutorialEditRequest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getStudentLeave())
+                    dispatch(getTutorial())
                 }
             }
             else {
-                dispatch(getStudentLeave())
+              dispatch(getTutorial())
             }
         }
     }, [dispatch]);

@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/tutorial.action";
 import { postTutorialPage } from "../TutorialPage/PostTutorialPage";
+import { postTutorialPageToast } from "../TutorialPage/PostTutorialPageToast";
 
 export function postTutorial(tutorial: any[], data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -26,7 +27,17 @@ export function postTutorial(tutorial: any[], data: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                tutorial.map((value) => {
+                var total = tutorial.length;
+                console.log(total)
+                tutorial.map((value, index) => {
+                    if (index === total - 1){
+                        return dispatch(postTutorialPageToast({
+                            tutorial_id: data.id,
+                            name: data.name,
+                            description: value.content,
+                            number: value.page
+                        }, idx))
+                    }
                     return dispatch(postTutorialPage({
                         tutorial_id: data.id,
                         name: data.name,
@@ -34,10 +45,9 @@ export function postTutorial(tutorial: any[], data: any, idx: any) {
                         number: value.page
                     }))
                 })
-                toast.update(idx, { render: "Yêu cầu chỉnh giáo án được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
             })
             .catch(error => {
-                toast.update(idx, { render: "Yêu cầu chỉnh giáo án được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Yêu cầu chỉnh giáo án được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

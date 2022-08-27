@@ -1,15 +1,18 @@
 import jwt_decode from "jwt-decode";
 import jwtDecode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { ChangeEvent, Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { ChartLine } from "../../common/components/CharLine";
-import { Editor } from "../../common/components/Quill/EditorSection";
+import Editor from "../../common/components/Quill/EditorSectionTemplate";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import TextInput from "../../common/components/TextInput";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
+import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
+import { OnChangeModel, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { ISectionState, IStateType, ITutorialPageState, IUserState } from "../../store/models/root.interface";
@@ -20,27 +23,65 @@ type Options = {
     value: any;
 }
 
+type PageContent = {
+    page: number;
+    content: string;
+}
+
 const EditSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const TutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
+    const tutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
 
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
+    const [index, setIndex] = useState(0);
+    const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
+    const [totalPage, setTotalPage] = useState(tutorialPages.tutorialPages.length);
 
     const [textHtml, setTextHtml] = useState<string>("")
     function getValue(value: string) {
         setTextHtml(value);
     }
+    
+
+    let tutorial_name = "";
+    if (tutorialPages.tutorialPages.length > 0){
+        tutorial_name = tutorialPages.tutorialPages[0].name
+    }
+
+    const [name, setName] = useState(tutorial_name);
+
+    function hasFormValueChanged(event: ChangeEvent<HTMLInputElement>): void {
+        setName(event.target.value)
+    }
+
+    function hasFormValueChangedNotFiled(model: OnChangeModelNotFiled): void {
+        setTotalPage(model.value)
+        setContentTutorialPage([])
+    }
+
 
     function setChangeCount() {
+        let contentPage: PageContent = {
+            page: count + 1,
+            content: textHtml
+        }
+        setContentTutorialPage([...contentTutorialPage, contentPage])
+        setTextHtml("")
         let x = count;
         let y = x + 1;
-        if (x < TutorialPages.tutorialPages.length){
+        if (x < tutorialPages.tutorialPages.length){
             console.log("Count")
             setCount(y);
         }
-        console.log(count)
     }
+
+    console.log(`total: ${contentTutorialPage.length}`)
+
+    contentTutorialPage.map((ele, idx) => {
+        console.log(`Page: ${ele.page}`)
+        console.log(`Content: ${ele.content}`)
+    })
 
     function setChangeCountBack() {
         let x = count;
@@ -103,22 +144,25 @@ const EditSectionTeacher: React.FC = () => {
 
     const history = useHistory();
     const routeChange = () =>{ 
-        let path = '/class/exercise-student'; 
-        history.push({
-            pathname: path,
+        const idx = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
         });
-    }
-
-    const listTeachingForm: Options[] = [
-        {
-            "name": "Dạy thông qua Jitsi",
-            "value": true
-        },
-        {
-            "name": "Tự đọc giáo trình",
-            "value": false
+        let contentPage: PageContent = {
+            page: count + 1,
+            content: textHtml
         }
-    ]
+        setContentTutorialPage([...contentTutorialPage, contentPage])
+        setTextHtml("")
+
+        console.log(contentTutorialPage.length)
+
+        //dispatch(postTutorial(contentTutorialPage, {
+        //    section_id: section_id,
+        //    creator_id: id,
+        //    name: name,
+        //    description: ""
+        //}, idx))
+    }
 
     const listTotalPage: Options[] = [
         {
@@ -141,6 +185,7 @@ const EditSectionTeacher: React.FC = () => {
     
     return (
         <Fragment>
+            <ToastContainer />
             <div className="row">
                 <div className="col-xl-12 col-md-12 mb-4">
                     <div className="row">
@@ -153,35 +198,25 @@ const EditSectionTeacher: React.FC = () => {
                                         </div>
                                         <div className="row no-gutters">
                                             <div className="col-xl-12 col-md-12 col-xs-12">
-                                                <TextInput id="input_name"
-                                                    value={sections.sections.length > 0 ? sections.sections[0].name : ""}
-                                                    field="name"
-                                                    onChange={() => {}}
-                                                    required={true}
-                                                    maxLength={2000}
-                                                    label="Tên"
-                                                    placeholder="" 
-                                                />
+                                            <div>
+                                                <label htmlFor="name">Tên giáo trình</label>
+                                                <input
+                                                    value={name}
+                                                    type="text"
+                                                    onChange={hasFormValueChanged}
+                                                    className={`form-control name`}
+                                                    id={`id_name`}
+                                                    placeholder="" />
+                                            </div>
                                             </div>
                                         </div>
 
                                         <div className="row no-gutters">
                                             <div className="col-xl-6 col-md-6 col-xs-6">
-                                                <SelectKeyValue
-                                                    id="input_teaching_form"
-                                                    field="teaching_form"
-                                                    label="Hình thức dạy"
-                                                    options={listTeachingForm}
-                                                    required={true}
-                                                    onChange={() => {}}
-                                                    value={sections.sections.length > 0 ? sections.sections[0].teach_form : 0}
-                                                />
-                                            </div>
-                                            <div className="col-xl-6 col-md-6 col-xs-6">
                                                 <SelectKeyValueNotField
-                                                    value={TutorialPages.tutorialPages.length}
+                                                    value={tutorialPages.tutorialPages.length}
                                                     id="input_total_page"
-                                                    onChange={() => {}}
+                                                    onChange={hasFormValueChangedNotFiled}
                                                     required={true}
                                                     label="Số trang"
                                                     options={listTotalPage}
@@ -190,17 +225,17 @@ const EditSectionTeacher: React.FC = () => {
                                         </div>
 
                                         <div className="row no-gutters">
-                                            <label>Nội dung trang</label>
-                                            <Editor getValue={getValue} isCreate="{textHtml}" setValue={TutorialPages.tutorialPages.length === 0 ? "" : TutorialPages.tutorialPages[count-1].description} />
+                                            <label>Nội dung trang {count + 1}</label>
+                                            <Editor getValue={getValue} isCreate={textHtml} setValue={tutorialPages.tutorialPages.length === 0 ? "" : tutorialPages.tutorialPages[count].description} />
                                             {
                                                 function () {
-                                                    if (count < TutorialPages.tutorialPages.length) {
-                                                        if (count === 1){
+                                                    if (count < tutorialPages.tutorialPages.length - 1) {
+                                                        if (count === 0){
                                                             return (
                                                                 <button className={`btn btn-success left-margin`} onClick={() => {setChangeCount()}}>Trang tiếp</button>
                                                             )
                                                         }
-                                                        else if (count > 1){
+                                                        else if (count > 0){
                                                             return (
                                                                 <> 
                                                                     <button className={`btn btn-warning left-margin`} onClick={() => {setChangeCountBack()}}>Trở về</button>

@@ -154,14 +154,14 @@ const EditSectionTeacher: React.FC = () => {
         setContentTutorialPage([...contentTutorialPage, contentPage])
         setTextHtml("")
 
-        console.log(contentTutorialPage.length)
+        console.log([...contentTutorialPage, contentPage].length)
 
-        //dispatch(postTutorial(contentTutorialPage, {
-        //    section_id: section_id,
-        //    creator_id: id,
-        //    name: name,
-        //    description: ""
-        //}, idx))
+        dispatch(postTutorial([...contentTutorialPage, contentPage], {
+            section_id: section_id,
+            creator_id: id,
+            name: name,
+            description: ""
+        }, idx))
     }
 
     const listTotalPage: Options[] = [

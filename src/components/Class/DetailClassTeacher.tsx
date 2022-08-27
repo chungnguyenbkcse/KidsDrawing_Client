@@ -7,6 +7,7 @@ import TopCard from "../../common/components/TopCardUser";
 import { getExerciseByClass } from "../../common/service/Exercise/GetExerciseByClass";
 import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
 import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
+import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
@@ -14,7 +15,7 @@ import { setModificationStateAnonymousNotification } from "../../store/actions/a
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, IUserState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 
@@ -22,7 +23,7 @@ const DetailClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
-
+    const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     console.log(exercise_submissions)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -70,6 +71,7 @@ const DetailClassTeacher: React.FC = () => {
                     dispatch(getUserById(id))
                     dispatch(getTeacher())
                     dispatch(getExerciseSubmissionByClass(class_id))
+                    dispatch(getTeacherLeaveByTeacher(id))
                 }
             }
             else {
@@ -78,6 +80,7 @@ const DetailClassTeacher: React.FC = () => {
                 dispatch(getUserById(id))
                 dispatch(getTeacher())
                 dispatch(getExerciseSubmissionByClass(class_id))
+                dispatch(getTeacherLeaveByTeacher(id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
@@ -223,28 +226,36 @@ const DetailClassTeacher: React.FC = () => {
                     </div>
 
 
-                <div className="col-xl-4 col-md-4 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Buổi nghỉ</h3>
-                    <div className="row row-off-section mb-4 ml-2 mr-2">
-                        <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="Card image cap" />
-                        </div>
-                        <div className="col-xl-8 col-md-8 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Buổi 1</h3>
-                            <h4 className=" mb-2" id="level-teacher">Đã duyệt</h4>
+                    <div className="col-xl-4 col-md-4 mb-4">
+                    <h3 className=" mb-2" id="level-teacher">Yêu cầu nghỉ dạy</h3>
+                    <div className="table-responsive portlet">
+                        <table className="table">
+                            <thead className="thead-light">
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {
+                        teacher_leaves.leaves.map((ele, index) => {
+                            return (
+                                <tr className={`table-row`} key={`semester_course_${index}`}>
+                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange1()}}>
+                                    <div className="col-xl-4 col-md-4 mb-4">
+                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                    </div>
+                                    <div className="col-xl-8 col-md-8 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>
+                                        <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
+                                    </div>
+                                </div>
+                                </tr>
+                            )
+                        })
+                    }
+                            </tbody>
+                            </table>
                         </div>
                     </div>
-
-                    <div className="row row-off-section-2 mb-4 ml-2 mr-2">
-                        <div className="col-xl-4 col-md-4 mb-4">
-                            <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="Card image cap" />
-                        </div>
-                        <div className="col-xl-8 col-md-8 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Buổi 1</h3>
-                            <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </Fragment>

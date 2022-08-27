@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IStateType, IStudentLeaveState } from "../../store/models/root.interface";
 import { IStudentLeave } from "../../store/models/student_leave.interface";
 
@@ -8,8 +10,23 @@ export type studentListProps = {
   children?: React.ReactNode;
 };
 
-function StudentRequestList(props: studentListProps): JSX.Element  {
+function TutorialEditRequestList(props: studentListProps): JSX.Element  {
   const students: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
+  const history = useHistory();
+  const routeChange1 = (student_leave: IStudentLeave) => {
+    localStorage.removeItem('resson_off_teacher')
+    localStorage.setItem('resson_off_teacher', student_leave.description)
+    let path = '/teacher-request/detail';
+    history.push({
+        pathname: path,
+    });
+  }
+
+  const handleTeacherLeave = (teacher_leave: IStudentLeave, status: string) => {
+    const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
 
   const studentElements: (JSX.Element | null)[] = students.leaves.map(student => {
     if (!student) { return null; }
@@ -53,4 +70,4 @@ function StudentRequestList(props: studentListProps): JSX.Element  {
   );
 }
 
-export default StudentRequestList;
+export default TutorialEditRequestList;

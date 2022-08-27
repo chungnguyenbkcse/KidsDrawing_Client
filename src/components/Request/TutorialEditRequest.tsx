@@ -2,21 +2,18 @@ import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { ITeacherLeaveState, IStateType } from "../../store/models/root.interface";
-import TeacherRequestList from "./TeacherRequestList";
+import { IStudentLeaveState, IStateType } from "../../store/models/root.interface";
+import TutorialEditRequestList from "./TutorialEditRequestList";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
-import { getTeacherLeave } from "../../common/service/TeacherLeave/GetTeacherLeave";
-import { ToastContainer } from "react-toastify";
+import { getStudentLeave } from "../../common/service/StudentLeave/GetStudentLeave";
 
-const TeacherRequest: React.FC = () => {
-  const teachers: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
-  const numberItemsCount: number = teachers.leaves.length;
-
+const TutorialEditRequest: React.FC = () => {
+  const studentLeaveLeaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
+  const numberItemsCount: number = studentLeaveLeaves.leaves.length;
 
   const dispatch: Dispatch<any> = useDispatch();
-  dispatch(updateCurrentPath("Yêu cầu nghỉ dạy", ""));
+  dispatch(updateCurrentPath("Yêu cầu chỉnh giáo án", ""));
 
   let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -41,19 +38,18 @@ const TeacherRequest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTeacherLeave())
+                    dispatch(getStudentLeave())
                 }
             }
             else {
-                dispatch(getTeacherLeave())
+                dispatch(getStudentLeave())
             }
         }
     }, [dispatch]);
 
   return (
     <Fragment>
-      <ToastContainer />
-      <h1 className="h3 mb-2 text-gray-800">Yêu cầu nghỉ dạy</h1>
+      <h1 className="h3 mb-2 text-gray-800">Yêu cầu chỉnh giáo án</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
       <div className="row">
@@ -68,7 +64,7 @@ const TeacherRequest: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
             </div>
             <div className="card-body">
-              <TeacherRequestList />
+              <TutorialEditRequestList />
             </div>
           </div>
 
@@ -80,8 +76,4 @@ const TeacherRequest: React.FC = () => {
   );
 };
 
-export default TeacherRequest;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
-
+export default TutorialEditRequest;

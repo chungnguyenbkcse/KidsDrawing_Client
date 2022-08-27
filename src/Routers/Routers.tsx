@@ -21,7 +21,6 @@ import Class from "../components/Class/Class";
 import DetailClass from "../components/Class/DetailClass";
 import DetailLesson from "../components/Class/DetailLesson";
 import Turnover from "../components/Turnover/Turnover";
-import StudentRequest from "../components/Request/StudentRequest";
 import TeacherRequest from "../components/Request/TeacherRequest";
 import RequestConfirmLevel from "../components/Request/RequestConfirmLevel";
 import LessonPlan from "../components/Course/LessonPlan";
@@ -58,6 +57,8 @@ import ViewSectionTeacher from "../components/SectionTeacher/ViewSectionTeacher"
 import RequestTeacher from "../components/RequestTeacher/RequestTeacher";
 import ExamTeacher from "../components/Exam/ExamTeacher";
 import StudentLeaveDetail from "../components/RequestTeacher/StudentLeaveDetail";
+import DetailTeacherRequest from "../components/Request/DetailTeacherRequest";
+import TutorialEditRequest from "../components/Request/TutorialEditRequest";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -119,6 +120,7 @@ const Routers: React.FC = () => {
                         <Switch>
                             <Route path={`/products`}><Products /></Route>
                             <Route path={`/orders`}><Orders /></Route>
+                            <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                             <Route path={`/change-password`}><ChangePassword /></Route>
                             <Route path={`/account`}><Account /></Route>
                             <Route path={`/parents/detail`}><DetailParent /></Route>
@@ -144,7 +146,7 @@ const Routers: React.FC = () => {
                             <Route path={`/contests/:id_contest`}><ContestForm /></Route>
                             <Route path={`/contests`}><Contest /></Route>
                             <Route path={`/turnovers`}><Turnover /></Route>
-                            <Route path={`/request-student-off`}><StudentRequest /></Route>
+                            <Route path={`/tutorial-edit`}><TutorialEditRequest /></Route>
                             <Route path={`/request-teacher-off`}><TeacherRequest /></Route>
                             <Route path={`/teachers/request-level/degree-photo`}><DegreePhoto /></Route>
                             <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>

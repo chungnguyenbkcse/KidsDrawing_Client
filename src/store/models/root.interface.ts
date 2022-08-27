@@ -39,6 +39,7 @@ import { CourseReportModificationStatus, ICourseReport } from "./course_report.i
 import { ExerciseLevelModificationStatus, IExerciseLevel } from "./exercise_level.interface";
 import { IUserGradeExerciseSubmission, UserGradeExerciseSubmissionModificationStatus } from "./user_grade_exercise_submission.interface";
 import { ExerciseStudentModificationStatus, IExerciseStudent } from "./exercise_student.interface";
+import { ITutorial, TutorialModificationStatus } from "./tutorial.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -91,6 +92,7 @@ export interface IStateType {
     exercise_levels: IExerciseLevelState;
     user_grade_exercise_submissions: IUserGradeExerciseSubmissionState;
     exercise_students: IExerciseStudentState;
+    tutorials: ITutorialState;
 }
 
 export interface IProductState {
@@ -221,6 +223,13 @@ export interface ITutorialTemplateState {
     selectedTutorialTemplate: ITutorialTemplate | null;
     modificationState: TutorialTemplateModificationStatus;
     tutorialTemplates: ITutorialTemplate[];
+}
+
+
+export interface ITutorialState {
+    selectedTutorial: ITutorial | null;
+    modificationState: TutorialModificationStatus;
+    tutorials: ITutorial[];
 }
 
 export interface IUserGradeContestState {

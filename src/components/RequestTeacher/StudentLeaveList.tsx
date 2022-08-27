@@ -5,6 +5,8 @@ import { ILesson, LessonModificationStatus } from "../../store/models/lesson.int
 import { setModificationState } from "../../store/actions/lesson.action";
 import { useHistory } from "react-router-dom";
 import { IStudentLeave } from "../../store/models/student_leave.interface";
+import { toast } from "react-toastify";
+import { putStudentLeaveStatus } from "../../common/service/StudentLeave/PutStudentLeave";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -50,6 +52,15 @@ function StudentLeaveList(props: lessonListProps): JSX.Element {
             pathname: path,
         });
     }
+
+    const handleStudentLeave = (student_leave: IStudentLeave, status: string) => {
+        const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+        dispatch(putStudentLeaveStatus(student_leave.id, {
+            status: status
+        }, id))
+    }
     
     const lessonElements: (JSX.Element | null)[] = student_leaves.leaves.map((exercise, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
@@ -72,6 +83,29 @@ function StudentLeaveList(props: lessonListProps): JSX.Element {
                     Chi tiết
                 </button>
             </td>
+            <td>
+                <button 
+                    type="button" 
+                    className="btn btn-success" 
+                    onClick={() => {
+                        handleStudentLeave(exercise, "Approved")
+                    }}
+                >
+                    Chấp nhận
+                </button>
+            </td>
+
+            <td>
+                <button 
+                    type="button" 
+                    className="btn btn-danger" 
+                    onClick={() => {
+                        handleStudentLeave(exercise, "Not approved")
+                    }}
+                >
+                    Xóa
+                </button>
+            </td>
         </tr>);
     });
 
@@ -87,6 +121,8 @@ function StudentLeaveList(props: lessonListProps): JSX.Element {
                             <th scope="col" className="name-row-table">Buổi</th>
                             <th scope="col" className="name-row-table">Học sinh</th>
                             <th scope="col" className="name-row-table">Thời gian nghỉ</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>

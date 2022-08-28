@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IUserRegisterJoinSemesterState, ISemesterClassState, ICourseState } from "../../store/models/root.interface";
+import { IStateType, IUserRegisterJoinSemesterState, ISemesterClassState, ICourseState, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
 import { IUserRegisterJoinSemester } from "../../store/models/user_register_join_semester.interface";
 import { useHistory } from "react-router-dom";
 import { ISemesterClass } from "../../store/models/semester_class.interface";
@@ -17,7 +17,7 @@ type CourseSemester = {
 }
 
 function TopStudent(props: user_register_semesterListProps): JSX.Element {
-    const user_register_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
+    const user_gradee_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     const history = useHistory();
 
     const routeChange = () => {
@@ -38,12 +38,13 @@ function TopStudent(props: user_register_semesterListProps): JSX.Element {
     let semesterCourseList: CourseSemester[] = []
     //console.log(listCourses)
 
-    const user_register_semesterElements: (JSX.Element | null)[] = courseList.map((user_register_semester, index) => {
+    const user_register_semesterElements: (JSX.Element | null)[] = user_gradee_contest_submissions.userGradeContestSubmissions.map((user_register_semester, index) => {
         if (!user_register_semester) { return null; }
-        return (<tr className={`table-row ${(user_register_semesters.selectedUserRegisterJoinSemester && user_register_semesters.selectedUserRegisterJoinSemester.id === index) ? "selected" : ""}`}
+        return (<tr className={`table-row`}
             key={`user_register_semester_${index}`}>
             <th scope="row">{index + 1}</th>
-            <td onClick={routeChange}>{user_register_semester}</td>
+            <td onClick={routeChange}>{user_register_semester.student_id}</td>
+            <td onClick={routeChange}>{user_register_semester.score}</td>
         </tr>);
     });
 

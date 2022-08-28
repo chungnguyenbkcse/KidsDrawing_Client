@@ -67,7 +67,9 @@ function ContestEndList(props: contestListProps): JSX.Element {
         });
     })
 
-    const routeChange = () => {
+    const routeChange = (contest_id: number) => {
+        localStorage.removeItem('contest_id');
+        localStorage.setItem('contest_id', contest_id.toString())
         let path = '/contests/result';
         history.push(path);
     }
@@ -88,7 +90,7 @@ function ContestEndList(props: contestListProps): JSX.Element {
         return (<tr className={`table-row ${(contests.selectedContest && contests.selectedContest.id === contest.id) ? "selected" : ""}`}
             key={`contest_${contest.id}`}>
             <th scope="row">{index + 1}</th>
-            <td onClick={routeChange}>{contest.name}</td>
+            <td onClick={() => routeChange(contest.id)}>{contest.name}</td>
             <td>{typeList[index]}</td>
             <td>{ageList[index]}</td>
             <td>{strDate1.substring(0, 10) + " " + strDate1.substring(11,19)}</td>

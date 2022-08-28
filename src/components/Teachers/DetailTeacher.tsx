@@ -57,7 +57,7 @@ const DetailTeacher: React.FC = () => {
                 dispatch(getCourse())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     const { state } = useLocation<any>();
     let user: IUser = { id: 0, username: "", email: "", password: "", status: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 };
@@ -71,7 +71,8 @@ const DetailTeacher: React.FC = () => {
     teacher_register_quantifications.approveds.map((ele, index) => {
         if (ele.teacher_id === user.id && ele.status === "Approved"){
             course_ids.push(ele.course_id)
-        }
+        } 
+        return ele
     })
     console.log(course_ids)
     console.log(courses.courses)
@@ -89,6 +90,7 @@ const DetailTeacher: React.FC = () => {
                     console.log("hello")
                 }
             }
+            return course
         })
     })
 

@@ -60,7 +60,7 @@ const Student: React.FC = () => {
         }
         dispatch(clearSelectedUser());
         dispatch(updateCurrentPath("Học sinh", "Danh sách"));
-    }, [path.area, dispatch]);
+    }, [path.area, dispatch, access_token, refresh_token]);
 
     function onUserSelect(user: IUser): void {
         dispatch(changeSelectedUser(user));

@@ -3,17 +3,15 @@ import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
-import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExeerciseAndClass";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
 import ScoreExamList from "./ScoreExamList";
 
 const ResultGradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const students: IUserState = useSelector((state: IStateType) => state.users);
     const user_grade_exercise_submissions: IUserGradeExerciseSubmissionState  = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
     const max = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
     const min = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.min(a, b.score), 0);
@@ -55,15 +53,18 @@ const ResultGradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {    
-                    dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id))
+                    dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id_))
                 }
             }
             else {     
-                dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id))
+                dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id_))
             }
         }
+    }, [dispatch, access_token, refresh_token, class_id_, exercise_id]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
-    }, [path.area, dispatch]);
+    }, [dispatch, path.area])
 
 
     const history = useHistory();

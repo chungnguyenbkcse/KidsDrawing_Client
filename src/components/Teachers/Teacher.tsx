@@ -59,7 +59,7 @@ const Teacher: React.FC = () => {
                 dispatch(getTeacherRegisterQuantification())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     useEffect(() => {
         dispatch(clearSelectedUser());

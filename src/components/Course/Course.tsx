@@ -13,8 +13,6 @@ import {
 } from "../../store/actions/course.action";
 import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
-import { ISemesterClass, SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
-import { changeSelectedSemesterClass, setModificationStateSemesterClass } from "../../store/actions/semester_class.action";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
@@ -34,7 +32,6 @@ const Course: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberCourseCount: number = courses.courses.length;
     const [popup1, setPopup1] = useState(false);
-    const [popup2, setPopup2] = useState(false);
 
     console.log(courses)
     let access_token = localStorage.getItem("access_token");
@@ -82,7 +79,7 @@ const Course: React.FC = () => {
                 dispatch(getSectionTemplate())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     function onCourseSelect(course: ICourse): void {
         dispatch(changeSelectedCourse(course));
@@ -92,13 +89,6 @@ const Course: React.FC = () => {
 
     function onCourseRemove1() {
         setPopup1(true);
-    }
-    function onCourseRemove2() {
-        setPopup2(true);
-    }
-
-    function onRemovePopup2(value: boolean) {
-        setPopup2(value)
     }
 
     const history = useHistory();

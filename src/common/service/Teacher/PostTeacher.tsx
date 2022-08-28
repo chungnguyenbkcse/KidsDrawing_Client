@@ -1,7 +1,5 @@
 import { toast } from "react-toastify";
-import { addNotification } from "../../../store/actions/notifications.action";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTeacher, clearSelectedUser, setModificationState } from "../../../store/actions/users.action";
-import { UserModificationStatus } from "../../../store/models/user.interface";
+import { fetchDataRequest } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacher } from "./GetTeacher";
 
@@ -32,7 +30,9 @@ export function postTeacher(data: any, idx: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

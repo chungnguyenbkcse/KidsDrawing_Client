@@ -1,7 +1,5 @@
-import jwt_decode from "jwt-decode";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTeacherAll, initialTeacher, addTeacher } from "../../../store/actions/users.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTeacherAll, initialTeacher } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getTeacher } from "../Teacher/GetTeacher";
 interface user {
     id: number,
     username: string,
@@ -44,7 +42,9 @@ export function getUserById(id: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (ele => {
                 console.log(ele)

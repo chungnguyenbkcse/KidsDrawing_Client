@@ -57,7 +57,7 @@ const ContestForm: React.FC = () => {
         dispatch(getUserGradeContestByContestId(contest.id))
       }
     }
-  }, [dispatch])
+  }, [dispatch, contest])
 
   
 

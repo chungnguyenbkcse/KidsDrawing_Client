@@ -20,9 +20,17 @@ export function postCalendar(id: any, holiday: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postCalendar(id, holiday))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

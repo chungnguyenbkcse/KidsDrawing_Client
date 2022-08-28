@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTimeScheduleTeacher, removeTimeScheduleTeacherAll } from "../../../store/actions/time_schedule_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
@@ -25,9 +24,17 @@ export function getScheduleTeacher(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getScheduleTeacher(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
@@ -36,13 +43,13 @@ export function getScheduleTeacher(id: any) {
                 data.body.schedule_time.map((ele: any, index: any) => {
                     let x = Object.values(ele)
                     let y = Object.keys(ele)
-                    x.map((ele_1: any, idx: any) => {
+                    return x.map((ele_1: any, idx: any) => {
                         //console.log(ele_1)
                         return Object.values(ele_1).map((ele_2: any) => {
                             //console.log(ele_2)
                             let x_1 = Object.values(ele_2)
-                            x_1.map((ele_3: any) => {
-                                ele_3.map((ele_4: any) => {
+                            return x_1.map((ele_3: any) => {
+                                return ele_3.map((ele_4: any) => {
                                     console.log(ele_4)
                                     if (ele_4.length !== 0){
                                         let time: TimeScheduleTeacher = {
@@ -52,6 +59,7 @@ export function getScheduleTeacher(id: any) {
                                         }
                                         dispatch(addTimeScheduleTeacher(time))
                                     }
+                                    return ele_4
                                 })
                             })
                         })

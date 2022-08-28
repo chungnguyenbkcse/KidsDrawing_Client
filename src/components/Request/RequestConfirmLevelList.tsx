@@ -1,9 +1,8 @@
 import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IProductState, ITeacherRegisterQuantificationState, ICourseState, IUserState } from "../../store/models/root.interface";
+import { IStateType, ITeacherRegisterQuantificationState, ICourseState, IUserState } from "../../store/models/root.interface";
 import { IProduct } from "../../store/models/product.interface";
 import { useHistory } from "react-router-dom";
-import { putTeacherRegisterLevel } from "../../common/service/TeacherRegisterQuantification/PutTeacherRegisterLevel";
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 import { putTeacherRegisterLevelAdmin } from "../../common/service/TeacherRegisterQuantification/PutTeacherRegisterLevelAdmin";
 import { addNotification } from "../../store/actions/notifications.action";
@@ -35,7 +34,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
     });
     dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
       status: "Approved"
-    }))
+    }, id))
   }
 
   function notApprovedTeacherLevel(ele: ITeacherRegisterQuantification) {
@@ -45,7 +44,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
     });
     dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
       status: "Not approved"
-    }))
+    }, id))
     dispatch(addNotification("Trình độ ", `${ele.course_name} - Đã được chấp nhận bởi bạn`));
   }
 
@@ -57,6 +56,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
       if (ele.id === product.course_id) {
         course_name = ele.name
       }
+      return ele
     })
 
     let teacher_name = "";
@@ -64,6 +64,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
       if (ele.id === product.teacher_id) {
         teacher_name = ele.username
       }
+      return ele
     })
     return (<tr className={`table-row ${(teacher_register_quantifications.selectedTeacherRegisterQuantification && teacher_register_quantifications.selectedTeacherRegisterQuantification.id === product.id) ? "selected" : ""}`}
       key={`product_${index}`}>

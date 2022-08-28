@@ -26,7 +26,9 @@ export function deleteContest(id: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
                 console.log(data)

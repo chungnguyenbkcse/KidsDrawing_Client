@@ -8,7 +8,6 @@ import { IArtType } from "../../store/models/art_type.interface";
 import { IArtAge } from "../../store/models/art_age.interface";
 import { setModificationState } from "../../store/actions/course.action";
 import { ISectionTemplate } from "../../store/models/section_template.interface";
-import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
 
 export type courseListProps = {
   onSelect?: (course: ICourse) => void;

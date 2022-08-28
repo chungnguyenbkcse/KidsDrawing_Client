@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, 
     removeTeacherRegisterQuatificationApprovedAll, initialTeacherRegisterQuatificationApproved, addTeacherRegisterQuatificationApproved,
     removeTeacherRegisterQuatificationNotApprovedAll, initialTeacherRegisterQuatificationNotApproved, addTeacherRegisterQuatificationNotApproved,
@@ -45,7 +44,9 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 console.log(data)

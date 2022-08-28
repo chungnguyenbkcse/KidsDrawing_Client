@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeContestAll, initialContest, addContest } from "../../../store/actions/contest.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface Contest {
     id: number;
     name: string;
@@ -32,9 +33,17 @@ export function getContest() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getContest())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

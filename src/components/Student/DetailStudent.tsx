@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IUserState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import {
-    clearSelectedUser, setModificationState,
+    setModificationState,
     changeSelectedUser
 } from "../../store/actions/users.action";
 import { UserModificationStatus, IUser } from "../../store/models/user.interface";

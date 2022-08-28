@@ -1,7 +1,5 @@
 import { toast } from "react-toastify";
-import { addNotification } from "../../../store/actions/notifications.action";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addLeaves } from "../../../store/actions/teacher_leave.action";
-import { UserModificationStatus } from "../../../store/models/user.interface";
+import { fetchDataRequest } from "../../../store/actions/teacher_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function putTeacherLeaveStatus(id: any, data: any, idx: any) {
@@ -23,9 +21,17 @@ export function putTeacherLeaveStatus(id: any, data: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(putTeacherLeaveStatus(id, data, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

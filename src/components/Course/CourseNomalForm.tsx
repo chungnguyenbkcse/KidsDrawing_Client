@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ICourse, CourseModificationStatus } from "../../store/models/course.interface";
 import TextInput from "../../common/components/TextInput";
 import { editCourse, clearSelectedCourse, setModificationState, addCourse } from "../../store/actions/course.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import NumberInput from "../../common/components/NumberInput";
 import Checkbox from "../../common/components/Checkbox";
 import { OnChangeModel, ICourseNomalFormState } from "../../common/types/Form.types";

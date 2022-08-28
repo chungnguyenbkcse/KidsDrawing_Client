@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useEffect, useState, FormEvent } from "react";
+import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import ClassList from "./ClassList";
 import TopCard from "../../common/components/TopCard";
 import "./Class.css";
@@ -20,7 +20,6 @@ import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { addNotification } from "../../store/actions/notifications.action";
-import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClass";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { ISemesterClass, SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
@@ -29,12 +28,12 @@ import ClassSemesterList from "./ClassSemesterList";
 import Popup from "reactjs-popup";
 import ClassSemesterForm from "./ClassSemesterForm";
 import { deleteSemesterClass } from "../../common/service/SemesterClass/DeleteSemesterClass";
-import ClassForm from "./ClassForm";
 import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
 import { getSchedule } from "../../common/service/Schedule/GetSchedule";
 import { getLesson } from "../../common/service/Lesson/GetLesson";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { toast, ToastContainer } from "react-toastify";
+import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClass";
 type Options = {
     name: string;
     value: any;
@@ -110,7 +109,7 @@ const Class: React.FC = () => {
                 dispatch(getCourse())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     const semesters: ISemesterState = useSelector((state: IStateType) => state.semesters);
     const listSemester: ISemester[] = semesters.semesters
@@ -141,43 +140,22 @@ const Class: React.FC = () => {
     async function handleScheduleClass() {
         let time: String[] = [];
         value.map((ele: any, index: any) => {
-            time.push(ele.toString())
+            return time.push(ele.toString())
         })
-        console.log(time)
 
-        const id = toast.loading("Đang xếp lớp. Vui lòng đợi giây lát...", {
+        const idx = toast.loading("Đang xếp lớp. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
-        
-        var bearer = 'Bearer ' + localStorage.getItem("access_token");
-        const res = await fetch(
-            `${process.env.REACT_APP_API_URL}/semester/schedule-class/${semesterId}`, {
-                method: "POST",
-                headers: {
-                    'Authorization': bearer,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ time: time })
-            }
-        )
-        console.log(res)
-        //dispatch(postScheduleClass(semesterId, { time: time }, id));
+    
+        dispatch(postScheduleClass(semesterId, { time: time }, idx));
     }
 
     function onSemesterClassRemove() {
         setPopup1(true);
     }
 
-    function onMyClassRemove() {
-        setPopup2(true);
-    }
-
     function onRemovePopup1(value: boolean) {
         setPopup1(false);
-    }
-
-    function onRemovePopup2(value: boolean) {
-        setPopup2(false);
     }
 
     return (

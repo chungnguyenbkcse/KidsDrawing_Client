@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataError, addContest } from "../../../store/actions/contest.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postUserGradeContest } from "../UserGradeContest/PostUserGradeContest";
 import { getContest } from "./GetContest";
@@ -29,7 +29,9 @@ export function postContest(lst: any[], contest: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 console.log(data)

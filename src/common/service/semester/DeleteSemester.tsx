@@ -26,7 +26,9 @@ export function deleteSemester(id: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 console.log(data)

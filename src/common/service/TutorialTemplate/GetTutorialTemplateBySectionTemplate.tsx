@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplateAll, initialTutorialTemplate, addTutorialTemplate } from "../../../store/actions/tutorial_template.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTutorialTemplatePageByTutorialTemplateId } from "../TutorialTemplatePage/GetTutorialTemplatePageByTutorialTemplateId";
 interface TutorialTemplate {
     id: number;
@@ -25,9 +26,17 @@ export function getTutorialTemplateBySectionTemplate(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getTutorialTemplateBySectionTemplate(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

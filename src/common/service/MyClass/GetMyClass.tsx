@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeMyClassAll, initialMyClass, addMyClass } from "../../../store/actions/my_class.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
     id: number;
     creator_id: number;
@@ -25,9 +26,17 @@ export function getMyClass() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getMyClass())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

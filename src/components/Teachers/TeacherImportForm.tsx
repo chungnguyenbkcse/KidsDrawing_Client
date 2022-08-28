@@ -2,11 +2,9 @@ import React, { useState, FormEvent, Dispatch, Fragment } from "react";
 import { IStateType, IUserState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
-import { editTeacher, clearSelectedUser, setModificationState, addTeacher } from "../../store/actions/users.action";
+import { clearSelectedUser, setModificationState, addTeacher } from "../../store/actions/users.action";
 import { addNotification } from "../../store/actions/notifications.action";
 import { postTeacher } from "../../common/service/Teacher/PostTeacher";
-import { putTeacher } from "../../common/service/Teacher/PutTeacher";
-import { IUserFormState } from "../../common/types/Form.types";
 import { toast } from "react-toastify";
 
 export type teacherListProps = {

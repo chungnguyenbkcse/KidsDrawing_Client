@@ -1,4 +1,5 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeAcceptTeacherLeaveAll, removeLeavesAll,  addAcceptTeacherLeave, removeAcceptTeacherLeave, removeRemoveTeacherLeaveAll, addRemoveTeacherLeave, addLeaves } from "../../../store/actions/teacher_leave.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeAcceptTeacherLeaveAll, removeLeavesAll,  addAcceptTeacherLeave, removeRemoveTeacherLeaveAll, addRemoveTeacherLeave, addLeaves } from "../../../store/actions/teacher_leave.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherLeave {
     id: number;
     section_id: number;
@@ -33,9 +34,17 @@ export function getTeacherLeaveByTeacher(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getTeacherLeaveByTeacher(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

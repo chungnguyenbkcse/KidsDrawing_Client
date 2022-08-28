@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import TopCardLevel from "../../common/components/TopCardLevel";
-import { ICourse } from "../../store/models/course.interface";
-import { ICourseState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
+import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 
 export type teacherRegisterQuantificationListProps = {

@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface schedule {
     id: number;
     lesson_time: number;
@@ -8,7 +9,6 @@ interface schedule {
 }
 export function getSchedule() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    var creator_id: number = Number(localStorage.getItem("id"));
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -24,9 +24,17 @@ export function getSchedule() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getSchedule())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

@@ -1,28 +1,16 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISectionTemplateState, ITutorialTemplateState, ITutorialTemplatePageState, IRootPageStateType, ICourseState } from "../../store/models/root.interface";
+import { IStateType, ISectionTemplateState, ITutorialTemplatePageState, IRootPageStateType } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store/models/section_template.interface";
 import TextInput from "../../common/components/TextInput";
-import { editSectionTemplate, clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
-import { addNotification } from "../../store/actions/notifications.action";
-import NumberInput from "../../common/components/NumberInput";
+import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
-import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
-import { putSectionTemplate } from "../../common/service/SectionTemplate/PutSectionTemplate";
 import Editor from "../../common/components/Quill/EditorSectionTemplate";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import SelectKeyValue from "../../common/components/SelectKeyValue";
-import { ICourse } from "../../store/models/course.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { getTutorialTemplateBySectionTemplate } from "../../common/service/TutorialTemplate/GetTutorialTemplateBySectionTemplate";
-import { useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
-import { postTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage";
-import { postTutorialTemplate } from "../../common/service/TutorialTemplate/PostTutorialTemplate";
-import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
 
 export type SectionTemplateListProps = {
     children?: React.ReactNode;
@@ -38,13 +26,6 @@ type PageContent = {
     content: string;
 }
 
-type TutorialSectionTemplate = {
-    number: number;
-    name: string;
-    teaching_form: boolean;
-    tutorial: PageContent[];
-}
-
 function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const section_templates: ISectionTemplateState | null = useSelector((state: IStateType) => state.section_templates);
@@ -57,12 +38,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     let section_template_id: number = 0;
     if (id_x !== null) {
         section_template_id = parseInt(id_x)
-    }
-
-    var id_y = localStorage.getItem('course_id');
-    let course_id: number = 0;
-    if (id_y != null){
-        course_id = parseInt(id_y);
     }
     
     if (!section_template) {
@@ -77,7 +52,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     useEffect(() => {
         dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
-    }, [path.area, dispatch, course_id]);
+    }, [path.area, dispatch]);
 
 
     const [formState, setFormState] = useState({
@@ -94,7 +69,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const [index, setIndex] = useState(0);
     const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
     const [currentPage, setCurrentPage] = useState<number>(0)
-    const [numberSection, setNumberSection] = useState<number>(1)
 
     function hasFormValueChanged(model: OnChangeModel): void {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
@@ -113,8 +87,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             setCurrentPage(0)
         }
     }, [totalPage])
-
-    const [textValue, setTextValue] = useState<string>("")
 
     //console.log(totalPage)
 
@@ -143,28 +115,11 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     function saveForm(formState: ISectionTemplateFormState, saveFn: Function, contentTutorialPages: PageContent[]): void {
         if (section_template) {
 
-            const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                position: toast.POSITION.TOP_CENTER
-            });
-
-            if (saveFn === addSectionTemplate && section_template !== null) {
-                console.log(contentTutorialPages)
-                contentTutorialPages.map((content_tutorial_page) => {
-                    
-                })
-            }
             dispatch(clearSelectedSectionTemplate());
             dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
         }
     }
 
-    function getDisabledClass(): string {
-        let isError: boolean = isFormInvalid();
-        console.log(currentPage)
-        console.log(totalPage)
-        console.log(isError)
-        return isError ? "disabled" : "";
-    }
 
     function isFormInvalid(): boolean {
         return (currentPage === totalPage) as boolean;
@@ -232,7 +187,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 dispatch(getTutorialPageBySection(section_template_id))
             }
         }
-    }, [dispatch])
+    }, [dispatch, section_template_id, access_token, refresh_token])
 
     function handleSaveTutorialTemplate() {
         let contentPage: PageContent = {
@@ -256,7 +211,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-green">Buổi {numberSection}</h6>
+                        <h6 className="m-0 font-weight-bold text-green">Buổi</h6>
                     </div>
                     <div className="card-body">
                         <form onSubmit={saveUser}>

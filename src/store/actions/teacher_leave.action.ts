@@ -1,4 +1,4 @@
-import { ITeacherLeave, TeacherLeaveModificationStatus } from "../models/teacher_leave.interface";
+import { ITeacherLeave } from "../models/teacher_leave.interface";
 
 export const FETCH_DATA_REQUEST: string = "FETCH_DATA_REQUEST";
 export const FETCH_DATA_SUCCESS: string = "FETCH_DATA_SUCCESS";

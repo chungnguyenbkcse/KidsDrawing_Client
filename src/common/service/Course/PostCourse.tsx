@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataError, addCourse } from "../../../store/actions/course.action";
+import { fetchDataRequest } from "../../../store/actions/course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getCourse } from "./GetCourse";
 
@@ -21,9 +21,17 @@ export function postCourse(course: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postCourse(course, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
                 console.log(data)

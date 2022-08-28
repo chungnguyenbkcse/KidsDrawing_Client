@@ -1,19 +1,16 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISectionTemplateState, IRootPageStateType, ITutorialTemplateState, ITutorialTemplatePageState, ICourseState } from "../../store/models/root.interface";
+import { IStateType, ISectionTemplateState, IRootPageStateType, ITutorialTemplatePageState, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store/models/section_template.interface";
 import TextInput from "../../common/components/TextInput";
-import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate, removeSectionTemplateAll } from "../../store/actions/section_template.action";
-import { addNotification } from "../../store/actions/notifications.action";
+import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import Editor from "../../common/components/Quill/EditorSection1";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { ICourse } from "../../store/models/course.interface";
-import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
-import { clearSelectedCourse } from "../../store/actions/course.action";
 import { toast } from "react-toastify";
 type Options = {
   name: string;
@@ -35,7 +32,6 @@ type TutorialSectionTemplate = {
 const LessonPlan: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const section_templates: ISectionTemplateState | null = useSelector((state: IStateType) => state.section_templates);
-  const tutorial_templates: ITutorialTemplateState | null = useSelector((state: IStateType) => state.tutorial_templates);
   const tutorial_template_pages: ITutorialTemplatePageState | null = useSelector((state: IStateType) => state.tutorial_template_pages);
   const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);

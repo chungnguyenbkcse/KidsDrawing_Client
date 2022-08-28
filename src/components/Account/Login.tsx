@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, Dispatch, useEffect } from "react";
+import React, { useState, FormEvent, Dispatch } from "react";
 import { OnChangeModel } from "../../common/types/Form.types";
 import { useDispatch } from "react-redux";
 import TextInput from "../../common/components/TextInput";
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   });
 
   function changeRouteHome(value: boolean) {
-    if (value == true){
+    if (value === true){
       history.push('/')
     }
   }

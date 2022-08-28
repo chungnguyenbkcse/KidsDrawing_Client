@@ -1,27 +1,17 @@
-import React, { Fragment, Dispatch, useState, useEffect } from "react";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import TopCard from "../../common/components/TopCard";
 import "./Contest.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IContestState, IStateType, IRootPageStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
+import { IStateType, IRootPageStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
 import {
-    removeContest, clearSelectedContest, setModificationState,
-    changeSelectedContest
+    clearSelectedContest
 } from "../../store/actions/contest.action";
-import { addNotification } from "../../store/actions/notifications.action";
-import { ContestModificationStatus, IContest } from "../../store/models/contest.interface";
-import ContestIsOnList from "./ContestIsOnList";
-import ContestEndList from "./ContestEndList";
-import ContestNotOnYetList from "./ContestNotOnYetList";
-import { useHistory } from "react-router-dom";
-import { deleteContest } from "../../common/service/Contest/DeleteContest";
 import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { getContest } from "../../common/service/Contest/GetContest";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
-import { formatDate } from "../../common/components/ConverDate";
 import TopStudent from "./TopStudent";
 import TopTeacher from "./TopTeacher";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
@@ -30,19 +20,10 @@ import jwt_decode from "jwt-decode";
 
 
 const ResultContest: React.FC = () => {
-    const [checked1, setChecked1] = useState(true);
-    const [checked2, setChecked2] = useState(false);
-    const [checked3, setChecked3] = useState(false);
     const dispatch: Dispatch<any> = useDispatch();
     const user_gradee_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = 3;
-    const [popup1, setPopup1] = useState(false);
-
-    const date_0 = new Date();
-    const date = date_0.toUTCString()
-    console.log(date)
-    const date_now = formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16);
     
 
     var id_x = localStorage.getItem('contest_id');
@@ -81,7 +62,7 @@ const ResultContest: React.FC = () => {
                 dispatch(getUserGradeContestSubmissionByContestId(contest_id))
             }
         }
-    }, [dispatch])
+    }, [dispatch, contest_id, access_token, refresh_token])
 
     
     useEffect(() => {
@@ -96,38 +77,6 @@ const ResultContest: React.FC = () => {
         dispatch(getArtLevel())
         dispatch(getArtAge())
     }, [dispatch])
-
-    function onContestSelectNotOnYetList(contest: IContest): void {
-        dispatch(changeSelectedContest(contest));
-        onContestRemove1()
-        dispatch(setModificationState(ContestModificationStatus.None));
-    }
-
-    function onContestSelectOnList(contest: IContest): void {
-        dispatch(changeSelectedContest(contest));
-        dispatch(setModificationState(ContestModificationStatus.None));
-    }
-
-    function onContestSelectEndList(contest: IContest): void {
-        dispatch(changeSelectedContest(contest));
-        dispatch(setModificationState(ContestModificationStatus.None));
-    }
-
-    function onContestRemove1() {
-        setPopup1(true);
-    }
-
-    const history = useHistory();
-
-    const routeChange = () => {
-        let path = `/contests/edit-contest`; 
-        history.push(
-            {
-                pathname: path,
-                state: {contest_value: null} // your data array of objects
-            }
-        );
-    }
 
 
     return (

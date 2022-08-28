@@ -1,20 +1,14 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { ICourseTeacherState, IRootPageStateType, IStateType, IStudentLeaveState, ITeacherLeaveState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
+import { IRootPageStateType, IStateType, IStudentLeaveState, ITeacherLeaveState } from "../../store/models/root.interface";
 import "./RequestTeacher.css"
-import { getCourseTeacher } from "../../common/service/CourseTeacher/GetCourseTeacherByTeacher";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import ExerciseSectionList from "../ManageStudent/ExerciseSectionList";
 import StudentLeaveList from "./StudentLeaveList";
 import TeacherLeaveList from "./TeacherLeaveList";
-import { getStudentLeave } from "../../common/service/StudentLeave/GetStudentLeaveByClass";
 import { getStudentLeaveByTeacher } from "../../common/service/StudentLeave/GetStudentLeaveByTeacher";
 import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
 import { ToastContainer } from "react-toastify";
@@ -34,11 +28,6 @@ const RequestTeacher: React.FC = () => {
         id = parseInt(id_x);
     }
 
-    var id_y = localStorage.getItem('class_id');
-    var class_id: number = 0;
-    if (id_y !== null) {
-        class_id = parseInt(id_y);
-    }
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -73,7 +62,7 @@ const RequestTeacher: React.FC = () => {
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
         dispatch(updateCurrentPath("Lớp theo kì", ""));
-    }, [path.area, dispatch]);
+    }, [path.area, dispatch, access_token, refresh_token, id]);
 
     
     const [checked, setChecked] = useState(true);

@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/tutorial.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 import { postTutorialPage } from "../TutorialPage/PostTutorialPage";
 import { postTutorialPageToast } from "../TutorialPage/PostTutorialPageToast";
 
@@ -21,9 +22,17 @@ export function postTutorial(tutorial: any[], data: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postTutorial(tutorial, data, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 console.log(data)

@@ -1,7 +1,8 @@
-import { addInformationClass, initialInformationClass, removeInformationClass, removeInformationClassAll } from "../../../store/actions/information_class.action";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeMyClassAll, initialMyClass, addMyClass } from "../../../store/actions/my_class.action";
-import { addTimeSchedule, removeTimeScheduleAll } from "../../../store/actions/time_schedule.action";
-import { addStudent, initialStudent, removeStudentAll } from "../../../store/actions/users.action";
+import { addInformationClass, removeInformationClassAll } from "../../../store/actions/information_class.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/my_class.action";
+import { addTimeSchedule } from "../../../store/actions/time_schedule.action";
+import { addStudent, removeStudentAll } from "../../../store/actions/users.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
     id: 1,
     name: string;
@@ -13,12 +14,6 @@ interface MyClass {
     art_level: string;
     number_section: number;
     number_student: number;
-}
-
-interface ScheduleTime {
-    id: number;
-    start_time: string;
-    end_time: string;
 }
 
 interface user {
@@ -54,9 +49,17 @@ export function getInfoMyClass(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getInfoMyClass(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
@@ -80,12 +83,7 @@ export function getInfoMyClass(id: any) {
                         createTime: ele.createTime
                     }
                     //console.log(strDate.substring(0, 16))
-                    if (index === 0){
-                        return dispatch(initialStudent(user));
-                    }
-                    else{
-                        return dispatch(addStudent(user))
-                    }
+                    return dispatch(addStudent(user))
                 })
                 console.log(data.body.classes.security_code)
                 dispatch(removeInformationClassAll())
@@ -102,18 +100,15 @@ export function getInfoMyClass(id: any) {
                     number_student: data.body.students.length
                 }
 
-                dispatch(removeTimeScheduleAll())
-                data.body.lesson_time.map((ele: any, index: any) => {
-                })
-
                 data.body.lesson_time.map((ele: any, index: any) => {
                     let x = Object.values(ele)
-                    x.map((ele_1: any) => {
+                    return x.map((ele_1: any) => {
                         return ele_1.map((ele_2: any) => {
                             //console.log(ele_2)
                             if (ele_2.length !== 0){
                                 dispatch(addTimeSchedule({start_time: ele_2[0], end_time: ele_2[1]}))
                             }
+                            return ele_2
                         })
                     })
                 })

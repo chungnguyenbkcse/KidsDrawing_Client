@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeLessonAll, initialLesson, addLesson } from "../../../store/actions/lesson.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface lesson {
     id: number;
     start_time: string;
@@ -21,9 +22,17 @@ export function getLesson() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getLesson())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

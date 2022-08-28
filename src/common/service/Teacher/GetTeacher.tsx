@@ -42,7 +42,9 @@ export function getTeacher() {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

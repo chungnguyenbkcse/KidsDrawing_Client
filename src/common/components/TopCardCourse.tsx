@@ -15,7 +15,7 @@ function TopCardCourse(props: PropsWithChildren<ICardProperties>): ReactElement 
     return (
         <div className="col-xl-4 col-md-4 mb-2" onClick={() => {routeChange(props.description, props.course_id)}}>
             <div className={`card shadow h-100 py-0`} id="topcard-user" >
-                <img className="card-img-top" src={props.url_image} alt="Card image cap" />
+                <img className="card-img-top" src={props.url_image} alt="" />
                 <div className="card-body">
                     <h5 className="card-title">{props.name}</h5>
                     <div className="row">

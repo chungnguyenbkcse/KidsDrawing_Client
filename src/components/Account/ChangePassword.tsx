@@ -10,7 +10,6 @@ import { postTeacher } from "../../common/service/Teacher/PostTeacher";
 import { putTeacher } from "../../common/service/Teacher/PutTeacher";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SelectInput from "../../common/components/Select";
 import { getUserById } from "../../common/service/User/GetUserById";
 
 export type teacherListProps = {
@@ -31,7 +30,7 @@ function ChangePassword(): JSX.Element {
             setUserRole(userPrivilege[0])
         }
         getUserById(id)
-    }, [dispatch])
+    }, [dispatch, id, role_privilege, userPrivilege])
     let user: IUser = users.teachers[0];
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
 
@@ -80,7 +79,7 @@ function ChangePassword(): JSX.Element {
                     firstName: formState.firstName.value,
                     lastName: formState.lastName.value,
                     dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: preview,
+                    profile_image_url: "",
                     sex: formState.sex.value,
                     phone: formState.phone.value,
                     address: formState.address.value,
@@ -97,7 +96,7 @@ function ChangePassword(): JSX.Element {
                     firstName: formState.firstName.value,
                     lastName: formState.lastName.value,
                     dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: preview,
+                    profile_image_url: "",
                     sex: formState.sex.value,
                     phone: formState.phone.value,
                     address: formState.address.value,
@@ -133,41 +132,8 @@ function ChangePassword(): JSX.Element {
             || !formState.email.value || !formState.username.value ) as boolean;
     }
 
-    const src = user.profile_image_url;
 
-    const [preview, setPreview] = useState(src)
 
-    const [image, setImage] = useState<any>();
-
-    const uploadPicture = (e: any) => {
-        setImage({
-            /* contains the preview, if you want to show the picture to the user
-                you can access it with this.state.currentPicture
-           */
-            picturePreview: URL.createObjectURL(e.target.files[0]),
-            /* this contains the file we want to send */
-            pictureAsFile: e.target.files[0]
-        })
-        setPreview(URL.createObjectURL(e.target.files[0]))
-    };
-
-    async function setImageAction() {
-        const formData = new FormData();
-        formData.append(
-            "gifFile",
-            image.pictureAsFile
-        );
-        // do your post request
-        const res = await fetch(
-            `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
-            method: "POST",
-            body: formData
-        }
-        )
-        const data = await res.json()
-        return data.url_image
-
-    };
 
     return (
         <Fragment>

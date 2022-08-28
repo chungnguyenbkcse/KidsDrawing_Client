@@ -52,11 +52,13 @@ function TeacherList(props: userListProps): JSX.Element {
       if (ele.teacher_id === teacher.id){
         total ++;
       }
+      return ele
     })
     teacher_register_quantifications.approveds.map((ele, index) => {
       if (ele.teacher_id === teacher.id){
         teacher_level ++;
       }
+      return ele
     })
     return (<tr className={`table-row ${(users.selectedUser && users.selectedUser.id === teacher.id) ? "selected" : ""}`}
 

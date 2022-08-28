@@ -20,9 +20,17 @@ export function postTutorialPageToast(tutorialtemplatepage: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postTutorialPageToast(tutorialtemplatepage, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
                 console.log(data)

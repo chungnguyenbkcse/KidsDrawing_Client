@@ -34,7 +34,6 @@ const Contest: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const contests: IContestState = useSelector((state: IStateType) => state.contests);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = contests.contests.length;
     const [popup1, setPopup1] = useState(false);
 
     const date_0 = new Date();
@@ -46,6 +45,7 @@ const Contest: React.FC = () => {
         if (!(!contest || strDate2 > date_now)) {
             return contest
         }
+        return null
     }).length
 
     let numberContestOnCount: number = contests.contests.filter((contest) => {
@@ -54,6 +54,7 @@ const Contest: React.FC = () => {
         if (!(!contest || strDate1 > date_now || date_now > strDate2)) {
             return contest
         }
+        return null
     }).length
 
     let numberContestNotStartCount: number = contests.contests.filter((contest) => {
@@ -61,6 +62,7 @@ const Contest: React.FC = () => {
         if (!(!contest || strDate1 < date_now)) {
             return contest
         }
+        return null
     }).length
     useEffect(() => {
         dispatch(clearSelectedContest());
@@ -105,7 +107,7 @@ const Contest: React.FC = () => {
                 dispatch(getArtAge())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     function onContestSelectNotOnYetList(contest: IContest): void {
         dispatch(changeSelectedContest(contest));

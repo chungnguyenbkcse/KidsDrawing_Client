@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
@@ -28,7 +27,9 @@ export function deleteUser(id: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
                 console.log(data)

@@ -3,10 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
 import { IAnonymousNotificationState, IContestState, ICourseState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
-//import { IOrder } from "../../store/models/order.interface";
-//import { ChartBar } from "../../common/components/ChartBar";
-//import CourseMaxSign from "./CourseMaxSign";
-//import CourseMinSign from "./CourseMinSign";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getContest } from "../../common/service/Contest/GetContest";
@@ -93,7 +89,7 @@ const Home: React.FC = () => {
         dispatch(getParent())
       }
     }
-  }, [dispatch])
+  }, [dispatch, access_token, refresh_token])
 
   return (
     <Fragment>

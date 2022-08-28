@@ -1,5 +1,7 @@
+import { postRefreshToken } from "../Aut/RefreshToken";
+
 export function postImage(data: any) {
-    return () => {
+    return (dispatch: any) => {
         fetch(
                 `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
                     method: "POST",
@@ -8,9 +10,17 @@ export function postImage(data: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postImage(data))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 console.log(data)

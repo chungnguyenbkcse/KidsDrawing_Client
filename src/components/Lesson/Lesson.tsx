@@ -57,7 +57,7 @@ const Lesson: React.FC = () => {
                 dispatch(getLesson())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     useEffect(() => {
         dispatch(clearSelectedLesson());

@@ -1,7 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
 import { IStateType, ITutorialState } from "../../store/models/root.interface";
 import { ITutorial } from "../../store/models/tutorial.interface";
 
@@ -12,21 +10,6 @@ export type studentListProps = {
 
 function TutorialEditRequestList(props: studentListProps): JSX.Element  {
   const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
-  const history = useHistory();
-  const routeChange1 = (student_leave: ITutorial) => {
-    localStorage.removeItem('resson_off_teacher')
-    localStorage.setItem('resson_off_teacher', student_leave.description)
-    let path = '/teacher-request/detail';
-    history.push({
-        pathname: path,
-    });
-  }
-
-  const handleTeacherLeave = (teacher_leave: ITutorial, status: string) => {
-    const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-      position: toast.POSITION.TOP_CENTER
-    });
-  }
 
   const studentElements: (JSX.Element | null)[] = tutorials.tutorial_not_approved_nows.map((student, index) => {
     if (!student) { return null; }

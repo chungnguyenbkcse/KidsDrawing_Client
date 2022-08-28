@@ -2,11 +2,10 @@ import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IStudentLeaveState, IStateType, ITutorialState } from "../../store/models/root.interface";
+import { IStateType, ITutorialState } from "../../store/models/root.interface";
 import TutorialEditRequestList from "./TutorialEditRequestList";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getStudentLeave } from "../../common/service/StudentLeave/GetStudentLeave";
 import { getTutorial } from "../../common/service/Tutorial/GetTutorial";
 
 const TutorialEditRequest: React.FC = () => {
@@ -46,7 +45,7 @@ const TutorialEditRequest: React.FC = () => {
               dispatch(getTutorial())
             }
         }
-    }, [dispatch]);
+    }, [dispatch, access_token, refresh_token]);
 
   return (
     <Fragment>

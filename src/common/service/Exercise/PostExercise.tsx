@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addExercise } from "../../../store/actions/exercise.action";
+import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/exercise.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getExercise } from "./GetExercise";
 import { getExerciseBySection } from "./GetExerciseBySection";
+
 
 export function postExercise(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -27,9 +27,17 @@ export function postExercise(data: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postExercise(data, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

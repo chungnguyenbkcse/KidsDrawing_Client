@@ -1,26 +1,15 @@
 import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
 import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IExerciseSubmissionState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { IExerciseSubmissionState, IStateType } from "../../store/models/root.interface";
 
 const ExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
-    console.log(users.teachers)
-    console.log(teacherRegisterQuantifications)
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = exercise_submissions.exercise_not_gradeds.length;
     const numberNotApprovedNowCount: number = exercise_submissions.exercise_gradeds.length;
 
@@ -82,7 +71,7 @@ const ExamTeacher: React.FC = () => {
                 dispatch(getExerciseSubmissionByExercise(exercise_id))
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, exercise_id]);
 
     
 
@@ -137,7 +126,7 @@ const ExamTeacher: React.FC = () => {
 
             {
                 function () {
-                    if (numberNotApprovedNowCount == 0){
+                    if (numberNotApprovedNowCount === 0){
                         return (
                             <div className="row justify-content-center mb-4">
                                 <button 

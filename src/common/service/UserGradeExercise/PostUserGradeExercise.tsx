@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester.actions";
+import { fetchDataRequest } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postUserGradeExercise(data: any, idx: any) {
@@ -20,9 +20,17 @@ export function postUserGradeExercise(data: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postUserGradeExercise(data, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
                 console.log(data)

@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { IStateType, IUserState } from "../../store/models/root.interface";
-import { IUser } from "../../store/models/user.interface";
 import { useHistory } from "react-router-dom";
 
 function StudentList(): JSX.Element  {

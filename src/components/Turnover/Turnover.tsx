@@ -2,7 +2,7 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IUserRegisterJoinSemesterState, IStateType, ITurnoverState, IReportUserState, ICourseReportState } from "../../store/models/root.interface";
+import { IStateType, ITurnoverState, IReportUserState, ICourseReportState } from "../../store/models/root.interface";
 import { ChartBar } from "../../common/components/ChartBar";
 import TurnoverList from "./TurnoverList";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
@@ -78,7 +78,7 @@ const Turnover: React.FC = () => {
         dispatch(getCourseReport())
       }
     }
-  }, [dispatch])
+  }, [dispatch, access_token, refresh_token])
 
   const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septempber', 'October', 'November', 'December'];
 
@@ -86,11 +86,11 @@ const Turnover: React.FC = () => {
   let last_data: number[] = [];
   if (turnovers.turnover_now.length > 0 && turnovers.turnover_last.length > 0){
     turnovers.turnover_now.map(ele => {
-      now_data.push(ele.turnover)
+      return now_data.push(ele.turnover)
     })
 
     turnovers.turnover_last.map(ele => {
-      last_data.push(ele.turnover)
+      return last_data.push(ele.turnover)
     })
   }
   const currentYear = new Date().getFullYear();

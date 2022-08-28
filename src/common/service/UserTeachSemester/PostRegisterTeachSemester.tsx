@@ -28,7 +28,9 @@ export function postRegisterTeachSemester(data: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (x => {
                 console.log(x)

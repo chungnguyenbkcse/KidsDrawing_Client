@@ -40,7 +40,7 @@ import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 
 const Art: React.FC = () => {
@@ -84,7 +84,7 @@ const Art: React.FC = () => {
                 dispatch(getArtLevel())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
     
     
     const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);

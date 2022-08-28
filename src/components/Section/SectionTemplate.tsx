@@ -1,30 +1,22 @@
 import React, { Fragment, Dispatch, useState, useEffect } from "react";
 import SectionTemplateList from "./SectionTemplateList";
-import SectionTemplateForm from "./SectionTemplateForm";
 import TopCard from "../../common/components/TopCard";
 import "./SectionTemplate.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { ISectionTemplateState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
 import {
-    removeSectionTemplate, clearSelectedSectionTemplate, setModificationStateSectionTemplate,
+    clearSelectedSectionTemplate, setModificationStateSectionTemplate,
     changeSelectedSectionTemplate
 } from "../../store/actions/section_template.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { SectionTemplateModificationStatus, ISectionTemplate } from "../../store/models/section_template.interface";
-import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSectionTemplate";
-import { deleteSectionTemplate } from "../../common/service/SectionTemplate/DeleteSectionTemplate";
-import { useLocation } from "react-router-dom";
 import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
-import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 
 const SectionTemplate: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const SectionTemplates: ISectionTemplateState = useSelector((state: IStateType) => state.section_templates);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = SectionTemplates.sectionTemplates.length;
-    const [popup, setPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     
     var id_x = localStorage.getItem('course_id');
@@ -35,7 +27,7 @@ const SectionTemplate: React.FC = () => {
 
     useEffect(() => {
         dispatch(getSectionTemplateByCourseId(course_id)) 
-    }, [dispatch])
+    }, [dispatch, course_id])
 
     useEffect(() => {
         dispatch(clearSelectedSectionTemplate());
@@ -44,19 +36,9 @@ const SectionTemplate: React.FC = () => {
 
     function onSectionTemplateSelect(SectionTemplate: ISectionTemplate): void {
         dispatch(changeSelectedSectionTemplate(SectionTemplate));
-        onSectionTemplateRemove();
         dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
     }
 
-    function onSectionTemplateRemove() {
-        setPopup(true);
-    }
-
-    function onRemovePopup(value: boolean) {
-        setPopup(false);
-    }
-
-    console.log(SectionTemplates.sectionTemplates)
 
 
     return (

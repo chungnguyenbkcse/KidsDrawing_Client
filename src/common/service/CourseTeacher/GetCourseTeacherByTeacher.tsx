@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeNotRegisterCourseAll, removeRegisterSuccessfullCourseAll, initialNotRegisterCourse, initialRegisterSuccessfullCourse, addNotRegisterCourse, addRegisterSuccessfullCourse } from "../../../store/actions/course_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseTeacher {
@@ -44,7 +43,9 @@ export function getCourseTeacher(id: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

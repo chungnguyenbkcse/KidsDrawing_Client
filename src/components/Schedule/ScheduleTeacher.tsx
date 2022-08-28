@@ -1,6 +1,6 @@
 import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IRootPageStateType, ITimeScheduleState, ITimeScheduleTeacherState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, ITimeScheduleTeacherState } from "../../store/models/root.interface";
 import {
     clearSelectedProduct
 } from "../../store/actions/products.action";
@@ -62,14 +62,14 @@ const ScheduleTeacher: React.FC = () => {
                 dispatch(getScheduleTeacher(id))
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token, id])
     let data: object[] = []
 
     //console.log(time_schedules.timeSchedules)
 
     time_schedule_teacherss.timeScheduleTeachers.map((ele: any, index: any) => {
         //console.log(ele)
-        data.push({
+        return data.push({
             Id: index,
             Subject: `Lớp ${ele.class_name}:  Buổi học ${index + 1}`,
             StartTime: new Date(ele.start_time),

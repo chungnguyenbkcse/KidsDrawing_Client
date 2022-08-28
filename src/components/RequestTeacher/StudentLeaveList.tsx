@@ -1,8 +1,7 @@
 import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ILessonState, IStudentLeaveState } from "../../store/models/root.interface";
-import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
-import { setModificationState } from "../../store/actions/lesson.action";
+import { IStateType, IStudentLeaveState } from "../../store/models/root.interface";
+import { ILesson } from "../../store/models/lesson.interface";
 import { useHistory } from "react-router-dom";
 import { IStudentLeave } from "../../store/models/student_leave.interface";
 import { toast } from "react-toastify";
@@ -13,30 +12,6 @@ export type lessonListProps = {
     value?: string;
     children?: React.ReactNode;
 };
-
-const data = [
-        {
-            "id": 1,
-            "name": "Vẽ con mèo",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        },
-        {
-            "id": 2,
-            "name": "Vẽ con lợn",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        },
-        {
-            "id": 3,
-            "name": "Vẽ con lợn",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        }
-]
 
 function StudentLeaveList(props: lessonListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();

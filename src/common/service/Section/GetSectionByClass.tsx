@@ -1,5 +1,5 @@
-import { messaging } from "firebase";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSectionAll, initialSection, addSection } from "../../../store/actions/section.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface Section {
     id: number;
     class_id: number;
@@ -28,9 +28,17 @@ export function getSectionByClass(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getSectionByClass(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 console.log(data)

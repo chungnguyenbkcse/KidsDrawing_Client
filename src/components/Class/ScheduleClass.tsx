@@ -17,7 +17,6 @@ import "@syncfusion/ej2-navigations/styles/material.css";
 import "@syncfusion/ej2-popups/styles/material.css";
 import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
-import { useLocation } from "react-router-dom";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
@@ -30,7 +29,7 @@ const ScheduleClass: React.FC = () => {
     let data: object[] = []
 
     time_schedules.timeSchedules.map((ele: any, index: any) => {
-        data.push({
+        return data.push({
             Id: index,
             Subject: `Buổi học ${index + 1}`,
             StartTime: new Date(ele.start_time),
@@ -39,7 +38,11 @@ const ScheduleClass: React.FC = () => {
         })
     })
 
-    const { state } = useLocation<any>();
+    var id_x = localStorage.getItem('class_id')
+    let class_id: number = 0;
+    if (id_x !== null){
+        class_id = parseInt(id_x)
+    }
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -64,14 +67,14 @@ const ScheduleClass: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getInfoMyClass(state.class_id))
+                    dispatch(getInfoMyClass(class_id))
                 }
             }
             else {
-                dispatch(getInfoMyClass(state.class_id))
+                dispatch(getInfoMyClass(class_id))
             }
         }
-    }, [dispatch]);
+    }, [dispatch, class_id, access_token, refresh_token]);
 
     console.log(new Date(2018, 1, 15, 12, 30))
 

@@ -1,10 +1,9 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
-import { getExerciseByClass } from "../../common/service/Exercise/GetExerciseByClass";
 import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
 import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
 import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
@@ -15,7 +14,7 @@ import { setModificationStateAnonymousNotification } from "../../store/actions/a
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 
@@ -83,7 +82,7 @@ const DetailClassTeacher: React.FC = () => {
                 dispatch(getTeacherLeaveByTeacher(id))
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, class_id, id]);
 
     useEffect(() => {
         dispatch(updateCurrentPath("Lớp học", "Buổi học"));
@@ -100,12 +99,6 @@ const DetailClassTeacher: React.FC = () => {
     }
 
     const history = useHistory();
-    const routeChange = () =>{ 
-        let path = '/class/exercise-student'; 
-        history.push({
-            pathname: path,
-        });
-    }
 
     const routeChange1 = () =>{ 
         let path = '/exercise'; 
@@ -178,7 +171,7 @@ const DetailClassTeacher: React.FC = () => {
                                 <tr className={`table-row`} key={`semester_course_${index}`}>
                                 <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {onChangeRoute(ele.id)}}>
                                     <div className="col-xl-4 col-md-4 mb-4">
-                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
                                     </div>
                                     <div className="col-xl-8 col-md-8 mb-4">
                                         <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
@@ -209,7 +202,7 @@ const DetailClassTeacher: React.FC = () => {
                                 <tr className={`table-row`} key={`semester_course_${index}`}>
                                 <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange1()}}>
                                     <div className="col-xl-4 col-md-4 mb-4">
-                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
                                     </div>
                                     <div className="col-xl-8 col-md-8 mb-4">
                                         <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
@@ -241,7 +234,7 @@ const DetailClassTeacher: React.FC = () => {
                                 <tr className={`table-row`} key={`semester_course_${index}`}>
                                 <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange1()}}>
                                     <div className="col-xl-4 col-md-4 mb-4">
-                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
                                     </div>
                                     <div className="col-xl-8 col-md-8 mb-4">
                                         <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>

@@ -1,7 +1,6 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useLocation } from "react-router-dom";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
 import { IStateType, ITutorialPageState } from "../../store/models/root.interface";
@@ -9,11 +8,6 @@ import { IStateType, ITutorialPageState } from "../../store/models/root.interfac
 const ViewSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const TutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
-    if (id_x !== null) {
-        id = parseInt(id_x);
-    }
 
     var id_y = localStorage.getItem('section_id');
     
@@ -73,7 +67,7 @@ const ViewSectionTeacher: React.FC = () => {
                 dispatch(getTutorialPageBySection(section_id))
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, section_id]);
     
     return (
         <Fragment>

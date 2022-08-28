@@ -6,7 +6,6 @@ import { ITeacherLeaveState, IStateType } from "../../store/models/root.interfac
 import TeacherRequestList from "./TeacherRequestList";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
 import { getTeacherLeave } from "../../common/service/TeacherLeave/GetTeacherLeave";
 import { ToastContainer } from "react-toastify";
 
@@ -48,7 +47,7 @@ const TeacherRequest: React.FC = () => {
                 dispatch(getTeacherLeave())
             }
         }
-    }, [dispatch]);
+    }, [dispatch, access_token, refresh_token]);
 
   return (
     <Fragment>
@@ -81,7 +80,3 @@ const TeacherRequest: React.FC = () => {
 };
 
 export default TeacherRequest;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
-

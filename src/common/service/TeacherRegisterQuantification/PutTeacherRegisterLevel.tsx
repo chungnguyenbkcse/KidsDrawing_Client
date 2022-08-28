@@ -1,6 +1,5 @@
-import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, editTeacherRegisterQuatificationNotApprovedNow } from "../../../store/actions/teacher_register_quantification.action";
+import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/teacher_register_quantification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacherRegisterQuantificationByTeacherId } from "./GetTeacherRegisterQuantificationByTeacherId";
 
@@ -23,9 +22,17 @@ export function putTeacherRegisterLevel(id: any, teacher_level: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                   throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(putTeacherRegisterLevel(id, teacher_level, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
                 toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });

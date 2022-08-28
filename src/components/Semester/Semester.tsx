@@ -57,7 +57,7 @@ const Semester: React.FC = () => {
                 dispatch(getSemester())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     useEffect(() => {
         dispatch(clearSelectedSemester());

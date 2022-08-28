@@ -1,7 +1,5 @@
-import jwt_decode from "jwt-decode";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeReportUserAll, addReportUser } from "../../../store/actions/report_user.action";
+import { fetchDataRequest, fetchDataError, removeReportUserAll, addReportUser } from "../../../store/actions/report_user.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getTeacher } from "../Teacher/GetTeacher";
 interface ReportUser {
     total: number
 }
@@ -23,9 +21,17 @@ export function getReportUser() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getReportUser())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(removeReportUserAll())

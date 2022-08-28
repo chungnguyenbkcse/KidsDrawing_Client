@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSectionTemplateAll, initialSectionTemplate, addSectionTemplate } from "../../../store/actions/section_template.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTutorialTemplateBySectionTemplate } from "../TutorialTemplate/GetTutorialTemplateBySectionTemplate";
 interface SectionTemplate {
     id: number;
@@ -29,9 +30,17 @@ export function getSectionTemplateByCourseId(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getSectionTemplateByCourseId(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 console.log(data)

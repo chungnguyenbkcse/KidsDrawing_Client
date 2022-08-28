@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTurnoverNow, addTurnoverLast, removeTurnoverNowAll, removeTurnoverLastAll} from "../../../store/actions/turnover.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface TurnOver {
     turnover: number;
 }
@@ -20,9 +21,17 @@ export function getTurnOverReport() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getTurnOverReport())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

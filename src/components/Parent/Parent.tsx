@@ -54,7 +54,7 @@ const Parent: React.FC = () => {
                 dispatch(getParent())
             }
         }
-    }, [dispatch])
+    }, [dispatch, access_token, refresh_token])
 
     useEffect(() => {
         dispatch(clearSelectedUser());

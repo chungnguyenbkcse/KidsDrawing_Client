@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { IArtLevel, ArtLevelModificationStatus } from "../../store/models/art_level.interface";
 import TextInput from "../../common/components/TextInput";
 import { editArtLevel, clearSelectedArtLevel, setModificationStateArtLevel, addArtLevel } from "../../store/actions/art_level.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IArtLevelFormState } from "../../common/types/Form.types";
 import { postArtLevel } from "../../common/service/ArtLevel/PostArtLevel";
 import { putArtLevel } from "../../common/service/ArtLevel/PutArtLevel";

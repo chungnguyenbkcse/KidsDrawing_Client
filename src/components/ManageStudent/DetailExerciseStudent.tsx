@@ -1,14 +1,9 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Editor from "../../common/components/Quill/Editor";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./ManageStudent.css"
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -20,14 +15,6 @@ const DetailExerciseStudent: React.FC = () => {
     console.log(users.teachers)
     console.log(teacherRegisterQuantifications)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
-    const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
-    const [popup, setPopup] = useState(false);
-    var id_x = localStorage.getItem('id');
-    var id: number = 0;
-    if (id_x !== null) {
-        id = parseInt(id_x);
-    }
 
     var id_y = localStorage.getItem('image_url_exercise');
     var image_url_exercise: string = "";
@@ -123,7 +110,7 @@ const DetailExerciseStudent: React.FC = () => {
                     <div className="card-header py-3">
                         <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
                     </div>
-                    <img className="card-img-top" src={image_url_exercise} alt="Card image cap" />
+                    <img className="card-img-top" src={image_url_exercise} alt="" />
                 </div>
                 <div className="col-xl-6 col-lg-6">
                     <div className="card shadow mb-4">

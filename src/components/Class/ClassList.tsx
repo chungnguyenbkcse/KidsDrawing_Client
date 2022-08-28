@@ -1,6 +1,6 @@
 import React, { Dispatch, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IMyClassState, ICourseState, IUserState } from "../../store/models/root.interface";
+import { IStateType, IMyClassState } from "../../store/models/root.interface";
 import { IMyClass, MyClassModificationStatus } from "../../store/models/my_class.interface";
 import ClassForm from "./ClassForm";
 import { useHistory } from "react-router-dom";

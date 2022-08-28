@@ -1,34 +1,20 @@
 import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IExerciseStudentState, IRootPageStateType, IStateType, IStudentLeaveState, ITeacherRegisterQuantificationState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { IExerciseStudentState, IStateType, IStudentLeaveState } from "../../store/models/root.interface";
 import ExerciseSectionList from "./ExerciseSectionList";
 import "./ManageStudent.css"
 
 const ExerciseStudentList: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const users: IUserState = useSelector((state: IStateType) => state.users);
     const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const student_leave: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
-    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
     const numberSubmittedCount: number = exercise_students.exercise_submitted.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
-    
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
-    if (id_x !== null) {
-        id = parseInt(id_x);
-    }
 
     var id_y = localStorage.getItem('student_id');
     var student_id: number = 0;
@@ -72,7 +58,7 @@ const ExerciseStudentList: React.FC = () => {
                 dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, student_id, class_id]);
 
     return (
         <Fragment>

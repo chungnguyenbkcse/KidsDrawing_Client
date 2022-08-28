@@ -5,7 +5,6 @@ import { ISemesterClass, SemesterClassModificationStatus } from "../../store/mod
 import { editSemesterClass, clearSelectedSemesterClass, setModificationStateSemesterClass, addSemesterClass } from "../../store/actions/semester_class.action"
 import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ISemesterClassFormState } from "../../common/types/Form.types";
-import { ISemester } from "../../store/models/semester.interface";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { postSemesterClass } from "../../common/service/SemesterClass/PostSemesterClass";
 import { putSemesterClass } from "../../common/service/SemesterClass/PutSemesterClass";
@@ -217,15 +216,12 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
         res_1.push(date_of_week_obj)
         listScheduleItemId.push(date_of_week_obj)
         listLessonId.push(lesson_time_obj)
-        //console.log(listScheduleItemId)
-        //setListScheduleItemId([...listScheduleItemId, date_of_week_obj])
-        //setListLessonId([...listLessonId, lesson_time_obj])
       }
     }
     setListScheduleItemId([...listScheduleItemId])
     setListLessonId([...listLessonId])
 
-  }, [total])
+  }, [total, listLessonId, listScheduleItemId, schedule_list])
   function hasFormMutipleValueChanged1(value: number, index: number) {
     if (listScheduleItemId.length === 0) {
       setListScheduleItemId([...listScheduleItemId, { "key": index, "value": value }])

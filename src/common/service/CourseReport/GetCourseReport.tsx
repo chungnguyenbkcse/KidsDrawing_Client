@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataError, removeCourseReportAll, addCourseReport } from "../../../store/actions/course_report.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseReport {
     total_register: number;
     name: string;
@@ -21,9 +22,17 @@ export function getCourseReport() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getCourseReport())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(removeCourseReportAll())

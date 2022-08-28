@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeExerciseNotSubmitAll, removeExerciseSubmittedAll, addExerciseNotSubmit, addExerciseSubmitted } from "../../../store/actions/exercise_student.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface exercise {
     id: number;
     name: string;
@@ -27,9 +28,17 @@ export function getExerciseForClassStudent(class_id: any, student_id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getExerciseForClassStudent(class_id, student_id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

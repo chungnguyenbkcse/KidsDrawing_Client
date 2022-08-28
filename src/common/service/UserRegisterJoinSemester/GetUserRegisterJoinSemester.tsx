@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, initialUserRegisterJoinSemester, addUserRegisterJoinSemester, removeUserRegisterJoinSemesterAll} from "../../../store/actions/user_register_join_semester.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_register_semester {
@@ -26,9 +25,17 @@ export function getUserRegisterJoinSemester() {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getUserRegisterJoinSemester())
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

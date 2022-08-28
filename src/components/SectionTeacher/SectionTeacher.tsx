@@ -1,18 +1,17 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
 import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
-import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationState } from "../../store/actions/exercise.action";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { ExerciseModificationStatus } from "../../store/models/exercise.interface";
-import { IExerciseLevelState, IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
 
@@ -31,12 +30,6 @@ const SectionTeacher: React.FC = () => {
 
     function onRemovePopup(value: boolean) {
         setPopup(false);
-    }
-
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
-    if (id_x !== null) {
-        id = parseInt(id_x);
     }
 
     var id_y = localStorage.getItem('section_id');
@@ -83,7 +76,7 @@ const SectionTeacher: React.FC = () => {
                 dispatch(getExerciseLevel())
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, section_id]);
 
     const history = useHistory();
     const routeChange2 = () => {
@@ -207,7 +200,7 @@ const SectionTeacher: React.FC = () => {
                                                             return ""
                                                         }
                                                         else {
-                                                            if (sections.sections[0].teach_form == true) {
+                                                            if (sections.sections[0].teach_form === true) {
                                                                 return "Dạy bằng jitsi";
                                                             }
                                                             else {
@@ -246,7 +239,7 @@ const SectionTeacher: React.FC = () => {
                                                                     <tr className={`table-row`} key={`semester_course_${index}`}>
                                                                         <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange3(ele.description, ele.name, ele.level_name, ele.id)}}>
                                                                             <div className="col-xl-4 col-md-4 mb-4">
-                                                                                <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="Card image cap" />
+                                                                                <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
                                                                             </div>
                                                                             <div className="col-xl-8 col-md-8 mb-4">
                                                                                 <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>

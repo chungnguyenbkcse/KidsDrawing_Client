@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
 import { IStateType, IUserState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IUser, UserModificationStatus } from "../../store/models/user.interface";
+import { UserModificationStatus } from "../../store/models/user.interface";
 import TextInput from "../../common/components/TextInput";
 import { editTeacher, clearSelectedUser, setModificationState, addTeacher } from "../../store/actions/users.action";
 import { addNotification } from "../../store/actions/notifications.action";
@@ -23,22 +23,19 @@ const Account: React.FC = () => {
     const id = localStorage.getItem('id')
     useEffect(() => {
         dispatch(getUserById(id))
-    }, [dispatch])
+    }, [dispatch, id])
     var role_privilege = localStorage.getItem('role_privilege')
     var rolePrivilege:string[] =[]
-    var roleUser :string =""
     const [userRole, setUserRole] = useState("")
     if (role_privilege !== null) {
         rolePrivilege = role_privilege.split(',')
-        roleUser = rolePrivilege[0]
+        setUserRole(rolePrivilege[0])
     }
     let users: IUserState = useSelector((state: IStateType) => state.users);
     console.log(users.teachers)
 
-    let user = users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
-    useEffect(() => {
-        user =  users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
-    }, [dispatch, users])
+    let user =  users.teachers.length > 0 ? users.teachers[0] : { id: 0, username: "", email: "", status: true, firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
+
     console.log(user)
     let [formState, setFormState] = useState({
         username: { error: "", value: user.username },
@@ -136,36 +133,8 @@ const Account: React.FC = () => {
 
     const [preview, setPreview] = useState(src)
 
-    const [image, setImage] = useState<any>();
-
     const uploadPicture = (e: any) => {
-        setImage({
-            /* contains the preview, if you want to show the picture to the user
-                you can access it with this.state.currentPicture
-           */
-            picturePreview: URL.createObjectURL(e.target.files[0]),
-            /* this contains the file we want to send */
-            pictureAsFile: e.target.files[0]
-        })
         setPreview(URL.createObjectURL(e.target.files[0]))
-    };
-
-    async function setImageAction() {
-        const formData = new FormData();
-        formData.append(
-            "gifFile",
-            image.pictureAsFile
-        );
-        // do your post request
-        const res = await fetch(
-            `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
-            method: "POST",
-            body: formData
-        }
-        )
-        const data = await res.json()
-        return data.url_image
-
     };
 
     return (

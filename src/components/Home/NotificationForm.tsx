@@ -14,9 +14,6 @@ export type artAgeListProps = {
     children?: React.ReactNode;
 };
 
-const data =  [
-    
-]
 
 function TeachAgeForm(props: artAgeListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();

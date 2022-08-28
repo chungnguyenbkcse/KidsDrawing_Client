@@ -1,7 +1,7 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
@@ -9,10 +9,9 @@ import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IInformationClassState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import "./ClassTeacherDetail.css"
 import NotificationClassTeacher from "./NotificationClassTeacher";
 import StudentList from "./StudentForTeacherList";
@@ -25,17 +24,10 @@ const ClassTeacherDetail: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const students: IUserState = useSelector((state: IStateType) => state.users);
     const numberStudentsCount: number = students.students.length;
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id_x = localStorage.getItem('class_id');
+    let class_id: number = 0;
     if (id_x !== null) {
-        id = parseInt(id_x);
-    }
-
-    const { state } = useLocation<any>();
-
-    let class_id = 1;
-    if (state !== undefined && state !== null) {
-        class_id = state.class_id;
+        class_id = parseInt(id_x);
     }
 
     let access_token = localStorage.getItem("access_token");
@@ -72,7 +64,7 @@ const ClassTeacherDetail: React.FC = () => {
             }
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
-    }, [path.area, dispatch]);
+    }, [path.area, dispatch, class_id, access_token, refresh_token]);
 
 
     const [popup1, setPopup1] = useState(false);
@@ -126,7 +118,7 @@ const ClassTeacherDetail: React.FC = () => {
                     {
                         function () {
                             if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
-                                return <NotificationClassTeacher isCheck={onRemovePopup1} data={state}/>
+                                return <NotificationClassTeacher isCheck={onRemovePopup1} data={class_id}/>
                             }
                         }()
                     }

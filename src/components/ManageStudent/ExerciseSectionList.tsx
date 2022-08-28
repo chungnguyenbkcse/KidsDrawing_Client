@@ -1,8 +1,7 @@
-import React, { Dispatch, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ILessonState, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
-import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
-import { setModificationState } from "../../store/actions/lesson.action";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
+import { IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import { ILesson } from "../../store/models/lesson.interface";
 import { useHistory } from "react-router-dom";
 import { IUserGradeExerciseSubmission } from "../../store/models/user_grade_exercise_submission.interface";
 
@@ -12,35 +11,9 @@ export type lessonListProps = {
     children?: React.ReactNode;
 };
 
-const data = [
-        {
-            "id": 1,
-            "name": "Vẽ con mèo",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        },
-        {
-            "id": 2,
-            "name": "Vẽ con lợn",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        },
-        {
-            "id": 3,
-            "name": "Vẽ con lợn",
-            "submission_time": "2022-10-10 19:00:00",
-            "deadline": "2022-10-10 22:00:00",
-            "scrore": 9
-        }
-]
 
 function ExerciseSectionList(props: lessonListProps): JSX.Element {
-    const dispatch: Dispatch<any> = useDispatch();
     const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
-    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
-    console.log(props.value)
 
     const history = useHistory();
     const onChangeRoute = (exercise: IUserGradeExerciseSubmission) =>{ 

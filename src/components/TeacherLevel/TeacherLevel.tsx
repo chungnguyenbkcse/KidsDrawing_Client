@@ -9,7 +9,7 @@ import { getTeacherRegisterQuantificationByTeacherId } from "../../common/servic
 import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
+import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./TeacherLevel.css"
 import TeacherLevelForm from "./TeacherLevelForm";
@@ -19,8 +19,6 @@ import TeacherLevelNotApprovedNowList from "./TeacherLevelNotApprovedNowList";
 const TeacherLevel: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
     const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
     const numberNotApprovedCount: number = teacherRegisterQuantifications.not_approves.length;
@@ -66,17 +64,11 @@ const TeacherLevel: React.FC = () => {
                 dispatch(getCourse())
             }
         }
-    }, [dispatch]);
+    }, [dispatch, id, access_token, refresh_token]);
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
         dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (teacherRegisterQuantifications.selectedTeacherRegisterQuantification) {
-            setPopup(true);
-        }
     }
 
     function onRemovePopup(value: boolean) {
@@ -93,8 +85,6 @@ const TeacherLevel: React.FC = () => {
         }
     }, [teacherRegisterQuantifications.modificationState, popup])
 
-    console.log(teacherRegisterQuantifications.modificationState)
-    console.log(popup)
 
     return (
         <Fragment>

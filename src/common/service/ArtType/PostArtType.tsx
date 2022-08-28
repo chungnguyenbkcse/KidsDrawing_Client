@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataError, removeArtTypeAll, addArtType } from "../../../store/actions/art_type.action";
+import { fetchDataRequest, addArtType } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getArtType } from "./GetArtType";
 
 export function postArtType(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -22,7 +21,13 @@ export function postArtType(data: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postArtType(data,idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
                 else {
                     return response

@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialApprovedAll, removeTutorialNotApprovedAll, removeTutorialNotApprovedNowAll, addTutorialApproved, addTutorialNotApproved, addTutorialNotApprovedNow } from "../../../store/actions/tutorial.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 interface Tutorial {
     id: number;
     section_id: number;
@@ -30,9 +31,17 @@ export function getTutorialBySection(id: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(getTutorialBySection(id))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response.json()
+                else {
+                    return response.json()
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))

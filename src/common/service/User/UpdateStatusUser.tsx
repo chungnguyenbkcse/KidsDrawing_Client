@@ -1,6 +1,4 @@
-import { addNotification } from "../../../store/actions/notifications.action";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/users.action";
-import { UserModificationStatus } from "../../../store/models/user.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function putStatusUser(id: any, data: any) {
@@ -30,7 +28,9 @@ export function putStatusUser(id: any, data: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

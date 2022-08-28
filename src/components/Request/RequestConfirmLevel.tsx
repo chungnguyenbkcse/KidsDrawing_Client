@@ -2,9 +2,8 @@ import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IProductState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
+import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import RequestConfirmLevelList from "./RequestConfirmLevelList";
-import { useLocation } from "react-router-dom";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getCourse } from "../../common/service/Course/GetCourse";
@@ -16,9 +15,11 @@ const RequestConfirmLevel: React.FC = () => {
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
   const numberItemsCount: number = teacher_register_quantifications.not_approved_now.length;
 
-  const { state } = useLocation<any>();
-  console.log(state.teacher_id)
-
+  var id_x = localStorage.getItem('class_id');
+  let class_id: number = 0;
+  if (id_x !== null){
+    class_id = parseInt(id_x)
+  }
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu xác nhận trình độ", ""));
@@ -46,18 +47,18 @@ const RequestConfirmLevel: React.FC = () => {
           dispatch(logout())
         }
         else {
-          dispatch(getTeacherRegisterQuantificationByTeacherId(state.teacher_id))
+          dispatch(getTeacherRegisterQuantificationByTeacherId(class_id))
           dispatch(getTeacher())
           dispatch(getCourse())
         }
       }
       else {
-        dispatch(getTeacherRegisterQuantificationByTeacherId(state.teacher_id))
+        dispatch(getTeacherRegisterQuantificationByTeacherId(class_id))
         dispatch(getTeacher())
         dispatch(getCourse())
       }
     }
-  }, [dispatch])
+  }, [dispatch, class_id, access_token, refresh_token])
 
   return (
     <Fragment>

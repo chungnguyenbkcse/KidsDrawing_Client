@@ -1,21 +1,12 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import Popup from "reactjs-popup";
 import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
-import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExeerciseAndClass";
 import { logout } from "../../store/actions/account.actions";
-import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
-import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
-
-import NotificationClassTeacher from "../Class/NotificationClassTeacher";
-import StudentList from "../Class/StudentForTeacherList";
+import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
 import ScoreExamList from "./ScoreExamList";
 
 
@@ -33,13 +24,14 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
         user_grade_exercise_submissions.user_grade_exercise_submissions.map(ele => {
             student.push(ele.student_name)
             scores.push(ele.score)
+            return ele
         })
     }
 
-    var class_id = localStorage.getItem('class_id');
-    var class_id_: number = 2;
-    if (class_id !== null) {
-        class_id_ = parseInt(class_id);
+    var id_x = localStorage.getItem('class_id');
+    var class_id: number = 0;
+    if (id_x !== null) {
+        class_id = parseInt(id_x);
     }
 
     var id_y = localStorage.getItem('exercise_id');
@@ -61,14 +53,6 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
             }
         ],
     };
-
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
-    if (id_x !== null) {
-        id = parseInt(id_x);
-    }
-
-    const { state } = useLocation<any>();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -102,27 +86,8 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
             }
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
-    }, [path.area, dispatch]);
+    }, [path.area, dispatch, exercise_id, class_id, access_token, refresh_token]);
 
-
-    const [popup1, setPopup1] = useState(false);
-
-    function onAnonymousNotificationRemove() {
-        setPopup1(true);
-    }
-
-
-    function onRemovePopup1(value: boolean) {
-        setPopup1(false);
-    }
-
-    const history = useHistory();
-    const onRouteChange = () =>{ 
-        let path = '/classes/detail-student'; 
-        history.push({
-            pathname: path
-        });
-    }
     return (
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
@@ -158,7 +123,4 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
 };
 
 export default AnalytisResultGradeExamTeacher;
-function dispatch(arg0: (dispatch: any) => void) {
-    throw new Error("Function not implemented.");
-}
 

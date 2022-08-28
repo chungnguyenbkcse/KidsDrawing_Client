@@ -1,10 +1,7 @@
-import React, { Dispatch, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IArtAgeState, IReportUserState } from "../../store/models/root.interface";
-import { IArtAge, ArtAgeModificationStatus } from "../../store/models/art_age.interface";
-import { setModificationStateArtAge } from "../../store/actions/art_age.action";
-import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
-import { DoughnutPieCharts } from "../../common/components/DoughnutPieCharts";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
+import { IStateType, IReportUserState } from "../../store/models/root.interface";
+import { IArtAge } from "../../store/models/art_age.interface";
 import { ChartLine } from "../../common/components/CharLine";
 
 export type artAgeListProps = {
@@ -20,7 +17,7 @@ function CourseAnalytis(props: artAgeListProps): JSX.Element {
     let data_list: number[] = []
     if (report_users.report_users.length > 0){
         report_users.report_users.map(ele => {
-            data_list.push(ele.total)
+            return data_list.push(ele.total)
         })
     }
 

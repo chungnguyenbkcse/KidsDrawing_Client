@@ -4,12 +4,11 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { FaChild } from "react-icons/fa";
 import { RiParentFill } from "react-icons/ri";
 import { BsMap } from "react-icons/bs";
-import { AiOutlineBook, AiFillCalendar, AiOutlineFileText } from "react-icons/ai";
+import { AiOutlineBook, AiOutlineFileText } from "react-icons/ai";
 import { FaPaintBrush } from "react-icons/fa";
 import { MdSchool } from "react-icons/md";
 import { GiVideoConference } from "react-icons/gi";
 import { BsCashCoin } from "react-icons/bs";
-import { TbDeviceGamepad2 } from "react-icons/tb";
 import "./LeftMenu.css";
 
 const LeftMenu: React.FC = () => {

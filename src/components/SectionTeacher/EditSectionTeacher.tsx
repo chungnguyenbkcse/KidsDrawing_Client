@@ -1,22 +1,16 @@
 import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
 import React, { ChangeEvent, Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { ChartLine } from "../../common/components/CharLine";
 import Editor from "../../common/components/Quill/EditorSectionTemplate";
-import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import TextInput from "../../common/components/TextInput";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
-import { OnChangeModel, OnChangeModelNotFiled } from "../../common/types/Form.types";
+import {  OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { ISectionState, IStateType, ITutorialPageState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
+import { IStateType, ITutorialPageState } from "../../store/models/root.interface";
 
 type Options = {
     name: string;
@@ -31,12 +25,9 @@ type PageContent = {
 const EditSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const tutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
-    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
 
     const [count, setCount] = useState(0);
-    const [index, setIndex] = useState(0);
     const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
-    const [totalPage, setTotalPage] = useState(tutorialPages.tutorialPages.length);
 
     const [textHtml, setTextHtml] = useState<string>("")
     function getValue(value: string) {
@@ -56,7 +47,6 @@ const EditSectionTeacher: React.FC = () => {
     }
 
     function hasFormValueChangedNotFiled(model: OnChangeModelNotFiled): void {
-        setTotalPage(model.value)
         setContentTutorialPage([])
     }
 
@@ -75,13 +65,6 @@ const EditSectionTeacher: React.FC = () => {
             setCount(y);
         }
     }
-
-    console.log(`total: ${contentTutorialPage.length}`)
-
-    contentTutorialPage.map((ele, idx) => {
-        console.log(`Page: ${ele.page}`)
-        console.log(`Content: ${ele.content}`)
-    })
 
     function setChangeCountBack() {
         let x = count;
@@ -140,9 +123,8 @@ const EditSectionTeacher: React.FC = () => {
                 dispatch(getTutorialPageBySection(section_id))
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, section_id]);
 
-    const history = useHistory();
     const routeChange = () =>{ 
         const idx = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER

@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/student_leave.action";
+import { postRefreshToken } from "../Aut/RefreshToken";
 export function putStudentLeaveStatus(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
@@ -19,9 +20,17 @@ export function putStudentLeaveStatus(id: any, data: any, idx: any) {
             )
             .then( response => {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(putStudentLeaveStatus(id, data, idx))
+                    }
+                    else {
+                        throw Error(response.statusText);
+                    }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

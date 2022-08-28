@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ICourse, CourseModificationStatus } from "../../store/models/course.interface";
 import TextInput from "../../common/components/TextInput";
 import { editCourse, clearSelectedCourse, setModificationState, addCourse } from "../../store/actions/course.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import NumberInput from "../../common/components/NumberInput";
 import Checkbox from "../../common/components/Checkbox";
 import { OnChangeModel, ICourseNomalFormState } from "../../common/types/Form.types";
@@ -79,8 +78,6 @@ const CourseNomalFormEdit: React.FC = () => {
     })
 
     const src = course.image_url;
-
-    const [preview, setPreview] = useState(src)
 
     const [formState, setFormState] = useState({
         name: { error: "", value: course.name },
@@ -235,7 +232,7 @@ const CourseNomalFormEdit: React.FC = () => {
                                     <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <img src={preview} alt="Preview" id="avatar"/>
+                                    <img src={src} alt="Preview" id="avatar"/>
                                 </div>
                             </div>
 

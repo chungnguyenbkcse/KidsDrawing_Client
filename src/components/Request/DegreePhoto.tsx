@@ -28,7 +28,7 @@ const DegreePhoto: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Hình ảnh</h6>
             </div>
             <div className="card-body">
-            <img src={x} />
+            <img src={x} alt=""/>
             </div>
           </div>
 

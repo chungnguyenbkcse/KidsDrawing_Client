@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postScheduleClass(id: any, data: any, idx: any) {
     console.log("post ++")
@@ -15,20 +16,18 @@ export function postScheduleClass(id: any, data: any, idx: any) {
                 }
             )
             .then( response => {
-                if (response.status === 503) {
-                    toast.update(idx, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 100 });
-                    return 1
-                }
                 if (!response.ok) {
-                    if (response.status === 503) {
-                        toast.update(idx, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 100 });
-                        return 1;
+                    if (response.status === 403) {
+                        dispatch(postRefreshToken())
+                        dispatch(postScheduleClass(id, data, idx))
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

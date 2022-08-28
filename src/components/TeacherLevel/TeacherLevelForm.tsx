@@ -2,9 +2,7 @@ import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react
 import { ICourseState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
-import TextInput from "../../common/components/TextInput";
 import { editTeacherRegisterQuatificationNotApproved, clearSelectedTeacherRegisterNotQuatificationNow, setModificationState, addTeacherRegisterQuatificationNotApprovedNow } from "../../store/actions/teacher_register_quantification.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ITeacherRegisterLevelFormState } from "../../common/types/Form.types";
 import { postTeaherLevel } from "../../common/service/TeacherRegisterQuantification/PostTeacherLevel";
 import { ICourse } from "../../store/models/course.interface";
@@ -150,10 +148,10 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
 
     const [preview, setPreview] = useState(src)
     useEffect(() => {
-      if (isCreate == false && teacher_register_not_approved !== null) {
+      if (isCreate === false && teacher_register_not_approved !== null) {
         setPreview(teacher_register_not_approved.degree_photo_url)
       }
-    }, [isCreate])
+    }, [isCreate, teacher_register_not_approved])
 
   return (
     <Fragment>

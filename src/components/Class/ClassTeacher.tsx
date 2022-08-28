@@ -21,7 +21,6 @@ const ClassTeacher: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberClassDoingCount: number = class_teachers.class_doing.length;
     const numberClassDoneCount: number = class_teachers.class_done.length;
-    const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -67,17 +66,11 @@ const ClassTeacher: React.FC = () => {
             }
         }
         dispatch(updateCurrentPath("Khóa học", ""));
-    }, [path.area, dispatch]);
+    }, [path.area, dispatch, id, access_token, refresh_token]);
 
     function onClassTeacherSelect(class_teacher: IClassTeacher): void {
         dispatch(changeSelectedDoinglClass(class_teacher));
         dispatch(setModificationState(ClassTeacherModificationStatus.None));
-    }
-
-    function onClassTeacherRemove() {
-        if (class_teachers.selectedClassTeacher) {
-            setPopup(true);
-        }
     }
 
     const [checked, setChecked] = useState(true);

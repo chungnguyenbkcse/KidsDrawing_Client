@@ -1,9 +1,7 @@
-import React, { Dispatch, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IArtAgeState, ICourseReportState } from "../../store/models/root.interface";
-import { IArtAge, ArtAgeModificationStatus } from "../../store/models/art_age.interface";
-import { setModificationStateArtAge } from "../../store/actions/art_age.action";
-import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
+import { IStateType, ICourseReportState } from "../../store/models/root.interface";
+import { IArtAge } from "../../store/models/art_age.interface";
 import { DoughnutPieCharts } from "../../common/components/DoughnutPieCharts";
 
 export type artAgeListProps = {
@@ -21,10 +19,10 @@ function CourseAnalytis(props: artAgeListProps): JSX.Element {
     course_reports.course_reports.map(ele => {
           data_list.push(ele.total_register)
           data_name_list.push(ele.name)
+          return ele
     })
   }
 
-  const currentYear = new Date().getFullYear();
     const data = {
         labels: data_name_list,
         datasets: [

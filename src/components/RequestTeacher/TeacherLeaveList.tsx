@@ -1,8 +1,7 @@
 import React, { Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ILessonState, ITeacherLeaveState } from "../../store/models/root.interface";
-import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
-import { setModificationState } from "../../store/actions/lesson.action";
+import { IStateType, ITeacherLeaveState } from "../../store/models/root.interface";
+import { ILesson } from "../../store/models/lesson.interface";
 import { useHistory } from "react-router-dom";
 import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
 import { putTeacherLeaveStatus } from "../../common/service/TeacherLeave/PutTeacherLeave";

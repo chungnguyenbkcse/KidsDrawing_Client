@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IContestTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./ContestTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
@@ -19,8 +18,6 @@ const ContestTeacher: React.FC = () => {
     const numberContestOpeningCount: number = contest_teachers.contest_opening.length;
     const numberContestEndCount: number = contest_teachers.contest_end.length;
     const numberContestNotOpenNowCount: number = contest_teachers.contest_not_open_now.length;
-    const numberContestNewCount: number = contest_teachers.contest_not_open_now_not_teacher.length;
-    const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -62,18 +59,8 @@ const ContestTeacher: React.FC = () => {
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
         dispatch(updateCurrentPath("Cuộc thi", ""));
-    }, [path.area, dispatch]);
+    }, [path.area, dispatch, id, access_token, refresh_token]);
 
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (contest_teachers.selectedContestTeacher) {
-            setPopup(true);
-        }
-    }
 
     const [checked, setChecked] = useState(true);
     return (

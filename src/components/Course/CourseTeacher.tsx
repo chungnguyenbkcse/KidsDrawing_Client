@@ -19,9 +19,6 @@ const CourseTeacher: React.FC = () => {
     const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberTeacherRegisterSuccessfullCount: number = course_teachers.register_successfull_courses.length;
-    const numberTeacherNotRegisterCount: number = course_teachers.register_successfull_courses.length;
-    console.log(course_teachers)
-    const [popup, setPopup] = useState(false);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -63,17 +60,11 @@ const CourseTeacher: React.FC = () => {
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
         dispatch(updateCurrentPath("Lớp theo kì", ""));
-    }, [path.area, dispatch]);
+    }, [path.area, dispatch, id, access_token, refresh_token]);
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
         dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
-
-    function onTeacherRegisterQuantificationRemove() {
-        if (course_teachers.selectedCourseTeacher) {
-            setPopup(true);
-        }
     }
 
     const [checked, setChecked] = useState(true);

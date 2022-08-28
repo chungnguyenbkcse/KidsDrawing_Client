@@ -1,10 +1,8 @@
-import React, { Fragment, Dispatch, useState, useEffect } from "react";
-import ClassForm from "./ClassForm";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import TopCard from "../../common/components/TopCard";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IProductState, IStateType, IRootPageStateType, IUserState, IInformationClassState } from "../../store/models/root.interface";
-import Popup from "reactjs-popup";
+import { IStateType, IRootPageStateType, IUserState, IInformationClassState } from "../../store/models/root.interface";
 import {
     clearSelectedProduct, setModificationState,
     changeSelectedProduct
@@ -13,8 +11,6 @@ import { ProductModificationStatus, IProduct } from "../../store/models/product.
 import TextInput from "../../common/components/TextInput";
 import LessonList from "./LessonList";
 import StudentList from "./StudentList";
-import { useLocation } from "react-router-dom";
-import { getStudent } from "../../common/service/Student/GetStudent";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
@@ -26,14 +22,17 @@ const DetailClass: React.FC = () => {
     const information_class: IInformationClassState = useSelector((state: IStateType) => state.information_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = students.students.length;
-    const [popup, setPopup] = useState(false);
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
         dispatch(updateCurrentPath("Lớp", "Lớp CM-1"));
     }, [path.area, dispatch]);
 
-    const { state } = useLocation<any>();
+    var id_x = localStorage.getItem('class_id')
+    let class_id: number = 0;
+    if (id_x !== null){
+        class_id = parseInt(id_x)
+    }
 
 
     let access_token = localStorage.getItem("access_token");
@@ -59,14 +58,14 @@ const DetailClass: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getInfoMyClass(state.class_id))
+                    dispatch(getInfoMyClass(class_id))
                 }
             }
             else {
-                dispatch(getInfoMyClass(state.class_id))
+                dispatch(getInfoMyClass(class_id))
             }
         }
-    }, [dispatch]);
+    }, [dispatch, access_token, refresh_token, class_id]);
 
     function onProductSelect(product: IProduct): void {
         dispatch(changeSelectedProduct(product));

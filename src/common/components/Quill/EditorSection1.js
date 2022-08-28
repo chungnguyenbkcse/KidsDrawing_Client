@@ -8,10 +8,8 @@ import ImageResize from 'quill-image-resize-module-react';
 Quill.register('modules/imageResize', ImageResize);
 
 export const Editor = (props) => {
-  console.log('editor')
   const reactQuillRef = useRef(null);
-  console.log(props.isCreate)
-  console.log(props.setValue)
+  const [state, setState] = React.useState({ value: null });
   React.useEffect(() => {
     if (reactQuillRef.current.getEditor() && props.isCreate !== "" && state.value === null){
         reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
@@ -19,13 +17,13 @@ export const Editor = (props) => {
     if (props.isCreate === ""){
         setState({value: null})
       }
-  }, [reactQuillRef, props]);
+  }, [reactQuillRef, props, state.value]);
   //console.log(reactQuillRef)
   
   //const quill = reactQuillRef.current.editor;
   //console.log(quill)
   //quill.clipboard.dangerouslyPasteHTML(props.setValue);
-  const [state, setState] = React.useState({ value: null });
+
   const handleChange = value => {
     setState({ value });
     props.getValue(value)

@@ -3,17 +3,14 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./GradeExamTeacher.css"
 import 'react-circular-progressbar/dist/styles.css';
 import TextInput from "../../common/components/TextInput";
 import { useHistory } from "react-router-dom";
-import { OnChangeModel, IGradeExerciseSubmissionFormState } from "../../common/types/Form.types";
-import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
+import { OnChangeModel } from "../../common/types/Form.types";
 import NumberInput from "../../common/components/NumberInput";
 import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
-import { addNotification } from "../../store/actions/notifications.action";
 import { toast, ToastContainer } from "react-toastify";
 import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
 
@@ -104,7 +101,7 @@ const GradeExamTeacher: React.FC = () => {
                 dispatch(getExerciseSubmissionByExercise(exercise_id))
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, exercise_id]);
 
     useEffect(() => {
         dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
@@ -153,12 +150,12 @@ const GradeExamTeacher: React.FC = () => {
                         function () {
                             if (count > 0)
                                 return (
-                                    <img className="card-img-top" src={image_url} alt="Card image cap" />
+                                    <img className="card-img-top" src={image_url} alt="" />
                                 )
                             else {
                                 if (exercise_submissions.exercise_not_gradeds.length > 0) {
                                     return (
-                                        <img className="card-img-top" src={exercise_submissions.exercise_not_gradeds[0].image_url} alt="Card image cap" />
+                                        <img className="card-img-top" src={exercise_submissions.exercise_not_gradeds[0].image_url} alt="" />
                                     )
                                 }
                             }

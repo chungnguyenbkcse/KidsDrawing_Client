@@ -4,14 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { IAnonymousNotification, AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import TextInput from "../../common/components/TextInput";
 import { editAnonymousNotification, clearSelectedAnonymousNotification, setModificationStateAnonymousNotification, addAnonymousNotification } from "../../store/actions/anonymous_notification.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IAnonymousNotificationFormState } from "../../common/types/Form.types";
-import { postAnonymousNotification } from "../../common/service/AnonymousNotification/PostAnonymousNotification";
-import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import SelectInput from "../../common/components/Select";
-import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { postNotificationByClass } from "../../common/service/Notification/PostNotificationByClass";
-import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export type artAgeListProps = {

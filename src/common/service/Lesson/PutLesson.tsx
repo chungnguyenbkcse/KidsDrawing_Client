@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, editLesson, fetchDataError } from "../../../store/actions/lesson.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getLesson } from "./GetLesson";
 
@@ -28,7 +28,9 @@ export function putLesson(id: any, data: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (val => {
                 console.log(val)

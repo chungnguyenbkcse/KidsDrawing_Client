@@ -1,6 +1,4 @@
-import { addNotification } from "../../../store/actions/notifications.action";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addSemester, clearSelectedSemester, setModificationState } from "../../../store/actions/semester.actions";
-import { SemesterModificationStatus } from "../../../store/models/semester.interface";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getSemester } from "./GetSemester";
 
@@ -30,7 +28,9 @@ export function postSemester(semester: any) {
                         throw Error(response.statusText);
                     }
                 }
-                return response
+                else {
+                    return response
+                }
             })
             .then (data => {
                 dispatch(fetchDataSuccess(semester))

@@ -9,7 +9,6 @@ import { getParentById } from "../../common/service/Parent/GetParentById";
 import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLeave/GetStudentLeaveByClassStudent";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
-import { getUserGradeExerciseByStudent } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByStudent";
 import { logout } from "../../store/actions/account.actions";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IExerciseStudentState, IStateType, IStudentLeaveState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
@@ -24,13 +23,6 @@ const ManageStudent: React.FC = () => {
     const numberSubmittedCount: number = exercise_students.exercise_submitted.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
-    var id_x = localStorage.getItem('id');
-    var id: number = 2;
-    if (id_x !== null) {
-        id = parseInt(id_x);
-    }
-
-    console.log(student_leave)
 
     
     var id_z = localStorage.getItem('parent_id');
@@ -38,16 +30,17 @@ const ManageStudent: React.FC = () => {
     if (id_z !== null) {
         parent_id = parseInt(id_z);
     }
+
     var id_y = localStorage.getItem('student_id');
     var student_id: number = 0;
     if (id_y !== null) {
         student_id = parseInt(id_y);
     }
 
-    var id_z = localStorage.getItem('class_id');
+    var id_t = localStorage.getItem('class_id');
     var class_id: number = 0;
-    if (id_z !== null) {
-        class_id = parseInt(id_z);
+    if (id_t !== null) {
+        class_id = parseInt(id_t);
     }
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -89,13 +82,14 @@ const ManageStudent: React.FC = () => {
                 dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
             }
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, access_token, refresh_token, student_id, parent_id, class_id]);
 
     let list_score_user_grade_exercise : number[] = [];
     let list_name_user_grade_exercise : string[] = [];
     user_grade_exercise_submission.user_grade_exercise_submissions.map((ele, idx) => {
         list_score_user_grade_exercise.push(ele.score)
         list_name_user_grade_exercise.push(ele.exercise_name)
+        return ele
     })
 
 

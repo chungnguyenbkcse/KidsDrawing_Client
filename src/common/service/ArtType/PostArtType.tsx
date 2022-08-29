@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, addArtType } from "../../../store/actions/art_type.action";
+import { fetchDataRequest } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function postArtType(data: any, idx: any) {
@@ -34,20 +34,10 @@ export function postArtType(data: any, idx: any) {
                 }
             })
             .then (xx => {
-                    console.log(xx)
-                    let art_type = {
-                        id: data.id,
-                        name: data.name,
-                        description: data.description
-                    }
-                    dispatch(addArtType(art_type))
-                    toast.update(idx, { render: "Thêm thể loại thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
-                    //dispatch(getArtType())
-                    //postRefreshToken()
-                    //postArtType(data)
+                    toast.update(idx, { render: "Thêm thể loại thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Thêm thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Thêm thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

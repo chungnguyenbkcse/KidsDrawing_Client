@@ -8,6 +8,7 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ILessonFormState } from "../../common/types/Form.types";
 import { postLesson } from "../../common/service/Lesson/PostLesson";
 import { putLesson } from "../../common/service/Lesson/PutLesson";
+import { toast } from "react-toastify";
 
 export type lessonListProps = {
   isCheck: (value: boolean) => void;
@@ -48,18 +49,21 @@ function LessonForm(props: lessonListProps): JSX.Element {
   function saveForm(formState: ILessonFormState, saveFn: Function): void {
     if (lesson) {
       
+      const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
 
       if (saveFn === addLesson) {
         dispatch(postLesson({
           start_time: formState.start_time.value,
           end_time: formState.end_time.value
-        }));
+        }, idx));
       }
       else {
         dispatch(putLesson(lesson.id, {
           start_time: formState.start_time.value,
           end_time: formState.end_time.value
-        }));
+        }, idx));
       }
 
       console.log(saveFn)

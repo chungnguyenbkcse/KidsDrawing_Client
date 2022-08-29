@@ -23,6 +23,7 @@ import { getSemester } from "../../common/service/semester/GetSemester";
 import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSectionTemplate";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { ToastContainer } from "react-toastify";
 
 
 const Course: React.FC = () => {
@@ -108,6 +109,7 @@ const Course: React.FC = () => {
 
     return (
         <Fragment>
+            <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Khóa học</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">

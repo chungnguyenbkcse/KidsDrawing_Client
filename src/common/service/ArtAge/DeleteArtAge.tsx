@@ -1,7 +1,8 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError, removeArtAge } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function deleteArtAge(id: any) {
+export function deleteArtAge(id: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -20,7 +21,7 @@ export function deleteArtAge(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteArtAge(id))
+                        dispatch(deleteArtAge(id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -31,10 +32,12 @@ export function deleteArtAge(id: any) {
                 }
             })
             .then (data => {
+                toast.update(idx, { render: "Xóa độ tuổi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log(data)
                 dispatch(removeArtAge(id))
             })
             .catch(error => {
+                toast.update(idx, { render: "Xóa độ tuổi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

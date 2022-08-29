@@ -1,13 +1,12 @@
-import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataError, removeArtLevel } from "../../../store/actions/art_level.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/tutorial_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function deleteArtLevel(id: any, idx: any) {
+export function deleteTutorialTemplatePage(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-            `${process.env.REACT_APP_API_URL}/art-level/${id}`, {
+            `${process.env.REACT_APP_API_URL}/tutorial-template-page/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': bearer,
@@ -21,7 +20,7 @@ export function deleteArtLevel(id: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteArtLevel(id, idx))
+                        dispatch(deleteTutorialTemplatePage(id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -33,11 +32,8 @@ export function deleteArtLevel(id: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Xóa trình độ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(removeArtLevel(id))
             })
             .catch(error => {
-                toast.update(idx, { render: "Xóa trình độ không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

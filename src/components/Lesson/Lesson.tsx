@@ -17,6 +17,7 @@ import { getLesson } from "../../common/service/Lesson/GetLesson";
 import { deleteLesson } from "../../common/service/Lesson/DeleteLesson";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { ToastContainer } from "react-toastify";
 
 
 const Lesson: React.FC = () => {
@@ -81,6 +82,7 @@ const Lesson: React.FC = () => {
 
     return (
         <Fragment>
+            <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Tiết học</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">

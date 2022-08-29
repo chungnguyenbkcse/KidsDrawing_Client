@@ -13,7 +13,7 @@ export function getTutorialTemplate() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/tutorial-template?page=0&size=5`, {
+                `${process.env.REACT_APP_API_URL}/tutorial-template`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -41,7 +41,7 @@ export function getTutorialTemplate() {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeTutorialTemplateAll())
                 //console.log(data.body.lessons)
-                data.body.tutorial_templates.map((ele: any, index: any) => {
+                data.body.TutorialTemplate.map((ele: any, index: any) => {
                     var tutorial_template: TutorialTemplate = {
                         id: ele.id,
                         section_template_id: ele.section_template_id,

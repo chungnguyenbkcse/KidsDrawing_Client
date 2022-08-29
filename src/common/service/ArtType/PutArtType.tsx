@@ -37,11 +37,11 @@ export function putArtType(id: any, data: any, idx: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
-                toast.update(idx, { render: "Chỉnh thể loại thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Chỉnh thể loại thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(getArtType())
             })
             .catch(error => {
-                toast.update(idx, { render: "Chỉnh thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Chỉnh thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

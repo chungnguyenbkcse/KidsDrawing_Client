@@ -89,15 +89,16 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     });
   })
 
-  const routeChange = (id: number, number_of_sum: number) => {
+  const routeChange = (course: ICourse) => {
     localStorage.removeItem('course_id')
-    localStorage.setItem('course_id', id.toString())
+    localStorage.setItem('course_id', course.id.toString())
     localStorage.removeItem('number_of_sum')
-    localStorage.setItem('number_of_sum', number_of_sum.toString())
+    localStorage.setItem('number_of_sum', course.num_of_section.toString())
+    localStorage.removeItem('course_name')
+    localStorage.setItem('course_name', course.name)
     let path = '/courses/section-template';
     history.push({
-      pathname: path,
-      state: {id: id, number_of_sum: number_of_sum}
+      pathname: path
     });
   }
 
@@ -119,7 +120,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
       <th scope="row">{course.id}</th>
       <td onClick={() => {
         if(props.onSelect) props.onSelect(course);
-        routeChange(course.id, course.num_of_section)
+        routeChange(course)
       }}>{course.name}</td>
       <td>{typeList[index]}</td>
       <td>{ageList[index]}</td>

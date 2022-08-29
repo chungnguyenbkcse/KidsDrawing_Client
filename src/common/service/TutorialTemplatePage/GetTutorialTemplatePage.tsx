@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage, addTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialTemplatePage {
     id: number;
@@ -40,7 +40,7 @@ export function getTutorialTemplatePage() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeTutorialTemplatePageAll())
-                //console.log(data.body.lessons)
+                console.log(data.body.TutorialTemplatePage)
                 data.body.TutorialTemplatePage.map((ele: any, index: any) => {
                     var tutorial_template_page: TutorialTemplatePage = {
                         id: ele.id,
@@ -50,12 +50,7 @@ export function getTutorialTemplatePage() {
                         number: ele.number
                     }
                     //console.log(strDate.substring(0, 16))
-                    if (index === 0){
-                        return dispatch(initialTutorialTemplatePage(tutorial_template_page));
-                    }
-                    else{
-                        return dispatch(addTutorialTemplatePage(tutorial_template_page))
-                    }
+                    return dispatch(initialTutorialTemplatePage(tutorial_template_page));
                 })
             })
             .catch(error => {

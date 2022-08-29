@@ -8,30 +8,27 @@ import ImageResize from 'quill-image-resize-module-react';
 Quill.register('modules/imageResize', ImageResize);
 
 export const Editor = (props) => {
+  console.log(`Input: ${props.setValue}`)
   const reactQuillRef = useRef(null);
-  const [state, setState] = React.useState({ value: null });
   React.useEffect(() => {
-    if (props.isCreate === ""){
-        reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
+    if (reactQuillRef.current.getEditor()){
+      reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
     }
-    else {
-        if (reactQuillRef.current.getEditor() && state.value === null){
-            reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
-        }
-    }
-  }, [reactQuillRef, props, state.value]);
+  }, [reactQuillRef, props.setValue]);
   //console.log(reactQuillRef)
   
   //const quill = reactQuillRef.current.editor;
   //console.log(quill)
   //quill.clipboard.dangerouslyPasteHTML(props.setValue);
+  
+  const [state, setState] = React.useState({ value: null });
   const handleChange = value => {
     setState({ value });
     props.getValue(value)
     //console.log(value)
   };
 
-  console.log(state.value)
+  console.log(`State: ${state.value}`)
   return (
     <div className="text-editor">
       <EditorToolbar />

@@ -12,6 +12,7 @@ import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotFie
 import { ICourse } from "../../store/models/course.interface";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 type Options = {
   name: string;
   value: any;
@@ -86,6 +87,13 @@ const LessonPlan: React.FC = () => {
     }
   }, [totalPage])
 
+  const history = useHistory();
+
+  function routeHome() {
+      let path = `/courses`;
+      history.push(path);
+  }
+
   //console.log(totalPage)
 
   function saveUser(e: FormEvent<HTMLFormElement>): void {
@@ -137,6 +145,10 @@ const LessonPlan: React.FC = () => {
 
       dispatch(clearSelectedSectionTemplate());
       dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
+      toast.update(id, { render: "Thêm trình độ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+      setTimeout(function () {
+        routeHome();
+      }, 2000); 
     }
   }
 

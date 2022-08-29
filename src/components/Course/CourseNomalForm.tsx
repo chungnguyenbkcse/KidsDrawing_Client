@@ -163,7 +163,9 @@ const CourseNomalForm: React.FC = () => {
 
             dispatch(clearSelectedCourse());
             dispatch(setModificationState(CourseModificationStatus.None));
-            routeHome()
+            setTimeout(function () {
+                routeHome();
+            }, 2000); 
         }
     }
 

@@ -40,7 +40,7 @@ import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 
 const Art: React.FC = () => {
@@ -303,7 +303,10 @@ const Art: React.FC = () => {
                                                                     if (!art_types.selectedArtType) {
                                                                         return;
                                                                     }
-                                                                    dispatch(deleteArtType(art_types.selectedArtType.id))
+                                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                                        position: toast.POSITION.TOP_CENTER
+                                                                    });
+                                                                    dispatch(deleteArtType(art_types.selectedArtType.id, idx))
                                                                     dispatch(addNotification("Thể loại ", `${art_types.selectedArtType.name} đã được xóa`));
                                                                     dispatch(removeArtType(art_types.selectedArtType.id));
                                                                     dispatch(clearSelectedArtType());
@@ -383,7 +386,10 @@ const Art: React.FC = () => {
                                                                     if (!art_ages.selectedArtAge) {
                                                                         return;
                                                                     }
-                                                                    dispatch(deleteArtAge(art_ages.selectedArtAge.id))
+                                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                                        position: toast.POSITION.TOP_CENTER
+                                                                    });
+                                                                    dispatch(deleteArtAge(art_ages.selectedArtAge.id, idx))
                                                                     dispatch(addNotification("Độ tuổi ", `${art_ages.selectedArtAge.name} đã được xóa`));
                                                                     dispatch(removeArtAge(art_ages.selectedArtAge.id));
                                                                     dispatch(clearSelectedArtAge());
@@ -464,7 +470,10 @@ const Art: React.FC = () => {
                                                                     if (!art_levels.selectedArtLevel) {
                                                                         return;
                                                                     }
-                                                                    dispatch(deleteArtLevel(art_levels.selectedArtLevel.id))
+                                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                                        position: toast.POSITION.TOP_CENTER
+                                                                    });
+                                                                    dispatch(deleteArtLevel(art_levels.selectedArtLevel.id, idx))
                                                                     dispatch(addNotification("Trình độ ", `${art_levels.selectedArtLevel.name} đã được xóa`));
                                                                     dispatch(removeArtLevel(art_levels.selectedArtLevel.id));
                                                                     dispatch(clearSelectedArtLevel());

@@ -11,6 +11,11 @@ import {
 } from "../../store/actions/section_template.action";
 import { SectionTemplateModificationStatus, ISectionTemplate } from "../../store/models/section_template.interface";
 import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
+import { getTutorialTemplate } from "../../common/service/TutorialTemplate/GetTutorialTemplate";
+import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
+import { ToastContainer } from "react-toastify";
 
 const SectionTemplate: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -25,9 +30,41 @@ const SectionTemplate: React.FC = () => {
         course_id = parseInt(id_x);
     }
 
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
-        dispatch(getSectionTemplateByCourseId(course_id)) 
-    }, [dispatch, course_id])
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time){
+                if (exp_refresh_token_decode < now_time){
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(getSectionTemplateByCourseId(course_id)) 
+                    dispatch(getTutorialTemplatePage())
+                    dispatch(getTutorialTemplate())
+                }
+            }
+            else {
+                dispatch(getSectionTemplateByCourseId(course_id)) 
+                dispatch(getTutorialTemplate())
+                dispatch(getTutorialTemplatePage())
+            }
+        }
+    }, [dispatch, access_token, refresh_token, course_id])
 
     useEffect(() => {
         dispatch(clearSelectedSectionTemplate());
@@ -43,6 +80,7 @@ const SectionTemplate: React.FC = () => {
 
     return (
         <Fragment>
+            <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Buổi học</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">

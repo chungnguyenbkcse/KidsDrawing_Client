@@ -1,23 +1,19 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSectionTemplateAll, initialSectionTemplate, addSectionTemplate } from "../../../store/actions/section_template.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-interface SectionTemplate {
+interface TutorialTemplatePage {
     id: number;
-    creator_id: number;
-    course_id: number;
+    tutorial_template_id: number;
     name: string;
     description: string;
     number: number;
-    teaching_form: boolean;
-    create_time: string;
-    update_time: string;
 }
-export function getSectionTemplateByCourseId(id: any) {
+export function getTutorialTemplatePageBySectionTemplate(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/section-template/course/${id}`, {
+                `${process.env.REACT_APP_API_URL}/tutorial-template-page/section-template/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -31,7 +27,7 @@ export function getSectionTemplateByCourseId(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getSectionTemplateByCourseId(id))
+                        dispatch(getTutorialTemplatePageBySectionTemplate(id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -42,31 +38,19 @@ export function getSectionTemplateByCourseId(id: any) {
                 }
             })
             .then (data => {
-                console.log(data)
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeSectionTemplateAll())
-                console.log(data.body.SectionTemplate)
-                data.body.SectionTemplate.map((ele: any, index: any) => {
-                    var section_template: SectionTemplate = {
+                dispatch(removeTutorialTemplatePageAll())
+                //console.log(data.body.lessons)
+                data.body.TutorialTemplatePage.map((ele: any, index: any) => {
+                    var tutorial_template_page: TutorialTemplatePage = {
                         id: ele.id,
-                        creator_id: ele.creator_id,
-                        course_id: ele.course_id,
+                        tutorial_template_id: ele.tutorial_template_id,
                         name: ele.name,
                         description: ele.description,
-                        number: ele.number,
-                        teaching_form: ele.teaching_form,
-                        create_time: ele.create_time,
-                        update_time: ele.update_time
+                        number: ele.number
                     }
-                    //console.log(strDate.substring(0, 16))
-                    if (index === 0){
-                        return dispatch(initialSectionTemplate(section_template));
-                    }
-                    else{
-                        return dispatch(addSectionTemplate(section_template))
-                    }
+                    return dispatch(initialTutorialTemplatePage(tutorial_template_page));
                 })
-                
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

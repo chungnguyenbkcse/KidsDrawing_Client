@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { IContest, ContestModificationStatus } from "../../store/models/contest.interface";
 import TextInput from "../../common/components/TextInput";
 import { editContest, clearSelectedContest, setModificationState, addContest } from "../../store/actions/contest.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import NumberInput from "../../common/components/NumberInput";
 import Checkbox from "../../common/components/Checkbox";
 import { OnChangeModel, IContestFormState } from "../../common/types/Form.types";
@@ -16,7 +15,7 @@ import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { IArtType } from "../../store/models/art_type.interface";
 import { IArtAge } from "../../store/models/art_age.interface";
 import Editor from "../../common/components/Quill/Editor";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import ReactSelect from "../../common/components/ReactSelect";
 import { IUser } from "../../store/models/user.interface";
 import { getUserGradeContestByContestId } from "../../common/service/UserGradeContest/GetUserGradeContestByContestId";
@@ -135,6 +134,13 @@ const ContestForm: React.FC = () => {
     saveForm(formState, saveUserFn, url);
   }
 
+  const history = useHistory();
+
+  function routeHome() {
+      let path = `/contests`;
+      history.push(path);
+  }
+
   function saveForm(formState: IContestFormState, saveFn: Function, url: string):void {
     if (contest) {
 
@@ -170,9 +176,11 @@ const ContestForm: React.FC = () => {
         }))
       }
 
-      dispatch(addNotification("Cuộc thi ", `${formState.name.value} chỉnh bởi bạn`));
       dispatch(clearSelectedContest());
       dispatch(setModificationState(ContestModificationStatus.None));
+      setTimeout(function () {
+        routeHome();
+      }, 2000); 
     }
   }
 

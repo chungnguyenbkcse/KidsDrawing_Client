@@ -4,8 +4,8 @@ interface ClassTeacher {
     id: number;
     name: string;
     course_id: number;
-    semester_course_id: number;
-    registration_id: number;
+    semester_class_id: number;
+    user_register_teach_semester: number;
     security_code: string;
     total_student: number;
     num_of_section: number;
@@ -58,8 +58,8 @@ export function getClassTeacher(id: any) {
                         name: ele.name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
-                        semester_course_id: ele.semester_course_id,
-                        registration_id: ele.registration_id,
+                        semester_class_id: ele.semester_class_id,
+                        user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
                         total_student: ele.total_student,
                         num_of_section: ele.num_of_section,
@@ -84,8 +84,8 @@ export function getClassTeacher(id: any) {
                         name: ele.name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
-                        semester_course_id: ele.semester_course_id,
-                        registration_id: ele.registration_id,
+                        semester_class_id: ele.semester_class_id,
+                        user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
                         total_student: ele.total_student,
                         num_of_section: ele.num_of_section,

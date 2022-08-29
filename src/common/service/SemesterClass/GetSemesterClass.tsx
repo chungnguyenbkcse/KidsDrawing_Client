@@ -3,7 +3,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface SemesterClass {
     id: number;
     name: string;
-    creation_id: number;
+    semester_id: number;
     semester_name: string;
     course_name: string;
     course_id: number;
@@ -47,7 +47,7 @@ export function getSemesterClass() {
                     var class_ele: SemesterClass = {
                         id: ele.id,
                         name: ele.name,
-                        creation_id: ele.creation_id,
+                        semester_id: ele.semester_id,
                         semester_name: ele.semester_name,
                         course_id: ele.course_id,
                         course_name: ele.course_name,

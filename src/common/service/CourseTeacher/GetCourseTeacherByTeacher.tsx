@@ -5,7 +5,7 @@ interface CourseTeacher {
     name: string;
     course_name: string;
     course_id: number;
-    semester_course_id: number;
+    semester_class_id: number;
     description: string;
     max_participant: number;
     num_of_section: number;
@@ -59,7 +59,7 @@ export function getCourseTeacher(id: any) {
                         course_name: ele.course_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
-                        semester_course_id: ele.semster_course_id,
+                        semester_class_id: ele.semster_course_id,
                         description: ele.description,
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,
@@ -89,7 +89,7 @@ export function getCourseTeacher(id: any) {
                         course_name: ele.course_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
-                        semester_course_id: ele.semster_course_id,
+                        semester_class_id: ele.semster_course_id,
                         description: ele.description,
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,

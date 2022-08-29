@@ -127,7 +127,7 @@ export interface ICourseNomalFormState {
 }
 
 export interface ISemesterClassFormState {
-    creation_id: IFormStateField<number>;
+    semester_id: IFormStateField<number>;
     course_id: IFormStateField<number>;
     max_participant: IFormStateField<number>;
     name: IFormStateField<string>;

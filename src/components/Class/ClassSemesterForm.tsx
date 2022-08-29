@@ -13,7 +13,7 @@ import NumberInput from "../../common/components/NumberInput";
 import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
 
-export type semesterCourseListProps = {
+export type semesterClassListProps = {
   isCheck: (value: boolean) => void;
   children?: React.ReactNode;
 };
@@ -39,7 +39,7 @@ type Option1s = {
 }
 
 
-function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
+function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const semester_classes: ISemesterClassState | null = useSelector((state: IStateType) => state.semester_classes);
   const semesters: ISemesterState | null = useSelector((state: IStateType) => state.semesters);
@@ -48,7 +48,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
   let semester_class_id: number = 0;
   if (!semester_classe || isCreate) {
-    semester_classe = { id: 0, max_participant: 0, semester_name: "", course_id: 0, course_name: "", creation_id: 0, name: "" };
+    semester_classe = { id: 0, max_participant: 0, semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "" };
   }
   else {
     semester_class_id = semester_classe.id;
@@ -123,7 +123,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   let schedule_list = schedules.schedules.filter((value) => value.semester_class_id === semester_class_id)
 
   const [formState, setFormState] = useState({
-    creation_id: { error: "", value: semester_classe.creation_id },
+    semester_id: { error: "", value: semester_classe.semester_id },
     name: { error: "", value: semester_classe.name },
     max_participant: { error: "", value: semester_classe.max_participant },
     course_id: { error: "", value: semester_classe.course_id },
@@ -161,7 +161,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
       console.log(schedule_element)
       if (saveFn === addSemesterClass) {
         dispatch(postSemesterClass({
-          creation_id: formState.creation_id.value,
+          semester_id: formState.semester_id.value,
           name: formState.name.value,
           course_id: formState.course_id.value
         }, schedule_element))
@@ -169,7 +169,7 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
 
       else if (saveFn === editSemesterClass) {
         dispatch(putSemesterClass(semester_classe.id, {
-          creation_id: formState.creation_id.value,
+          semester_id: formState.semester_id.value,
           name: formState.name.value,
           course_id: formState.course_id.value
         }))
@@ -195,8 +195,8 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.name.error  || formState.creation_id.error
-      || formState.course_id.error || !formState.creation_id.value || !formState.course_id.value
+    return (formState.name.error  || formState.semester_id.error
+      || formState.course_id.error || !formState.semester_id.value || !formState.course_id.value
       || !formState.name.value ) as boolean;
   }
   const [listScheduleItemId, setListScheduleItemId] = useState<Option1s[]>([])
@@ -296,9 +296,9 @@ function ClassSemesterForm(props: semesterCourseListProps): JSX.Element {
                 </div>
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                    <SelectKeyValue id="input_creation_id"
-                      field="creation_id"
-                      value={formState.creation_id.value}
+                    <SelectKeyValue id="input_semester_id"
+                      field="semester_id"
+                      value={formState.semester_id.value}
                       onChange={hasFormValueChanged}
                       required={true}
                       label="Học kì"

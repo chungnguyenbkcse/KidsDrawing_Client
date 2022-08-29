@@ -236,7 +236,7 @@ const SectionTeacher: React.FC = () => {
                                                         {
                                                             exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
                                                                 return (
-                                                                    <tr className={`table-row`} key={`semester_course_${index}`}>
+                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                         <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange3(ele.description, ele.name, ele.level_name, ele.id)}}>
                                                                             <div className="col-xl-4 col-md-4 mb-4">
                                                                                 <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>

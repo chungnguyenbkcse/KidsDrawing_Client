@@ -18,7 +18,7 @@ function CourseTeacherRegisterSuccessfullList(props: teacherRegisterQuantificati
             <TopCardCourse 
               course_name={ele.course_name} 
               name={ele.name}
-              semester_class_id={ele.semester_course_id}
+              semester_class_id={ele.semester_class_id}
               icon="book" 
               class="primary" 
               url_image={ele.image_url}

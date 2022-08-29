@@ -1,7 +1,7 @@
 export interface IMyClass {
     id: number;
     creator_id: number;
-    registration_id: number;
+    user_register_teach_semester: number;
     security_code: string;
     name: string;
     create_time: string;

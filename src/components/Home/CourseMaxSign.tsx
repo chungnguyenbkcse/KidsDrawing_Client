@@ -35,32 +35,32 @@ function CourseMaxSign(props: user_register_semesterListProps): JSX.Element  {
   const listCourses: ICourse[] = courses.courses
 
   let courseList: string[] = []
-  let semesterCourseList: CourseSemester[] = []
+  let semesterClassList: CourseSemester[] = []
   //console.log(listCourses)
 
 
   listSemesterClasss.map((course) => {
     let count = 0;
     userRegisterJoinSemesters.userRegisterJoinSemesters.forEach(element => {
-      if (course.id === element.semester_course_id) {
+      if (course.id === element.semester_class_id) {
         count += 1;
       }
     });
-    let semester_course: CourseSemester = {course_semester_id: course.id, count: count}
-    if (semesterCourseList.length === 0) {
-      semesterCourseList.push(semester_course)
+    let semester_class: CourseSemester = {course_semester_id: course.id, count: count}
+    if (semesterClassList.length === 0) {
+      semesterClassList.push(semester_class)
     }
     else {
       let is_check = false;
-      for (let index = 0; index < semesterCourseList.length; index++) {
-        if (semester_course.count > semesterCourseList[index].count){
+      for (let index = 0; index < semesterClassList.length; index++) {
+        if (semester_class.count > semesterClassList[index].count){
           is_check = true;
-          semesterCourseList.splice(index, 0, semester_course);
+          semesterClassList.splice(index, 0, semester_class);
           break;
         }
       }
       if (is_check === false) {
-        semesterCourseList.push(semester_course)
+        semesterClassList.push(semester_class)
       }
     }
   })
@@ -70,9 +70,9 @@ function CourseMaxSign(props: user_register_semesterListProps): JSX.Element  {
     let type_name = ""
     let level_name = ""
     let age_name = ""
-    if (semesterCourseList[index].count > 0){
+    if (semesterClassList[index].count > 0){
       for (let idx = 0; idx < listSemesterClasss.length; idx++) {
-        if (semesterCourseList[index].course_semester_id === listSemesterClasss[index].id){
+        if (semesterClassList[index].course_semester_id === listSemesterClasss[index].id){
           for (let i = 0; i < listCourses.length; i++) {
             if (listSemesterClasss[index].course_id === listCourses[i].id){
               course_name = listCourses[i].name

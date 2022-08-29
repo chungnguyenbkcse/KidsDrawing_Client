@@ -24,7 +24,7 @@ function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListPr
         return (
             <TopCardCourse 
               name={ele.name} 
-              semester_class_id = {ele.semester_course_id}
+              semester_class_id = {ele.semester_class_id}
               course_name={ele.course_name} 
               icon="book" 
               class="primary" 

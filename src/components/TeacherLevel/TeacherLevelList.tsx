@@ -15,7 +15,7 @@ function TeacherLevelList(props: teacherRegisterQuantificationListProps): JSX.El
     const teacherRegisterQuantificationElements: (JSX.Element | null)[] = teacherRegisterQuantifications.approveds.map((ele, index) => {
         if (!ele) { return null; }
         return (
-            <tr className={`table-row`} key={`semester_course_${index}`}>
+            <tr className={`table-row`} key={`semester_class_${index}`}>
             <TopCardLevel 
                 course_name={ele.course_name} 
                 icon="edit" class="warning" 

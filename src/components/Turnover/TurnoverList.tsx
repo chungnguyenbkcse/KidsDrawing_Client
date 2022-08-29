@@ -29,7 +29,7 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
 
   userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
     return listSemesterClasss.forEach(element => {
-      if (element.id === user_register_join_semester.semester_course_id) {
+      if (element.id === user_register_join_semester.semester_class_id) {
         return listCourses.forEach((ele) => {
           if (ele.id === element.course_id){
             return  courseList.push(ele.name)

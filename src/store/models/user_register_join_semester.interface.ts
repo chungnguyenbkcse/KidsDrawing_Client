@@ -1,7 +1,7 @@
 export interface IUserRegisterJoinSemester {
     id: number;
     student_id: number;
-    semester_course_id: number;
+    semester_class_id: number;
     payer_id: number;
     price: number;
     time: string;

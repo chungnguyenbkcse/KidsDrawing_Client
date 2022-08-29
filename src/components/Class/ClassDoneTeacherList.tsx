@@ -14,7 +14,7 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
 
     const classTeacherElements: (JSX.Element | null)[] = class_teachers.class_done.map((ele, index) => {
         if (!ele) { return null; }
-        return (<tr className={`table-row`} key={`semester_course_${index}`}>
+        return (<tr className={`table-row`} key={`semester_class_${index}`}>
             <TopCardClass 
               name={ele.name} 
               icon="book" 

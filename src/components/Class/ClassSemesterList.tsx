@@ -5,7 +5,7 @@ import { ISemesterClass, SemesterClassModificationStatus } from "../../store/mod
 import { setModificationStateSemesterClass } from "../../store/actions/semester_class.action";
 
 export type semesterClassListProps = {
-  onSelect?: (semester_course: ISemesterClass) => void;
+  onSelect?: (semester_class: ISemesterClass) => void;
   children?: React.ReactNode;
   value?: string;
 };
@@ -40,24 +40,24 @@ function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
 
   console.log(schedule_list)
 
-  const courseElements: (JSX.Element | null)[] = semester_classes.semesterClasses.map((semester_course, index) => {
-    if (!semester_course) { return null; }
-    return (<tr className={`table-row ${(semester_classes.selectedSemesterClass && semester_classes.selectedSemesterClass.id === semester_course.id) ? "selected" : ""}`}
-      key={`semester_course_${semester_course.id}`}>
+  const courseElements: (JSX.Element | null)[] = semester_classes.semesterClasses.map((semester_class, index) => {
+    if (!semester_class) { return null; }
+    return (<tr className={`table-row ${(semester_classes.selectedSemesterClass && semester_classes.selectedSemesterClass.id === semester_class.id) ? "selected" : ""}`}
+      key={`semester_class_${semester_class.id}`}>
       <th scope="row">{index + 1}</th>
-      <td>{semester_course.name}</td>
-      <td>{semester_course.course_name}</td>
-      <td>{semester_course.semester_name}</td>
+      <td>{semester_class.name}</td>
+      <td>{semester_class.course_name}</td>
+      <td>{semester_class.semester_name}</td>
       <td>{schedule_list.length ===0 ? "" : schedule_list[index].value}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={()=> {
-          if(props.onSelect) props.onSelect(semester_course);
+          if(props.onSelect) props.onSelect(semester_class);
           dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Edit))
         }}>Chỉnh sửa</button>
       </td>
       <td>
         <button type="button" className="btn btn-danger" onClick={() =>{
-          if(props.onSelect) props.onSelect(semester_course);
+          if(props.onSelect) props.onSelect(semester_class);
           dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Remove))
         }}>Xóa</button>
       </td>

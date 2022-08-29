@@ -5,7 +5,7 @@ interface user_register_semester {
     student_id: number;
     payer_id: number;
     price: number;
-    semester_course_id: number;
+    semester_class_id: number;
     time: string;
 }
 export function getUserRegisterJoinSemester() {
@@ -47,7 +47,7 @@ export function getUserRegisterJoinSemester() {
                         student_id: ele.student_id,
                         payer_id: ele.payer_id,
                         price: ele.price,
-                        semester_course_id: ele.semester_course_id,
+                        semester_class_id: ele.semester_class_id,
                         time: ele.time
                     }
                     //console.log(strDate.substring(0, 16))

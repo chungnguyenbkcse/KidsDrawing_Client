@@ -3,7 +3,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
     id: number;
     creator_id: number;
-    registration_id: number;
+    user_register_teach_semester: number;
     security_code: string;
     name: string;
     create_time: string;
@@ -50,7 +50,7 @@ export function getMyClass() {
                         name: ele.name,
                         security_code: ele.security_code,
                         creator_id: ele.creator_id,
-                        registration_id: ele.registration_id,
+                        user_register_teach_semester: ele.user_register_teach_semester,
                         create_time: ele.create_time,
                         update_time: ele.update_time
                     }

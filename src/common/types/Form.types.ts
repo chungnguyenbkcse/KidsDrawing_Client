@@ -129,6 +129,7 @@ export interface ICourseNomalFormState {
 export interface ISemesterClassFormState {
     semester_id: IFormStateField<number>;
     course_id: IFormStateField<number>;
+    registration_time: IFormStateField<string>;
     max_participant: IFormStateField<number>;
     name: IFormStateField<string>;
     total_date_of_week: IFormStateField<number>;

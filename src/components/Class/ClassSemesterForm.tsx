@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
+import React, { useState, FormEvent, Dispatch, Fragment } from "react";
 import { IStateType, ISemesterClassState, ISemesterState, ILessonState, IScheduleState, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISemesterClass, SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
@@ -12,6 +12,7 @@ import TextInput from "../../common/components/TextInput";
 import NumberInput from "../../common/components/NumberInput";
 import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
+import { toast } from "react-toastify";
 
 export type semesterClassListProps = {
   isCheck: (value: boolean) => void;
@@ -48,7 +49,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
   let semester_class_id: number = 0;
   if (!semester_classe || isCreate) {
-    semester_classe = { id: 0, max_participant: 0, semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "" };
+    semester_classe = { id: 0, max_participant: 0, semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "", registration_time: "" };
   }
   else {
     semester_class_id = semester_classe.id;
@@ -128,10 +129,34 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
     max_participant: { error: "", value: semester_classe.max_participant },
     course_id: { error: "", value: semester_classe.course_id },
     total_date_of_week: { error: "", value: total },
+    registration_time: { error: "", value: semester_classe.registration_time }
   });
+
+
+  const [listScheduleItemId, setListScheduleItemId] = useState<Option1s[]>([])
+  const [listLessonId, setListLessonId] = useState<Option1s[]>([])
 
   function hasFormValueChanged(model: OnChangeModel): void {
     setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+
+    let res_1: Option1s[] = []
+    if (total > 0) {
+      for (let index = 0; index < total; index++) {
+        let date_of_week_obj: Option1s = {
+          key: index,
+          value: schedule_list[index].date_of_week
+        }
+        let lesson_time_obj: Option1s = {
+          key: index,
+          value: schedule_list[index].lesson_time
+        }
+        res_1.push(date_of_week_obj)
+        listScheduleItemId.push(date_of_week_obj)
+        listLessonId.push(lesson_time_obj)
+      }
+    }
+    setListScheduleItemId([...listScheduleItemId])
+    setListLessonId([...listLessonId])
   }
 
   function saveUser(e: FormEvent<HTMLFormElement>): void {
@@ -158,21 +183,27 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
         })
       })
 
+      const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+
       console.log(schedule_element)
       if (saveFn === addSemesterClass) {
         dispatch(postSemesterClass({
           semester_id: formState.semester_id.value,
           name: formState.name.value,
+          registration_time: formState.registration_time.value,
           course_id: formState.course_id.value
-        }, schedule_element))
+        }, schedule_element, idx))
       }
 
       else if (saveFn === editSemesterClass) {
         dispatch(putSemesterClass(semester_classe.id, {
           semester_id: formState.semester_id.value,
+          registration_time: formState.registration_time.value,
           name: formState.name.value,
           course_id: formState.course_id.value
-        }))
+        }, idx))
       }
 
       dispatch(addNotification("Mở lớp đăng kí theo kì ", `chỉnh bởi bạn`));
@@ -195,13 +226,11 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.name.error  || formState.semester_id.error
+    return (formState.name.error  || formState.semester_id.error || formState.registration_time.error
       || formState.course_id.error || !formState.semester_id.value || !formState.course_id.value
-      || !formState.name.value ) as boolean;
+      || !formState.name.value || !formState.registration_time.value ) as boolean;
   }
-  const [listScheduleItemId, setListScheduleItemId] = useState<Option1s[]>([])
-  const [listLessonId, setListLessonId] = useState<Option1s[]>([])
-  useEffect(() => {
+/*   useEffect(() => {
     let res_1: Option1s[] = []
     if (total > 0) {
       for (let index = 0; index < total; index++) {
@@ -221,7 +250,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
     setListScheduleItemId([...listScheduleItemId])
     setListLessonId([...listLessonId])
 
-  }, [total, listLessonId, listScheduleItemId, schedule_list])
+  }, [total]) */
   function hasFormMutipleValueChanged1(value: number, index: number) {
     if (listScheduleItemId.length === 0) {
       setListScheduleItemId([...listScheduleItemId, { "key": index, "value": value }])
@@ -318,6 +347,17 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
                 </div>
 
                 <div className="form-row">
+                <div className="form-group col-md-6">
+                    <TextInput id="input_registration_time"
+                      field="registration_time"
+                      value={formState.registration_time.value}
+                      onChange={hasFormValueChanged}
+                      type="datetime-local"
+                      required={false}
+                      maxLength={100}
+                      label="Thời gian bắt đầu đăng kí"
+                      placeholder="" />
+                  </div>
                   <div className="form-group col-md-6">
                     <NumberInput id="input_total_date_of_week"
                       value={formState.total_date_of_week.value}

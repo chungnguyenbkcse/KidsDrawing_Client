@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
 import { IStateType, IContestState, IArtTypeState, IArtAgeState, IUserState, IUserGradeContestState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { IContest, ContestModificationStatus } from "../../store/models/contest.interface";
+import { ContestModificationStatus } from "../../store/models/contest.interface";
 import TextInput from "../../common/components/TextInput";
 import { editContest, clearSelectedContest, setModificationState, addContest } from "../../store/actions/contest.action";
 import NumberInput from "../../common/components/NumberInput";
@@ -15,7 +15,7 @@ import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { IArtType } from "../../store/models/art_type.interface";
 import { IArtAge } from "../../store/models/art_age.interface";
 import Editor from "../../common/components/Quill/Editor";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ReactSelect from "../../common/components/ReactSelect";
 import { IUser } from "../../store/models/user.interface";
 import { getUserGradeContestByContestId } from "../../common/service/UserGradeContest/GetUserGradeContestByContestId";
@@ -35,28 +35,21 @@ type Option1 = {
 const ContestForm: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const contests: IContestState | null = useSelector((state: IStateType) => state.contests);
-  const { state } = useLocation()
-    console.log(state)
-  let contest: IContest | null = null;
-    if (typeof state != "undefined"){
-        contest = state.contest_value;
-    }
+  var id_x = localStorage.getItem('contest_id');
+  let contest_id: number = 0;
+  if (id_x !== null) {
+    contest_id = parseInt(id_x)
+  }
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
-  if (!contest || isCreate ) {
-    contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0 };
-  }
+  let contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0 };
 
   useEffect(() => {
     dispatch(getArtType())
     dispatch(getArtAge())
     dispatch(getTeacher())
-    if (contest !== null){
-      if (contest.id !== 0){
-        dispatch(getUserGradeContestByContestId(contest.id))
-      }
-    }
-  }, [dispatch, contest])
+    dispatch(getUserGradeContestByContestId(contest_id))
+  }, [dispatch, contest_id])
 
   
 

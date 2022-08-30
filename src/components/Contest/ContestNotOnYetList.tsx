@@ -76,10 +76,11 @@ function ContestNotOnYetList(props: contestListProps): JSX.Element {
     const routeEdit = (contest: IContest) => {
         dispatch(setModificationState(ContestModificationStatus.None));
         let path = `/contests/create-contest`;
+        localStorage.removeItem('contest_id');
+        localStorage.setItem('contest_id', contest.id.toString());
         history.push(
             {
-                pathname: path,
-                state: { contest_value: contest } // your data array of objects
+                pathname: path
             }
         );
     }

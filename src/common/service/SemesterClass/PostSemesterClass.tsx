@@ -1,9 +1,10 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postSchedule } from "../Schedule/PostSchedule";
 import { getSemesterClass } from "./GetSemesterClass";
 
-export function postSemesterClass(data: any, schedule_element: any) {
+export function postSemesterClass(data: any, schedule_element: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
@@ -24,7 +25,7 @@ export function postSemesterClass(data: any, schedule_element: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSemesterClass(data, schedule_element))
+                        dispatch(postSemesterClass(data, schedule_element, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -37,6 +38,7 @@ export function postSemesterClass(data: any, schedule_element: any) {
             .then (data_1 => {
                 console.log(data_1)
                 dispatch(getSemesterClass())
+                toast.update(idx, { render: "Thêm lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 schedule_element.map((ele: any) => {
                     return dispatch(postSchedule({
                         lesson_time: ele.lesson_time,
@@ -46,6 +48,7 @@ export function postSemesterClass(data: any, schedule_element: any) {
                 })
             })
             .catch(error => {
+                toast.update(idx, { render: "Thêm lớp theo kì không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

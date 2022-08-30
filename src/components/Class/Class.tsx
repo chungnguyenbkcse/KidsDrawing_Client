@@ -161,13 +161,13 @@ const Class: React.FC = () => {
     return (
 
         <Fragment>
+            <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Lớp học</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
                 <TopCard title="SỐ LỚP THEO KÌ" text={`${numberSemesterClassesCount}`} icon="box" class="primary" />
                 <TopCard title="SỐ LỚP HỌC" text={`${numberItemsCount}`} icon="box" class="primary" />
             </div>
-            <ToastContainer />
             <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
                     <div className="input-group" id="search-content">

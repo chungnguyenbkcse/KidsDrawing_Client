@@ -32,13 +32,16 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element {
     let tutorial_template_page_list: any[] = []
     tutorial_templates.tutorialTemplates.map(ele => {
       if (ele.section_template_id === section_template.id){
+        localStorage.removeItem('tutorial_template_id')
+        localStorage.setItem('tutorial_template_id', ele.id.toString())
         tutorial_template_pages.tutorialTemplatePages.map(element => {
           if (element.tutorial_template_id === ele.id){
             tutorial_template_page_list.push({
               description: element.description,
               id: element.id,
               name: element.name,
-              tutorial_template_id: element.tutorial_template_id
+              tutorial_template_id: element.tutorial_template_id,
+              number: element.number
             })
           }
           return null
@@ -48,7 +51,7 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element {
     })
     console.log(tutorial_template_page_list)
     localStorage.removeItem('description_tutorial_template_page_list')
-    localStorage.setItem('description_tutorial_template_page_list', JSON.stringify(tutorial_template_page_list))
+    localStorage.setItem('description_tutorial_template_page_list', JSON.stringify(tutorial_template_page_list.sort((a, b) => a.number - b.number)))
     history.push({
       pathname: path
     });

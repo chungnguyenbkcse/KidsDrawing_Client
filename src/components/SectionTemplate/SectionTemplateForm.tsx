@@ -14,6 +14,7 @@ import { postTutorialTemplatePage } from "../../common/service/TutorialTemplateP
 import { putTutorialTemplate } from "../../common/service/TutorialTemplate/PutTutorialTemplate";
 import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 import { useHistory } from "react-router-dom";
+import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
 
 
 export type SectionTemplateListProps = {
@@ -52,8 +53,17 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     var id_z = localStorage.getItem('description_tutorial_template_page_list');
     let list_description: any[] = []
+    let initial_text = ""
     if (id_z !== null) {
         list_description = JSON.parse(id_z);
+        initial_text = list_description.length !== 0 ? list_description[0].description: "";
+    }
+
+
+    var id_t = localStorage.getItem('tutorial_template_id');
+    let tutorial_template_id: number = 0;
+    if (id_t !== null) {
+        tutorial_template_id = parseInt(id_t)
     }
 
     const history = useHistory();
@@ -62,7 +72,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         history.push(path);
     }
 
-    let [textHtml, setTextHtml] = useState(list_description[0].description);
+    let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section_template) {
         section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
@@ -124,32 +134,53 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 content: value
             }
 
-            dispatch(putTutorialTemplate(list_description[0].tutorial_template_id, {
+            dispatch(putTutorialTemplate(tutorial_template_id, {
                 name: formState.name.value,
                 description: "",
                 section_template_id: section_template_id
             }))
 
             let lst: PageContent[] = [...contentTutorialPage, contentPage] ;
-            lst.map((ele, index) => {
-                if (index < list_description.length){
-                    dispatch(putTutorialTemplatePage(list_description[index].id, {
-                        description: ele.content,
-                        name: list_description[index].name,
-                        tutorial_template_id: list_description[0].tutorial_template_id,
-                        number: ele.page
-                    }))
-                }
-                else {
-                    dispatch(postTutorialTemplatePage({
-                        description: ele.content,
-                        name: formState.name.value,
-                        tutorial_template_id: list_description[0].tutorial_template_id,
-                        number: ele.page
-                    }))
-                }
-                return null
-            })
+
+            console.log(totalPage)
+
+            if (totalPage < list_description.length) {
+                list_description.map((ele, index) => {
+                    if (totalPage > index){
+                        dispatch(putTutorialTemplatePage(ele.id, {
+                            description: lst[index].content,
+                            name: ele.name,
+                            tutorial_template_id: ele.tutorial_template_id,
+                            number: lst[index].page
+                        }))
+                    }
+                    else {
+                        dispatch(deleteTutorialTemplatePage(ele.id))
+                    }
+                    return null
+                })
+            }
+            else {
+                lst.map((ele, index) => {
+                    if (index < list_description.length){
+                        dispatch(putTutorialTemplatePage(list_description[index].id, {
+                            description: ele.content,
+                            name: list_description[index].name,
+                            tutorial_template_id: list_description[0].tutorial_template_id,
+                            number: ele.page
+                        }))
+                    }
+                    else {
+                        dispatch(postTutorialTemplatePage({
+                            description: ele.content,
+                            name: formState.name.value,
+                            tutorial_template_id: tutorial_template_id,
+                            number: ele.page
+                        }))
+                    }
+                    return null
+                })
+            }
             
             toast.update(idx, { render: "Chỉnh giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             dispatch(getTutorialTemplatePage())

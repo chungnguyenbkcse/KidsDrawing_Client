@@ -20,7 +20,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 type Options = {
     name: string;
@@ -181,7 +181,7 @@ const CourseNomalForm: React.FC = () => {
     function isFormInvalid(): boolean {
         return (formState.description.error
             || formState.name.error || formState.num_of_section.error || formState.price.error
-            || formState.image_url.error || !formState.name.value || !formState.num_of_section.value ) as boolean;
+            || preview === "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg" || !formState.name.value || !formState.num_of_section.value ) as boolean;
     }
 
     const [textHtml, setTextHtml] = useState<string>("")
@@ -227,7 +227,7 @@ const CourseNomalForm: React.FC = () => {
 
     return (
         <Fragment>
-
+            <ToastContainer />
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">

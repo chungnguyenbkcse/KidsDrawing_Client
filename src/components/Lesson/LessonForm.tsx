@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ILesson, LessonModificationStatus } from "../../store/models/lesson.interface";
 import TextInput from "../../common/components/TextInput";
 import { editLesson, clearSelectedLesson, setModificationState, addLesson } from "../../store/actions/lesson.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ILessonFormState } from "../../common/types/Form.types";
 import { postLesson } from "../../common/service/Lesson/PostLesson";
 import { putLesson } from "../../common/service/Lesson/PutLesson";
@@ -68,7 +67,6 @@ function LessonForm(props: lessonListProps): JSX.Element {
 
       console.log(saveFn)
 
-      dispatch(addNotification("Tiết học ", `${formState.start_time.value} - ${formState.end_time.value} chỉnh bởi bạn`));
       dispatch(clearSelectedLesson());
       dispatch(setModificationState(LessonModificationStatus.None));
     }

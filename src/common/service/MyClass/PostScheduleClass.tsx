@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getMyClass } from "./GetMyClass";
 
 export function postScheduleClass(id: any, data: any, idx: any) {
     console.log("post ++")
@@ -31,10 +32,12 @@ export function postScheduleClass(id: any, data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                dispatch(getMyClass())
+                
             })
             .catch(error => {
-                toast.update(idx, { render: "Xếp lớp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Xếp lớp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

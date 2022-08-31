@@ -34,7 +34,11 @@ function ClassList(props: myclassListProps): JSX.Element  {
     setPopup(true);
 }
 
-const routeViewSchedule = (class_id: number) =>{ 
+const routeViewSchedule = (class_id: number, class_name: string) =>{ 
+  localStorage.removeItem('class_id')
+  localStorage.setItem('class_id', class_id.toString())
+  localStorage.removeItem('class_name')
+  localStorage.setItem('class_name', class_name)
   let path = '/class/schedule'; 
   history.push({
     pathname: path,
@@ -47,11 +51,11 @@ const routeViewSchedule = (class_id: number) =>{
     return (<tr className={`table-row ${(myclasss.selectedMyClass && myclasss.selectedMyClass.id === myclass.id) ? "selected" : ""}`}
       key={`myclass_${idx}`}>
       <th scope="row">{idx + 1}</th>
-      <td onClick={() => {routeChange(myclass.id)}}>{myclass.security_code}</td>
+      <td onClick={() => {routeChange(myclass.id)}}>{myclass.name}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={() => {
           if(props.onSelect) props.onSelect(myclass);
-          routeViewSchedule(myclass.id)}}
+          routeViewSchedule(myclass.id, myclass.name)}}
         >Chi tiết</button>
       </td>
       <td>

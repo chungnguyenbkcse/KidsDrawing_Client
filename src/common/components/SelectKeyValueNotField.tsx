@@ -14,6 +14,12 @@ function SelectKeyValueNotField(props: SelectNotFieldProps): JSX.Element {
         [error, validClass] = (!elementValue && props.required) ?
             ["Value has to be selected", "is-invalid"] : ["", "is-valid"];
 
+        if (props.inputClass !== ""){
+            [error, validClass] = ["", ""];
+        }
+
+        console.log(props.inputClass)
+
         console.log(elementValue)
         props.onChange({ value: parseInt(elementValue), error: error, touched: touched});
 

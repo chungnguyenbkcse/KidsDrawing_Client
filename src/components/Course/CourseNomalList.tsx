@@ -108,7 +108,13 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     history.push(path);
   }
 
-  function routeChange1 () {
+  function routeChange1 (course: ICourse) {
+    localStorage.removeItem('course_id')
+    localStorage.setItem('course_id', course.id.toString())
+    localStorage.removeItem('number_of_sum')
+    localStorage.setItem('number_of_sum', course.num_of_section.toString())
+    localStorage.removeItem('course_name')
+    localStorage.setItem('course_name', course.name)
     let path = '/courses/lesson-plan';
     history.push(path);
   }
@@ -138,7 +144,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
               <td>
                 <button type="button" className="btn btn-warning" onClick={() => {
                   if (props.onSelect) props.onSelect(course);
-                  routeChange1()
+                  routeChange1(course)
                 }}
                 >Tạo giáo án</button>
               </td>

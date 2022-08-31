@@ -1,14 +1,10 @@
-import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISectionTemplateState, IRootPageStateType, ITutorialTemplatePageState, ICourseState } from "../../store/models/root.interface";
+import React, { useState, Dispatch, Fragment, useEffect, ChangeEvent } from "react";
+import { IStateType, IRootPageStateType, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store/models/section_template.interface";
-import TextInput from "../../common/components/TextInput";
 import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
-import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import Editor from "../../common/components/Quill/EditorSection1";
-import SelectKeyValue from "../../common/components/SelectKeyValue";
-import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
+import Editor from "../../common/components/Quill/EditorSectionTemplate";
 import { ICourse } from "../../store/models/course.interface";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
 import { toast } from "react-toastify";
@@ -32,18 +28,21 @@ type TutorialSectionTemplate = {
 
 const LessonPlan: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
-  const section_templates: ISectionTemplateState | null = useSelector((state: IStateType) => state.section_templates);
-  const tutorial_template_pages: ITutorialTemplatePageState | null = useSelector((state: IStateType) => state.tutorial_template_pages);
   const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-  console.log(section_templates.sectionTemplates)
   let course: ICourse | null = courses.selectedCourse;
-  console.log(course)
+
+  var id_x = localStorage.getItem('number_of_sum');
+  let number_of_sum: number = 0;
+  if (id_x !== null) {
+    number_of_sum = parseInt(id_x)
+  }
+
+
   if (!course) {
-      course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
+    course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
   }
   let course_id = (course !== null ? course.id : 0)
-  console.log(course_id)
 
   useEffect(() => {
     dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
@@ -53,58 +52,44 @@ const LessonPlan: React.FC = () => {
 
   let section_template: ISectionTemplate = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
 
-  const [formState, setFormState] = useState({
-    name: { error: "", value: section_template.name },
-    description: { error: "", value: section_template.description },
-    number: { error: "", value: section_template.number },
-    teaching_form: { error: "", value: section_template.teaching_form },
-    course_id: { error: "", value: section_template.course_id },
-    creator_id: { error: "", value: section_template.creator_id },
-    create_time: { error: "", value: section_template.create_time },
-    update_time: { error: "", value: section_template.update_time }
-  });
-  const [totalPage, setTotalPage] = useState(0);
   const [contentTutorialSection, setContentTutorialSection] = useState<TutorialSectionTemplate[]>([])
   const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
   const [currentPage, setCurrentPage] = useState<number>(0)
   const [numberSection, setNumberSection] = useState<number>(1)
 
-  function hasFormValueChanged(model: OnChangeModel): void {
-    setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+  const [error, setError] = useState("");
+  const [htmlClass, setHtmlClass] = useState("");
+  const [value, setValue] = useState(0);
+  const [text, setText] = useState("");
+
+  console.log(value)
+  console.log(currentPage)
+
+
+  function onValueChanged(event: ChangeEvent<HTMLSelectElement>): void {
+    let [error, validClass, elementValue] = ["", "", event.target.value];
+
+    [error, validClass] = (!elementValue) ?
+      ["Value has to be selected", "is-invalid"] : ["", "is-valid"];
+    setError(error);
+    setHtmlClass(validClass);
+    setValue(parseInt(elementValue));
+    setCurrentPage(0)
   }
 
-  function hasFormValueChangedNotFiled(model: OnChangeModelNotFiled): void {
-    setTotalPage(model.value)
-    setContentTutorialPage([])
-  }
-
-  useEffect(() => {
-    if (totalPage > 0) {
-      setCurrentPage(1)
-    }
-    else {
-      setCurrentPage(0)
-    }
-  }, [totalPage])
-
+  console.log(numberSection)
   const history = useHistory();
 
   function routeHome() {
-      let path = `/courses`;
-      history.push(path);
+    let path = `/courses`;
+    history.push(path);
   }
 
-  //console.log(totalPage)
 
-  function saveUser(e: FormEvent<HTMLFormElement>): void {
-    e.preventDefault();
-    if (isFormInvalid()) {
-      return;
-    }
+  function saveUser(): void {
     let saveUserFn: Function = addSectionTemplate;
-    //console.log(contentTutorialSection)
-    //console.log(saveUserFn)
-    saveForm(formState, saveUserFn, contentTutorialSection);
+
+    saveForm(saveUserFn, contentTutorialSection);
   }
 
   const [textHtml, setTextHtml] = useState<string>("")
@@ -112,26 +97,30 @@ const LessonPlan: React.FC = () => {
     setTextHtml(value);
   }
 
-  function saveForm(formState: ISectionTemplateFormState, saveFn: Function, contentTutorialSections: TutorialSectionTemplate[]): void {
+  function saveForm(saveFn: Function, contentTutorialSections: TutorialSectionTemplate[]): void {
     if (section_template) {
       const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
         position: toast.POSITION.TOP_CENTER
       });
-      
-      dispatch(saveFn({
-        ...section_template,
-        name: formState.name.value,
-        description: formState.description.value,
-        number: formState.number.value,
-        teaching_form: formState.teaching_form.value,
-        course_id: formState.course_id.value,
-        creator_id: formState.creator_id.value
-      }));
 
-      if (saveFn === addSectionTemplate && course !== null){
-        console.log("hello")
+      let contentPage: PageContent = {
+        page: currentPage,
+        content: textHtml
+      }
+      let contentSection: TutorialSectionTemplate = {
+        number: numberSection,
+        name: value1,
+        teaching_form: Boolean(value2),
+        tutorial: [...contentTutorialPage, contentPage]
+      }
+
+      let res = [...contentTutorialSections, contentSection];
+
+      console.log(res)
+
+      if (saveFn === addSectionTemplate && course !== null) {
         let course_id = (course !== null ? course.id : 0)
-        contentTutorialSections.map((contentSection) => {
+        res.map((contentSection) => {
           return dispatch(postSectionTemplate(contentSection.tutorial, {
             name: contentSection.name,
             number: contentSection.number,
@@ -141,27 +130,17 @@ const LessonPlan: React.FC = () => {
             creator_id: localStorage.getItem('id')
           }, id))
         })
-      }
+      } 
 
       dispatch(clearSelectedSectionTemplate());
       dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
       toast.update(id, { render: "Thêm trình độ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
       setTimeout(function () {
         routeHome();
-      }, 2000); 
+      }, 2000);
     }
   }
 
-  function getDisabledClass(): string {
-    let isError: boolean = isFormInvalid();
-    return isError ? "disabled" : "";
-  }
-
-  function isFormInvalid(): boolean {
-    let course_num_of_section = (course !== null ? course.num_of_section : 0)
-    return (formState.number.error || formState.teaching_form.error 
-      || !formState.name.value || !formState.teaching_form.value || contentTutorialSection.length < course_num_of_section) as boolean;
-  }
 
   const listTotalPage: Options[] = [
     {
@@ -200,69 +179,100 @@ const LessonPlan: React.FC = () => {
       content: textHtml
     }
     setContentTutorialPage([...contentTutorialPage, contentPage])
-    if (currentPage < totalPage) {
-      setCurrentPage(currentPage + 1)
-    }
+    let x = currentPage + 1
+    setCurrentPage(x)
     setTextHtml("")
+    setText("")
   }
 
-  function handleSaveTutorialTemplate() {
+
+  function handleNextSection() {
     let contentPage: PageContent = {
       page: currentPage,
       content: textHtml
     }
     let contentSection: TutorialSectionTemplate = {
       number: numberSection,
-      name: formState.name.value,
-      teaching_form: formState.teaching_form.value,
+      name: value1,
+      teaching_form: Boolean(value2),
       tutorial: [...contentTutorialPage, contentPage]
     }
     setContentTutorialSection([...contentTutorialSection, contentSection])
-  }
 
-  function handleBackSection() {
-    setNumberSection(numberSection - 1)
+    let y = numberSection + 1;
+    setNumberSection(y)
+
     setTextHtml("")
+    setHtmlClass("")
+    setValue(0)
+    setHtmlClass1("")
+    setHtmlClass2("")
+    setValue1("")
+    setValue2("")
+    setCurrentPage(0)
+    setContentTutorialPage([])
   }
 
-  function handleNextSection() {
-    setNumberSection(numberSection + 1)
-    if (totalPage === 1) {
-      let contentPage: PageContent = {
-        page: currentPage,
-        content: textHtml
-      }
-      let contentSection: TutorialSectionTemplate = {
-        number: numberSection,
-        name: formState.name.value,
-        teaching_form: formState.teaching_form.value,
-        tutorial: [...contentTutorialPage, contentPage]
-      }
-      setContentTutorialSection([...contentTutorialSection, contentSection])
-    }
-    setTextHtml("")
-    setFormState({
-      name: { error: "", value: "" },
-      description: { error: "", value: "" },
-      number: { error: "", value: 0 },
-      teaching_form: { error: "", value: false },
-      course_id: { error: "", value: section_template.course_id },
-      creator_id: { error: "", value: section_template.creator_id },
-      create_time: { error: "", value: section_template.create_time },
-      update_time: { error: "", value: section_template.update_time }
-    })
-    setTotalPage(0)
+
+
+  const getOptions: (JSX.Element | null)[] = listTotalPage.map((option: any, index: number) => {
+    return (
+      <option key={index} value={option.value}>{option.name}</option>
+    )
+  });
+
+
+  const [error1, setError1] = useState("");
+  const [htmlClass1, setHtmlClass1] = useState("");
+  const [value1, setValue1] = useState("");
+
+
+  function onValueChanged1(event: ChangeEvent<HTMLInputElement>): void {
+    let [error1, validClass1, elementValue1] = ["", "", event.target.value];
+
+    [error1, validClass1] = (!elementValue1) ?
+      ["Value cannot be empty", "is-invalid"] : ["", "is-valid"];
+
+    setError1(error1);
+    setHtmlClass1(validClass1);
+    setValue1(elementValue1);
   }
 
-  console.log(tutorial_template_pages.tutorialTemplatePages.length)
-  console.log(totalPage)
 
-  useEffect(() => {
-    if (tutorial_template_pages.tutorialTemplatePages.length !== 0){
-      setTotalPage(tutorial_template_pages.tutorialTemplatePages.length)
-    }
-  }, [tutorial_template_pages])
-  console.log(contentTutorialSection)
+  const [error2, setError2] = useState("");
+  const [htmlClass2, setHtmlClass2] = useState("");
+  const [value2, setValue2] = useState("");
+
+
+  function onValueChanged2(event: ChangeEvent<HTMLSelectElement>): void {
+    let [error2, validClass2, elementValue2] = ["", "", event.target.value];
+
+    [error2, validClass2] = (!elementValue2) ?
+      ["Value has to be selected", "is-invalid"] : ["", "is-valid"];
+
+    setError2(error2);
+    setHtmlClass2(validClass2);
+    setValue2(elementValue2);
+  }
+
+
+  const getOptions2: (JSX.Element | null)[] = listTeachingForm.map((option: any, index: number) => {
+    return (
+      <option key={index} value={option.value}>{option.name}</option>
+    )
+  });
+
+
+  function getDisabledClass(): string {
+    let isError: boolean = isFormInvalid();
+    return isError ? "disabled" : "";
+  }
+
+  function isFormInvalid(): boolean {
+    return (value === 0 && textHtml === "") as boolean;
+  }
+
+
   return (
     <Fragment>
       <div className="col-xl-12 col-lg-12">
@@ -271,100 +281,99 @@ const LessonPlan: React.FC = () => {
             <h6 className="m-0 font-weight-bold text-green">Buổi {numberSection}</h6>
           </div>
           <div className="card-body">
-            <form onSubmit={saveUser}>
+            <form>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <TextInput id="input_name"
-                    value={formState.name.value}
-                    field="name"
-                    onChange={hasFormValueChanged}
-                    required={true}
-                    maxLength={2000}
-                    label="Tiêu đề buổi học"
-                    placeholder="" />
+                  <div>
+                    <label htmlFor="input_name">Tiêu đề buổi học</label>
+                    <input
+                      value={value1}
+                      type="text"
+                      onChange={onValueChanged1}
+                      className={`form-control ${htmlClass1}`}
+                      id={`id_Tiêu đề buổi học`}
+                      placeholder="" />
+                    {error1 ?
+                      <div className="invalid-feedback">
+                        {error1}
+                      </div> : null
+                    }
+                  </div>
                 </div>
                 <div className="form-group col-md-6">
-                  <SelectKeyValue
-                    id="input_teaching_form"
-                    field="teaching_form"
-                    label="Hình thức dạy"
-                    options={listTeachingForm}
-                    required={true}
-                    onChange={hasFormValueChanged}
-                    value={formState.teaching_form.value}
-                  />
+                  <label htmlFor={`input_teaching_form`}>Hình thức dạy</label>
+                  <select
+                    value={value2}
+                    id={`input_teaching_form`}
+                    className={`form-control  ${htmlClass2}`}
+                    onChange={onValueChanged2}>
+                    <option value={0}>Choose...</option>
+                    {getOptions2}
+                  </select>
+
+                  {error2 ?
+                    <div className="invalid-feedback">
+                      {error2}
+                    </div> : null
+                  }
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <SelectKeyValueNotField
-                    value={tutorial_template_pages.tutorialTemplatePages.length !== 0 ? tutorial_template_pages.tutorialTemplatePages.length : totalPage}
-                    id="input_total_page"
-                    onChange={hasFormValueChangedNotFiled}
-                    required={true}
-                    label="Số trang"
-                    options={listTotalPage}
-                  />
+                  <label htmlFor={`input_total_page`}>Số trang</label>
+                  <select
+                    value={value}
+                    id={`input_total_page`}
+                    className={`form-control ${htmlClass}`}
+                    onChange={onValueChanged}>
+                    <option value={0}>Choose...</option>
+                    {getOptions}
+                  </select>
+
+                  {error ?
+                    <div className="invalid-feedback">
+                      {error}
+                    </div> : null
+                  }
                 </div>
               </div>
               {
                 function () {
-                  if (currentPage > 0 && totalPage > 1 && totalPage > currentPage) {
+                  if (value > 1 && value - 1 > currentPage) {
                     return (
                       <>
                         <div className="form-group">
-                          <label>Nội dung trang {currentPage}</label>
-                          <Editor getValue={getValue} isCreate={textHtml} setValue="" />
+                          <label>Nội dung trang {currentPage + 1}</label>
+                          <Editor getValue={getValue} isCreate={textHtml} setValue={text} />
                         </div>
                         <div className="form-group">
-                          <button type="button" className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>
+                          <button type="button" className="btn btn-info right-margin ml-2" onClick={handleNextPage}>Trang tiếp theo</button>
                         </div>
                       </>
                     )
                   }
 
-                  else if (totalPage === 1) {
+                  else if (value - 1 === currentPage || value === 1) {
                     return (
                       <div className="form-group">
-                        <label>Nội dung trang {currentPage}</label>
-                        <Editor getValue={getValue} isCreate={textHtml} setValue="" />
+                        <label>Nội dung trang {currentPage + 1}</label>
+                        <Editor getValue={getValue} isCreate={textHtml} setValue={text} />
                       </div>
                     )
                   }
-
-                  else if (currentPage > 0 && totalPage === currentPage) {
-                    return (
-                      <>
-                        <div className="form-group">
-                          <label>Nội dung trang {currentPage}</label>
-                          <Editor getValue={getValue} isCreate={textHtml} setValue="" />
-                        </div>
-                        <button type="button" className="btn btn-info right-margin" onClick={handleSaveTutorialTemplate}>Lưu</button>
-                      </>
-                    )
-                  }
                 }()
               }
+
               {
                 function () {
-                  if (numberSection > 1) {
+                  if (course && (numberSection < number_of_sum)) {
                     return (
-                      <button type="button" className="btn btn-warning" onClick={handleBackSection}>Về</button>
+                      <button type="button" className={`btn btn-primary left-margin ml-2`} onClick={handleNextSection}>Buổi tiếp theo</button>
                     )
                   }
-                }()
-              }
-
-              {
-                function() {
-                  if (course && (numberSection < course.num_of_section)){
+                  else if (course && (numberSection === number_of_sum)) {
                     return (
-                      <button type="button" className={`btn btn-primary left-margin`} onClick={handleNextSection}>Buổi tiếp theo</button>
-                    )
-                  }
-                  else if (course && (numberSection >= course.num_of_section)){
-                    return (
-                      <button type="submit" className={`btn btn-primary left-margin ${getDisabledClass()}`}>Hoàn thành</button>
+                      <button type="button" className={`btn btn-success left-right  ${getDisabledClass()}`} onClick={() => {saveUser()}}>Hoàn thành</button>
                     )
                   }
                 }()

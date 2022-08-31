@@ -44,6 +44,13 @@ const ScheduleClass: React.FC = () => {
         class_id = parseInt(id_x)
     }
 
+
+    var id_y = localStorage.getItem('class_name')
+    let class_name: string = "";
+    if (id_y !== null){
+        class_name = id_y
+    }
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -80,13 +87,12 @@ const ScheduleClass: React.FC = () => {
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
-        dispatch(updateCurrentPath("Lớp", "Lớp CM-1"));
+        dispatch(updateCurrentPath("Lớp",""));
     }, [path.area, dispatch]);
 
     return (
         <Fragment>
-            <h1 className="h3 mb-2 text-gray-800">Lớp CM-1</h1>
-            <p className="mb-4">Thông tin chung</p>
+            <h1 className="h3 mb-2 text-gray-800">{class_name}</h1>
             <div className="row">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">

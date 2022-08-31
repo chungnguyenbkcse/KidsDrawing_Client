@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { IArtType, ArtTypeModificationStatus } from "../../store/models/art_type.interface";
 import TextInput from "../../common/components/TextInput";
 import { editArtType, clearSelectedArtType, setModificationState, addArtType } from "../../store/actions/art_type.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IArtTypeFormState } from "../../common/types/Form.types";
 import { postArtType } from "../../common/service/ArtType/PostArtType";
 import { putArtType } from "../../common/service/ArtType/PutArtType";
@@ -65,7 +64,6 @@ function TeachTypeForm(props: artTypeListProps): JSX.Element {
         }, id))
       }
 
-      dispatch(addNotification("Thể loại ", `${formState.name.value} chỉnh bởi bạn`));
       dispatch(clearSelectedArtType());
       dispatch(setModificationState(ArtTypeModificationStatus.None));
     }

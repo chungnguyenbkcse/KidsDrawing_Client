@@ -11,10 +11,13 @@ export const Editor = (props) => {
   console.log(`Input: ${props.setValue}`)
   const reactQuillRef = useRef(null);
   React.useEffect(() => {
-    if (reactQuillRef.current.getEditor()){
+    if (reactQuillRef.current.getEditor() && props.isCreate !== "" && props.setValue === null){
       reactQuillRef.current.getEditor().clipboard.dangerouslyPasteHTML(props.setValue)
     }
-  }, [reactQuillRef, props.setValue]);
+    if (props.isCreate === ""){
+      setState({value: null})
+    }
+  }, [reactQuillRef, props.setValue, props.isCreate]);
   //console.log(reactQuillRef)
   
   //const quill = reactQuillRef.current.editor;

@@ -14,17 +14,22 @@ import { setModificationStateAnonymousNotification } from "../../store/actions/a
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
+import { ISection } from "../../store/models/section.interface";
+import { getTutorial } from "../../common/service/Tutorial/GetTutorial";
+import { getTutorialPage } from "../../common/service/TutorialPage/GetTutorialPage";
 
 const DetailClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+    const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
+    const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
-    console.log(exercise_submissions)
+    console.log(tutorial_pages)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = sections.sections.length;
     const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
@@ -35,7 +40,7 @@ const DetailClassTeacher: React.FC = () => {
     }
 
     var id_y = localStorage.getItem('class_id');
-    
+
     let class_id = 1;
 
     if (id_y !== null) {
@@ -67,6 +72,8 @@ const DetailClassTeacher: React.FC = () => {
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
                     dispatch(getSectionByClass(class_id))
+                    dispatch(getTutorial())
+                    dispatch(getTutorialPage())
                     dispatch(getUserById(id))
                     dispatch(getTeacher())
                     dispatch(getExerciseSubmissionByClass(class_id))
@@ -76,6 +83,8 @@ const DetailClassTeacher: React.FC = () => {
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
                 dispatch(getSectionByClass(class_id))
+                dispatch(getTutorial())
+                dispatch(getTutorialPage())
                 dispatch(getUserById(id))
                 dispatch(getTeacher())
                 dispatch(getExerciseSubmissionByClass(class_id))
@@ -100,23 +109,49 @@ const DetailClassTeacher: React.FC = () => {
 
     const history = useHistory();
 
-    const routeChange1 = () =>{ 
-        let path = '/exercise'; 
+    const routeChange1 = () => {
+        let path = '/exercise';
         history.push({
             pathname: path
         });
     }
 
-    const onChangeRoute = (section_id: number) => {
+    const onChangeRoute = (section: ISection) => {
         let path = "/classes/section";
-        localStorage.removeItem("section_id");
-        localStorage.setItem("section_id", section_id.toString())
+        localStorage.removeItem('section_id')
+        localStorage.setItem('section_id', section.id.toString())
+        localStorage.removeItem('section_number')
+        localStorage.setItem('section_number', section.number.toString())
+        let tutorial_page_list: any[] = []
+        localStorage.removeItem('tutorial_name')
+        localStorage.removeItem('tutorial_id')
+        tutorials.tutorial_approved.map(ele => {
+            if (ele.section_id === section.id) {
+                localStorage.setItem('tutorial_id', ele.id.toString())
+                localStorage.setItem('tutorial_name', ele.name.toString())
+                tutorial_pages.tutorialPages.map(element => {
+                    if (element.tutorial_id === ele.id) {
+                        tutorial_page_list.push({
+                            description: element.description,
+                            id: element.id,
+                            name: element.name,
+                            tutorial_id: element.tutorial_id,
+                            number: element.number
+                        })
+                    }
+                    return null
+                })
+            }
+            return null
+        })
+        console.log(tutorial_page_list)
+        localStorage.removeItem('description_tutorial_page_list')
+        localStorage.setItem('description_tutorial_page_list', JSON.stringify(tutorial_page_list.sort((a, b) => a.number - b.number)))
         history.push({
-            pathname: path,
-            state: { section_id: section_id}
+            pathname: path
         })
     }
-    
+
     return (
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
@@ -126,9 +161,9 @@ const DetailClassTeacher: React.FC = () => {
                 <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberApprovedCount}`} icon="book" class="primary" />
                 <TopCard title="SỐ BÀI KIỂM TRA CHƯA CHẤM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
                 <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button 
-                        className="btn btn-success btn-green" 
-                        id="btn-create-teacher-level" 
+                    <button
+                        className="btn btn-success btn-green"
+                        id="btn-create-teacher-level"
                         onClick={() => {
                             dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Create))
                             onAnonymousNotificationRemove()
@@ -165,26 +200,26 @@ const DetailClassTeacher: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                    {
-                        sections.sections.sort((a,b) => a.number - b.number).map((ele, index) => {
-                            return (
-                                <tr className={`table-row`} key={`semester_class_${index}`}>
-                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {onChangeRoute(ele.id)}}>
-                                    <div className="col-xl-4 col-md-4 mb-4">
-                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
-                                    </div>
-                                    <div className="col-xl-8 col-md-8 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
-                                        <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
-                                    </div>
-                                </div>
-                                </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                </table>
-                </div>
+                                {
+                                    sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
+                                        return (
+                                            <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
+                                                    <div className="col-xl-4 col-md-4 mb-4">
+                                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                    </div>
+                                                    <div className="col-xl-8 col-md-8 mb-4">
+                                                        <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
+                                                        <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
+                                                    </div>
+                                                </div>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div className="col-xl-4 col-md-4 mb-4">
@@ -196,30 +231,30 @@ const DetailClassTeacher: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {
-                        exercise_submissions.exercise_not_gradeds.map((ele, index) => {
-                            return (
-                                <tr className={`table-row`} key={`semester_class_${index}`}>
-                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange1()}}>
-                                    <div className="col-xl-4 col-md-4 mb-4">
-                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
-                                    </div>
-                                    <div className="col-xl-8 col-md-8 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
-                                        <h3 className=" mb-2" id="level-teacher">Học sinh: {ele.student_name}</h3>
-                                    </div>
-                                </div>
-                                </tr>
-                            )
-                        })
-                    }
+                                {
+                                    exercise_submissions.exercise_not_gradeds.map((ele, index) => {
+                                        return (
+                                            <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                    <div className="col-xl-4 col-md-4 mb-4">
+                                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                    </div>
+                                                    <div className="col-xl-8 col-md-8 mb-4">
+                                                        <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
+                                                        <h3 className=" mb-2" id="level-teacher">Học sinh: {ele.student_name}</h3>
+                                                    </div>
+                                                </div>
+                                            </tr>
+                                        )
+                                    })
+                                }
                             </tbody>
-                            </table>
-                        </div>
+                        </table>
                     </div>
+                </div>
 
 
-                    <div className="col-xl-4 col-md-4 mb-4">
+                <div className="col-xl-4 col-md-4 mb-4">
                     <h3 className=" mb-2" id="level-teacher">Yêu cầu nghỉ dạy</h3>
                     <div className="table-responsive portlet">
                         <table className="table">
@@ -228,27 +263,27 @@ const DetailClassTeacher: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {
-                        teacher_leaves.leaves.map((ele, index) => {
-                            return (
-                                <tr className={`table-row`} key={`semester_class_${index}`}>
-                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange1()}}>
-                                    <div className="col-xl-4 col-md-4 mb-4">
-                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
-                                    </div>
-                                    <div className="col-xl-8 col-md-8 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>
-                                        <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
-                                    </div>
-                                </div>
-                                </tr>
-                            )
-                        })
-                    }
+                                {
+                                    teacher_leaves.leaves.map((ele, index) => {
+                                        return (
+                                            <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                    <div className="col-xl-4 col-md-4 mb-4">
+                                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                    </div>
+                                                    <div className="col-xl-8 col-md-8 mb-4">
+                                                        <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>
+                                                        <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
+                                                    </div>
+                                                </div>
+                                            </tr>
+                                        )
+                                    })
+                                }
                             </tbody>
-                            </table>
-                        </div>
+                        </table>
                     </div>
+                </div>
             </div>
 
         </Fragment>

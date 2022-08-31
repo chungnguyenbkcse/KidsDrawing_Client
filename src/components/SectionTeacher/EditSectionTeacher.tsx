@@ -1,16 +1,11 @@
-import jwt_decode from "jwt-decode";
-import React, { ChangeEvent, Dispatch, Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { ChangeEvent, Dispatch, Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import Editor from "../../common/components/Quill/EditorSectionTemplate";
+import Editor from "../../common/components/Quill/EditorEditSection";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
-import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import {  OnChangeModelNotFiled } from "../../common/types/Form.types";
-import { logout } from "../../store/actions/account.actions";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
-import { IStateType, ITutorialPageState } from "../../store/models/root.interface";
 
 type Options = {
     name: string;
@@ -24,23 +19,30 @@ type PageContent = {
 
 const EditSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const tutorialPages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
 
     const [count, setCount] = useState(0);
     const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
 
-    const [textHtml, setTextHtml] = useState<string>("")
+    var id_t = localStorage.getItem('description_tutorial_page_list');
+    let list_description: any[] = []
+    let initial_text = ""
+    if (id_t !== null) {
+        list_description = JSON.parse(id_t);
+        initial_text = list_description.length !== 0 ? list_description[0].description: "";
+    }
+
+    const [checked, setChecked] = useState(false);
+
+    let [textHtml, setTextHtml] = useState(initial_text);
+
+    console.log(textHtml)
+
     function getValue(value: string) {
         setTextHtml(value);
+        setChecked(true)
     }
     
-
-    let tutorial_name = "";
-    if (tutorialPages.tutorialPages.length > 0){
-        tutorial_name = tutorialPages.tutorialPages[0].name
-    }
-
-    const [name, setName] = useState(tutorial_name);
+    
 
     function hasFormValueChanged(event: ChangeEvent<HTMLInputElement>): void {
         setName(event.target.value)
@@ -48,6 +50,7 @@ const EditSectionTeacher: React.FC = () => {
 
     function hasFormValueChangedNotFiled(model: OnChangeModelNotFiled): void {
         setContentTutorialPage([])
+        setTotalPage(model.value)
     }
 
 
@@ -60,11 +63,16 @@ const EditSectionTeacher: React.FC = () => {
         setTextHtml("")
         let x = count;
         let y = x + 1;
-        if (x < tutorialPages.tutorialPages.length){
+        if (x < totalPage){
+            setTextHtml(list_description[x+1].description)
+            setChecked(false)
             console.log("Count")
+            console.log(x)
             setCount(y);
         }
     }
+
+    console.log(count)
 
     function setChangeCountBack() {
         let x = count;
@@ -88,42 +96,18 @@ const EditSectionTeacher: React.FC = () => {
     if (id_y !== null) {
         section_id = parseInt(id_y);
     }
+
+
+    var id_z = localStorage.getItem('tutorial_name');
     
-    let access_token = localStorage.getItem("access_token");
-    let refresh_token = localStorage.getItem("refresh_token");
-    useEffect(() => {
-        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
-            let access_token_decode: any = jwt_decode(access_token)
-            let refresh_token_decode: any = jwt_decode(refresh_token)
-            let exp_access_token_decode = access_token_decode.exp;
-            let exp_refresh_token_decode = refresh_token_decode.exp;
-            let now_time = Date.now() / 1000;
-            console.log(exp_access_token_decode)
-            console.log(now_time)
-            if (exp_access_token_decode < now_time) {
-                if (exp_refresh_token_decode < now_time) {
-                    localStorage.removeItem('access_token') // Authorization
-                    localStorage.removeItem('refresh_token')
-                    localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
-                    localStorage.removeItem('id')
-                    localStorage.removeItem('contest_id')
-                    localStorage.removeItem('schedule_id')
-                    dispatch(logout())
-                }
-                else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getSectionById(section_id))
-                    dispatch(getTutorialPageBySection(section_id))
-                }
-            }
-            else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getSectionById(section_id))
-                dispatch(getTutorialPageBySection(section_id))
-            }
-        }
-    }, [dispatch, access_token, refresh_token, section_id]);
+    let tutorial_name = "";
+
+    if (id_z !== null) {
+        tutorial_name = id_z;
+    }
+
+    const [name, setName] = useState(tutorial_name);
+
 
     const routeChange = () =>{ 
         const idx = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
@@ -144,6 +128,16 @@ const EditSectionTeacher: React.FC = () => {
             name: name,
             description: ""
         }, idx))
+
+        setTimeout(function () {
+            routeHome();
+        }, 2000); 
+    }
+
+    const history = useHistory();
+    function routeHome() {
+        let path = `/classes/section`;
+        history.push(path);
     }
 
     const listTotalPage: Options[] = [
@@ -164,6 +158,8 @@ const EditSectionTeacher: React.FC = () => {
             "value": 4
         }
     ];
+
+    const [totalPage, setTotalPage] = useState(list_description.length);
     
     return (
         <Fragment>
@@ -196,7 +192,7 @@ const EditSectionTeacher: React.FC = () => {
                                         <div className="row no-gutters">
                                             <div className="col-xl-6 col-md-6 col-xs-6">
                                                 <SelectKeyValueNotField
-                                                    value={tutorialPages.tutorialPages.length}
+                                                    value={totalPage}
                                                     id="input_total_page"
                                                     onChange={hasFormValueChangedNotFiled}
                                                     required={true}
@@ -208,10 +204,10 @@ const EditSectionTeacher: React.FC = () => {
 
                                         <div className="row no-gutters">
                                             <label>Nội dung trang {count + 1}</label>
-                                            <Editor getValue={getValue} isCreate={textHtml} setValue={tutorialPages.tutorialPages.length === 0 ? "" : tutorialPages.tutorialPages[count].description} />
+                                            <Editor getValue={getValue} isCreate={checked} setValue={textHtml} />
                                             {
                                                 function () {
-                                                    if (count < tutorialPages.tutorialPages.length - 1) {
+                                                    if (count < totalPage - 1) {
                                                         if (count === 0){
                                                             return (
                                                                 <button className={`btn btn-success left-margin`} onClick={() => {setChangeCount()}}>Trang tiếp</button>

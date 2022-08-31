@@ -5,7 +5,7 @@ import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store
 import TextInput from "../../common/components/TextInput";
 import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
-import Editor from "../../common/components/Quill/EditorSectionTemplate";
+import Editor from "../../common/components/Quill/EditorEditSection";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { toast, ToastContainer } from "react-toastify";
@@ -38,6 +38,8 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     //console.log(section_templates.sectionTemplates)
     let section_template: ISectionTemplate | null = section_templates.selectedSectionTemplate;
+
+    const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_template_id');
     let section_template_id: number = 0;
@@ -227,6 +229,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         }
         if (currentPage < list_description.length) {
             setTextHtml(list_description[index].description)
+            setChecked(false)
         }
         else {
             setTextHtml("")
@@ -239,6 +242,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function getValue(value: any){
         setValue(value);
+        setChecked(true)
     }
     
     return (
@@ -277,7 +281,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                             </div>
                             <div className="form-group">
                                 <label>Nội dung trang {currentPage}</label>
-                                <Editor getValue={getValue} setValue={textHtml} />
+                                <Editor getValue={getValue} isCreate={checked} setValue={textHtml} />
                             </div>
                             {
                                 function () {

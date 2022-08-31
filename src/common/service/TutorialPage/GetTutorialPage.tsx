@@ -13,7 +13,7 @@ export function getTutorialPage() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/tutorial-page/section`, {
+                `${process.env.REACT_APP_API_URL}/tutorial-page`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

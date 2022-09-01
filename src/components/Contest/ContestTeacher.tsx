@@ -10,6 +10,9 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { getContestTeacher } from "../../common/service/ContestTeacher/GetContestTeacher";
+import ContestEndList from "./ContestEndTeacherList";
+import ContestNotDoingList from "./ContestNotDoingTeacherList";
+import ContestDoingList from "./ContestDoingTeacherList";
 
 const ContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -62,7 +65,9 @@ const ContestTeacher: React.FC = () => {
     }, [path.area, dispatch, id, access_token, refresh_token]);
 
 
-    const [checked, setChecked] = useState(true);
+    const [checked1, setChecked1] = useState(true);
+    const [checked2, setChecked2] = useState(false);
+    const [checked3, setChecked3] = useState(false);
     return (
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
@@ -71,7 +76,8 @@ const ContestTeacher: React.FC = () => {
             <div className="row">
                 <TopCard title="CHƯA DIỄN RA" text={`${numberContestNotOpenNowCount}`} icon="book" class="primary" />
                 <TopCard title="ĐANG DIỄN RA" text={`${numberContestOpeningCount}`} icon="book" class="primary" />
-                <TopCard title="ĐÃ DIỄN RA" text={`${numberContestEndCount}`} icon="book" class="primary" />
+                <TopCard title="ĐÃ KẾT THÚC" text={`${numberContestEndCount}`} icon="book" class="primary" />
+                <TopCard title="SỐ BÀI CẦN CHẤM" text={`${numberContestEndCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
@@ -95,37 +101,62 @@ const ContestTeacher: React.FC = () => {
             </div>
 
             <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked === false) {
-                            setChecked(true)
+                        if (checked1 === false) {
+                            setChecked1(true)
+                            setChecked2(false)
+                            setChecked3(false)
                         }
                     }} style={{
-                        color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Khám phá</h6>
+                        color: checked1 ? "#F24E1E" : "#2F4F4F"
+                    }}>Chưa diễn ra</h6>
+
                     <div style={{
                         height: "5px",
                         textAlign: "center",
                         margin: "auto",
                         width: "30%",
-                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                        backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
                     }}></div>
                 </div>
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked === true) {
-                            setChecked(false)
+                        if (checked2 === false) {
+                            setChecked2(true)
+                            setChecked1(false)
+                            setChecked3(false)
                         }
                     }}
                         style={{
-                            color: checked ? "#2F4F4F" : "#F24E1E"
-                        }}>Đã đăng kí</h6>
+                            color: checked2 ? "#F24E1E" : "#2F4F4F"
+                        }}>Đang diễn ra</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
                         margin: "auto",
                         width: "30%",
-                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                        backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                    }}></div>
+                </div>
+
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked3 === false) {
+                            setChecked3(true)
+                            setChecked1(false)
+                            setChecked2(false)
+                        }
+                    }}
+                        style={{
+                            color: checked3 ? "#F24E1E" : "#2F4F4F"
+                        }}>Đã kết thúc</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
                     }}></div>
                 </div>
             </div>
@@ -133,25 +164,58 @@ const ContestTeacher: React.FC = () => {
 
             {
                 function () {
-                    if (checked === true) {
+                    if (checked1 === true) {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    
-
-
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
+                                            </div>
+                                            <div className="card-body">
+                                                <ContestNotDoingList />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </Fragment>
                         )
                     }
-                    else {
+                    else if ( checked2 === true) {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
+                                            </div>
+                                            <div className="card-body">
+                                                <ContestDoingList />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </Fragment>
+                        )
+                    }
 
+                    else if ( checked3 === true) {
+                        return (
+                            <Fragment>
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
+                                            </div>
+                                            <div className="card-body">
+                                                <ContestEndList />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </Fragment>
                         )
                     }

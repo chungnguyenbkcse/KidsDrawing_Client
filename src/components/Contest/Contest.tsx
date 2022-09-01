@@ -176,7 +176,7 @@ const Contest: React.FC = () => {
                         }
                     }} style={{
                         color: checked1 ? "#F24E1E" : "#2F4F4F"
-                    }}>Cuộc thi đang diễn ra</h6>
+                    }}>Cuộc thi chưa diễn ra</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
@@ -195,7 +195,7 @@ const Contest: React.FC = () => {
                     }}
                         style={{
                             color: checked2 ? "#F24E1E" : "#2F4F4F"
-                        }}>Cuộc thi chưa diễn ra</h6>
+                        }}>Cuộc thi đang diễn ra</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
@@ -228,7 +228,7 @@ const Contest: React.FC = () => {
 
             {
                 function () {
-                    if (checked1 === true) {
+                    if (checked2 === true) {
                         return (
                             <Fragment>
                                 <div className="row">
@@ -248,7 +248,7 @@ const Contest: React.FC = () => {
                             </Fragment>
                         )
                     }
-                    else if (checked2 === true) {
+                    else if (checked1 === true) {
                         return (
                             <Fragment>
                                 <div className="row">

@@ -41,6 +41,8 @@ import { IUserGradeExerciseSubmission, UserGradeExerciseSubmissionModificationSt
 import { ExerciseStudentModificationStatus, IExerciseStudent } from "./exercise_student.interface";
 import { ITutorial, TutorialModificationStatus } from "./tutorial.interface";
 import { IUserGradeContestSubmission, UserGradeContestSubmissionModificationStatus } from "./user_grade_contest_submission.interface";
+import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "./user_register_tutorial.interface";
+import { IUserRegisterTutorialPage, UserRegisterTutorialPageModificationStatus } from "./user_register_tutorial_page.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -95,6 +97,8 @@ export interface IStateType {
     exercise_students: IExerciseStudentState;
     tutorials: ITutorialState;
     user_grade_contest_submissions: IUserGradeContestSubmissionState;
+    user_register_tutorials: IUserRegisterTutorialState;
+    user_register_tutorial_pages: IUserRegisterTutorialPageState;
 }
 
 export interface IProductState {
@@ -129,6 +133,20 @@ export interface ISemesterState {
     selectedSemester: ISemester | null;
     modificationState: SemesterModificationStatus;
     semesters: ISemester[];
+}
+
+export interface IUserRegisterTutorialState {
+    selectedUserRegisterTutorial: IUserRegisterTutorial | null;
+    modificationState: UserRegisterTutorialModificationStatus;
+    user_register_tutorial_approveds: IUserRegisterTutorial[];
+    user_register_tutorial_not_approveds: IUserRegisterTutorial[];
+    user_register_tutorial_not_approved_nows: IUserRegisterTutorial[];
+}
+
+export interface IUserRegisterTutorialPageState {
+    selectedUserRegisterTutorialPage: IUserRegisterTutorialPage | null;
+    modificationState: UserRegisterTutorialPageModificationStatus;
+    user_register_tutorial_pages: IUserRegisterTutorialPage[];
 }
 
 export interface IExerciseLevelState {

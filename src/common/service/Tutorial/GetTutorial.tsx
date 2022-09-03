@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialApprovedAll, removeTutorialNotApprovedAll, removeTutorialNotApprovedNowAll, addTutorialApproved, addTutorialNotApproved, addTutorialNotApprovedNow } from "../../../store/actions/tutorial.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialAll, addTutorial } from "../../../store/actions/tutorial.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Tutorial {
     id: number;
@@ -9,8 +9,6 @@ interface Tutorial {
     class_id: number;
     section_number: number;
     name: string;
-    status: string;
-    description: string;
     create_time: string;
     update_time: string;
 }
@@ -45,9 +43,7 @@ export function getTutorial() {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeTutorialApprovedAll())
-                dispatch(removeTutorialNotApprovedAll())
-                dispatch(removeTutorialNotApprovedNowAll())
+                dispatch(removeTutorialAll())
                 //console.log(data.body.lessons)
                 data.body.Tutorial.map((ele: any, index: any) => {
                     var tutorial: Tutorial = {
@@ -59,21 +55,11 @@ export function getTutorial() {
                         class_id: ele.class_id,
                         class_name: ele.class_name,
                         section_number: ele.section_number,
-                        status: ele.status,
-                        description: ele.description,
                         create_time: ele.create_time,
                         update_time: ele.update_time
                     }
-                    //console.log(strDate.substring(0, 16))
-                    if (tutorial.status === "Not approved now"){
-                        return dispatch(addTutorialNotApprovedNow(tutorial));
-                    }
-                    else if (tutorial.status === "Not approved"){
-                        return dispatch(addTutorialNotApproved(tutorial));
-                    }
-                    else{
-                        return dispatch(addTutorialApproved(tutorial))
-                    }
+
+                    return dispatch(addTutorial(tutorial))
                 })
             })
             .catch(error => {

@@ -7,8 +7,6 @@ export interface ITutorial {
     class_id: number;
     section_number: number;
     name: string;
-    status: string;
-    description: string;
     create_time: string;
     update_time: string;
 }

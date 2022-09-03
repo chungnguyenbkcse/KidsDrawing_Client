@@ -50,7 +50,7 @@ const LessonPlan: React.FC = () => {
 
 
 
-  let section_template: ISectionTemplate = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+  let section_template: ISectionTemplate = { id: 0, name: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
 
   const [contentTutorialSection, setContentTutorialSection] = useState<TutorialSectionTemplate[]>([])
   const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])

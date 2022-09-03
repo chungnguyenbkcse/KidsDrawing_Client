@@ -77,12 +77,12 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section_template) {
-        section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: 0, name: "",  creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
     console.log(tutorial_template_pages.tutorialTemplatePages)
     if (tutorial_template_pages.tutorialTemplatePages.length === 0) {
-        section_template = { id: 0, name: "", description: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: 0, name: "",  creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
 
@@ -93,7 +93,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     const [formState, setFormState] = useState({
         name: { error: "", value: section_template.name },
-        description: { error: "", value: section_template.description },
         number: { error: "", value: section_template.number },
         teaching_form: { error: "", value: section_template.teaching_form },
         course_id: { error: "", value: section_template.course_id },

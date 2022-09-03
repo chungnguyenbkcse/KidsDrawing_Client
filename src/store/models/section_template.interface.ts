@@ -3,7 +3,6 @@ export interface ISectionTemplate {
     creator_id: number;
     course_id: number;
     name: string;
-    description: string;
     number: number;
     teaching_form: boolean;
     create_time: string;

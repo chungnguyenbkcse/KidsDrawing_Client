@@ -11,7 +11,7 @@ export type studentListProps = {
 function TutorialEditRequestList(props: studentListProps): JSX.Element  {
   const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
 
-  const studentElements: (JSX.Element | null)[] = tutorials.tutorial_not_approved_nows.map((student, index) => {
+  const studentElements: (JSX.Element | null)[] = tutorials.tutorials.map((student, index) => {
     if (!student) { return null; }
     return (<tr className={`table-row ${(tutorials.selectedTutorial && tutorials.selectedTutorial.id === student.id) ? "selected" : ""}`}
       key={`student_${student.id}`}>

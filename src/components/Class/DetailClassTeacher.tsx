@@ -125,7 +125,7 @@ const DetailClassTeacher: React.FC = () => {
         let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
         localStorage.removeItem('tutorial_id')
-        tutorials.tutorial_approved.map(ele => {
+        tutorials.tutorials.map(ele => {
             if (ele.section_id === section.id) {
                 localStorage.setItem('tutorial_id', ele.id.toString())
                 localStorage.setItem('tutorial_name', ele.name.toString())

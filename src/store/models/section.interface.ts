@@ -2,7 +2,6 @@ export interface ISection {
     id: number;
     class_id: number;
     name: string;
-    description: string;
     number: number;
     teach_form: boolean;
     recording: string;

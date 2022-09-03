@@ -10,7 +10,7 @@ import { getTutorial } from "../../common/service/Tutorial/GetTutorial";
 
 const TutorialEditRequest: React.FC = () => {
   const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
-  const numberItemsCount: number = tutorials.tutorial_not_approved_nows.length;
+  const numberItemsCount: number = tutorials.tutorials.length;
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu chỉnh giáo án", ""));

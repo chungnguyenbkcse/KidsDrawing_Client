@@ -174,7 +174,6 @@ export interface ISectionTemplateFormState {
     creator_id: IFormStateField<number>;
     course_id: IFormStateField<number>;
     name: IFormStateField<string>;
-    description: IFormStateField<string>;
     teaching_form: IFormStateField<any>;
     number: IFormStateField<number>;
     create_time: IFormStateField<string>;
@@ -184,7 +183,6 @@ export interface ISectionTemplateFormState {
 export interface ITutorialTemplateFormState {
     section_template_id: IFormStateField<number>;
     name: IFormStateField<string>;
-    description: IFormStateField<string>;
     create_time: IFormStateField<string>;
     update_time: IFormStateField<string>;
 }

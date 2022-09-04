@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { IStateType, IContestTeacherState } from "../../store/models/root.interface";
 import { ILesson } from "../../store/models/lesson.interface";
+import { useHistory } from "react-router-dom";
+import { IContestTeacher } from "../../store/models/contest_teacher.interface";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -12,19 +14,44 @@ export type lessonListProps = {
 function ContestTeacherNotDoingList(props: lessonListProps): JSX.Element {
     const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
 
+    const history = useHistory();
+    const onChangeRoute = (contest_teacher: IContestTeacher) =>{ 
+        localStorage.removeItem("contest_id")
+        localStorage.setItem('contest_id', contest_teacher.id.toString())
+        localStorage.removeItem("contest_name")
+        localStorage.setItem('contest_name', contest_teacher.name)
+        localStorage.removeItem("contest_description")
+        localStorage.setItem('contest_description', contest_teacher.description)
+        localStorage.removeItem("max_participant")
+        localStorage.setItem('max_participant', contest_teacher.max_participant.toString())
+        localStorage.removeItem("art_type_contest")
+        localStorage.setItem('art_type_contest', contest_teacher.art_type_name)
+        localStorage.removeItem("art_age_contest")
+        localStorage.setItem('art_age_contest', contest_teacher.art_age_name)
+        localStorage.removeItem("registration_time")
+        localStorage.setItem('registration_time', contest_teacher.registration_time)
+        localStorage.removeItem("start_time")
+        localStorage.setItem('start_time', contest_teacher.start_time)
+        localStorage.removeItem("end_time")
+        localStorage.setItem('end_time', contest_teacher.end_time)
+        let path = '/contests/detail-contest'; 
+        history.push({
+            pathname: path,
+        });
+    }
     
-    const lessonElements: (JSX.Element | null)[] = contest_teachers.contest_not_open_now.map((exercise, index) => {
+    const lessonElements: (JSX.Element | null)[] = contest_teachers.contest_not_open_now.map((contest, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
-        if (!exercise) { return null; }
+        if (!contest) { return null; }
         return (<tr className={`table-row `}
-            key={`lesson_${exercise.id}`} >
+            key={`lesson_${contest.id}`} onClick={() => {onChangeRoute(contest)}}>
             <th scope="row" className="data-table">{index + 1}</th>
-            <td className="data-table">{exercise.name}</td>
-            <td className="data-table">{exercise.art_age_name}</td>
-            <td className="data-table">{exercise.art_type_name}</td>
-            <td className="data-table">{exercise.max_participant}</td>
-            <td className="data-table">{exercise.registration_time}</td>
-            <td className="data-table">{exercise.end_time}</td>
+            <td className="data-table">{contest.name}</td>
+            <td className="data-table">{contest.art_age_name}</td>
+            <td className="data-table">{contest.art_type_name}</td>
+            <td className="data-table">{contest.max_participant}</td>
+            <td className="data-table">{contest.registration_time}</td>
+            <td className="data-table">{contest.end_time}</td>
         </tr>);
     });
 
@@ -33,7 +60,7 @@ function ContestTeacherNotDoingList(props: lessonListProps): JSX.Element {
         <Fragment>
             <div className="table-responsive portlet">
                 <table className="table">
-                    <thead id="table-thread-exercise-section">
+                    <thead id="table-thread-contest-section">
                         <tr>
                             <th scope="col" className="name-row-table">#</th>
                             <th scope="col" className="name-row-table">Tên cuộc thi</th>

@@ -1,13 +1,12 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
 import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { IContestSubmissionState, IStateType } from "../../store/models/root.interface";
 
-const ContestDetailTeacher: React.FC = () => {
+const DetailContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
     const numberNotGradedCount: number = contest_submissions.contest_not_gradeds.length;
@@ -32,6 +31,7 @@ const ContestDetailTeacher: React.FC = () => {
     if (id_y !== null) {
         contest_id = parseInt(id_y);
     }
+
 
     var id_z = localStorage.getItem('max_participant');
     let max_participant = 0;
@@ -110,30 +110,14 @@ const ContestDetailTeacher: React.FC = () => {
     }, [dispatch, access_token, refresh_token, contest_id]);
 
     
-
-    const history = useHistory();
-    const routeChange = () =>{ 
-        let path = '/contest/grade'; 
-        history.push({
-            pathname: path
-        });
-    }
-
-    const routeChange1 = () => {
-        let path = '/contest/result-grade';
-        history.push({
-            pathname: path,
-        });
-    }
-    
     return (
         <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
+                <TopCard title="SỐ BÀI ĐÃ NỘP" text={`${numberGradedCount + numberNotGradedCount}`} icon="book" class="primary" />
                 <TopCard title="SỐ BÀI ĐÃ CHẤM" text={`${numberGradedCount}`} icon="book" class="primary" />
-                <TopCard title="CHƯA CHẤM" text={`${numberNotGradedCount}`} icon="book" class="danger" />
             </div>
             <div className="row">
                 <div className="col-xl-12 col-md-12 mb-4">
@@ -175,41 +159,8 @@ const ContestDetailTeacher: React.FC = () => {
                 </div>              
             </div>
 
-            {
-                function () {
-                    if (numberNotGradedCount === 0){
-                        return (
-                            <div className="row justify-content-center mb-4">
-                                <button 
-                                    className="btn btn-success btn-green" 
-                                    id="btn-into-class-student"
-                                    onClick={() => {routeChange1()}}
-                                >
-                                    Xem điểm
-                                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
-                                </button>
-                            </div>
-                        )
-                    }
-                    else {
-                        return (
-                            <div className="row justify-content-center mb-4">
-                                <button 
-                                    className="btn btn-success btn-green" 
-                                    id="btn-into-class-student"
-                                    onClick={() => {routeChange()}}
-                                >
-                                    Chấm bài
-                                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
-                                </button>
-                            </div>
-                        )
-                    }
-                }()
-            }
-
         </Fragment>
     );
 };
 
-export default ContestDetailTeacher;
+export default DetailContestTeacher;

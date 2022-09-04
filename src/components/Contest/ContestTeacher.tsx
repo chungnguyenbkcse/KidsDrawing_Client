@@ -78,7 +78,6 @@ const ContestTeacher: React.FC = () => {
                 <TopCard title="CHƯA DIỄN RA" text={`${numberContestNotOpenNowCount}`} icon="book" class="primary" />
                 <TopCard title="ĐANG DIỄN RA" text={`${numberContestOpeningCount}`} icon="book" class="primary" />
                 <TopCard title="ĐÃ KẾT THÚC" text={`${numberContestEndCount}`} icon="book" class="primary" />
-                <TopCard title="SỐ BÀI CẦN CHẤM" text={`${numberContestEndCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>

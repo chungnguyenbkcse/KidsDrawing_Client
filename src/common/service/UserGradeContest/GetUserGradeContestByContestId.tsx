@@ -4,6 +4,8 @@ interface user_grade_contest {
     id: number;
     contest_id: number;
     teacher_id: number;
+    teacher_name: string;
+    contest_name: string;
 }
 export function getUserGradeContestByContestId(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -42,7 +44,9 @@ export function getUserGradeContestByContestId(id: any) {
                     var user_grade_contest: user_grade_contest = {
                         id: ele.id,
                         contest_id: ele.contest_id,
-                        teacher_id: ele.teacher_id
+                        teacher_id: ele.teacher_id,
+                        teacher_name: ele.teacher_name,
+                        contest_name: ele.contest_name
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){

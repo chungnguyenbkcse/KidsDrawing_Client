@@ -1,16 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IUserRegisterJoinSemesterState } from "../../store/models/root.interface";
+import { IContestSubmissionState, IStateType, IUserGradeContestState } from "../../store/models/root.interface";
 import { IUserRegisterJoinSemester } from "../../store/models/user_register_join_semester.interface";
 import { useHistory } from "react-router-dom";
 
-export type user_register_semesterListProps = {
-    onSelect?: (user_register_semester: IUserRegisterJoinSemester) => void;
+export type user_grade_contestListProps = {
+    onSelect?: (user_grade_contest: IUserRegisterJoinSemester) => void;
     children?: React.ReactNode;
 };
 
-function TopTeacher(props: user_register_semesterListProps): JSX.Element {
-    const user_register_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
+function TopTeacher(props: user_grade_contestListProps): JSX.Element {
+    const user_grade_contests: IUserGradeContestState = useSelector((state: IStateType) => state.user_grade_contests);
+    const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
+    
     const history = useHistory();
 
     const routeChange = () => {
@@ -18,16 +20,24 @@ function TopTeacher(props: user_register_semesterListProps): JSX.Element {
         history.push(path);
     }
 
-    let courseList: string[] = []
-    //console.log(listCourses)
 
-    const user_register_semesterElements: (JSX.Element | null)[] = courseList.map((user_register_semester, index) => {
-        if (!user_register_semester) { return null; }
-        return (<tr className={`table-row ${(user_register_semesters.selectedUserRegisterJoinSemester && user_register_semesters.selectedUserRegisterJoinSemester.id === index) ? "selected" : ""}`}
-            key={`user_register_semester_${index}`}>
+    let total = Math.round((contest_submissions.contest_gradeds.length+ contest_submissions.contest_not_gradeds.length) / user_grade_contests.userGradeContests.length);
+    const user_grade_contestElements: (JSX.Element | null)[] = user_grade_contests.userGradeContests.map((user_grade_contest, index) => {
+        if (!user_grade_contest) { return null; }
+        if (index === user_grade_contests.userGradeContests.length - 1){
+            return (<tr className={`table-row ${(user_grade_contests.selectedUserGradeContest && user_grade_contests.selectedUserGradeContest.id === index) ? "selected" : ""}`}
+                key={`user_grade_contest_${index}`}>
+                <th scope="row">{index + 1}</th>
+                <td onClick={routeChange}>{user_grade_contest.teacher_name}</td>
+                <th scope="row">{(contest_submissions.contest_gradeds.length+ contest_submissions.contest_not_gradeds.length) - total*index}</th>
+                <th scope="row"></th>
+            </tr>);
+        }
+        return (<tr className={`table-row ${(user_grade_contests.selectedUserGradeContest && user_grade_contests.selectedUserGradeContest.id === index) ? "selected" : ""}`}
+            key={`user_grade_contest_${index}`}>
             <th scope="row">{index + 1}</th>
-            <td onClick={routeChange}>{user_register_semester}</td>
-            <th scope="row"></th>
+            <td onClick={routeChange}>{user_grade_contest.teacher_name}</td>
+            <th scope="row">{total}</th>
             <th scope="row"></th>
         </tr>);
     });
@@ -45,7 +55,7 @@ function TopTeacher(props: user_register_semesterListProps): JSX.Element {
                     </tr>
                 </thead>
                 <tbody>
-                    {user_register_semesterElements}
+                    {user_grade_contestElements}
                 </tbody>
             </table>
         </div>

@@ -3,7 +3,7 @@ import TopCard from "../../common/components/TopCard";
 import "./Contest.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IStateType, IRootPageStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, IUserGradeContestSubmissionState, IContestSubmissionState, IUserGradeContestState } from "../../store/models/root.interface";
 import {
     clearSelectedContest
 } from "../../store/actions/contest.action";
@@ -17,13 +17,17 @@ import TopTeacher from "./TopTeacher";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
+import { ChartLine } from "../../common/components/CharLine";
+import { getUserGradeContestByContestId } from "../../common/service/UserGradeContest/GetUserGradeContestByContestId";
 
 
 const ResultContest: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const user_gradee_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
+    const user_grade_contests: IUserGradeContestState = useSelector((state: IStateType) => state.user_grade_contests);
+    const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberItemsCount: number = 3;
     
 
     var id_x = localStorage.getItem('contest_id');
@@ -56,10 +60,14 @@ const ResultContest: React.FC = () => {
                 }
                 else {
                     dispatch(getUserGradeContestSubmissionByContestId(contest_id))
+                    dispatch(getContestSubmissionByContest(contest_id))
+                    dispatch(getUserGradeContestByContestId(contest_id))
                 }
             }
             else {
                 dispatch(getUserGradeContestSubmissionByContestId(contest_id))
+                dispatch(getContestSubmissionByContest(contest_id))
+                dispatch(getUserGradeContestByContestId(contest_id))
             }
         }
     }, [dispatch, contest_id, access_token, refresh_token])
@@ -78,14 +86,37 @@ const ResultContest: React.FC = () => {
         dispatch(getArtAge())
     }, [dispatch])
 
+    let student: string[] = []
+    let scores: number[] = []
+    if (user_gradee_contest_submissions.userGradeContestSubmissions.length > 0){
+        user_gradee_contest_submissions.userGradeContestSubmissions.map(ele => {
+            student.push(ele.student_name)
+            scores.push(ele.score)
+            return ele
+        })
+    }
+
+    const labels = student;
+    let data = {
+        labels,
+        datasets: [
+            {
+                label: 'Điêm',
+                data: scores,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ],
+    };
+
 
     return (
         <Fragment>
             <h1 className="h3 mb-2 text-gray-800">Cuộc thi</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
-                <TopCard title="SỐ BÀI NỘP" text={`${user_gradee_contest_submissions.userGradeContestSubmissions.length}`} icon="box" class="primary" />
-                <TopCard title="GIÁO VIÊN CHẤM" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="SỐ BÀI NỘP" text={`${contest_submissions.contest_gradeds.length + contest_submissions.contest_not_gradeds.length}`} icon="box" class="primary" />
+                <TopCard title="GIÁO VIÊN CHẤM" text={`${user_grade_contests.userGradeContests.length}`} icon="box" class="primary" />
                 <TopCard title="ĐÃ CHẤM" text={`${user_gradee_contest_submissions.userGradeContestSubmissions.length}`} icon="box" class="primary" />
             </div>
 
@@ -125,6 +156,12 @@ const ResultContest: React.FC = () => {
             <TopTeacher />
             </div>
           </div>
+        </div>
+
+        <div className="col-xl-12 col-md-12 mb-4">
+            <div className="row justify-content-center">
+                <ChartLine data={data} />
+            </div>
         </div>
 
       </div>

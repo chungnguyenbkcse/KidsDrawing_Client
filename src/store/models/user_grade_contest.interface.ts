@@ -2,6 +2,8 @@ export interface IUserGradeContest {
     id: number;
     contest_id: number;
     teacher_id: number;
+    teacher_name: string;
+    contest_name: string;
 }
 
 export enum UserGradeContestModificationStatus {

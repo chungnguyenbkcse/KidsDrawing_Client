@@ -25,7 +25,7 @@ function TopStudent(props: user_register_semesterListProps): JSX.Element {
         return (<tr className={`table-row`}
             key={`user_register_semester_${index}`}>
             <th scope="row">{index + 1}</th>
-            <td onClick={routeChange}>{user_register_semester.student_id}</td>
+            <td onClick={routeChange}>{user_register_semester.student_name}</td>
             <td onClick={routeChange}>{user_register_semester.score}</td>
         </tr>);
     });

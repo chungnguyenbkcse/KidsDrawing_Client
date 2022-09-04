@@ -2,8 +2,6 @@ import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { IStateType, IContestTeacherState } from "../../store/models/root.interface";
 import { ILesson } from "../../store/models/lesson.interface";
-import { useHistory } from "react-router-dom";
-import { IContestTeacher } from "../../store/models/contest_teacher.interface";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -13,17 +11,6 @@ export type lessonListProps = {
 
 function ContestTeacherNotDoingList(props: lessonListProps): JSX.Element {
     const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
-
-
-    const history = useHistory();
-    const onChangeRoute = (contest_teacher: IContestTeacher) =>{ 
-        localStorage.removeItem("detail_resson")
-        localStorage.setItem('detail_resson', contest_teacher.description)
-        let path = '/student-leave/detail'; 
-        history.push({
-            pathname: path,
-        });
-    }
 
     
     const lessonElements: (JSX.Element | null)[] = contest_teachers.contest_not_open_now.map((exercise, index) => {
@@ -38,17 +25,6 @@ function ContestTeacherNotDoingList(props: lessonListProps): JSX.Element {
             <td className="data-table">{exercise.max_participant}</td>
             <td className="data-table">{exercise.registration_time}</td>
             <td className="data-table">{exercise.end_time}</td>
-            <td>
-                <button 
-                    type="button" 
-                    className="btn btn-primary" 
-                    onClick={() => {
-                        onChangeRoute(exercise)
-                    }}
-                >
-                    Chi tiết
-                </button>
-            </td>
         </tr>);
     });
 
@@ -66,8 +42,6 @@ function ContestTeacherNotDoingList(props: lessonListProps): JSX.Element {
                             <th scope="col" className="name-row-table">Số người tham gia tối đa</th>
                             <th scope="col" className="name-row-table">Thời gian bắt đầu</th>
                             <th scope="col" className="name-row-table">Thời gian kết thúc</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>

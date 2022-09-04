@@ -35,8 +35,8 @@ function ContestTeacherEndList(props: lessonListProps): JSX.Element {
             <td className="data-table">{exercise.name}</td>
             <td className="data-table">{exercise.art_age_name}</td>
             <td className="data-table">{exercise.art_type_name}</td>
-            <td className="data-table">10</td>
-            <td className="data-table">Chưa xong</td>
+            <td className="data-table">{exercise.total_contest_submission - exercise.total_const_submission_graded}</td>
+            <td className="data-table">{exercise.total_contest_submission - exercise.total_const_submission_graded > 0 ? "Chưa xong": "Da xong"}</td>
             <td className="data-table">{exercise.registration_time}</td>
             <td className="data-table">{exercise.end_time}</td>
             <td>

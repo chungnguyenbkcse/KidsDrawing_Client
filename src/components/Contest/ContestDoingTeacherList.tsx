@@ -2,8 +2,6 @@ import React, { Fragment } from "react";
 import {  useSelector } from "react-redux";
 import { IStateType, IContestTeacherState } from "../../store/models/root.interface";
 import { ILesson } from "../../store/models/lesson.interface";
-import { useHistory } from "react-router-dom";
-import { IContestTeacher } from "../../store/models/contest_teacher.interface";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -15,16 +13,6 @@ function ContestTeacherDoingList(props: lessonListProps): JSX.Element {
     const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
 
 
-    const history = useHistory();
-    const onChangeRoute = (contest_teacher: IContestTeacher) =>{ 
-        localStorage.removeItem("detail_resson")
-        localStorage.setItem('detail_resson', contest_teacher.description)
-        let path = '/student-leave/detail'; 
-        history.push({
-            pathname: path,
-        });
-    }
-
     
     const lessonElements: (JSX.Element | null)[] = contest_teachers.contest_opening.map((exercise, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
@@ -35,20 +23,9 @@ function ContestTeacherDoingList(props: lessonListProps): JSX.Element {
             <td className="data-table">{exercise.name}</td>
             <td className="data-table">{exercise.art_age_name}</td>
             <td className="data-table">{exercise.art_type_name}</td>
-            <td className="data-table">10</td>
+            <td className="data-table">{exercise.total_register_contest}</td>
             <td className="data-table">{exercise.registration_time}</td>
             <td className="data-table">{exercise.end_time}</td>
-            <td>
-                <button 
-                    type="button" 
-                    className="btn btn-primary" 
-                    onClick={() => {
-                        onChangeRoute(exercise)
-                    }}
-                >
-                    
-                </button>
-            </td>
         </tr>);
     });
 

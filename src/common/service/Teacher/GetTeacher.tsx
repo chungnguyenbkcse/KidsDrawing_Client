@@ -49,6 +49,7 @@ export function getTeacher() {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeTeacherAll())
+                console.log(data.body.teachers)
                 data.body.teachers.map((ele: any, index: any) => {
                     var user: user = {
                         id: ele.id,

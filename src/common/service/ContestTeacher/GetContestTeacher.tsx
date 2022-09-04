@@ -60,7 +60,7 @@ export function getContestTeacher(id: any) {
                 console.log(data)
                 data.body.contest_opening.map((ele: any, index: any) => {
                     var contest: ContestTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
@@ -86,7 +86,7 @@ export function getContestTeacher(id: any) {
 
                 data.body.contest_not_open_now_not_teacher.map((ele: any, index: any) => {
                     var contest: ContestTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
@@ -113,7 +113,7 @@ export function getContestTeacher(id: any) {
 
                 data.body.contest_end.map((ele: any, index: any) => {
                     var contest: ContestTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
@@ -140,7 +140,7 @@ export function getContestTeacher(id: any) {
 
                 data.body.contest_not_open_now.map((ele: any, index: any) => {
                     var contest: ContestTeacher = {
-                        id: index,
+                        id: ele.id,
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,

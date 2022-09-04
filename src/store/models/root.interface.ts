@@ -43,6 +43,7 @@ import { ITutorial, TutorialModificationStatus } from "./tutorial.interface";
 import { IUserGradeContestSubmission, UserGradeContestSubmissionModificationStatus } from "./user_grade_contest_submission.interface";
 import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "./user_register_tutorial.interface";
 import { IUserRegisterTutorialPage, UserRegisterTutorialPageModificationStatus } from "./user_register_tutorial_page.interface";
+import { ContestSubmissionModificationStatus, IContestSubmission } from "./contest_submission.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -99,6 +100,7 @@ export interface IStateType {
     user_grade_contest_submissions: IUserGradeContestSubmissionState;
     user_register_tutorials: IUserRegisterTutorialState;
     user_register_tutorial_pages: IUserRegisterTutorialPageState;
+    contest_submissions: IContestSubmissionState;
 }
 
 export interface IProductState {
@@ -296,6 +298,14 @@ export interface IExerciseSubmissionState {
     modificationState: ExerciseSubmissionModificationStatus;
     exercise_not_gradeds: IExerciseSubmission[];
     exercise_gradeds: IExerciseSubmission[];
+}
+
+
+export interface IContestSubmissionState {
+    selectedContestSubmission: IContestSubmission | null;
+    modificationState: ContestSubmissionModificationStatus;
+    contest_not_gradeds: IContestSubmission[];
+    contest_gradeds: IContestSubmission[];
 }
 
 export interface IStudentLeaveState {

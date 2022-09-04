@@ -2,6 +2,11 @@ import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeUserGradeCont
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
     student_id: number;
+    teacher_name: string;
+    teacher_id: number;
+    student_name: string;
+    contest_id: number;
+    contest_name: string;
     contest_submission_id: number;
     feedback: string;
     score: number;
@@ -44,6 +49,11 @@ export function getUserGradeContestSubmissionByContestId(id: any) {
                 data.body.UserGradeContestSubmission.map((ele: any, index: any) => {
                     var user_grade_contest: user_grade_contest = {
                         student_id: ele.student_id,
+                        student_name: ele.student_name,
+                        teacher_id: ele.teacher_id,
+                        teacher_name: ele.teacher_name,
+                        contest_id: ele.contest_id,
+                        contest_name: ele.contest_name,
                         contest_submission_id: ele.contest_submission_id,
                         feedback: ele.feedback,
                         score: ele.score,

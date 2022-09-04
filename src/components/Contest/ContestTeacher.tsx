@@ -26,6 +26,7 @@ const ContestTeacher: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+    console.log(contest_teachers)
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {

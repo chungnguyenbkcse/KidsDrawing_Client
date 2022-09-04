@@ -46,6 +46,7 @@ import tutorialsReducer from "./tutorial.reducer";
 import userGradeContestSubmissionsReducer from "./user_grade_contest_submission.reducer";
 import user_register_tutorial_pagesReducer from "./user_register_tutorial_page.reducer";
 import userRegisterTutorialReducer from "./user_register_tutorial.reducer";
+import contestSubmissionsReducer from "./contest_submission.reducer";
 
 
 const initialState: IRootStateType = {
@@ -106,7 +107,8 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     tutorials: tutorialsReducer,
     user_grade_contest_submissions: userGradeContestSubmissionsReducer,
     user_register_tutorial_pages: user_register_tutorial_pagesReducer,
-    user_register_tutorials: userRegisterTutorialReducer
+    user_register_tutorials: userRegisterTutorialReducer,
+    contest_submissions: contestSubmissionsReducer,
 });
 
 

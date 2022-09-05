@@ -24,7 +24,7 @@ export function putUserRegisterTutorial(id: any, tutorial: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putUserRegisterTutorial(tutorial, id, idx))
+                        dispatch(putUserRegisterTutorial(id, tutorial, idx))
                     }
                     else {
                         throw Error(response.statusText);

@@ -48,6 +48,7 @@ function TutorialEditRequestList(props: studentListProps): JSX.Element {
       key={`student_${student.id}`}>
       <th scope="row">{index + 1}</th>
       <td>{student.name}</td>
+      <td>{student.class_name}</td>
       <td>{student.section_number}</td>
       <td>{student.creator_name}</td>
       <td>{student.create_time}</td>
@@ -72,6 +73,7 @@ function TutorialEditRequestList(props: studentListProps): JSX.Element {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Tên giáo án</th>
+            <th scope="col">Lớp</th>
             <th scope="col">Buổi</th>
             <th scope="col">Giáo viên</th>
             <th scope="col">Thời gian</th>

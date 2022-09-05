@@ -5,6 +5,8 @@ export interface IUserRegisterTutorial {
     creator_name: string;
     section_name: string;
     section_number: number;
+    class_id: number;
+    class_name: string;
     name: string;
     status: string;
     create_time: string;

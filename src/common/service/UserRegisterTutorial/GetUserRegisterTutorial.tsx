@@ -7,6 +7,8 @@ interface UserRegisterTutorial {
     creator_name: string;
     section_name: string;
     section_number: number;
+    class_id: number;
+    class_name: string;
     name: string;
     status: string;
     create_time: string;
@@ -18,7 +20,7 @@ export function getUserRegisterTutorial() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user_register_tutorial`, {
+                `${process.env.REACT_APP_API_URL}/user-register-tutorial`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -47,14 +49,16 @@ export function getUserRegisterTutorial() {
                 dispatch(removeUserRegisterTutorialApprovedAll())
                 dispatch(removeUserRegisterTutorialNotApprovedNowAll())
                 dispatch(removeUserRegisterTutorialNotApprovedAll())
-                console.log(data.body.teacher_register_qualification)
-                data.body.teacher_register_qualification.map((ele: any, index: any) => {
+                console.log(data.body.user_register_tutorial)
+                data.body.user_register_tutorial.map((ele: any, index: any) => {
                     var UserRegisterTutorial: UserRegisterTutorial = {
                         id: ele.id,
                         section_id: ele.section_id,
                         section_name: ele.section_name,
                         creator_name: ele.creator_name,
                         creator_id: ele.creator_id,
+                        class_id: ele.class_id,
+                        class_name: ele.class_name,
                         section_number:ele.section_number,
                         name: ele.name,
                         status: ele.status,

@@ -133,11 +133,11 @@ export function setModificationState(value: UserRegisterTutorialModificationStat
 
 
 export function initialUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IInitialUserRegisterTutorialApprovedToTutorialTemplateActionType {
-    return { type: INITIAL_USER_REGISTER_TUTORIAL_APPROVED, user_register_tutorial: user_register_tutorial };
+    return { type: INITIAL_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE, user_register_tutorial: user_register_tutorial };
 }
 
 export function removeUserRegisterTutorialApprovedToTutorialTemplateAll(): IRemoveUserRegisterTutorialApprovedToTutorialTemplateAllActionType {
-    return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED_ALL };
+    return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_ALL };
 }
 
 export function addUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IAddUserRegisterTutorialApprovedToTutorialTemplateActionType {
@@ -145,19 +145,19 @@ export function addUserRegisterTutorialApprovedToTutorialTemplate(user_register_
 }
 
 export function editUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IEditUserRegisterTutorialApprovedToTutorialTemplateActionType {
-    return { type: EDIT_USER_REGISTER_TUTORIAL_APPROVED, user_register_tutorial: user_register_tutorial };
+    return { type: EDIT_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE, user_register_tutorial: user_register_tutorial };
 }
 
 export function removeUserRegisterTutorialApprovedToTutorialTemplate(id: number): IRemoveUserRegisterTutorialApprovedToTutorialTemplateActionType {
-    return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED, id: id };
+    return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE, id: id };
 }
 
 export function changeSelectedUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IChangeSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType {
-    return { type: CHANGE_USER_REGISTER_TUTORIAL_APPROVED_PENDING_EDIT, user_register_tutorial: user_register_tutorial };
+    return { type: CHANGE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_PENDING_EDIT, user_register_tutorial: user_register_tutorial };
 }
 
 export function clearSelectedUserRegisterTutorialApprovedToTutorialTemplate(): IClearSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType {
-    return { type: CLEAR_USER_REGISTER_TUTORIAL_APPROVED_PENDING_EDIT };
+    return { type: CLEAR_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_PENDING_EDIT };
 }
 
 

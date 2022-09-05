@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { IAnonymousNotification, AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import TextInput from "../../common/components/TextInput";
 import { editAnonymousNotification, clearSelectedAnonymousNotification, setModificationStateAnonymousNotification, addAnonymousNotification } from "../../store/actions/anonymous_notification.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IAnonymousNotificationFormState } from "../../common/types/Form.types";
 import { postAnonymousNotification } from "../../common/service/AnonymousNotification/PostAnonymousNotification";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
+import { toast } from "react-toastify";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -47,11 +47,16 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
 
     function saveForm(formState: IAnonymousNotificationFormState, saveFn: Function): void {
         if (notification) {
+            const idx = toast.loading("Đang xử lý yêu cầu. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
+            
             if (saveFn === addAnonymousNotification) {
                 dispatch(postAnonymousNotification(formState.type_send.value, {
-                    name: formState.name.value,
-                    description: formState.description.value
-                }))
+                    subject: formState.name.value,
+                    msgBody: formState.description.value,
+                    attachment: ""
+                }, idx))
             }
 
             console.log({
@@ -60,7 +65,6 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
                 type_send: formState.type_send
             })
 
-            dispatch(addNotification("Thông báo ", `${formState.name.value} gửi bởi bạn`));
             dispatch(clearSelectedAnonymousNotification());
             dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.None));
         }
@@ -96,7 +100,7 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
                                         field="name"
                                         onChange={hasFormValueChanged}
                                         required={true}
-                                        maxLength={20}
+                                        maxLength={20000}
                                         label="Tên"
                                         placeholder="" />
                                 </div>
@@ -106,7 +110,7 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
                                         value={formState.description.value}
                                         onChange={hasFormValueChanged}
                                         required={false}
-                                        maxLength={100}
+                                        maxLength={100000}
                                         label="Miêu tả"
                                         placeholder="" />
                                 </div>
@@ -122,7 +126,7 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
                                         options={[
                                             {
                                                 name: "Toàn hệ thống",
-                                                value: "all"
+                                                value: "admin"
                                             },
                                             {
                                                 name: "Chỉ giáo viên",

@@ -16,6 +16,7 @@ import { setModificationStateAnonymousNotification } from "../../store/actions/a
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import NotificationForm from "./NotificationForm";
 import Popup from "reactjs-popup";
+import { ToastContainer } from "react-toastify";
 
 const Home: React.FC = () => {
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
@@ -93,6 +94,7 @@ const Home: React.FC = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
       <h1 className="h3 mb-2 text-gray-800">Trang chủ</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

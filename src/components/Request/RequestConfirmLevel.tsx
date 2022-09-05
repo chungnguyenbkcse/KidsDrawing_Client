@@ -15,10 +15,10 @@ const RequestConfirmLevel: React.FC = () => {
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
   const numberItemsCount: number = teacher_register_quantifications.not_approved_now.length;
 
-  var id_x = localStorage.getItem('class_id');
-  let class_id: number = 0;
+  var id_x = localStorage.getItem('teacher_id');
+  let teacher_id: number = 0;
   if (id_x !== null){
-    class_id = parseInt(id_x)
+    teacher_id = parseInt(id_x)
   }
 
   const dispatch: Dispatch<any> = useDispatch();
@@ -47,18 +47,18 @@ const RequestConfirmLevel: React.FC = () => {
           dispatch(logout())
         }
         else {
-          dispatch(getTeacherRegisterQuantificationByTeacherId(class_id))
+          dispatch(getTeacherRegisterQuantificationByTeacherId(teacher_id))
           dispatch(getTeacher())
           dispatch(getCourse())
         }
       }
       else {
-        dispatch(getTeacherRegisterQuantificationByTeacherId(class_id))
+        dispatch(getTeacherRegisterQuantificationByTeacherId(teacher_id))
         dispatch(getTeacher())
         dispatch(getCourse())
       }
     }
-  }, [dispatch, class_id, access_token, refresh_token])
+  }, [dispatch, teacher_id, access_token, refresh_token])
 
   return (
     <Fragment>

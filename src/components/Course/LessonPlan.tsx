@@ -7,7 +7,7 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import Editor from "../../common/components/Quill/EditorSectionTemplate";
 import { ICourse } from "../../store/models/course.interface";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 type Options = {
   name: string;
@@ -165,11 +165,11 @@ const LessonPlan: React.FC = () => {
   const listTeachingForm: Options[] = [
     {
       "name": "Dạy thông qua Jitsi",
-      "value": true
+      "value": "true"
     },
     {
       "name": "Tự đọc giáo trình",
-      "value": false
+      "value": "false"
     }
   ]
 
@@ -275,6 +275,7 @@ const LessonPlan: React.FC = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">

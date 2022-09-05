@@ -5,7 +5,7 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { useHistory, useLocation } from "react-router-dom";
 import "./CourseTeacherDetail.css"
 import { postRegisterTeachSemester } from "../../common/service/UserTeachSemester/PostRegisterTeachSemester";
-import { addNotification } from "../../store/actions/notifications.action";
+import { toast, ToastContainer } from "react-toastify";
 
 const CourseTeacherDetail: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -33,16 +33,22 @@ const CourseTeacherDetail: React.FC = () => {
                 teacher_id: localStorage.getItem('id'),
                 semester_class_id: state.semester_class_id
             })
-            dispatch(addNotification("Lớp theo kì ", `${state.course_name} đăng kí bởi bạn`));
-            let path = '/courses'; 
-            history.push({
-                pathname: path
+            toast.success("Đăng kí lớp thành công!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000
             });
+            let path = '/courses'; 
+            setTimeout(function () {
+                history.push({
+                    pathname: path
+                });
+            }, 2000); 
         }
     }
 
     return (
         <Fragment>
+            <ToastContainer />
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
                     {

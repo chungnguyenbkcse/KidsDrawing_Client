@@ -30,9 +30,10 @@ function TeacherList(props: userListProps): JSX.Element {
 
   const onChangeRequest = (teacher_id: number) => {
     let path = '/teachers/request-level';
+    localStorage.removeItem("teacher_id");
+    localStorage.setItem("teacher_id", teacher_id.toString())
     history.push({
-      pathname: path,
-      state: {teacher_id: teacher_id}
+      pathname: path
     });
   }
 

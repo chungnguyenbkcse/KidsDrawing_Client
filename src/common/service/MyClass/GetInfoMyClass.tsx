@@ -1,6 +1,6 @@
 import { addInformationClass, removeInformationClassAll } from "../../../store/actions/information_class.action";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/my_class.action";
-import { addTimeSchedule } from "../../../store/actions/time_schedule.action";
+import { addTimeSchedule, removeTimeScheduleAll } from "../../../store/actions/time_schedule.action";
 import { addStudent, removeStudentAll } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
@@ -100,6 +100,7 @@ export function getInfoMyClass(id: any) {
                     number_student: data.body.students.length
                 }
 
+                dispatch(removeTimeScheduleAll())
                 data.body.lesson_time.map((ele: any, index: any) => {
                     let x = Object.values(ele)
                     return x.map((ele_1: any) => {

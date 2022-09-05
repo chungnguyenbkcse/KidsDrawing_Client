@@ -1,10 +1,15 @@
-import React, { useState, Dispatch } from "react";
+import React, { useState, Dispatch, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { getUserById } from "../../common/service/User/GetUserById";
 import { putStatusUser } from "../../common/service/User/UpdateStatusUser";
 import { logout } from "../../store/actions/account.actions";
 function TopMenuAccount(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const username: string | null = localStorage.getItem('username');
+  const id = localStorage.getItem('id')
+  useEffect(() => {
+      dispatch(getUserById(id))
+  }, [dispatch, id])
   const [isShow, setShow] = useState(false);
 
   return (

@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { UserModificationStatus } from "../../store/models/user.interface";
 import TextInput from "../../common/components/TextInput";
 import { editTeacher, clearSelectedUser, setModificationState, addTeacher } from "../../store/actions/users.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IUser1FormState } from "../../common/types/Form.types";
 import { postTeacher } from "../../common/service/Teacher/PostTeacher";
 import { putTeacher } from "../../common/service/Teacher/PutTeacher";
@@ -25,11 +24,11 @@ const Account: React.FC = () => {
         dispatch(getUserById(id))
     }, [dispatch, id])
     var role_privilege = localStorage.getItem('role_privilege')
-    var rolePrivilege:string[] =[]
-    const [userRole, setUserRole] = useState("")
+    let rolePrivilege: any = []
+    let userRole: any = ""
     if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
-        setUserRole(rolePrivilege[0])
+        rolePrivilege = (role_privilege.split(','))
+        userRole = (rolePrivilege[0])
     }
     let users: IUserState = useSelector((state: IStateType) => state.users);
     console.log(users.teachers)
@@ -54,32 +53,44 @@ const Account: React.FC = () => {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
 
-    function saveUser(e: FormEvent<HTMLFormElement>): void {
+    async function saveUser(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (isFormInvalid()) {
             return;
         }
+        const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+        var url = await setImageAction();
         let saveUserFn: Function =editTeacher;
-        saveForm(formState, saveUserFn);
+        saveForm(formState, saveUserFn, url, id);
     }
 
-    function saveForm(formState: IUser1FormState, saveFn: Function): void {
+    function saveForm(formState: IUser1FormState, saveFn: Function, url: string, id: any): void {
         if (user) {
-            const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
-                position: toast.POSITION.TOP_CENTER
-            });
+            
+            let username = formState.username.value === "" ? user.username : formState.username.value;
+            let email = formState.email.value === "" ? user.email : formState.email.value;
+            let firstName = formState.firstName.value === "" ? user.firstName : formState.firstName.value;
+            let lastName = formState.lastName.value === "" ? user.lastName : formState.lastName.value;
+            let dateOfBirth = formState.dateOfBirth.value === "" ? user.dateOfBirth : formState.dateOfBirth.value;
+            let sex = formState.sex.value === "" ? user.sex : formState.sex.value;
+            let phone = formState.phone.value === "" ? user.phone : formState.phone.value;
+            let address = formState.address.value === "" ? user.address : formState.address.value
+            let url_x = url === "" ? user.profile_image_url : url;
+
             if (saveFn === addTeacher) {
                 dispatch(postTeacher({
-                    username: formState.username.value,
-                    email: formState.email.value,
-                    password: formState.password.value,
-                    firstName: formState.firstName.value,
-                    lastName: formState.lastName.value,
-                    dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: preview,
-                    sex: formState.sex.value,
-                    phone: formState.phone.value,
-                    address: formState.address.value,
+                    username: username,
+                    email: email,
+                    password: "",
+                    firstName: firstName,
+                    lastName: lastName,
+                    dateOfBirth: dateOfBirth,
+                    profile_image_url: url_x,
+                    sex: sex,
+                    phone: phone,
+                    address: address,
                     parent_ids: user.parents,
                     roleNames: [userRole]
                 }, id));
@@ -87,33 +98,27 @@ const Account: React.FC = () => {
 
             else if (saveFn === editTeacher) {
                 dispatch(putTeacher(user.id, {
-                    username: formState.username.value,
-                    email: formState.email.value,
+                    username: username,
+                    email: email,
                     password: "",
-                    firstName: formState.firstName.value,
-                    lastName: formState.lastName.value,
-                    dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: preview,
-                    sex: formState.sex.value,
-                    phone: formState.phone.value,
-                    address: formState.address.value,
+                    firstName: firstName,
+                    lastName: lastName,
+                    dateOfBirth: dateOfBirth,
+                    profile_image_url: url_x,
+                    sex: sex,
+                    phone: phone,
+                    address: address,
                     parent_ids: user.parents,
                     roleNames: [userRole]
                 }, id));
             }
 
-            dispatch(addNotification("Thông tin cá nhân", ` ${formState.username.value} chỉnh bởi bạn`));
             dispatch(clearSelectedUser());
             dispatch(setModificationState(UserModificationStatus.None));
-            notify()
         }
     }
 
-    function notify() {
-        toast.info("Cập nhật thành công!", {
-            position: toast.POSITION.TOP_CENTER
-        });
-    }
+    console.log(formState)
 
     function cancelForm(): void {
         dispatch(setModificationState(UserModificationStatus.None));
@@ -125,16 +130,47 @@ const Account: React.FC = () => {
     }
 
     function isFormInvalid(): boolean {
-        return (formState.username.error || formState.email.error
-            || !formState.email.value || !formState.username.value ) as boolean;
+        return ((!formState.email.value && user.email === "") || (!formState.username.value && user.username === "")
+             ) as boolean;
     }
 
-    const src = user.profile_image_url;
+    let src = user.profile_image_url;
 
     const [preview, setPreview] = useState(src)
+    const [image, setImage] = useState<any>();
 
     const uploadPicture = (e: any) => {
+        setImage({
+            /* contains the preview, if you want to show the picture to the user
+                you can access it with this.state.currentPicture
+           */
+            picturePreview : URL.createObjectURL(e.target.files[0]),
+            /* this contains the file we want to send */
+            pictureAsFile : e.target.files[0]
+        })
         setPreview(URL.createObjectURL(e.target.files[0]))
+    };
+
+    async function setImageAction(){
+        const formData = new FormData();
+        if (image === undefined){
+            return ""
+        }
+        else {
+            formData.append(
+                "gifFile",
+                image.pictureAsFile
+            );
+            // do your post request
+            const res = await fetch(
+                `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
+                    method: "POST",
+                    body: formData
+                }
+            )
+            const data = await res.json()
+            return data.url_image
+        }
     };
 
     return (
@@ -154,14 +190,14 @@ const Account: React.FC = () => {
                                         <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
                                     </div>
                                     <div className="form-group col-md-6">
-                                        <img src={preview} alt="Preview" id="avatar" />
+                                        <img src={preview === "" ? user.profile_image_url : preview} alt="Preview" id="avatar" />
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_username"
                                             field="username"
-                                            value={formState.username.value}
+                                            value={formState.username.value === "" ? user.username : formState.username.value}
                                             onChange={hasFormValueChanged}
                                             required={true}
                                             maxLength={100}
@@ -171,7 +207,7 @@ const Account: React.FC = () => {
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_email"
                                             field="email"
-                                            value={formState.email.value}
+                                            value={formState.email.value === "" ? user.email : formState.email.value}
                                             onChange={hasFormValueChanged}
                                             required={true}
                                             maxLength={200}
@@ -183,7 +219,7 @@ const Account: React.FC = () => {
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_firstName"
                                             field="firstName"
-                                            value={formState.firstName.value}
+                                            value={formState.firstName.value === "" ? user.firstName : formState.firstName.value}
                                             onChange={hasFormValueChanged}
                                             required={false}
                                             maxLength={100}
@@ -193,7 +229,7 @@ const Account: React.FC = () => {
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_lastName"
                                             field="lastName"
-                                            value={formState.lastName.value}
+                                            value={formState.lastName.value === "" ? user.lastName : formState.lastName.value}
                                             onChange={hasFormValueChanged}
                                             required={false}
                                             maxLength={200}
@@ -204,19 +240,19 @@ const Account: React.FC = () => {
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                     <SelectInput
-                                        id="input_category"
+                                        id="input_sex"
                                         field="sex"
                                         label="Giới tính"
                                         options={["Nam", "Nữ"]}
                                         required={true}
                                         onChange={hasFormValueChanged}
-                                        value={formState.sex.value}
+                                        value={formState.sex.value === "" ? user.sex : formState.sex.value}
                                     />
                                     </div>
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_phone"
                                             field="phone"
-                                            value={formState.phone.value}
+                                            value={formState.phone.value === "" ? user.phone : formState.phone.value}
                                             onChange={hasFormValueChanged}
                                             required={false}
                                             maxLength={200}
@@ -227,7 +263,7 @@ const Account: React.FC = () => {
                                 <div className="form-group">
                                     <TextInput id="input_address"
                                         field="address"
-                                        value={formState.address.value}
+                                        value={formState.address.value === "" ? user.address : formState.address.value}
                                         onChange={hasFormValueChanged}
                                         required={false}
                                         maxLength={200}
@@ -238,7 +274,7 @@ const Account: React.FC = () => {
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_dateOfBirth"
                                             field="dateOfBirth"
-                                            value={formState.dateOfBirth.value}
+                                            value={formState.dateOfBirth.value === "" ? user.dateOfBirth : formState.dateOfBirth.value}
                                             onChange={hasFormValueChanged}
                                             type="date"
                                             required={false}

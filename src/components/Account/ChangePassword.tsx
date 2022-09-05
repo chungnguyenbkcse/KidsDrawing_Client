@@ -4,13 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
 import TextInput from "../../common/components/TextInput";
 import { editTeacher, clearSelectedUser, setModificationState, addTeacher } from "../../store/actions/users.action";
-import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, IUser1FormState } from "../../common/types/Form.types";
-import { postTeacher } from "../../common/service/Teacher/PostTeacher";
-import { putTeacher } from "../../common/service/Teacher/PutTeacher";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getUserById } from "../../common/service/User/GetUserById";
+import { putPassword } from "../../common/service/User/UpdatePassword";
 
 export type teacherListProps = {
     isCheck: (value: boolean) => void;
@@ -20,17 +18,15 @@ export type teacherListProps = {
 function ChangePassword(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const users: IUserState = useSelector((state: IStateType) => state.users);
-    var role_privilege = localStorage.getItem('role_privilege')
-    const [userPrivilege, setUserPrivilege] = useState<string[]>([])
-    const [userRole, setUserRole] = useState("")
+    
     const id = localStorage.getItem('id')
+    let user_id: number = 0;
+    if (id !== null) {
+        user_id = parseInt(id)
+    }
     useEffect(() => {
-        if (role_privilege !== null) {
-            setUserPrivilege(role_privilege.split(','))
-            setUserRole(userPrivilege[0])
-        }
-        getUserById(id)
-    }, [dispatch, id, role_privilege, userPrivilege])
+        getUserById(user_id)
+    }, [dispatch, user_id])
     let user: IUser = users.teachers[0];
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
 
@@ -67,56 +63,21 @@ function ChangePassword(): JSX.Element {
 
     function saveForm(formState: IUser1FormState, saveFn: Function): void {
         if (user) {
-            const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+            const idx = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
             });
 
-            if (saveFn === addTeacher) {
-                dispatch(postTeacher({
-                    username: formState.username.value,
-                    email: formState.email.value,
-                    password: formState.password.value,
-                    firstName: formState.firstName.value,
-                    lastName: formState.lastName.value,
-                    dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: "",
-                    sex: formState.sex.value,
-                    phone: formState.phone.value,
-                    address: formState.address.value,
-                    parent_ids: user.parents,
-                    roleNames: [userRole]
-                }, id));
-            }
-
-            else if (saveFn === editTeacher) {
-                dispatch(putTeacher(user.id, {
-                    username: formState.username.value,
-                    email: formState.email.value,
-                    password: "",
-                    firstName: formState.firstName.value,
-                    lastName: formState.lastName.value,
-                    dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: "",
-                    sex: formState.sex.value,
-                    phone: formState.phone.value,
-                    address: formState.address.value,
-                    parent_ids: user.parents,
-                    roleNames: [userRole]
-                }, id));
-            }
-
-            dispatch(addNotification("Mật khẩu", ` ${formState.username.value} chỉnh bởi bạn`));
+            dispatch(putPassword(user.id, {
+                    pre_password: formState.username.value,
+                    new_password: formState.phone.value
+            }, idx));
+            
             dispatch(clearSelectedUser());
             dispatch(setModificationState(UserModificationStatus.None));
-            notify()
+
         }
     }
 
-    function notify() {
-        toast.info("Cập nhật thành công!", {
-            position: toast.POSITION.TOP_CENTER
-        });
-    }
 
     function cancelForm(): void {
         dispatch(setModificationState(UserModificationStatus.None));
@@ -128,8 +89,8 @@ function ChangePassword(): JSX.Element {
     }
 
     function isFormInvalid(): boolean {
-        return (formState.username.error || formState.email.error
-            || !formState.email.value || !formState.username.value ) as boolean;
+        return (formState.username.error || formState.phone.error
+            || !formState.username.value || !formState.phone.value ) as boolean;
     }
 
 
@@ -146,35 +107,27 @@ function ChangePassword(): JSX.Element {
                         <ToastContainer />
                         <div className="card-body">
                             <form onSubmit={saveUser}>
-                                <div className="form-group">
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
                                     <TextInput id="input_username"
                                         field="username"
-                                        value={""}
+                                        value={formState.username.value}
                                         onChange={hasFormValueChanged}
                                         required={true}
                                         maxLength={100}
                                         label="Mật khẩu cũ"
                                         placeholder="" />
                                 </div>
+                                </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_phone"
                                             field="phone"
-                                            value={""}
+                                            value={formState.phone.value}
                                             onChange={hasFormValueChanged}
                                             required={true}
                                             maxLength={200}
                                             label="Mật khẩu mới"
-                                            placeholder="" />
-                                    </div>
-                                    <div className="form-group col-md-6">
-                                        <TextInput id="input_password"
-                                            field="password"
-                                            value={""}
-                                            onChange={hasFormValueChanged}
-                                            required={true}
-                                            maxLength={200}
-                                            label="Xác nhận lại khẩu mới"
                                             placeholder="" />
                                     </div>
                                 </div>

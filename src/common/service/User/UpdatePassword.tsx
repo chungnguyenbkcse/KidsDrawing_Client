@@ -1,15 +1,14 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest } from "../../../store/actions/users.action";
+import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getUserById } from "../User/GetUserById";
 
-export function putTeacher(id: any, data: any, idx: any) {
+export function putPassword(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user/${id}`, {
+                `${process.env.REACT_APP_API_URL}/user/change-password/${id}`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,
@@ -24,7 +23,7 @@ export function putTeacher(id: any, data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putTeacher(id, data, idx))
+                        dispatch(putPassword(id,data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -37,11 +36,12 @@ export function putTeacher(id: any, data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 console.log(id)
-                toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(getUserById(id))
+                toast.update(idx, { render: "Thay đổi mật khẩu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                dispatch(fetchDataSuccess(data))
             })
             .catch(error => {
-                toast.update(id, { render: "Chỉnh thông tin tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thay đổi mật khẩu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                dispatch(fetchDataError(error));
                 console.log("error")
             });
     };

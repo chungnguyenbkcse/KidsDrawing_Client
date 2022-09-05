@@ -3,46 +3,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import { IStateType, IUserRegisterTutorialState } from "../../store/models/root.interface";
-import { ITutorial } from "../../store/models/tutorial.interface";
 import { IUserRegisterTutorial } from "../../store/models/user_register_tutorial.interface";
 
 export type studentListProps = {
-  onSelect?: (student: ITutorial) => void;
+  onSelect?: (student: IUserRegisterTutorial) => void;
   children?: React.ReactNode;
 };
 
-function TutorialEditRequestList(props: studentListProps): JSX.Element {
+function UserRegisterTutorialEditRequestList(props: studentListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
 
   const user_register_tutorials: IUserRegisterTutorialState = useSelector((state: IStateType) => state.user_register_tutorials);
 
   function approvedTutorial(ele: IUserRegisterTutorial) {
-    const id = toast.info("Chấp nhận giáo án giáo viên!", {
+    const id = toast.info("Chấp nhận giáo án giáo viên cho giáo án chung!", {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
     dispatch(putUserRegisterTutorial(ele.id, {
-      status: "Approved",
+      status: "Approved to tutorial template",
       section_id: ele.section_id,
       name: ele.name,
       creator_id: ele.creator_id
     }, id))
   }
 
-  function notApprovedTutorial(ele: IUserRegisterTutorial) {
-    const id = toast.info("Chấp nhận giáo án giáo viên!", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000
-    });
-    dispatch(putUserRegisterTutorial(ele.id, {
-      status: "Not approved",
-      section_id: ele.section_id,
-      name: ele.name,
-      creator_id: ele.creator_id
-    }, id))
-  }
-
-  const studentElements: (JSX.Element | null)[] = user_register_tutorials.user_register_tutorial_not_approved_nows.map((student, index) => {
+  const studentElements: (JSX.Element | null)[] = user_register_tutorials.user_register_tutorial_approveds.map((student, index) => {
     if (!student) { return null; }
     return (<tr className={`table-row ${(user_register_tutorials.selectedUserRegisterTutorial && user_register_tutorials.selectedUserRegisterTutorial.id === student.id) ? "selected" : ""}`}
       key={`student_${student.id}`}>
@@ -55,11 +41,6 @@ function TutorialEditRequestList(props: studentListProps): JSX.Element {
         <button type="button" className="btn btn-primary" onClick={() => {
           approvedTutorial(student)
         }}>Chấp nhận</button>
-      </td>
-      <td>
-        <button type="button" className="btn btn-danger" onClick={() => {
-          notApprovedTutorial(student)
-        }}>Xóa</button>
       </td>
     </tr>);
   });
@@ -88,4 +69,4 @@ function TutorialEditRequestList(props: studentListProps): JSX.Element {
   );
 }
 
-export default TutorialEditRequestList;
+export default UserRegisterTutorialEditRequestList;

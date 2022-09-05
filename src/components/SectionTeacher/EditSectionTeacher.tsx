@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Editor from "../../common/components/Quill/EditorEditSection";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
+import { postUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PostUserRegisterTutorial";
 import {  OnChangeModelNotFiled } from "../../common/types/Form.types";
 
 type Options = {
@@ -122,11 +122,11 @@ const EditSectionTeacher: React.FC = () => {
 
         console.log([...contentTutorialPage, contentPage].length)
 
-        dispatch(postTutorial([...contentTutorialPage, contentPage], {
+        dispatch(postUserRegisterTutorial([...contentTutorialPage, contentPage], {
             section_id: section_id,
             creator_id: id,
             name: name,
-            description: ""
+            status: "Not approved now"
         }, idx))
 
         setTimeout(function () {

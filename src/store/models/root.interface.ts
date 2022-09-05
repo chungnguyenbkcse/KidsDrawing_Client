@@ -143,6 +143,7 @@ export interface IUserRegisterTutorialState {
     user_register_tutorial_approveds: IUserRegisterTutorial[];
     user_register_tutorial_not_approveds: IUserRegisterTutorial[];
     user_register_tutorial_not_approved_nows: IUserRegisterTutorial[];
+    user_register_tutorial_approved_to_tutorial_templates: IUserRegisterTutorial[]; 
 }
 
 export interface IUserRegisterTutorialPageState {

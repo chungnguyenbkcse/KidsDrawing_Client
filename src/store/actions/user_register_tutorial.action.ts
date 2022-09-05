@@ -21,6 +21,17 @@ export const REMOVE_USER_REGISTER_TUTORIAL_APPROVED_ALL: string = "REMOVE_USER_R
 export const INITIAL_USER_REGISTER_TUTORIAL_APPROVED: string = "INITIAL_USER_REGISTER_TUTORIAL_APPROVED";
 
 
+// Approved to tutorial template
+export const ADD_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE: string = "ADD_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE";
+export const EDIT_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE: string = "EDIT_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE";
+export const REMOVE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE: string = "REMOVE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE";
+export const CHANGE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_AMOUNT: string = "CHANGE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_AMOUNT";
+export const CHANGE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_PENDING_EDIT: string = "CHANGE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_PENDING_EDIT";
+export const CLEAR_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_PENDING_EDIT: string = "CLEAR_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_PENDING_EDIT";
+export const REMOVE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_ALL: string = "REMOVE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE_ALL";
+export const INITIAL_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE: string = "INITIAL_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE";
+
+
 // not_register_user_register_tutorials
 export const ADD_USER_REGISTER_TUTORIAL_NOT_APPROVED: string = "ADD_USER_REGISTER_TUTORIAL_NOT_APPROVED";
 export const EDIT_USER_REGISTER_TUTORIAL_NOT_APPROVED: string = "EDIT_USER_REGISTER_TUTORIAL_NOT_APPROVED";
@@ -120,6 +131,37 @@ export function setModificationState(value: UserRegisterTutorialModificationStat
 
 
 
+
+export function initialUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IInitialUserRegisterTutorialApprovedToTutorialTemplateActionType {
+    return { type: INITIAL_USER_REGISTER_TUTORIAL_APPROVED, user_register_tutorial: user_register_tutorial };
+}
+
+export function removeUserRegisterTutorialApprovedToTutorialTemplateAll(): IRemoveUserRegisterTutorialApprovedToTutorialTemplateAllActionType {
+    return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED_ALL };
+}
+
+export function addUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IAddUserRegisterTutorialApprovedToTutorialTemplateActionType {
+    return { type: ADD_USER_REGISTER_TUTORIAL_APPROVED, user_register_tutorial: user_register_tutorial };
+}
+
+export function editUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IEditUserRegisterTutorialApprovedToTutorialTemplateActionType {
+    return { type: EDIT_USER_REGISTER_TUTORIAL_APPROVED, user_register_tutorial: user_register_tutorial };
+}
+
+export function removeUserRegisterTutorialApprovedToTutorialTemplate(id: number): IRemoveUserRegisterTutorialApprovedToTutorialTemplateActionType {
+    return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED, id: id };
+}
+
+export function changeSelectedUserRegisterTutorialApprovedToTutorialTemplate(user_register_tutorial: IUserRegisterTutorial): IChangeSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType {
+    return { type: CHANGE_USER_REGISTER_TUTORIAL_APPROVED_PENDING_EDIT, user_register_tutorial: user_register_tutorial };
+}
+
+export function clearSelectedUserRegisterTutorialApprovedToTutorialTemplate(): IClearSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType {
+    return { type: CLEAR_USER_REGISTER_TUTORIAL_APPROVED_PENDING_EDIT };
+}
+
+
+
 export function initialUserRegisterTutorialNotApproved(user_register_tutorial: IUserRegisterTutorial): IInitialUserRegisterTutorialNotApprovedActionType {
     return { type: INITIAL_USER_REGISTER_TUTORIAL_NOT_APPROVED, user_register_tutorial: user_register_tutorial };
 }
@@ -165,6 +207,16 @@ interface IChangeSelectedUserRegisterTutorialApprovedActionType { type: string, 
 interface IClearSelectedUserRegisterTutorialApprovedActionType { type: string };
 interface IRemoveUserRegisterTutorialApprovedAllActionType { type: string }
 interface IInitialUserRegisterTutorialApprovedActionType {type: string, user_register_tutorial: IUserRegisterTutorial}
+
+
+// not_register_user_register_tutorials
+interface IAddUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
+interface IEditUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
+interface IRemoveUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, id: number };
+interface IChangeSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
+interface IClearSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string };
+interface IRemoveUserRegisterTutorialApprovedToTutorialTemplateAllActionType { type: string }
+interface IInitialUserRegisterTutorialApprovedToTutorialTemplateActionType {type: string, user_register_tutorial: IUserRegisterTutorial}
 
 
 // register_successfull_user_register_tutorials

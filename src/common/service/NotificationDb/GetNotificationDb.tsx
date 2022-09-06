@@ -11,7 +11,7 @@ export function getNotificationDb() {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/notfication-database`, {
+                `${process.env.REACT_APP_API_URL}/notification-database`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

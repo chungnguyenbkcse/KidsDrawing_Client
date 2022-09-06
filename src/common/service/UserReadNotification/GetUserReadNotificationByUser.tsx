@@ -5,13 +5,13 @@ interface UserReadNotification {
     user_id: number;
     is_read: boolean;
 }
-export function getUserReadNotification(class_id: any, student_id: any) {
+export function getUserReadNotification(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user-grade-exercise-submission/class-student/${class_id}/${student_id}`, {
+                `${process.env.REACT_APP_API_URL}/user-read-notification/user/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -25,7 +25,7 @@ export function getUserReadNotification(class_id: any, student_id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUserReadNotification(class_id, student_id))
+                        dispatch(getUserReadNotification(id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -50,7 +50,7 @@ export function getUserReadNotification(class_id: any, student_id: any) {
                         return dispatch(addUserReadedNotification(userReadNotification))
                     }
                     else {
-                        return dispatch(addUserReadedNotification(userReadNotification))
+                        return dispatch(addUserNotReadedNotification(userReadNotification))
                     }
                 })
             })

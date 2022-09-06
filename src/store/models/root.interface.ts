@@ -45,6 +45,8 @@ import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from ".
 import { IUserRegisterTutorialPage, UserRegisterTutorialPageModificationStatus } from "./user_register_tutorial_page.interface";
 import { ContestSubmissionModificationStatus, IContestSubmission } from "./contest_submission.interface";
 import { IScheduleTimeClass, ScheduleTimeClassModificationStatus } from "./schedule_time_class.interface";
+import { INotificationDb, NotificationDbModificationStatus } from "./notification_db.interface";
+import { IUserReadNotification, UserReadNotificationModificationStatus } from "./user_read_notification.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -103,6 +105,8 @@ export interface IStateType {
     user_register_tutorial_pages: IUserRegisterTutorialPageState;
     contest_submissions: IContestSubmissionState;
     schedule_time_classes: IScheduleTimeClassState;
+    notification_dbs: INotificationDbState;
+    user_read_notifications: IUserReadNotificationState;
 }
 
 export interface IProductState {
@@ -137,6 +141,13 @@ export interface ISemesterState {
     selectedSemester: ISemester | null;
     modificationState: SemesterModificationStatus;
     semesters: ISemester[];
+}
+
+export interface IUserReadNotificationState {
+    selectedUserReadNotification: IUserReadNotification | null;
+    modificationState: UserReadNotificationModificationStatus;
+    user_readed_notifications: IUserReadNotification[];
+    user_not_readed_notifications: IUserReadNotification[];
 }
 
 export interface IUserRegisterTutorialState {
@@ -255,6 +266,12 @@ export interface ITutorialState {
     selectedTutorial: ITutorial | null;
     modificationState: TutorialModificationStatus;
     tutorials: ITutorial[];
+}
+
+export interface INotificationDbState {
+    selectedNotificationDb: INotificationDb | null;
+    modificationState: NotificationDbModificationStatus;
+    notification_dbs: INotificationDb[];
 }
 
 export interface IUserGradeContestState {

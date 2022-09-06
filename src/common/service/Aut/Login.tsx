@@ -36,10 +36,10 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 localStorage.setItem('role_privilege', decoded.role_privilege)
                 localStorage.setItem('id', decoded.id)
                 dispatch(login(username));
-                toast.update(id, { render: "Đăng nhập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(id, { render: "Đăng nhập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 setTimeout(function () {
                     changeRouteHome(true);
-                }, 3000); 
+                }, 2000); 
                 let openRequest = indexedDB.open("firebase-messaging-database", 1);
                 openRequest.onerror = function() {
                     console.error("Error", openRequest.error);
@@ -76,7 +76,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 };            
             })
             .catch(error => {
-                toast.update(id, { render: "Đăng nhập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(id, { render: "Đăng nhập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             });
     };
 }

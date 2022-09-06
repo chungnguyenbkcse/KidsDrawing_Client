@@ -43,7 +43,7 @@ function classTeachersReducer(state: IClassTeacherState = initialState, action: 
             return { ...state, class_done : [...state.class_done, action.class_teacher]};
         }
         case ADD_DONE_CLASS: {
-            return { ...state, class_doing: [...state.class_doing, action.class_teacher]};
+            return { ...state, class_done: [...state.class_done, action.class_teacher]};
         }
         case EDIT_DONE_CLASS: {
             const foundIndex: number = state.class_done.findIndex(pr => pr.id === action.class_teacher.id);

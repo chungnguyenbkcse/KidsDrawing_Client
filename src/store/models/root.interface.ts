@@ -44,6 +44,7 @@ import { IUserGradeContestSubmission, UserGradeContestSubmissionModificationStat
 import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "./user_register_tutorial.interface";
 import { IUserRegisterTutorialPage, UserRegisterTutorialPageModificationStatus } from "./user_register_tutorial_page.interface";
 import { ContestSubmissionModificationStatus, IContestSubmission } from "./contest_submission.interface";
+import { IScheduleTimeClass, ScheduleTimeClassModificationStatus } from "./schedule_time_class.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -101,6 +102,7 @@ export interface IStateType {
     user_register_tutorials: IUserRegisterTutorialState;
     user_register_tutorial_pages: IUserRegisterTutorialPageState;
     contest_submissions: IContestSubmissionState;
+    schedule_time_classes: IScheduleTimeClassState;
 }
 
 export interface IProductState {
@@ -359,6 +361,12 @@ export interface ITimeScheduleState {
     selectedTimeSchedule: ITimeSchedule | null;
     modificationState: TimeScheduleModificationStatus;
     timeSchedules: ITimeSchedule[];
+}
+
+export interface IScheduleTimeClassState {
+    selectedScheduleTimeClass: IScheduleTimeClass | null;
+    modificationState: ScheduleTimeClassModificationStatus;
+    schedule_time_classes: IScheduleTimeClass[];
 }
 
 export interface ITimeScheduleTeacherState {

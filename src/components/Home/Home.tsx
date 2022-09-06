@@ -2,7 +2,7 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IAnonymousNotificationState, IContestState, ICourseState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IContestState, ICourseState, IScheduleTimeClassState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getContest } from "../../common/service/Contest/GetContest";
@@ -17,6 +17,19 @@ import { AnonymousNotificationModificationStatus } from "../../store/models/anon
 import NotificationForm from "./NotificationForm";
 import Popup from "reactjs-popup";
 import { ToastContainer } from "react-toastify";
+import { getScheduleTimeClass } from "../../common/service/ScheduleTimeClass/GetScheduleTimeClass";
+import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-calendars/styles/material.css";
+import "@syncfusion/ej2-dropdowns/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-lists/styles/material.css";
+import "@syncfusion/ej2-navigations/styles/material.css";
+import "@syncfusion/ej2-popups/styles/material.css";
+import "@syncfusion/ej2-splitbuttons/styles/material.css";
+import "@syncfusion/ej2-react-schedule/styles/material.css";
 
 const Home: React.FC = () => {
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
@@ -44,6 +57,23 @@ const Home: React.FC = () => {
   const numberStudentsCount: number = users.students.length;
   const numberTeachersCount: number = users.teachers.length;
   const numberParentsCount: number = users.parents.length;
+
+  const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
+  console.log(schedule_time_classes)
+
+  let data: object[] = []
+
+  schedule_time_classes.schedule_time_classes.map((ele, index) => {
+        return data.push({
+            Id: index,
+            Subject: ele.class_name,
+            StartTime: new Date(ele.start_time),
+            EndTime: new Date(ele.end_time),
+            IsAllDay: false
+        })
+    })
+
+  console.log(data)
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Trang chủ", ""));
@@ -78,6 +108,7 @@ const Home: React.FC = () => {
           dispatch(getContest())
           dispatch(getStudent())
           dispatch(getParent())
+          dispatch(getScheduleTimeClass(1))
         }
       }
       else {
@@ -88,6 +119,7 @@ const Home: React.FC = () => {
         dispatch(getContest())
         dispatch(getStudent())
         dispatch(getParent())
+        dispatch(getScheduleTimeClass(1))
       }
     }
   }, [dispatch, access_token, refresh_token])
@@ -140,6 +172,36 @@ const Home: React.FC = () => {
           }
         </>
       </Popup>
+
+
+      <div className="row">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                        <div className="card-header py-3">
+                            <h6 className="m-0 font-weight-bold text-green">Lịch học chi tiết</h6>
+                        </div>
+                        <div className="card-body">
+                            <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                                dataSource: data, fields: {
+                                    id: 'Id',
+                                    subject: { name: 'Subject' },
+                                    isAllDay: { name: 'IsAllDay' },
+                                    startTime: { name: 'StartTime' },
+                                    endTime: { name: 'EndTime' }
+                                }
+                            }}>
+
+                                <ViewsDirective>
+                                    <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
+                                    <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
+                                    <ViewDirective option='Month' showWeekend={false} />
+                                </ViewsDirective>
+                                <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+                            </ScheduleComponent>;
+                        </div>
+                    </div>
+                </div>
+            </div>
 
       {/* <div className="row">
         <div className="col-xl-12 col-lg-12">

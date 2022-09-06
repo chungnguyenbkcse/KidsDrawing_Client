@@ -47,6 +47,7 @@ import userGradeContestSubmissionsReducer from "./user_grade_contest_submission.
 import user_register_tutorial_pagesReducer from "./user_register_tutorial_page.reducer";
 import userRegisterTutorialReducer from "./user_register_tutorial.reducer";
 import contestSubmissionsReducer from "./contest_submission.reducer";
+import schedule_time_classsReducer from "./schedule_time_class.reducer";
 
 
 const initialState: IRootStateType = {
@@ -109,6 +110,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     user_register_tutorial_pages: user_register_tutorial_pagesReducer,
     user_register_tutorials: userRegisterTutorialReducer,
     contest_submissions: contestSubmissionsReducer,
+    schedule_time_classes: schedule_time_classsReducer
 });
 
 

@@ -1,10 +1,11 @@
 import React, { useState, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getNotificationDb } from "../../common/service/NotificationDb/GetNotificationDb";
+import { getNotify } from "../../common/service/Notify/GetNotify";
 import { getUserReadNotification } from "../../common/service/UserReadNotification/GetUserReadNotificationByUser";
+import { putUserReadNotification } from "../../common/service/UserReadNotification/PutUserReadNotification";
 import { logout } from "../../store/actions/account.actions";
-import { INotificationDbState, IStateType, IUserReadNotificationState } from "../../store/models/root.interface";
+import { INotifyState, IStateType, IUserReadNotificationState } from "../../store/models/root.interface";
 import "./TopNotification.css"
 
 type Options = {
@@ -18,7 +19,7 @@ type Options = {
 
 function TopMenuNotification(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
-  const notificationDbs: INotificationDbState = useSelector((state: IStateType) => state.notification_dbs);
+  const notifys: INotifyState = useSelector((state: IStateType) => state.notifys);
   const user_read_notifications: IUserReadNotificationState = useSelector((state: IStateType) => state.user_read_notifications);
   const [isShow, setShow] = useState(false);
 
@@ -29,49 +30,60 @@ function TopMenuNotification(): JSX.Element {
   }
 
   useEffect(() => {
-    dispatch(getNotificationDb())
     dispatch(getUserReadNotification(user_id))
+    dispatch(getNotify())
   }, [dispatch, user_id])
+
+  console.log(notifys.notifys)
+  console.log(user_read_notifications.user_not_readed_notifications)
 
   let data_not_read: Options[] = [];
   let total = 0;
   user_read_notifications.user_not_readed_notifications.map((ele, idx) => {
-    let notification = notificationDbs.notification_dbs.find(o => o.id = ele.notification_id);
-    if (notification !== undefined){
-      let item: Options = {
-        notification_id: ele.notification_id,
-        notification_name: notification.name,
-        user_id: ele.user_id,
-        notification_time: notification.time,
-        notification_desciption: notification.description,
-        is_read: ele.is_read
+    return notifys.notifys.map(notification => {
+      if (notification.idx === ele.notification_id){
+        let item: Options = {
+          notification_id: ele.notification_id,
+          notification_name: notification.name,
+          user_id: ele.user_id,
+          notification_time: notification.time,
+          notification_desciption: notification.description,
+          is_read: ele.is_read
+        }
+        total ++;
+        return data_not_read.push(item)
       }
-      total ++;
-      return data_not_read.push(item)
-    }
-    return idx
+      return notification
+    })
   })
 
   let data_readed: Options[] = [];
   user_read_notifications.user_readed_notifications.map((ele, idx) => {
-    let notification = notificationDbs.notification_dbs.find(o => o.id = ele.notification_id);
-    if (notification !== undefined && total <= 6){
-      let item: Options = {
-        notification_id: ele.notification_id,
-        notification_name: notification.name,
-        user_id: ele.user_id,
-        notification_time: notification.time,
-        notification_desciption: notification.description,
-        is_read: ele.is_read
+    return notifys.notifys.map(notification => {
+      if (notification.idx === ele.notification_id && total <= 6){
+        let item: Options = {
+          notification_id: ele.notification_id,
+          notification_name: notification.name,
+          user_id: ele.user_id,
+          notification_time: notification.time,
+          notification_desciption: notification.description,
+          is_read: ele.is_read
+        }
+        total ++;
+        return data_not_read.push(item)
       }
-      return data_readed.push(item)
-    }
-    return idx
+      return notification
+    })
   })
 
   const history = useHistory();
   const routeChange = (props: Options) =>{ 
       setShow(!isShow)
+      dispatch(putUserReadNotification({
+        user_id: user_id,
+        notification_id: props.notification_id,
+        is_read: true
+      }))
       localStorage.removeItem('notification_id');
       localStorage.setItem('notification_id', props.notification_id.toString());
       localStorage.removeItem('user_id');

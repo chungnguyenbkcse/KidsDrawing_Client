@@ -1,40 +1,48 @@
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester.actions";
+import { fetchDataRequest, fetchDataError, removeNotifyAll, initialNotify } from "../../../store/actions/notify.action";
+import { INotify } from "../../../store/models/notify.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getUserReadNotification } from "./GetUserReadNotificationByUser";
-
-export function putUserReadNotification(data: any) {
+export function getNotify() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user-read-notification`, {
-                    method: "PUT",
+                `${process.env.REACT_APP_API_URL}/notification-database`, {
+                    method: "GET",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
-                    },
-                    body: JSON.stringify(data)
+                    }
                 }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putUserReadNotification(data))
+                        dispatch(getNotify())
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
                 else {
-                    return response
+                    return response.json()
                 }
             })
-            .then (xx => {
-                console.log(xx)
-                dispatch(getUserReadNotification(data.user_id))
+            .then (data => {
+                dispatch(removeNotifyAll())
+                console.log(data.body.notifications)
+                data.body.notifications.map((ele: any, index: any) => {
+                    let notification: INotify = {
+                        idx: ele.id,
+                        name: ele.name,
+                        description: ele.description,
+                        time: ele.time
+                    }
+                    console.log(ele)
+                    return dispatch(initialNotify(notification))
+                })
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

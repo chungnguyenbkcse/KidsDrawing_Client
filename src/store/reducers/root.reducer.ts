@@ -48,8 +48,9 @@ import user_register_tutorial_pagesReducer from "./user_register_tutorial_page.r
 import userRegisterTutorialReducer from "./user_register_tutorial.reducer";
 import contestSubmissionsReducer from "./contest_submission.reducer";
 import schedule_time_classsReducer from "./schedule_time_class.reducer";
-import notification_dbsReducer from "./notification_db.reducer";
+import notify_dbsReducer from "./notify_db.reducer";
 import userReadNotificationsReducer from "./user_read_notification.reducer";
+import notifysReducer from "./notify.reducer";
 
 
 const initialState: IRootStateType = {
@@ -113,8 +114,9 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     user_register_tutorials: userRegisterTutorialReducer,
     contest_submissions: contestSubmissionsReducer,
     schedule_time_classes: schedule_time_classsReducer,
-    notification_dbs: notification_dbsReducer,
+    notify_dbs: notify_dbsReducer,
     user_read_notifications: userReadNotificationsReducer,
+    notifys: notifysReducer
 });
 
 

@@ -1,12 +1,12 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeNotificationDbAll, initialNotificationDb, addNotificationDb } from "../../../store/actions/notification_db.action";
+import { fetchDataRequest, fetchDataError, removeNotifyDbAll, initialNotifyDb } from "../../../store/actions/notify_db.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-interface NotificationDb {
+interface NotifyDb {
     id: number;
     name: string;
     description: string;
     time: string;
 }
-export function getNotificationDb() {
+export function getNotifyDb() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -25,7 +25,7 @@ export function getNotificationDb() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getNotificationDb())
+                        dispatch(getNotifyDb())
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,23 +36,17 @@ export function getNotificationDb() {
                 }
             })
             .then (data => {
-                dispatch(fetchDataSuccess(data))
-                dispatch(removeNotificationDbAll())
+                dispatch(removeNotifyDbAll())
                 console.log(data.body.notifications)
                 data.body.notifications.map((ele: any, index: any) => {
-                    var NotificationDb: NotificationDb = {
+                    let notificationDb: NotifyDb = {
                         id: ele.id,
                         name: ele.name,
                         description: ele.description,
                         time: ele.time
                     }
-                    //console.log(strDate.substring(0, 16))
-                    if (index === 0){
-                        return dispatch(initialNotificationDb(NotificationDb));
-                    }
-                    else{
-                        return dispatch(addNotificationDb(NotificationDb))
-                    }
+                    console.log(ele)
+                    return dispatch(initialNotifyDb(notificationDb))
                 })
             })
             .catch(error => {

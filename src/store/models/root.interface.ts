@@ -45,8 +45,9 @@ import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from ".
 import { IUserRegisterTutorialPage, UserRegisterTutorialPageModificationStatus } from "./user_register_tutorial_page.interface";
 import { ContestSubmissionModificationStatus, IContestSubmission } from "./contest_submission.interface";
 import { IScheduleTimeClass, ScheduleTimeClassModificationStatus } from "./schedule_time_class.interface";
-import { INotificationDb, NotificationDbModificationStatus } from "./notification_db.interface";
+import { INotifyDb, NotifyDbModificationStatus } from "./notify_db.interface";
 import { IUserReadNotification, UserReadNotificationModificationStatus } from "./user_read_notification.interface";
+import { INotify, NotifyModificationStatus } from "./notify.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -105,8 +106,9 @@ export interface IStateType {
     user_register_tutorial_pages: IUserRegisterTutorialPageState;
     contest_submissions: IContestSubmissionState;
     schedule_time_classes: IScheduleTimeClassState;
-    notification_dbs: INotificationDbState;
+    notify_dbs: INotifyDbState;
     user_read_notifications: IUserReadNotificationState;
+    notifys: INotifyState;
 }
 
 export interface IProductState {
@@ -169,6 +171,12 @@ export interface IExerciseLevelState {
     selectedExerciseLevel: IExerciseLevel | null;
     modificationState: ExerciseLevelModificationStatus;
     exercise_levels: IExerciseLevel[];
+}
+
+export interface INotifyState {
+    selectedNotify: INotify | null;
+    modificationState: NotifyModificationStatus;
+    notifys: INotify[];
 }
 
 export interface ICourseReportState {
@@ -268,10 +276,10 @@ export interface ITutorialState {
     tutorials: ITutorial[];
 }
 
-export interface INotificationDbState {
-    selectedNotificationDb: INotificationDb | null;
-    modificationState: NotificationDbModificationStatus;
-    notification_dbs: INotificationDb[];
+export interface INotifyDbState {
+    selectedNotifyDb: INotifyDb | null;
+    modificationState: NotifyDbModificationStatus;
+    notify_dbs: INotifyDb[];
 }
 
 export interface IUserGradeContestState {

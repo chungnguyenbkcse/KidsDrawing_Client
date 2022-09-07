@@ -1,10 +1,11 @@
 import React, { Fragment, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getNotificationDb } from "../../common/service/NotificationDb/GetNotificationDb";
+import { getNotifyDb } from "../../common/service/NotifyDb/GetNotifyDb";
 import { getUserReadNotification } from "../../common/service/UserReadNotification/GetUserReadNotificationByUser";
+import { putUserReadNotification } from "../../common/service/UserReadNotification/PutUserReadNotification";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { INotificationDbState, IStateType, IUserReadNotificationState } from "../../store/models/root.interface";
+import { INotifyDbState, IStateType, IUserReadNotificationState } from "../../store/models/root.interface";
 import './Notification.css'
 
 type Options = {
@@ -21,7 +22,7 @@ const Notification: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     dispatch(updateCurrentPath("Thông báo", "Danh sách"));
 
-    const notificationDbs: INotificationDbState = useSelector((state: IStateType) => state.notification_dbs);
+    const notificationDbs: INotifyDbState = useSelector((state: IStateType) => state.notify_dbs);
     const user_read_notifications: IUserReadNotificationState = useSelector((state: IStateType) => state.user_read_notifications);
 
     var id_x = localStorage.getItem('id');
@@ -31,13 +32,13 @@ const Notification: React.FC = () => {
     }
 
     useEffect(() => {
-        dispatch(getNotificationDb())
+        dispatch(getNotifyDb())
         dispatch(getUserReadNotification(user_id))
     }, [dispatch, user_id])
 
     let data_not_read: Options[] = [];
     user_read_notifications.user_not_readed_notifications.map((ele, idx) => {
-        let notification = notificationDbs.notification_dbs.find(o => o.id = ele.notification_id);
+        let notification = notificationDbs.notify_dbs.find(o => o.id = ele.notification_id);
         if (notification !== undefined) {
             let item: Options = {
                 notification_id: ele.notification_id,
@@ -54,7 +55,7 @@ const Notification: React.FC = () => {
 
     let data_readed: Options[] = [];
     user_read_notifications.user_readed_notifications.map((ele, idx) => {
-        let notification = notificationDbs.notification_dbs.find(o => o.id = ele.notification_id);
+        let notification = notificationDbs.notify_dbs.find(o => o.id = ele.notification_id);
         if (notification !== undefined) {
             let item: Options = {
                 notification_id: ele.notification_id,
@@ -71,6 +72,11 @@ const Notification: React.FC = () => {
 
     const history = useHistory();
     const routeChange = (props: Options) => {
+        dispatch(putUserReadNotification({
+            user_id: user_id,
+            notification_id: props.notification_id,
+            is_read: true
+        }))
         localStorage.removeItem('notification_id');
         localStorage.setItem('notification_id', props.notification_id.toString());
         localStorage.removeItem('user_id');

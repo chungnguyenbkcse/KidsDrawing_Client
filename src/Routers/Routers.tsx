@@ -6,7 +6,6 @@ import TopMenu from "../components/TopMenu/TopMenu";
 import Products from "../components/Products/Products";
 import Orders from "../components/Orders/Orders";
 import Home from "../components/Home/Home";
-import Notifications from "../common/components/Notification";
 import Teacher from "../components/Teachers/Teacher";
 import DetailTeacher from "../components/Teachers/DetailTeacher";
 import Student from "../components/Student/Student";
@@ -78,7 +77,6 @@ const Routers: React.FC = () => {
     if (roleUser === "TEACHER_USER"){
         return (
             <Fragment>
-                <Notifications />
                 <LeftMenu />
                 <div id="content-wrapper" className="d-flex flex-column content-wrapper-teacher">
                     <div id="content" className="teacher-content">
@@ -123,58 +121,59 @@ const Routers: React.FC = () => {
             </Fragment>
         )
     }
-    return (
-        <Fragment>
-            <Notifications />
-            <LeftMenu />
-            <div id="content-wrapper" className="d-flex flex-column">
-                <div id="content">
-                    <TopMenu />
-                    <div className="container-fluid">
-                        <Switch>
-                            <Route path={`/products`}><Products /></Route>
-                            <Route path={`/orders`}><Orders /></Route>
-                            <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
-                            <Route path={`/change-password`}><ChangePassword /></Route>
-                            <Route path={`/account`}><Account /></Route>
-                            <Route path={`/parents/detail`}><DetailParent /></Route>
-                            <Route path={`/parents`}><Parent /></Route>
-                            <Route path={`/students/detail`}><DetailStudent /></Route>
-                            <Route path={`/students`}><Student /></Route>
-                            <Route path={`/semesters`}><Semester /></Route>
-                            <Route path={`/lessons`}><Lesson /></Route>
-                            <Route path={`/arts`}><Art /></Route>
-                            <Route path={`/class/lesson`}><DetailLesson /></Route>
-                            <Route path={`/class/detail`}><DetailClass /></Route>
-                            <Route path={`/class/schedule`}><ScheduleClass /></Route>
-                            <Route path={`/class`}><Class /></Route>
-                            <Route path={`/section-template/edit`}><SectionTemplateForm /></Route>
-                            <Route path={`/courses/section-template`}><SectionTemplate /></Route>
-                            <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
-                            <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
-                            <Route path={`/courses/edit-course`}><CourseNomalFormEdit /></Route>
-                            <Route path={`/courses/:id_course`}><CourseNomalForm /></Route>
-                            <Route path={`/courses`}><Course /></Route>
-                            <Route path={`/contests/result`}><ResultContest /></Route>
-                            <Route path={`/contests/edit-contest`}><ContestForm /></Route>
-                            <Route path={`/contests/:id_contest`}><ContestForm /></Route>
-                            <Route path={`/contests`}><Contest /></Route>
-                            <Route path={`/turnovers`}><Turnover /></Route>
-                            <Route path={`/tutorial-edit`}><TutorialEditRequest /></Route>
-                            <Route path={`/request-teacher-off`}><TeacherRequest /></Route>
-                            <Route path={`/teachers/request-level/degree-photo`}><DegreePhoto /></Route>
-                            <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>
-                            <Route path="/teachers/detail"><DetailTeacher /></Route>
-                            <Route path={`/teachers`}><Teacher /></Route>
-                            <Route path={`/notification/detail`}><NotificationDetail /></Route>
-                            <Route path={`/notification`}><Notification /></Route>
-                            <Route path="/"><Home /></Route>
-                        </Switch>
+    else {
+        return (
+            <Fragment>
+                <LeftMenu />
+                <div id="content-wrapper" className="d-flex flex-column">
+                    <div id="content">
+                        <TopMenu />
+                        <div className="container-fluid">
+                            <Switch>
+                                <Route path={`/products`}><Products /></Route>
+                                <Route path={`/orders`}><Orders /></Route>
+                                <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
+                                <Route path={`/change-password`}><ChangePassword /></Route>
+                                <Route path={`/account`}><Account /></Route>
+                                <Route path={`/parents/detail`}><DetailParent /></Route>
+                                <Route path={`/parents`}><Parent /></Route>
+                                <Route path={`/students/detail`}><DetailStudent /></Route>
+                                <Route path={`/students`}><Student /></Route>
+                                <Route path={`/semesters`}><Semester /></Route>
+                                <Route path={`/lessons`}><Lesson /></Route>
+                                <Route path={`/arts`}><Art /></Route>
+                                <Route path={`/class/lesson`}><DetailLesson /></Route>
+                                <Route path={`/class/detail`}><DetailClass /></Route>
+                                <Route path={`/class/schedule`}><ScheduleClass /></Route>
+                                <Route path={`/class`}><Class /></Route>
+                                <Route path={`/section-template/edit`}><SectionTemplateForm /></Route>
+                                <Route path={`/courses/section-template`}><SectionTemplate /></Route>
+                                <Route path={`/courses/lesson-plan`}><LessonPlan /></Route>
+                                <Route path={`/courses/create-course`}><CourseNomalForm /></Route>
+                                <Route path={`/courses/edit-course`}><CourseNomalFormEdit /></Route>
+                                <Route path={`/courses/:id_course`}><CourseNomalForm /></Route>
+                                <Route path={`/courses`}><Course /></Route>
+                                <Route path={`/contests/result`}><ResultContest /></Route>
+                                <Route path={`/contests/edit-contest`}><ContestForm /></Route>
+                                <Route path={`/contests/:id_contest`}><ContestForm /></Route>
+                                <Route path={`/contests`}><Contest /></Route>
+                                <Route path={`/turnovers`}><Turnover /></Route>
+                                <Route path={`/tutorial-edit`}><TutorialEditRequest /></Route>
+                                <Route path={`/request-teacher-off`}><TeacherRequest /></Route>
+                                <Route path={`/teachers/request-level/degree-photo`}><DegreePhoto /></Route>
+                                <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>
+                                <Route path="/teachers/detail"><DetailTeacher /></Route>
+                                <Route path={`/teachers`}><Teacher /></Route>
+                                <Route path={`/notification/detail`}><NotificationDetail /></Route>
+                                <Route path={`/notification`}><Notification /></Route>
+                                <Route path="/"><Home /></Route>
+                            </Switch>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Fragment>
-    )
+            </Fragment>
+        )
+    }
 }
 
 export default Routers;

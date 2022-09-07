@@ -15,11 +15,10 @@ function TopMenuAccount(): JSX.Element {
   return (
 
     <li className="nav-item dropdown no-arrow">
-      <a className="nav-link dropdown-toggle"
+      <p className="nav-link dropdown-toggle"
         onClick={() => {
           setShow(!isShow);
         }}
-        href="# "
         id="userDropdown"
         role="button"
         data-toggle="dropdown"
@@ -28,7 +27,7 @@ function TopMenuAccount(): JSX.Element {
         <span className="mr-2 d-none d-lg-inline small cadet">{username}</span>
         <img className="img-profile rounded-circle" alt=""
           src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
-      </a>
+      </p>
 
       <div className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${(isShow) ? "show" : ""}`}
         aria-labelledby="userDropdown">

@@ -64,6 +64,8 @@ import GradeContestTeacher from "../components/Contest/GradeContestTeacher";
 import ResultGradeContestTeacher from "../components/Contest/ResultGradeContestTeacher";
 import AnalytisResultGradeContestTeacher from "../components/Contest/AnalytisResultGradeContestTeacher";
 import DetailContestTeacher from "../components/Contest/DetailContestTeacher";
+import NotificationDetail from "../components/Notification/NotificationDetail";
+import Notification from "../components/Notification/Notification";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -103,6 +105,8 @@ const Routers: React.FC = () => {
                                 <Route path={`/section/edit`}><EditSectionTeacher /></Route>
                                 <Route path={`/section/view`}><ViewSectionTeacher /></Route>
                                 <Route path={`/request`}><RequestTeacher /></Route>
+                                <Route path={`/notification/detail`}><NotificationDetail /></Route>
+                                <Route path={`/notification`}><Notification /></Route>
                                 <Route path={`/exercise/result-grade`}><ResultGradeExamTeacher /></Route>
                                 <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
                                 <Route path={`/classes/detail`}><ClassTeacherDetail /></Route>
@@ -162,6 +166,8 @@ const Routers: React.FC = () => {
                             <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>
                             <Route path="/teachers/detail"><DetailTeacher /></Route>
                             <Route path={`/teachers`}><Teacher /></Route>
+                            <Route path={`/notification/detail`}><NotificationDetail /></Route>
+                            <Route path={`/notification`}><Notification /></Route>
                             <Route path="/"><Home /></Route>
                         </Switch>
                     </div>

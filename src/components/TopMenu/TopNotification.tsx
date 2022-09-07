@@ -1,5 +1,6 @@
 import React, { useState, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getNotificationDb } from "../../common/service/NotificationDb/GetNotificationDb";
 import { getUserReadNotification } from "../../common/service/UserReadNotification/GetUserReadNotificationByUser";
 import { logout } from "../../store/actions/account.actions";
@@ -68,17 +69,36 @@ function TopMenuNotification(): JSX.Element {
     return idx
   })
 
+  const history = useHistory();
+  const routeChange = (props: Options) =>{ 
+      setShow(!isShow)
+      localStorage.removeItem('notification_id');
+      localStorage.setItem('notification_id', props.notification_id.toString());
+      localStorage.removeItem('user_id');
+      localStorage.setItem('user_id', props.user_id.toString());
+      localStorage.removeItem('notification_name');
+      localStorage.setItem('notification_name', props.notification_name);
+      localStorage.removeItem('notification_desciption');
+      localStorage.setItem('notification_desciption', props.notification_desciption);
+      localStorage.removeItem('notification_time');
+      localStorage.setItem('notification_time', props.notification_time);
+      let path = '/notification/detail'; 
+      history.push({
+          pathname: path,
+      });
+  }
+
   return (
 
     <li className="nav-item dropdown no-arrow">
 
 
-      <a className="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" onClick={() => {
+      <p className="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" onClick={() => {
         setShow(!isShow);
-      }} href="# ">
+      }}>
         <span className="badge badge-danger ml-2">{user_read_notifications.user_not_readed_notifications.length}</span>
         <i className="fas fa-bell"></i>
-      </a>
+      </p>
 
       <div className={`dropdown-menu dropdown-menu-right shadow dropdown-secondary animated--grow-in ${(isShow) ? "show" : ""} notification`}
         aria-labelledby="userDropdown">
@@ -87,15 +107,14 @@ function TopMenuNotification(): JSX.Element {
               data_not_read.map((ele, idx) => {
                 return (
                   <li key={idx}>
-                    <a className="dropdown-item waves-light"
-                      onClick={() => { }}
-                      href="# "
+                    <p className="dropdown-item waves-light"
+                      onClick={() => {routeChange(ele)}}
                       data-toggle="modal"
                       data-target="#logoutModal">
                       <i className="fas fa-bell fa-sm fa-fw mr-2"></i>
                       {ele.notification_name}
                       <span className="badge badge-danger ml-2">*</span>
-                    </a>
+                    </p>
                   </li>
                 )
               })
@@ -106,14 +125,13 @@ function TopMenuNotification(): JSX.Element {
               data_readed.map((ele, idx) => {
                 return (
                   <li>
-                    <a className="dropdown-item waves-light"
+                    <p className="dropdown-item waves-light"
                       onClick={() => dispatch(logout())}
-                      href="# "
                       data-toggle="modal"
                       data-target="#logoutModal">
                       <i className="fas fa-bell fa-sm fa-fw mr-2 text-gray-400"></i>
                       {ele.notification_name}
-                    </a>
+                    </p>
                   </li>
                 )
               })

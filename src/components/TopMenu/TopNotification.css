@@ -12,3 +12,7 @@
 .notification {
     min-width: 500px !important;
 }
+
+.dropdown-item {
+    cursor: pointer;
+}

@@ -6,13 +6,13 @@ interface ScheduleTimeClass {
     start_time: string;
     end_time: string;
 }
-export function getScheduleTimeClass(id: any) {
+export function getScheduleTimeClass() {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/classes/schedule-all/${id}`, {
+                `${process.env.REACT_APP_API_URL}/classes/schedule-all`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -26,7 +26,7 @@ export function getScheduleTimeClass(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getScheduleTimeClass(id))
+                        dispatch(getScheduleTimeClass())
                     }
                     else {
                         throw Error(response.statusText);

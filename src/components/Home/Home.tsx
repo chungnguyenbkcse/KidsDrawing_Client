@@ -108,7 +108,7 @@ const Home: React.FC = () => {
           dispatch(getContest())
           dispatch(getStudent())
           dispatch(getParent())
-          dispatch(getScheduleTimeClass(1))
+          dispatch(getScheduleTimeClass())
         }
       }
       else {
@@ -119,7 +119,7 @@ const Home: React.FC = () => {
         dispatch(getContest())
         dispatch(getStudent())
         dispatch(getParent())
-        dispatch(getScheduleTimeClass(1))
+        dispatch(getScheduleTimeClass())
       }
     }
   }, [dispatch, access_token, refresh_token])

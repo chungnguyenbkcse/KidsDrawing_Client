@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import TopCardClass from "../../common/components/TopCardClass";
 import { IClassTeacher } from "../../store/models/class_teacher.interface";
 import { IClassTeacherState, IStateType } from "../../store/models/root.interface";
 

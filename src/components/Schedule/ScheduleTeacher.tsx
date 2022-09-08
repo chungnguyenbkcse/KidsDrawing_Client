@@ -21,6 +21,8 @@ import { getScheduleTeacher } from "../../common/service/ScheduleTeacher/GetSche
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ScheduleTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -31,6 +33,9 @@ const ScheduleTeacher: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
+
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -55,11 +60,11 @@ const ScheduleTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getScheduleTeacher(id))
+                    trackPromise(getScheduleTeacher(dispatch, id))
                 }
             }
             else {
-                dispatch(getScheduleTeacher(id))
+                trackPromise(getScheduleTeacher(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, id])
@@ -84,7 +89,16 @@ const ScheduleTeacher: React.FC = () => {
     }, [path.area, dispatch]);
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <div className="row">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">

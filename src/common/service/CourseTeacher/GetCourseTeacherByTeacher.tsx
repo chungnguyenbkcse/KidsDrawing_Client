@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeNotRegisterCourseAll, removeRegisterSuccessfullCourseAll, initialNotRegisterCourse, initialRegisterSuccessfullCourse, addNotRegisterCourse, addRegisterSuccessfullCourse } from "../../../store/actions/course_teacher.action";
+import { fetchDataSuccess, fetchDataError, removeNotRegisterCourseAll, removeRegisterSuccessfullCourseAll, initialNotRegisterCourse, initialRegisterSuccessfullCourse, addNotRegisterCourse, addRegisterSuccessfullCourse } from "../../../store/actions/course_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseTeacher {
     id: number;
@@ -18,11 +18,9 @@ interface CourseTeacher {
     schedule: string;
     registration_deadline: string;
 }
-export function getCourseTeacher(id: any) {
+export function getCourseTeacher(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/course/teacher/${id}`, {
                     method: "GET",
                     headers: {
@@ -37,7 +35,7 @@ export function getCourseTeacher(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getCourseTeacher(id))
+                        dispatch(getCourseTeacher(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -115,5 +113,4 @@ export function getCourseTeacher(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

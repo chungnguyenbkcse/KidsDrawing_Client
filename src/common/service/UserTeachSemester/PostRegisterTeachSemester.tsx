@@ -34,7 +34,7 @@ export function postRegisterTeachSemester(data: any) {
             })
             .then (x => {
                 console.log(x)
-                dispatch(getCourseTeacher(data.teacher_id))
+                dispatch(getCourseTeacher(dispatch, data.teacher_id))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

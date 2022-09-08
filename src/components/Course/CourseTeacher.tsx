@@ -13,6 +13,8 @@ import CourseTeacherNotRegisterList from "./CourseTeacherNotRegisterList";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const CourseTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -24,6 +26,9 @@ const CourseTeacher: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -47,15 +52,15 @@ const CourseTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                    dispatch(getUserById(dispatch, id))
-                    dispatch(getCourseTeacher(id))
+                    trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                    trackPromise(getUserById(dispatch, id))
+                    trackPromise(getCourseTeacher(dispatch, id))
                 }
             }
             else {
-                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                dispatch(getUserById(dispatch, id))
-                dispatch(getCourseTeacher(id))
+                trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                trackPromise(getUserById(dispatch, id))
+                trackPromise(getCourseTeacher(dispatch, id))
             }
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
@@ -69,7 +74,16 @@ const CourseTeacher: React.FC = () => {
 
     const [checked, setChecked] = useState(true);
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

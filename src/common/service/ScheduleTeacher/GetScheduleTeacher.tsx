@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTimeScheduleTeacher, removeTimeScheduleTeacherAll } from "../../../store/actions/time_schedule_teacher.action";
+import { fetchDataSuccess, fetchDataError, addTimeScheduleTeacher, removeTimeScheduleTeacherAll } from "../../../store/actions/time_schedule_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 interface TimeScheduleTeacher {
@@ -6,12 +6,10 @@ interface TimeScheduleTeacher {
     start_time: string;
     end_time: string;
 }
-export function getScheduleTeacher(id: any) {
+export function getScheduleTeacher(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/classes/teacher/${id}`, {
                     method: "GET",
                     headers: {
@@ -26,7 +24,7 @@ export function getScheduleTeacher(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getScheduleTeacher(id))
+                        dispatch(getScheduleTeacher(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -70,5 +68,4 @@ export function getScheduleTeacher(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

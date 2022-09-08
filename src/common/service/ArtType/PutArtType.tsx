@@ -38,7 +38,7 @@ export function putArtType(id: any, data: any, idx: any) {
                 console.log(data)
                 console.log(id)
                 toast.update(idx, { render: "Chỉnh thể loại thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(getArtType(dispatch))
+                getArtType(dispatch)
             })
             .catch(error => {
                 toast.update(idx, { render: "Chỉnh thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

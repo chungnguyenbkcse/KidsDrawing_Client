@@ -35,7 +35,7 @@ export function postContest(lst: any[], contest: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(getContest(dispatch))
+                getContest(dispatch)
                 lst.map((value, index) =>  {
                     return dispatch(postUserGradeContest({
                         contest_id: data.id,

@@ -36,7 +36,7 @@ export function postSectionTemplate(tutorial: any[], data: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(getSectionTemplate(dispatch))
+                getSectionTemplate(dispatch)
                 dispatch(postTutorialTemplate(tutorial,{
                         section_template_id: data.id,
                         name: data.name,

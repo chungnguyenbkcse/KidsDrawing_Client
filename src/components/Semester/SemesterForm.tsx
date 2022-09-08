@@ -9,6 +9,7 @@ import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel, ISemesterFormState } from "../../common/types/Form.types";
 import { postSemester } from "../../common/service/semester/PostSemester";
 import { putSemester } from "../../common/service/semester/PutSemester";
+import { toast } from "react-toastify";
 
 export type semesterListProps = {
   isCheck: (value: boolean) => void;
@@ -52,6 +53,10 @@ function SemesterForm(props: semesterListProps): JSX.Element {
 
   function saveForm(formState: ISemesterFormState, saveFn: Function): void {
     if (semester) {
+      const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      
       if (saveFn === addSemester) {
         dispatch(postSemester({
           name: formState.name.value,
@@ -61,7 +66,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           start_time: formState.start_time.value,
           end_time: formState.end_time.value,
           creator_id: localStorage.getItem('id')
-        }));
+        }, idx));
       }
       else {
         dispatch(putSemester(semester.id, {
@@ -72,7 +77,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           start_time: formState.start_time.value,
           end_time: formState.end_time.value,
           creator_id: localStorage.getItem('id')
-        }));
+        }, idx));
       }
 
       console.log(saveFn)

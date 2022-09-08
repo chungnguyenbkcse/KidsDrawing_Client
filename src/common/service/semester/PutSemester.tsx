@@ -1,8 +1,9 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getSemester } from "./GetSemester";
 
-export function putSemester(id: any, data: any) {
+export function putSemester(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -22,7 +23,7 @@ export function putSemester(id: any, data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putSemester(id,data))
+                        dispatch(putSemester(id,data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -35,10 +36,12 @@ export function putSemester(id: any, data: any) {
             .then (val => {
                 console.log(val)
                 console.log(id)
+                toast.update(idx, { render: "Chỉnh học kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataSuccess(data))
-                dispatch(getSemester(dispatch))
+                getSemester(dispatch)
             })
             .catch(error => {
+                toast.update(idx, { render: "Chỉnh khóa học không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

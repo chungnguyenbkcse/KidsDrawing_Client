@@ -35,7 +35,7 @@ export function putTutorialTemplate(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
-                dispatch(getTutorialTemplate(dispatch))
+                getTutorialTemplate(dispatch)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

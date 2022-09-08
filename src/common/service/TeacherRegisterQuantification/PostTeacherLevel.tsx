@@ -37,7 +37,7 @@ export function postTeaherLevel(teacher_level: any, idx: any) {
             .then (data => {
                 toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 dispatch(fetchDataSuccess(teacher_level))
-                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_level.teacher_id))
+                getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_level.teacher_id)
                 console.log(data)
             })
             .catch(error => {

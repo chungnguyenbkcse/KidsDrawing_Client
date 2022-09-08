@@ -19,6 +19,7 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { ToastContainer } from "react-toastify";
 
 
 const Semester: React.FC = () => {
@@ -93,6 +94,7 @@ const Semester: React.FC = () => {
           </div>
         </div>
       </div> :<Fragment>
+      <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Học kì</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">

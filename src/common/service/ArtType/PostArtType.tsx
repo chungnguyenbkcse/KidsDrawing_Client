@@ -36,7 +36,7 @@ export function postArtType(data: any, idx: any) {
             })
             .then (xx => {
                 toast.update(idx, { render: "Thêm thể loại thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(getArtType(dispatch))
+                getArtType(dispatch)
             })
             .catch(error => {
                 toast.update(idx, { render: "Thêm thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

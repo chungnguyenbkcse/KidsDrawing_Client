@@ -37,7 +37,7 @@ export function putArtAge(id: any, data: any, idx: any) {
                 console.log(data)
                 console.log(id)
                 toast.update(idx, { render: "Chỉnh độ tuổi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
-                dispatch(getArtAge(dispatch))
+                getArtAge(dispatch)
             })
             .catch(error => {
                 toast.update(idx, { render: "Chỉnh độ tuổi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });

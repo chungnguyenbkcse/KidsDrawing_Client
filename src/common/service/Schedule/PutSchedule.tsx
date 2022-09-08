@@ -35,7 +35,7 @@ export function putSchedule(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
-                dispatch(getSchedule(dispatch))
+                getSchedule(dispatch)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

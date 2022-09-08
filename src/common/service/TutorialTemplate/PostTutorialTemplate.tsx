@@ -36,7 +36,6 @@ export function postTutorialTemplate(tutorial: any[], data: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(getTutorialTemplate(dispatch))
                 tutorial.map((value) => {
                     return dispatch(postTutorialTemplatePage({
                         tutorial_template_id: data.id,
@@ -46,6 +45,7 @@ export function postTutorialTemplate(tutorial: any[], data: any, idx: any) {
                     }))
                 })
                 toast.update(idx, { render: "Thêm giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                getTutorialTemplate(dispatch)
             })
             .catch(error => {
                 toast.update(idx, { render: "Thêm giáo án không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });

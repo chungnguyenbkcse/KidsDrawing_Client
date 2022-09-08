@@ -42,8 +42,8 @@ export function postExercise(data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(data))
-                dispatch(getExerciseBySection(section_id))
                 toast.update(idx, { render: "Thêm bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                getExerciseBySection(section_id)
             })
             .catch(error => {
                 toast.update(idx, { render: "Thêm bài tập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

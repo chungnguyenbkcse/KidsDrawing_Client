@@ -34,14 +34,14 @@ export function postTutorialTemplate(tutorial: any[], data: any, idx: any) {
                     return response.json()
                 }
             })
-            .then (data => {
-                console.log(data)
+            .then (xx => {
+                console.log(xx)
                 tutorial.map((value) => {
                     return dispatch(postTutorialTemplatePage({
-                        tutorial_template_id: data.id,
+                        tutorial_template_id: xx.id,
                         name: data.name,
                         description: value.content,
-                        number: value.page
+                        number: data.page
                     }))
                 })
                 toast.update(idx, { render: "Thêm giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });

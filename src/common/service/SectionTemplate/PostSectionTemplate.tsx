@@ -40,7 +40,7 @@ export function postSectionTemplate(tutorial: any[], data: any, idx: any) {
                 dispatch(postTutorialTemplate(tutorial,{
                         section_template_id: data.id,
                         name: data.name,
-                        description: data.description,
+                        creator_id: localStorage.getItem('id')
                 }, idx))
             })
             .catch(error => {

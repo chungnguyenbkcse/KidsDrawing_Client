@@ -21,6 +21,8 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
 import { toast, ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 type Options = {
     name: string;
@@ -31,6 +33,8 @@ type Options = {
 const CourseNomalForm: React.FC = () => {
     //console.log(id)
     const dispatch: Dispatch<any> = useDispatch();
+
+    const { promiseInProgress } = usePromiseTracker();
     //console.log(courses)
     const { state } = useLocation()
     console.log(state)
@@ -46,10 +50,10 @@ const CourseNomalForm: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getCourse(dispatch))
-        dispatch(getArtType(dispatch))
-        dispatch(getArtLevel(dispatch))
-        dispatch(getArtAge(dispatch))
+        trackPromise(getCourse(dispatch))
+        trackPromise(getArtType(dispatch))
+        trackPromise(getArtLevel(dispatch))
+        trackPromise(getArtAge(dispatch))
 
     }, [dispatch])
 
@@ -226,7 +230,16 @@ const CourseNomalForm: React.FC = () => {
     //console.log('Input',textHtml)
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">

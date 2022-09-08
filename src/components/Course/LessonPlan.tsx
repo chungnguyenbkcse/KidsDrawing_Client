@@ -124,7 +124,6 @@ const LessonPlan: React.FC = () => {
           return dispatch(postSectionTemplate(contentSection.tutorial, {
             name: contentSection.name,
             number: contentSection.number,
-            description: "",
             teaching_form: contentSection.teaching_form,
             course_id: course_id,
             creator_id: localStorage.getItem('id')

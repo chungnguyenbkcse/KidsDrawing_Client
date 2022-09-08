@@ -22,6 +22,8 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
 import { toast } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 type Options = {
     name: string;
@@ -33,6 +35,8 @@ const CourseNomalFormEdit: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const courses: ICourseState = useSelector((state: IStateType) => state.courses);
+
+    const { promiseInProgress } = usePromiseTracker();
     //console.log(course)
     const isCreate: boolean = false;
     let course: ICourse | null = courses.selectedCourse;
@@ -45,10 +49,10 @@ const CourseNomalFormEdit: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getCourse(dispatch))
-        dispatch(getArtType(dispatch))
-        dispatch(getArtLevel(dispatch))
-        dispatch(getArtAge(dispatch))
+        trackPromise(getCourse(dispatch))
+        trackPromise(getArtType(dispatch))
+        trackPromise(getArtLevel(dispatch))
+        trackPromise(getArtAge(dispatch))
 
     }, [dispatch])
 
@@ -219,7 +223,16 @@ const CourseNomalFormEdit: React.FC = () => {
     //console.log('Input',textHtml)
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
 
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">

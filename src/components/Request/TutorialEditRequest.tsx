@@ -9,6 +9,8 @@ import { logout } from "../../store/actions/account.actions";
 import { getUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/GetUserRegisterTutorial";
 import UserRegisterTutorialEditRequestList from "./UserRegisterTutorialEditRequestList";
 import { ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const TutorialEditRequest: React.FC = () => {
   const user_register_tutorials: IUserRegisterTutorialState = useSelector((state: IStateType) => state.user_register_tutorials);
@@ -17,6 +19,7 @@ const TutorialEditRequest: React.FC = () => {
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu chỉnh giáo án", ""));
+  const { promiseInProgress } = usePromiseTracker();
 
   let access_token = localStorage.getItem("access_token");
   let refresh_token = localStorage.getItem("refresh_token");
@@ -41,11 +44,11 @@ const TutorialEditRequest: React.FC = () => {
           dispatch(logout())
         }
         else {
-          dispatch(getUserRegisterTutorial())
+          trackPromise(getUserRegisterTutorial(dispatch))
         }
       }
       else {
-        dispatch(getUserRegisterTutorial())
+        trackPromise(getUserRegisterTutorial(dispatch))
       }
     }
   }, [dispatch, access_token, refresh_token]);
@@ -53,7 +56,16 @@ const TutorialEditRequest: React.FC = () => {
   const [checked, setChecked] = useState(true);
 
   return (
-    <Fragment>
+    promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
       <ToastContainer />
       <h1 className="h3 mb-2 text-gray-800">Yêu cầu chỉnh giáo án</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}

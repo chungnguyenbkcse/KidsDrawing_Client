@@ -45,9 +45,9 @@ const ContestForm: React.FC = () => {
   let contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0 };
 
   useEffect(() => {
-    dispatch(getArtType())
-    dispatch(getArtAge())
-    dispatch(getTeacher())
+    dispatch(getArtType(dispatch))
+    dispatch(getArtAge(dispatch))
+    dispatch(getTeacher(dispatch))
     dispatch(getUserGradeContestByContestId(contest_id))
   }, [dispatch, contest_id])
 

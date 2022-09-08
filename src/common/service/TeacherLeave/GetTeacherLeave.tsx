@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeAcceptTeacherLeaveAll, addAcceptTeacherLeave, removeRemoveTeacherLeaveAll, addRemoveTeacherLeave, addLeaves, removeLeavesAll } from "../../../store/actions/teacher_leave.action";
+import { fetchDataSuccess, fetchDataError, removeAcceptTeacherLeaveAll, addAcceptTeacherLeave, removeRemoveTeacherLeaveAll, addRemoveTeacherLeave, addLeaves, removeLeavesAll } from "../../../store/actions/teacher_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherLeave {
     id: number;
@@ -17,11 +17,9 @@ interface TeacherLeave {
     create_time: string;
     update_time: string;
 }
-export function getTeacherLeave() {
+export function getTeacherLeave(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/teacher-leave`, {
                     method: "GET",
                     headers: {
@@ -36,7 +34,7 @@ export function getTeacherLeave() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTeacherLeave())
+                        dispatch(getTeacherLeave(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -88,5 +86,4 @@ export function getTeacherLeave() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

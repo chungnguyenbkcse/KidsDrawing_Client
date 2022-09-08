@@ -34,6 +34,9 @@ import { getLesson } from "../../common/service/Lesson/GetLesson";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { toast, ToastContainer } from "react-toastify";
 import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClass";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
+
 type Options = {
     name: string;
     value: any;
@@ -63,6 +66,7 @@ const Class: React.FC = () => {
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const { promiseInProgress } = usePromiseTracker();
 
     useEffect(() => {
         dispatch(clearSelectedMyClass());
@@ -92,21 +96,21 @@ const Class: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getMyClass())
-                    dispatch(getSemester())
-                    dispatch(getSemesterClass())
-                    dispatch(getSchedule())
-                    dispatch(getLesson())
-                    dispatch(getCourse())
+                    trackPromise(getMyClass(dispatch))
+                    trackPromise(getSemester(dispatch))
+                    trackPromise(getSemesterClass(dispatch))
+                    trackPromise(getSchedule(dispatch))
+                    trackPromise(getLesson(dispatch))
+                    trackPromise(getCourse(dispatch))
                 }
             }
             else {
-                dispatch(getMyClass())
-                dispatch(getSemester())
-                dispatch(getSemesterClass())
-                dispatch(getSchedule())
-                dispatch(getLesson())
-                dispatch(getCourse())
+                trackPromise(getMyClass(dispatch))
+                trackPromise(getSemester(dispatch))
+                trackPromise(getSemesterClass(dispatch))
+                trackPromise(getSchedule(dispatch))
+                trackPromise(getLesson(dispatch))
+                trackPromise(getCourse(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token])
@@ -160,7 +164,16 @@ const Class: React.FC = () => {
 
     return (
 
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Lớp học</h1>
             <p className="mb-4">Thông tin chung</p>

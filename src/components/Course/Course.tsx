@@ -24,6 +24,8 @@ import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSect
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 
 const Course: React.FC = () => {
@@ -33,6 +35,7 @@ const Course: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberCourseCount: number = courses.courses.length;
     const [popup1, setPopup1] = useState(false);
+    const { promiseInProgress } = usePromiseTracker();
 
     console.log(courses)
     let access_token = localStorage.getItem("access_token");
@@ -63,21 +66,21 @@ const Course: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getCourse())
-                    dispatch(getSemester())
-                    dispatch(getArtType())
-                    dispatch(getArtLevel())
-                    dispatch(getArtAge())
-                    dispatch(getSectionTemplate())
+                    trackPromise(getCourse(dispatch))
+                    trackPromise(getSemester(dispatch))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtLevel(dispatch))
+                    trackPromise(getArtAge(dispatch))
+                    trackPromise(getSectionTemplate(dispatch))
                 }
             }
             else {
-                dispatch(getCourse())
-                dispatch(getSemester())
-                dispatch(getArtType())
-                dispatch(getArtLevel())
-                dispatch(getArtAge())
-                dispatch(getSectionTemplate())
+                trackPromise(getCourse(dispatch))
+                trackPromise(getSemester(dispatch))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtLevel(dispatch))
+                trackPromise(getArtAge(dispatch))
+                trackPromise(getSectionTemplate(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token])
@@ -108,7 +111,16 @@ const Course: React.FC = () => {
 
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Khóa học</h1>
             <p className="mb-4">Thông tin chung</p>

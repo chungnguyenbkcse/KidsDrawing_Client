@@ -52,16 +52,16 @@ const TeacherLevel: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
-                    dispatch(getCourse())
+                    dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                    dispatch(getUserById(dispatch, id))
+                    dispatch(getCourse(dispatch))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
-                dispatch(getCourse())
+                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                dispatch(getUserById(dispatch, id))
+                dispatch(getCourse(dispatch))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);

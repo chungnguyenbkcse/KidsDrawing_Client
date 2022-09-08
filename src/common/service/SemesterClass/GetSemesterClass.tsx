@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemesterClassAll, initialSemesterClass, addSemesterClass } from "../../../store/actions/semester_class.action";
+import { fetchDataSuccess, fetchDataError, removeSemesterClassAll, initialSemesterClass, addSemesterClass } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface SemesterClass {
     id: number;
@@ -10,12 +10,10 @@ interface SemesterClass {
     course_id: number;
     max_participant: number;
 }
-export function getSemesterClass() {
+export function getSemesterClass(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/semester-class`, {
                     method: "GET",
                     headers: {
@@ -30,7 +28,7 @@ export function getSemesterClass() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getSemesterClass())
+                        dispatch(getSemesterClass(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -68,5 +66,4 @@ export function getSemesterClass() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

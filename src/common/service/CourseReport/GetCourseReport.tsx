@@ -1,15 +1,13 @@
-import { fetchDataRequest, fetchDataError, removeCourseReportAll, addCourseReport } from "../../../store/actions/course_report.action";
+import { fetchDataError, removeCourseReportAll, addCourseReport } from "../../../store/actions/course_report.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseReport {
     total_register: number;
     name: string;
 }
-export function getCourseReport() {
+export function getCourseReport(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     const currentYear = new Date().getFullYear();
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/course/report/${currentYear}`, {
                     method: "GET",
                     headers: {
@@ -24,7 +22,7 @@ export function getCourseReport() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getCourseReport())
+                        dispatch(getCourseReport(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -50,5 +48,4 @@ export function getCourseReport() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

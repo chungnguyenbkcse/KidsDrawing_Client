@@ -1,16 +1,14 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeArtTypeAll, initialArtType, addArtType } from "../../../store/actions/art_type.action";
+import { fetchDataSuccess, fetchDataError, removeArtTypeAll, initialArtType, addArtType } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ArtType {
     id: number;
     name: string;
     description: string;
 }
-export function getArtType() {
+export function getArtType(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/art-type?page=0&size=5`, {
                     method: "GET",
                     headers: {
@@ -25,7 +23,7 @@ export function getArtType() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getArtType())
+                        dispatch(getArtType(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -58,5 +56,4 @@ export function getArtType() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

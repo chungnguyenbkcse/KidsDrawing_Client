@@ -38,7 +38,7 @@ export function putTeacher(id: any, data: any, idx: any) {
                 console.log(val)
                 console.log(id)
                 toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(getUserById(id))
+                dispatch(getUserById(dispatch, id))
             })
             .catch(error => {
                 toast.update(id, { render: "Chỉnh thông tin tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

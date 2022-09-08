@@ -36,7 +36,7 @@ export function putSemester(id: any, data: any) {
                 console.log(val)
                 console.log(id)
                 dispatch(fetchDataSuccess(data))
-                dispatch(getSemester())
+                dispatch(getSemester(dispatch))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

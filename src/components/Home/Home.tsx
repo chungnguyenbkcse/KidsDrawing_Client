@@ -31,9 +31,17 @@ import "@syncfusion/ej2-popups/styles/material.css";
 import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
 
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import Loading from "../../common/components/Loading";
+
+
+
+
+
 const Home: React.FC = () => {
   const courses: ICourseState = useSelector((state: IStateType) => state.courses);
   const totalCourseAmount: number = courses.courses.length;
+  const { promiseInProgress } = usePromiseTracker();
 
   const [popup1, setPopup1] = useState(false);
 
@@ -64,14 +72,14 @@ const Home: React.FC = () => {
   let data: object[] = []
 
   schedule_time_classes.schedule_time_classes.map((ele, index) => {
-        return data.push({
-            Id: index,
-            Subject: ele.class_name,
-            StartTime: new Date(ele.start_time),
-            EndTime: new Date(ele.end_time),
-            IsAllDay: false
-        })
+    return data.push({
+      Id: index,
+      Subject: ele.class_name,
+      StartTime: new Date(ele.start_time),
+      EndTime: new Date(ele.end_time),
+      IsAllDay: false
     })
+  })
 
   console.log(data)
 
@@ -101,143 +109,118 @@ const Home: React.FC = () => {
           dispatch(logout())
         }
         else {
-          dispatch(getUserRegisterJoinSemester())
-          dispatch(getSemesterClass())
-          dispatch(getTeacher())
-          dispatch(getCourse())
-          dispatch(getContest())
-          dispatch(getStudent())
-          dispatch(getParent())
-          dispatch(getScheduleTimeClass())
+          trackPromise(getUserRegisterJoinSemester(dispatch))
+          trackPromise(getSemesterClass(dispatch))
+          trackPromise(getTeacher(dispatch))
+          trackPromise(getCourse(dispatch))
+          trackPromise(getContest(dispatch))
+          trackPromise(getStudent(dispatch))
+          trackPromise(getParent(dispatch))
+          trackPromise(getScheduleTimeClass(dispatch))
         }
       }
       else {
-        dispatch(getUserRegisterJoinSemester())
-        dispatch(getSemesterClass())
-        dispatch(getTeacher())
-        dispatch(getCourse())
-        dispatch(getContest())
-        dispatch(getStudent())
-        dispatch(getParent())
-        dispatch(getScheduleTimeClass())
+        trackPromise(getUserRegisterJoinSemester(dispatch))
+        trackPromise(getSemesterClass(dispatch))
+        trackPromise(getTeacher(dispatch))
+        trackPromise(getCourse(dispatch))
+        trackPromise(getContest(dispatch))
+        trackPromise(getStudent(dispatch))
+        trackPromise(getParent(dispatch))
+        trackPromise(getScheduleTimeClass(dispatch))
       }
     }
   }, [dispatch, access_token, refresh_token])
 
   return (
-    <Fragment>
-      <ToastContainer />
-      <h1 className="h3 mb-2 text-gray-800">Trang chủ</h1>
-      {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+    promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
+        <ToastContainer />
+        <h1 className="h3 mb-2 text-gray-800">Trang chủ</h1>
 
-      <div className="row">
-        <TopCard title="KHÓA HỌC" text={`${totalCourseAmount}`} icon="book" class="primary" />
-        <TopCard title="CUỘC THI" text={`${totalContestAmount}`} icon="book" class="danger" />
-        <TopCard title="DOANH THU" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
-      </div>
+        <div className="row">
+          <TopCard title="KHÓA HỌC" text={`${totalCourseAmount}`} icon="book" class="primary" />
+          <TopCard title="CUỘC THI" text={`${totalContestAmount}`} icon="book" class="danger" />
+          <TopCard title="DOANH THU" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
+        </div>
 
-      <div className="row">
-        <TopCard title="HỌC VIÊN" text={`${numberStudentsCount}`} icon="user" class="primary" />
-        <TopCard title="GIÁO VIÊN" text={`${numberTeachersCount}`} icon="user" class="danger" />
-        <TopCard title="PHỤ HUYNH" text={`${numberParentsCount}`} icon="user" class="danger" />
-      </div>
+        <div className="row">
+          <TopCard title="HỌC VIÊN" text={`${numberStudentsCount}`} icon="user" class="primary" />
+          <TopCard title="GIÁO VIÊN" text={`${numberTeachersCount}`} icon="user" class="danger" />
+          <TopCard title="PHỤ HUYNH" text={`${numberParentsCount}`} icon="user" class="danger" />
+        </div>
 
-      <div className="row">
-        <div className="col-xl-6 col-md-4 mb-4">
-            <button 
-              className="btn btn-success btn-green" 
+        <div className="row">
+          <div className="col-xl-6 col-md-4 mb-4">
+            <button
+              className="btn btn-success btn-green"
               onClick={() => {
                 dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Create))
                 onAnonymousNotificationRemove()
               }}
             >
-                <i className="fas fa fa-plus"></i>
-                Gửi thông báo
+              <i className="fas fa fa-plus"></i>
+              Gửi thông báo
             </button>
-        </div>
-      </div>
-
-      <Popup
-        open={popup1}
-        onClose={() => setPopup1(false)}
-        closeOnDocumentClick
-      >
-        <>
-          {
-            function () {
-              if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
-                return <NotificationForm isCheck={onRemovePopup1} />
-              }
-            }()
-          }
-        </>
-      </Popup>
-
-
-      <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Lịch học chi tiết</h6>
-                        </div>
-                        <div className="card-body">
-                            <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
-                                dataSource: data, fields: {
-                                    id: 'Id',
-                                    subject: { name: 'Subject' },
-                                    isAllDay: { name: 'IsAllDay' },
-                                    startTime: { name: 'StartTime' },
-                                    endTime: { name: 'EndTime' }
-                                }
-                            }}>
-
-                                <ViewsDirective>
-                                    <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
-                                    <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
-                                    <ViewDirective option='Month' showWeekend={false} />
-                                </ViewsDirective>
-                                <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-                            </ScheduleComponent>;
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-      {/* <div className="row">
-        <div className="col-xl-12 col-lg-12">
-          <ChartBar />
-        </div>
-      </div> */}
-
-      {/* <div className="row">
-
-        <div className="col-xl-6 col-lg-6">
-          <div className="card shadow mb-4">
-            <div className="card-header py-3">
-              <h6 className="m-0 font-weight-bold text-green">Top khóa học được yêu thích</h6>
-            </div>
-            <div className="card-body">
-              <CourseMaxSign />
-            </div>
           </div>
-
         </div>
 
-        <div className="col-xl-6 col-lg-6">
-          <div className="card shadow mb-4">
-            <div className="card-header py-3">
-              <h6 className="m-0 font-weight-bold text-green">Top khóa học ít người đăng ký</h6>
-            </div>
-            <div className="card-body">
-            <CourseMinSign />
+        <Popup
+          open={popup1}
+          onClose={() => setPopup1(false)}
+          closeOnDocumentClick
+        >
+          <>
+            {
+              function () {
+                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
+                  return <NotificationForm isCheck={onRemovePopup1} />
+                }
+              }()
+            }
+          </>
+        </Popup>
+
+
+        <div className="row">
+          <div className="col-xl-12 col-lg-12">
+            <div className="card shadow mb-4">
+              <div className="card-header py-3">
+                <h6 className="m-0 font-weight-bold text-green">Lịch học chi tiết</h6>
+              </div>
+              <div className="card-body">
+                <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                  dataSource: data, fields: {
+                    id: 'Id',
+                    subject: { name: 'Subject' },
+                    isAllDay: { name: 'IsAllDay' },
+                    startTime: { name: 'StartTime' },
+                    endTime: { name: 'EndTime' }
+                  }
+                }}>
+
+                  <ViewsDirective>
+                    <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
+                    <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
+                    <ViewDirective option='Month' showWeekend={false} />
+                  </ViewsDirective>
+                  <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+                </ScheduleComponent>;
+              </div>
             </div>
           </div>
         </div>
 
-      </div> */}
-
-    </Fragment>
+      </Fragment>
   );
-};
+}
 
 export default Home;

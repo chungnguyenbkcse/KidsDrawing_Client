@@ -50,14 +50,14 @@ const ContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                    dispatch(getUserById(dispatch, id))
                     dispatch(getContestTeacher(id))
                 }
             }
             else {
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                dispatch(getUserById(dispatch, id))
                 dispatch(getContestTeacher(id))
             }
         }

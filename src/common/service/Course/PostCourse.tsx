@@ -36,7 +36,7 @@ export function postCourse(course: any, idx: any) {
             .then (data => {
                 console.log(data)
                 toast.update(idx, { render: "Thêm khóa học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(getCourse())
+                dispatch(getCourse(dispatch))
             })
             .catch(error => {
                 toast.update(idx, { render: "Thêm khóa học không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

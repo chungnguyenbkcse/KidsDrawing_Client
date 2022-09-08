@@ -35,7 +35,7 @@ export function putContest(id: any,data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
-                dispatch(getContest())
+                dispatch(getContest(dispatch))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -37,7 +37,7 @@ export function postTeacher(data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
-                dispatch(getTeacher())
+                dispatch(getTeacher(dispatch))
             })
             .catch(error => {
                 toast.update(idx, { render: "Chỉnh thông tin tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });

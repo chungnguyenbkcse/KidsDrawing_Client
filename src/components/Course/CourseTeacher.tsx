@@ -47,14 +47,14 @@ const CourseTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                    dispatch(getUserById(id))
+                    dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                    dispatch(getUserById(dispatch, id))
                     dispatch(getCourseTeacher(id))
                 }
             }
             else {
-                dispatch(getTeacherRegisterQuantificationByTeacherId(id))
-                dispatch(getUserById(id))
+                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                dispatch(getUserById(dispatch, id))
                 dispatch(getCourseTeacher(id))
             }
         }

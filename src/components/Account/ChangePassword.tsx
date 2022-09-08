@@ -25,7 +25,7 @@ function ChangePassword(): JSX.Element {
         user_id = parseInt(id)
     }
     useEffect(() => {
-        getUserById(user_id)
+        getUserById(dispatch, user_id)
     }, [dispatch, user_id])
     let user: IUser = users.teachers[0];
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);

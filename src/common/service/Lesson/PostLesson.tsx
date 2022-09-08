@@ -37,7 +37,7 @@ export function postLesson(data: any, idx: any) {
                 console.log(val)
                 toast.update(idx, { render: "Thêm tiết học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataSuccess(data))
-                dispatch(getLesson())
+                dispatch(getLesson(dispatch))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

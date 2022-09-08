@@ -25,6 +25,8 @@ import { formatDate } from "../../common/components/ConverDate";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 
 const Contest: React.FC = () => {
@@ -35,6 +37,7 @@ const Contest: React.FC = () => {
     const contests: IContestState = useSelector((state: IStateType) => state.contests);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const [popup1, setPopup1] = useState(false);
+    const { promiseInProgress } = usePromiseTracker();
 
     const date_0 = new Date();
     const date = date_0.toUTCString()
@@ -92,19 +95,19 @@ const Contest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTeacher())
-                    dispatch(getContest())
-                    dispatch(getArtType())
-                    dispatch(getArtLevel())
-                    dispatch(getArtAge())
+                    trackPromise(getTeacher(dispatch))
+                    trackPromise(getContest(dispatch))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtLevel(dispatch))
+                    trackPromise(getArtAge(dispatch))
                 }
             }
             else {
-                dispatch(getTeacher())
-                dispatch(getContest())
-                dispatch(getArtType())
-                dispatch(getArtLevel())
-                dispatch(getArtAge())
+                trackPromise(getTeacher(dispatch))
+                trackPromise(getContest(dispatch))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtLevel(dispatch))
+                trackPromise(getArtAge(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token])
@@ -143,7 +146,16 @@ const Contest: React.FC = () => {
 
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Cuộc thi</h1>
             <p className="mb-4">Thông tin chung</p>

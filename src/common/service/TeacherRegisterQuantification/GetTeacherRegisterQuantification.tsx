@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTeacherRegisterQuatificationApprovedAll, initialTeacherRegisterQuatificationApproved, addTeacherRegisterQuatificationApproved, removeTeacherRegisterQuatificationNotApprovedNowAll, removeTeacherRegisterQuatificationNotApprovedAll, initialTeacherRegisterQuatificationNotApproved, addTeacherRegisterQuatificationNotApproved, initialTeacherRegisterQuatificationNotApprovedNow, addTeacherRegisterQuatificationNotApprovedNow } from "../../../store/actions/teacher_register_quantification.action";
+import { fetchDataSuccess, fetchDataError, removeTeacherRegisterQuatificationApprovedAll, initialTeacherRegisterQuatificationApproved, addTeacherRegisterQuatificationApproved, removeTeacherRegisterQuatificationNotApprovedNowAll, removeTeacherRegisterQuatificationNotApprovedAll, initialTeacherRegisterQuatificationNotApproved, addTeacherRegisterQuatificationNotApproved, initialTeacherRegisterQuatificationNotApprovedNow, addTeacherRegisterQuatificationNotApprovedNow } from "../../../store/actions/teacher_register_quantification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherRegisterQuantification {
     id: number;
@@ -13,12 +13,10 @@ interface TeacherRegisterQuantification {
     degree_photo_url: string;
     status: string;
 }
-export function getTeacherRegisterQuantification() {
+export function getTeacherRegisterQuantification(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/teacher-register-level`, {
                     method: "GET",
                     headers: {
@@ -33,7 +31,7 @@ export function getTeacherRegisterQuantification() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTeacherRegisterQuantification())
+                        dispatch(getTeacherRegisterQuantification(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -94,5 +92,4 @@ export function getTeacherRegisterQuantification() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

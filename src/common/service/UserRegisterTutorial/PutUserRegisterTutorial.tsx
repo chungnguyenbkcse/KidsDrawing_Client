@@ -37,7 +37,7 @@ export function putUserRegisterTutorial(id: any, tutorial: any, idx: any) {
             .then (data => {
                 toast.update(idx, { render: "Bạn đã xác nhận trình độ cho giáo viên thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataSuccess(tutorial))
-                dispatch(getUserRegisterTutorial())
+                dispatch(getUserRegisterTutorial(dispatch))
                 console.log(data)
             })
             .catch(error => {

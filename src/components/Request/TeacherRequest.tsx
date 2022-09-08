@@ -8,10 +8,13 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getTeacherLeave } from "../../common/service/TeacherLeave/GetTeacherLeave";
 import { ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const TeacherRequest: React.FC = () => {
   const teachers: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
   const numberItemsCount: number = teachers.leaves.length;
+  const { promiseInProgress } = usePromiseTracker();
 
 
   const dispatch: Dispatch<any> = useDispatch();
@@ -40,17 +43,26 @@ const TeacherRequest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTeacherLeave())
+                  trackPromise(getTeacherLeave(dispatch))
                 }
             }
             else {
-                dispatch(getTeacherLeave())
+              trackPromise(getTeacherLeave(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token]);
 
   return (
-    <Fragment>
+    promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
       <ToastContainer />
       <h1 className="h3 mb-2 text-gray-800">Yêu cầu nghỉ dạy</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}

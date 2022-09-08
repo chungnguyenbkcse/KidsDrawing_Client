@@ -74,8 +74,8 @@ const DetailClassTeacher: React.FC = () => {
                     dispatch(getSectionByClass(class_id))
                     dispatch(getTutorial())
                     dispatch(getTutorialPage())
-                    dispatch(getUserById(id))
-                    dispatch(getTeacher())
+                    dispatch(getUserById(dispatch, id))
+                    dispatch(getTeacher(dispatch))
                     dispatch(getExerciseSubmissionByClass(class_id))
                     dispatch(getTeacherLeaveByTeacher(id))
                 }
@@ -85,8 +85,8 @@ const DetailClassTeacher: React.FC = () => {
                 dispatch(getSectionByClass(class_id))
                 dispatch(getTutorial())
                 dispatch(getTutorialPage())
-                dispatch(getUserById(id))
-                dispatch(getTeacher())
+                dispatch(getUserById(dispatch, id))
+                dispatch(getTeacher(dispatch))
                 dispatch(getExerciseSubmissionByClass(class_id))
                 dispatch(getTeacherLeaveByTeacher(id))
             }

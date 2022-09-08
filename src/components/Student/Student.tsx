@@ -14,6 +14,8 @@ import { getStudent } from "../../common/service/Student/GetStudent";
 import { getParent } from "../../common/service/Parent/GetParent";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 
 
@@ -24,6 +26,7 @@ const Student: React.FC = () => {
     const numberItemsCount: number = users.students.length;
     const [popup, setPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -49,13 +52,13 @@ const Student: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getStudent())
-                    dispatch(getParent())
+                    trackPromise(getStudent(dispatch))
+                    trackPromise(getParent(dispatch))
                 }
             }
             else {
-                dispatch(getStudent())
-                dispatch(getParent())
+                trackPromise(getStudent(dispatch))
+                trackPromise(getParent(dispatch))
             }
         }
         dispatch(clearSelectedUser());
@@ -73,7 +76,16 @@ const Student: React.FC = () => {
     }
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> :<Fragment>
             <h1 className="h3 mb-2 text-gray-800">Học sinh</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">

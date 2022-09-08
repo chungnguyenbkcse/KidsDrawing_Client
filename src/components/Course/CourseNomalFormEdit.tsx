@@ -45,10 +45,10 @@ const CourseNomalFormEdit: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getCourse())
-        dispatch(getArtType())
-        dispatch(getArtLevel())
-        dispatch(getArtAge())
+        dispatch(getCourse(dispatch))
+        dispatch(getArtType(dispatch))
+        dispatch(getArtLevel(dispatch))
+        dispatch(getArtAge(dispatch))
 
     }, [dispatch])
 

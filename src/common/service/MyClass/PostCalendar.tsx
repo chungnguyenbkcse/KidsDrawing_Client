@@ -35,7 +35,7 @@ export function postCalendar(id: any, holiday: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(id))
-                dispatch(getMyClass())
+                dispatch(getMyClass(dispatch))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

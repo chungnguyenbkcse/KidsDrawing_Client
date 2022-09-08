@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, initialUserRegisterJoinSemester, addUserRegisterJoinSemester, removeUserRegisterJoinSemesterAll} from "../../../store/actions/user_register_join_semester.action";
+import { fetchDataError, initialUserRegisterJoinSemester, addUserRegisterJoinSemester, removeUserRegisterJoinSemesterAll} from "../../../store/actions/user_register_join_semester.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_register_semester {
     id: number;
@@ -8,11 +8,9 @@ interface user_register_semester {
     semester_class_id: number;
     time: string;
 }
-export function getUserRegisterJoinSemester() {
+export function getUserRegisterJoinSemester(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/user-register-join-semester`, {
                     method: "GET",
                     headers: {
@@ -27,7 +25,7 @@ export function getUserRegisterJoinSemester() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUserRegisterJoinSemester())
+                        dispatch(getUserRegisterJoinSemester(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -38,7 +36,6 @@ export function getUserRegisterJoinSemester() {
                 }
             })
             .then (data => {
-                dispatch(fetchDataSuccess(data))
                 dispatch(removeUserRegisterJoinSemesterAll())
                 console.log(data.body.user_register_semester)
                 data.body.user_register_semester.map((ele: any, index: any) => {
@@ -63,5 +60,4 @@ export function getUserRegisterJoinSemester() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

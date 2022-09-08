@@ -33,7 +33,7 @@ export function postScheduleClass(id: any, data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 toast.update(idx, { render: "Xếp lớp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(getMyClass())
+                dispatch(getMyClass(dispatch))
                 
             })
             .catch(error => {

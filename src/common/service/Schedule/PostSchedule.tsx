@@ -34,7 +34,7 @@ export function postSchedule(data: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(getSchedule())
+                dispatch(getSchedule(dispatch))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

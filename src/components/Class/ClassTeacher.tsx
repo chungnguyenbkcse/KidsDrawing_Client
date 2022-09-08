@@ -51,18 +51,18 @@ const ClassTeacher: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedDoinglClass());
-                    dispatch(getUserById(id))
+                    dispatch(getUserById(dispatch, id))
                     dispatch(getClassTeacher(id))
-                    dispatch(getCourse())
-                    dispatch(getSemester())
+                    dispatch(getCourse(dispatch))
+                    dispatch(getSemester(dispatch))
                 }
             }
             else {
                 dispatch(clearSelectedDoinglClass());
-                dispatch(getUserById(id))
+                dispatch(getUserById(dispatch, id))
                 dispatch(getClassTeacher(id))
-                dispatch(getCourse())
-                dispatch(getSemester())
+                dispatch(getCourse(dispatch))
+                dispatch(getSemester(dispatch))
             }
         }
         dispatch(updateCurrentPath("Khóa học", ""));

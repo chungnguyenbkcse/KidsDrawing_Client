@@ -17,6 +17,8 @@ import UserAnalytis from "./UserAnalytis";
 import { getTurnOverReport } from "../../common/service/TurnOver/GetTurnoverReport";
 import { getReportUser } from "../../common/service/ReportUser/GetUserReport";
 import { getCourseReport } from "../../common/service/CourseReport/GetCourseReport";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const Turnover: React.FC = () => {
   const turnovers: ITurnoverState = useSelector((state: IStateType) => state.turnovers);
@@ -33,6 +35,8 @@ const Turnover: React.FC = () => {
   const [checked1, setChecked1] = useState(true);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
+
+  const { promiseInProgress } = usePromiseTracker();
 
   let access_token = localStorage.getItem("access_token");
   let refresh_token = localStorage.getItem("refresh_token");
@@ -57,25 +61,25 @@ const Turnover: React.FC = () => {
           dispatch(logout())
         }
         else {
-          dispatch(getUserRegisterJoinSemester())
-          dispatch(getCourse())
-          dispatch(getSemesterClass())
-          dispatch(getStudent())
-          dispatch(getParent())
-          dispatch(getTurnOverReport())
-          dispatch(getReportUser())
-          dispatch(getCourseReport())
+          trackPromise(getUserRegisterJoinSemester(dispatch))
+          trackPromise(getCourse(dispatch))
+          trackPromise(getSemesterClass(dispatch))
+          trackPromise(getStudent(dispatch))
+          trackPromise(getParent(dispatch))
+          trackPromise(getTurnOverReport(dispatch))
+          trackPromise(getReportUser(dispatch))
+          trackPromise(getCourseReport(dispatch))
         }
       }
       else {
-        dispatch(getUserRegisterJoinSemester())
-        dispatch(getCourse())
-        dispatch(getSemesterClass())
-        dispatch(getStudent())
-        dispatch(getParent())
-        dispatch(getTurnOverReport())
-        dispatch(getReportUser())
-        dispatch(getCourseReport())
+          trackPromise(getUserRegisterJoinSemester(dispatch))
+          trackPromise(getCourse(dispatch))
+          trackPromise(getSemesterClass(dispatch))
+          trackPromise(getStudent(dispatch))
+          trackPromise(getParent(dispatch))
+          trackPromise(getTurnOverReport(dispatch))
+          trackPromise(getReportUser(dispatch))
+          trackPromise(getCourseReport(dispatch))
       }
     }
   }, [dispatch, access_token, refresh_token])
@@ -116,7 +120,16 @@ const Turnover: React.FC = () => {
 
 
   return (
-    <Fragment>
+    promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
       <h1 className="h3 mb-2 text-gray-800">Phân tích</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

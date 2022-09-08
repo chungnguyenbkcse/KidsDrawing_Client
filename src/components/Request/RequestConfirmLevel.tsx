@@ -47,15 +47,15 @@ const RequestConfirmLevel: React.FC = () => {
           dispatch(logout())
         }
         else {
-          dispatch(getTeacherRegisterQuantificationByTeacherId(teacher_id))
-          dispatch(getTeacher())
-          dispatch(getCourse())
+          dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_id))
+          dispatch(getTeacher(dispatch))
+          dispatch(getCourse(dispatch))
         }
       }
       else {
-        dispatch(getTeacherRegisterQuantificationByTeacherId(teacher_id))
-        dispatch(getTeacher())
-        dispatch(getCourse())
+        dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_id))
+        dispatch(getTeacher(dispatch))
+        dispatch(getCourse(dispatch))
       }
     }
   }, [dispatch, teacher_id, access_token, refresh_token])

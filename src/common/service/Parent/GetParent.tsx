@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeParentAll, initialParent, addParent } from "../../../store/actions/users.action";
+import { fetchDataSuccess, fetchDataError, removeParentAll, initialParent, addParent } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user {
     id: number,
@@ -16,11 +16,9 @@ interface user {
     parents: number,
     createTime: string
 }
-export function getParent() {
+export function getParent(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/user/parent`, {
                     method: "GET",
                     headers: {
@@ -35,7 +33,7 @@ export function getParent() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getParent())
+                        dispatch(getParent(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -78,5 +76,4 @@ export function getParent() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

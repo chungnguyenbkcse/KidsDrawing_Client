@@ -66,7 +66,7 @@ const ManageStudent: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getUserById(student_id))
+                    dispatch(getUserById(dispatch, student_id))
                     dispatch(getParentById(parent_id))
                     dispatch(getExerciseForClassStudent(class_id, student_id))
                     dispatch(getStudentLeaveByClassAndStudent(class_id, student_id))
@@ -75,7 +75,7 @@ const ManageStudent: React.FC = () => {
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getUserById(student_id))
+                dispatch(getUserById(dispatch, student_id))
                 dispatch(getParentById(parent_id))
                 dispatch(getExerciseForClassStudent(class_id, student_id))
                 dispatch(getStudentLeaveByClassAndStudent(class_id, student_id))

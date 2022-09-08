@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, 
+import { fetchDataSuccess, fetchDataError, 
     removeTeacherRegisterQuatificationApprovedAll, initialTeacherRegisterQuatificationApproved, addTeacherRegisterQuatificationApproved,
     removeTeacherRegisterQuatificationNotApprovedAll, initialTeacherRegisterQuatificationNotApproved, addTeacherRegisterQuatificationNotApproved,
     removeTeacherRegisterQuatificationNotApprovedNowAll, initialTeacherRegisterQuatificationNotApprovedNow, addTeacherRegisterQuatificationNotApprovedNow
@@ -17,12 +17,10 @@ interface TeacherRegisterQuantification {
     degree_photo_url: string;
     status: string;
 }
-export function getTeacherRegisterQuantificationByTeacherId(id: any) {
+export function getTeacherRegisterQuantificationByTeacherId(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/teacher-register-level/teacher/${id}`, {
                     method: "GET",
                     headers: {
@@ -38,7 +36,7 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTeacherRegisterQuantificationByTeacherId(id))
+                        dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -131,5 +129,4 @@ export function getTeacherRegisterQuantificationByTeacherId(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

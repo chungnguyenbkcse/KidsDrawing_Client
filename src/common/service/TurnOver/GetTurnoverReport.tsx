@@ -1,14 +1,12 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addTurnoverNow, addTurnoverLast, removeTurnoverNowAll, removeTurnoverLastAll} from "../../../store/actions/turnover.action";
+import { fetchDataSuccess, fetchDataError, addTurnoverNow, addTurnoverLast, removeTurnoverNowAll, removeTurnoverLastAll} from "../../../store/actions/turnover.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TurnOver {
     turnover: number;
 }
-export function getTurnOverReport() {
+export function getTurnOverReport(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     const currentYear = new Date().getFullYear();
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/user-register-join-semester/report/${currentYear}`, {
                     method: "GET",
                     headers: {
@@ -23,7 +21,7 @@ export function getTurnOverReport() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTurnOverReport())
+                        dispatch(getTurnOverReport(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -59,5 +57,4 @@ export function getTurnOverReport() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

@@ -37,7 +37,7 @@ export function postSemesterClass(data: any, schedule_element: any, idx: any) {
             })
             .then (data_1 => {
                 console.log(data_1)
-                dispatch(getSemesterClass())
+                dispatch(getSemesterClass(dispatch))
                 toast.update(idx, { render: "Thêm lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 schedule_element.map((ele: any) => {
                     return dispatch(postSchedule({

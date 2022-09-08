@@ -1,5 +1,5 @@
 import { logout } from "../../../store/actions/account.actions";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeCourseAll, initialCourse, addCourse } from "../../../store/actions/course.action";
+import { fetchDataSuccess, fetchDataError, removeCourseAll, initialCourse, addCourse } from "../../../store/actions/course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Course {
     id: number;
@@ -17,11 +17,9 @@ interface Course {
     create_time: string;
     update_time: string;
 }
-export function getCourse() {
+export function getCourse(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/course?page=0&size=10`, {
                     method: "GET",
                     headers: {
@@ -36,7 +34,7 @@ export function getCourse() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getCourse())
+                        dispatch(getCourse(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -82,5 +80,4 @@ export function getCourse() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { putStatusUser } from "../../common/service/User/UpdateStatusUser";
 import { logout } from "../../store/actions/account.actions";
+import { trackPromise } from "react-promise-tracker";
+
 function TopMenuAccount(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const username: string | null = localStorage.getItem('username');
   const id = localStorage.getItem('id')
   useEffect(() => {
-      dispatch(getUserById(id))
+    trackPromise(getUserById(dispatch, id))
   }, [dispatch, id])
   const [isShow, setShow] = useState(false);
 

@@ -35,7 +35,7 @@ export function putSectionTemplate(id: any, data: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
-                dispatch(getSectionTemplate())
+                dispatch(getSectionTemplate(dispatch))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -1,15 +1,13 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeArtLevelAll, initialArtLevel, addArtLevel } from "../../../store/actions/art_level.action";
+import { fetchDataSuccess, fetchDataError, removeArtLevelAll, initialArtLevel, addArtLevel } from "../../../store/actions/art_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ArtLevel {
     id: number;
     name: string;
     description: string;
 }
-export function getArtLevel() {
+export function getArtLevel(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/art-level?page=0&size=5`, {
                     method: "GET",
                     headers: {
@@ -24,7 +22,7 @@ export function getArtLevel() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getArtLevel())
+                        dispatch(getArtLevel(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -57,5 +55,4 @@ export function getArtLevel() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

@@ -36,7 +36,7 @@ export function postArtLevel(data: any, idx: any) {
             .then (data => {
                 console.log(data)
                 toast.update(idx, { render: "Thêm trình độ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(getArtLevel())
+                dispatch(getArtLevel(dispatch))
             })
             .catch(error => {
                 toast.update(idx, { render: "Thêm trình độ không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

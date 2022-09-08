@@ -37,7 +37,7 @@ export function putTeacherRegisterLevelAdmin(id: any, teacher_id: any, teacher_l
             .then (data => {
                 toast.update(idx, { render: "Bạn đã xác nhận trình độ cho giáo viên thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataSuccess(teacher_level))
-                dispatch(getTeacherRegisterQuantificationByTeacherId(teacher_id))
+                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_id))
                 console.log(data)
             })
             .catch(error => {

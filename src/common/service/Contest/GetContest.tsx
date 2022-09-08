@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeContestAll, initialContest, addContest } from "../../../store/actions/contest.action";
+import { fetchDataSuccess, fetchDataError, removeContestAll, initialContest, addContest } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Contest {
     id: number;
@@ -19,11 +19,9 @@ interface Contest {
     create_time: string;
     update_time: string;
 }
-export function getContest() {
+export function getContest(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/contest?page=0&size=5`, {
                     method: "GET",
                     headers: {
@@ -38,7 +36,7 @@ export function getContest() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getContest())
+                        dispatch(getContest(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -89,5 +87,4 @@ export function getContest() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

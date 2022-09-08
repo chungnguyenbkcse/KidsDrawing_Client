@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeMyClassAll, initialMyClass, addMyClass } from "../../../store/actions/my_class.action";
+import { fetchDataSuccess, fetchDataError, removeMyClassAll, initialMyClass, addMyClass } from "../../../store/actions/my_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
     id: number;
@@ -9,11 +9,9 @@ interface MyClass {
     create_time: string;
     update_time: string;
 }
-export function getMyClass() {
+export function getMyClass(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/classes`, {
                     method: "GET",
                     headers: {
@@ -28,7 +26,7 @@ export function getMyClass() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getMyClass())
+                        dispatch(getMyClass(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -67,5 +65,4 @@ export function getMyClass() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

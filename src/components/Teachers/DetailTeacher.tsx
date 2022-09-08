@@ -50,11 +50,11 @@ const DetailTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getCourse())
+                    dispatch(getCourse(dispatch))
                 }
             }
             else {
-                dispatch(getCourse())
+                dispatch(getCourse(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token])

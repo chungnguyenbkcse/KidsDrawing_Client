@@ -41,6 +41,8 @@ import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { toast, ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 
 const Art: React.FC = () => {
@@ -48,6 +50,7 @@ const Art: React.FC = () => {
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
     const dispatch: Dispatch<any> = useDispatch();
+    const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -73,15 +76,15 @@ const Art: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getArtType())
-                    dispatch(getArtAge())
-                    dispatch(getArtLevel())
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtAge(dispatch))
+                    trackPromise(getArtLevel(dispatch))
                 }
             }
             else {
-                dispatch(getArtType())
-                dispatch(getArtAge())
-                dispatch(getArtLevel())
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtAge(dispatch))
+                trackPromise(getArtLevel(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token])
@@ -149,7 +152,16 @@ const Art: React.FC = () => {
 
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Nghệ thuật</h1>
             <p className="mb-4">Thông tin chung</p>

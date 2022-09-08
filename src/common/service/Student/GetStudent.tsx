@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeStudentAll, initialStudent, addStudent } from "../../../store/actions/users.action";
+import { fetchDataSuccess, fetchDataError, removeStudentAll, initialStudent, addStudent } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user {
     id: number,
@@ -16,11 +16,9 @@ interface user {
     parents: number,
     createTime: string
 }
-export function getStudent() {
+export function getStudent(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/user/student`, {
                     method: "GET",
                     headers: {
@@ -35,7 +33,7 @@ export function getStudent() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getStudent())
+                        dispatch(getStudent(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -78,5 +76,4 @@ export function getStudent() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

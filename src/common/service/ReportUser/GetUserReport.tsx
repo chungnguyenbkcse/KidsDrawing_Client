@@ -1,14 +1,12 @@
-import { fetchDataRequest, fetchDataError, removeReportUserAll, addReportUser } from "../../../store/actions/report_user.action";
+import { fetchDataError, removeReportUserAll, addReportUser } from "../../../store/actions/report_user.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ReportUser {
     total: number
 }
-export function getReportUser() {
+export function getReportUser(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     const currentYear = new Date().getFullYear();
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/user/report/${currentYear}`, {
                     method: "GET",
                     headers: {
@@ -23,7 +21,7 @@ export function getReportUser() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getReportUser())
+                        dispatch(getReportUser(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -48,5 +46,4 @@ export function getReportUser() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

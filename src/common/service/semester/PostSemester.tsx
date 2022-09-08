@@ -34,7 +34,7 @@ export function postSemester(semester: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(semester))
-                dispatch(getSemester())
+                dispatch(getSemester(dispatch))
                 console.log(data)
             })
             .catch(error => {

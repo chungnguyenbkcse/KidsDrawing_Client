@@ -79,11 +79,11 @@ const ResultContest: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getTeacher())
-        dispatch(getContest())
-        dispatch(getArtType())
-        dispatch(getArtLevel())
-        dispatch(getArtAge())
+        dispatch(getTeacher(dispatch))
+        dispatch(getContest(dispatch))
+        dispatch(getArtType(dispatch))
+        dispatch(getArtLevel(dispatch))
+        dispatch(getArtAge(dispatch))
     }, [dispatch])
 
     let student: string[] = []

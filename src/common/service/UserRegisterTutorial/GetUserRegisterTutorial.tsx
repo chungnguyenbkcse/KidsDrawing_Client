@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeUserRegisterTutorialApprovedAll, initialUserRegisterTutorialApproved, addUserRegisterTutorialApproved, removeUserRegisterTutorialNotApprovedNowAll, removeUserRegisterTutorialNotApprovedAll, initialUserRegisterTutorialNotApproved, addUserRegisterTutorialNotApproved, initialUserRegisterTutorialNotApprovedNow, addUserRegisterTutorialNotApprovedNow, initialUserRegisterTutorialApprovedToTutorialTemplate, addUserRegisterTutorialApprovedToTutorialTemplate } from "../../../store/actions/user_register_tutorial.action";
+import { fetchDataSuccess, fetchDataError, removeUserRegisterTutorialApprovedAll, initialUserRegisterTutorialApproved, addUserRegisterTutorialApproved, removeUserRegisterTutorialNotApprovedNowAll, removeUserRegisterTutorialNotApprovedAll, initialUserRegisterTutorialNotApproved, addUserRegisterTutorialNotApproved, initialUserRegisterTutorialNotApprovedNow, addUserRegisterTutorialNotApprovedNow, initialUserRegisterTutorialApprovedToTutorialTemplate, addUserRegisterTutorialApprovedToTutorialTemplate } from "../../../store/actions/user_register_tutorial.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface UserRegisterTutorial {
     id: number;
@@ -14,12 +14,10 @@ interface UserRegisterTutorial {
     create_time: string;
     update_time: string;
 }
-export function getUserRegisterTutorial() {
+export function getUserRegisterTutorial(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/user-register-tutorial`, {
                     method: "GET",
                     headers: {
@@ -34,7 +32,7 @@ export function getUserRegisterTutorial() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUserRegisterTutorial())
+                        dispatch(getUserRegisterTutorial(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -104,5 +102,4 @@ export function getUserRegisterTutorial() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
+import { fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface schedule {
     id: number;
@@ -7,11 +7,9 @@ interface schedule {
     semester_class_id: number;
     date_of_week: number;
 }
-export function getSchedule() {
+export function getSchedule(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/schedule`, {
                     method: "GET",
                     headers: {
@@ -26,7 +24,7 @@ export function getSchedule() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getSchedule())
+                        dispatch(getSchedule(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -61,5 +59,4 @@ export function getSchedule() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

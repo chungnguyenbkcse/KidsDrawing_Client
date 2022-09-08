@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemesterAll, initialSemester, addSemester } from "../../../store/actions/semester.actions";
+import { fetchDataSuccess, fetchDataError, removeSemesterAll, initialSemester, addSemester } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface semester {
     id: number;
@@ -12,11 +12,9 @@ interface semester {
     create_time: string;
     update_time: string;
 }
-export function getSemester() {
+export function getSemester(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/semester`, {
                     method: "GET",
                     headers: {
@@ -31,7 +29,7 @@ export function getSemester() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getSemester())
+                        dispatch(getSemester(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -73,5 +71,4 @@ export function getSemester() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

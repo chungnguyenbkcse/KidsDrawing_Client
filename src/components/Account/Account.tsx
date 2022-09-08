@@ -21,7 +21,7 @@ const Account: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const id = localStorage.getItem('id')
     useEffect(() => {
-        dispatch(getUserById(id))
+        dispatch(getUserById(dispatch, id))
     }, [dispatch, id])
     var role_privilege = localStorage.getItem('role_privilege')
     let rolePrivilege: any = []

@@ -39,9 +39,9 @@ export function postTutorialTemplate(tutorial: any[], data: any, idx: any) {
                 tutorial.map((value) => {
                     return dispatch(postTutorialTemplatePage({
                         tutorial_template_id: xx.id,
-                        name: data.name,
+                        name: xx.name,
                         description: value.content,
-                        number: data.page
+                        number: value.page
                     }))
                 })
                 toast.update(idx, { render: "Thêm giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });

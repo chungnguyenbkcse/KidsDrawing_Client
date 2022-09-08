@@ -34,11 +34,11 @@ export function postSectionTemplate(tutorial: any[], data: any, idx: any) {
                     return response.json()
                 }
             })
-            .then (data => {
-                console.log(data)
+            .then (xx => {
+                console.log(xx)
                 getSectionTemplate(dispatch)
                 dispatch(postTutorialTemplate(tutorial,{
-                        section_template_id: data.id,
+                        section_template_id: xx.id,
                         name: data.name,
                         creator_id: localStorage.getItem('id')
                 }, idx))

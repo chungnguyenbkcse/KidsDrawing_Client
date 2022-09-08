@@ -110,7 +110,7 @@ const LessonPlan: React.FC = () => {
       let contentSection: TutorialSectionTemplate = {
         number: numberSection,
         name: value1,
-        teaching_form: Boolean(value2),
+        teaching_form: value2 === "true" ? true : false,
         tutorial: [...contentTutorialPage, contentPage]
       }
 
@@ -193,7 +193,7 @@ const LessonPlan: React.FC = () => {
     let contentSection: TutorialSectionTemplate = {
       number: numberSection,
       name: value1,
-      teaching_form: Boolean(value2),
+      teaching_form: value2 === "true" ? true : false,
       tutorial: [...contentTutorialPage, contentPage]
     }
     setContentTutorialSection([...contentTutorialSection, contentSection])

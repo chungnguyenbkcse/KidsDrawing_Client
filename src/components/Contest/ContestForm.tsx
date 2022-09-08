@@ -21,6 +21,8 @@ import { IUser } from "../../store/models/user.interface";
 import { getUserGradeContestByContestId } from "../../common/service/UserGradeContest/GetUserGradeContestByContestId";
 import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { IUserGradeContest } from "../../store/models/user_grade_contest.interface";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 type Options = {
   name: string;
@@ -40,6 +42,9 @@ const ContestForm: React.FC = () => {
   if (id_x !== null) {
     contest_id = parseInt(id_x)
   }
+
+  const { promiseInProgress } = usePromiseTracker();
+
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
   let contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0 };
@@ -48,7 +53,7 @@ const ContestForm: React.FC = () => {
     dispatch(getArtType(dispatch))
     dispatch(getArtAge(dispatch))
     dispatch(getTeacher(dispatch))
-    dispatch(getUserGradeContestByContestId(contest_id))
+    trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
   }, [dispatch, contest_id])
 
   
@@ -239,7 +244,16 @@ const ContestForm: React.FC = () => {
   }
 
   return (
-    <Fragment>
+    promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">

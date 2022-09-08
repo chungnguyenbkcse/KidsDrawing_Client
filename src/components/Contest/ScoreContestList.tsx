@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
+import { trackPromise } from "react-promise-tracker";
 
 function ScoreContestList(): JSX.Element {
 
@@ -58,11 +59,11 @@ function ScoreContestList(): JSX.Element {
                     dispatch(logout())
                 }
                 else {    
-                    dispatch(getUserGradeContestSubmissionByContestId(contest_id))
+                    trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
                 }
             }
             else {     
-                dispatch(getUserGradeContestSubmissionByContestId(contest_id))
+                trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id_, contest_id]);

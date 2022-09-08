@@ -36,7 +36,7 @@ export function postTutorialTemplate(tutorial: any[], data: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(getTutorialTemplate())
+                dispatch(getTutorialTemplate(dispatch))
                 tutorial.map((value) => {
                     return dispatch(postTutorialTemplatePage({
                         tutorial_template_id: data.id,

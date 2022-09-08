@@ -5,12 +5,16 @@ import TopCard from "../../common/components/TopCardUser";
 import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { IContestSubmissionState, IStateType } from "../../store/models/root.interface";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const DetailContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
     const numberNotGradedCount: number = contest_submissions.contest_not_gradeds.length;
     const numberGradedCount: number = contest_submissions.contest_gradeds.length;
+
+    const { promiseInProgress } = usePromiseTracker();
 
 
     var contest_description = localStorage.getItem('contest_description');
@@ -100,18 +104,27 @@ const DetailContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getContestSubmissionByContest(contest_id))
+                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
                 }
             }
             else {
-                dispatch(getContestSubmissionByContest(contest_id))
+                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
             }
         }
     }, [dispatch, access_token, refresh_token, contest_id]);
 
     
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

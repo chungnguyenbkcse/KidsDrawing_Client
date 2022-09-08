@@ -15,6 +15,7 @@ import { putTutorialTemplate } from "../../common/service/TutorialTemplate/PutTu
 import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 import { useHistory } from "react-router-dom";
 import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
+import { trackPromise } from "react-promise-tracker";
 
 
 export type SectionTemplateListProps = {
@@ -184,7 +185,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             }
             
             toast.update(idx, { render: "Chỉnh giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-            dispatch(getTutorialTemplatePage())
+            trackPromise(getTutorialTemplatePage(dispatch))
             dispatch(clearSelectedSectionTemplate());
             dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
             setTimeout(function () {

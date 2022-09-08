@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeDoinglClassAll, removeDoneClassAll, initialDoinglClass, initialDoneClass,  addDoinglClass, addDoneClass } from "../../../store/actions/class_teacher.action";
+import { fetchDataSuccess, fetchDataError, removeDoinglClassAll, removeDoneClassAll, initialDoinglClass, initialDoneClass,  addDoinglClass, addDoneClass } from "../../../store/actions/class_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ClassTeacher {
     id: number;
@@ -16,12 +16,10 @@ interface ClassTeacher {
     art_age_name: string;
     schedule: string;
 }
-export function getClassTeacher(id: any) {
+export function getClassTeacher(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/classes/teacher/${id}`, {
                     method: "GET",
                     headers: {
@@ -36,7 +34,7 @@ export function getClassTeacher(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getClassTeacher(id))
+                        dispatch(getClassTeacher(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -108,5 +106,4 @@ export function getClassTeacher(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

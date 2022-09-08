@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeContestGradedAll, removeContestNotGradedAll, addContestGraded, addContestNotGraded } from "../../../store/actions/contest_submission.action";
+import { fetchDataSuccess, fetchDataError, removeContestGradedAll, removeContestNotGradedAll, addContestGraded, addContestNotGraded } from "../../../store/actions/contest_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ContestSubmission {
     id: number;
@@ -10,11 +10,9 @@ interface ContestSubmission {
     create_time: string;
     update_time: string;
 }
-export function getContestSubmissionByContest(id: any) {
+export function getContestSubmissionByContest(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/contest-submission/contest/${id}`, {
                     method: "GET",
                     headers: {
@@ -29,7 +27,7 @@ export function getContestSubmissionByContest(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getContestSubmissionByContest(id))
+                        dispatch(getContestSubmissionByContest(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -80,5 +78,4 @@ export function getContestSubmissionByContest(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

@@ -16,6 +16,8 @@ import jwt_decode from "jwt-decode";
 import { getTutorialTemplate } from "../../common/service/TutorialTemplate/GetTutorialTemplate";
 import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 import { ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const SectionTemplate: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -29,6 +31,8 @@ const SectionTemplate: React.FC = () => {
     if (id_x != null){
         course_id = parseInt(id_x);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -53,15 +57,15 @@ const SectionTemplate: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getSectionTemplateByCourseId(course_id)) 
-                    dispatch(getTutorialTemplatePage())
-                    dispatch(getTutorialTemplate())
+                    trackPromise(getSectionTemplateByCourseId(dispatch, course_id)) 
+                    trackPromise(getTutorialTemplatePage(dispatch))
+                    trackPromise(getTutorialTemplate(dispatch))
                 }
             }
             else {
-                dispatch(getSectionTemplateByCourseId(course_id)) 
-                dispatch(getTutorialTemplate())
-                dispatch(getTutorialTemplatePage())
+                trackPromise(getSectionTemplateByCourseId(dispatch, course_id)) 
+                trackPromise(getTutorialTemplate(dispatch))
+                trackPromise(getTutorialTemplatePage(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token, course_id])
@@ -79,7 +83,16 @@ const SectionTemplate: React.FC = () => {
 
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Buổi học</h1>
             <p className="mb-4">Thông tin chung</p>

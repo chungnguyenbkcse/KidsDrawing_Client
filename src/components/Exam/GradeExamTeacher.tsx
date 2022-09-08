@@ -13,6 +13,8 @@ import NumberInput from "../../common/components/NumberInput";
 import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
 import { toast, ToastContainer } from "react-toastify";
 import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const GradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -22,6 +24,8 @@ const GradeExamTeacher: React.FC = () => {
         feedback: "",
         score: 0
     }
+
+    const { promiseInProgress } = usePromiseTracker();
 
     const [formState, setFormState] = useState({
         feedback: { error: "", value: user_grade_exercise_submission.feedback },
@@ -94,11 +98,11 @@ const GradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getExerciseSubmissionByExercise(exercise_id))
+                    trackPromise(getExerciseSubmissionByExercise(dispatch, exercise_id))
                 }
             }
             else {
-                dispatch(getExerciseSubmissionByExercise(exercise_id))
+                trackPromise(getExerciseSubmissionByExercise(dispatch, exercise_id))
             }
         }
     }, [dispatch, access_token, refresh_token, exercise_id]);
@@ -139,7 +143,16 @@ const GradeExamTeacher: React.FC = () => {
     const [exercise_submission_id, setExerciseSubmissionId] = useState(0);
     const [time_submit, setTimeSubmit] = useState("");
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> :  <Fragment>
             <ToastContainer />
             <div className="row">
                 <div className="col-xl-6 col-lg-6">

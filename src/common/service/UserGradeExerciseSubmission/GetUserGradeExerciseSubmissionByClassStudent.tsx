@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, addUserGradeExerciseSubmission, removeUserGradeExerciseSubmissionAll} from "../../../store/actions/user_grade_exercise_submission.action";
+import { fetchDataError, addUserGradeExerciseSubmission, removeUserGradeExerciseSubmissionAll} from "../../../store/actions/user_grade_exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
     student_id: number;
@@ -13,12 +13,10 @@ interface user_grade_contest {
     score: number;
     time: string;
 }
-export function getUserGradeExerciseByStudentAndClass(class_id: any, student_id: any) {
+export function getUserGradeExerciseByStudentAndClass(dispatch: any, class_id: any, student_id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/user-grade-exercise-submission/class-student/${class_id}/${student_id}`, {
                     method: "GET",
                     headers: {
@@ -33,7 +31,7 @@ export function getUserGradeExerciseByStudentAndClass(class_id: any, student_id:
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUserGradeExerciseByStudentAndClass(class_id, student_id))
+                        dispatch(getUserGradeExerciseByStudentAndClass(dispatch, class_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -44,7 +42,6 @@ export function getUserGradeExerciseByStudentAndClass(class_id: any, student_id:
                 }
             })
             .then (data => {
-                dispatch(fetchDataSuccess(data))
                 dispatch(removeUserGradeExerciseSubmissionAll())
                 console.log(data.body.UserGradeExerciseSubmission)
                 data.body.UserGradeExerciseSubmission.map((ele: any, index: any) => {
@@ -69,5 +66,4 @@ export function getUserGradeExerciseByStudentAndClass(class_id: any, student_id:
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

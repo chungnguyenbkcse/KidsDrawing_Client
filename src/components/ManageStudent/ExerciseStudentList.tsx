@@ -7,6 +7,8 @@ import { logout } from "../../store/actions/account.actions";
 import { IExerciseStudentState, IStateType, IStudentLeaveState } from "../../store/models/root.interface";
 import ExerciseSectionList from "./ExerciseSectionList";
 import "./ManageStudent.css"
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ExerciseStudentList: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -15,6 +17,7 @@ const ExerciseStudentList: React.FC = () => {
     const numberSubmittedCount: number = exercise_students.exercise_submitted.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
+    const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('student_id');
     var student_id: number = 0;
@@ -51,17 +54,27 @@ const ExerciseStudentList: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
+                    dispatch(logout())
+                    trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
                 }
             }
             else {
-                dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
+                trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
             }
         }
     }, [dispatch, access_token, refresh_token, student_id, class_id]);
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

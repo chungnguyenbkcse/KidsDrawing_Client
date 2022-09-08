@@ -12,6 +12,8 @@ import TeacherLeaveList from "./TeacherLeaveList";
 import { getStudentLeaveByTeacher } from "../../common/service/StudentLeave/GetStudentLeaveByTeacher";
 import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
 import { ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const RequestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -19,6 +21,7 @@ const RequestTeacher: React.FC = () => {
     const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
     console.log(student_leaves)
     console.log(teacher_leaves)
+    const { promiseInProgress } = usePromiseTracker();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberTeacherRegisterSuccessfullCount: number = student_leaves.leaves.length;
     const numberTeacherNotRegisterCount: number = teacher_leaves.leaves.length;
@@ -51,13 +54,13 @@ const RequestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getStudentLeaveByTeacher(id))
-                    dispatch(getTeacherLeaveByTeacher(id))
+                    trackPromise(getStudentLeaveByTeacher(dispatch, id))
+                    trackPromise(getTeacherLeaveByTeacher(dispatch, id))
                 }
             }
             else {
-                dispatch(getStudentLeaveByTeacher(id))
-                dispatch(getTeacherLeaveByTeacher(id))
+                trackPromise(getStudentLeaveByTeacher(dispatch, id))
+                trackPromise(getTeacherLeaveByTeacher(dispatch, id))
             }
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
@@ -67,7 +70,16 @@ const RequestTeacher: React.FC = () => {
     
     const [checked, setChecked] = useState(true);
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
             <ToastContainer />

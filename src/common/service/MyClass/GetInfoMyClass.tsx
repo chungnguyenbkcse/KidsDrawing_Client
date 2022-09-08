@@ -1,5 +1,5 @@
 import { addInformationClass, removeInformationClassAll } from "../../../store/actions/information_class.action";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/my_class.action";
+import { fetchDataSuccess, fetchDataError } from "../../../store/actions/my_class.action";
 import { addTimeSchedule, removeTimeScheduleAll } from "../../../store/actions/time_schedule.action";
 import { addStudent, removeStudentAll } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
@@ -32,11 +32,9 @@ interface user {
     parents: number,
     createTime: string
 }
-export function getInfoMyClass(id: any) {
+export function getInfoMyClass(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/classes/info/${id}`, {
                     method: "GET",
                     headers: {
@@ -51,7 +49,7 @@ export function getInfoMyClass(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getInfoMyClass(id))
+                        dispatch(getInfoMyClass(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -121,5 +119,4 @@ export function getInfoMyClass(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

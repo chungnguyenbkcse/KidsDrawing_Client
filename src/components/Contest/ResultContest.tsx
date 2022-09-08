@@ -20,6 +20,8 @@ import jwt_decode from "jwt-decode";
 import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
 import { ChartLine } from "../../common/components/CharLine";
 import { getUserGradeContestByContestId } from "../../common/service/UserGradeContest/GetUserGradeContestByContestId";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 
 const ResultContest: React.FC = () => {
@@ -35,6 +37,8 @@ const ResultContest: React.FC = () => {
     if (id_x !== null){
         contest_id = parseInt(id_x)
     }
+
+    const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -59,15 +63,15 @@ const ResultContest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getUserGradeContestSubmissionByContestId(contest_id))
-                    dispatch(getContestSubmissionByContest(contest_id))
-                    dispatch(getUserGradeContestByContestId(contest_id))
+                    trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
+                    trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
                 }
             }
             else {
-                dispatch(getUserGradeContestSubmissionByContestId(contest_id))
-                dispatch(getContestSubmissionByContest(contest_id))
-                dispatch(getUserGradeContestByContestId(contest_id))
+                trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
+                trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
             }
         }
     }, [dispatch, contest_id, access_token, refresh_token])
@@ -79,11 +83,11 @@ const ResultContest: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        dispatch(getTeacher(dispatch))
-        dispatch(getContest(dispatch))
-        dispatch(getArtType(dispatch))
-        dispatch(getArtLevel(dispatch))
-        dispatch(getArtAge(dispatch))
+        trackPromise(getTeacher(dispatch))
+        trackPromise(getContest(dispatch))
+        trackPromise(getArtType(dispatch))
+        trackPromise(getArtLevel(dispatch))
+        trackPromise(getArtAge(dispatch))
     }, [dispatch])
 
     let student: string[] = []
@@ -111,7 +115,16 @@ const ResultContest: React.FC = () => {
 
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <h1 className="h3 mb-2 text-gray-800">Cuộc thi</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">

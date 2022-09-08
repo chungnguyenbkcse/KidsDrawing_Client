@@ -13,6 +13,8 @@ import { getContestTeacher } from "../../common/service/ContestTeacher/GetContes
 import ContestEndList from "./ContestEndTeacherList";
 import ContestNotDoingList from "./ContestNotDoingTeacherList";
 import ContestDoingList from "./ContestDoingTeacherList";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -26,6 +28,7 @@ const ContestTeacher: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+    const { promiseInProgress } = usePromiseTracker();
     console.log(contest_teachers)
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -50,15 +53,15 @@ const ContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                    dispatch(getUserById(dispatch, id))
-                    dispatch(getContestTeacher(id))
+                    trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                    trackPromise(getUserById(dispatch, id))
+                    trackPromise(getContestTeacher(dispatch, id))
                 }
             }
             else {
-                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                dispatch(getUserById(dispatch, id))
-                dispatch(getContestTeacher(id))
+                trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                trackPromise(getUserById(dispatch, id))
+                trackPromise(getContestTeacher(dispatch, id))
             }
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
@@ -70,7 +73,16 @@ const ContestTeacher: React.FC = () => {
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

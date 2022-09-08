@@ -8,6 +8,8 @@ import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
 import ScoreContestList from "./ScoreContestList";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -20,6 +22,8 @@ const ResultGradeContestTeacher: React.FC = () => {
     if (class_id !== null) {
         class_id_ = parseInt(class_id);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('contest_id');
     let contest_id = 0;
@@ -53,11 +57,11 @@ const ResultGradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {    
-                    dispatch(getUserGradeContestSubmissionByContestId(contest_id))
+                    trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
                 }
             }
             else {     
-                dispatch(getUserGradeContestSubmissionByContestId(contest_id))
+                trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id_, contest_id]);
@@ -75,7 +79,16 @@ const ResultGradeContestTeacher: React.FC = () => {
         });
     }
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             
             <div className="row">
                 <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />

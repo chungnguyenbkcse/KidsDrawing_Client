@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSectionAll, initialSection, addSection } from "../../../store/actions/section.action";
+import { fetchDataSuccess, fetchDataError, removeSectionAll, initialSection, addSection } from "../../../store/actions/section.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Section {
     id: number;
@@ -10,12 +10,10 @@ interface Section {
     recording: string;
     message: string;
 }
-export function getSectionByClass(id: any) {
+export function getSectionByClass(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/section/class/${id}`, {
                     method: "GET",
                     headers: {
@@ -30,7 +28,7 @@ export function getSectionByClass(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getSectionByClass(id))
+                        dispatch(getSectionByClass(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -69,5 +67,4 @@ export function getSectionByClass(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

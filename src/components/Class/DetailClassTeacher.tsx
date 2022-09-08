@@ -12,7 +12,6 @@ import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
@@ -20,6 +19,9 @@ import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
 import { getTutorial } from "../../common/service/Tutorial/GetTutorial";
 import { getTutorialPage } from "../../common/service/TutorialPage/GetTutorialPage";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
+
 
 const DetailClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -30,6 +32,8 @@ const DetailClassTeacher: React.FC = () => {
     const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     console.log(tutorial_pages)
+    const { promiseInProgress } = usePromiseTracker();
+
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberApprovedCount: number = sections.sections.length;
     const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
@@ -70,25 +74,23 @@ const DetailClassTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getSectionByClass(class_id))
-                    dispatch(getTutorial())
-                    dispatch(getTutorialPage())
-                    dispatch(getUserById(dispatch, id))
-                    dispatch(getTeacher(dispatch))
-                    dispatch(getExerciseSubmissionByClass(class_id))
-                    dispatch(getTeacherLeaveByTeacher(id))
+                    trackPromise(getSectionByClass(dispatch, class_id))
+                    trackPromise(getTutorial(dispatch))
+                    trackPromise(getTutorialPage(dispatch))
+                    trackPromise(getUserById(dispatch, id))
+                    trackPromise(getTeacher(dispatch))
+                    trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
+                    trackPromise(getTeacherLeaveByTeacher(dispatch, id))
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getSectionByClass(class_id))
-                dispatch(getTutorial())
-                dispatch(getTutorialPage())
-                dispatch(getUserById(dispatch, id))
-                dispatch(getTeacher(dispatch))
-                dispatch(getExerciseSubmissionByClass(class_id))
-                dispatch(getTeacherLeaveByTeacher(id))
+                trackPromise(getSectionByClass(dispatch, class_id))
+                trackPromise(getTutorial(dispatch))
+                trackPromise(getTutorialPage(dispatch))
+                trackPromise(getUserById(dispatch, id))
+                trackPromise(getTeacher(dispatch))
+                trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
+                trackPromise(getTeacherLeaveByTeacher(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
@@ -153,7 +155,16 @@ const DetailClassTeacher: React.FC = () => {
     }
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

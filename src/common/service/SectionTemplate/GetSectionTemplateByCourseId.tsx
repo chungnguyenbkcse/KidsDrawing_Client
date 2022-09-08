@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSectionTemplateAll, initialSectionTemplate, addSectionTemplate } from "../../../store/actions/section_template.action";
+import { fetchDataSuccess, fetchDataError, removeSectionTemplateAll, initialSectionTemplate, addSectionTemplate } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface SectionTemplate {
     id: number;
@@ -11,12 +11,10 @@ interface SectionTemplate {
     create_time: string;
     update_time: string;
 }
-export function getSectionTemplateByCourseId(id: any) {
+export function getSectionTemplateByCourseId(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/section-template/course/${id}`, {
                     method: "GET",
                     headers: {
@@ -31,7 +29,7 @@ export function getSectionTemplateByCourseId(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getSectionTemplateByCourseId(id))
+                        dispatch(getSectionTemplateByCourseId(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -72,5 +70,4 @@ export function getSectionTemplateByCourseId(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

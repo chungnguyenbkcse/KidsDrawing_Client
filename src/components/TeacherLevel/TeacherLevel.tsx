@@ -8,13 +8,15 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { changeSelectedTeacherRegisterQuatificationApproved, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./TeacherLevel.css"
 import TeacherLevelForm from "./TeacherLevelForm";
 import TeacherLevelList from "./TeacherLevelList";
 import TeacherLevelNotApprovedNowList from "./TeacherLevelNotApprovedNowList";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const TeacherLevel: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -28,6 +30,9 @@ const TeacherLevel: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -51,17 +56,15 @@ const TeacherLevel: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                    dispatch(getUserById(dispatch, id))
-                    dispatch(getCourse(dispatch))
+                    trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                    trackPromise(getUserById(dispatch, id))
+                    trackPromise(getCourse(dispatch))
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                dispatch(getUserById(dispatch, id))
-                dispatch(getCourse(dispatch))
+                trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
+                trackPromise(getUserById(dispatch, id))
+                trackPromise(getCourse(dispatch))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);
@@ -87,7 +90,16 @@ const TeacherLevel: React.FC = () => {
 
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

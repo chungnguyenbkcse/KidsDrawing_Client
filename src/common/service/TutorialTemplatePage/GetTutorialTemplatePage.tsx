@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
+import { fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialTemplatePage {
     id: number;
@@ -7,12 +7,10 @@ interface TutorialTemplatePage {
     description: string;
     number: number;
 }
-export function getTutorialTemplatePage() {
+export function getTutorialTemplatePage(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/tutorial-template-page`, {
                     method: "GET",
                     headers: {
@@ -27,7 +25,7 @@ export function getTutorialTemplatePage() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTutorialTemplatePage())
+                        dispatch(getTutorialTemplatePage(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -57,5 +55,4 @@ export function getTutorialTemplatePage() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

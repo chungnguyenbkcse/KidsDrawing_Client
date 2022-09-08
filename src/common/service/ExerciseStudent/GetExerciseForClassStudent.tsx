@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeExerciseNotSubmitAll, removeExerciseSubmittedAll, addExerciseNotSubmit, addExerciseSubmitted } from "../../../store/actions/exercise_student.action";
+import { fetchDataSuccess, fetchDataError, removeExerciseNotSubmitAll, removeExerciseSubmittedAll, addExerciseNotSubmit, addExerciseSubmitted } from "../../../store/actions/exercise_student.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface exercise {
     id: number;
@@ -11,11 +11,9 @@ interface exercise {
     create_time: string;
     update_time: string;
 }
-export function getExerciseForClassStudent(class_id: any, student_id: any) {
+export function getExerciseForClassStudent(dispatch: any, class_id: any, student_id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/exercises/class-student/${class_id}/${student_id}`, {
                     method: "GET",
                     headers: {
@@ -30,7 +28,7 @@ export function getExerciseForClassStudent(class_id: any, student_id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseForClassStudent(class_id, student_id))
+                        dispatch(getExerciseForClassStudent(dispatch, class_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -86,5 +84,4 @@ export function getExerciseForClassStudent(class_id: any, student_id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

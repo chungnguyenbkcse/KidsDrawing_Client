@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeExerciseGradedAll, removeExerciseNotGradedAll, addExerciseGraded, addExerciseNotGraded } from "../../../store/actions/exercise_submission.action";
+import { fetchDataSuccess, fetchDataError, removeExerciseGradedAll, removeExerciseNotGradedAll, addExerciseGraded, addExerciseNotGraded } from "../../../store/actions/exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ExerciseSubmission {
     id: number;
@@ -10,11 +10,9 @@ interface ExerciseSubmission {
     create_time: string;
     update_time: string;
 }
-export function getExerciseSubmissionByExercise(id: any) {
+export function getExerciseSubmissionByExercise(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/exercise-submission/exercise/${id}`, {
                     method: "GET",
                     headers: {
@@ -29,7 +27,7 @@ export function getExerciseSubmissionByExercise(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseSubmissionByExercise(id))
+                        dispatch(getExerciseSubmissionByExercise(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -80,5 +78,4 @@ export function getExerciseSubmissionByExercise(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

@@ -2,7 +2,7 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { changeSelectedDoinglClass, clearSelectedDoinglClass, setModificationState } from "../../store/actions/class_teacher.action";
+import { changeSelectedDoinglClass, setModificationState } from "../../store/actions/class_teacher.action";
 import { IClassTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { IClassTeacher, ClassTeacherModificationStatus } from "../../store/models/class_teacher.interface";
 import "./ClassTeacher.css"
@@ -14,6 +14,8 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { getCourse } from "../../common/service/Course/GetCourse";
 import { getSemester } from "../../common/service/semester/GetSemester";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -26,6 +28,7 @@ const ClassTeacher: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+    const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -50,19 +53,17 @@ const ClassTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedDoinglClass());
-                    dispatch(getUserById(dispatch, id))
-                    dispatch(getClassTeacher(id))
-                    dispatch(getCourse(dispatch))
-                    dispatch(getSemester(dispatch))
+                    trackPromise(getUserById(dispatch, id))
+                    trackPromise(getClassTeacher(dispatch, id))
+                    trackPromise(getCourse(dispatch))
+                    trackPromise(getSemester(dispatch))
                 }
             }
             else {
-                dispatch(clearSelectedDoinglClass());
-                dispatch(getUserById(dispatch, id))
-                dispatch(getClassTeacher(id))
-                dispatch(getCourse(dispatch))
-                dispatch(getSemester(dispatch))
+                trackPromise(getUserById(dispatch, id))
+                trackPromise(getClassTeacher(dispatch,id))
+                trackPromise(getCourse(dispatch))
+                trackPromise(getSemester(dispatch))
             }
         }
         dispatch(updateCurrentPath("Khóa học", ""));
@@ -75,7 +76,16 @@ const ClassTeacher: React.FC = () => {
 
     const [checked, setChecked] = useState(true);
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

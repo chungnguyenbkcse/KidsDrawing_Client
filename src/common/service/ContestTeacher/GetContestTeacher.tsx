@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, 
+import { fetchDataSuccess, fetchDataError, 
     removeContestTeacherEndAll, removeContestTeacherNotOpenNowAll, 
     removeContestTeacherNotOpenNowNotTeacherAll, removeContestTeacherOpeningAll,
     initialContestTeacherEnd, initialContestTeacherNotOpenNow,
@@ -22,11 +22,9 @@ interface ContestTeacher {
     art_type_name: string;
     art_age_name: string;
 }
-export function getContestTeacher(id: any) {
+export function getContestTeacher(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/contest/teacher/${id}`, {
                     method: "GET",
                     headers: {
@@ -41,7 +39,7 @@ export function getContestTeacher(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getContestTeacher(id))
+                        dispatch(getContestTeacher(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -168,5 +166,4 @@ export function getContestTeacher(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

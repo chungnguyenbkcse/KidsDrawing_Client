@@ -20,11 +20,15 @@ import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ScheduleClass: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
+
+    const { promiseInProgress } = usePromiseTracker();
 
     let data: object[] = []
 
@@ -74,11 +78,11 @@ const ScheduleClass: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getInfoMyClass(class_id))
+                    trackPromise(getInfoMyClass(dispatch, class_id))
                 }
             }
             else {
-                dispatch(getInfoMyClass(class_id))
+                trackPromise(getInfoMyClass(dispatch, class_id))
             }
         }
     }, [dispatch, class_id, access_token, refresh_token]);
@@ -91,7 +95,16 @@ const ScheduleClass: React.FC = () => {
     }, [path.area, dispatch]);
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> :<Fragment>
             <h1 className="h3 mb-2 text-gray-800">{class_name}</h1>
             <div className="row">
                 <div className="col-xl-12 col-lg-12">

@@ -10,9 +10,10 @@ import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLe
 import { getUserById } from "../../common/service/User/GetUserById";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IExerciseStudentState, IStateType, IStudentLeaveState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import "./ManageStudent.css"
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ManageStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -23,6 +24,7 @@ const ManageStudent: React.FC = () => {
     const numberSubmittedCount: number = exercise_students.exercise_submitted.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
+    const { promiseInProgress } = usePromiseTracker();
 
     
     var id_z = localStorage.getItem('parent_id');
@@ -65,21 +67,19 @@ const ManageStudent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getUserById(dispatch, student_id))
-                    dispatch(getParentById(parent_id))
-                    dispatch(getExerciseForClassStudent(class_id, student_id))
-                    dispatch(getStudentLeaveByClassAndStudent(class_id, student_id))
-                    dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
+                    trackPromise(getUserById(dispatch, student_id))
+                    trackPromise(getParentById(dispatch, parent_id))
+                    trackPromise(getExerciseForClassStudent(dispatch, class_id, student_id))
+                    trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, student_id))
+                    trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getUserById(dispatch, student_id))
-                dispatch(getParentById(parent_id))
-                dispatch(getExerciseForClassStudent(class_id, student_id))
-                dispatch(getStudentLeaveByClassAndStudent(class_id, student_id))
-                dispatch(getUserGradeExerciseByStudentAndClass(class_id,student_id))
+                trackPromise(getUserById(dispatch, student_id))
+                trackPromise(getParentById(dispatch, parent_id))
+                trackPromise(getExerciseForClassStudent(dispatch, class_id, student_id))
+                trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, student_id))
+                trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
             }
         }
     }, [dispatch, access_token, refresh_token, student_id, parent_id, class_id]);
@@ -115,7 +115,16 @@ const ManageStudent: React.FC = () => {
     }
     
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

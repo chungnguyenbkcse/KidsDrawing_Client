@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeStudentLeaveApprovedAll, removeStudentLeaveNotApprovedAll, removeStudentLeaveNotApprovedNowAll, addStudentLeaveApproved, addStudentLeaveNotApproved, addStudentLeaveNotApprovedNow } from "../../../store/actions/student_leave.action";
+import { fetchDataSuccess, fetchDataError, removeStudentLeaveApprovedAll, removeStudentLeaveNotApprovedAll, removeStudentLeaveNotApprovedNowAll, addStudentLeaveApproved, addStudentLeaveNotApproved, addStudentLeaveNotApprovedNow } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface StudentLeave {
     id: number;
@@ -15,11 +15,9 @@ interface StudentLeave {
     create_time: string;
     update_time: string;
 }
-export function getStudentLeaveByClassAndStudent(class_id: any, student_id: any) {
+export function getStudentLeaveByClassAndStudent(dispatch: any, class_id: any, student_id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/student-leave/class-student/${class_id}/${student_id}`, {
                     method: "GET",
                     headers: {
@@ -34,7 +32,7 @@ export function getStudentLeaveByClassAndStudent(class_id: any, student_id: any)
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getStudentLeaveByClassAndStudent(class_id, student_id))
+                        dispatch(getStudentLeaveByClassAndStudent(dispatch, class_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -84,5 +82,4 @@ export function getStudentLeaveByClassAndStudent(class_id: any, student_id: any)
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

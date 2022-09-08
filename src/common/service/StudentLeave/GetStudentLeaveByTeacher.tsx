@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeStudentLeaveApprovedAll, removeStudentLeaveNotApprovedAll, removeStudentLeaveNotApprovedNowAll, addStudentLeaveApproved, addStudentLeaveNotApproved, addStudentLeaveNotApprovedNow } from "../../../store/actions/student_leave.action";
+import { fetchDataSuccess, fetchDataError, removeStudentLeaveApprovedAll, removeStudentLeaveNotApprovedAll, removeStudentLeaveNotApprovedNowAll, addStudentLeaveApproved, addStudentLeaveNotApproved, addStudentLeaveNotApprovedNow } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface StudentLeave {
     id: number;
@@ -15,11 +15,9 @@ interface StudentLeave {
     create_time: string;
     update_time: string;
 }
-export function getStudentLeaveByTeacher(id: any) {
+export function getStudentLeaveByTeacher(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/student-leave/teacher/${id}`, {
                     method: "GET",
                     headers: {
@@ -34,7 +32,7 @@ export function getStudentLeaveByTeacher(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getStudentLeaveByTeacher(id))
+                        dispatch(getStudentLeaveByTeacher(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -84,5 +82,4 @@ export function getStudentLeaveByTeacher(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

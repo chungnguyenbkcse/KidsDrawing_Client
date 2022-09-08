@@ -13,11 +13,15 @@ import NumberInput from "../../common/components/NumberInput";
 import { toast, ToastContainer } from "react-toastify";
 import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
 import { postUserGradeContestSubmission } from "../../common/service/UserGradeContestSubmission/PostUserGradeContestSubmission";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
+
 
 const GradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    const { promiseInProgress } = usePromiseTracker();
     let user_grade_contest_submission = {
         feedback: "",
         score: 0
@@ -94,11 +98,11 @@ const GradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getContestSubmissionByContest(contest_id))
+                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
                 }
             }
             else {
-                dispatch(getContestSubmissionByContest(contest_id))
+                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
             }
         }
     }, [dispatch, access_token, refresh_token, contest_id]);
@@ -139,7 +143,16 @@ const GradeContestTeacher: React.FC = () => {
     const [contest_submission_id, setContestSubmissionId] = useState(0);
     const [time_submit, setTimeSubmit] = useState("");
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <div className="row">
                 <div className="col-xl-6 col-lg-6">

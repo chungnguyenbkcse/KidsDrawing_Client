@@ -15,6 +15,8 @@ import { IAnonymousNotificationState, IRootPageStateType, IStateType, ITeacherRe
 import "./ClassTeacherDetail.css"
 import NotificationClassTeacher from "./NotificationClassTeacher";
 import StudentList from "./StudentForTeacherList";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ClassTeacherDetail: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -29,6 +31,8 @@ const ClassTeacherDetail: React.FC = () => {
     if (id_x !== null) {
         class_id = parseInt(id_x);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -55,12 +59,12 @@ const ClassTeacherDetail: React.FC = () => {
                 }
                 else {
                     dispatch(clearSelectedTeacherRegisterQuatification());       
-                    dispatch(getInfoMyClass(class_id))
+                    trackPromise(getInfoMyClass(dispatch, class_id))
                 }
             }
             else {
                 dispatch(clearSelectedTeacherRegisterQuatification());       
-                dispatch(getInfoMyClass(class_id))
+                trackPromise(getInfoMyClass(dispatch, class_id))
             }
         }
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
@@ -87,7 +91,16 @@ const ClassTeacherDetail: React.FC = () => {
         });
     }
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
             <ToastContainer />

@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, initialUserGradeContest, addUserGradeContest} from "../../../store/actions/user_grade_contest.action";
+import { fetchDataSuccess, fetchDataError, initialUserGradeContest, addUserGradeContest} from "../../../store/actions/user_grade_contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
     id: number;
@@ -7,12 +7,10 @@ interface user_grade_contest {
     teacher_name: string;
     contest_name: string;
 }
-export function getUserGradeContestByContestId(id: any) {
+export function getUserGradeContestByContestId(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/user-grade-contest/contest/${id}?page=0&size=100`, {
                     method: "GET",
                     headers: {
@@ -27,7 +25,7 @@ export function getUserGradeContestByContestId(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUserGradeContestByContestId(id))
+                        dispatch(getUserGradeContestByContestId(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -61,5 +59,4 @@ export function getUserGradeContestByContestId(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

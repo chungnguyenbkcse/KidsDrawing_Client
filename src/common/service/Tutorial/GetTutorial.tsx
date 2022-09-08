@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialAll, addTutorial } from "../../../store/actions/tutorial.action";
+import { fetchDataSuccess, fetchDataError, removeTutorialAll, addTutorial } from "../../../store/actions/tutorial.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Tutorial {
     id: number;
@@ -12,11 +12,9 @@ interface Tutorial {
     create_time: string;
     update_time: string;
 }
-export function getTutorial() {
+export function getTutorial(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/tutorial`, {
                     method: "GET",
                     headers: {
@@ -31,7 +29,7 @@ export function getTutorial() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTutorial())
+                        dispatch(getTutorial(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -66,5 +64,4 @@ export function getTutorial() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

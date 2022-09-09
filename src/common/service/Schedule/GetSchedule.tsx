@@ -2,8 +2,8 @@ import { fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, a
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface schedule {
     id: number;
-    lesson_time: number;
-    lesson_time_name: string;
+    lesson_time_id: number;
+    lesson_time: string;
     semester_class_id: number;
     date_of_week: number;
 }
@@ -41,9 +41,9 @@ export function getSchedule(dispatch: any) {
                 data.body.schedules.map((ele: any, index: any) => {
                     var schedule: schedule = {
                         id: ele.id,
-                        lesson_time: ele.lesson_time_id,
-                        lesson_time_name: ele.lesson_time,
-                        semester_class_id: ele.semester_class_id,
+                        lesson_time_id: ele.lesson_time_id,
+                        lesson_time: ele.lesson_time,
+                        semester_class_id: ele.semester_classes_id,
                         date_of_week: ele.date_of_week
                     }
                     //console.log(strDate.substring(0, 16))

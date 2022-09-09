@@ -21,15 +21,16 @@ function ClassSemesterList(props: semesterClassListProps): JSX.Element  {
   const semester_classes: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
   const schedules: IScheduleState = useSelector((state: IStateType) => state.schedules);
   let schedule_list: Options[] = []
-  console.log(schedules.schedules)
+  console.log(semester_classes.semesterClasses)
   if (schedules.schedules.length > 0){
-    semester_classes.semesterClasses.forEach(ele => {
+    semester_classes.semesterClasses.map(ele => {
       let item: string = "";
-      schedules.schedules.forEach(element => {
+      schedules.schedules.map(element => {
         if (element.semester_class_id === ele.id) {
-          console.log(element.lesson_time_name)
-          item += element.lesson_time_name
+          console.log(element.lesson_time)
+          item += element.lesson_time
         }
+        return element
       })
       return schedule_list.push({
         name: ele.name,

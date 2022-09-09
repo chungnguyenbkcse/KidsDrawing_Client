@@ -75,7 +75,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
       if (element.semester_class_id === semester_class_id) {
         lesson_time_list.push({
           key: element.date_of_week,
-          value: element.lesson_time
+          value: element.lesson_time_id
         })
       }
     })
@@ -148,7 +148,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
         }
         let lesson_time_obj: Option1s = {
           key: index,
-          value: schedule_list[index].lesson_time
+          value: schedule_list[index].lesson_time_id
         }
         res_1.push(date_of_week_obj)
         listScheduleItemId.push(date_of_week_obj)

@@ -88,7 +88,7 @@ const ViewSectionTeacher: React.FC = () => {
                                                         return ""
                                                     }
                                                     else {
-                                                        return <div className="card-body" dangerouslySetInnerHTML={{ __html: TutorialPages.tutorialPages[count-1].description }}>
+                                                        return <div className="card-body" dangerouslySetInnerHTML={{ __html: TutorialPages.tutorialPages.sort((a, b) => a.number - b.number)[count-1].description }}>
                                                         </div>
                                                     }
                                                 }()

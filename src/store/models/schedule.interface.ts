@@ -1,7 +1,7 @@
 export interface ISchedule {
     id: number;
-    lesson_time: number;
-    lesson_time_name: string;
+    lesson_time_id: number;
+    lesson_time: string;
     semester_class_id: number;
     date_of_week: number;
 }

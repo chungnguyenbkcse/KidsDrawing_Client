@@ -64,7 +64,7 @@ const EditSectionTeacher: React.FC = () => {
         let x = count;
         let y = x + 1;
         if (x < totalPage){
-            setTextHtml(list_description[x+1].description)
+            setTextHtml(list_description[x].description)
             setChecked(false)
             console.log("Count")
             console.log(x)

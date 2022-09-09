@@ -42,7 +42,7 @@ export function postSemesterClass(data: any, schedule_element: any, idx: any) {
                     return dispatch(postSchedule({
                         lesson_time: ele.lesson_time,
                         date_of_week: ele.date_of_week,
-                        semester_class_id: data_1.id
+                        semester_classes_id: data_1.id
                     }))
                 })
                 getSemesterClass(dispatch)

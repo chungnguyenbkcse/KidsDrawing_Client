@@ -102,7 +102,6 @@ const TeacherLevel: React.FC = () => {
       </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
             <div className="row">
                 <TopCard title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`${numberApprovedCount}`} icon="book" class="primary" />
                 <TopCard title="TRÌNH ĐỘ CHƯA DUYỆT" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />

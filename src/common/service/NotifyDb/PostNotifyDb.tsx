@@ -2,7 +2,7 @@ import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_age
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postUserReadNotification } from "../UserReadNotification/PostUserReadNotification";
 
-export function postNotifyDb(data: any) {
+export function postNotifyDb(data: any, user_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -22,7 +22,7 @@ export function postNotifyDb(data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postNotifyDb(data))
+                        dispatch(postNotifyDb(data, user_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,7 +36,7 @@ export function postNotifyDb(data: any) {
                 console.log(xx)
                 dispatch(postUserReadNotification({
                     notification_id: xx.id,
-                    user_id: data.creator_id,
+                    user_id: user_id,
                     is_read: false
                 }))
             })

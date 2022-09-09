@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/teacher_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { postNotifyDb } from "../NotifyDb/PostNotifyDb";
+import { getTeacherLeaveByTeacher } from "./GetTeacherLeaveByTeacher";
 
 export function postTeacherLeave(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -30,11 +32,16 @@ export function postTeacherLeave(data: any, idx: any) {
                     }
                 }
                 else {
-                    return response
+                    return response.json()
                 }
             })
             .then (val => {
                 console.log(val)
+                dispatch(postNotifyDb({
+                    name: `Gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`,
+                    description: `Bạn đã gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`
+                }, 1))
+                getTeacherLeaveByTeacher(dispatch, data.teacher_id)
                 toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {

@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/user_register_tutorial.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { postNotifyDb } from "../NotifyDb/PostNotifyDb";
 import { getUserRegisterTutorial } from "./GetUserRegisterTutorial";
 
 export function putUserRegisterTutorial(id: any, tutorial: any, idx: any) {
@@ -35,6 +36,10 @@ export function putUserRegisterTutorial(id: any, tutorial: any, idx: any) {
                 }
             })
             .then (data => {
+                dispatch(postNotifyDb({
+                    name: 'Chấp nhận giáo án giáo viên!',
+                    description: `Quản trị viên đã chấp nhận yêu cầu chỉnh giáo án ${tutorial.name} của giáo viên!`
+                }, tutorial.creator_id))
                 toast.update(idx, { render: "Bạn đã xác nhận trình độ cho giáo viên thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataSuccess(tutorial))
                 getUserRegisterTutorial(dispatch)

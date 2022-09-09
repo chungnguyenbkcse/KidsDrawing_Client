@@ -1,7 +1,6 @@
 import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { postNotifyDb } from "../../common/service/NotifyDb/PostNotifyDb";
 import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import { IStateType, IUserRegisterTutorialState } from "../../store/models/root.interface";
 import { ITutorial } from "../../store/models/tutorial.interface";
@@ -28,11 +27,6 @@ function TutorialEditRequestList(props: studentListProps): JSX.Element {
       name: ele.name,
       creator_id: ele.creator_id
     }, id))
-
-    dispatch(postNotifyDb({
-      name: 'Chấp nhận giáo án giáo viên!',
-      description: `Quản trị viên đã chấp nhận yêu cầu chỉnh giáo án ${ele.name} của giáo viên!`
-    }))
   }
 
   function notApprovedTutorial(ele: IUserRegisterTutorial) {

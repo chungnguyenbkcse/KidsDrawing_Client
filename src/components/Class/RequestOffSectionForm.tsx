@@ -5,7 +5,7 @@ import TextInput from "../../common/components/TextInput";
 import { addLeaves } from "../../store/actions/teacher_leave.action";
 import { OnChangeModel, ITeacherLeaveFormState } from "../../common/types/Form.types";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { IUser } from "../../store/models/user.interface";
 import { ITeacherLeave, TeacherLeaveModificationStatus } from "../../store/models/teacher_leave.interface";
 import { postTeacherLeave } from "../../common/service/TeacherLeave/PostTeacherLeave";
@@ -85,30 +85,25 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     function saveForm(formState: ITeacherLeaveFormState, saveFn: Function): void {
         if (teacher_leave) {
             const id = toast.loading("Đang gửi yêu cầu. Vui lòng đợi trong giây lát...", {
-                position: toast.POSITION.TOP_CENTER
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000
             });
-            if (saveFn === addLeaves) {
-                if (props.data === undefined || props.data === null) {
-                    return
-                }
-                else {
-                    dispatch(postTeacherLeave({
-                        section_id: formState.section_id.value,
-                        substitute_teacher_id: formState.substitute_teacher_id.value,
-                        teacher_id: teacher_id,
-                        class_id: class_id,
-                        description: formState.description.value
-                    }, id))
 
-                    console.log({
-                        section_id: formState.section_id.value,
-                        substitute_teacher_id: formState.substitute_teacher_id.value,
-                        teacher_id: teacher_id,
-                        class_id: class_id,
-                        description: formState.description.value
-                    })
-                }
-            }
+            dispatch(postTeacherLeave({
+                section_id: formState.section_id.value,
+                substitute_teacher_id: formState.substitute_teacher_id.value,
+                teacher_id: teacher_id,
+                classes_id: class_id,
+                description: formState.description.value
+            }, id))
+
+            console.log({
+                section_id: formState.section_id.value,
+                substitute_teacher_id: formState.substitute_teacher_id.value,
+                teacher_id: teacher_id,
+                classes_id: class_id,
+                description: formState.description.value
+            })
         }
     }
 
@@ -127,6 +122,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
     return (
         <Fragment>
+            <ToastContainer />
             <div className="row text-left">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
@@ -150,7 +146,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                                     <div className="form-group col-md-6">
                                         <SelectKeyValue
                                             id="input_substitute_teacher_id"
-                                            field="asubstitute_teacher_id"
+                                            field="substitute_teacher_id"
                                             label="Giáo viên dạy thay"
                                             options={listTeachers}
                                             required={true}

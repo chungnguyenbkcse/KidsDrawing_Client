@@ -6,6 +6,9 @@ import Login from "./components/Account/Login";
 import { PrivateRoute } from "./common/components/PrivateRoute";
 import Routers from "./Routers/Routers";
 import LandingPage from "./components/LandingPage/LandingPage";
+import ForgotPassword from "./components/Account/ForgotPassword";
+import UpdatePassword from "./components/Account/UpdatePassword";
+import RegisterForm from "./components/Account/RegisterForm";
 
 
 const App: React.FC = () => {
@@ -19,6 +22,9 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <Route path="/landing-page"><LandingPage /></Route>
+          <Route path={`/forgot-password`}><ForgotPassword /></Route>
+          <Route path={`/update-password`}><UpdatePassword /></Route>
+          <Route path={`/register`}><RegisterForm /></Route>
           <Route path="/auth"><Login /></Route>
           <PrivateRoute path="/">
             <Routers />

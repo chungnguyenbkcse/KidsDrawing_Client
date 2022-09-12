@@ -24,10 +24,10 @@ const ContentHeader = styled.header<Props>`
   }
 `;
 
-const PickedColor = styled.span`
+/* const PickedColor = styled.span`
   font-size: 18px;
   text-decoration: underline;
-`;
+`; */
 
 const Header: React.FC<Props> = ({ correct, pickedColor }: Props) => {
   return (
@@ -35,7 +35,8 @@ const Header: React.FC<Props> = ({ correct, pickedColor }: Props) => {
       <div>
         <h1>Color Guessing Game</h1>
         <p>
-          Guess which block is: <PickedColor>{pickedColor}</PickedColor>
+          {/* Guess which block below is: <PickedColor>{pickedColor}</PickedColor> */}
+          Guess which block below is:
         </p>
       </div>
     </ContentHeader>

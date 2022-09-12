@@ -68,6 +68,10 @@ import GuessColor from "../components/GuessColor";
 import CourseParent from "../components/Course/CourseParent";
 import ContestParent from "../components/Contest/ContestParent";
 import ScheduleParent from "../components/Schedule/ScheduleParent";
+import CourseStudent from "../components/Course/CourseStudent";
+import ScheduleStudent from "../components/Schedule/ScheduleStudent";
+import ContestStudent from "../components/Contest/ContestStudent";
+import StudentHome from "../components/Home/StudentHome";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -141,8 +145,32 @@ const Routers: React.FC = () => {
                                 <Route path={`/courses`}><CourseParent /></Route>
                                 <Route path={`/contests`}><ContestParent /></Route>
                                 <Route path={`/schedules`}><ScheduleParent /></Route>
-                                <Route path={`/game/guess-color`}><GuessColor /></Route>
                                 <Route path="/"><ParentHome /></Route>
+                            </Switch>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        )
+    }
+    else if (roleUser === "STUDENT_USER"){
+        return (
+            <Fragment>
+                <LeftMenu />
+                <div id="content-wrapper" className="d-flex flex-column">
+                    <div id="content">
+                        <TopMenu />
+                        <div className="container-fluid">
+                            <Switch>
+                                <Route path={`/change-password`}><ChangePassword /></Route>
+                                <Route path={`/account`}><Account /></Route>                            
+                                <Route path={`/notification/detail`}><NotificationDetail /></Route>
+                                <Route path={`/notification`}><Notification /></Route>
+                                <Route path={`/courses`}><CourseStudent /></Route>
+                                <Route path={`/contests`}><ContestStudent /></Route>
+                                <Route path={`/schedules`}><ScheduleStudent /></Route>
+                                <Route path={`/game/guess-color`}><GuessColor /></Route>
+                                <Route path="/"><StudentHome /></Route>
                             </Switch>
                         </div>
                     </div>

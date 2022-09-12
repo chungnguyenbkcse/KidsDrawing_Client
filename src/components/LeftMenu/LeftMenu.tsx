@@ -318,12 +318,12 @@ const LeftMenu: React.FC = () => {
         <Fragment>
             <div className="toggle-area">
                 <button className="btn btn-primary toggle-button" onClick={() => changeLeftMenuVisibility()}>
-                    <i className="fas fa-bolt"></i>
+                        <i className="fas fa-bolt"></i>
                 </button>
             </div>
 
-            <ul className={`navbar-nav bg-gradient-primary-green sidebar sidebar-dark accordion ${getCollapseClass()}`}
-                id="collapseMenu">
+            <ul className={`navbar-nav teacher-navbar-nav sidebar sidebar-dark accordion ${getCollapseClass()}`}
+                    id="collapseMenu">
 
                 <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                     <div className="sidebar-brand-icon icon-green rotate-n-15">
@@ -343,28 +343,28 @@ const LeftMenu: React.FC = () => {
                 </li>
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/students`}>
+                    <Link className="nav-link" to={`/courses`}>
                         <FaChild />
                         <span> Khóa học</span>
                     </Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/parents`}>
+                    <Link className="nav-link" to={`/contests`}>
                         <RiParentFill />
                         <span> Cuộc thi</span>
                     </Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/turnovers`}>
+                    <Link className="nav-link" to={`/schedules`}>
                         <BsCashCoin />
                         <span> Thời khóa biểu</span>
                     </Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="nav-link" to={`/turnovers`}>
+                    <Link className="nav-link" to={`/game/guess-color`}>
                         <BsCashCoin />
                         <span> Trò chơi</span>
                     </Link>

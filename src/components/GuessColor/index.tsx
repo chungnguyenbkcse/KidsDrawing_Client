@@ -1,9 +1,11 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, Dispatch } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import Header from "./Header";
 import Game from "./Game";
 import Scoreboard from "./Scoreboard";
+import { updateCurrentPath } from "../../store/actions/root.actions";
+import { useDispatch } from "react-redux";
 
 type ButtonTypes = {
   buttonDifficulty: number;
@@ -63,6 +65,8 @@ const Message = styled.span`
 `;
 
 const GuessColor = () => {
+  const dispatch: Dispatch<any> = useDispatch();
+  dispatch(updateCurrentPath("Trò chơi", ""));
   const [difficulty, setDifficulty] = useState(6);
   const [gameColors, setGameColors] = useState([
     "rgb(91, 99, 77)",
@@ -150,6 +154,11 @@ const GuessColor = () => {
   return (
     <>
       <Header pickedColor={pickedColor} correct={correct} />
+      <div className="row pick-color mb-2 mt-2 mr-2 ml-2 text-center justify-content-md-center justify-content-center">
+        <div className="col-xl-2 col-md-12 col-xs-12" style={{backgroundColor: pickedColor, height: "160px", width: '100px', border: 'border: 4px solid white', borderRadius: '30px'}}>
+        </div>
+      </div>
+      
       <MenuBar>
         <MenuButton
           onClick={() => resetGame()}

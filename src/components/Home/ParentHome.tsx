@@ -2,25 +2,49 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
-import TeacherRegisterQuantificationList from "./TeacherLevelList";
+import { changeSelectedUser, setModificationState } from "../../store/actions/users.action";
+import { IScheduleTimeClassState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IUser, UserModificationStatus } from "../../store/models/user.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
+import AccountChildList from "./AccountChildList";
+import "./ParentHome.css"
+import Popup from "reactjs-popup";
+import AccountChildForm from "../AccountChild/AccountChildForm";
+import { Eventcalendar } from '@mobiscroll/react';
+import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import { getScheduleTimeByParent } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByParent";
+
 
 const ParentHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
-    const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
+    const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
+    const numberChildCount: number = users.students.length;
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
+    }
+
+    console.log(schedule_time_classes.schedule_time_classes)
+
+    const [popup, setPopup] = useState(false);
+
+    function onUserSelect(lesson: IUser): void {
+        dispatch(changeSelectedUser(lesson));
+        onUserRemove();
+        dispatch(setModificationState(UserModificationStatus.None));
+    }
+
+    function onUserRemove() {
+        setPopup(true);
+    }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
     }
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -50,20 +74,34 @@ const ParentHome: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                    trackPromise(getUserById(dispatch, id))
+                    trackPromise(getStudentByParent(dispatch, id))
+                    trackPromise(getScheduleTimeByParent(dispatch, id))
                 }
             }
             else {
-                trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                trackPromise(getUserById(dispatch, id))
+                trackPromise(getStudentByParent(dispatch, id))
+                trackPromise(getScheduleTimeByParent(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, id]);
 
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
+    let data: any[] = [];
+    if (schedule_time_classes.schedule_time_classes.length > 0) {
+        schedule_time_classes.schedule_time_classes.map((ele, idx) => {
+
+            return data.push({
+                // base properties
+                title: ele.class_name,
+                color: '#56ca70',
+                start: ele.start_time,
+                end: ele.end_time,
+                // add any property you'd like
+                busy: true,
+                description: 'Weekly meeting with team',
+                location: 'Office'
+            })
+        
+        })
     }
 
     return (
@@ -81,11 +119,13 @@ const ParentHome: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="TÀI KHOẢN CON" text={`${numberApprovedCount}`} icon="user" class="primary" />
-                    <TopCard title="SỐ TIỀN" text={`${numberApprovedCount}`} icon="donate" class="primary" />
+                    <TopCard title="TÀI KHOẢN CON" text={`${numberChildCount}`} icon="user" class="primary" />
+                    <TopCard title="SỐ TIỀN" text={`${numberChildCount}`} icon="donate" class="primary" />
                     <div className="col-xl-6 col-md-6 mb-4" id="content-button-create-teacher-level">
-                        <button className="btn btn-success btn-green mr-0" id="btn-create-teacher-level" onClick={() =>
-                            dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
+                        <button className="btn btn-success btn-green mr-0" id="btn-create-teacher-level" onClick={() => {
+                            dispatch(setModificationState(UserModificationStatus.Create))
+                            onUserRemove()
+                        }}>
                             <i className="fas fa fa-plus"></i>
                             Thêm tài khoản con
                         </button>
@@ -108,42 +148,49 @@ const ParentHome: React.FC = () => {
                     </div>
                 </div>
 
+                <Popup
+                    open={popup}
+                    onClose={() => setPopup(false)}
+                    closeOnDocumentClick
+                >
+                    <>
+                        {
+                            function () {
+                                if ((users.modificationState === UserModificationStatus.Create) || ((users.selectedUser) && (users.modificationState === UserModificationStatus.Edit))) {
+                                    return <AccountChildForm isCheck={onRemovePopup} />
+                                }
+                            }()
+                        }
+                    </>
+                </Popup>
+
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
                         <h3 className=" mb-2" id="level-teacher">Danh sách tài khoản con</h3>
-                        <TeacherRegisterQuantificationList
-                            onSelect={onTeacherRegisterQuantificationSelect}
+                        <AccountChildList
+                            onSelect={onUserSelect}
                         />
                     </div>
-
                     <div className="col-xl-6 col-md-6 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Lịch của bé</h3>
-                        <div className="col-xl-12 col-md-12 mb-4">
-                            <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                <div className="card-body">
-                                    <div className="row text-center text-center justify-content-center">
-                                        <i className={`fas fa-user fa-10x`} id="icon-user"></i>
-                                    </div>
-                                    <div className="row no-gutters justify-content-center">
-                                        <h4 id="full-name">{users.teachers.length === 0 ? "" : (users.teachers[0].firstName + " " + users.teachers[0].lastName)}</h4>
-                                    </div>
-                                    <div className="row no-gutters justify-content-center">
-                                        <p id="username-teacher">{users.teachers.length === 0 ? "" : users.teachers[0].username}</p>
-                                    </div>
-                                    <div className="row no-gutters">
-                                        <i className={`fas fa-phone fa-2x`} id="icon-phone"></i>
-                                        <p id="phone">{users.teachers.length === 0 ? "" : users.teachers[0].phone}</p>
-                                    </div>
-
-                                    <div className="row no-gutters">
-                                        <i className={`fas fa-envelope fa-2x`} id="icon-phone"></i>
-                                        <p id="phone">{users.teachers.length === 0 ? "" : users.teachers[0].email}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
+                        <Eventcalendar
+                            data={data}
+                            view={{
+                                schedule: {
+                                    type: 'day',
+                                    startDay: 1,
+                                    endDay: 5,
+                                    startTime: '07:00',
+                                    endTime: '18:00',
+                                    timeCellStep: 60,
+                                    timeLabelStep: 60
+                                }
+                            }}
+                        />
                     </div>
                 </div>
+
+
 
             </Fragment>
     );

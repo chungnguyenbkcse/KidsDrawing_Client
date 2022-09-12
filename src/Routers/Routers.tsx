@@ -65,6 +65,9 @@ import NotificationDetail from "../components/Notification/NotificationDetail";
 import Notification from "../components/Notification/Notification";
 import ParentHome from "../components/Home/ParentHome";
 import GuessColor from "../components/GuessColor";
+import CourseParent from "../components/Course/CourseParent";
+import ContestParent from "../components/Contest/ContestParent";
+import ScheduleParent from "../components/Schedule/ScheduleParent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -135,6 +138,9 @@ const Routers: React.FC = () => {
                                 <Route path={`/account`}><Account /></Route>                            
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>
+                                <Route path={`/courses`}><CourseParent /></Route>
+                                <Route path={`/contests`}><ContestParent /></Route>
+                                <Route path={`/schedules`}><ScheduleParent /></Route>
                                 <Route path={`/game/guess-color`}><GuessColor /></Route>
                                 <Route path="/"><ParentHome /></Route>
                             </Switch>

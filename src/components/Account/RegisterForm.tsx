@@ -51,13 +51,13 @@ const RegisterForm: React.FC = () => {
         username: formState.username.value,
         password: formState.password.value,
         email: formState.email.value,
-        firstName: formState.firstName.value,
-        lastName: formState.lastName.value,
-        dateOfBirth: formState.dateOfBirth.value,
+        firstName: null,
+        lastName: null,
+        dateOfBirth: null,
         profile_image_url: null,
-        sex: formState.sex.value,
-        phone: formState.phone.value,
-        address: formState.address.value,
+        sex: null,
+        phone: null,
+        address: null,
         roleNames: ["PARENT_USER"]
     }, changeRouteHome, id))
   }

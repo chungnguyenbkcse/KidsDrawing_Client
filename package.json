@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@coreui/react-chartjs": "^1.0.1",
+    "@mobiscroll/react": "https://npm.mobiscroll.com/@mobiscroll/react-trial/-/react-trial-5.18.2.tgz",
     "@syncfusion/ej2-react-schedule": "^19.4.55",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.12",

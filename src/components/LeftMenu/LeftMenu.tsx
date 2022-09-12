@@ -288,21 +288,21 @@ const LeftMenu: React.FC = () => {
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/students`}>
-                            <FaChild />
+                        <Link className="nav-link" to={`/courses`}>
+                            <MdSchool />
                             <span> Khóa học</span>
                         </Link>
                     </li>
     
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/parents`}>
-                            <RiParentFill />
+                        <Link className="nav-link" to={`/contests`}>
+                            <AiOutlineFileText />
                             <span> Cuộc thi</span>
                         </Link>
                     </li>
 
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/game/guess-color`}>
+                        <Link className="nav-link" to={`/schedules`}>
                             <BsCashCoin />
                             <span> Thời khóa biểu</span>
                         </Link>

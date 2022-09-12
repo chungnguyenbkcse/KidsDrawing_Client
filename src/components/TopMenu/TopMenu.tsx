@@ -31,7 +31,7 @@ const TopMenu: React.FC = () => {
       </nav>
     );
   }
-  else if (roleUser === "TEACHER_USER"){
+  else if (roleUser === "TEACHER_USER" || roleUser === "PARENT_USER" || roleUser === "STUDENT_USER"){
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">

@@ -3,8 +3,6 @@ import { Switch, Route } from "react-router";
 import "./Routers.css"
 import LeftMenu from "../components/LeftMenu/LeftMenu";
 import TopMenu from "../components/TopMenu/TopMenu";
-import Products from "../components/Products/Products";
-import Orders from "../components/Orders/Orders";
 import Home from "../components/Home/Home";
 import Teacher from "../components/Teachers/Teacher";
 import DetailTeacher from "../components/Teachers/DetailTeacher";
@@ -65,6 +63,8 @@ import AnalytisResultGradeContestTeacher from "../components/Contest/AnalytisRes
 import DetailContestTeacher from "../components/Contest/DetailContestTeacher";
 import NotificationDetail from "../components/Notification/NotificationDetail";
 import Notification from "../components/Notification/Notification";
+import ParentHome from "../components/Home/ParentHome";
+import GuessColor from "../components/GuessColor";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -121,6 +121,29 @@ const Routers: React.FC = () => {
             </Fragment>
         )
     }
+    else if (roleUser === "PARENT_USER") {
+        return (
+            <Fragment>
+                <LeftMenu />
+                <div id="content-wrapper" className="d-flex flex-column">
+                    <div id="content">
+                        <TopMenu />
+                        <div className="container-fluid">
+                            <Switch>
+                                <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
+                                <Route path={`/change-password`}><ChangePassword /></Route>
+                                <Route path={`/account`}><Account /></Route>                            
+                                <Route path={`/notification/detail`}><NotificationDetail /></Route>
+                                <Route path={`/notification`}><Notification /></Route>
+                                <Route path={`/game/guess-color`}><GuessColor /></Route>
+                                <Route path="/"><ParentHome /></Route>
+                            </Switch>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        )
+    }
     else {
         return (
             <Fragment>
@@ -130,8 +153,6 @@ const Routers: React.FC = () => {
                         <TopMenu />
                         <div className="container-fluid">
                             <Switch>
-                                <Route path={`/products`}><Products /></Route>
-                                <Route path={`/orders`}><Orders /></Route>
                                 <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>

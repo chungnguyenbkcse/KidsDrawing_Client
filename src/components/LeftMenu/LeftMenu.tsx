@@ -267,7 +267,7 @@ const LeftMenu: React.FC = () => {
                     </button>
                 </div>
     
-                <ul className={`navbar-nav bg-gradient-primary-green sidebar sidebar-dark accordion ${getCollapseClass()}`}
+                <ul className={`navbar-nav teacher-navbar-nav sidebar sidebar-dark accordion ${getCollapseClass()}`}
                     id="collapseMenu">
     
                     <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -302,7 +302,7 @@ const LeftMenu: React.FC = () => {
                     </li>
 
                     <li className="nav-item">
-                        <Link className="nav-link" to={`/turnovers`}>
+                        <Link className="nav-link" to={`/game/guess-color`}>
                             <BsCashCoin />
                             <span> Thời khóa biểu</span>
                         </Link>

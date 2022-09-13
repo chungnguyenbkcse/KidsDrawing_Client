@@ -23,6 +23,7 @@ import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { IUserGradeContest } from "../../store/models/user_grade_contest.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { toast, ToastContainer } from "react-toastify";
 
 type Options = {
   name: string;
@@ -141,7 +142,9 @@ const ContestForm: React.FC = () => {
 
   function saveForm(formState: IContestFormState, saveFn: Function, url: string):void {
     if (contest) {
-
+      const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
       if (saveFn === addContest) {
         dispatch(postContest(valueTeacher,{
           name: formState.name.value,
@@ -155,7 +158,7 @@ const ContestForm: React.FC = () => {
           end_time: formState.end_time.value,
           art_age_id: formState.art_age_id.value,
           art_type_id: formState.art_type_id.value
-        }))
+        }, idx))
       }
 
       else if (saveFn === editContest) {
@@ -171,7 +174,7 @@ const ContestForm: React.FC = () => {
           end_time: formState.end_time.value,
           art_age_id: formState.art_age_id.value,
           art_type_id: formState.art_type_id.value
-        }))
+        }, idx))
       }
 
       dispatch(clearSelectedContest());
@@ -254,6 +257,7 @@ const ContestForm: React.FC = () => {
           </div>
         </div>
       </div> : <Fragment>
+      <ToastContainer />
       <div className="col-xl-12 col-lg-12">
         <div className="card shadow mb-4">
           <div className="card-header py-3">

@@ -35,6 +35,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 console.log(decoded)
                 localStorage.setItem('role_privilege', decoded.role_privilege)
                 localStorage.setItem('id', decoded.id)
+                localStorage.setItem('link_profile', decoded.profile_image_url)
                 dispatch(login(username));
                 toast.update(id, { render: "Đăng nhập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 setTimeout(function () {

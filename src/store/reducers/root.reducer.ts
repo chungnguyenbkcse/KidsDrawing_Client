@@ -51,6 +51,7 @@ import schedule_time_classsReducer from "./schedule_time_class.reducer";
 import notify_dbsReducer from "./notify_db.reducer";
 import userReadNotificationsReducer from "./user_read_notification.reducer";
 import notifysReducer from "./notify.reducer";
+import classes_studentsReducer from "./classes_student.reducer";
 
 
 const initialState: IRootStateType = {
@@ -116,7 +117,8 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     schedule_time_classes: schedule_time_classsReducer,
     notify_dbs: notify_dbsReducer,
     user_read_notifications: userReadNotificationsReducer,
-    notifys: notifysReducer
+    notifys: notifysReducer,
+    classes_students: classes_studentsReducer,
 });
 
 

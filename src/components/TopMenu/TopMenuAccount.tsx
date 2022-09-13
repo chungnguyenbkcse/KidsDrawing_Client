@@ -9,6 +9,7 @@ function TopMenuAccount(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const username: string | null = localStorage.getItem('username');
   const id = localStorage.getItem('id')
+  const link_profile = localStorage.getItem('link_profile')
   useEffect(() => {
     trackPromise(getUserById(dispatch, id))
   }, [dispatch, id])
@@ -28,7 +29,7 @@ function TopMenuAccount(): JSX.Element {
         aria-expanded="false">
         <span className="mr-2 d-none d-lg-inline small cadet">{username}</span>
         <img className="img-profile rounded-circle" alt=""
-          src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
+          src={link_profile !== null ? link_profile :  "https://source.unsplash.com/QAB-WJcbgJk/60x60"} />
       </p>
 
       <div className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${(isShow) ? "show" : ""}`}

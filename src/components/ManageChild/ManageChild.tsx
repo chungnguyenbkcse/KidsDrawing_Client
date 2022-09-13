@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
-import { IMyClassState, IScheduleTimeClassState, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IClassesStudentState, IContestTeacherState, IMyClassState, IScheduleTimeClassState, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import "./ManageChild.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -10,13 +10,21 @@ import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotFie
 import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { IoMdAnalytics } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
-import TopCardCustom from "../../common/components/TopCardCustom";
-import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
-import { Eventcalendar } from "@mobiscroll/react";
 import { ChartLine } from "../../common/components/CharLine";
 import { getAllClassByStudent } from "../../common/service/MyClass/GetAllClassByStudent";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { getContestByStudent } from "../../common/service/Contest/GetContestByStudent";
+import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
+import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
+import TopCard from "../../common/components/TopCard";
+import { Eventcalendar, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarToday, CalendarNext } from '@mobiscroll/react';
+
+setOptions({
+    theme: 'ios',
+    themeVariant: 'light'
+});
+
 
 type Options = {
     name: string;
@@ -30,15 +38,91 @@ const ManageChild: React.FC = () => {
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
     const myclasses: IMyClassState = useSelector((state: IStateType) => state.myclasses);
     const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
-    const numberApprovedCount: number = 0;
-    const numberNotApprovedNowCount: number = 0;
+    const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
+    const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
+    const numberApprovedCount: number = classes_students.classes_students.length;
+    const numberNotApprovedNowCount: number = contest_teachers.contest_end.length + contest_teachers.contest_not_open_now.length + contest_teachers.contest_opening.length;
     var id_x = localStorage.getItem('student_id');
     var student_id: number = 0;
     if (id_x !== null) {
         student_id = parseInt(id_x);
     }
 
-    console.log(schedule_time_classes)
+    const [view, setView] = React.useState('month');
+
+
+    const [calView, setCalView] = React.useState(
+        {
+            calendar: { labels: true }
+        }
+    );
+
+    const changeView = (event: any) => {
+        let calView: any;
+        
+        switch (event.target.value) {
+            case 'year':
+                calView = {
+                    calendar: { type: 'year' }
+                }
+                break;
+            case 'month':
+                calView = {
+                    calendar: { labels: true }
+                }
+                break;
+            case 'week':
+                calView = {
+                    schedule: { type: 'week' }
+                }
+                break;
+            case 'day':
+                calView = {
+                    schedule: { type: 'day' }
+                }
+                break;
+            case 'agenda':
+                calView = {
+                    calendar: { type: 'week' },
+                    agenda: { type: 'week' }
+                }
+                break;
+        }
+
+        setView(event.target.value);
+        setCalView(calView);
+    }
+    
+    const customWithNavButtons = () => {
+        return <React.Fragment>
+            <CalendarNav className="cal-header-nav" />
+            <div className="cal-header-picker">
+                <SegmentedGroup value={view} onChange={changeView}>
+                    <SegmentedItem value="year">
+                        Year
+                    </SegmentedItem>
+                    <SegmentedItem value="month">
+                        Month
+                    </SegmentedItem>
+                    <SegmentedItem value="week">
+                        Week
+                    </SegmentedItem>
+                    <SegmentedItem value="day">
+                        Day
+                    </SegmentedItem>
+                    <SegmentedItem value="agenda">
+                        Agenda
+                    </SegmentedItem>
+                </SegmentedGroup>
+            </div>
+            <CalendarPrev className="cal-header-prev" />
+            <CalendarToday className="cal-header-today" />
+            <CalendarNext className="cal-header-next" />
+        </React.Fragment>;
+    }
+
+    console.log(classes_students)
+    console.log(contest_teachers)
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -68,12 +152,16 @@ const ManageChild: React.FC = () => {
                     trackPromise(getUserById(dispatch, student_id))
                     trackPromise(getScheduleTimeByChild(dispatch, student_id))
                     trackPromise(getAllClassByStudent(dispatch, student_id))
+                    trackPromise(getContestByStudent(dispatch, student_id))
+                    trackPromise(getClassesStudent(dispatch, student_id))
                 }
             }
             else {
                 trackPromise(getUserById(dispatch, student_id))
                 trackPromise(getScheduleTimeByChild(dispatch, student_id))
                 trackPromise(getAllClassByStudent(dispatch, student_id))
+                trackPromise(getContestByStudent(dispatch, student_id))
+                trackPromise(getClassesStudent(dispatch, student_id))
             }
         }
     }, [dispatch, access_token, refresh_token, student_id]);
@@ -82,7 +170,7 @@ const ManageChild: React.FC = () => {
     const [value1, setValue1] = useState(0);
     const listOptions: Options[] = [
         {
-            name: 'Khóa học',
+            name: 'Lớp',
             value: 1
         },
         {
@@ -161,6 +249,8 @@ const ManageChild: React.FC = () => {
                 </div>
             </div> : <Fragment>
                 <div className="row">
+                    <TopCard title="KHÓA HỌC" text={`${numberApprovedCount}`} icon="book" class="primary" />
+                    <TopCard title="CUỘC THI" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
                 </div>
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
@@ -187,7 +277,7 @@ const ManageChild: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row dropdown-content">
+                                    <div className="row dropdown-content mr-2">
                                         <SelectKeyValueNotField
                                             value={value}
                                             id="input_total_page"
@@ -291,83 +381,83 @@ const ManageChild: React.FC = () => {
                                             }
 
                                             else if (checked === false && value === 1) {
-                                                return (
-                                                    <>
-                                                        <div className="row">
+                                                return classes_students.classes_students.map((ele, idx) => {
+                                                    console.log(ele)
+                                                    return (
+                                                        <div className="row" key={idx}>
                                                             <div className="col-xl-12 col-lg-12">
                                                                 <div className="card mb-4 card-course">
-                                                                        <div className="card-body">
-                                                                            <h5 className="card-title">Lớp chì màu 1</h5>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                    <img className="card-img-top" src="https://thumbs.dreamstime.com/b/painting-art-classes-drawing-courses-skills-imagination-inspiration-charming-student-girl-creating-picture-easel-close-up-202644169.jpg" alt="" />
+                                                                    <div className="card-body">
+                                                                        <h5 className="card-title">{ele.name}</h5>
+                                                                        <div className="row">
+                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                <img className="card-img-top" src={ele.link_url} alt="" />
+                                                                            </div>
+
+                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                <div className="row">
+                                                                                    <p><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">{ele.art_type_name}</span></p>
+
                                                                                 </div>
-
-                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                    <div className="row">
-                                                                                        <p><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">Chì màu</span></p>
-
-                                                                                    </div>
-                                                                                    <div className="row">
-                                                                                        <p ><span className="header-card-course-teacher">Trình độ:</span> <span className="header-card-course-value-teacher">Cơ bản</span></p>
-                                                                                    </div>
+                                                                                <div className="row">
+                                                                                    <p ><span className="header-card-course-teacher">Trình độ:</span> <span className="header-card-course-value-teacher">{ele.art_level_name}</span></p>
                                                                                 </div>
-                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                    <div className="row">
-                                                                                        <p><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">5-10 tuổi</span></p>
+                                                                            </div>
+                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                <div className="row">
+                                                                                    <p><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">{ele.art_age_name}</span></p>
 
-                                                                                    </div>
-                                                                                    <div className="row">
-                                                                                        <p ><span className="header-card-course-teacher">Số buổi:</span> <span className="header-card-course-value-teacher">10 buổi</span></p>
-                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="row">
+                                                                                    <p ><span className="header-card-course-teacher">Số buổi:</span> <span className="header-card-course-value-teacher">{ele.total_section}</span></p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </>
-                                                )
+                                                    )
+                                                })
                                             }
 
-                                            else if (checked === false && value === 2) {
-                                                return (
-                                                    <>
+
+                                            if (checked === false && value === 2) {
+                                                return contest_teachers.contest_end.map((ele, idx) => {
+                                                    return (
                                                         <div className="row">
-                                                            <div className="col-xl-12 col-lg-12">
-                                                                <div className="card mb-4 card-course">
-                                                                        <div className="card-body">
-                                                                            <h5 className="card-title">Cuộc thi vẽ tranh gia đình</h5>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                    <img className="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-mz-Vi86sigjZZr9aVOiVJmbS--ab_ujpo8Fesnd&s" alt="" />
+                                                            <div className="col-xl-12 col-lg-12" key={idx}>
+                                                                <div className="card mb-4 card-contest-doing">
+                                                                    <div className="card-body">
+                                                                        <h5 className="card-title">{ele.name}</h5>
+                                                                        <div className="row">
+                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                <img className="card-img-top" src={ele.image_url} alt="" />
+                                                                            </div>
+
+                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                <div className="row">
+                                                                                    <p><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">{ele.art_type_name}</span></p>
+
                                                                                 </div>
-
-                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                    <div className="row">
-                                                                                        <p><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">Chì màu</span></p>
-
-                                                                                    </div>
-                                                                                    <div className="row">
-                                                                                        <p ><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">5-10 tuổi</span></p>
-                                                                                    </div>
+                                                                                <div className="row">
+                                                                                    <p ><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">{ele.art_age_name}</span></p>
                                                                                 </div>
-                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                    <div className="row">
-                                                                                        <p><span className="header-card-course-teacher">Thời gian bắt đầu:</span> <span className="header-card-course-value-teacher"></span></p>
+                                                                            </div>
+                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                <div className="row">
+                                                                                    <p><span className="header-card-course-teacher">Thời gian bắt đầu: {ele.registration_time}</span> <span className="header-card-course-value-teacher"></span></p>
 
-                                                                                    </div>
-                                                                                    <div className="row">
-                                                                                        <p ><span className="header-card-course-teacher">Số lượng bé tham gia:</span> <span className="header-card-course-value-teacher">10 buổi</span></p>
-                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </>
-                                                )
+                                                    )
+                                                })
+
                                             }
                                         }()
                                     }
@@ -376,26 +466,19 @@ const ManageChild: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="col-xl-6 col-md-6 mb-4">
-                        <div className="row">
-                            <TopCardCustom title="KHÓA HỌC" text={`${numberApprovedCount}`} icon="book" class="primary" />
-                            <TopCardCustom title="CUỘC THI" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-xs-6">
+                        <h3 className=" mb-2" id="level-teacher">Lịch học của bé</h3>
+                        <div className="card shadow mb-4">
+                            <div className="card-body">
+                                <Eventcalendar
+                                    renderHeader={customWithNavButtons}
+                                    height={750}
+                                    view={calView}
+                                    data={data}
+                                    cssClass="md-switching-view-cont"
+                                />
+                            </div>
                         </div>
-                        <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
-                        <Eventcalendar
-                            data={data}
-                            view={{
-                                schedule: {
-                                    type: 'day',
-                                    startDay: 1,
-                                    endDay: 5,
-                                    startTime: '07:00',
-                                    endTime: '18:00',
-                                    timeCellStep: 60,
-                                    timeLabelStep: 60
-                                }
-                            }}
-                        />
                     </div>
                 </div>
 

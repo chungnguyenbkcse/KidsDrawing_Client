@@ -48,6 +48,7 @@ import { IScheduleTimeClass, ScheduleTimeClassModificationStatus } from "./sched
 import { INotifyDb, NotifyDbModificationStatus } from "./notify_db.interface";
 import { IUserReadNotification, UserReadNotificationModificationStatus } from "./user_read_notification.interface";
 import { INotify, NotifyModificationStatus } from "./notify.interface";
+import { ClassesStudentModificationStatus, IClassesStudent } from "./classes_student.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -109,6 +110,7 @@ export interface IStateType {
     notify_dbs: INotifyDbState;
     user_read_notifications: IUserReadNotificationState;
     notifys: INotifyState;
+    classes_students: IClassesStudentState;
 }
 
 export interface IProductState {
@@ -143,6 +145,12 @@ export interface ISemesterState {
     selectedSemester: ISemester | null;
     modificationState: SemesterModificationStatus;
     semesters: ISemester[];
+}
+
+export interface IClassesStudentState {
+    selectedClassesStudent: IClassesStudent | null;
+    modificationState: ClassesStudentModificationStatus;
+    classes_students: IClassesStudent[];
 }
 
 export interface IUserReadNotificationState {

@@ -289,6 +289,86 @@ const ManageChild: React.FC = () => {
                                                     </div>
                                                 )
                                             }
+
+                                            else if (checked === false && value === 1) {
+                                                return (
+                                                    <>
+                                                        <div className="row">
+                                                            <div className="col-xl-12 col-lg-12">
+                                                                <div className="card mb-4 card-course">
+                                                                        <div className="card-body">
+                                                                            <h5 className="card-title">Lớp chì màu 1</h5>
+                                                                            <div className="row">
+                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                    <img className="card-img-top" src="https://thumbs.dreamstime.com/b/painting-art-classes-drawing-courses-skills-imagination-inspiration-charming-student-girl-creating-picture-easel-close-up-202644169.jpg" alt="" />
+                                                                                </div>
+
+                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                    <div className="row">
+                                                                                        <p><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">Chì màu</span></p>
+
+                                                                                    </div>
+                                                                                    <div className="row">
+                                                                                        <p ><span className="header-card-course-teacher">Trình độ:</span> <span className="header-card-course-value-teacher">Cơ bản</span></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                    <div className="row">
+                                                                                        <p><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">5-10 tuổi</span></p>
+
+                                                                                    </div>
+                                                                                    <div className="row">
+                                                                                        <p ><span className="header-card-course-teacher">Số buổi:</span> <span className="header-card-course-value-teacher">10 buổi</span></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
+
+                                            else if (checked === false && value === 2) {
+                                                return (
+                                                    <>
+                                                        <div className="row">
+                                                            <div className="col-xl-12 col-lg-12">
+                                                                <div className="card mb-4 card-course">
+                                                                        <div className="card-body">
+                                                                            <h5 className="card-title">Cuộc thi vẽ tranh gia đình</h5>
+                                                                            <div className="row">
+                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                    <img className="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-mz-Vi86sigjZZr9aVOiVJmbS--ab_ujpo8Fesnd&s" alt="" />
+                                                                                </div>
+
+                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                    <div className="row">
+                                                                                        <p><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">Chì màu</span></p>
+
+                                                                                    </div>
+                                                                                    <div className="row">
+                                                                                        <p ><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">5-10 tuổi</span></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                                                    <div className="row">
+                                                                                        <p><span className="header-card-course-teacher">Thời gian bắt đầu:</span> <span className="header-card-course-value-teacher"></span></p>
+
+                                                                                    </div>
+                                                                                    <div className="row">
+                                                                                        <p ><span className="header-card-course-teacher">Số lượng bé tham gia:</span> <span className="header-card-course-value-teacher">10 buổi</span></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
                                         }()
                                     }
                                 </div>

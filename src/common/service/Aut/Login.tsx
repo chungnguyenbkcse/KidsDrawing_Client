@@ -27,6 +27,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 return response.json()
             })
             .then(data => {
+                localStorage.clear();
                 localStorage.setItem('access_token', data.accessToken) // Authorization
                 localStorage.setItem('refresh_token', data.refreshToken)
                 localStorage.setItem('username', username)

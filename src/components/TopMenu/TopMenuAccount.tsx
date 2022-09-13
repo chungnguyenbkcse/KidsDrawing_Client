@@ -53,13 +53,7 @@ function TopMenuAccount(): JSX.Element {
         <p className="dropdown-item logout-btn"
         onClick={() => {
           let id = localStorage.getItem('id');
-          localStorage.removeItem('access_token') // Authorization
-          localStorage.removeItem('refresh_token')
-          localStorage.removeItem('username')
-          localStorage.removeItem('role_privilege')
-          localStorage.removeItem('id')
-          localStorage.removeItem('contest_id')
-          localStorage.removeItem('schedule_id')
+          localStorage.clear();
           dispatch(logout())
           dispatch(putStatusUser(id, {
             status: null

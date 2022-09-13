@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
-import { IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
+import { IMyClassState, IScheduleTimeClassState, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import "./ManageChild.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -13,6 +13,10 @@ import { FaHistory } from "react-icons/fa";
 import TopCardCustom from "../../common/components/TopCardCustom";
 import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
 import { Eventcalendar } from "@mobiscroll/react";
+import { ChartLine } from "../../common/components/CharLine";
+import { getAllClassByStudent } from "../../common/service/MyClass/GetAllClassByStudent";
+import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
+import { getUserById } from "../../common/service/User/GetUserById";
 
 type Options = {
     name: string;
@@ -22,13 +26,16 @@ type Options = {
 const ManageChild: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const [checked, setChecked] = useState(true);
+    const users: IUserState = useSelector((state: IStateType) => state.users);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
+    const myclasses: IMyClassState = useSelector((state: IStateType) => state.myclasses);
+    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
     const numberApprovedCount: number = 0;
     const numberNotApprovedNowCount: number = 0;
     var id_x = localStorage.getItem('student_id');
-    var id: number = 2;
+    var student_id: number = 0;
     if (id_x !== null) {
-        id = parseInt(id_x);
+        student_id = parseInt(id_x);
     }
 
     console.log(schedule_time_classes)
@@ -58,16 +65,21 @@ const ManageChild: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getScheduleTimeByChild(dispatch, id))
+                    trackPromise(getUserById(dispatch, student_id))
+                    trackPromise(getScheduleTimeByChild(dispatch, student_id))
+                    trackPromise(getAllClassByStudent(dispatch, student_id))
                 }
             }
             else {
-                trackPromise(getScheduleTimeByChild(dispatch, id))
+                trackPromise(getUserById(dispatch, student_id))
+                trackPromise(getScheduleTimeByChild(dispatch, student_id))
+                trackPromise(getAllClassByStudent(dispatch, student_id))
             }
         }
-    }, [dispatch, access_token, refresh_token, id]);
+    }, [dispatch, access_token, refresh_token, student_id]);
 
     const [value, setValue] = useState(0);
+    const [value1, setValue1] = useState(0);
     const listOptions: Options[] = [
         {
             name: 'Khóa học',
@@ -79,9 +91,44 @@ const ManageChild: React.FC = () => {
         },
     ];
 
+    const listClasses: Options[] = [];
+    myclasses.myClasses.map((ele, idx) => {
+        let item: Options = {
+            name: ele.name,
+            value: ele.id
+        };
+        return listClasses.push(item);
+    })
+
     function hasFormValueChangedNotFiled(model: OnChangeModelNotFiled): void {
         setValue(model.value);
     }
+
+    function hasFormValueChangedNotFiled1(model: OnChangeModelNotFiled): void {
+        setValue1(model.value);
+        getUserGradeExerciseByStudentAndClass(dispatch, value1, student_id)
+    }
+
+    let list_score_user_grade_exercise: number[] = [];
+    let list_name_user_grade_exercise: string[] = [];
+    user_grade_exercise_submission.user_grade_exercise_submissions.map((ele, idx) => {
+        list_score_user_grade_exercise.push(ele.score)
+        list_name_user_grade_exercise.push(ele.exercise_name)
+        return ele
+    })
+
+    const labels = list_name_user_grade_exercise;
+    const datax = {
+        labels,
+        datasets: [
+            {
+                label: 'Điểm kiểm tra',
+                data: list_score_user_grade_exercise,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ],
+    };
 
     let data: any[] = [];
     if (schedule_time_classes.schedule_time_classes.length > 0) {
@@ -98,7 +145,7 @@ const ManageChild: React.FC = () => {
                 description: 'Weekly meeting with team',
                 location: 'Office'
             })
-        
+
         })
     }
 
@@ -117,7 +164,7 @@ const ManageChild: React.FC = () => {
                 </div>
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Trình độ đã duyệt</h3>
+                        <h3 className=" mb-2" id="level-teacher">Thông tin của bé</h3>
                         <div className="col-xl-12 col-md-12 mb-4">
                             <div className={`card shadow h-100 py-2`} id="infor-student">
                                 <div className="card-body">
@@ -127,15 +174,15 @@ const ManageChild: React.FC = () => {
                                         </div>
                                         <div className="col-xl-8 col-md-8 col-xs-8">
                                             <div className="row">
-                                                <h2>Nguyen Van Chung</h2>
+                                                <h2>{users.teachers.length > 0 ? users.teachers[0].firstName + " " + users.teachers[0].lastName : ""}</h2>
                                             </div>
                                             <div className="row">
-                                                <p>@chungnguyen123</p>
+                                                <p>@{users.teachers.length > 0 ? users.teachers[0].username : ""}</p>
                                             </div>
                                             <div className="row no-gutters align-items-center">
                                                 <i className={`fa fa-calendar fa-2x text-gray-300`} id="icon-calendar"></i>
                                                 <div className="text-xs mb-1 ml-2">
-                                                    <p className="birthday">Ngày sinh: </p>
+                                                    <p className="birthday">Ngày sinh: {users.teachers.length > 0 ? users.teachers[0].dateOfBirth : ""}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,7 +201,7 @@ const ManageChild: React.FC = () => {
                                         <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                                             <IoMdAnalytics style={{
                                                 color: checked ? "#F24E1E" : "#2F4F4F"
-                                            }}/>
+                                            }} />
                                             <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
                                                 if (checked === false) {
                                                     setChecked(true)
@@ -173,7 +220,7 @@ const ManageChild: React.FC = () => {
                                         <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                                             <FaHistory style={{
                                                 color: !checked ? "#F24E1E" : "#2F4F4F"
-                                            }}/>
+                                            }} />
                                             <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                                                 if (checked === true) {
                                                     setChecked(false)
@@ -191,6 +238,59 @@ const ManageChild: React.FC = () => {
                                             }}></div>
                                         </div>
                                     </div>
+                                    {
+                                        function () {
+                                            if (checked === true && value === 1) {
+                                                return (
+                                                    <>
+                                                        <div className="row">
+                                                            <SelectKeyValueNotField
+                                                                value={value1}
+                                                                id="input_classes"
+                                                                onChange={hasFormValueChangedNotFiled1}
+                                                                required={true}
+                                                                label=""
+                                                                options={listClasses}
+                                                            />
+                                                        </div>
+                                                        <div className="row">
+                                                            <div className="col-xl-12 col-lg-12">
+                                                                <div className="card mb-4">
+                                                                    <div className="card-body chart-line">
+                                                                        <ChartLine data={datax} />
+                                                                    </div>
+                                                                    <div className="row justify-content-center chart-line">
+                                                                        <button
+                                                                            className="btn btn-success btn-green"
+                                                                            id="btn-into-class-student"
+                                                                            onClick={() => { }}
+                                                                        >
+                                                                            Xem chi tiết
+                                                                            <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
+
+                                            else if (checked === true && value === 2) {
+                                                return (
+                                                    <div className="row">
+                                                        <div className="col-xl-12 col-lg-12">
+                                                            <div className="card mb-4">
+                                                                <div className="card-body chart-line">
+                                                                    <ChartLine data={datax} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                        }()
+                                    }
                                 </div>
                             </div>
                         </div>

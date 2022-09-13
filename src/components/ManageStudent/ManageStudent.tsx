@@ -175,7 +175,7 @@ const ManageStudent: React.FC = () => {
                     </div>
                     <div className="row">
                         <div className="col-xl-12 col-md-12 mb-4">
-                            <h3 className=" mb-2" id="level-teacher">Trình độ phụ huynh</h3>
+                            <h3 className=" mb-2" id="level-teacher">Thông tin phụ huynh</h3>
                             <div className="col-xl-12 col-md-12 mb-4">
                                 <div className={`card shadow h-100 py-2`} id="topcard-user">
                                     <div className="card-body">

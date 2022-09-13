@@ -16,6 +16,7 @@ function AccountChildList(props: accountChildListProps): JSX.Element {
         if (!ele) { return null; }
         return (
             <TopCardAccount 
+                student_id={ele.id}
                 fullname={ele.firstName + ele.lastName} 
                 icon="user" class="primary" 
                 birthday={ele.dateOfBirth}

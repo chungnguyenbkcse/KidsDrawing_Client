@@ -4,8 +4,10 @@ import { ICardProperties } from "../types/ICardAccountChild.types";
 
 function TopCardAccount(props: PropsWithChildren<ICardProperties>): ReactElement {
     const history = useHistory();
-    const routeChange = () =>{ 
-        let path = '/account/detail'; 
+    const routeChange = (student_id: number) =>{ 
+        let path = '/students/detail'; 
+        localStorage.removeItem('student_id');
+        localStorage.setItem('student_id', student_id.toString())
         history.push({
             pathname: path
         });
@@ -13,7 +15,7 @@ function TopCardAccount(props: PropsWithChildren<ICardProperties>): ReactElement
 
     return (
         <div className="col-xl-12 col-md-12 mb-4" onClick={() => {
-            routeChange()}}
+            routeChange(props.student_id)}}
         >
             <div className={`card shadow h-100 py-2`} id="topcard-account">
                 <div className="card-body">

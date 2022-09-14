@@ -16,6 +16,7 @@ import AccountChildForm from "../AccountChild/AccountChildForm";
 import { Eventcalendar } from '@mobiscroll/react';
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import { getScheduleTimeByParent } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByParent";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 
 const ParentHome: React.FC = () => {
@@ -46,6 +47,8 @@ const ParentHome: React.FC = () => {
     function onRemovePopup(value: boolean) {
         setPopup(false);
     }
+
+    dispatch(updateCurrentPath("Trang chủ", ""));
 
     const [searchTerm, setSearchTerm] = useState("");
 

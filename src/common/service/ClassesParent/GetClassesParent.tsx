@@ -1,26 +1,34 @@
-import { fetchDataSuccess, fetchDataError, removeDoinglClassAll, removeDoneClassAll, initialDoinglClass, initialDoneClass,  addDoinglClass, addDoneClass } from "../../../store/actions/class_teacher.action";
+import { fetchDataSuccess, fetchDataError, removeDoinglClassAll, removeDoneClassAll, initialDoinglClass, initialDoneClass,  addDoinglClass, addDoneClass } from "../../../store/actions/classes_parent.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-interface ClassTeacher {
+interface ClassesParent {
     id: number;
     name: string;
+    link_url: string;
+    student_id: number;
+    student_name: string;
+    teacher_name: string;
+    teacher_id: number;
     course_id: number;
     semester_class_id: number;
+    semester_class_name: string;
     user_register_teach_semester: number;
     security_code: string;
     total_student: number;
-    num_of_section: number;
+    total_section: number;
     course_name: string;
     semester_name: string;
     art_type_name: string;
     art_level_name: string;
+    art_type_id: number;
+    art_level_id: number;
+    art_age_id: number;
     art_age_name: string;
-    schedule: string;
 }
-export function getClassTeacher(dispatch: any, id: any) {
+export function getClassesParent(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/classes/teacher/${id}`, {
+                `${process.env.REACT_APP_API_URL}/classes/parent/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -34,7 +42,7 @@ export function getClassTeacher(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getClassTeacher(dispatch, id))
+                        dispatch(getClassesParent(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -51,54 +59,70 @@ export function getClassTeacher(dispatch: any, id: any) {
                 console.log(data.body.classes_done)
                 console.log(data.body.classes_doing)
                 data.body.classes_done.map((ele: any, index: any) => {
-                    var class_teacher: ClassTeacher = {
+                    var classes_parent: ClassesParent = {
                         id: ele.id,
                         name: ele.name,
+                        semester_class_name: ele.semester_class_name,
+                        student_id: ele.student_id,
+                        student_name: ele.student_name,
+                        teacher_id: ele.teacher_id,
+                        teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
                         total_student: ele.total_student,
-                        num_of_section: ele.num_of_section,
-                        schedule: ele.schedule,
+                        total_section: ele.total_section,
+                        link_url: ele.link_url,
+                        art_age_id: ele.art_age_id,
+                        art_level_id: ele.art_level_id,
+                        art_type_id: ele.art_type_id,
                         course_name: ele.course_name,
                         art_age_name: ele.art_age_name,
                         art_level_name: ele.art_level_name,
                         art_type_name: ele.art_type_name
                     }
-                    console.log(class_teacher)
+                    console.log(classes_parent)
                     if (index === 0){
-                        return dispatch(initialDoneClass(class_teacher));
+                        return dispatch(initialDoneClass(classes_parent));
                     }
                     else{
-                        return dispatch(addDoneClass(class_teacher))
+                        return dispatch(addDoneClass(classes_parent))
                     }
                 })
 
                 data.body.classes_doing.map((ele: any, index: any) => {
-                    var class_teacher: ClassTeacher = {
+                    var classes_parent: ClassesParent = {
                         id: ele.id,
                         name: ele.name,
+                        student_id: ele.student_id,
+                        semester_class_name: ele.semester_class_name,
+                        student_name: ele.student_name,
+                        teacher_id: ele.teacher_id,
+                        teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
                         total_student: ele.total_student,
-                        num_of_section: ele.num_of_section,
-                        schedule: ele.schedule,
+                        total_section: ele.total_section,
+                        link_url: ele.link_url,
+                        art_age_id: ele.art_age_id,
+                        art_level_id: ele.art_level_id,
+                        art_type_id: ele.art_type_id,
                         course_name: ele.course_name,
                         art_age_name: ele.art_age_name,
                         art_level_name: ele.art_level_name,
                         art_type_name: ele.art_type_name
                     }
-                    console.log(class_teacher)
+                    console.log(classes_parent)
                     if (index === 0){
-                        return dispatch(initialDoinglClass(class_teacher));
+                        return dispatch(initialDoinglClass(classes_parent));
                     }
                     else{
-                        return dispatch(addDoinglClass(class_teacher))
+                        return dispatch(addDoinglClass(classes_parent))
                     }
                 })
             })

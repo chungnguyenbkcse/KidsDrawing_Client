@@ -50,6 +50,7 @@ import { IUserReadNotification, UserReadNotificationModificationStatus } from ".
 import { INotify, NotifyModificationStatus } from "./notify.interface";
 import { ClassesStudentModificationStatus, IClassesStudent } from "./classes_student.interface";
 import { ClassesParentModificationStatus, IClassesParent } from "./classes_parent.interface";
+import { CourseParentModificationStatus, ICourseParent } from "./course_parent.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -113,6 +114,7 @@ export interface IStateType {
     notifys: INotifyState;
     classes_students: IClassesStudentState;
     classes_parents: IClassesParentState;
+    course_parents: ICourseParentState;
 }
 
 export interface IProductState {
@@ -429,6 +431,13 @@ export interface IClassesParentState {
     modificationState: ClassesParentModificationStatus;
     classes_doing: IClassesParent[];
     classes_done: IClassesParent[];
+}
+
+export interface ICourseParentState {
+    selectedCourseParent: ICourseParent | null;
+    modificationState: CourseParentModificationStatus;
+    courses_registed: ICourseParent[];
+    courses_not_registed_now: ICourseParent[];
 }
 
 export interface IContestTeacherState {

@@ -53,6 +53,7 @@ import userReadNotificationsReducer from "./user_read_notification.reducer";
 import notifysReducer from "./notify.reducer";
 import classes_studentsReducer from "./classes_student.reducer";
 import classesParentsReducer from "./classes_parent.reducer";
+import courseParentsReducer from "./course_parent.reducer";
 
 
 const initialState: IRootStateType = {
@@ -121,6 +122,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     notifys: notifysReducer,
     classes_students: classes_studentsReducer,
     classes_parents: classesParentsReducer,
+    course_parents: courseParentsReducer,
 });
 
 

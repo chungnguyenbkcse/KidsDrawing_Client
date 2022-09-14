@@ -19,6 +19,8 @@ import { getClassesStudent } from "../../common/service/ClassesStudent/GetClasse
 import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
 import TopCard from "../../common/components/TopCard";
 import { Eventcalendar, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarToday, CalendarNext } from '@mobiscroll/react';
+import { IClassesStudent } from "../../store/models/classes_student.interface";
+import { useHistory } from "react-router-dom";
 
 setOptions({
     theme: 'ios',
@@ -194,7 +196,9 @@ const ManageChild: React.FC = () => {
 
     function hasFormValueChangedNotFiled1(model: OnChangeModelNotFiled): void {
         setValue1(model.value);
-        getUserGradeExerciseByStudentAndClass(dispatch, value1, student_id)
+        console.log(model.value)
+        console.log(student_id);
+        getUserGradeExerciseByStudentAndClass(dispatch, model.value, student_id)
     }
 
     let list_score_user_grade_exercise: number[] = [];
@@ -204,6 +208,8 @@ const ManageChild: React.FC = () => {
         list_name_user_grade_exercise.push(ele.exercise_name)
         return ele
     })
+
+    console.log(user_grade_exercise_submission.user_grade_exercise_submissions)
 
     const labels = list_name_user_grade_exercise;
     const datax = {
@@ -235,6 +241,27 @@ const ManageChild: React.FC = () => {
             })
 
         })
+    }
+
+    const history = useHistory();
+    function onChangeRouter1(classes_student: IClassesStudent) {
+        let path = '/student/class'; 
+        localStorage.removeItem('teacher_id');
+        localStorage.setItem('teacher_id', value1.toString())
+        localStorage.removeItem('class_id');
+        localStorage.setItem('class_id', value1.toString());
+        history.push({
+            pathname: path,
+        });
+    }
+
+    function onChangeRoute2() {
+        let path = '/class/exercise-student'; 
+        localStorage.removeItem('class_id');
+        localStorage.setItem('class_id', value1.toString());
+        history.push({
+            pathname: path,
+        });
     }
 
     return (
@@ -353,7 +380,7 @@ const ManageChild: React.FC = () => {
                                                                         <button
                                                                             className="btn btn-success btn-green"
                                                                             id="btn-into-class-student"
-                                                                            onClick={() => { }}
+                                                                            onClick={() => {onChangeRoute2()}}
                                                                         >
                                                                             Xem chi tiết
                                                                             <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
@@ -384,7 +411,7 @@ const ManageChild: React.FC = () => {
                                                 return classes_students.classes_students.map((ele, idx) => {
                                                     console.log(ele)
                                                     return (
-                                                        <div className="row" key={idx}>
+                                                        <div className="row" key={idx} onClick={() => {onChangeRouter1(ele)}}>
                                                             <div className="col-xl-12 col-lg-12">
                                                                 <div className="card mb-4 card-course">
                                                                     <div className="card-body">

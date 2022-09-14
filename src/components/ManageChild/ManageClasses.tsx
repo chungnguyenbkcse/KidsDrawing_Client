@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
@@ -10,10 +10,15 @@ import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLe
 import { getUserById } from "../../common/service/User/GetUserById";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
-import { IExerciseStudentState, IStateType, IStudentLeaveState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IExerciseStudentState, ILessonState, IStateType, IStudentLeaveState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import "./ManageClasses.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { FcFeedback } from "react-icons/fc";
+import { setModificationState } from "../../store/actions/lesson.action";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import Popup from "reactjs-popup";
+import FormReviewClass from "./FormReviewClass";
 
 const ManageClasses: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -106,12 +111,24 @@ const ManageClasses: React.FC = () => {
         ],
     };
 
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
+
     const history = useHistory();
     const routeChange = () =>{ 
         let path = '/class/exercise-student'; 
         history.push({
             pathname: path,
         });
+    }
+
+    const [popup, setPopup] = useState(false);
+
+    function onLessonRemove() {
+        setPopup(true);
+    }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
     }
     
     return (
@@ -140,6 +157,21 @@ const ManageClasses: React.FC = () => {
                     </button>
                 </div> */}
             </div>
+            <Popup
+            open={popup}
+            onClose={() => setPopup(false)}
+            closeOnDocumentClick
+        >
+            <>
+                {
+                    function () {
+                        if ((lessons.modificationState === LessonModificationStatus.Create) || ((lessons.selectedLesson) && (lessons.modificationState === LessonModificationStatus.Edit))) {
+                            return <FormReviewClass isCheck={onRemovePopup}/>
+                        }
+                    }()
+                }
+            </>
+        </Popup>
             <div className="row">
                 <div className="col-xl-6 col-md-6 mb-4">
                     <div className="row">
@@ -210,26 +242,46 @@ const ManageClasses: React.FC = () => {
                 </div>
 
                 <div className="col-xl-6 col-md-6 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Thống kê điểm</h3>
-                    <div className="col-xl-12 col-md-12 mb-4">
-                        <div className={`card shadow h-100 py-2`} id="topcard-user">
-                            <div className="card-body">
-                                <div className="row no-gutters">
-                                    <ChartLine data={data} />
-                                </div>
-                                <div className="row justify-content-center">
-                                    <button 
-                                        className="btn btn-success btn-green" 
-                                        id="btn-into-class-student"
-                                        onClick={() => {routeChange()}}
-                                    >
-                                        Xem chi tiết
-                                        <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
-                                    </button>
+                    <div className="row">
+                        <h3 className=" mb-2" id="level-teacher">Thống kê điểm</h3>
+                        <div className="col-xl-12 col-md-12 mb-4">
+                            <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                <div className="card-body">
+                                    <div className="row no-gutters">
+                                        <ChartLine data={data} />
+                                    </div>
+                                    <div className="row justify-content-center">
+                                        <button 
+                                            className="btn btn-success btn-green" 
+                                            id="btn-into-class-student"
+                                            onClick={() => {routeChange()}}
+                                        >
+                                            Xem chi tiết
+                                            <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="row">
+                    <div className="col-xl-12 col-md-12 mb-4">
+                        <div className="row justify-content-center">
+                            <button 
+                                className="btn btn-success btn-green" 
+                                id="btn-into-class-review"
+                                onClick={() => {
+                                    dispatch(setModificationState(LessonModificationStatus.Create))
+                                    onLessonRemove()
+                                }}
+                            >
+                                Nhận xét
+                                <FcFeedback />
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                    
                 </div>
             </div>
 

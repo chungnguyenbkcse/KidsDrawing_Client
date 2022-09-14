@@ -9648,6 +9648,11 @@
     "prop-types" "^15.6.0"
     "react-transition-group" "^4.3.0"
 
+"react-simple-star-rating@^4.0.5":
+  "integrity" "sha512-995YpXtLNNLim/K59lhRqFnvpRXJHsiJAnYAu2iHEjfCn4u8hP9Eam53hi+ubc6stU25FzvBPyXKzjhu7wl+hA=="
+  "resolved" "https://registry.npmjs.org/react-simple-star-rating/-/react-simple-star-rating-4.0.5.tgz"
+  "version" "4.0.5"
+
 "react-toastify@^8.0.0":
   "integrity" "sha512-7a5uhwbJ5Ivp5QyJN8P9M8g+7wksJt51QuYAZW0c3pDOh0Jx8lH7XzNHzzJg4NHup9n4zcqH9rwXknnyzYg2OA=="
   "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-8.0.0.tgz"

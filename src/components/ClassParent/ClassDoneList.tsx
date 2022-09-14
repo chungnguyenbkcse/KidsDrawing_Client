@@ -14,12 +14,15 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
 
   const history = useHistory();
   const routeChange = (classes_parent: IClassesParent) => {
-    let path = '/classes/detail';
-    localStorage.removeItem("class_id");
-    localStorage.setItem("class_id", classes_parent.id.toString())
+    let path = '/student/class'; 
+    localStorage.removeItem('teacher_id');
+    localStorage.setItem('teacher_id', classes_parent.teacher_id.toString())
+    localStorage.removeItem('student_id');
+    localStorage.setItem('student_id', classes_parent.student_id.toString())
+    localStorage.removeItem('class_id');
+    localStorage.setItem('class_id', classes_parent.id.toString());
     history.push({
-      pathname: path,
-      state: { class_id: classes_parent.id }
+        pathname: path,
     });
   }
 

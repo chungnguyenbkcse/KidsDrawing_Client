@@ -13,7 +13,7 @@ interface ContestTeacher {
     max_participant: number;
     total_register_contest: number;
     total_contest_submission: number;
-    total_const_submission_graded: number;
+    total_contest_submission_graded: number;
     registration_time: string;
     image_url: string;
     start_time: string;
@@ -62,7 +62,7 @@ export function getContestTeacher(dispatch: any, id: any) {
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
-                        total_const_submission_graded: ele.total_const_submission_graded,
+                        total_contest_submission_graded: ele.total_contest_submission_graded,
                         total_contest_submission: ele.total_contest_submission,
                         total_register_contest: ele.total_register_contest,
                         registration_time: ele.registration_time,
@@ -88,7 +88,7 @@ export function getContestTeacher(dispatch: any, id: any) {
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
-                        total_const_submission_graded: ele.total_const_submission_graded,
+                        total_contest_submission_graded: ele.total_contest_submission_graded,
                         total_contest_submission: ele.total_contest_submission,
                         total_register_contest: ele.total_register_contest,
                         registration_time: ele.registration_time,
@@ -115,7 +115,7 @@ export function getContestTeacher(dispatch: any, id: any) {
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
-                        total_const_submission_graded: ele.total_const_submission_graded,
+                        total_contest_submission_graded: ele.total_contest_submission_graded,
                         total_contest_submission: ele.total_contest_submission,
                         total_register_contest: ele.total_register_contest,
                         registration_time: ele.registration_time,
@@ -142,7 +142,7 @@ export function getContestTeacher(dispatch: any, id: any) {
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
-                        total_const_submission_graded: ele.total_const_submission_graded,
+                        total_contest_submission_graded: ele.total_contest_submission_graded,
                         total_contest_submission: ele.total_contest_submission,
                         total_register_contest: ele.total_register_contest,
                         registration_time: ele.registration_time,

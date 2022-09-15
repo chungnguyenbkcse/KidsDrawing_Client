@@ -3,8 +3,6 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseParent {
     id: number;
     name: string;
-    student_id: number;
-    student_name: string;
     description: string;
     max_participant: number;
     num_of_section: number;
@@ -61,8 +59,6 @@ export function getCourseParent(dispatch: any, id: any) {
                         is_enabled: ele.is_enabled,
                         creator_id: ele.creator_id,
                         name: ele.name,
-                        student_id: ele.student_id,
-                        student_name: ele.student_name,
                         description: ele.description,
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,
@@ -87,8 +83,6 @@ export function getCourseParent(dispatch: any, id: any) {
                         is_enabled: ele.is_enabled,
                         creator_id: ele.creator_id,
                         name: ele.name,
-                        student_id: ele.student_id,
-                        student_name: ele.student_name,
                         description: ele.description,
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,

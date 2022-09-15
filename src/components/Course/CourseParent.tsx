@@ -1,29 +1,27 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { ICourseTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { ICourseParentState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./CourseTeacher.css"
-import CourseTeacherRegisterSuccessfullList from "./CourseTeacherRegisterSuccessfullList";
-import CourseTeacherNotRegisterList from "./CourseTeacherNotRegisterList";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import { usePromiseTracker } from "react-promise-tracker";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getCourseParent } from "../../common/service/CourseParent/GetCourseParent";
 
 const CourseParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
+    const course_teachers: ICourseParentState = useSelector((state: IStateType) => state.course_parents);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberTeacherRegisterSuccessfullCount: number = course_teachers.register_successfull_courses.length;
+    const numberParentRegisterSuccessfullCount: number = course_teachers.courses_registed.length;
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    console.log(course_teachers)
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -50,19 +48,15 @@ const CourseParent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
+                    trackPromise(getCourseParent(dispatch, id))
                 }
             }
             else {
+                trackPromise(getCourseParent(dispatch, id))
             }
         }
-        dispatch(clearSelectedTeacherRegisterQuatification());
-        dispatch(updateCurrentPath("Lớp theo kì", ""));
+        dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch, id, access_token, refresh_token]);
-
-    function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
-        dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
-        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
-    }
 
     const [checked, setChecked] = useState(true);
     return (
@@ -80,10 +74,10 @@ const CourseParent: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
+                <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberParentRegisterSuccessfullCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
+                    dispatch(setModificationState(ParentRegisterQuantificationModificationStatus.Create))}>
                         <i className="fas fa fa-plus"></i>
                         Đăng kí trình độ
                     </button>
@@ -146,9 +140,7 @@ const CourseParent: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    <CourseTeacherNotRegisterList
-                                        onSelect={onTeacherRegisterQuantificationSelect}
-                                    />
+                                    
 
 
                                 </div>
@@ -160,9 +152,7 @@ const CourseParent: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    <CourseTeacherRegisterSuccessfullList
-                                        onSelect={onTeacherRegisterQuantificationSelect}
-                                    />
+                                    
                                 </div>
 
                             </Fragment>

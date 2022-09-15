@@ -51,6 +51,7 @@ import { INotify, NotifyModificationStatus } from "./notify.interface";
 import { ClassesStudentModificationStatus, IClassesStudent } from "./classes_student.interface";
 import { ClassesParentModificationStatus, IClassesParent } from "./classes_parent.interface";
 import { CourseParentModificationStatus, ICourseParent } from "./course_parent.interface";
+import { ContestStudentModificationStatus, IContestStudent } from "./contest_student.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -115,6 +116,7 @@ export interface IStateType {
     classes_students: IClassesStudentState;
     classes_parents: IClassesParentState;
     course_parents: ICourseParentState;
+    contest_students: IContestStudentState;
 }
 
 export interface IProductState {
@@ -447,6 +449,15 @@ export interface IContestTeacherState {
     contest_not_open_now_not_teacher: IContestTeacher[];
     contest_end: IContestTeacher[];
     contest_not_open_now: IContestTeacher[];
+}
+
+export interface IContestStudentState {
+    selectedContestStudent: IContestStudent | null;
+    modificationState: ContestStudentModificationStatus;
+    contest_opening: IContestStudent[];
+    contest_new: IContestStudent[];
+    contest_end: IContestStudent[];
+    contest_not_open_now: IContestStudent[];
 }
 
 export interface IAnonymousNotificationState {

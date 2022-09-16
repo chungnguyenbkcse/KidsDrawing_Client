@@ -12,7 +12,6 @@ import {
     removeMyClass
 } from "../../store/actions/my_class.action";
 import { MyClassModificationStatus, IMyClass } from "../../store/models/my_class.interface";
-import { getSemester } from "../../common/service/semester/GetSemester";
 import { ISemester } from "../../store/models/semester.interface";
 import { getMyClass } from "../../common/service/MyClass/GetMyClass";
 import DatePicker, { DateObject } from "react-multi-date-picker";
@@ -36,6 +35,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClass";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getSemesterNext } from "../../common/service/semester/GetSemesterNext";
 
 type Options = {
     name: string;
@@ -97,7 +97,7 @@ const Class: React.FC = () => {
                 }
                 else {
                     trackPromise(getMyClass(dispatch))
-                    trackPromise(getSemester(dispatch))
+                    trackPromise(getSemesterNext(dispatch))
                     trackPromise(getSemesterClass(dispatch))
                     trackPromise(getSchedule(dispatch))
                     trackPromise(getLesson(dispatch))
@@ -106,7 +106,7 @@ const Class: React.FC = () => {
             }
             else {
                 trackPromise(getMyClass(dispatch))
-                trackPromise(getSemester(dispatch))
+                trackPromise(getSemesterNext(dispatch))
                 trackPromise(getSemesterClass(dispatch))
                 trackPromise(getSchedule(dispatch))
                 trackPromise(getLesson(dispatch))

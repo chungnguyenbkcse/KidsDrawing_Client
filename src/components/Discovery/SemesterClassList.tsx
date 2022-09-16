@@ -1,26 +1,14 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import TopCardCourse from "../../common/components/TopCardCourse";
-import { ICourseTeacherState, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
+import { ICourseTeacherState, IStateType } from "../../store/models/root.interface";
 
-export type teacherRegisterQuantificationListProps = {
-    onSelect?: (teacherRegisterQuantification: ITeacherRegisterQuantification) => void;
-    children?: React.ReactNode;
-};
 
-function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListProps): JSX.Element {
+function SemesterClassList(): JSX.Element {
   const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
-  const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-  let quantifications: number[] = [];
-  teacherRegisterQuantifications.approveds.map((ele, index) => {
-    return quantifications.push(ele.course_id);
-  })
 
-  console.log(course_teachers.not_register_courses)
 
-    const teacherRegisterQuantificationElements: (JSX.Element | null)[] = course_teachers.not_register_courses.map((ele, index) => {
-        if (!ele || !quantifications.includes(ele.course_id)) { return null; }
+    const teacherRegisterQuantificationElements: (JSX.Element | null)[] = course_teachers.register_successfull_courses.map((ele, index) => {
         return (
             <TopCardCourse 
               name={ele.name} 
@@ -52,4 +40,4 @@ function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListPr
     );
 }
 
-export default CourseTeacherNotRegisterList;
+export default SemesterClassList;

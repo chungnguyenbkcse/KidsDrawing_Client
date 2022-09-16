@@ -1,4 +1,4 @@
-import { fetchDataSuccess, fetchDataError, removeNotRegisterCourseAll, removeRegisterSuccessfullCourseAll, initialNotRegisterCourse, initialRegisterSuccessfullCourse, addNotRegisterCourse, addRegisterSuccessfullCourse } from "../../../store/actions/course_teacher.action";
+import { fetchDataSuccess, fetchDataError, removeRegisterSuccessfullCourseAll, addRegisterSuccessfullCourse } from "../../../store/actions/course_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseTeacher {
     id: number;
@@ -18,10 +18,11 @@ interface CourseTeacher {
     schedule: string;
     registration_deadline: string;
 }
-export function getCourseTeacher(dispatch: any, id: any) {
+export function getSemesterClassNew(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return  fetch(
-                `${process.env.REACT_APP_API_URL}/course/teacher/${id}`, {
+    
+    return fetch(
+                `${process.env.REACT_APP_API_URL}/semester-class/new`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -35,7 +36,7 @@ export function getCourseTeacher(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getCourseTeacher(dispatch, id))
+                        dispatch(getSemesterClassNew(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -47,10 +48,9 @@ export function getCourseTeacher(dispatch: any, id: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeNotRegisterCourseAll())
                 dispatch(removeRegisterSuccessfullCourseAll())
-                console.log(data.body.register_successfull_courses.length)
-                data.body.register_successfull_courses.map((ele: any, index: any) => {
+                //console.log(data.body.lessons)
+                data.body.semester_classes.map((ele: any, index: any) => {
                     var course: CourseTeacher = {
                         id: ele.id,
                         name: ele.name,
@@ -71,42 +71,7 @@ export function getCourseTeacher(dispatch: any, id: any) {
 
                     }
                     console.log(course)
-                    if (index === 0){
-                        return dispatch(initialRegisterSuccessfullCourse(course));
-                    }
-                    else{
-                        return dispatch(addRegisterSuccessfullCourse(course))
-                    }
-                })
-
-                console.log(data.body.not_register_courses.length)
-                data.body.not_register_courses.map((ele: any, index: any) => {
-                    var course: CourseTeacher = {
-                        id: ele.id,
-                        name: ele.name,
-                        course_name: ele.course_name,
-                        course_id: ele.course_id,
-                        semester_name: ele.semester_name,
-                        semester_class_id: ele.semster_class_id,
-                        description: ele.description,
-                        max_participant: ele.max_participant,
-                        num_of_section: ele.num_of_section,
-                        price: ele.price,
-                        image_url: ele.image_url,
-                        art_type_name: ele.art_type_name,
-                        art_age_name: ele.art_age_name,
-                        art_level_name: ele.art_level_name,
-                        schedule: ele.schedule,
-                        registration_deadline: ele.registration_deadline
-
-                    }
-                    console.log(course)
-                    if (index === 0){
-                        return dispatch(initialNotRegisterCourse(course));
-                    }
-                    else{
-                        return dispatch(addNotRegisterCourse(course))
-                    }
+                    return dispatch(addRegisterSuccessfullCourse(course))
                 })
             })
             .catch(error => {

@@ -46,7 +46,7 @@ export function getStudentByParent(dispatch: any, id: any) {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeStudentAll())
-                console.log(data)
+                console.log(data.body.childs)
                 data.body.childs.map ((ele: any) => {
                     var user: user = {
                         id: ele.id,

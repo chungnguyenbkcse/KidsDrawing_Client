@@ -78,6 +78,7 @@ import ClassParent from "../components/ClassParent/ClassParent";
 import ManageClassesDoing from "../components/ManageChild/ManageClassesDoing";
 import Discovery from "../components/Discovery/Discovery";
 import SemesterClassDetail from "../components/Discovery/SemesterClassDetail";
+import ConestDetail from "../components/Discovery/ContestDetail";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -157,6 +158,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/courses/detail`}><SemesterClassDetail /></Route>
                                 <Route path={`/courses`}><CourseParent /></Route>
                                 <Route path={`/classes`}><ClassParent /></Route>
+                                <Route path={`/contests/detail`}><ConestDetail /></Route>
                                 <Route path={`/contests`}><ContestParent /></Route>
                                 <Route path={`/schedules`}><ScheduleParent /></Route>
                                 <Route path="/"><ParentHome /></Route>

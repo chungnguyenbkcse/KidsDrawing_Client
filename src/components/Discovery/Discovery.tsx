@@ -11,6 +11,8 @@ import Loading from "../../common/components/Loading";
 import { getSemesterClassNew } from "../../common/service/SemesterClass/GetSemesterNew";
 import SemesterClassList from "./SemesterClassList";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
+import { getContestStudentByParent } from "../../common/service/ContestStudent/GetContestStudentByParent";
+import ContestList from "./ContestList";
 
 const Discovery: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -49,11 +51,13 @@ const Discovery: React.FC = () => {
                 else {
                     trackPromise(getSemesterClassNew(dispatch))
                     trackPromise(getStudentByParent(dispatch, id))
+                    trackPromise(getContestStudentByParent(dispatch, id))
                 }
             }
             else {
                 trackPromise(getSemesterClassNew(dispatch))
                 trackPromise(getStudentByParent(dispatch, id))
+                trackPromise(getContestStudentByParent(dispatch, id))
             }
         }
         dispatch(clearSelectedTeacherRegisterQuatification());
@@ -146,7 +150,7 @@ const Discovery: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    
+                                    <ContestList />
                                 </div>
 
                             </Fragment>

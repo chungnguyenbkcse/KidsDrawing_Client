@@ -10,11 +10,11 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { getContestTeacher } from "../../common/service/ContestTeacher/GetContestTeacher";
-import ContestEndList from "./ContestEndTeacherList";
 import ContestNotDoingList from "./ContestNotDoingTeacherList";
 import ContestDoingList from "./ContestDoingTeacherList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import ContestEndTeacherList from "./ContestEndTeacherList";
 
 const ContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -223,7 +223,7 @@ const ContestTeacher: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ContestEndList />
+                                                <ContestEndTeacherList />
                                             </div>
                                         </div>
                                     </div>

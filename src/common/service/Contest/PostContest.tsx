@@ -4,7 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { postUserGradeContest } from "../UserGradeContest/PostUserGradeContest";
 import { getContest } from "./GetContest";
 
-export function postContest(lst: any[], contest: any, idx: any) {
+export function postContest(lst: any[], contest: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -24,7 +24,7 @@ export function postContest(lst: any[], contest: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postContest(lst,contest,idx))
+                        dispatch(postContest(lst,contest,idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -44,6 +44,9 @@ export function postContest(lst: any[], contest: any, idx: any) {
                     }))
                 })
                 toast.update(idx, { render: "Thêm cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                setTimeout(function () {
+                    routeHome(true);
+                }, 2000); 
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

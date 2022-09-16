@@ -1,15 +1,13 @@
-import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getContest } from "./GetContest";
 
-export function putContest(id: any,data: any, idx: any, routeHome: any) {
+export function postUserRegisterContest(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/contest/${id}`, {
-                    method: "PUT",
+                `${process.env.REACT_APP_API_URL}/user-register-join-contest`, {
+                    method: "POST",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -23,28 +21,21 @@ export function putContest(id: any,data: any, idx: any, routeHome: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putContest(id,data, idx, routeHome))
+                        dispatch(postUserRegisterContest(data))
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
                 else {
-                    return response
+                    return response.json()
                 }
             })
             .then (data => {
                 console.log(data)
-                console.log(id)
-                toast.update(idx, { render: "Chỉnh cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                setTimeout(function () {
-                    routeHome(true);
-                }, 2000);
-                getContest(dispatch) 
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
-                toast.update(idx, { render: "Chỉnh cuộc thi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

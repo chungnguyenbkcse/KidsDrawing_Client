@@ -67,7 +67,7 @@ export function getContest(dispatch: any) {
                         start_time: strDate1.substring(0,16),
                         end_time: strDate2.substring(0,16),
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creater_id,
+                        creator_id: ele.creator_id,
                         art_type_id: ele.art_type_id,
                         art_age_id: ele.art_age_id,
                         create_time: ele.create_time,

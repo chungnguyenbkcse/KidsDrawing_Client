@@ -74,7 +74,7 @@ const Home: React.FC = () => {
   schedule_time_classes.schedule_time_classes.map((ele, index) => {
     return data.push({
       Id: index,
-      Subject: ele.class_name,
+      Subject: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
       StartTime: new Date(ele.start_time),
       EndTime: new Date(ele.end_time),
       IsAllDay: false

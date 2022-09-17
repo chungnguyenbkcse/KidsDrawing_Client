@@ -94,7 +94,7 @@ const ParentHome: React.FC = () => {
 
             return data.push({
                 // base properties
-                title: ele.class_name,
+                title: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
                 color: '#56ca70',
                 start: ele.start_time,
                 end: ele.end_time,

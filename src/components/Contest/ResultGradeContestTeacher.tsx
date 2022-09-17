@@ -17,6 +17,14 @@ const ResultGradeContestTeacher: React.FC = () => {
     const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
     const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 0);
 
+    var role_privilege = localStorage.getItem('role_privilege')
+    var rolePrivilege:string[] =[]
+    var roleUser :string =""
+    if (role_privilege !== null) {
+        rolePrivilege = role_privilege.split(',')
+        roleUser = rolePrivilege[0]
+    }
+
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('contest_id');
@@ -69,6 +77,14 @@ const ResultGradeContestTeacher: React.FC = () => {
             pathname: path
         });
     }
+
+    const onRouteChange1 = () =>{ 
+        let path = '/contest/detail'; 
+        history.push({
+            pathname: path
+        });
+    }
+
     return (
         promiseInProgress ?
       <div className="row" id="search-box">
@@ -99,17 +115,38 @@ const ResultGradeContestTeacher: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="col-xl-4 col-md-4 mb-4">
-                    <div className="row justify-content-center">
-                        <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
-                        onRouteChange()}}>
-                            Xem review
-                            <i className="fas fa fa-arrow-right"></i>
-                    </button>
-                    </div>
-                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
-                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
-                </div>
+                {
+                    function (){
+                        if (roleUser === "TEACHER_USER") {
+                            return (
+                                <div className="col-xl-4 col-md-4 mb-4">
+                                    <div className="row justify-content-center">
+                                        <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
+                                        onRouteChange()}}>
+                                            Xem review
+                                            <i className="fas fa fa-arrow-right"></i>
+                                    </button>
+                                    </div>
+                                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
+                                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
+                                </div>
+                            )
+                        }
+                        else if (roleUser === "PARENT_USER") {
+                            return (<div className="col-xl-4 col-md-4 mb-4">
+                                    <div className="row justify-content-center">
+                                        <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
+                                        onRouteChange1()}}>
+                                            Xem điểm của bé
+                                            <i className="fas fa fa-arrow-right"></i>
+                                    </button>
+                                    </div>
+                                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
+                                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
+                                </div>)
+                        }
+                    }()
+                }
             </div>
 
         </Fragment>

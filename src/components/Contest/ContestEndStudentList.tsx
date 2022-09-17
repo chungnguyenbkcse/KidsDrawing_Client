@@ -20,6 +20,8 @@ function ContestStudentEndList(props: lessonListProps): JSX.Element {
         let path = '/contest/result-grade';
         localStorage.removeItem('contest_id');
         localStorage.setItem('contest_id', contest.id.toString())
+        localStorage.removeItem('contest_name')
+        localStorage.setItem('contest_name', contest.name)
         history.push({
             pathname: path
         });

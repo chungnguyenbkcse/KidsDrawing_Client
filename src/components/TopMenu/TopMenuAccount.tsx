@@ -17,8 +17,15 @@ function TopMenuAccount(): JSX.Element {
   const [isShow, setShow] = useState(false);
 
   console.log(users.teachers)
-  localStorage.setItem('profile_image', users.teachers[0].profile_image_url)
-  let profile_image = localStorage.getItem('profile_image')
+  let profile_image = ""
+  if (users.teachers.length > 0 ){
+    localStorage.setItem('profile_image', users.teachers[0].profile_image_url)
+  }
+
+  var id_x = localStorage.getItem('profile_image');
+  if (id_x !== null) {
+    profile_image = id_x;
+  }
 
   return (
 

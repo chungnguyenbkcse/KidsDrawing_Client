@@ -8,7 +8,7 @@ function TopCardCourse(props: PropsWithChildren<ICardProperties>): ReactElement 
         let path = '/courses/detail'; 
         history.push({
             pathname: path,
-            state: { description: description, course_id: course_id, semester_class_id: props.semester_class_id, course_name: props.course_name}
+            state: { description: description, course_id: course_id, semester_class_id: props.semester_class_id, course_name: props.course_name, semester_class_name: props.name, image_url: props.url_image, price: props.price}
         });
     }
 

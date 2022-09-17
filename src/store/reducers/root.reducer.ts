@@ -55,6 +55,7 @@ import classes_studentsReducer from "./classes_student.reducer";
 import classesParentsReducer from "./classes_parent.reducer";
 import courseParentsReducer from "./course_parent.reducer";
 import contestStudentsReducer from "./contest_student.reducer";
+import cartReducer from "./cart.reducer";
 
 
 const initialState: IRootStateType = {
@@ -125,6 +126,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     classes_parents: classesParentsReducer,
     course_parents: courseParentsReducer,
     contest_students: contestStudentsReducer,
+    carts: cartReducer,
 });
 
 

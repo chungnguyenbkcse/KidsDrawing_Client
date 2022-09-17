@@ -8,3 +8,7 @@
 .content-wrapper-teacher {
     background-color: #503E9D !important;
 }
+
+.container-fluid {
+    margin-top: 100px !important;
+}

@@ -4,7 +4,6 @@ import { IStateType, IRootPageStateType, IUserState } from "../../store/models/r
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { useHistory, useLocation } from "react-router-dom";
 import "./SemesterClassDetail.css"
-import { ToastContainer } from "react-toastify";
 import { IUser } from "../../store/models/user.interface";
 import ReactSelect from "../../common/components/ReactSelect";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -15,6 +14,8 @@ import { getStudentByParent } from "../../common/service/Student/GetStudentByPar
 import jwt_decode from "jwt-decode";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GrLinkNext } from "react-icons/gr";
+import { addCart } from "../../store/actions/cart.action";
+import { toast, ToastContainer } from "react-toastify";
 
 type Option1 = {
     label: string;
@@ -80,11 +81,47 @@ const SemesterClassDetail: React.FC = () => {
     }, [path.area, dispatch, id, access_token, refresh_token]);
 
     function handleRegister() {
-        
+        valueTeacher.map((ele, idx) => {
+            console.log({
+                id: state.semester_class_id,
+                name: state.semester_class_name,
+                image: state.image_url,
+                quantity: 1,
+                price: state.price
+            })
+            return dispatch(addCart({
+                id: state.semester_class_id,
+                name: state.semester_class_name,
+                image: state.image_url,
+                quantity: 1,
+                price: state.price
+            }))
+        })
+
+        toast.success("Thêm giỏ hàng thành công...", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000
+          })
     }
 
     const history = useHistory();
     function handleRegister1() {
+        valueTeacher.map((ele, idx) => {
+            console.log({
+                id: state.semester_class_id,
+                name: state.semester_class_name,
+                image: state.image_url,
+                quantity: 1,
+                price: state.price
+            })
+            return dispatch(addCart({
+                id: state.semester_class_id,
+                name: state.semester_class_name,
+                image: state.image_url,
+                quantity: 1,
+                price: state.price
+            }))
+        })
         let path = '/cart'; 
         history.push({
             pathname: path

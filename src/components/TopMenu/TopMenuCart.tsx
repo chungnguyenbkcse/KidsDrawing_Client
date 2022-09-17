@@ -5,7 +5,7 @@ import { getNotify } from "../../common/service/Notify/GetNotify";
 import { getUserReadNotification } from "../../common/service/UserReadNotification/GetUserReadNotificationByUser";
 import { putUserReadNotification } from "../../common/service/UserReadNotification/PutUserReadNotification";
 import { logout } from "../../store/actions/account.actions";
-import { INotifyState, IStateType, IUserReadNotificationState } from "../../store/models/root.interface";
+import { ICartState, INotifyState, IStateType, IUserReadNotificationState } from "../../store/models/root.interface";
 import "./TopNotification.css"
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
@@ -23,6 +23,7 @@ function TopMenuCart(): JSX.Element {
   const notifys: INotifyState = useSelector((state: IStateType) => state.notifys);
   const user_read_notifications: IUserReadNotificationState = useSelector((state: IStateType) => state.user_read_notifications);
   const [isShow, setShow] = useState(false);
+  const carts: ICartState = useSelector((state: IStateType) => state.carts);
 
   var id_x = localStorage.getItem('id');
   let user_id: number = 0;
@@ -101,15 +102,22 @@ function TopMenuCart(): JSX.Element {
       });
   }
 
+  function routeCart() {
+    let path = '/cart'; 
+    history.push({
+        pathname: path
+    });
+  }
+
   return (
 
     <li className="nav-item dropdown no-arrow">
 
 
       <p className="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" onClick={() => {
-        setShow(!isShow);
+        routeCart();
       }}>
-        <span className="badge badge-danger ml-2">{user_read_notifications.user_not_readed_notifications.length}</span>
+        <span className="badge badge-danger ml-2">{carts.carts.length}</span>
         <AiOutlineShoppingCart />
       </p>
 

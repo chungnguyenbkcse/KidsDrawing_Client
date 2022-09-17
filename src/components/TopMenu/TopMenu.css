@@ -9,7 +9,9 @@
 
 #teacher_navbar {
     background-color: #ffffff !important;
-    border-radius: 50px !important;
+    position : fixed !important;
+    z-index: 1;
+    width: 80%;
 }
 
 .logout-btn {

@@ -7,11 +7,15 @@
     max-height: 350px;
 }
 
-#teacher_navbar {
+#teacher_navbarx {
     background-color: #ffffff !important;
     position : fixed !important;
     z-index: 1;
     width: 80%;
+}
+
+#teacher_navbar {
+    background-color: #ffffff !important;
 }
 
 .logout-btn {

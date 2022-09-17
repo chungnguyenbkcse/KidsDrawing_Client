@@ -143,7 +143,7 @@ const Routers: React.FC = () => {
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
                         <TopMenu />
-                        <div className="container-fluid">
+                        <div className="container-fluid content-page">
                             <Switch>
                                 <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
@@ -178,7 +178,7 @@ const Routers: React.FC = () => {
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
                         <TopMenu />
-                        <div className="container-fluid">
+                        <div className="container-fluid content-page">
                             <Switch>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>                            

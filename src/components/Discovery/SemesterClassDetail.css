@@ -19,3 +19,11 @@
 #btn-payment {
     color: #ffffff !important;
 }
+
+#btn-create-register-course3 {
+    background: #14FB00 !important;
+    border-radius: 30px;
+    margin-bottom: 30px !important;
+    min-width: 200px !important;
+    float: right !important;
+}

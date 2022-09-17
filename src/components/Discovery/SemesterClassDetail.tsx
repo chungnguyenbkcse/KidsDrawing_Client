@@ -4,8 +4,7 @@ import { IStateType, IRootPageStateType, IUserState } from "../../store/models/r
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { useHistory, useLocation } from "react-router-dom";
 import "./SemesterClassDetail.css"
-import { postRegisterTeachSemester } from "../../common/service/UserTeachSemester/PostRegisterTeachSemester";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { IUser } from "../../store/models/user.interface";
 import ReactSelect from "../../common/components/ReactSelect";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -80,32 +79,16 @@ const SemesterClassDetail: React.FC = () => {
         dispatch(updateCurrentPath("Lớp", ""));
     }, [path.area, dispatch, id, access_token, refresh_token]);
 
-    const history = useHistory();
-
     function handleRegister() {
-        if (state === undefined || state === null) {
-            return ""
-        }
-        else {
-            dispatch(postRegisterTeachSemester({
-                teacher_id: localStorage.getItem('id'),
-                semester_class_id: state.semester_class_id
-            }))
-            console.log({
-                teacher_id: localStorage.getItem('id'),
-                semester_class_id: state.semester_class_id
-            })
-            toast.success("Đăng kí lớp thành công!", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
-            });
-            let path = '/courses'; 
-            setTimeout(function () {
-                history.push({
-                    pathname: path
-                });
-            }, 2000); 
-        }
+        
+    }
+
+    const history = useHistory();
+    function handleRegister1() {
+        let path = '/cart'; 
+        history.push({
+            pathname: path
+        });
     }
 
     const [valueTeacher, setValueTeacher] = useState<any[]>([])
@@ -156,7 +139,7 @@ const SemesterClassDetail: React.FC = () => {
                     </button>
                         </div>
                         <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
-                        <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister()}>
+                        <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister1()}>
                         <GrLinkNext id="btn-payment" color="#ffffff"/>
                         Thanh toán ngay
                     </button>

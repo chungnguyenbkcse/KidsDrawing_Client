@@ -1,15 +1,17 @@
 import React, { useState, Dispatch, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { putStatusUser } from "../../common/service/User/UpdateStatusUser";
 import { logout } from "../../store/actions/account.actions";
 import { trackPromise } from "react-promise-tracker";
+import { IStateType, IUserState } from "../../store/models/root.interface";
 
 function TopMenuAccount(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const username: string | null = localStorage.getItem('username');
   const id = localStorage.getItem('id')
   const link_profile = localStorage.getItem('link_profile')
+  const users: IUserState = useSelector((state: IStateType) => state.users);
   useEffect(() => {
     trackPromise(getUserById(dispatch, id))
   }, [dispatch, id])
@@ -29,7 +31,7 @@ function TopMenuAccount(): JSX.Element {
         aria-expanded="false">
         <span className="mr-2 d-none d-lg-inline small cadet">{username}</span>
         <img className="img-profile rounded-circle" alt=""
-          src={link_profile !== null ? link_profile :  "https://source.unsplash.com/QAB-WJcbgJk/60x60"} />
+          src={users.teachers.length !== 0 ? users.teachers[0].profile_image_url :  "https://source.unsplash.com/QAB-WJcbgJk/60x60"} />
       </p>
 
       <div className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${(isShow) ? "show" : ""}`}

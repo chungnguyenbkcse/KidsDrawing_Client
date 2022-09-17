@@ -11,6 +11,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SelectInput from "../../common/components/Select";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 export type teacherListProps = {
     isCheck: (value: boolean) => void;
@@ -20,8 +22,9 @@ export type teacherListProps = {
 const Account: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const id = localStorage.getItem('id')
+    const { promiseInProgress } = usePromiseTracker();
     useEffect(() => {
-        dispatch(getUserById(dispatch, id))
+        trackPromise(getUserById(dispatch, id))
     }, [dispatch, id])
     var role_privilege = localStorage.getItem('role_privilege')
     let rolePrivilege: any = []
@@ -174,7 +177,16 @@ const Account: React.FC = () => {
     };
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <div className="row text-left">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">

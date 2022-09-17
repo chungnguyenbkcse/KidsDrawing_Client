@@ -148,6 +148,10 @@ const Routers: React.FC = () => {
                                 <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>  
+                                <Route path={`/contests/detail`}><ContestDetailTeacher /></Route>
+                                <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
+                                <Route path={`/contest/result-grade`}><ResultGradeContestTeacher /></Route>
+                                <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>
                                 <Route path={`/cart`}><CartForm /></Route>
                                 <Route path={`/discover`}><Discovery /></Route>
                                 <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>

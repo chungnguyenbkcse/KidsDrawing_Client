@@ -6,22 +6,16 @@ import TopCard from "../../common/components/TopCardUser";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
+import { IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
 import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const user_grade_contest_submissions: IUserGradeContestSubmissionState  = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
     const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 0);
-    var class_id = localStorage.getItem('class_id');
-    var class_id_: number = 2;
-    if (class_id !== null) {
-        class_id_ = parseInt(class_id);
-    }
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -64,11 +58,8 @@ const ResultGradeContestTeacher: React.FC = () => {
                 trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
             }
         }
-    }, [dispatch, access_token, refresh_token, class_id_, contest_id]);
-
-    useEffect(() => {
         dispatch(updateCurrentPath("Cuoc thi", "Chi tiết"));
-    }, [dispatch, path.area])
+    }, [dispatch, access_token, refresh_token, contest_id]);
 
 
     const history = useHistory();

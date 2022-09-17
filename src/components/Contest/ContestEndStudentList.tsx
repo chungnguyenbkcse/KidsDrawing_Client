@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { IStateType, IContestStudentState } from "../../store/models/root.interface";
 import { ILesson } from "../../store/models/lesson.interface";
+import { useHistory } from "react-router-dom";
+import { IContestStudent } from "../../store/models/contest_student.interface";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -12,11 +14,22 @@ export type lessonListProps = {
 function ContestStudentEndList(props: lessonListProps): JSX.Element {
     const contest_students: IContestStudentState = useSelector((state: IStateType) => state.contest_students);
     
+    const history = useHistory();
+
+    const routeChange = (contest: IContestStudent) => {
+        let path = '/contest/result-grade';
+        localStorage.removeItem('contest_id');
+        localStorage.setItem('contest_id', contest.id.toString())
+        history.push({
+            pathname: path
+        });
+    }
+
     const lessonElements: (JSX.Element | null)[] = contest_students.contest_end.map((contest, index) => {
         //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
         if (!contest) { return null; }
         return (<tr className={`table-row `}
-            key={`lesson_${contest.id}`} >
+            key={`lesson_${contest.id}`} onClick={() => {routeChange(contest)}}>
             <th scope="row" className="data-table">{index + 1}</th>
             <td className="data-table">{contest.name}</td>
             <td className="data-table">{contest.art_age_name}</td>

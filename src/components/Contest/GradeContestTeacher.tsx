@@ -36,23 +36,28 @@ const GradeContestTeacher: React.FC = () => {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
 
+    var id_x = localStorage.getItem('id');
+    let id: number = 0;
+    if (id_x !== null) {
+        id = parseInt(id_x)
+    }
+
     function saveForm(){
         const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
         
-        if (student_id === 0 && contest_submission_id === 0){
-            let x = contest_submissions.contest_not_gradeds[0].student_id;
+        if (contest_submission_id === 0){
             let y = contest_submissions.contest_not_gradeds[0].id;
             console.log({
-                student_id: x,
+                teacher_id: id,
                 contest_submission_id: y,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             })
 
             dispatch(postUserGradeContestSubmission({
-                student_id: x,
+                teacher_id: id,
                 contest_submission_id: y,
                 score: formState.score.value,
                 feedback: formState.feedback.value
@@ -60,7 +65,7 @@ const GradeContestTeacher: React.FC = () => {
         }
         else {
             dispatch(postUserGradeContestSubmission({
-                student_id: student_id,
+                teacher_id: id,
                 contest_submission_id: contest_submission_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value
@@ -119,12 +124,10 @@ const GradeContestTeacher: React.FC = () => {
             let image_url_ = contest_submissions.contest_not_gradeds[x].image_url;
             let student_name_ = contest_submissions.contest_not_gradeds[x].student_name;
             let time_submit_ = contest_submissions.contest_not_gradeds[x].update_time;
-            let student_id_ = contest_submissions.contest_not_gradeds[x].student_id;
             let contest_submission_id_ = contest_submissions.contest_not_gradeds[x].id;
             setImageUrl(image_url_);
             setStudentName(student_name_);
             setTimeSubmit(time_submit_);
-            setStudentId(student_id_);
             setContestSubmissionId(contest_submission_id_);
         }
     }
@@ -139,7 +142,6 @@ const GradeContestTeacher: React.FC = () => {
     const [count, setCount] = useState(0);
     const [image_url, setImageUrl] = useState("");
     const [student_name, setStudentName] = useState("");
-    const [student_id, setStudentId] = useState(0);
     const [contest_submission_id, setContestSubmissionId] = useState(0);
     const [time_submit, setTimeSubmit] = useState("");
     return (

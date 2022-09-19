@@ -108,7 +108,7 @@ const SectionTeacher: React.FC = () => {
 
     const history = useHistory();
     const routeChange2 = () => {
-        let path ="/section/view";
+        let path = "/section/view";
         history.push({
             pathname: path,
             state: { section_id: section_id }
@@ -121,6 +121,13 @@ const SectionTeacher: React.FC = () => {
         }
     }
 
+    const routeChange5 = () => {
+        let path = "/attendance";
+        history.push({
+            pathname: path
+        });
+    }
+
     const onChangeRoute1 = () => {
         let path = "/section/edit";
         history.push({
@@ -129,7 +136,7 @@ const SectionTeacher: React.FC = () => {
         })
     }
 
-    const routeChange3 = (description:  string, name: string, level_name: string, id: number) => {
+    const routeChange3 = (description: string, name: string, level_name: string, id: number) => {
         let path = '/exercise';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
@@ -146,177 +153,203 @@ const SectionTeacher: React.FC = () => {
 
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            <ToastContainer />
-            <div className="row mb-2">
-                <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
-                    <button
-                        className="btn btn-success ml-3"
-                        id="btn-edit-tutorial"
-                        onClick={onChangeRoute1}
-                    >
-                        <i className="fas fa-edit"></i>
-                        Chỉnh giáo án
-                    </button>
+            <div className="row" id="search-box">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                        </div>
+                    </div>
+                </div>
+            </div> : <Fragment>
+                <ToastContainer />
+                <div className="row mb-2">
+                    <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
+                        <button
+                            className="btn btn-success ml-3"
+                            id="btn-edit-tutorial"
+                            onClick={onChangeRoute1}
+                        >
+                            <i className="fas fa-edit"></i>
+                            Chỉnh giáo án
+                        </button>
+                    </div>
+
+                    <div className="col-xl-6 col-md-6 col-xs-6 md-4">
+                        <button
+                            className="btn btn-success ml-3"
+                            id="btn-add-exercise"
+                            onClick={() => {
+                                dispatch(setModificationState(ExerciseModificationStatus.Create))
+                                onExerciseRemove()
+                            }}
+                        >
+                            <i className="fas fa fa-plus"></i>
+                            Thêm bài tập
+                        </button>
+                    </div>
                 </div>
 
-                <div className="col-xl-6 col-md-6 col-xs-6 md-4">
-                    <button
-                        className="btn btn-success ml-3"
-                        id="btn-add-exercise"
-                        onClick={() => {
-                            dispatch(setModificationState(ExerciseModificationStatus.Create))
-                            onExerciseRemove()
-                        }}
-                    >
-                        <i className="fas fa fa-plus"></i>
-                        Thêm bài tập
-                    </button>
-                </div>
-            </div>
-
-            <Popup
-                open={popup}
-                onClose={() => setPopup(false)}
-                closeOnDocumentClick
-            >
-                <>
-                    {
-                        function () {
-                            if ((exercises.modificationState === ExerciseModificationStatus.Create) || (exercises.modificationState === ExerciseModificationStatus.Edit)) {
-                                return <ExerciseForm isCheck={onRemovePopup}/>
-                            }
-                        }()
-                    }
-                </>
-            </Popup>
-            <div className="row">
-                <div className="col-xl-6 col-md-6 mb-4">
-                    <div className="row">
-                        <div className="col-xl-12 col-md-12 mb-4">
+                <Popup
+                    open={popup}
+                    onClose={() => setPopup(false)}
+                    closeOnDocumentClick
+                >
+                    <>
+                        {
+                            function () {
+                                if ((exercises.modificationState === ExerciseModificationStatus.Create) || (exercises.modificationState === ExerciseModificationStatus.Edit)) {
+                                    return <ExerciseForm isCheck={onRemovePopup} />
+                                }
+                            }()
+                        }
+                    </>
+                </Popup>
+                <div className="row">
+                    <div className="col-xl-6 col-md-6 mb-4">
+                        <div className="row">
                             <div className="col-xl-12 col-md-12 mb-4">
-                                <div className={`card shadow h-100 py-2`} id="normal-tutorial">
-                                    <div className="card-body">
-                                        <div className="row no-gutters justify-content-left">
-                                            <h4 id="full-name">Giáo án chung</h4>
-                                        </div>
-                                        <div className="row no-gutters">
-                                            <p id="phone">Tên: {
-                                                function () {
-                                                    if (sections.sections.length <= 0) {
-                                                        return ""
-                                                    }
-                                                    else {
-                                                        return sections.sections[0].name;
-                                                    }
-                                                }()
-                                            }</p>
-                                        </div>
-
-                                        <div className="row no-gutters">
-                                            <p id="phone">Nội dung: </p>
-                                        </div>
-
-                                        <div className="row  justify-content-center">
-                                            <button
-                                                className="btn btn-success ml-2"
-                                                id="btn-view-tutorial"
-                                                onClick={routeChange2}
-                                            >
-                                                Xem nội dung
-                                            </button>
-                                        </div>
-
-                                        <div className="row no-gutters">
-                                            <p id="phone">Hình thức:
-                                                {
+                                <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className={`card shadow h-100 py-2`} id="normal-tutorial">
+                                        <div className="card-body">
+                                            <div className="row no-gutters justify-content-left">
+                                                <h4 id="full-name">Giáo án chung</h4>
+                                            </div>
+                                            <div className="row no-gutters">
+                                                <p id="phone">Tên: {
                                                     function () {
                                                         if (sections.sections.length <= 0) {
                                                             return ""
                                                         }
                                                         else {
-                                                            if (sections.sections[0].teach_form === true) {
-                                                                return "Dạy bằng jitsi";
-                                                            }
-                                                            else {
-                                                                return "Dạy bằng giáo trình";
-                                                            }
+                                                            return sections.sections[0].name;
                                                         }
                                                     }()
-                                                }
-                                            </p>
-                                        </div>
-                                        <div className="row  justify-content-center">
-                                        {
-                                            function () {
-                                                if (sections.sections.length <= 0) {
-                                                    return ""
-                                                }
-                                                else {
-                                                    if (sections.sections[0].teach_form === true) {
-                                                        return (
-                                                            <button
-                                                                className="btn btn-success ml-2"
-                                                                id="btn-into-room"
-                                                                onClick={routeChange4}
-                                                            >
-                                                                Vào metting room
-                                                            </button>
-                                                        )
+                                                }</p>
+                                            </div>
+
+                                            <div className="row no-gutters">
+                                                <p id="phone">Nội dung: </p>
+                                            </div>
+
+                                            <div className="row  justify-content-center">
+                                                <button
+                                                    className="btn btn-success ml-2"
+                                                    id="btn-view-tutorial"
+                                                    onClick={routeChange2}
+                                                >
+                                                    Xem nội dung
+                                                </button>
+                                            </div>
+
+                                            <div className="row no-gutters">
+                                                <p id="phone">Hình thức:
+                                                    {
+                                                        function () {
+                                                            if (sections.sections.length <= 0) {
+                                                                return ""
+                                                            }
+                                                            else {
+                                                                if (sections.sections[0].teach_form === true) {
+                                                                    return "Dạy bằng jitsi";
+                                                                }
+                                                                else {
+                                                                    return "Dạy bằng giáo trình";
+                                                                }
+                                                            }
+                                                        }()
                                                     }
-                                                }
-                                            }()
-                                        }
+                                                </p>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-xl-6 col-md-6 col-xs-6">
+                                                    {
+                                                        function () {
+                                                            if (sections.sections.length <= 0) {
+                                                                return ""
+                                                            }
+                                                            else {
+                                                                if (sections.sections[0].teach_form === true) {
+                                                                    return (
+                                                                        <button
+                                                                            className="btn btn-success ml-2"
+                                                                            id="btn-into-room"
+                                                                            onClick={routeChange4}
+                                                                        >
+                                                                            Vào metting room
+                                                                        </button>
+                                                                    )
+                                                                }
+                                                            }
+                                                        }()
+                                                    }
+                                                </div>
+                                                <div className="col-xl-6 col-md-6 col-xs-6">
+                                                    {
+                                                        function () {
+                                                            if (sections.sections.length <= 0) {
+                                                                return ""
+                                                            }
+                                                            else {
+                                                                if (sections.sections[0].teach_form === true) {
+                                                                    return (
+                                                                        <button
+                                                                            className="btn btn-success ml-2"
+                                                                            id="btn-into-attendance"
+                                                                            onClick={routeChange5}
+                                                                        >
+                                                                            Điểm danh
+                                                                        </button>
+                                                                    )
+                                                                }
+                                                            }
+                                                        }()
+                                                    }
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="col-xl-6 col-md-6 mb-4">
-                    <div className="row">
-                        <div className="col-xl-12 col-md-12 mb-4">
+                    <div className="col-xl-6 col-md-6 mb-4">
+                        <div className="row">
                             <div className="col-xl-12 col-md-12 mb-4">
-                                <div className={`card shadow h-100 py-2`} >
-                                    <div className="card-body">
-                                        <div className="row no-gutters justify-content-left">
-                                            <h4 id="full-name">Bài tập</h4>
-                                            <div className="table-responsive portlet">
-                                                <table className="table">
-                                                    <thead className="thead-light">
-                                                        <tr>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {
-                                                            exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
-                                                                return (
-                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                        <div className="row row-section mb-4 ml-2 mr-2" onClick={() => {routeChange3(ele.description, ele.name, ele.level_name, ele.id)}}>
-                                                                            <div className="col-xl-4 col-md-4 mb-4">
-                                                                                <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt=""/>
+                                <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className={`card shadow h-100 py-2`} >
+                                        <div className="card-body">
+                                            <div className="row no-gutters justify-content-left">
+                                                <h4 id="full-name">Bài tập</h4>
+                                                <div className="table-responsive portlet">
+                                                    <table className="table">
+                                                        <thead className="thead-light">
+                                                            <tr>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
+                                                                    return (
+                                                                        <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                            <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                                <div className="col-xl-4 col-md-4 mb-4">
+                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                                </div>
+                                                                                <div className="col-xl-8 col-md-8 mb-4">
+                                                                                    <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>
+                                                                                    <h4 className=" mb-2" id="level-teacher">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                                </div>
                                                                             </div>
-                                                                            <div className="col-xl-8 col-md-8 mb-4">
-                                                                                <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>
-                                                                                <h4 className=" mb-2" id="level-teacher">Phần trăm đánh giá: {ele.level_name}</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                    </tr>
-                                                                )
-                                                            })
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                                                        </tr>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -325,9 +358,8 @@ const SectionTeacher: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </Fragment>
+            </Fragment>
     );
 };
 

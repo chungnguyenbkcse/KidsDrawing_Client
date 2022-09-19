@@ -103,7 +103,7 @@ const DetailContestStudent: React.FC = () => {
             }
         }
         dispatch(updateCurrentPath("Cuoc thi", "Chi tiết"));
-    }, [dispatch, access_token, refresh_token, contest_id]);
+    }, [dispatch, access_token, refresh_token, contest_id, id]);
 
 
     useEffect(() => {

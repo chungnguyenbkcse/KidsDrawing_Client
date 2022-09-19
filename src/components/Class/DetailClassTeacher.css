@@ -93,3 +93,12 @@
     background: #C3C9BB;
     border-radius: 20px;
 }
+
+.image-section {
+    height: auto;
+    width: 50% !important;
+}
+
+.table-section {
+    min-height: 1000px;
+}

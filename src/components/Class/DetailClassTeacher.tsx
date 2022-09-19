@@ -51,6 +51,10 @@ const DetailClassTeacher: React.FC = () => {
         class_id = parseInt(id_y);
     }
 
+    const [checked1, setChecked1] = useState(true);
+    const [checked2, setChecked2] = useState(false);
+    const [checked3, setChecked3] = useState(false);
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -156,148 +160,226 @@ const DetailClassTeacher: React.FC = () => {
 
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
-            {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
-            <div className="row">
-                <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberApprovedCount}`} icon="book" class="primary" />
-                <TopCard title="SỐ BÀI KIỂM TRA CHƯA CHẤM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
-                <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button
-                        className="btn btn-success btn-green"
-                        id="btn-create-teacher-level"
-                        onClick={() => {
-                            dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Create))
-                            onAnonymousNotificationRemove()
-                        }}
-                    >
-                        <i className="fas fa fa-plus"></i>
-                        Đăng kí nghỉ dạy
-                    </button>
+            <div className="row" id="search-box">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div> : <Fragment>
+                {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
+                {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-            <Popup
-                open={popup1}
-                onClose={() => setPopup1(false)}
-                closeOnDocumentClick
-            >
-                <>
-                    {
-                        function () {
-                            if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
-                                return <RequestOffSectionForm isCheck={onRemovePopup1} />
+                <div className="row">
+                    <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberApprovedCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BÀI KIỂM TRA CHƯA CHẤM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
+                    <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
+                        <button
+                            className="btn btn-success btn-green"
+                            id="btn-create-teacher-level"
+                            onClick={() => {
+                                dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Create))
+                                onAnonymousNotificationRemove()
+                            }}
+                        >
+                            <i className="fas fa fa-plus"></i>
+                            Đăng kí nghỉ dạy
+                        </button>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                            if (checked1 === false) {
+                                setChecked1(true)
+                                setChecked2(false)
+                                setChecked3(false)
                             }
-                        }()
-                    }
-                </>
-            </Popup>
-            <div className="row">
-                <div className="col-xl-4 col-md-4 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
-                    <div className="table-responsive portlet">
-                        <table className="table">
-                            <thead className="thead-light">
-                                <tr>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
-                                        return (
-                                            <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
-                                                    <div className="col-xl-4 col-md-4 mb-4">
-                                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
-                                                    </div>
-                                                    <div className="col-xl-8 col-md-8 mb-4">
-                                                        <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
-                                                        <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
-                                                    </div>
-                                                </div>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                        }} style={{
+                            color: checked1 ? "#F24E1E" : "#2F4F4F"
+                        }}>Buổi học</h6>
+
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked2 === false) {
+                                setChecked2(true)
+                                setChecked1(false)
+                                setChecked3(false)
+                            }
+                        }}
+                            style={{
+                                color: checked2 ? "#F24E1E" : "#2F4F4F"
+                            }}>Bài tập chưa chấm</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked3 === false) {
+                                setChecked3(true)
+                                setChecked1(false)
+                                setChecked2(false)
+                            }
+                        }}
+                            style={{
+                                color: checked3 ? "#F24E1E" : "#2F4F4F"
+                            }}>Nghỉ dạy</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                        }}></div>
                     </div>
                 </div>
 
-                <div className="col-xl-4 col-md-4 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Bài kiểm tra cần chấm</h3>
-                    <div className="table-responsive portlet">
-                        <table className="table">
-                            <thead className="thead-light">
-                                <tr>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    exercise_submissions.exercise_not_gradeds.map((ele, index) => {
-                                        return (
-                                            <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
-                                                    <div className="col-xl-4 col-md-4 mb-4">
-                                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
-                                                    </div>
-                                                    <div className="col-xl-8 col-md-8 mb-4">
-                                                        <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
-                                                        <h3 className=" mb-2" id="level-teacher">Học sinh: {ele.student_name}</h3>
-                                                    </div>
-                                                </div>
-                                            </tr>
-                                        )
-                                    })
+                <Popup
+                    open={popup1}
+                    onClose={() => setPopup1(false)}
+                    closeOnDocumentClick
+                >
+                    <>
+                        {
+                            function () {
+                                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
+                                    return <RequestOffSectionForm isCheck={onRemovePopup1} />
                                 }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                            }()
+                        }
+                    </>
+                </Popup>
 
-
-                <div className="col-xl-4 col-md-4 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Yêu cầu nghỉ dạy</h3>
-                    <div className="table-responsive portlet">
-                        <table className="table">
-                            <thead className="thead-light">
-                                <tr>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    teacher_leaves.leaves.map((ele, index) => {
-                                        return (
-                                            <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
-                                                    <div className="col-xl-4 col-md-4 mb-4">
-                                                        <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
-                                                    </div>
-                                                    <div className="col-xl-8 col-md-8 mb-4">
-                                                        <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>
-                                                        <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
-                                                    </div>
-                                                </div>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </Fragment>
+                {
+                    function () {
+                        if (checked1 === true) {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
+                                        <div className="table-responsive portlet table-section">
+                                            <table className="table">
+                                                <thead className="thead-light">
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
+                                                                        <div className="col-xl-4 col-md-4 mb-4">
+                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-8 col-md-8 mb-4">
+                                                                            <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
+                                                                            <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        else if (checked2 === true) {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Bài kiểm tra cần chấm</h3>
+                                        <div className="table-responsive portlet table-section">
+                                            <table className="table">
+                                                <thead className="thead-light">
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        exercise_submissions.exercise_not_gradeds.map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                        <div className="col-xl-4 col-md-4 mb-4">
+                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-8 col-md-8 mb-4">
+                                                                            <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
+                                                                            <h3 className=" mb-2" id="level-teacher">Học sinh: {ele.student_name}</h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        else if (checked3 === true) {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Yêu cầu nghỉ dạy</h3>
+                                        <div className="table-responsive portlet table-section">
+                                            <table className="table">
+                                                <thead className="thead-light ">
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        teacher_leaves.leaves.map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                        <div className="col-xl-4 col-md-4 mb-4">
+                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-8 col-md-8 mb-4">
+                                                                            <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>
+                                                                            <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }()
+                }
+            </Fragment>
     );
 };
 

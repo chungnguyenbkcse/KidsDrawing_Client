@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeExerciseAll, initialExercise, addExercise } from "../../../store/actions/exercise.action";
+import { fetchDataSuccess, fetchDataError, removeExerciseAll, initialExercise, addExercise } from "../../../store/actions/exercise.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface exercise {
     id: number;
@@ -11,11 +11,9 @@ interface exercise {
     create_time: string;
     update_time: string;
 }
-export function getExerciseBySection(id: any) {
+export function getExerciseBySection(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/exercises/section/${id}`, {
                     method: "GET",
                     headers: {
@@ -30,7 +28,7 @@ export function getExerciseBySection(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseBySection(id))
+                        dispatch(getExerciseBySection(dispatch,id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -71,5 +69,4 @@ export function getExerciseBySection(id: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

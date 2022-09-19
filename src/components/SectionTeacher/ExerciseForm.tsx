@@ -1,9 +1,7 @@
 import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import { ChartLine } from "../../common/components/CharLine";
+import { useHistory } from "react-router-dom";
 import { Editor } from "../../common/components/Quill/EditorSection";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
@@ -11,9 +9,9 @@ import TextInput from "../../common/components/TextInput";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { ISectionState, IStateType, ITutorialPageState, IUserState } from "../../store/models/root.interface";
-import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 type Options = {
     name: string;
@@ -31,6 +29,8 @@ const ExerciseForm: React.FC = () => {
     function getValue(value: string) {
         setTextHtml(value);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
 
     function setChangeCount() {
         let x = count;
@@ -88,15 +88,13 @@ const ExerciseForm: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getSectionById(section_id))
-                    dispatch(getTutorialPageBySection(section_id))
+                    trackPromise(getSectionById(dispatch, section_id))
+                    trackPromise(getTutorialPageBySection(dispatch, section_id))
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getSectionById(section_id))
-                dispatch(getTutorialPageBySection(section_id))
+                trackPromise(getSectionById(dispatch, section_id))
+                trackPromise(getTutorialPageBySection(dispatch, section_id))
             }
         }
     }, [dispatch, access_token, refresh_token]);
@@ -140,7 +138,16 @@ const ExerciseForm: React.FC = () => {
     ];
     
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <div className="row">
                 <div className="col-xl-12 col-md-12 mb-4">
                     <div className="row">

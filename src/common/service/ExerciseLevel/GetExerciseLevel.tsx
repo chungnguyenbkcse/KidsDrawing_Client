@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeExerciseLevelAll, addExerciseLevel } from "../../../store/actions/exercise_level.action";
+import { fetchDataSuccess, fetchDataError, removeExerciseLevelAll, addExerciseLevel } from "../../../store/actions/exercise_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ExerciseLevel {
     id: number;
@@ -6,11 +6,9 @@ interface ExerciseLevel {
     description: string;
     weight: number;
 }
-export function getExerciseLevel() {
+export function getExerciseLevel(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/exercise-level`, {
                     method: "GET",
                     headers: {
@@ -25,7 +23,7 @@ export function getExerciseLevel() {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseLevel())
+                        dispatch(getExerciseLevel(dispatch))
                     }
                     else {
                         throw Error(response.statusText);
@@ -54,5 +52,4 @@ export function getExerciseLevel() {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

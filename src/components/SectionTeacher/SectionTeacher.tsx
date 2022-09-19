@@ -9,20 +9,25 @@ import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExercise
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationState } from "../../store/actions/exercise.action";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { ExerciseModificationStatus } from "../../store/models/exercise.interface";
-import { IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IClassTeacherState, IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
+import { getClassTeacher } from "../../common/service/ClassTeacher/GetClassTeacher";
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const exercises: IExerciseState = useSelector((state: IStateType) => state.exercises);
     const users: IUserState = useSelector((state: IStateType) => state.users);
+    const class_teachers: IClassTeacherState = useSelector((state: IStateType) => state.class_teachers);
     console.log(users.teachers)
 
     const [popup, setPopup] = useState(false);
+
+    const { promiseInProgress } = usePromiseTracker();
 
     function onExerciseRemove() {
         setPopup(true);
@@ -38,6 +43,29 @@ const SectionTeacher: React.FC = () => {
 
     if (id_y !== null) {
         section_id = parseInt(id_y);
+    }
+
+    var id_x = localStorage.getItem('id');
+    var id: number = 0;
+    if (id_x !== null) {
+        id = parseInt(id_x);
+    }
+
+
+    var id_z = localStorage.getItem('class_id');
+    var class_id: number = 0;
+    if (id_z !== null) {
+        class_id = parseInt(id_z);
+    }
+
+    let link_jisti = "";
+    if (class_teachers.class_doing.length > 0) {
+        class_teachers.class_doing.map((ele, idx) => {
+            if (ele.id === class_id) {
+                link_jisti = ele.link_url;
+            }
+            return ele
+        })
     }
 
     let access_token = localStorage.getItem("access_token");
@@ -63,28 +91,34 @@ const SectionTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(clearSelectedTeacherRegisterQuatification());
-                    dispatch(getSectionById(section_id))
-                    dispatch(getExerciseBySection(section_id))
-                    dispatch(getExerciseLevel())
+                    trackPromise(getClassTeacher(dispatch, id))
+                    trackPromise(getSectionById(dispatch, section_id))
+                    trackPromise(getExerciseBySection(dispatch, section_id))
+                    trackPromise(getExerciseLevel(dispatch))
                 }
             }
             else {
-                dispatch(clearSelectedTeacherRegisterQuatification());
-                dispatch(getSectionById(section_id))
-                dispatch(getExerciseBySection(section_id))
-                dispatch(getExerciseLevel())
+                trackPromise(getClassTeacher(dispatch, id))
+                trackPromise(getSectionById(dispatch, section_id))
+                trackPromise(getExerciseBySection(dispatch, section_id))
+                trackPromise(getExerciseLevel(dispatch))
             }
         }
-    }, [dispatch, access_token, refresh_token, section_id]);
+    }, [dispatch, access_token, refresh_token, section_id, id]);
 
     const history = useHistory();
     const routeChange2 = () => {
-        let path = '/section/view';
+        let path ="/section/view";
         history.push({
             pathname: path,
             state: { section_id: section_id }
         });
+    }
+
+    const routeChange4 = () => {
+        if (link_jisti !== null) {
+            window.open(link_jisti, '_blank');
+        }
     }
 
     const onChangeRoute1 = () => {
@@ -111,7 +145,16 @@ const SectionTeacher: React.FC = () => {
     }
 
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
             <ToastContainer />
             <div className="row mb-2">
                 <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
@@ -210,6 +253,28 @@ const SectionTeacher: React.FC = () => {
                                                     }()
                                                 }
                                             </p>
+                                        </div>
+                                        <div className="row  justify-content-center">
+                                        {
+                                            function () {
+                                                if (sections.sections.length <= 0) {
+                                                    return ""
+                                                }
+                                                else {
+                                                    if (sections.sections[0].teach_form === true) {
+                                                        return (
+                                                            <button
+                                                                className="btn btn-success ml-2"
+                                                                id="btn-into-room"
+                                                                onClick={routeChange4}
+                                                            >
+                                                                Vào metting room
+                                                            </button>
+                                                        )
+                                                    }
+                                                }
+                                            }()
+                                        }
                                         </div>
                                     </div>
                                 </div>

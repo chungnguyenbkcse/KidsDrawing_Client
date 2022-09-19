@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
 import { IStateType, ITutorialPageState } from "../../store/models/root.interface";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const ViewSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -18,6 +20,8 @@ const ViewSectionTeacher: React.FC = () => {
     }
 
     const [count, setCount] = useState(1);
+
+    const { promiseInProgress } = usePromiseTracker();
 
     function setChangeCount() {
         let x = count;
@@ -60,17 +64,26 @@ const ViewSectionTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTutorialPageBySection(section_id))
+                    trackPromise(getTutorialPageBySection(dispatch, section_id))
                 }
             }
             else {
-                dispatch(getTutorialPageBySection(section_id))
+                trackPromise(getTutorialPageBySection(dispatch, section_id))
             }
         }
     }, [dispatch, access_token, refresh_token, section_id]);
     
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> :  <Fragment>
             <div className="row">
                 <div className="col-xl-12 col-md-12 mb-4">
                     <div className="row">

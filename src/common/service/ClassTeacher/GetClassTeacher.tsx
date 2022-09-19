@@ -4,6 +4,7 @@ interface ClassTeacher {
     id: number;
     name: string;
     course_id: number;
+    link_url: string;
     semester_class_id: number;
     user_register_teach_semester: number;
     security_code: string;
@@ -57,6 +58,7 @@ export function getClassTeacher(dispatch: any, id: any) {
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
                         semester_class_id: ele.semester_class_id,
+                        link_url: ele.link_url,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
                         total_student: ele.total_student,
@@ -80,6 +82,7 @@ export function getClassTeacher(dispatch: any, id: any) {
                     var class_teacher: ClassTeacher = {
                         id: ele.id,
                         name: ele.name,
+                        link_url: ele.link_url,
                         course_id: ele.course_id,
                         semester_name: ele.semester_name,
                         semester_class_id: ele.semester_class_id,

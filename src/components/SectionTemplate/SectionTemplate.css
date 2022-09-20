@@ -18,6 +18,20 @@
     width: 40px;
 }
 
+.add-step {
+    float: right !important;
+}
+
+.step-continue { 
+    background-color: #0A6BFF !important;
+    color: #ffffff !important;
+}
+
+.btn-remove {
+    color: #ffffff !important;
+    background-color: #f3091c !important;
+}
+
 .btn-red {
     background-color: indianred !important;
     border-color: indianred !important;

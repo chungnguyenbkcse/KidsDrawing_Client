@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, Fragment } from "react";
 import { SelectNotFieldProps } from "../types/SelectNotField";
 
-function SelectKeyValueNotField(props: SelectNotFieldProps): JSX.Element {
+function SelectKeyValueNotField2(props: SelectNotFieldProps): JSX.Element {
     const [touched, setTouch] = useState(false);
     const [error, setError] = useState("");
     const [htmlClass, setHtmlClass] = useState("");
@@ -43,6 +43,7 @@ function SelectKeyValueNotField(props: SelectNotFieldProps): JSX.Element {
             <select
                 value={value}
                 id={`${props.id}`}
+                disabled
                 className={`form-control ${props.inputClass ? props.inputClass : ""} ${htmlClass}`}
                 onChange={onValueChanged}>
                 <option value= {0}>Choose...</option>
@@ -58,4 +59,4 @@ function SelectKeyValueNotField(props: SelectNotFieldProps): JSX.Element {
     );
 }
 
-export default SelectKeyValueNotField;
+export default SelectKeyValueNotField2;

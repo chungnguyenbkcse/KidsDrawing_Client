@@ -6,7 +6,6 @@ import TextInput from "../../common/components/TextInput";
 import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
 import { OnChangeModel, ISectionTemplateFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
 import Editor from "../../common/components/Quill/EditorEditSection";
-import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { toast, ToastContainer } from "react-toastify";
 import { putTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/PutTutorialTemplatePage";
@@ -16,6 +15,8 @@ import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePa
 import { useHistory } from "react-router-dom";
 import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
 import { trackPromise } from "react-promise-tracker";
+import SelectKeyValueNotField2 from "../../common/components/SeclectKeyValueNotField2";
+import "./SectionTemplate.css"
 
 
 export type SectionTemplateListProps = {
@@ -30,6 +31,14 @@ type Options = {
 type PageContent = {
     page: number;
     content: string;
+}
+
+type TutorialPageTemplate = {
+    id: number;
+    tutorial_template_id: number;
+    name: string;
+    number: number;
+    description: string;
 }
 
 function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
@@ -55,7 +64,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     }
 
     var id_z = localStorage.getItem('description_tutorial_template_page_list');
-    let list_description: any[] = []
+    let list_description: TutorialPageTemplate[] = []
     let initial_text = ""
     if (id_z !== null) {
         list_description = JSON.parse(id_z);
@@ -138,7 +147,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
             dispatch(putTutorialTemplate(tutorial_template_id, {
                 name: formState.name.value,
-                description: "",
                 section_template_id: section_template_id
             }))
 
@@ -194,7 +202,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         }
     }
 
-
+    console.log(contentTutorialPage)
 
     const listTotalPage: Options[] = [
         {
@@ -215,20 +223,42 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         }
     ];
 
+
     function handleNextPage() {
         let contentPage: PageContent = {
             page: currentPage,
             content: value
         }
+
+        let check = false;
+        contentTutorialPage.map((ele, idx) => {
+            if (ele.page === contentPage.page) {
+                ele = contentPage
+                check = true;
+            }
+            return 0
+        })
+
+        if (check === false) {
+            setContentTutorialPage([...contentTutorialPage, contentPage])
+        }
+        else {
+            setContentTutorialPage(contentTutorialPage)
+        }
+        
         setIndex(index + 1)
         console.log(index)
-        setContentTutorialPage([...contentTutorialPage, contentPage])
         if (currentPage < totalPage) {
             let x = currentPage + 1;
             setCurrentPage(x)
         }
+        else {
+            let x = currentPage + 1;
+            setCurrentPage(x)
+        }
         if (currentPage < list_description.length) {
-            setTextHtml(list_description[index].description)
+            console.log(currentPage - 1)
+            setTextHtml(list_description[currentPage].description)
             setChecked(false)
         }
         else {
@@ -238,12 +268,178 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         setValue("")
     }
 
+    function handleNextPage1() {
+
+        setTextHtml(list_description[currentPage-1].description)
+        setChecked(false)
+        setValue("")
+    }
+
+    console.log('Result: ', contentTutorialPage)
+
+    console.log(`currentPage: ${currentPage}`)
+
     const [value, setValue] = useState("")
+    console.log('value', value)
 
     function getValue(value: any){
         setValue(value);
         setChecked(true)
     }
+
+    function handleBackPage () {
+        let contentPage: PageContent = {
+            page: currentPage - 1,
+            content: value
+        }
+
+        let check = false;
+        contentTutorialPage.map((ele, idx) => {
+            if (ele.page === contentPage.page) {
+                ele = contentPage
+                check = true;
+            }
+            return 0
+        })
+
+        if (check === false) {
+            setContentTutorialPage([...contentTutorialPage, contentPage])
+        }
+        else {
+            setContentTutorialPage(contentTutorialPage)
+        }
+
+        if (currentPage - 1 > 0) {
+            let x = currentPage - 1;
+            setCurrentPage(x)
+        }
+        if (currentPage < list_description.length) {
+            console.log(`curent-page: ${currentPage}`)
+            setIndex(index - 1)
+            setTextHtml(contentTutorialPage[currentPage - 2].content)
+            console.log(textHtml)
+            setChecked(false)
+        }
+        else {
+            setTextHtml("")
+        }
+        
+        setValue("")
+
+    }
+
+    function handleBackPage1 () {
+        let x = currentPage - 1;
+        setCurrentPage(x)
+        setTextHtml(list_description[currentPage-2].description)
+        setValue("")
+    }
+
+    function handleNewPage() {
+        const x = totalPage + 1;
+        const y = currentPage;
+        setTotalPage(x);
+        setTextHtml("")
+        console.log(y)
+        let list_x: TutorialPageTemplate[] = list_description;
+        let isCheck = false;
+        list_description.map((ele, idx) => {
+            console.log(y)
+            if (ele.number === y) {
+                isCheck = true;
+                list_x.splice(idx + 1, 0, {
+                    id: 0,
+                    tutorial_template_id: ele.tutorial_template_id,
+                    name: ele.name,
+                    number: ele.number + 1,
+                    description: ""
+                })
+                list_x.map((element, index) => {
+                    if (index > idx + 1) {
+                        list_x.splice(index, 1, {
+                            id: element.id,
+                            tutorial_template_id: element.tutorial_template_id,
+                            name: element.name,
+                            number: element.number + 1,
+                            description: element.description
+                        })
+                    }
+                    return 0
+                })
+            }
+            return 0
+        })
+
+        if (isCheck === false) {
+            list_x.push({
+                id: 0,
+                tutorial_template_id: list_x[0].tutorial_template_id,
+                name: list_x[0].name,
+                number: list_x.length + 1,
+                description: ""
+            })
+        }
+
+        console.log(x)
+        console.log(list_x)
+
+        localStorage.removeItem('description_tutorial_template_page_list');
+        localStorage.setItem('description_tutorial_template_page_list', JSON.stringify(list_x.sort((a, b) => a.number - b.number)))
+        handleNextPage()
+        console.log(currentPage)
+        console.log(totalPage)
+    }
+
+    function handleRemove() {
+        const x = totalPage - 1;
+        const y = currentPage;
+        setTotalPage(x);
+        setTextHtml("")
+        console.log(y)
+        let isCheck1: Boolean = false;
+        let list_x: TutorialPageTemplate[] = list_description;
+        list_description.map((ele, idx) => {
+            console.log(y)
+            if (ele.number === y && idx !== list_description.length - 1) {
+                isCheck1 = true;
+                list_x.splice(idx, 1)
+                console.log(list_x)
+                list_x.map((element, index) => {
+                    if (element.number > ele.number) {
+                        list_x.splice(index, 1, {
+                            id: element.id,
+                            tutorial_template_id: element.tutorial_template_id,
+                            name: element.name,
+                            number: element.number - 1,
+                            description: element.description
+                        })
+                    }
+                    return 0
+                })
+            }
+            else if (ele.number === y && idx === list_description.length - 1) {
+                list_x.splice(idx, 1);
+            }
+            return 0
+        })
+
+        if (isCheck1 === true) {
+            console.log('next')
+            localStorage.removeItem('description_tutorial_template_page_list');
+            localStorage.setItem('description_tutorial_template_page_list', JSON.stringify(list_x.sort((a, b) => a.number - b.number)))
+            handleNextPage1()
+        }
+        else {
+            console.log('back')
+            localStorage.removeItem('description_tutorial_template_page_list');
+            localStorage.setItem('description_tutorial_template_page_list', JSON.stringify(list_x.sort((a, b) => a.number - b.number)))
+            handleBackPage1()
+        }
+
+        console.log(x)
+        console.log(list_x)
+    }
+
     
     return (
         <Fragment>
@@ -268,8 +464,8 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <SelectKeyValueNotField
+                                <div className={`form-group col-md-6`}>
+                                    <SelectKeyValueNotField2
                                         value={totalPage}
                                         id="input_total_page"
                                         onChange={hasFormValueChangedNotFiled}
@@ -280,17 +476,38 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label>Nội dung trang {currentPage}</label>
+                                <label>Nội dung bước {currentPage} / {totalPage}</label>
                                 <Editor getValue={getValue} isCreate={checked} setValue={textHtml} />
                             </div>
                             {
                                 function () {
                                     if (currentPage < totalPage) {
-                                        return (
-                                            <div className="form-group">
-                                                <button type="button" className="btn btn-info right-margin" onClick={handleNextPage}>Trang tiếp theo</button>
+                                        if (currentPage === 1) {
+                                            return (
+                                                <div className="row">
+                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                    <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
+                                                </div>
+                                                <div className="col-xl-8 col-md-8 col-xs-8">
+                                                    <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                </div>
                                             </div>
-                                        )
+                                            )
+                                        }
+                                        else {
+                                            return (
+                                                <div className="row">
+                                                    <div className="col-xl-4 col-md-4 col-xs-4">
+                                                        <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                        <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
+                                                    </div>
+                                                    <div className="col-xl-8 col-md-8 col-xs-8">
+                                                        <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
+                                                        <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
                                     }
                                 }()
                             }
@@ -298,7 +515,16 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                 function () {
                                     if (currentPage === totalPage) {
                                         return (
-                                            <button type="submit" className={`btn btn-primary left-margin`}>Hoàn thành</button>
+                                            <div className="row">
+                                                <div className="col-xl-6 col-md-6 col-xs-6">
+                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                    <button type="submit" className={`btn btn-primary left-margin ml-2`}>Hoàn thành</button>
+                                                </div>
+                                                <div className="col-xl-6 col-md-6 col-xs-6">
+                                                <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
+                                                    <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                </div>
+                                            </div>
                                         )
                                     }
                                 }()

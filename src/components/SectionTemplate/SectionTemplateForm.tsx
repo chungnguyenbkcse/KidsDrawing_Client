@@ -14,9 +14,12 @@ import { putTutorialTemplate } from "../../common/service/TutorialTemplate/PutTu
 import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 import { useHistory } from "react-router-dom";
 import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
-import { trackPromise } from "react-promise-tracker";
 import SelectKeyValueNotField2 from "../../common/components/SeclectKeyValueNotField2";
 import "./SectionTemplate.css"
+import jwt_decode from "jwt-decode";
+import { logout } from "../../store/actions/account.actions";
+import { getTutorialTemplatePageByTutorialTemplateId } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePageByTutorialTemplateId";
+import { trackPromise } from "react-promise-tracker";
 
 
 export type SectionTemplateListProps = {
@@ -77,6 +80,39 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     if (id_t !== null) {
         tutorial_template_id = parseInt(id_t)
     }
+
+
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
+    useEffect(() => {
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time){
+                if (exp_refresh_token_decode < now_time){
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorial_template_id))      
+                }
+            }
+            else {
+                dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorial_template_id)) 
+            }
+        }
+    }, [dispatch, access_token, refresh_token, tutorial_template_id])
 
     const history = useHistory();
     function routeHome() {
@@ -149,56 +185,60 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 name: formState.name.value,
                 section_template_id: section_template_id
             }))
+            
 
             let lst: PageContent[] = [...contentTutorialPage, contentPage] ;
 
             console.log(totalPage)
-
-            if (totalPage < list_description.length) {
-                list_description.map((ele, index) => {
-                    if (totalPage > index){
-                        dispatch(putTutorialTemplatePage(ele.id, {
-                            description: lst[index].content,
-                            name: ele.name,
-                            tutorial_template_id: ele.tutorial_template_id,
-                            number: lst[index].page
-                        }))
-                    }
-                    else {
-                        dispatch(deleteTutorialTemplatePage(ele.id))
-                    }
-                    return null
-                })
+            console.log(lst)
+            if (tutorial_template_pages !== null){
+                if (totalPage <= tutorial_template_pages.tutorialTemplatePages.length) {
+                    tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, index) => {
+                        if (totalPage > index){
+                            dispatch(putTutorialTemplatePage(ele.id, {
+                                description: lst[index].content,
+                                name: ele.name,
+                                tutorial_template_id: ele.tutorial_template_id,
+                                number: lst[index].page
+                            }))
+                        }
+                        else {
+                            dispatch(deleteTutorialTemplatePage(ele.id))
+                        }
+                        return null
+                    })
+                }
+                else {
+                    lst.map((ele, index) => {
+                        if (index < tutorial_template_pages.tutorialTemplatePages.length){
+                            dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages[index].id, {
+                                description: ele.content,
+                                name: tutorial_template_pages.tutorialTemplatePages[index].name,
+                                tutorial_template_id: tutorial_template_pages.tutorialTemplatePages[0].tutorial_template_id,
+                                number: ele.page
+                            }))
+                        }
+                        else {
+                            dispatch(postTutorialTemplatePage({
+                                description: ele.content,
+                                name: formState.name.value,
+                                tutorial_template_id: tutorial_template_id,
+                                number: ele.page
+                            }))
+                        }
+                        if (index === lst.length - 1) {
+                            toast.update(idx, { render: "Chỉnh giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                            trackPromise(getTutorialTemplatePage(dispatch))
+                            dispatch(clearSelectedSectionTemplate());
+                            dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
+                            setTimeout(function () {
+                                routeHome();
+                            }, 2000); 
+                        }
+                        return null
+                    })
+                }
             }
-            else {
-                lst.map((ele, index) => {
-                    if (index < list_description.length){
-                        dispatch(putTutorialTemplatePage(list_description[index].id, {
-                            description: ele.content,
-                            name: list_description[index].name,
-                            tutorial_template_id: list_description[0].tutorial_template_id,
-                            number: ele.page
-                        }))
-                    }
-                    else {
-                        dispatch(postTutorialTemplatePage({
-                            description: ele.content,
-                            name: formState.name.value,
-                            tutorial_template_id: tutorial_template_id,
-                            number: ele.page
-                        }))
-                    }
-                    return null
-                })
-            }
-            
-            toast.update(idx, { render: "Chỉnh giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-            trackPromise(getTutorialTemplatePage(dispatch))
-            dispatch(clearSelectedSectionTemplate());
-            dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
-            setTimeout(function () {
-                routeHome();
-            }, 2000); 
         }
     }
 
@@ -313,9 +353,11 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             let x = currentPage - 1;
             setCurrentPage(x)
         }
-        if (currentPage < list_description.length) {
+        console.log(currentPage)
+        if (currentPage <= contentTutorialPage.length) {
             console.log(`curent-page: ${currentPage}`)
             setIndex(index - 1)
+            console.log(currentPage)
             setTextHtml(contentTutorialPage[currentPage - 2].content)
             console.log(textHtml)
             setChecked(false)
@@ -331,7 +373,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     function handleBackPage1 () {
         let x = currentPage - 1;
         setCurrentPage(x)
+        console.log(currentPage)
         setTextHtml(list_description[currentPage-2].description)
+        setChecked(false)
         setValue("")
     }
 
@@ -418,6 +462,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 })
             }
             else if (ele.number === y && idx === list_description.length - 1) {
+                console.log('remove')
                 list_x.splice(idx, 1);
             }
             return 0

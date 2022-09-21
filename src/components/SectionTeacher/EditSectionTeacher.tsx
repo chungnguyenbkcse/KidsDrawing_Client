@@ -4,12 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { ISection } from "../../store/models/section.interface";
 import TextInput from "../../common/components/TextInput";
 import { addSection } from "../../store/actions/section.action";
-import { OnChangeModel, ISectionFormState, OnChangeModelNotFiled } from "../../common/types/Form.types";
+import { OnChangeModel, ISectionFormState } from "../../common/types/Form.types";
 import Editor from "../../common/components/Quill/EditorEditSection";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import SelectKeyValueNotField2 from "../../common/components/SeclectKeyValueNotField2";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getTutorialPageByTutorialId } from "../../common/service/TutorialPage/GetTutorialPageByTutorialId";
@@ -153,11 +152,6 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
 
-    function hasFormValueChangedNotFiled(model: OnChangeModelNotFiled): void {
-        setTotalPage(model.value)
-        setContentTutorialPage([])
-    }
-
     //console.log(totalPage)
 
     function saveUser(e: FormEvent<HTMLFormElement>): void {
@@ -187,27 +181,6 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
             }, idx, routeHome))
         }
     }
-
-    console.log(contentTutorialPage)
-
-    const listTotalPage: Options[] = [
-        {
-            "name": "1 trang",
-            "value": 1
-        },
-        {
-            "name": "2 trang",
-            "value": 2
-        },
-        {
-            "name": "3 trang",
-            "value": 3
-        },
-        {
-            "name": "4 trang",
-            "value": 4
-        }
-    ];
 
 
     function handleNextPage() {
@@ -449,18 +422,6 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                                         maxLength={2000}
                                         label="Tên giáo trình"
                                         placeholder="" />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className={`form-group col-md-6`}>
-                                    <SelectKeyValueNotField2
-                                        value={totalPage}
-                                        id="input_total_page"
-                                        onChange={hasFormValueChangedNotFiled}
-                                        required={true}
-                                        label="Số trang"
-                                        options={listTotalPage}
-                                    />
                                 </div>
                             </div>
                             <div className="form-group">

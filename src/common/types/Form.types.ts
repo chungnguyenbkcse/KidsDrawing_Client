@@ -180,6 +180,10 @@ export interface ISectionTemplateFormState {
     update_time: IFormStateField<string>;
 }
 
+export interface ISectionFormState {
+    name: IFormStateField<string>;
+}
+
 export interface ITutorialTemplateFormState {
     section_template_id: IFormStateField<number>;
     name: IFormStateField<string>;

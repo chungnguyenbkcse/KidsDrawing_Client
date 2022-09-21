@@ -54,6 +54,7 @@ import { CourseParentModificationStatus, ICourseParent } from "./course_parent.i
 import { ContestStudentModificationStatus, IContestStudent } from "./contest_student.interface";
 import { CartModificationStatus, ICart } from "./cart.interface";
 import { IAttendance, AttendanceModificationStatus } from "./attendance.interface";
+import { IProfile, ProfileModificationStatus } from "./profile.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -121,6 +122,7 @@ export interface IStateType {
     contest_students: IContestStudentState;
     carts: ICartState;
     attendances: IAttendanceState;
+    profiles: IProfileState;
 }
 
 export interface IProductState {
@@ -133,6 +135,12 @@ export interface IAttendanceState {
     attendances: IAttendance[];
     selectedAttendance: IAttendance | null;
     modificationState: AttendanceModificationStatus;
+}
+
+export interface IProfileState {
+    profiles: IProfile[];
+    selectedProfile: IProfile | null;
+    modificationState: ProfileModificationStatus;
 }
 
 export interface IActionBase {

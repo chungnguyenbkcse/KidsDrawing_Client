@@ -5,7 +5,7 @@ import { postUserRegisterTutorialPage } from "../UserRegisterTutorialPage/PostUs
 import { postUserRegisterTutorialPageToast } from "../UserRegisterTutorialPage/PostUserRegisterTutorialPageToast";
 
 
-export function postUserRegisterTutorial(tutorial: any[], data: any, idx: any) {
+export function postUserRegisterTutorial(tutorial: any[], data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -25,7 +25,7 @@ export function postUserRegisterTutorial(tutorial: any[], data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postUserRegisterTutorial(tutorial, data, idx))
+                        dispatch(postUserRegisterTutorial(tutorial, data, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -41,6 +41,7 @@ export function postUserRegisterTutorial(tutorial: any[], data: any, idx: any) {
                 console.log(total)
                 tutorial.map((value, index) => {
                     if (index === total - 1){
+                        routeHome()
                         return dispatch(postUserRegisterTutorialPageToast({
                             user_register_tutorial_id: data.id,
                             name: data.name,

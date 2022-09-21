@@ -1,25 +1,25 @@
 import React, { useState, Dispatch, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { putStatusUser } from "../../common/service/User/UpdateStatusUser";
 import { logout } from "../../store/actions/account.actions";
 import { trackPromise } from "react-promise-tracker";
-import { IStateType, IUserState } from "../../store/models/root.interface";
+import { IProfileState, IStateType } from "../../store/models/root.interface";
+import { getProfile } from "../../common/service/User/GetProfile";
 
 function TopMenuAccount(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
   const username: string | null = localStorage.getItem('username');
   const id = localStorage.getItem('id')
-  const users: IUserState = useSelector((state: IStateType) => state.users);
+  const profiles: IProfileState = useSelector((state: IStateType) => state.profiles);
   useEffect(() => {
-    trackPromise(getUserById(dispatch, id))
+    trackPromise(getProfile(dispatch, id))
   }, [dispatch, id])
   const [isShow, setShow] = useState(false);
 
-  console.log(users.teachers)
+  console.log(profiles.profiles)
   let profile_image = ""
-  if (users.teachers.length > 0 ){
-    localStorage.setItem('profile_image', users.teachers[0].profile_image_url)
+  if (profiles.profiles.length > 0 ){
+    localStorage.setItem('profile_image', profiles.profiles[0].profile_image_url)
   }
 
   var id_x = localStorage.getItem('profile_image');

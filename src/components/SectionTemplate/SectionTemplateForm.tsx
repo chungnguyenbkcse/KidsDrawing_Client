@@ -147,7 +147,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         update_time: { error: "", value: section_template.update_time }
     });
     const [totalPage, setTotalPage] = useState(list_description.length);
-    const [index, setIndex] = useState(1);
     const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
     const [currentPage, setCurrentPage] = useState<number>(1)
 
@@ -286,8 +285,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             setContentTutorialPage(contentTutorialPage)
         }
         
-        setIndex(index + 1)
-        console.log(index)
         if (currentPage < totalPage) {
             let x = currentPage + 1;
             setCurrentPage(x)
@@ -356,7 +353,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         console.log(currentPage)
         if (currentPage <= contentTutorialPage.length) {
             console.log(`curent-page: ${currentPage}`)
-            setIndex(index - 1)
             console.log(currentPage)
             setTextHtml(contentTutorialPage[currentPage - 2].content)
             console.log(textHtml)

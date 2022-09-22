@@ -5,12 +5,16 @@ import { GrLinkNext } from "react-icons/gr";
 import { ICartState, IStateType } from "../../store/models/root.interface";
 import { useDispatch, useSelector } from "react-redux";
 import {removeCart } from "../../store/actions/cart.action";
+import { postMomo } from "../../common/service/Payment/PostPayment";
 
 
 const CartForm: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const carts: ICartState = useSelector((state: IStateType) => state.carts);
     console.log(carts.carts)
+    function handlePayment() {
+        postMomo()
+    }
 
     return (
         <Fragment>
@@ -53,7 +57,7 @@ const CartForm: React.FC = () => {
                 <tr>
                     <td colSpan={5}></td>
                     <td>
-                        <button className="btn btn-success btn-green" id="btn-create-register-course3" onClick={() => {}}>
+                        <button className="btn btn-success btn-green" id="btn-create-register-course3" onClick={() => {handlePayment()}}>
                             <GrLinkNext id="btn-payment" color="#ffffff"/>
                             Thanh toán
                         </button>

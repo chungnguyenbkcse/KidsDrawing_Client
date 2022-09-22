@@ -2,7 +2,7 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IRootPageStateType, IUserState } from "../../store/models/root.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./SemesterClassDetail.css"
 import { IUser } from "../../store/models/user.interface";
 import ReactSelect from "../../common/components/ReactSelect";
@@ -30,8 +30,8 @@ const SemesterClassDetail: React.FC = () => {
     const listTeacher: IUser[] = users.students
     const listTeachers: Option1[] = [];
     listTeacher.map((ele) => {
-      let item: Option1 = { "label": ele.username, "value": ele.id }
-      return listTeachers.push(item)
+        let item: Option1 = { "label": ele.username, "value": ele.id }
+        return listTeachers.push(item)
     })
 
     var id_x = localStorage.getItem('id');
@@ -40,15 +40,87 @@ const SemesterClassDetail: React.FC = () => {
         id = parseInt(id_x);
     }
 
-    const { state } = useLocation<any>();
-    console.log(state)
+    var id_a = localStorage.getItem('description_course');
+    var description_course: string = '';
+    if (id_a !== null) {
+        description_course = id_a;
+    }
+
+    var id_b = localStorage.getItem('course_id');
+    var course_id: string = '';
+    if (id_b !== null) {
+        course_id = id_b;
+    }
+
+    var id_c = localStorage.getItem('course_name');
+    var course_name: string = '';
+    if (id_c !== null) {
+        course_name = id_c;
+    }
+
+    var id_d = localStorage.getItem('art_age_name');
+    var art_age_name: string = '';
+    if (id_d !== null) {
+        art_age_name = id_d;
+    }
+
+    var id_e = localStorage.getItem('art_type_name');
+    var art_type_name: string = '';
+    if (id_e !== null) {
+        art_type_name = id_e;
+    }
+
+    var id_f = localStorage.getItem('num_of_section');
+    var num_of_section: string = '';
+    if (id_f !== null) {
+        num_of_section = id_f;
+    }
+
+    var id_h = localStorage.getItem('schedule');
+    var schedule: string = '';
+    if (id_h !== null) {
+        schedule = id_h;
+    }
+
+    var id_k = localStorage.getItem('art_level_name');
+    var art_level_name: string = '';
+    if (id_k !== null) {
+        art_level_name = id_k;
+    }
+
+    var id_l = localStorage.getItem('semester_class_name');
+    var semester_class_name: string = '';
+    if (id_l !== null) {
+        semester_class_name = id_l;
+    }
+
+    var id_m = localStorage.getItem('price');
+    var price: string = '';
+    if (id_m !== null) {
+        price = id_m;
+    }
+
+    var id_n = localStorage.getItem('price');
+    var semester_class_id: string = '';
+    if (id_n !== null) {
+        semester_class_id = id_n;
+    }
+
+    var id_nx = localStorage.getItem('url_image');
+    var url_image: string = '';
+    if (id_nx !== null) {
+        url_image = id_nx;
+    }
+
+    console.log(course_id)
+    console.log(semester_class_id)
 
     const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
-        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
             let access_token_decode: any = jwt_decode(access_token)
             let refresh_token_decode: any = jwt_decode(refresh_token)
             let exp_access_token_decode = access_token_decode.exp;
@@ -56,8 +128,8 @@ const SemesterClassDetail: React.FC = () => {
             let now_time = Date.now() / 1000;
             console.log(exp_access_token_decode)
             console.log(now_time)
-            if (exp_access_token_decode < now_time){
-                if (exp_refresh_token_decode < now_time){
+            if (exp_access_token_decode < now_time) {
+                if (exp_refresh_token_decode < now_time) {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
@@ -81,48 +153,30 @@ const SemesterClassDetail: React.FC = () => {
     }, [path.area, dispatch, id, access_token, refresh_token]);
 
     function handleRegister() {
-        valueTeacher.map((ele, idx) => {
-            console.log({
-                id: state.semester_class_id,
-                name: state.semester_class_name,
-                image: state.image_url,
-                quantity: 1,
-                price: state.price
-            })
-            return dispatch(addCart({
-                id: state.semester_class_id,
-                name: state.semester_class_name,
-                image: state.image_url,
-                quantity: 1,
-                price: state.price
-            }))
-        })
+        dispatch(addCart({
+            id: parseInt(semester_class_id),
+            name: semester_class_name,
+            image: url_image,
+            quantity: valueTeacher.length,
+            price: parseInt(price)
+        }))
 
         toast.success("Thêm giỏ hàng thành công...", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 2000
-          })
+        })
     }
 
     const history = useHistory();
     function handleRegister1() {
-        valueTeacher.map((ele, idx) => {
-            console.log({
-                id: state.semester_class_id,
-                name: state.semester_class_name,
-                image: state.image_url,
-                quantity: 1,
-                price: state.price
-            })
-            return dispatch(addCart({
-                id: state.semester_class_id,
-                name: state.semester_class_name,
-                image: state.image_url,
-                quantity: 1,
-                price: state.price
-            }))
-        })
-        let path = '/cart'; 
+        dispatch(addCart({
+            id: parseInt(semester_class_id),
+            name: semester_class_name,
+            image: url_image,
+            quantity: valueTeacher.length,
+            price: parseInt(price)
+        }))
+        let path = '/cart';
         history.push({
             pathname: path
         });
@@ -132,60 +186,104 @@ const SemesterClassDetail: React.FC = () => {
 
     console.log(valueTeacher)
 
-    function changeValueTeacher(value: any){
-      setValueTeacher(value)
+    function changeValueTeacher(value: any) {
+        setValueTeacher(value)
     }
 
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            <ToastContainer />
-            <div className="col-xl-12 col-lg-12">
-                <div className="card shadow mb-4">
-                    {
-                        function () {
-                            if (state === undefined || state === null) {
-                                return ""
-                            }
-                            else {
-                                console.log(state)
-                                return <div className="card-body" dangerouslySetInnerHTML={{ __html: state.description }}>
-                                </div>
-                            }
-                        }()
-                    }
-                    <div className="row">
-                        <div className="form-group col-md-6 ml-2">
-                            <label>Bé</label>
-                            <ReactSelect setValue={listTeachers} value={[]} changeValue={changeValueTeacher}/>
+            <div className="row" id="search-box">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
                         </div>
                     </div>
-                    <div className="row" id="btn-register-course">
-                        <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
-                        <button className="btn btn-success btn-green" id="btn-create-register-course1" onClick={() => handleRegister()}>
-                        <AiOutlineShoppingCart />
-                        Thêm vào giỏ hàng
-                    </button>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
-                        <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister1()}>
-                        <GrLinkNext id="btn-payment" color="#ffffff"/>
-                        Thanh toán ngay
-                    </button>
-                        </div>           
                 </div>
+            </div> : <Fragment>
+                <ToastContainer />
+                <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                        <div className="row no-gutters align-items-center">
+                            <div className="text-xs font-weight-bold text-green text-uppercase ">
+                                <p className="fullname ml-2 mt-4">{semester_class_name}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-xl-6 col-md-6">
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs ">
+                                        <p className="birthday ml-2">Khóa học: {course_name}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday ml-2">Thể loại: {art_type_name}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday ml-2">Độ tuổi: {art_age_name}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday ml-2">Trình độ: {art_level_name}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-xl-6 col-md-6">
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs mr-2">
+                                        <p className="birthday">Lịch học: {schedule}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday">Số buổi học: {num_of_section}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday">Giá: {price}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="form-group col-md-6 ml-2">
+                                <label>Bé</label>
+                                <ReactSelect setValue={listTeachers} value={[]} changeValue={changeValueTeacher} />
+                            </div>
+                        </div>
+                        <div className="row" id="btn-register-course">
+                            <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
+                                <button className="btn btn-success btn-green" id="btn-create-register-course1" onClick={() => handleRegister()}>
+                                    <AiOutlineShoppingCart />
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
+                                <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister1()}>
+                                    <GrLinkNext id="btn-payment" color="#ffffff" />
+                                    Thanh toán ngay
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-xl-12 col-lg-12">
+                <div className="card-header py-3">
+                    <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
+                </div>
+                <div className="card shadow mb-4">
+                    <div className="card-body" dangerouslySetInnerHTML={{ __html: description_course }}>
+                    </div>
                 </div>
             </div>
 
-        </Fragment >
+            </Fragment >
     );
 };
 

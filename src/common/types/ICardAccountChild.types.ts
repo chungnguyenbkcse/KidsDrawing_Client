@@ -5,6 +5,8 @@ export interface ICardProperties {
     fullname: string;
     username: string;
     birthday: string;
+    sex: string;
+    email: string;
     icon: string;
     class: string;
 }

@@ -30,6 +30,8 @@ const ParentHome: React.FC = () => {
         id = parseInt(id_x);
     }
 
+    const [checked, setChecked] = useState(true);
+
     console.log(schedule_time_classes.schedule_time_classes)
 
     const [popup, setPopup] = useState(false);
@@ -168,33 +170,86 @@ const ParentHome: React.FC = () => {
                 </Popup>
 
                 <div className="row">
-                    <div className="col-xl-6 col-md-6 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Danh sách tài khoản con</h3>
-                        <AccountChildList
-                            onSelect={onUserSelect}
-                        />
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                            if (checked === false) {
+                                setChecked(true)
+                            }
+                        }} style={{
+                            color: checked ? "#F24E1E" : "#2F4F4F"
+                        }}>Tài khoản con</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                        }}></div>
                     </div>
-                    <div className="col-xl-6 col-md-6 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
-                        <Eventcalendar
-                            data={data}
-                            view={{
-                                schedule: {
-                                    type: 'day',
-                                    startDay: 1,
-                                    endDay: 5,
-                                    startTime: '07:00',
-                                    endTime: '18:00',
-                                    timeCellStep: 60,
-                                    timeLabelStep: 60
-                                }
-                            }}
-                        />
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked === true) {
+                                setChecked(false)
+                            }
+                        }}
+                            style={{
+                                color: checked ? "#2F4F4F" : "#F24E1E"
+                            }}>Lịch trong ngày</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                        }}></div>
                     </div>
                 </div>
 
+                {
+                    function () {
+                        if (checked === true) {
+                            return (
+                                <Fragment>
+                                    <div className="row">
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <h3 className=" mb-2" id="level-teacher">Danh sách tài khoản con</h3>
+                                            <AccountChildList
+                                                onSelect={onUserSelect}
+                                            />
+                                        </div>
+                                    </div>
 
+                                </Fragment>
+                            )
+                        }
+                        else {
+                            return (
+                                <Fragment>
+                                    <div className="row">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                    <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
+                                    <Eventcalendar
+                                        data={data}
+                                        view={{
+                                            schedule: {
+                                                type: 'day',
+                                                startDay: 1,
+                                                endDay: 5,
+                                                startTime: '07:00',
+                                                endTime: '18:00',
+                                                timeCellStep: 60,
+                                                timeLabelStep: 60
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                    </div>
 
+                                </Fragment>
+                            )
+                        }
+                    }()
+                }              
             </Fragment>
     );
 };

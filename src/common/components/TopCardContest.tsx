@@ -4,20 +4,34 @@ import { ICardProperties } from "../types/TopCardContest.types";
 
 function TopCardContest(props: PropsWithChildren<ICardProperties>): ReactElement {
     const history = useHistory();
-    const routeChange = (description: string, id: number) =>{ 
+    const routeChange = (contest: PropsWithChildren<ICardProperties>) =>{ 
         localStorage.removeItem('description_contest');
-        localStorage.setItem('description_contest', description);
+        localStorage.setItem('description_contest', contest.description);
         localStorage.removeItem('contest_id');
-        localStorage.setItem('contest_id', id.toString())
-        let path = '/contests/detail'; 
+        localStorage.setItem('contest_id', contest.id.toString())
+        localStorage.removeItem('contest_name');
+        localStorage.setItem('contest_name', contest.name)
+        localStorage.removeItem('art_age_name');
+        localStorage.setItem('art_age_name', contest.art_age_name.toString())
+        localStorage.removeItem('art_type_name');
+        localStorage.setItem('art_type_name', contest.art_type_name.toString())
+        localStorage.removeItem('registration_time');
+        localStorage.setItem('registration_time', contest.registration_time.toString())
+        localStorage.removeItem('start_time');
+        localStorage.setItem('start_time', contest.start_time.toString())
+        localStorage.removeItem('end_time');
+        localStorage.setItem('end_time', contest.end_time.toString())
+        localStorage.removeItem('max_participant');
+        localStorage.setItem('max_participant', contest.max_participant.toString())
+        let path = '/contests/register'; 
         history.push({
             pathname: path,
-            state: { description: description, id: id}
+            state: { description: contest.description, id: contest.id}
         });
     }
 
     return (
-        <div className="col-xl-4 col-md-4 mb-2" onClick={() => {routeChange(props.description, props.id)}}>
+        <div className="col-xl-4 col-md-4 mb-2" onClick={() => {routeChange(props)}}>
             <div className={`card shadow h-100 py-0`} id="topcard-user" >
                 <img className="card-img-top" src={props.url_image} alt="" />
                 <div className="card-body">

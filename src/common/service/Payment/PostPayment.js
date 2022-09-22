@@ -66,6 +66,7 @@ export function postMomo() {
             console.log('Body: ');
             console.log(body);
             console.log('payUrl: ');
+            window.open(JSON.parse(body).payUrl, '_blank');
             console.log(JSON.parse(body).payUrl);
         });
         res.on('end', () => {

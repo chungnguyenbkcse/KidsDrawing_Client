@@ -41,7 +41,7 @@ function CourseMaxSign(props: user_register_semesterListProps): JSX.Element  {
 
   listSemesterClasss.map((course) => {
     let count = 0;
-    userRegisterJoinSemesters.userRegisterJoinSemesters.forEach(element => {
+    userRegisterJoinSemesters.completed.forEach(element => {
       if (course.id === element.semester_class_id) {
         count += 1;
       }

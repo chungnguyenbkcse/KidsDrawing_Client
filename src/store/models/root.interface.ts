@@ -386,7 +386,8 @@ export interface ITurnoverState {
 export interface IUserRegisterJoinSemesterState {
     selectedUserRegisterJoinSemester: IUserRegisterJoinSemester | null;
     modificationState: UserRegisterJoinSemesterModificationStatus;
-    userRegisterJoinSemesters: IUserRegisterJoinSemester[];
+    completed: IUserRegisterJoinSemester[];
+    waiting: IUserRegisterJoinSemester[];
 }
 export interface ITutorialTemplatePageState {
     selectedTutorialTemplatePage: ITutorialTemplatePage | null;

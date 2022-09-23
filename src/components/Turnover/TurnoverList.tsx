@@ -27,7 +27,7 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
   let studentList: string[] = []
   let parentList: string[] = []
 
-  userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
+  userRegisterJoinSemesters.completed.map((user_register_join_semester) => {
     return listSemesterClasss.forEach(element => {
       if (element.id === user_register_join_semester.semester_class_id) {
         return listCourses.forEach((ele) => {
@@ -39,7 +39,7 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
     });
   })
 
-  userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
+  userRegisterJoinSemesters.completed.map((user_register_join_semester) => {
     return listParents.forEach((element) => {
       if (element.id === user_register_join_semester.payer_id){
         return parentList.push(element.username)
@@ -47,7 +47,7 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
     })
   })
 
-  userRegisterJoinSemesters.userRegisterJoinSemesters.map((user_register_join_semester) => {
+  userRegisterJoinSemesters.completed.map((user_register_join_semester) => {
     return listStudents.forEach((element) => {
       if (element.id === user_register_join_semester.student_id){
         return studentList.push(element.username)
@@ -55,7 +55,7 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
     })
   })
 
-  const userRegisterJoinSemesterElements: (JSX.Element | null)[] = userRegisterJoinSemesters.userRegisterJoinSemesters.map((userRegisterJoinSemester, index) => {
+  const userRegisterJoinSemesterElements: (JSX.Element | null)[] = userRegisterJoinSemesters.completed.map((userRegisterJoinSemester, index) => {
     if (!userRegisterJoinSemester) { return null; }
     return (<tr className={`table-row ${(userRegisterJoinSemesters.selectedUserRegisterJoinSemester && userRegisterJoinSemesters.selectedUserRegisterJoinSemester.id === userRegisterJoinSemester.id) ? "selected" : ""}`}
       key={`userRegisterJoinSemester_${index}`}>

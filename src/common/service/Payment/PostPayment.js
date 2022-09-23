@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 
-export function postMomo(total_price) {
+export function postMomo(total_price, ids) {
     //https://developers.momo.vn/#/docs/en/aiov2/?id=payment-method
     //parameters
     var partnerCode = "MOMOXF6D20220917";
@@ -9,16 +9,18 @@ export function postMomo(total_price) {
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
-    var redirectUrl = "https://webhook.site/d33e3a87-9364-4887-8a5b-8493064f2d41";
-    var ipnUrl = "https://webhook.site/d33e3a87-9364-4887-8a5b-8493064f2d41";
+    var ipnUrl = "https://kidsdrawing-backend-java.herokuapp.com/api/v1/user-register-join-semester/payment?ids=" + ids.toString();
+
+    console.log("ipnUrl", ipnUrl)
+    var redirectUrl = "https://momo.vn";
     // var ipnUrl = redirectUrl = "https://webhook.site/454e7b77-f177-4ece-8236-ddf1c26ba7f8";
-    var amount = total_price;
+    var amount = 1000;
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
 
     //before sign HMAC SHA256 with format
     //accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl&orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId&requestType=$requestType
-    var rawSignature = "accessKey=" + accessKey + "&amount=" + amount + "&extraData=" + extraData + "&ipnUrl=" + ipnUrl + "&orderId=" + orderId + "&orderInfo=" + orderInfo + "&partnerCode=" + partnerCode + "&redirectUrl=" + redirectUrl + "&requestId=" + requestId + "&requestType=" + requestType
+    var rawSignature = "accessKey=" + accessKey + "&amount=" + amount + "&extraData=" + extraData + "&ipnUrl=" + ipnUrl + "&orderId=" + orderId + "&orderInfo=" + orderInfo + "&partnerCode=" + partnerCode + "&redirectUrl=" + redirectUrl + "&requestId=" + requestId + "&requestType=" + requestType 
     //puts raw signature
     console.log("--------------------RAW SIGNATURE----------------")
     console.log(rawSignature)

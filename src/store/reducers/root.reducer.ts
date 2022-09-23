@@ -21,7 +21,6 @@ import userGradeContestsReducer from "./user_grade_contest.reducer";
 import tutorialTemplatePagesReducer from "./tutorial_template_page.reducer";
 import teacherLeaveReducer from "./teacher_leave.reducer";
 import studentLeaveReducer from "./student_leave.reducer";
-import userRegisterJoinSemestersReducer from "./user_register_join_semester.reducer";
 import myClassesReducer from "./my_class.reducer";
 import teacher_register_quantificationsReducer from "./teacher_register_quantification.reducer";
 import informationClassesReducer from "./information_class.reducer";
@@ -58,6 +57,7 @@ import contestStudentsReducer from "./contest_student.reducer";
 import cartReducer from "./cart.reducer";
 import attendancesReducer from "./attendance.reducer";
 import profilesReducer from "./profile.reducer";
+import user_register_join_semestersReducer from "./user_register_join_semester.reducer";
 
 
 const initialState: IRootStateType = {
@@ -95,7 +95,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     tutorial_template_pages: tutorialTemplatePagesReducer,
     teacher_leaves: teacherLeaveReducer,
     student_leaves: studentLeaveReducer,
-    user_register_join_semesters: userRegisterJoinSemestersReducer,
+    user_register_join_semesters: user_register_join_semestersReducer,
     myclasses: myClassesReducer,
     teacher_register_quantifications: teacher_register_quantificationsReducer,
     information_classes: informationClassesReducer,

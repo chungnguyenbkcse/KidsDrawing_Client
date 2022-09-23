@@ -54,7 +54,7 @@ const Home: React.FC = () => {
   }
 
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
-  const totalPrice: number = userRegisterJoinSemesters.userRegisterJoinSemesters.reduce((prev, next) => prev + ((next.price) || 0), 0);
+  const totalPrice: number = userRegisterJoinSemesters.completed.reduce((prev, next) => prev + ((next.price) || 0), 0);
   //const numberItemsCount: number =courses.courses.length;
   //const totalPrice: number =courses.courses.reduce((prev, next) => prev + ((next.price * next.amount) || 0), 0);
   const contests: IContestState = useSelector((state: IStateType) => state.contests);

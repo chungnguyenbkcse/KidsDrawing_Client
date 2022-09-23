@@ -16,6 +16,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GrLinkNext } from "react-icons/gr";
 import { addCart } from "../../store/actions/cart.action";
 import { toast, ToastContainer } from "react-toastify";
+import { postUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/PostUserRegisterJoinSemester";
 
 type Option1 = {
     label: string;
@@ -100,7 +101,7 @@ const SemesterClassDetail: React.FC = () => {
         price = id_m;
     }
 
-    var id_n = localStorage.getItem('price');
+    var id_n = localStorage.getItem('semester_class_id');
     var semester_class_id: string = '';
     if (id_n !== null) {
         semester_class_id = id_n;
@@ -153,13 +154,24 @@ const SemesterClassDetail: React.FC = () => {
     }, [path.area, dispatch, id, access_token, refresh_token]);
 
     function handleRegister() {
-        dispatch(addCart({
-            id: parseInt(semester_class_id),
-            name: semester_class_name,
-            image: url_image,
-            quantity: valueTeacher.length,
-            price: parseInt(price)
-        }))
+        valueTeacher.map((ele, idx) => {
+            dispatch(postUserRegisterJoinSemester({
+                "student_id": ele.value,
+                "semester_classes_id": semester_class_id,
+                "payer_id": id,
+                "price": price,
+                "status": "Waiting"
+            }))
+            return dispatch(addCart({
+                id: parseInt(semester_class_id),
+                name: semester_class_name,
+                image: url_image,
+                student_id: ele.value,
+                student_name: ele.label,
+                quantity: 1,
+                price: parseInt(price)
+            }))
+        })
 
         toast.success("Thêm giỏ hàng thành công...", {
             position: toast.POSITION.TOP_CENTER,
@@ -169,13 +181,24 @@ const SemesterClassDetail: React.FC = () => {
 
     const history = useHistory();
     function handleRegister1() {
-        dispatch(addCart({
-            id: parseInt(semester_class_id),
-            name: semester_class_name,
-            image: url_image,
-            quantity: valueTeacher.length,
-            price: parseInt(price)
-        }))
+        valueTeacher.map((ele, idx) => {
+            dispatch(postUserRegisterJoinSemester({
+                "student_id": ele.value,
+                "semester_classes_id": semester_class_id,
+                "payer_id": id,
+                "price": price,
+                "status": "Waiting"
+            }))
+            return dispatch(addCart({
+                id: parseInt(semester_class_id),
+                name: semester_class_name,
+                image: url_image,
+                student_id: ele.value,
+                student_name: ele.label,
+                quantity: 1,
+                price: parseInt(price)
+            }))
+        })
         let path = '/cart';
         history.push({
             pathname: path

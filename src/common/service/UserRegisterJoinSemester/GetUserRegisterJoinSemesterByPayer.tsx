@@ -12,10 +12,10 @@ interface user_register_semester {
     semester_class_id: number;
     time: string;
 }
-export function getUserRegisterJoinSemester(dispatch: any) {
+export function getUserRegisterJoinSemesterByPayer(dispatch: any, id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/user-register-join-semester`, {
+                `${process.env.REACT_APP_API_URL}/user-register-join-semester/payer/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -29,7 +29,7 @@ export function getUserRegisterJoinSemester(dispatch: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUserRegisterJoinSemester(dispatch))
+                        dispatch(getUserRegisterJoinSemesterByPayer(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);

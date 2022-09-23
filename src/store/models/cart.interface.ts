@@ -2,6 +2,8 @@ export interface ICart {
     id: number;
     name: string;
     image: string;
+    student_id: number;
+    student_name: string;
     price: number;
     quantity: number;
 }

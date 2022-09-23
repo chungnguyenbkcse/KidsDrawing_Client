@@ -9,8 +9,8 @@ export function postMomo(total_price) {
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
-    var redirectUrl = "https://momo.vn/return";
-    var ipnUrl = "https://callback.url/notify";
+    var redirectUrl = "https://webhook.site/d33e3a87-9364-4887-8a5b-8493064f2d41";
+    var ipnUrl = "https://webhook.site/d33e3a87-9364-4887-8a5b-8493064f2d41";
     // var ipnUrl = redirectUrl = "https://webhook.site/454e7b77-f177-4ece-8236-ddf1c26ba7f8";
     var amount = total_price;
     var requestType = "captureWallet"

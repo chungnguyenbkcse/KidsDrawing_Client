@@ -12,8 +12,8 @@ const CartForm: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const carts: ICartState = useSelector((state: IStateType) => state.carts);
     console.log(carts.carts)
-    function handlePayment() {
-        postMomo()
+    function handlePayment(total_price: number) {
+        postMomo(total_price)
     }
 
     return (
@@ -57,7 +57,7 @@ const CartForm: React.FC = () => {
                 <tr>
                     <td colSpan={5}></td>
                     <td>
-                        <button className="btn btn-success btn-green" id="btn-create-register-course3" onClick={() => {handlePayment()}}>
+                        <button className="btn btn-success btn-green" id="btn-create-register-course3" onClick={() => {handlePayment(carts.carts.reduce((prev, next) => prev + ((next.price * next.quantity) || 0), 0))}}>
                             <GrLinkNext id="btn-payment" color="#ffffff"/>
                             Thanh toán
                         </button>

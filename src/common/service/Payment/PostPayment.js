@@ -9,10 +9,10 @@ export function postMomo(total_price, ids) {
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
-    var ipnUrl = "https://kidsdrawing-backend-java.herokuapp.com/api/v1/user-register-join-semester/payment?ids=" + ids.toString();
+    var ipnUrl = "http://localhost:8080/api/v1/user-register-join-semester/payment?ids=" + ids.toString();
 
     console.log("ipnUrl", ipnUrl)
-    var redirectUrl = "https://momo.vn";
+    var redirectUrl = "http://localhost:3000/payment-successfull?ids=" + ids.toString();
     // var ipnUrl = redirectUrl = "https://webhook.site/454e7b77-f177-4ece-8236-ddf1c26ba7f8";
     var amount = 1000;
     var requestType = "captureWallet"

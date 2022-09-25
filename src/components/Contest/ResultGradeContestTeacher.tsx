@@ -10,6 +10,7 @@ import { IStateType, IUserGradeContestSubmissionState } from "../../store/models
 import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -32,6 +33,12 @@ const ResultGradeContestTeacher: React.FC = () => {
 
     if (id_y !== null) {
         contest_id = parseInt(id_y);
+    }
+
+    var id_x = localStorage.getItem('id');
+    var id: number = 2;
+    if (id_x !== null) {
+        id = parseInt(id_x);
     }
 
 
@@ -59,27 +66,22 @@ const ResultGradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
+                    trackPromise(getStudentByParent(dispatch, id))
                     trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
                 }
             }
             else {
+                trackPromise(getStudentByParent(dispatch, id))
                 trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
             }
         }
         dispatch(updateCurrentPath("Cuoc thi", "Chi tiết"));
-    }, [dispatch, access_token, refresh_token, contest_id]);
+    }, [dispatch, access_token, refresh_token, contest_id, id]);
 
 
     const history = useHistory();
     const onRouteChange = () => {
         let path = '/contest/result-analytis';
-        history.push({
-            pathname: path
-        });
-    }
-
-    const onRouteChange1 = () => {
-        let path = '/contest/detail';
         history.push({
             pathname: path
         });

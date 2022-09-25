@@ -24,24 +24,48 @@ const DetailContestStudent: React.FC = () => {
     console.log(contest_submissions.contest_gradeds)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
-    let childs: IUserGradeContestSubmission[] = [];
+    var id_k = localStorage.getItem('child_id');
+    let child_id: number = 0;
+    if (id_k !== null) {
+        child_id = parseInt(id_k);
+    }
+
+    let childs: IUserGradeContestSubmission = {
+        student_id: 0,
+        student_name: "",
+        teacher_id: 0,
+        teacher_name: "",
+        contest_id: 0,
+        contest_name: '',
+        contest_submission_id: 0,
+        feedback: "",
+        score: 0,
+        time: ""
+    };
     users.students.map((ele, idx) => {
         return user_grade_contest_submissions.userGradeContestSubmissions.map((element, idx) => {
-            if (ele.id === element.student_id) {
-                childs.push(element)
+            if (element.student_id === child_id) {
+                childs = element
             }
             return element
         })
     })
 
-    let submistions: IContestSubmission[] = [];
-    childs.map((ele, idx) => {
-        return contest_submissions.contest_gradeds.map((element, idx) => {
-            if (element.id === ele.contest_submission_id){
-                submistions.push(element);
-            }
-            return element
-        })
+    let submistions: IContestSubmission = {
+        id: 0,
+        student_id: 0,
+        student_name: '',
+        contest_id: 0,
+        contest_name: "",
+        image_url: '',
+        create_time: "",
+        update_time: ""
+    };
+    contest_submissions.contest_gradeds.map((element, idx) => {
+        if (element.student_id === child_id) {
+            submistions = element;
+        }
+        return element
     })
 
     const { promiseInProgress } = usePromiseTracker();
@@ -137,47 +161,36 @@ const DetailContestStudent: React.FC = () => {
                         </div>
                     </div>
                 </div>
-
-                {
-                    childs.map((ele, idx) => {
-                        return (
-                            <>
-                                <div className="row">
-                                    <div className="col-xl-6 col-lg-6">
-                                        <div className="card-header py-3">
-                                            <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Bài làm của bé: {ele.student_name}</h6>
-                                        </div>
-                                        <img className="card-img-top" src={submistions[idx].image_url} alt="" />
-                                    </div>
-                                    <div className="col-xl-6 col-lg-6">
-                                        <div className="card shadow mb-4">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Điểm của bé</h6>
-                                            </div>
-                                            <div className="card-body">
-                                                <CircularProgressbar value={ele.score} text={`${ele.score}`} />;
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Nhận xét</h6>
-                                            </div>
-                                            <div className="card-body">
-                                                {ele.feedback}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        )
-                    })
-                }
+                <div className="row">
+                    <div className="col-xl-6 col-lg-6">
+                        <div className="card-header py-3">
+                            <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Bài làm của bé: {childs.student_name}</h6>
+                        </div>
+                        <img className="card-img-top" src={submistions.image_url} alt="" />
+                    </div>
+                    <div className="col-xl-6 col-lg-6">
+                        <div className="card shadow mb-4">
+                            <div className="card-header py-3">
+                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Điểm của bé</h6>
+                            </div>
+                            <div className="card-body">
+                                <CircularProgressbar value={childs.score * 10} text={`${childs.score}`} />;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="card shadow mb-4">
+                            <div className="card-header py-3">
+                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Nhận xét</h6>
+                            </div>
+                            <div className="card-body">
+                                {childs.feedback}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </Fragment>
     );

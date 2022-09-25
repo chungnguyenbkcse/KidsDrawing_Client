@@ -83,3 +83,7 @@
     background: #0CE908;
     border-radius: 30px;
 }
+
+.child-row {
+    background-color: #0CE908 !important;
+}

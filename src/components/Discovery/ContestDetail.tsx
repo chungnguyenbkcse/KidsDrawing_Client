@@ -18,7 +18,7 @@ type Option1 = {
     value: number;
 }
 
-const ConestDetail: React.FC = () => {
+const ConestDetailStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
@@ -243,4 +243,4 @@ const ConestDetail: React.FC = () => {
     );
 };
 
-export default ConestDetail;
+export default ConestDetailStudent;

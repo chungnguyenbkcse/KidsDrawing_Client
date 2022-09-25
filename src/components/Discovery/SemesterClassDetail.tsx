@@ -226,7 +226,7 @@ const SemesterClassDetail: React.FC = () => {
             </div> : <Fragment>
                 <ToastContainer />
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
+                    <div className="card shadow mb-4 shadow-1">
                         <div className="row no-gutters align-items-center">
                             <div className="text-xs font-weight-bold text-green text-uppercase ">
                                 <p className="fullname ml-2 mt-4">{semester_class_name}</p>

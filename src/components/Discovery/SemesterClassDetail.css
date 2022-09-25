@@ -9,6 +9,11 @@
     min-width: 200px !important;
 }
 
+#shadow-1 {
+    border-radius: 20px;
+    background-color: #AFE1F1;
+}
+
 #btn-create-register-course2 {
     background: #14FB00 !important;
     border-radius: 30px;

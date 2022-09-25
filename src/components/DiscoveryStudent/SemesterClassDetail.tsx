@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useEffect } from "react";
+import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IStateType, IRootPageStateType, IUserState } from "../../store/models/root.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
@@ -8,7 +8,7 @@ import Loading from "../../common/components/Loading";
 import { logout } from "../../store/actions/account.actions";
 import { getSemesterClassNew } from "../../common/service/SemesterClass/GetSemesterNew";
 import jwt_decode from "jwt-decode";
-import { GrLinkNext } from "react-icons/gr";
+import { GrLinkDown, GrLinkNext } from "react-icons/gr";
 import { toast, ToastContainer } from "react-toastify";
 import { postUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/PostUserRegisterJoinSemester";
 import { getUserById } from "../../common/service/User/GetUserById";
@@ -18,7 +18,8 @@ const SemesterClassDetailStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const users: IUserState = useSelector((state: IStateType) => state.users);
-    
+    const [checked, setChecked] = useState(false);
+
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -91,11 +92,10 @@ const SemesterClassDetailStudent: React.FC = () => {
         semester_class_id = id_n;
     }
 
-    var id_nx = localStorage.getItem('url_image');
-    var url_image: string = '';
-    if (id_nx !== null) {
-        url_image = id_nx;
+    function handleClick() {
+        setChecked(!checked)
     }
+
 
     console.log(course_id)
     console.log(semester_class_id)
@@ -138,18 +138,18 @@ const SemesterClassDetailStudent: React.FC = () => {
     }, [path.area, dispatch, id, access_token, refresh_token]);
 
     function handleRegister() {
-            dispatch(postUserRegisterJoinSemester({
-                "student_id":id,
-                "semester_classes_id": semester_class_id,
-                "payer_id": users.teachers.length > 0 ? users.teachers[0].parents : 0,
-                "price": price,
-                "status": "Waiting"
-            }))
-            toast.success("Đăng kí thành công! Vui lòng đợi ba mẹ thanh toán...", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
-            })
-        }
+        dispatch(postUserRegisterJoinSemester({
+            "student_id": id,
+            "semester_classes_id": semester_class_id,
+            "payer_id": users.teachers.length > 0 ? users.teachers[0].parents : 0,
+            "price": price,
+            "status": "Waiting"
+        }))
+        toast.success("Đăng kí thành công! Vui lòng đợi ba mẹ thanh toán...", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000
+        })
+    }
 
     return (
         promiseInProgress ?
@@ -164,10 +164,10 @@ const SemesterClassDetailStudent: React.FC = () => {
             </div> : <Fragment>
                 <ToastContainer />
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
+                    <div className="card shadow mb-4" id="shadow-1">
                         <div className="row no-gutters align-items-center">
-                            <div className="text-xs font-weight-bold text-green text-uppercase ">
-                                <p className="fullname ml-2 mt-4">{semester_class_name}</p>
+                            <div className="text-xs font-weight-bold text-green text-uppercase text-center">
+                                <p className="fullname ml-2 mt-4 text-center">{semester_class_name}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -222,15 +222,31 @@ const SemesterClassDetailStudent: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-xl-12 col-lg-12">
-                <div className="card-header py-3">
-                    <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
-                </div>
-                <div className="card shadow mb-4">
-                    <div className="card-body" dangerouslySetInnerHTML={{ __html: description_course }}>
+                <div className="row" id="btn-register-course">
+                    <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                        <button className="btn btn-success btn-green" id="btn-create-register-course4" onClick={() => handleClick()}>
+                        <GrLinkDown id="btn-payment" color="#ffffff" />
+                        Xem miêu tả
+                        </button>
                     </div>
                 </div>
-            </div>
+                {
+                    function () {
+                        if (checked === true) {
+                            return (
+                                <div className="col-xl-12 col-lg-12">
+                                    <div className="card-header py-3">
+                                        <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
+                                    </div>
+                                    <div className="card shadow mb-4">
+                                        <div className="card-body" dangerouslySetInnerHTML={{ __html: description_course }}>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }()
+                }
 
             </Fragment >
     );

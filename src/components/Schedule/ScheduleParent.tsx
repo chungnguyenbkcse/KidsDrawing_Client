@@ -12,13 +12,20 @@ import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 
-import { Eventcalendar, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarToday, CalendarNext } from '@mobiscroll/react';
+import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-calendars/styles/material.css";
+import "@syncfusion/ej2-dropdowns/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-lists/styles/material.css";
+import "@syncfusion/ej2-navigations/styles/material.css";
+import "@syncfusion/ej2-popups/styles/material.css";
+import "@syncfusion/ej2-splitbuttons/styles/material.css";
+import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getScheduleTimeByParent } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByParent";
 
-setOptions({
-    theme: 'ios',
-    themeVariant: 'light'
-});
 
 const ScheduleParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -28,79 +35,6 @@ const ScheduleParent: React.FC = () => {
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
-    }
-
-    const [view, setView] = React.useState('month');
-
-
-    const [calView, setCalView] = React.useState(
-        {
-            calendar: { labels: true }
-        }
-    );
-
-    const changeView = (event: any) => {
-        let calView: any;
-        
-        switch (event.target.value) {
-            case 'year':
-                calView = {
-                    calendar: { type: 'year' }
-                }
-                break;
-            case 'month':
-                calView = {
-                    calendar: { labels: true }
-                }
-                break;
-            case 'week':
-                calView = {
-                    schedule: { type: 'week' }
-                }
-                break;
-            case 'day':
-                calView = {
-                    schedule: { type: 'day' }
-                }
-                break;
-            case 'agenda':
-                calView = {
-                    calendar: { type: 'week' },
-                    agenda: { type: 'week' }
-                }
-                break;
-        }
-
-        setView(event.target.value);
-        setCalView(calView);
-    }
-    
-    const customWithNavButtons = () => {
-        return <React.Fragment>
-            <CalendarNav className="cal-header-nav" />
-            <div className="cal-header-picker">
-                <SegmentedGroup value={view} onChange={changeView}>
-                    <SegmentedItem value="year">
-                        Year
-                    </SegmentedItem>
-                    <SegmentedItem value="month">
-                        Month
-                    </SegmentedItem>
-                    <SegmentedItem value="week">
-                        Week
-                    </SegmentedItem>
-                    <SegmentedItem value="day">
-                        Day
-                    </SegmentedItem>
-                    <SegmentedItem value="agenda">
-                        Agenda
-                    </SegmentedItem>
-                </SegmentedGroup>
-            </div>
-            <CalendarPrev className="cal-header-prev" />
-            <CalendarToday className="cal-header-today" />
-            <CalendarNext className="cal-header-next" />
-        </React.Fragment>;
     }
 
     const { promiseInProgress } = usePromiseTracker();
@@ -137,24 +71,18 @@ const ScheduleParent: React.FC = () => {
             }
         }
     }, [dispatch, access_token, refresh_token, id])
-    let data: any[] = [];
-    if (schedule_time_classes.schedule_time_classes.length > 0) {
-        schedule_time_classes.schedule_time_classes.map((ele, idx) => {
 
-            return data.push({
-                // base properties
-                title: ele.class_name,
-                color: '#56ca70',
-                start: ele.start_time,
-                end: ele.end_time,
-                // add any property you'd like
-                busy: true,
-                description: 'Weekly meeting with team',
-                location: 'Office'
-            })
-        
-        })
-    }
+    let data: object[] = []
+
+  schedule_time_classes.schedule_time_classes.map((ele, index) => {
+    return data.push({
+      Id: index,
+      Subject: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
+      StartTime: new Date(ele.start_time),
+      EndTime: new Date(ele.end_time),
+      IsAllDay: false
+    })
+  })
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
@@ -176,14 +104,23 @@ const ScheduleParent: React.FC = () => {
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
                         <div className="card-body">
-                        <Eventcalendar
-            renderHeader={customWithNavButtons}
-            height={750}
-            view={calView}
-            data={data}
-            cssClass="md-switching-view-cont"
-        />
+                        <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                  dataSource: data, fields: {
+                    id: 'Id',
+                    subject: { name: 'Subject' },
+                    isAllDay: { name: 'IsAllDay' },
+                    startTime: { name: 'StartTime' },
+                    endTime: { name: 'EndTime' }
+                  }
+                }}>
 
+                  <ViewsDirective>
+                    <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
+                    <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
+                    <ViewDirective option='Month' showWeekend={false} />
+                  </ViewsDirective>
+                  <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+                </ScheduleComponent>;
                                 
                         </div>
                     </div>

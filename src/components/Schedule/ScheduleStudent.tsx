@@ -12,13 +12,21 @@ import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 
-import { Eventcalendar, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarToday, CalendarNext } from '@mobiscroll/react';
+import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-calendars/styles/material.css";
+import "@syncfusion/ej2-dropdowns/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-lists/styles/material.css";
+import "@syncfusion/ej2-navigations/styles/material.css";
+import "@syncfusion/ej2-popups/styles/material.css";
+import "@syncfusion/ej2-splitbuttons/styles/material.css";
+import "@syncfusion/ej2-react-schedule/styles/material.css";
+
 import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
 
-setOptions({
-    theme: 'ios',
-    themeVariant: 'light'
-});
 
 const ScheduleStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -32,86 +40,13 @@ const ScheduleStudent: React.FC = () => {
 
     console.log(schedule_time_classes.schedule_time_classes)
 
-    const [view, setView] = React.useState('month');
-
-
-    const [calView, setCalView] = React.useState(
-        {
-            calendar: { labels: true }
-        }
-    );
-
-    const changeView = (event: any) => {
-        let calView: any;
-        
-        switch (event.target.value) {
-            case 'year':
-                calView = {
-                    calendar: { type: 'year' }
-                }
-                break;
-            case 'month':
-                calView = {
-                    calendar: { labels: true }
-                }
-                break;
-            case 'week':
-                calView = {
-                    schedule: { type: 'week' }
-                }
-                break;
-            case 'day':
-                calView = {
-                    schedule: { type: 'day' }
-                }
-                break;
-            case 'agenda':
-                calView = {
-                    calendar: { type: 'week' },
-                    agenda: { type: 'week' }
-                }
-                break;
-        }
-
-        setView(event.target.value);
-        setCalView(calView);
-    }
-    
-    const customWithNavButtons = () => {
-        return <React.Fragment>
-            <CalendarNav className="cal-header-nav" />
-            <div className="cal-header-picker">
-                <SegmentedGroup value={view} onChange={changeView}>
-                    <SegmentedItem value="year">
-                        Year
-                    </SegmentedItem>
-                    <SegmentedItem value="month">
-                        Month
-                    </SegmentedItem>
-                    <SegmentedItem value="week">
-                        Week
-                    </SegmentedItem>
-                    <SegmentedItem value="day">
-                        Day
-                    </SegmentedItem>
-                    <SegmentedItem value="agenda">
-                        Agenda
-                    </SegmentedItem>
-                </SegmentedGroup>
-            </div>
-            <CalendarPrev className="cal-header-prev" />
-            <CalendarToday className="cal-header-today" />
-            <CalendarNext className="cal-header-next" />
-        </React.Fragment>;
-    }
-
     const { promiseInProgress } = usePromiseTracker();
 
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
-        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
             let access_token_decode: any = jwt_decode(access_token)
             let refresh_token_decode: any = jwt_decode(refresh_token)
             let exp_access_token_decode = access_token_decode.exp;
@@ -119,8 +54,8 @@ const ScheduleStudent: React.FC = () => {
             let now_time = Date.now() / 1000;
             console.log(exp_access_token_decode)
             console.log(now_time)
-            if (exp_access_token_decode < now_time){
-                if (exp_refresh_token_decode < now_time){
+            if (exp_access_token_decode < now_time) {
+                if (exp_refresh_token_decode < now_time) {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
@@ -139,24 +74,18 @@ const ScheduleStudent: React.FC = () => {
             }
         }
     }, [dispatch, access_token, refresh_token, id])
-    let data: any[] = [];
-    if (schedule_time_classes.schedule_time_classes.length > 0) {
-        schedule_time_classes.schedule_time_classes.map((ele, idx) => {
 
-            return data.push({
-                // base properties
-                title: ele.class_name,
-                color: '#56ca70',
-                start: ele.start_time,
-                end: ele.end_time,
-                // add any property you'd like
-                busy: true,
-                description: 'Weekly meeting with team',
-                location: 'Office'
-            })
-        
+    let data: object[] = []
+
+    schedule_time_classes.schedule_time_classes.map((ele, index) => {
+        return data.push({
+            Id: index,
+            Subject: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
+            StartTime: new Date(ele.start_time),
+            EndTime: new Date(ele.end_time),
+            IsAllDay: false
         })
-    }
+    })
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
@@ -165,33 +94,43 @@ const ScheduleStudent: React.FC = () => {
 
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            <div className="row">
+            <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
-                        <div className="card-body">
-                        <Eventcalendar
-            renderHeader={customWithNavButtons}
-            height={750}
-            view={calView}
-            data={data}
-            cssClass="md-switching-view-cont"
-        />
-
-                                
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
                         </div>
                     </div>
                 </div>
-            </div>
-        </Fragment >
+            </div> : <Fragment>
+                <div className="row">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="card shadow mb-4">
+                            <div className="card-body">
+                                <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                                    dataSource: data, fields: {
+                                        id: 'Id',
+                                        subject: { name: 'Subject' },
+                                        isAllDay: { name: 'IsAllDay' },
+                                        startTime: { name: 'StartTime' },
+                                        endTime: { name: 'EndTime' }
+                                    }
+                                }}>
+
+                                    <ViewsDirective>
+                                        <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
+                                        <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
+                                        <ViewDirective option='Month' showWeekend={false} />
+                                    </ViewsDirective>
+                                    <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+                                </ScheduleComponent>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Fragment >
     );
 };
 

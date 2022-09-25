@@ -13,13 +13,13 @@ import Loading from "../../common/components/Loading";
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const user_grade_contest_submissions: IUserGradeContestSubmissionState  = useSelector((state: IStateType) => state.user_grade_contest_submissions);
+    const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
     const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 0);
 
     var role_privilege = localStorage.getItem('role_privilege')
-    var rolePrivilege:string[] =[]
-    var roleUser :string =""
+    var rolePrivilege: string[] = []
+    var roleUser: string = ""
     if (role_privilege !== null) {
         rolePrivilege = role_privilege.split(',')
         roleUser = rolePrivilege[0]
@@ -39,7 +39,7 @@ const ResultGradeContestTeacher: React.FC = () => {
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
 
-        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
             let access_token_decode: any = jwt_decode(access_token)
             let refresh_token_decode: any = jwt_decode(refresh_token)
             let exp_access_token_decode = access_token_decode.exp;
@@ -47,8 +47,8 @@ const ResultGradeContestTeacher: React.FC = () => {
             let now_time = Date.now() / 1000;
             console.log(exp_access_token_decode)
             console.log(now_time)
-            if (exp_access_token_decode < now_time){
-                if (exp_refresh_token_decode < now_time){
+            if (exp_access_token_decode < now_time) {
+                if (exp_refresh_token_decode < now_time) {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
@@ -58,11 +58,11 @@ const ResultGradeContestTeacher: React.FC = () => {
                     localStorage.removeItem('schedule_id')
                     dispatch(logout())
                 }
-                else {    
+                else {
                     trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
                 }
             }
-            else {     
+            else {
                 trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
             }
         }
@@ -71,15 +71,15 @@ const ResultGradeContestTeacher: React.FC = () => {
 
 
     const history = useHistory();
-    const onRouteChange = () =>{ 
-        let path = '/contest/result-analytis'; 
+    const onRouteChange = () => {
+        let path = '/contest/result-analytis';
         history.push({
             pathname: path
         });
     }
 
-    const onRouteChange1 = () =>{ 
-        let path = '/contest/detail'; 
+    const onRouteChange1 = () => {
+        let path = '/contest/detail';
         history.push({
             pathname: path
         });
@@ -87,69 +87,81 @@ const ResultGradeContestTeacher: React.FC = () => {
 
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            
-            <div className="row">
-                <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
-                <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
-            </div>
-
-            <div className="row">
-
-                <div className="col-xl-8 col-md-8 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
-                    <div className="col-xl-12 col-md-12 mb-4">
-                        <div className={`card shadow h-100 py-2`} id="topcard-user">
-                            <div className="card-body">
-                                <ScoreContestList />
-                            </div>
+            <div className="row" id="search-box">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
                         </div>
                     </div>
                 </div>
+            </div> : <Fragment>
 
-                {
-                    function (){
-                        if (roleUser === "TEACHER_USER") {
-                            return (
-                                <div className="col-xl-4 col-md-4 mb-4">
-                                    <div className="row justify-content-center">
-                                        <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
-                                        onRouteChange()}}>
-                                            Xem review
-                                            <i className="fas fa fa-arrow-right"></i>
-                                    </button>
-                                    </div>
-                                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
-                                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
-                                </div>
-                            )
-                        }
-                        else if (roleUser === "PARENT_USER") {
-                            return (<div className="col-xl-4 col-md-4 mb-4">
-                                    <div className="row justify-content-center">
-                                        <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
-                                        onRouteChange1()}}>
-                                            Xem điểm của bé
-                                            <i className="fas fa fa-arrow-right"></i>
-                                    </button>
-                                    </div>
-                                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
-                                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
-                                </div>)
-                        }
-                    }()
-                }
-            </div>
+                <div className="row">
+                    <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
+                    <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
+                </div>
 
-        </Fragment>
+                <div className="row">
+
+                    {
+                        function () {
+                            if (roleUser === "TEACHER_USER") {
+                                return (
+                                    <div className="col-xl-8 col-md-8 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                                <div className="card-body">
+                                                    <ScoreContestList />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+
+                            else if (roleUser === "PARENT_USER") {
+                                return (
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Bảng xếp hạng</h3>
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                                <div className="card-body">
+                                                    <ScoreContestList />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+
+                        }()
+                    }
+
+                    {
+                        function () {
+                            if (roleUser === "TEACHER_USER") {
+                                return (
+                                    <div className="col-xl-4 col-md-4 mb-4">
+                                        <div className="row justify-content-center">
+                                            <button className="btn btn-success btn-green" id="btn-into-class" onClick={() => {
+                                                onRouteChange()
+                                            }}>
+                                                Xem review
+                                                <i className="fas fa fa-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                        {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
+                                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
+                                    </div>
+                                )
+                            }
+                        }()
+                    }
+                </div>
+
+            </Fragment>
     );
 };
 

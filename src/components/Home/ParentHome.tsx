@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedUser, setModificationState } from "../../store/actions/users.action";
-import { IScheduleTimeClassState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IScheduleTimeClassState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -13,17 +13,31 @@ import AccountChildList from "./AccountChildList";
 import "./ParentHome.css"
 import Popup from "reactjs-popup";
 import AccountChildForm from "../AccountChild/AccountChildForm";
-import { Eventcalendar } from '@mobiscroll/react';
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import { getScheduleTimeByParent } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByParent";
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-calendars/styles/material.css";
+import "@syncfusion/ej2-dropdowns/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-lists/styles/material.css";
+import "@syncfusion/ej2-navigations/styles/material.css";
+import "@syncfusion/ej2-popups/styles/material.css";
+import "@syncfusion/ej2-splitbuttons/styles/material.css";
+import "@syncfusion/ej2-react-schedule/styles/material.css";
+import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 
 
 const ParentHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
+    const user_register_join_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
     const numberChildCount: number = users.students.length;
+    const totalMoney: number = user_register_join_semesters.completed.reduce((prev, next) => prev + ((next.price * 1) || 0), 0);
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -81,33 +95,28 @@ const ParentHome: React.FC = () => {
                 else {
                     trackPromise(getStudentByParent(dispatch, id))
                     trackPromise(getScheduleTimeByParent(dispatch, id))
+                    trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
                 }
             }
             else {
                 trackPromise(getStudentByParent(dispatch, id))
                 trackPromise(getScheduleTimeByParent(dispatch, id))
+                trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, id]);
 
-    let data: any[] = [];
-    if (schedule_time_classes.schedule_time_classes.length > 0) {
-        schedule_time_classes.schedule_time_classes.map((ele, idx) => {
+    let data: object[] = []
 
-            return data.push({
-                // base properties
-                title: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
-                color: '#56ca70',
-                start: ele.start_time,
-                end: ele.end_time,
-                // add any property you'd like
-                busy: true,
-                description: 'Weekly meeting with team',
-                location: 'Office'
-            })
-        
+    schedule_time_classes.schedule_time_classes.map((ele, index) => {
+        return data.push({
+            Id: index,
+            Subject: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
+            StartTime: new Date(ele.start_time),
+            EndTime: new Date(ele.end_time),
+            IsAllDay: false
         })
-    }
+    })
 
     return (
         promiseInProgress ?
@@ -125,7 +134,7 @@ const ParentHome: React.FC = () => {
 
                 <div className="row">
                     <TopCard title="TÀI KHOẢN CON" text={`${numberChildCount}`} icon="user" class="primary" />
-                    <TopCard title="SỐ TIỀN" text={`${numberChildCount}`} icon="donate" class="primary" />
+                    <TopCard title="SỐ TIỀN" text={`${totalMoney}`} icon="donate" class="primary" />
                     <div className="col-xl-6 col-md-6 mb-4" id="content-button-create-teacher-level">
                         <button className="btn btn-success btn-green mr-0" id="btn-create-teacher-level" onClick={() => {
                             dispatch(setModificationState(UserModificationStatus.Create))
@@ -226,30 +235,37 @@ const ParentHome: React.FC = () => {
                             return (
                                 <Fragment>
                                     <div className="row">
-                                    <div className="col-xl-12 col-md-12 mb-4">
-                                    <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
-                                    <Eventcalendar
-                                        data={data}
-                                        view={{
-                                            schedule: {
-                                                type: 'day',
-                                                startDay: 1,
-                                                endDay: 5,
-                                                startTime: '07:00',
-                                                endTime: '18:00',
-                                                timeCellStep: 60,
-                                                timeLabelStep: 60
-                                            }
-                                        }}
-                                    />
-                                </div>
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
+                                            <div className="card shadow mb-4">
+                                                <div className="card-body">
+                                                    <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                                                        dataSource: data, fields: {
+                                                            id: 'Id',
+                                                            subject: { name: 'Subject' },
+                                                            isAllDay: { name: 'IsAllDay' },
+                                                            startTime: { name: 'StartTime' },
+                                                            endTime: { name: 'EndTime' }
+                                                        }
+                                                    }}>
+
+                                                        <ViewsDirective>
+                                                            <ViewDirective option='Day' startHour='00:00' endHour='23:59' /> 
+                                                        </ViewsDirective>
+                                                        <Inject services={[Day]} />
+                                                    </ScheduleComponent>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </Fragment>
                             )
                         }
                     }()
-                }              
+                }
             </Fragment>
     );
 };

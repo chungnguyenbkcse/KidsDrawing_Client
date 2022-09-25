@@ -86,6 +86,9 @@ import ClassStudent from "../components/ClassStudent/ClassStudent";
 import DiscoveryStudent from "../components/DiscoveryStudent/Discovery";
 import ConestDetailStudent from "../components/Discovery/ContestDetail";
 import SemesterClassDetailStudent from "../components/DiscoveryStudent/SemesterClassDetail";
+import DetailClassStudent from "../components/ClassStudent/DetailClassStudent";
+import SectionStudent from "../components/ClassStudent/SectionStudent";
+import ViewSectionStudent from "../components/ClassStudent/ViewSectionStudent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -197,8 +200,11 @@ const Routers: React.FC = () => {
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>
                                 <Route path={`/courses/detail`}><SemesterClassDetailStudent /></Route>
+                                <Route path={`/classes/section`}><SectionStudent /></Route>
+                                <Route path={`/section/view`}><ViewSectionStudent /></Route>
                                 <Route path={`/courses`}><CourseStudent /></Route>
                                 <Route path={`/discover`}><DiscoveryStudent /></Route>
+                                <Route path={`/classes/detail-student`}><DetailClassStudent /></Route>
                                 <Route path={`/contests/register`}><ConestDetailStudent /></Route>
                                 <Route path={`/contests`}><ContestStudent /></Route>
                                 <Route path={`/classes`}><ClassStudent /></Route>

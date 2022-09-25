@@ -45,6 +45,12 @@ export interface ITeacherLeaveFormState {
     description: IFormStateField<string>;
 }
 
+
+export interface IStudentLeaveFormState {
+    section_id: IFormStateField<number>;
+    description: IFormStateField<string>;
+}
+
 export  interface IOrderFormState {
     name: IFormStateField<string>;
     product: IFormStateField<IProduct | null>;

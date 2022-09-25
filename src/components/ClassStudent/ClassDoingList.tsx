@@ -15,7 +15,7 @@ function ClassDoingList(props: classTeacherListProps): JSX.Element {
 
   const history = useHistory();
   const routeChange = (classes_student: IClassesStudent) => {
-    let path = '/student/classes-doing'; 
+    let path = '/classes/detail-student'; 
     localStorage.removeItem('teacher_id');
     localStorage.setItem('teacher_id', classes_student.teacher_id.toString())
     localStorage.removeItem('student_id');

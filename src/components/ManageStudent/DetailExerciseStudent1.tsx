@@ -9,7 +9,6 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { getUserGradeExerciseByExerciseAndStudent } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExerciseStudent";
 
 const DetailExerciseStudent1: React.FC = () => {
@@ -27,12 +26,6 @@ const DetailExerciseStudent1: React.FC = () => {
     var id: number = 0;
     if (id_y !== null) {
         id = parseInt(id_y);
-    }
-
-    var id_t = localStorage.getItem('class_id');
-    var class_id: number = 0;
-    if (id_t !== null) {
-        class_id = parseInt(id_t);
     }
 
     var id_k = localStorage.getItem('exercise_id');
@@ -72,7 +65,7 @@ const DetailExerciseStudent1: React.FC = () => {
                 trackPromise(getUserGradeExerciseByExerciseAndStudent(dispatch, exercise_id,id))
             }
         }
-    }, [dispatch, access_token, refresh_token, class_id, id]);
+    }, [dispatch, access_token, refresh_token, exercise_id, id]);
 
 
     useEffect(() => {

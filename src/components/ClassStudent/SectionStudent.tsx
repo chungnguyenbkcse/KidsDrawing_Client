@@ -119,7 +119,7 @@ const SectionStudent: React.FC = () => {
 
 
     const routeChange3 = (description: string, name: string, level_name: string, id: number) => {
-        let path = '/exercise';
+        let path = '/exercise/detail';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
         localStorage.removeItem('exercise_level_name');
@@ -266,7 +266,7 @@ const SectionStudent: React.FC = () => {
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
                                                                                 <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/student_hfstak.png" alt="" />
+                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
                                                                                 </div>
                                                                                 <div className="col-xl-8 col-md-8 mb-4">
                                                                                     <h3 className=" mb-2" id="level-student">{ele.name}</h3>

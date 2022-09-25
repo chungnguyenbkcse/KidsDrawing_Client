@@ -1,34 +1,36 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-import { ICourseParentState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
-import "./CourseTeacher.css"
+import { changeSelectedDoinglClass, setModificationState } from "../../store/actions/classes_student.action";
+import { IClassesStudentState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
+import { IClassesStudent, ClassesStudentModificationStatus } from "../../store/models/classes_student.interface";
+import "./ClassStudent.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getCourseParent } from "../../common/service/CourseParent/GetCourseParent";
+import ClassDoingList from "./ClassDoingList";
+import ClassDoneList from "./ClassDoneList";
 
-const CourseParent: React.FC = () => {
+const ClassStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const course_teachers: ICourseParentState = useSelector((state: IStateType) => state.course_parents);
+    const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberParentRegisterSuccessfullCount: number = course_teachers.courses_registed.length;
+    const numberClassDoingCount: number = classes_students.classes_doing.length;
+    const numberClassDoneCount: number = classes_students.classes_done.length;
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
-
-    console.log(course_teachers)
-
     const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
-        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
             let access_token_decode: any = jwt_decode(access_token)
             let refresh_token_decode: any = jwt_decode(refresh_token)
             let exp_access_token_decode = access_token_decode.exp;
@@ -36,8 +38,8 @@ const CourseParent: React.FC = () => {
             let now_time = Date.now() / 1000;
             console.log(exp_access_token_decode)
             console.log(now_time)
-            if (exp_access_token_decode < now_time){
-                if (exp_refresh_token_decode < now_time){
+            if (exp_access_token_decode < now_time) {
+                if (exp_refresh_token_decode < now_time) {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
@@ -48,15 +50,20 @@ const CourseParent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getCourseParent(dispatch, id))
+                    trackPromise(getClassesStudent(dispatch, id))
                 }
             }
             else {
-                trackPromise(getCourseParent(dispatch, id))
+                trackPromise(getClassesStudent(dispatch,id))
             }
         }
         dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch, id, access_token, refresh_token]);
+
+    function onClassesStudentSelect(classes_student: IClassesStudent): void {
+        dispatch(changeSelectedDoinglClass(classes_student));
+        dispatch(setModificationState(ClassesStudentModificationStatus.None));
+    }
 
     const [checked, setChecked] = useState(true);
     return (
@@ -74,10 +81,11 @@ const CourseParent: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberParentRegisterSuccessfullCount}`} icon="book" class="primary" />
+                <TopCard title="SỐ LỚP ĐANG DẠY" text={`${numberClassDoingCount}`} icon="book" class="primary" />
+                <TopCard title="SỐ LỚP ĐÃ DẠY" text={`${numberClassDoneCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(ParentRegisterQuantificationModificationStatus.Create))}>
+                    dispatch(setModificationState(ClassesStudentModificationStatus.Create))}>
                         <i className="fas fa fa-plus"></i>
                         Đăng kí trình độ
                     </button>
@@ -105,7 +113,7 @@ const CourseParent: React.FC = () => {
                         }
                     }} style={{
                         color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Khám phá</h6>
+                    }}>Đang học</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
@@ -122,7 +130,7 @@ const CourseParent: React.FC = () => {
                     }}
                         style={{
                             color: checked ? "#2F4F4F" : "#F24E1E"
-                        }}>Đã đăng kí</h6>
+                        }}>Đã học</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
@@ -140,11 +148,19 @@ const CourseParent: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    
-
-
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
+                                            </div>
+                                            <div className="card-body">
+                                                <ClassDoingList
+                                                    onSelect={onClassesStudentSelect}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </Fragment>
                         )
                     }
@@ -152,9 +168,19 @@ const CourseParent: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-header py-3">
+                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
+                                            </div>
+                                            <div className="card-body">
+                                                <ClassDoneList
+                                                    onSelect={onClassesStudentSelect}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </Fragment>
                         )
                     }
@@ -166,4 +192,4 @@ const CourseParent: React.FC = () => {
     );
 };
 
-export default CourseParent;
+export default ClassStudent;

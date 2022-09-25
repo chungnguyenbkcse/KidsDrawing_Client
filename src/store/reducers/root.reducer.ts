@@ -58,6 +58,7 @@ import cartReducer from "./cart.reducer";
 import attendancesReducer from "./attendance.reducer";
 import profilesReducer from "./profile.reducer";
 import user_register_join_semestersReducer from "./user_register_join_semester.reducer";
+import courseStudentsReducer from "./course_student.reducer";
 
 
 const initialState: IRootStateType = {
@@ -131,6 +132,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     carts: cartReducer,
     attendances: attendancesReducer,
     profiles: profilesReducer,
+    course_students: courseStudentsReducer,
 });
 
 

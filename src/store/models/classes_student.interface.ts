@@ -2,10 +2,13 @@ export interface IClassesStudent {
     id: number;
     name: string;
     link_url: string;
+    student_id: number;
+    student_name: string;
     teacher_name: string;
     teacher_id: number;
     course_id: number;
     semester_class_id: number;
+    semester_class_name: string;
     user_register_teach_semester: number;
     security_code: string;
     total_student: number;

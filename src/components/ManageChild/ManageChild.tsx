@@ -18,14 +18,20 @@ import { getContestByStudent } from "../../common/service/Contest/GetContestBySt
 import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
 import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
 import TopCard from "../../common/components/TopCard";
-import { Eventcalendar, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarToday, CalendarNext } from '@mobiscroll/react';
+import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-calendars/styles/material.css";
+import "@syncfusion/ej2-dropdowns/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-lists/styles/material.css";
+import "@syncfusion/ej2-navigations/styles/material.css";
+import "@syncfusion/ej2-popups/styles/material.css";
+import "@syncfusion/ej2-splitbuttons/styles/material.css";
+import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { IClassesStudent } from "../../store/models/classes_student.interface";
 import { useHistory } from "react-router-dom";
-
-setOptions({
-    theme: 'ios',
-    themeVariant: 'light'
-});
 
 
 type Options = {
@@ -42,85 +48,12 @@ const ManageChild: React.FC = () => {
     const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
     const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
     const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
-    const numberApprovedCount: number = classes_students.classes_students.length;
+    const numberApprovedCount: number = classes_students.classes_done.length;
     const numberNotApprovedNowCount: number = contest_teachers.contest_end.length + contest_teachers.contest_not_open_now.length + contest_teachers.contest_opening.length;
     var id_x = localStorage.getItem('student_id');
     var student_id: number = 0;
     if (id_x !== null) {
         student_id = parseInt(id_x);
-    }
-
-    const [view, setView] = React.useState('month');
-
-
-    const [calView, setCalView] = React.useState(
-        {
-            calendar: { labels: true }
-        }
-    );
-
-    const changeView = (event: any) => {
-        let calView: any;
-        
-        switch (event.target.value) {
-            case 'year':
-                calView = {
-                    calendar: { type: 'year' }
-                }
-                break;
-            case 'month':
-                calView = {
-                    calendar: { labels: true }
-                }
-                break;
-            case 'week':
-                calView = {
-                    schedule: { type: 'week' }
-                }
-                break;
-            case 'day':
-                calView = {
-                    schedule: { type: 'day' }
-                }
-                break;
-            case 'agenda':
-                calView = {
-                    calendar: { type: 'week' },
-                    agenda: { type: 'week' }
-                }
-                break;
-        }
-
-        setView(event.target.value);
-        setCalView(calView);
-    }
-    
-    const customWithNavButtons = () => {
-        return <React.Fragment>
-            <CalendarNav className="cal-header-nav" />
-            <div className="cal-header-picker">
-                <SegmentedGroup value={view} onChange={changeView}>
-                    <SegmentedItem value="year">
-                        Year
-                    </SegmentedItem>
-                    <SegmentedItem value="month">
-                        Month
-                    </SegmentedItem>
-                    <SegmentedItem value="week">
-                        Week
-                    </SegmentedItem>
-                    <SegmentedItem value="day">
-                        Day
-                    </SegmentedItem>
-                    <SegmentedItem value="agenda">
-                        Agenda
-                    </SegmentedItem>
-                </SegmentedGroup>
-            </div>
-            <CalendarPrev className="cal-header-prev" />
-            <CalendarToday className="cal-header-today" />
-            <CalendarNext className="cal-header-next" />
-        </React.Fragment>;
     }
 
     console.log(classes_students)
@@ -172,7 +105,7 @@ const ManageChild: React.FC = () => {
     const [value1, setValue1] = useState(0);
     const listOptions: Options[] = [
         {
-            name: 'Lớp',
+            name: 'Khóa học',
             value: 1
         },
         {
@@ -224,24 +157,17 @@ const ManageChild: React.FC = () => {
         ],
     };
 
-    let data: any[] = [];
-    if (schedule_time_classes.schedule_time_classes.length > 0) {
-        schedule_time_classes.schedule_time_classes.map((ele, idx) => {
+    let data: object[] = []
 
-            return data.push({
-                // base properties
-                title: ele.class_name,
-                color: '#56ca70',
-                start: ele.start_time,
-                end: ele.end_time,
-                // add any property you'd like
-                busy: true,
-                description: 'Weekly meeting with team',
-                location: 'Office'
-            })
-
+    schedule_time_classes.schedule_time_classes.map((ele, index) => {
+        return data.push({
+            Id: index,
+            Subject: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
+            StartTime: new Date(ele.start_time),
+            EndTime: new Date(ele.end_time),
+            IsAllDay: false
         })
-    }
+    })
 
     const history = useHistory();
     function onChangeRouter1(classes_student: IClassesStudent) {
@@ -408,7 +334,7 @@ const ManageChild: React.FC = () => {
                                             }
 
                                             else if (checked === false && value === 1) {
-                                                return classes_students.classes_students.map((ele, idx) => {
+                                                return classes_students.classes_done.map((ele, idx) => {
                                                     console.log(ele)
                                                     return (
                                                         <div className="row" key={idx} onClick={() => {onChangeRouter1(ele)}}>
@@ -497,13 +423,21 @@ const ManageChild: React.FC = () => {
                         <h3 className=" mb-2" id="level-teacher">Lịch học của bé</h3>
                         <div className="card shadow mb-4">
                             <div className="card-body">
-                                <Eventcalendar
-                                    renderHeader={customWithNavButtons}
-                                    height={750}
-                                    view={calView}
-                                    data={data}
-                                    cssClass="md-switching-view-cont"
-                                />
+                            <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                                    dataSource: data, fields: {
+                                        id: 'Id',
+                                        subject: { name: 'Subject' },
+                                        isAllDay: { name: 'IsAllDay' },
+                                        startTime: { name: 'StartTime' },
+                                        endTime: { name: 'EndTime' }
+                                    }
+                                }}>
+
+                                    <ViewsDirective>
+                                        <ViewDirective option='Day' startHour='00:00' endHour='23:59' />
+                                    </ViewsDirective>
+                                    <Inject services={[Day]} />
+                                </ScheduleComponent>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 import { IClassesStudentState, IActionBase } from "../models/root.interface";
-import { ADD_CLASSES_STUDENT, CHANGE_CLASSES_STUDENT_PENDING_EDIT, EDIT_CLASSES_STUDENT, REMOVE_CLASSES_STUDENT,
-    CLEAR_CLASSES_STUDENT_PENDING_EDIT, SET_MODIFICATION_STATE, INITIAL_CLASSES_STUDENT, REMOVE_CLASSES_STUDENT_ALL} from "../actions/classes_student.action";
+import { ADD_DOING_CLASS, CHANGE_DOING_CLASS_PENDING_EDIT, EDIT_DOING_CLASS, REMOVE_DOING_CLASS,
+    CLEAR_DOING_CLASS_PENDING_EDIT, SET_MODIFICATION_STATE, INITIAL_DOING_CLASS, REMOVE_DOING_CLASS_ALL, INITIAL_DONE_CLASS, ADD_DONE_CLASS, EDIT_DONE_CLASS, REMOVE_DONE_CLASS, REMOVE_DONE_CLASS_ALL, CHANGE_DONE_CLASS_PENDING_EDIT, CLEAR_DONE_CLASS_PENDING_EDIT} from "../actions/classes_student.action";
 import { IClassesStudent, ClassesStudentModificationStatus } from "../models/classes_student.interface";
 
 
@@ -8,35 +8,62 @@ import { IClassesStudent, ClassesStudentModificationStatus } from "../models/cla
 const initialState: IClassesStudentState = {
     modificationState: ClassesStudentModificationStatus.None,
     selectedClassesStudent: null,
-    classes_students: []
+    classes_doing: [],
+    classes_done: []
 };
 
-function classes_studentsReducer(state: IClassesStudentState = initialState, action: IActionBase): IClassesStudentState {
+function classesStudentsReducer(state: IClassesStudentState = initialState, action: IActionBase): IClassesStudentState {
     switch (action.type) {
-        case INITIAL_CLASSES_STUDENT: {
-            return { ...state, classes_students : [...state.classes_students, action.classes_student]};
+        case INITIAL_DOING_CLASS: {
+            return { ...state, classes_doing : [...state.classes_doing, action.classes_student]};
         }
-        case ADD_CLASSES_STUDENT: {
-            return { ...state, classes_students: [...state.classes_students, action.classes_student]};
+        case ADD_DOING_CLASS: {
+            return { ...state, classes_doing: [...state.classes_doing, action.classes_student]};
         }
-        case EDIT_CLASSES_STUDENT: {
-            const foundIndex: number = state.classes_students.findIndex(pr => pr.id === action.classes_student.id);
-            let classes_students: IClassesStudent[] = state.classes_students;
-            classes_students[foundIndex] = action.classes_student;
-            return { ...state, classes_students: classes_students };
+        case EDIT_DOING_CLASS: {
+            const foundIndex: number = state.classes_doing.findIndex(pr => pr.id === action.classes_student.id);
+            let classes_doing: IClassesStudent[] = state.classes_doing;
+            classes_doing[foundIndex] = action.classes_student;
+            return { ...state, classes_doing: classes_doing };
         }
-        case REMOVE_CLASSES_STUDENT: {
-            return { ...state, classes_students: state.classes_students.filter(pr => pr.id !== action.id) };
+        case REMOVE_DOING_CLASS: {
+            return { ...state, classes_doing: state.classes_doing.filter(pr => pr.id !== action.id) };
         }
-        case REMOVE_CLASSES_STUDENT_ALL: {
-            return { ...state, classes_students: [] };
+        case REMOVE_DOING_CLASS_ALL: {
+            return { ...state, classes_doing: [] };
         }
-        case CHANGE_CLASSES_STUDENT_PENDING_EDIT: {
+        case CHANGE_DOING_CLASS_PENDING_EDIT: {
             return { ...state, selectedClassesStudent: action.classes_student };
         }
-        case CLEAR_CLASSES_STUDENT_PENDING_EDIT: {
+        case CLEAR_DOING_CLASS_PENDING_EDIT: {
             return { ...state, selectedClassesStudent: null };
         }
+
+        case INITIAL_DONE_CLASS: {
+            return { ...state, classes_done : [...state.classes_done, action.classes_student]};
+        }
+        case ADD_DONE_CLASS: {
+            return { ...state, classes_done: [...state.classes_done, action.classes_student]};
+        }
+        case EDIT_DONE_CLASS: {
+            const foundIndex: number = state.classes_done.findIndex(pr => pr.id === action.classes_student.id);
+            let classes_done: IClassesStudent[] = state.classes_done;
+            classes_done[foundIndex] = action.classes_student;
+            return { ...state, classes_done: classes_done };
+        }
+        case REMOVE_DONE_CLASS: {
+            return { ...state, classes_done: state.classes_done.filter(pr => pr.id !== action.id) };
+        }
+        case REMOVE_DONE_CLASS_ALL: {
+            return { ...state, classes_done: [] };
+        }
+        case CHANGE_DONE_CLASS_PENDING_EDIT: {
+            return { ...state, selectedClassesStudent: action.classes_student };
+        }
+        case CLEAR_DONE_CLASS_PENDING_EDIT: {
+            return { ...state, selectedClassesStudent: null };
+        }
+
         case SET_MODIFICATION_STATE: {
             return { ...state, modificationState: action.value };
         }
@@ -46,4 +73,4 @@ function classes_studentsReducer(state: IClassesStudentState = initialState, act
 }
 
 
-export default classes_studentsReducer;
+export default classesStudentsReducer;

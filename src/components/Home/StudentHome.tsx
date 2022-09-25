@@ -10,8 +10,18 @@ import Loading from "../../common/components/Loading";
 import "./ParentHome.css"
 import Popup from "reactjs-popup";
 import AccountChildForm from "../AccountChild/AccountChildForm";
-import { Eventcalendar } from '@mobiscroll/react';
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-calendars/styles/material.css";
+import "@syncfusion/ej2-dropdowns/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-lists/styles/material.css";
+import "@syncfusion/ej2-navigations/styles/material.css";
+import "@syncfusion/ej2-popups/styles/material.css";
+import "@syncfusion/ej2-splitbuttons/styles/material.css";
+import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
 
 
@@ -71,24 +81,17 @@ const StudentHome: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, id]);
 
-    let data: any[] = [];
-    if (schedule_time_classes.schedule_time_classes.length > 0) {
-        schedule_time_classes.schedule_time_classes.map((ele, idx) => {
+    let data: object[] = []
 
-            return data.push({
-                // base properties
-                title: ele.class_name,
-                color: '#56ca70',
-                start: ele.start_time,
-                end: ele.end_time,
-                // add any property you'd like
-                busy: true,
-                description: 'Weekly meeting with team',
-                location: 'Office'
-            })
-        
+    schedule_time_classes.schedule_time_classes.map((ele, index) => {
+        return data.push({
+            Id: index,
+            Subject: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
+            StartTime: new Date(ele.start_time),
+            EndTime: new Date(ele.end_time),
+            IsAllDay: false
         })
-    }
+    })
 
     return (
         promiseInProgress ?
@@ -105,7 +108,7 @@ const StudentHome: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="LỚP" text={`${numberChildCount}`} icon="book" class="primary" />
+                    <TopCard title="KHÓA HỌC" text={`${numberChildCount}`} icon="book" class="primary" />
                     <TopCard title="CUỘC THI" text={`${numberChildCount}`} icon="book" class="primary" />
                 </div>
 
@@ -144,24 +147,31 @@ const StudentHome: React.FC = () => {
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
                         <h3 className=" mb-2" id="level-teacher">Thành tích</h3>
-                        
+
                     </div>
                     <div className="col-xl-6 col-md-6 mb-4">
                         <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
-                        <Eventcalendar
-                            data={data}
-                            view={{
-                                schedule: {
-                                    type: 'day',
-                                    startDay: 1,
-                                    endDay: 5,
-                                    startTime: '07:00',
-                                    endTime: '18:00',
-                                    timeCellStep: 60,
-                                    timeLabelStep: 60
-                                }
-                            }}
-                        />
+                        <div className="card shadow mb-4">
+                            <div className="card-body">
+                                <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                                    dataSource: data, fields: {
+                                        id: 'Id',
+                                        subject: { name: 'Subject' },
+                                        isAllDay: { name: 'IsAllDay' },
+                                        startTime: { name: 'StartTime' },
+                                        endTime: { name: 'EndTime' }
+                                    }
+                                }}>
+
+                                    <ViewsDirective>
+                                        <ViewDirective option='Day' startHour='00:00' endHour='23:59' />
+                                    </ViewsDirective>
+                                    <Inject services={[Day]} />
+                                </ScheduleComponent>
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 

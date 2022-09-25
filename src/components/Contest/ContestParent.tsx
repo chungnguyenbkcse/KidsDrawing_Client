@@ -77,7 +77,7 @@ const ContestParent: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="CHƯA DIỄ RA" text={`${numberNotOpenNowCount}`} icon="book" class="primary" />
+                    <TopCard title="CHƯA DIỄN RA" text={`${numberNotOpenNowCount}`} icon="book" class="primary" />
                     <TopCard title="ĐANG DIỄN RA" text={`${numberContestOpeningCount}`} icon="book" class="primary" />
                     <TopCard title="ĐÃ KẾT THÚC" text={`${numberContestEndCount}`} icon="book" class="primary" />
                     {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">

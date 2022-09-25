@@ -83,6 +83,7 @@ import CartForm from "../components/Discovery/CartForm";
 import DetailContestStudent from "../components/ManageStudent/DetailContestStudent";
 import Attendance from "../components/SectionTeacher/Attendance";
 import ClassStudent from "../components/ClassStudent/ClassStudent";
+import DiscoveryStudent from "../components/DiscoveryStudent/Discovery";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -194,6 +195,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>
                                 <Route path={`/courses`}><CourseStudent /></Route>
+                                <Route path={`/discover`}><DiscoveryStudent /></Route>
                                 <Route path={`/contests`}><ContestStudent /></Route>
                                 <Route path={`/classes`}><ClassStudent /></Route>
                                 <Route path={`/schedules`}><ScheduleStudent /></Route>

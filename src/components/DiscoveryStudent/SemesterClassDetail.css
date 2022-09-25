@@ -1,0 +1,29 @@
+#btn-register-course {
+    margin-bottom: 10px !important;
+}
+
+#btn-create-register-course1 {
+    background: #14FB00;
+    border-radius: 30px;
+    margin-bottom: 30px !important;
+    min-width: 200px !important;
+}
+
+#btn-create-register-course2 {
+    background: #14FB00 !important;
+    border-radius: 30px;
+    margin-bottom: 30px !important;
+    min-width: 200px !important;
+}
+
+#btn-payment {
+    color: #ffffff !important;
+}
+
+#btn-create-register-course3 {
+    background: #14FB00 !important;
+    border-radius: 30px;
+    margin-bottom: 30px !important;
+    min-width: 200px !important;
+    float: right !important;
+}

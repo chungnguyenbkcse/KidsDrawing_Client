@@ -13,7 +13,6 @@ import AccountChildList from "./AccountChildList";
 import "./ParentHome.css"
 import Popup from "reactjs-popup";
 import AccountChildForm from "../AccountChild/AccountChildForm";
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import { getScheduleTimeByParent } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByParent";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";

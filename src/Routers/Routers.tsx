@@ -92,6 +92,7 @@ import ViewSectionStudent from "../components/ClassStudent/ViewSectionStudent";
 import DetailExerciseStudent1 from "../components/ManageStudent/DetailExerciseStudent1";
 import FormSubmit from "../components/ClassStudent/FormSubmit";
 import FormSubmitContestStudent from "../components/Contest/FormSubmitContestStudent";
+import ScheduleClassStudent from "../components/ClassStudent/ScheduleClassStudent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -213,6 +214,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/exercise/detail`}><DetailExerciseStudent1 /></Route>
                                 <Route path={`/exercise/submit`}><FormSubmit /></Route>
                                 <Route path={`/discover`}><DiscoveryStudent /></Route>
+                                <Route path={`/classes/schedule`}><ScheduleClassStudent /></Route>
                                 <Route path={`/classes/detail-student`}><DetailClassStudent /></Route>
                                 <Route path={`/contests/register`}><ConestDetailStudent /></Route>
                                 <Route path={`/contests`}><ContestStudent /></Route>

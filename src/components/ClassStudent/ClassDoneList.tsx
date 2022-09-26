@@ -32,12 +32,19 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
     return (<tr className={`table-row `}
       key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>
       <th scope="row" className="data-table">{index + 1}</th>
-      <td className="data-table">{contest.student_name}</td>
-      <td className="data-table">{contest.name}</td>
       <td className="data-table">{contest.course_name}</td>
       <td className="data-table">{contest.semester_name}</td>
       <td className="data-table">{contest.total_student}</td>
       <td className="data-table">{contest.total_section}</td>
+      <td className="data-table">
+        <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={() => {}}
+        >
+            Xem review
+        </button>
+      </td>
     </tr>);
   });
 
@@ -49,12 +56,11 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
           <thead id="table-thread-contest-section">
             <tr>
               <th scope="col" className="name-row-table">#</th>
-              <th scope="col" className="name-row-table">Bé</th>
-              <th scope="col" className="name-row-table">Tên lớp</th>
               <th scope="col" className="name-row-table">Khóa học</th>
               <th scope="col" className="name-row-table">Học kì</th>
               <th scope="col" className="name-row-table">Số học viên</th>
               <th scope="col" className="name-row-table">Số buổi học</th>
+              <th scope="col" className="name-row-table"></th>
             </tr>
           </thead>
           <tbody>

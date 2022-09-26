@@ -353,7 +353,7 @@ const LeftMenu: React.FC = () => {
                 <li className="nav-item">
                     <Link className="nav-link" to={`/classes`}>
                         <GiVideoConference />
-                        <span> Lớp của bé</span>
+                        <span> Khóa học của bé</span>
                     </Link>
                 </li>
 

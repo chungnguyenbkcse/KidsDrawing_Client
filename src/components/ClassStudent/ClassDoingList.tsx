@@ -27,18 +27,49 @@ function ClassDoingList(props: classTeacherListProps): JSX.Element {
     });
   }
 
+  const routeChange1 = (classes_student: IClassesStudent) => {
+    let path = '/classes/schedule'; 
+    localStorage.removeItem('teacher_id');
+    localStorage.setItem('teacher_id', classes_student.teacher_id.toString())
+    localStorage.removeItem('student_id');
+    localStorage.setItem('student_id', classes_student.student_id.toString())
+    localStorage.removeItem('class_id');
+    localStorage.setItem('class_id', classes_student.id.toString());
+    localStorage.removeItem('course_name');
+    localStorage.setItem('course_name', classes_student.course_name.toString());
+    history.push({
+        pathname: path,
+    });
+  }
+
   const lessonElements: (JSX.Element | null)[] = classes_students.classes_doing.map((contest, index) => {
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!contest) { return null; }
     return (<tr className={`table-row `}
-      key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>
+      key={`lesson_${contest.id}`}>
       <th scope="row" className="data-table">{index + 1}</th>
-      <td className="data-table">{contest.student_name}</td>
-      <td className="data-table">{contest.name}</td>
       <td className="data-table">{contest.course_name}</td>
       <td className="data-table">{contest.semester_name}</td>
       <td className="data-table">{contest.total_student}</td>
       <td className="data-table">{contest.total_section}</td>
+      <td className="data-table">
+        <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={() => { routeChange1(contest) }}
+        >
+            Lịch học
+        </button>
+      </td>
+      <td className="data-table">
+        <button 
+            type="button" 
+            className="btn btn-success enter-class" 
+            onClick={() => { routeChange(contest) }}
+        >
+            Vào học
+        </button>
+      </td>
     </tr>);
   });
 
@@ -50,12 +81,12 @@ function ClassDoingList(props: classTeacherListProps): JSX.Element {
           <thead id="table-thread-contest-section">
             <tr>
               <th scope="col" className="name-row-table">#</th>
-              <th scope="col" className="name-row-table">Bé</th>
-              <th scope="col" className="name-row-table">Tên lớp</th>
               <th scope="col" className="name-row-table">Khóa học</th>
               <th scope="col" className="name-row-table">Học kì</th>
               <th scope="col" className="name-row-table">Số học viên</th>
               <th scope="col" className="name-row-table">Số buổi học</th>
+              <th scope="col" className="name-row-table"></th>
+              <th scope="col" className="name-row-table"></th>
             </tr>
           </thead>
           <tbody>

@@ -81,8 +81,8 @@ const ClassStudent: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="SỐ LỚP ĐANG DẠY" text={`${numberClassDoingCount}`} icon="book" class="primary" />
-                <TopCard title="SỐ LỚP ĐÃ DẠY" text={`${numberClassDoneCount}`} icon="book" class="primary" />
+                <TopCard title="KHÓA HỌC ĐANG HỌC" text={`${numberClassDoingCount}`} icon="book" class="primary" />
+                <TopCard title="KHÓA HỌC ĐÃ HỌC" text={`${numberClassDoneCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(ClassesStudentModificationStatus.Create))}>
@@ -150,8 +150,8 @@ const ClassStudent: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
+                                            <div className="card-header py-3 card-header-new">
+                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách khóa học</h6>
                                             </div>
                                             <div className="card-body">
                                                 <ClassDoingList
@@ -171,7 +171,7 @@ const ClassStudent: React.FC = () => {
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
                                             <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
+                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách khóa học</h6>
                                             </div>
                                             <div className="card-body">
                                                 <ClassDoneList

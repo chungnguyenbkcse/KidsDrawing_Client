@@ -12,6 +12,7 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
 import { getExerciseForSectionStudent } from "../../common/service/ExerciseStudent/GetExerciseBySectionStudent";
+import { IExerciseStudent } from "../../store/models/exercise_student.interface";
 
 const SectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -118,6 +119,20 @@ const SectionStudent: React.FC = () => {
         localStorage.setItem('exercise_name', name);
         localStorage.setItem('exercise_level_name', level_name);
         localStorage.setItem('exercise_id', id.toString());
+        history.push({
+            pathname: path
+        });
+    }
+
+
+    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseStudent){
+        let path = '/exercise-submission/view';
+        localStorage.removeItem('exercise_submission_id');
+        localStorage.setItem('exercise_submission_id', exercise_student.exercise_submission_id.toString())
+        localStorage.removeItem('time_submit');
+        localStorage.setItem('time_submit', exercise_student.time_submit.toString())
+        localStorage.removeItem('description');
+        localStorage.setItem('description', exercise_student.description.toString())
         history.push({
             pathname: path
         });
@@ -237,12 +252,11 @@ const SectionStudent: React.FC = () => {
                     <div className="col-xl-6 col-md-6 mb-4">
                         <div className="row">
                             <div className="col-xl-12 col-md-12 mb-4">
-                                <div className="col-xl-12 col-md-12 mb-4">
-                                    <div className={`card shadow h-100 py-2`} >
+                                    <div className={`card shadow py-2`} >
                                         <div className="card-body">
-                                            <div className="row no-gutters justify-content-left">
+                                            <div className="row no-gutters justify-content-left exercise-list">
                                                 <h4 id="full-name">Bài tập</h4>
-                                                <div className="table-responsive portlet">
+                                                <div className="table-responsive portlet  exercise-list">
                                                     <table className="table">
                                                         <thead className="thead-light">
                                                             <tr>
@@ -260,7 +274,6 @@ const SectionStudent: React.FC = () => {
                                                                                 <div className="col-xl-8 col-md-8 mb-4">
                                                                                     <h3 className=" mb-2" id="level-student">{ele.name}</h3>
                                                                                     <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
-                                                                                    <p>Chưa nộp</p>
                                                                                 </div>
                                                                             </div>
                                                                         </tr>
@@ -290,7 +303,7 @@ const SectionStudent: React.FC = () => {
                                                                 exercise_student.exercise_submitted_not_grade.sort((a, b) => a.id - b.id).map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                            <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
                                                                                 <div className="col-xl-4 col-md-4 mb-4">
                                                                                     <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
                                                                                 </div>
@@ -309,7 +322,6 @@ const SectionStudent: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ interface exercise {
     id: number;
     name: string;
     description: string;
+    deadline: string;
     section_id: number;
     level_id: number;
     level_name: string;
@@ -52,6 +53,7 @@ export function getExerciseByClass(id: any) {
                         name: ele.name,
                         description: ele.description,
                         section_id: ele.section_id,
+                        deadline: ele.deadline,
                         level_id: ele.level_id,
                         level_name: ele.level_name,
                         section_name: ele.section_name,

@@ -1,14 +1,17 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, FormEvent, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
+import { IExerciseSubmissionState, IRootPageStateType, IStateType, IUserState } from "../../store/models/root.interface";
 import "./ManageStudent.css"
 import 'react-circular-progressbar/dist/styles.css';
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getExerciseSubmissionById } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionById";
+import { IUser, UserModificationStatus } from "../../store/models/user.interface";
+import { editTeacher, setModificationState } from "../../store/actions/users.action";
+import { toast, ToastContainer } from "react-toastify";
 
 const ViewExerciseSubmission: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -19,12 +22,6 @@ const ViewExerciseSubmission: React.FC = () => {
     var exercise_submission_id: string = "";
     if (id_y !== null) {
         exercise_submission_id = id_y;
-    }
-
-    var id_t = localStorage.getItem('description');
-    var description: string = "";
-    if (id_t !== null) {
-        description = id_t;
     }
 
     const { promiseInProgress } = usePromiseTracker();
@@ -67,6 +64,87 @@ const ViewExerciseSubmission: React.FC = () => {
         dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
     }, [path.area, dispatch]);
 
+    let users: IUserState = useSelector((state: IStateType) => state.users);
+    let user: IUser | null = users.selectedUser;
+
+    const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
+
+    if (!user || isCreate) {
+        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
+    }
+
+    async function saveUser(e: FormEvent<HTMLFormElement>): Promise<void> {
+        e.preventDefault();
+        if (isFormInvalid()) {
+            return;
+        }
+        var url = await setImageAction();
+        let saveUserFn: Function = editTeacher;
+        saveForm(saveUserFn, url);
+    }
+
+    function saveForm(saveFn: Function, url: string): void {
+        if (user) {
+            notify()
+        }
+    }
+
+    function notify() {
+        toast.info("Cập nhật thành công!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000
+        });
+    }
+
+    function cancelForm(): void {
+        dispatch(setModificationState(UserModificationStatus.None));
+    }
+
+    function getDisabledClass(): string {
+        let isError: boolean = isFormInvalid();
+        return isError ? "disabled" : "";
+    }
+
+    function isFormInvalid(): boolean {
+        return (image === null) as boolean;
+    }
+
+    const src = user.profile_image_url;
+
+    const [preview, setPreview] = useState(src)
+
+    const [image, setImage] = useState<any>();
+
+    const uploadPicture = (e: any) => {
+        setImage({
+            /* contains the preview, if you want to show the picture to the user
+                you can access it with this.state.currentPicture
+           */
+            picturePreview: URL.createObjectURL(e.target.files[0]),
+            /* this contains the file we want to send */
+            pictureAsFile: e.target.files[0]
+        })
+        setPreview(URL.createObjectURL(e.target.files[0]))
+    };
+
+    async function setImageAction() {
+        const formData = new FormData();
+        formData.append(
+            "gifFile",
+            image.pictureAsFile
+        );
+        // do your post request
+        const res = await fetch(
+            `${process.env.REACT_APP_API_URL}/cloudinary/gifs`, {
+            method: "POST",
+            body: formData
+        }
+        )
+        const data = await res.json()
+        return data.url_image
+
+    };
+
 
     return (
         promiseInProgress ?
@@ -79,16 +157,29 @@ const ViewExerciseSubmission: React.FC = () => {
                     </div>
                 </div>
             </div> : <Fragment>
-
+            <ToastContainer />
             <div className="row">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4" id="topcard-user">
                         <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Đề tài</h6>
+                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Nộp bài</h6>
                         </div>
                         <div className="card-body">
-                            <p dangerouslySetInnerHTML={{ __html: description }}>
-                            </p>
+                            <div className="row">
+                                <form onSubmit={saveUser}>
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <label htmlFor="profile_image">Chọn ảnh:</label>
+                                            <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                            <img src={preview} alt="Preview" id="avatar" />
+                                        </div>
+                                    </div>
+                                    <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                    <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

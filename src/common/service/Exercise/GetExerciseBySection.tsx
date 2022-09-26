@@ -5,6 +5,7 @@ interface exercise {
     name: string;
     description: string;
     section_id: number;
+    deadline: string;
     level_id: number;
     level_name: string;
     section_name: string;
@@ -51,6 +52,7 @@ export function getExerciseBySection(dispatch: any, id: any) {
                         description: ele.description,
                         section_id: ele.section_id,
                         level_id: ele.level_id,
+                        deadline: ele.deadline,
                         level_name: ele.level_name,
                         section_name: ele.section_name,
                         create_time: strDate_1.substring(0, 5),

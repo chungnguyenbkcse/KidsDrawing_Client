@@ -99,6 +99,7 @@ export interface IExerciseFormState {
     level_id: IFormStateField<number>;
     name: IFormStateField<string>;
     description: IFormStateField<string>;
+    deadline: IFormStateField<string>;
 }
 
 

@@ -2,6 +2,7 @@ export interface IExercise {
     id: number;
     name: string;
     description: string;
+    deadline: string;
     section_id: number;
     level_id: number;
     level_name: string;

@@ -9,9 +9,7 @@
 
 #teacher_navbarx {
     background-color: #ffffff !important;
-    position : fixed !important;
-    z-index: 1;
-    width: 80%;
+    width: 90%;
 }
 
 #teacher_navbar {

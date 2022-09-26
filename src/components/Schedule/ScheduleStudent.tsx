@@ -77,15 +77,20 @@ const ScheduleStudent: React.FC = () => {
 
     let data: object[] = []
 
-    schedule_time_classes.schedule_time_classes.map((ele, index) => {
-        return data.push({
-            Id: index,
-            Subject: ele.class_name !== undefined && ele.class_name !== null ? ele.class_name : "",
-            StartTime: new Date(ele.start_time),
-            EndTime: new Date(ele.end_time),
-            IsAllDay: false
+    if (schedule_time_classes.schedule_time_classes.length > 1 && promiseInProgress === false) {
+        schedule_time_classes.schedule_time_classes.map((ele, index) => {
+            if (ele !== undefined && ele !== null) {
+                return data.push({
+                    Id: index,
+                    Subject: (ele.class_name !== undefined && ele.class_name !== null) ? ele.class_name : "",
+                    StartTime: new Date(ele.start_time),
+                    EndTime: new Date(ele.end_time),
+                    IsAllDay: false
+                })
+            }
+            return 1
         })
-    })
+    }
 
     useEffect(() => {
         dispatch(clearSelectedProduct());

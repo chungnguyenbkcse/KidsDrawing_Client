@@ -18,6 +18,7 @@ import Loading from "../../common/components/Loading";
 import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLeave/GetStudentLeaveByClassStudent";
 import { getExerciseForClassStudent } from "../../common/service/ExerciseStudent/GetExerciseForClassStudent";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
+import { IExerciseStudent } from "../../store/models/exercise_student.interface";
 
 
 const DetailClassStudent: React.FC = () => {
@@ -111,6 +112,15 @@ const DetailClassStudent: React.FC = () => {
 
     const history = useHistory();
 
+    const routeChange2 = (exercise_student: IExerciseStudent) => {
+        let path = '/exercise/detail';
+        localStorage.removeItem('exercise_id');
+        localStorage.setItem('exercise_id', exercise_student.id.toString())
+        history.push({
+            pathname: path
+        });
+    }
+
     const routeChange1 = () => {
         let path = '/exercise/submit';
         history.push({
@@ -158,25 +168,27 @@ const DetailClassStudent: React.FC = () => {
     let count = 0;
     let data: string[] = []
     let total_time = "";
-    if (time_schedules.timeSchedules.length > 0) {
-        var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
-        var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
-        var hour_start = parseInt(start_time_0[1].substring(0,2));
-        var minus_tart = parseInt(start_time_0[1].substring(3,5));
-        var sercon_start = parseInt(start_time_0[1].substring(6,8));
-        var hour_end = parseInt(end_time_0[1].substring(0,2));
-        var minus_end = parseInt(end_time_0[1].substring(3,5));
-        var sercon_end = parseInt(end_time_0[1].substring(6,8));
-
-        total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút "+ (sercon_end - sercon_start).toString() + " giây";
-        time_schedules.timeSchedules.map((ele, index) => {
-            if (isDateBeforeToday(new Date(Date.parse(ele.end_time)))) {
-                count ++;
+    if (time_schedules.timeSchedules.length > 1 && promiseInProgress === false) {
+            if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null){
+                var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
+                var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
+                var hour_start = parseInt(start_time_0[1].substring(0, 2));
+                var minus_tart = parseInt(start_time_0[1].substring(3, 5));
+                var sercon_start = parseInt(start_time_0[1].substring(6, 8));
+                var hour_end = parseInt(end_time_0[1].substring(0, 2));
+                var minus_end = parseInt(end_time_0[1].substring(3, 5));
+                var sercon_end = parseInt(end_time_0[1].substring(6, 8));
+    
+                total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
+                time_schedules.timeSchedules.map((ele, index) => {
+                    if (isDateBeforeToday(new Date(Date.parse(ele.end_time)))) {
+                        count++;
+                    }
+                    var start_time = ele.start_time.split("T");
+                    var end_time = ele.end_time.split("T");
+                    return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
+                })
             }
-            var start_time = ele.start_time.split("T");
-            var end_time = ele.end_time.split("T");
-            return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
-        })
     }
 
 
@@ -318,7 +330,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     <p className=" mt-2 section_number">Buổi {ele.number}: </p>
                                                                                 </div>
                                                                                 <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p> 
+                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -342,26 +354,17 @@ const DetailClassStudent: React.FC = () => {
                                                                                     <p className=" mb-2 section_number">Hình thức học: </p>
                                                                                 </div>
                                                                                 <div className="col-xl-9 col-md-9">
-                                                                                <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
+                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
                                                                                 <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>   
+                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>
                                                                                 </div>
                                                                                 <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>   
+                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>
                                                                                 </div>
                                                                             </div>
-                                                                            
-                            
-                                                                        </div>
-                                                                        <div className="col-xl-6 col-md-6">
-                                                                            
-                                                                            
-                                                                            
-                                                                            
-                                    
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -396,10 +399,10 @@ const DetailClassStudent: React.FC = () => {
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-2">
-                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name"> {ele.name}</span> </p> 
-                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name"></span> </p>   
+                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
+                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
+                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
+                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name pl-2">{ele.teacher_name}</span> </p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -424,16 +427,16 @@ const DetailClassStudent: React.FC = () => {
                                                         exercise_student.exercise_submitted_graded.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2(ele) }}>
                                                                         <div className="col-xl-4 col-md-4">
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-2">
-                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name"> {ele.name}</span> </p> 
-                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name"></span> </p>   
+                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
+                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
+                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name pl-2">{ele.time_submit}</span> </p>
+                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
+                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name pl-2">{ele.teacher_name}</span> </p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -450,11 +453,11 @@ const DetailClassStudent: React.FC = () => {
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-2">
-                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name"> {ele.name}</span> </p> 
-                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name"></span> </p>
-                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name"></span> </p>   
+                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
+                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
+                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name pl-2">{ele.time_submit}</span> </p>
+                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
+                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name pl-2">{ele.teacher_name}</span> </p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -490,8 +493,7 @@ const DetailClassStudent: React.FC = () => {
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8">
                                                                             <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
-                                                                            <p className=" mb-2 section_number">Giáo viên duyệt: </p>
-                                                                            <p className=" mb-2 section_number">Thời gian gửi: </p>
+                                                                            <p className=" mb-2 section_number">Thời gian gửi: <span className="section_name pl-2">{ele.update_time}</span></p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -513,17 +515,16 @@ const DetailClassStudent: React.FC = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        student_leaves.leaves.map((ele, index) => {
+                                                        student_leaves.acceptLeaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
                                                                         <div className="col-xl-4 col-md-4">
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8">
                                                                             <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
-                                                                            <p className=" mb-2 section_number">Giáo viên duyệt: </p>
-                                                                            <p className=" mb-2 section_number">Thời gian duyệt: </p>
+                                                                            <p className=" mb-2 section_number">Thời gian duyệt: <span className="section_name pl-2">{ele.update_time}</span></p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>

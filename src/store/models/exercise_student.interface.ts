@@ -5,6 +5,9 @@ export interface IExerciseStudent {
     section_id: number;
     level_id: number;
     level_name: string;
+    deadline: string;
+    time_submit:  string;
+    teacher_name: string;
     section_name: string;
     create_time: string;
     update_time: string;

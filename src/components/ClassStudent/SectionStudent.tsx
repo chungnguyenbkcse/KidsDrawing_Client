@@ -1,37 +1,27 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Popup from "reactjs-popup";
-import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
 import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
-import { ExerciseModificationStatus } from "../../store/models/exercise.interface";
-import { IClassesStudentState, IExerciseState, ISectionState, IStateType, IUserState } from "../../store/models/root.interface";
-import ExerciseForm from "../Exercise/ExerciseForm";
+import { IClassesStudentState, IExerciseStudentState, ISectionState, IStateType } from "../../store/models/root.interface";
 import "./SectionStudent.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
+import { getExerciseForSectionStudent } from "../../common/service/ExerciseStudent/GetExerciseBySectionStudent";
 
 const SectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
-    const exercises: IExerciseState = useSelector((state: IStateType) => state.exercises);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const exercise_student: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const class_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
-    console.log(users.students)
 
-    const [popup, setPopup] = useState(false);
 
     const { promiseInProgress } = usePromiseTracker();
 
-
-    function onRemovePopup(value: boolean) {
-        setPopup(false);
-    }
 
     var id_y = localStorage.getItem('section_id');
 
@@ -89,14 +79,14 @@ const SectionStudent: React.FC = () => {
                 else {
                     trackPromise(getClassesStudent(dispatch, id))
                     trackPromise(getSectionById(dispatch, section_id))
-                    trackPromise(getExerciseBySection(dispatch, section_id))
+                    trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                     trackPromise(getExerciseLevel(dispatch))
                 }
             }
             else {
                 trackPromise(getClassesStudent(dispatch, id))
                 trackPromise(getSectionById(dispatch, section_id))
-                trackPromise(getExerciseBySection(dispatch, section_id))
+                trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                 trackPromise(getExerciseLevel(dispatch))
             }
         }
@@ -133,6 +123,21 @@ const SectionStudent: React.FC = () => {
         });
     }
 
+    const routeChange5 = (description: string, name: string, level_name: string, id: number) => {
+        let path = '/exercise/submit';
+        localStorage.removeItem('exercise_description');
+        localStorage.removeItem('exercise_name');
+        localStorage.removeItem('exercise_level_name');
+        localStorage.removeItem('exercise_id');
+        localStorage.setItem('exercise_description', description);
+        localStorage.setItem('exercise_name', name);
+        localStorage.setItem('exercise_level_name', level_name);
+        localStorage.setItem('exercise_id', id.toString());
+        history.push({
+            pathname: path
+        });
+    }
+
     return (
         promiseInProgress ?
             <div className="row" id="search-box">
@@ -145,22 +150,6 @@ const SectionStudent: React.FC = () => {
                 </div>
             </div> : <Fragment>
                 <ToastContainer />
-
-                <Popup
-                    open={popup}
-                    onClose={() => setPopup(false)}
-                    closeOnDocumentClick
-                >
-                    <>
-                        {
-                            function () {
-                                if ((exercises.modificationState === ExerciseModificationStatus.Create) || (exercises.modificationState === ExerciseModificationStatus.Edit)) {
-                                    return <ExerciseForm isCheck={onRemovePopup} />
-                                }
-                            }()
-                        }
-                    </>
-                </Popup>
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
                         <div className="row">
@@ -261,7 +250,26 @@ const SectionStudent: React.FC = () => {
                                                         </thead>
                                                         <tbody>
                                                             {
-                                                                exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
+                                                                exercise_student.exercise_not_submit.sort((a, b) => a.id - b.id).map((ele, index) => {
+                                                                    return (
+                                                                        <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                            <div className="row row-section mb-4 ml-2 mr-2 row-not-submit" onClick={() => { routeChange5(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                                <div className="col-xl-4 col-md-4 mb-4">
+                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                                </div>
+                                                                                <div className="col-xl-8 col-md-8 mb-4">
+                                                                                    <h3 className=" mb-2" id="level-student">{ele.name}</h3>
+                                                                                    <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                                    <p>Chưa nộp</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </tr>
+                                                                    )
+                                                                })
+                                                            }
+
+                                                            {
+                                                                exercise_student.exercise_submitted.sort((a, b) => a.id - b.id).map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>

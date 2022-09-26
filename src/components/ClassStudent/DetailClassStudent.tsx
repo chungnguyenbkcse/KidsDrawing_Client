@@ -6,21 +6,18 @@ import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
 import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
 import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
-import { getTeacher } from "../../common/service/Teacher/GetTeacher";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassStudent.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
-import { getTutorial } from "../../common/service/Tutorial/GetTutorial";
-import { getTutorialPage } from "../../common/service/TutorialPage/GetTutorialPage";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLeave/GetStudentLeaveByClassStudent";
+import { getExerciseForClassStudent } from "../../common/service/ExerciseStudent/GetExerciseForClassStudent";
 
 
 const DetailClassStudent: React.FC = () => {
@@ -31,7 +28,7 @@ const DetailClassStudent: React.FC = () => {
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
-    console.log(tutorial_pages)
+    const exercise_student: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const { promiseInProgress } = usePromiseTracker();
 
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -79,22 +76,16 @@ const DetailClassStudent: React.FC = () => {
                 }
                 else {
                     trackPromise(getSectionByClass(dispatch, class_id))
-                    trackPromise(getTutorial(dispatch))
-                    trackPromise(getTutorialPage(dispatch))
-                    trackPromise(getUserById(dispatch, id))
-                    trackPromise(getTeacher(dispatch))
                     trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
                     trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
+                    trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
                 }
             }
             else {
                 trackPromise(getSectionByClass(dispatch, class_id))
-                trackPromise(getTutorial(dispatch))
-                trackPromise(getTutorialPage(dispatch))
-                trackPromise(getUserById(dispatch, id))
-                trackPromise(getTeacher(dispatch))
-                trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
+                trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
                 trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
+                trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
@@ -116,7 +107,7 @@ const DetailClassStudent: React.FC = () => {
     const history = useHistory();
 
     const routeChange1 = () => {
-        let path = '/exercise';
+        let path = '/exercise/submit';
         history.push({
             pathname: path
         });
@@ -220,7 +211,7 @@ const DetailClassStudent: React.FC = () => {
                         }}
                             style={{
                                 color: checked2 ? "#F24E1E" : "#2F4F4F"
-                            }}>Bài tập chưa chấm</h6>
+                            }}>Bài tập cần làm</h6>
                         <div style={{
                             height: "5px",
                             textAlign: "center",
@@ -318,7 +309,7 @@ const DetailClassStudent: React.FC = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        exercise_submissions.exercise_not_gradeds.map((ele, index) => {
+                                                        exercise_student.exercise_not_submit.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
@@ -326,8 +317,8 @@ const DetailClassStudent: React.FC = () => {
                                                                             <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-4">
-                                                                            <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
-                                                                            <h3 className=" mb-2" id="level-teacher">Học sinh: {ele.student_name}</h3>
+                                                                            <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>
+                                                                            <h6 className=" mb-2" id="level-teacher">Phần trăm đánh giá: {ele.level_name}</h6>
                                                                         </div>
                                                                     </div>
                                                                 </tr>

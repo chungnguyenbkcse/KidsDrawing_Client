@@ -74,13 +74,16 @@ const ScheduleTeacher: React.FC = () => {
 
     time_schedule_teacherss.timeScheduleTeachers.map((ele: any, index: any) => {
         //console.log(ele)
-        return data.push({
-            Id: index,
-            Subject: `Lớp ${ele.class_name}:  Buổi học ${index + 1}`,
-            StartTime: new Date(ele.start_time),
-            EndTime: new Date(ele.end_time),
-            IsAllDay: false
-        })
+        if (ele !== undefined && ele !== null) {
+            return data.push({
+                Id: index,
+                Subject: `Lớp ${ele.class_name}:  Buổi học ${index + 1}`,
+                StartTime: new Date(ele.start_time),
+                EndTime: new Date(ele.end_time),
+                IsAllDay: false
+            })
+        }
+        return 1
     })
 
     useEffect(() => {

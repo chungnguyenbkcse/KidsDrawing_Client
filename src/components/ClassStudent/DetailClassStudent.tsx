@@ -128,6 +128,19 @@ const DetailClassStudent: React.FC = () => {
         });
     }
 
+    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseStudent){
+        let path = '/exercise-submission/view';
+        localStorage.removeItem('exercise_submission_id');
+        localStorage.setItem('exercise_submission_id', exercise_student.exercise_submission_id.toString())
+        localStorage.removeItem('time_submit');
+        localStorage.setItem('time_submit', exercise_student.time_submit.toString())
+        localStorage.removeItem('description');
+        localStorage.setItem('description', exercise_student.description.toString())
+        history.push({
+            pathname: path
+        });
+    }
+
     const onChangeRoute = (section: ISection) => {
         let path = "/classes/section";
         localStorage.removeItem('section_id')
@@ -448,7 +461,7 @@ const DetailClassStudent: React.FC = () => {
                                                         exercise_student.exercise_submitted_not_grade.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
                                                                         <div className="col-xl-4 col-md-4">
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
                                                                         </div>
@@ -488,12 +501,12 @@ const DetailClassStudent: React.FC = () => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
-                                                                        <div className="col-xl-4 col-md-4">
+                                                                        <div className="col-xl-3 col-md-3">
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8">
+                                                                        <div className="col-xl-9 col-md-9">
                                                                             <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
-                                                                            <p className=" mb-2 section_number">Thời gian gửi: <span className="section_name pl-2">{ele.update_time}</span></p>
+                                                                            <p className=" mb-2 section_number">Thời gian gửi: <span className="section_name">{ele.update_time}</span></p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>

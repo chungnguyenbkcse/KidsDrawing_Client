@@ -10,7 +10,7 @@ import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, IStudentLeaveState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassStudent.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
@@ -26,7 +26,7 @@ const DetailClassStudent: React.FC = () => {
     const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
     const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
-    const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
+    const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const exercise_student: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const { promiseInProgress } = usePromiseTracker();
@@ -149,6 +149,7 @@ const DetailClassStudent: React.FC = () => {
         })
     }
 
+
     return (
         promiseInProgress ?
             <div className="row" id="search-box">
@@ -160,12 +161,13 @@ const DetailClassStudent: React.FC = () => {
                     </div>
                 </div>
             </div> : <Fragment>
-                {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
+                {/* <h1 className="h3 mb-2 text-gray-800" id="home-student">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
                     <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${numberApprovedCount}`} icon="book" class="primary" />
                     <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
+                    <TopCard title="NGHỈ HỌC" text={`${student_leaves.leaves.length}`} icon="book" class="danger" />
                     <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                         <button
                             className="btn btn-success btn-green"
@@ -211,7 +213,7 @@ const DetailClassStudent: React.FC = () => {
                         }}
                             style={{
                                 color: checked2 ? "#F24E1E" : "#2F4F4F"
-                            }}>Bài tập cần làm</h6>
+                            }}>Bài tập</h6>
                         <div style={{
                             height: "5px",
                             textAlign: "center",
@@ -277,12 +279,15 @@ const DetailClassStudent: React.FC = () => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
-                                                                        <div className="col-xl-4 col-md-4 mb-4">
+                                                                        <div className="col-xl-4 col-md-4">
                                                                             <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8 mb-4">
-                                                                            <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
-                                                                            <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
+                                                                        <div className="col-xl-8 col-md-8 mb-2">
+                                                                            <p className=" mb-2 section_number">Buổi {ele.number}: <span className="section_name"> {ele.name}</span> </p> 
+                                                                            <p className=" mb-2 section_number">Lịch học: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Thời gian buổi học: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Hình thức học: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Giáo viên: <span className="section_name"></span> </p>   
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -299,7 +304,7 @@ const DetailClassStudent: React.FC = () => {
                         else if (checked2 === true) {
                             return (
                                 <div className="row">
-                                    <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className="col-xl-6 col-md-6 mb-4">
                                         <h3 className=" mb-2" id="level-teacher">Bài kiểm tra cần làm</h3>
                                         <div className="table-responsive portlet table-section">
                                             <table className="table">
@@ -313,12 +318,48 @@ const DetailClassStudent: React.FC = () => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
-                                                                        <div className="col-xl-4 col-md-4 mb-4">
-                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                        <div className="col-xl-4 col-md-4">
+                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8 mb-4">
-                                                                            <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>
-                                                                            <h6 className=" mb-2" id="level-teacher">Phần trăm đánh giá: {ele.level_name}</h6>
+                                                                        <div className="col-xl-8 col-md-8 mb-2">
+                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name"> {ele.name}</span> </p> 
+                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name"></span> </p>   
+                                                                        </div>
+                                                                    </div>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-xl-6 col-md-6 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Bài kiểm tra đã nộp</h3>
+                                        <div className="table-responsive portlet table-section">
+                                            <table className="table">
+                                                <thead className="thead-light">
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        exercise_student.exercise_submitted.map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                        <div className="col-xl-4 col-md-4">
+                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-8 col-md-8 mb-2">
+                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name"> {ele.name}</span> </p> 
+                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name"></span> </p>   
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -335,8 +376,8 @@ const DetailClassStudent: React.FC = () => {
                         else if (checked3 === true) {
                             return (
                                 <div className="row">
-                                    <div className="col-xl-12 col-md-12 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Yêu cầu nghỉ học</h3>
+                                    <div className="col-xl-6 col-md-6 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Chưa duyệt</h3>
                                         <div className="table-responsive portlet table-section">
                                             <table className="table">
                                                 <thead className="thead-light ">
@@ -345,16 +386,49 @@ const DetailClassStudent: React.FC = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        teacher_leaves.leaves.map((ele, index) => {
+                                                        student_leaves.leaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
-                                                                        <div className="col-xl-4 col-md-4 mb-4">
-                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                        <div className="col-xl-4 col-md-4">
+                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8 mb-4">
-                                                                            <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>
-                                                                            <h4 className=" mb-2" id="level-teacher">Chưa duyệt</h4>
+                                                                        <div className="col-xl-8 col-md-8">
+                                                                            <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
+                                                                            <p className=" mb-2 section_number">Giáo viên duyệt: </p>
+                                                                            <p className=" mb-2 section_number">Thời gian gửi: </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-xl-6 col-md-6 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Đã duyệt</h3>
+                                        <div className="table-responsive portlet table-section">
+                                            <table className="table">
+                                                <thead className="thead-light ">
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        student_leaves.leaves.map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                        <div className="col-xl-4 col-md-4">
+                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-8 col-md-8">
+                                                                            <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
+                                                                            <p className=" mb-2 section_number">Giáo viên duyệt: </p>
+                                                                            <p className=" mb-2 section_number">Thời gian duyệt: </p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>

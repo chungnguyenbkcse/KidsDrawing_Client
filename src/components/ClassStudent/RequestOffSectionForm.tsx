@@ -43,7 +43,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
     const listSections: Option1[] = [];
     sections.sections.map((ele) => {
-        let item: Option1 = { "name": ele.name, "value": ele.id }
+        let item: Option1 = { "name": "Buổi " + ele.number, "value": ele.id }
         return listSections.push(item)
     })
 
@@ -122,9 +122,9 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
             <ToastContainer />
             <div className="row text-left">
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
+                    <div className="card" id="topcard-user">
                         <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Gửi yêu cầu nghỉ học</h6>
+                            <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Gửi yêu cầu nghỉ học</h6>
                         </div>
                         <div className="card-body">
                             <form onSubmit={saveUser}>
@@ -145,6 +145,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                                         value={formState.description.value}
                                         onChange={hasFormValueChanged}
                                         required={false}
+                                        type="textarea"
                                         maxLength={100}
                                         label="Lý do"
                                         placeholder="" />

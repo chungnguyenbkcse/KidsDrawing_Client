@@ -353,7 +353,8 @@ export interface IExerciseStudentState {
     selectedExerciseStudent: IExerciseStudent | null;
     modificationState: ExerciseStudentModificationStatus;
     exercise_not_submit: IExerciseStudent[];
-    exercise_submitted: IExerciseStudent[];
+    exercise_submitted_not_grade: IExerciseStudent[];
+    exercise_submitted_graded: IExerciseStudent[];
 }
 
 export interface IExerciseSubmissionState {

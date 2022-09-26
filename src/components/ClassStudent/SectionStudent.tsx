@@ -269,7 +269,25 @@ const SectionStudent: React.FC = () => {
                                                             }
 
                                                             {
-                                                                exercise_student.exercise_submitted.sort((a, b) => a.id - b.id).map((ele, index) => {
+                                                                exercise_student.exercise_submitted_graded.sort((a, b) => a.id - b.id).map((ele, index) => {
+                                                                    return (
+                                                                        <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                            <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                                <div className="col-xl-4 col-md-4 mb-4">
+                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                                </div>
+                                                                                <div className="col-xl-8 col-md-8 mb-4">
+                                                                                    <h3 className=" mb-2" id="level-student">{ele.name}</h3>
+                                                                                    <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                                </div>
+                                                                            </div>
+                                                                        </tr>
+                                                                    )
+                                                                })
+                                                            }
+
+{
+                                                                exercise_student.exercise_submitted_not_grade.sort((a, b) => a.id - b.id).map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>

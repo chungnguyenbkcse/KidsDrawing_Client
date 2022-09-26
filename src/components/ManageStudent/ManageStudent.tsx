@@ -21,7 +21,7 @@ const ManageStudent: React.FC = () => {
     const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const student_leave: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
     const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
-    const numberSubmittedCount: number = exercise_students.exercise_submitted.length;
+    const numberSubmittedCount: number = exercise_students.exercise_submitted_not_grade.length + exercise_students.exercise_submitted_graded.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
     const { promiseInProgress } = usePromiseTracker();

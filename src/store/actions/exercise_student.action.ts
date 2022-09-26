@@ -11,14 +11,25 @@ export const REMOVE_EXERCISE_NOT_SUBMIT_ALL: string = "REMOVE_EXERCISE_NOT_SUBMI
 export const INITIAL_EXERCISE_NOT_SUBMIT: string = "INITIAL_EXERCISE_NOT_SUBMIT";
 
 // not_register_exercise_students
-export const ADD_EXERCISE_SUBMITTED: string = "ADD_EXERCISE_SUBMITTED";
-export const EDIT_EXERCISE_SUBMITTED: string = "EDIT_EXERCISE_SUBMITTED";
-export const REMOVE_EXERCISE_SUBMITTED: string = "REMOVE_EXERCISE_SUBMITTED";
-export const CHANGE_EXERCISE_SUBMITTED_AMOUNT: string = "CHANGE_EXERCISE_SUBMITTED_AMOUNT";
-export const CHANGE_EXERCISE_SUBMITTED_PENDING_EDIT: string = "CHANGE_EXERCISE_SUBMITTED_PENDING_EDIT";
-export const CLEAR_EXERCISE_SUBMITTED_PENDING_EDIT: string = "CLEAR_EXERCISE_SUBMITTED_PENDING_EDIT";
-export const REMOVE_EXERCISE_SUBMITTED_ALL: string = "REMOVE_EXERCISE_SUBMITTED_ALL";
-export const INITIAL_EXERCISE_SUBMITTED: string = "INITIAL_EXERCISE_SUBMITTED";
+export const ADD_EXERCISE_SUBMITED_NOT_GRADE: string = "ADD_EXERCISE_SUBMITED_NOT_GRADE";
+export const EDIT_EXERCISE_SUBMITED_NOT_GRADE: string = "EDIT_EXERCISE_SUBMITED_NOT_GRADE";
+export const REMOVE_EXERCISE_SUBMITED_NOT_GRADE: string = "REMOVE_EXERCISE_SUBMITED_NOT_GRADE";
+export const CHANGE_EXERCISE_SUBMITED_NOT_GRADE_AMOUNT: string = "CHANGE_EXERCISE_SUBMITED_NOT_GRADE_AMOUNT";
+export const CHANGE_EXERCISE_SUBMITED_NOT_GRADE_PENDING_EDIT: string = "CHANGE_EXERCISE_SUBMITED_NOT_GRADE_PENDING_EDIT";
+export const CLEAR_EXERCISE_SUBMITED_NOT_GRADE_PENDING_EDIT: string = "CLEAR_EXERCISE_SUBMITED_NOT_GRADE_PENDING_EDIT";
+export const REMOVE_EXERCISE_SUBMITED_NOT_GRADE_ALL: string = "REMOVE_EXERCISE_SUBMITED_NOT_GRADE_ALL";
+export const INITIAL_EXERCISE_SUBMITED_NOT_GRADE: string = "INITIAL_EXERCISE_SUBMITED_NOT_GRADE";
+
+
+// not_register_exercise_students
+export const ADD_EXERCISE_SUBMITED_GRADED: string = "ADD_EXERCISE_SUBMITED_GRADED";
+export const EDIT_EXERCISE_SUBMITED_GRADED: string = "EDIT_EXERCISE_SUBMITED_GRADED";
+export const REMOVE_EXERCISE_SUBMITED_GRADED: string = "REMOVE_EXERCISE_SUBMITED_GRADED";
+export const CHANGE_EXERCISE_SUBMITED_GRADED_AMOUNT: string = "CHANGE_EXERCISE_SUBMITED_GRADED_AMOUNT";
+export const CHANGE_EXERCISE_SUBMITED_GRADED_PENDING_EDIT: string = "CHANGE_EXERCISE_SUBMITED_GRADED_PENDING_EDIT";
+export const CLEAR_EXERCISE_SUBMITED_GRADED_PENDING_EDIT: string = "CLEAR_EXERCISE_SUBMITED_GRADED_PENDING_EDIT";
+export const REMOVE_EXERCISE_SUBMITED_GRADED_ALL: string = "REMOVE_EXERCISE_SUBMITED_GRADED_ALL";
+export const INITIAL_EXERCISE_SUBMITED_GRADED: string = "INITIAL_EXERCISE_SUBMITED_GRADED";
 
 
 export const SET_MODIFICATION_STATE: string = "SET_MODIFICATION_STATE";
@@ -75,36 +86,66 @@ export function clearSelectedExerciseNotSubmit(): IClearSelectedExerciseNotSubmi
 }
 
 
-export function initialExerciseSubmitted(exercise_student: IExerciseStudent): IInitialExerciseSubmittedActionType {
-    return { type: INITIAL_EXERCISE_SUBMITTED, exercise_student: exercise_student };
+export function initialExerciseSubmitNotGrade(exercise_student: IExerciseStudent): IInitialExerciseSubmitNotGradeActionType {
+    return { type: INITIAL_EXERCISE_SUBMITED_NOT_GRADE, exercise_student: exercise_student };
 }
 
-export function removeExerciseSubmittedAll(): IRemoveExerciseSubmittedAllActionType {
-    return { type: REMOVE_EXERCISE_SUBMITTED_ALL };
+export function removeExerciseSubmitNotGradeAll(): IRemoveExerciseSubmitNotGradeAllActionType {
+    return { type: REMOVE_EXERCISE_SUBMITED_NOT_GRADE_ALL };
 }
 
-export function addExerciseSubmitted(exercise_student: IExerciseStudent): IAddExerciseSubmittedActionType {
-    return { type: ADD_EXERCISE_SUBMITTED, exercise_student: exercise_student };
+export function addExerciseSubmitNotGrade(exercise_student: IExerciseStudent): IAddExerciseSubmitNotGradeActionType {
+    return { type: ADD_EXERCISE_SUBMITED_NOT_GRADE, exercise_student: exercise_student };
 }
 
-export function editExerciseSubmitted(exercise_student: IExerciseStudent): IEditExerciseSubmittedActionType {
-    return { type: EDIT_EXERCISE_SUBMITTED, exercise_student: exercise_student };
+export function editExerciseSubmitNotGrade(exercise_student: IExerciseStudent): IEditExerciseSubmitNotGradeActionType {
+    return { type: EDIT_EXERCISE_SUBMITED_NOT_GRADE, exercise_student: exercise_student };
 }
 
-export function removeExerciseSubmitted(id: number): IRemoveExerciseSubmittedActionType {
-    return { type: REMOVE_EXERCISE_SUBMITTED, id: id };
+export function removeExerciseSubmitNotGrade(id: number): IRemoveExerciseSubmitNotGradeActionType {
+    return { type: REMOVE_EXERCISE_SUBMITED_NOT_GRADE, id: id };
 }
 
-export function changeSelectedExerciseSubmitted(exercise_student: IExerciseStudent): IChangeSelectedExerciseSubmittedActionType {
-    return { type: CHANGE_EXERCISE_SUBMITTED_PENDING_EDIT, exercise_student: exercise_student };
+export function changeSelectedExerciseSubmitNotGrade(exercise_student: IExerciseStudent): IChangeSelectedExerciseSubmitNotGradeActionType {
+    return { type: CHANGE_EXERCISE_SUBMITED_NOT_GRADE_PENDING_EDIT, exercise_student: exercise_student };
 }
 
-export function clearSelectedExerciseSubmitted(): IClearSelectedExerciseSubmittedActionType {
-    return { type: CLEAR_EXERCISE_SUBMITTED_PENDING_EDIT };
+export function clearSelectedExerciseSubmitNotGrade(): IClearSelectedExerciseSubmitNotGradeActionType {
+    return { type: CLEAR_EXERCISE_SUBMITED_NOT_GRADE_PENDING_EDIT };
 }
 
 export function setModificationState(value: ExerciseStudentModificationStatus): ISetModificationStateActionType {
     return { type: SET_MODIFICATION_STATE, value: value };
+}
+
+
+
+export function initialExerciseSubmitGraded(exercise_student: IExerciseStudent): IInitialExerciseSubmitGradedActionType {
+    return { type: INITIAL_EXERCISE_SUBMITED_GRADED, exercise_student: exercise_student };
+}
+
+export function removeExerciseSubmitGradedAll(): IRemoveExerciseSubmitGradedAllActionType {
+    return { type: REMOVE_EXERCISE_SUBMITED_GRADED_ALL };
+}
+
+export function addExerciseSubmitGraded(exercise_student: IExerciseStudent): IAddExerciseSubmitGradedActionType {
+    return { type: ADD_EXERCISE_SUBMITED_GRADED, exercise_student: exercise_student };
+}
+
+export function editExerciseSubmitGraded(exercise_student: IExerciseStudent): IEditExerciseSubmitGradedActionType {
+    return { type: EDIT_EXERCISE_SUBMITED_GRADED, exercise_student: exercise_student };
+}
+
+export function removeExerciseSubmitGraded(id: number): IRemoveExerciseSubmitGradedActionType {
+    return { type: REMOVE_EXERCISE_SUBMITED_GRADED, id: id };
+}
+
+export function changeSelectedExerciseSubmitGraded(exercise_student: IExerciseStudent): IChangeSelectedExerciseSubmitGradedActionType {
+    return { type: CHANGE_EXERCISE_SUBMITED_GRADED_AMOUNT, exercise_student: exercise_student };
+}
+
+export function clearSelectedExerciseSubmitGraded(): IClearSelectedExerciseSubmitGradedActionType {
+    return { type: CHANGE_EXERCISE_SUBMITED_GRADED_PENDING_EDIT };
 }
 
 // register_successfull_exercise_students
@@ -117,13 +158,24 @@ interface IRemoveExerciseNotSubmitAllActionType { type: string }
 interface IInitialExerciseNotSubmitActionType {type: string, exercise_student: IExerciseStudent}
 
 // not_register_exercise_students
-interface IAddExerciseSubmittedActionType { type: string, exercise_student: IExerciseStudent };
-interface IEditExerciseSubmittedActionType { type: string, exercise_student: IExerciseStudent };
-interface IRemoveExerciseSubmittedActionType { type: string, id: number };
-interface IChangeSelectedExerciseSubmittedActionType { type: string, exercise_student: IExerciseStudent };
-interface IClearSelectedExerciseSubmittedActionType { type: string };
-interface IRemoveExerciseSubmittedAllActionType { type: string }
-interface IInitialExerciseSubmittedActionType {type: string, exercise_student: IExerciseStudent}
+interface IAddExerciseSubmitNotGradeActionType { type: string, exercise_student: IExerciseStudent };
+interface IEditExerciseSubmitNotGradeActionType { type: string, exercise_student: IExerciseStudent };
+interface IRemoveExerciseSubmitNotGradeActionType { type: string, id: number };
+interface IChangeSelectedExerciseSubmitNotGradeActionType { type: string, exercise_student: IExerciseStudent };
+interface IClearSelectedExerciseSubmitNotGradeActionType { type: string };
+interface IRemoveExerciseSubmitNotGradeAllActionType { type: string }
+interface IInitialExerciseSubmitNotGradeActionType {type: string, exercise_student: IExerciseStudent}
+
+
+// register_successfull_exercise_students
+interface IAddExerciseSubmitGradedActionType { type: string, exercise_student: IExerciseStudent };
+interface IEditExerciseSubmitGradedActionType { type: string, exercise_student: IExerciseStudent };
+interface IRemoveExerciseSubmitGradedActionType { type: string, id: number };
+interface IChangeSelectedExerciseSubmitGradedActionType { type: string, exercise_student: IExerciseStudent };
+interface IClearSelectedExerciseSubmitGradedActionType { type: string };
+interface IRemoveExerciseSubmitGradedAllActionType { type: string }
+interface IInitialExerciseSubmitGradedActionType {type: string, exercise_student: IExerciseStudent}
+
 
 
 

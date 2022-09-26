@@ -1,4 +1,4 @@
-import { fetchDataSuccess, fetchDataError, removeExerciseNotSubmitAll, removeExerciseSubmittedAll, addExerciseNotSubmit, addExerciseSubmitted } from "../../../store/actions/exercise_student.action";
+import { fetchDataSuccess, fetchDataError, removeExerciseNotSubmitAll, removeExerciseSubmitGradedAll, removeExerciseSubmitNotGradeAll, addExerciseNotSubmit, addExerciseSubmitGraded, addExerciseSubmitNotGrade } from "../../../store/actions/exercise_student.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface exercise {
     id: number;
@@ -41,9 +41,11 @@ export function getExerciseForClassStudent(dispatch: any, class_id: any, student
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeExerciseNotSubmitAll())
-                dispatch(removeExerciseSubmittedAll())
+                dispatch(removeExerciseSubmitGradedAll())
+                dispatch(removeExerciseSubmitNotGradeAll())
                 console.log(data.body.exercise_not_submit)
-                console.log(data.body.exercise_submitted)
+                console.log(data.body.exercise_submitted_not_grade)
+                console.log(data.body.exercise_submitted_graded)
                 data.body.exercise_not_submit.map((ele: any, index: any) => {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
@@ -62,7 +64,7 @@ export function getExerciseForClassStudent(dispatch: any, class_id: any, student
                     return dispatch(addExerciseNotSubmit(exercise))
                 })
 
-                data.body.exercise_submitted.map((ele: any, index: any) => {
+                data.body.exercise_submitted_not_grade.map((ele: any, index: any) => {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
                     var exercise: exercise = {
@@ -77,7 +79,25 @@ export function getExerciseForClassStudent(dispatch: any, class_id: any, student
                         update_time: strDate_2.substring(0, 5)
                     }
                     //console.log(strDate.substring(0, 16))
-                    return dispatch(addExerciseSubmitted(exercise))
+                    return dispatch(addExerciseSubmitNotGrade(exercise))
+                })
+
+                data.body.exercise_submitted_graded.map((ele: any, index: any) => {
+                    var strDate_1 = ele.create_time;
+                    var strDate_2 = ele.update_time;
+                    var exercise: exercise = {
+                        id: ele.id,
+                        name: ele.name,
+                        description: ele.description,
+                        section_id: ele.section_id,
+                        level_id: ele.level_id,
+                        level_name: ele.level_name,
+                        section_name: ele.section_name,
+                        create_time: strDate_1.substring(0, 5),
+                        update_time: strDate_2.substring(0, 5)
+                    }
+                    //console.log(strDate.substring(0, 16))
+                    return dispatch(addExerciseSubmitGraded(exercise))
                 })
             })
             .catch(error => {

@@ -23,6 +23,11 @@
     color: #FC9011;
 }
 
+.row-section-1 {
+    background: #21FC36 !important;
+    border-radius: 20px;
+}
+
 .section_name {
     font-style: normal;
     font-weight: 400;

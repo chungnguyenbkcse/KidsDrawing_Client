@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
-import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
 import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseStudentState, IRootPageStateType, ISectionState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassStudent.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
@@ -29,33 +28,17 @@ const DetailClassStudent: React.FC = () => {
     const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
-    const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const exercise_student: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const { promiseInProgress } = usePromiseTracker();
 
-    let data: string[] = []
-    let total_time = "";
-    if (time_schedules.timeSchedules.length > 0) {
-        var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
-        var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
-        var hour_start = parseInt(start_time_0[1].substring(0,2));
-        var minus_tart = parseInt(start_time_0[1].substring(3,5));
-        var sercon_start = parseInt(start_time_0[1].substring(6,8));
-        var hour_end = parseInt(end_time_0[1].substring(0,2));
-        var minus_end = parseInt(end_time_0[1].substring(3,5));
-        var sercon_end = parseInt(end_time_0[1].substring(6,8));
-
-        total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút "+ (sercon_end - sercon_start).toString() + " giây";
-        time_schedules.timeSchedules.map((ele, index) => {
-            var start_time = ele.start_time.split("T");
-            var end_time = ele.end_time.split("T");
-            return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
-        })
+    function isDateBeforeToday(date: any) {
+        return new Date(date.toDateString()) < new Date(new Date().toDateString());
     }
 
+
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberApprovedCount: number = sections.sections.length;
-    const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
+    const numberSectionCount: number = sections.sections.length;
+    const numberNotSubmitNowCount: number = exercise_student.exercise_not_submit.length;
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -99,7 +82,6 @@ const DetailClassStudent: React.FC = () => {
                 else {
                     trackPromise(getInfoMyClass(dispatch, class_id))
                     trackPromise(getSectionByClass(dispatch, class_id))
-                    trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
                     trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
                     trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
                 }
@@ -109,7 +91,6 @@ const DetailClassStudent: React.FC = () => {
                 trackPromise(getSectionByClass(dispatch, class_id))
                 trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
                 trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
-                trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
@@ -174,6 +155,31 @@ const DetailClassStudent: React.FC = () => {
     }
 
 
+    let count = 0;
+    let data: string[] = []
+    let total_time = "";
+    if (time_schedules.timeSchedules.length > 0) {
+        var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
+        var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
+        var hour_start = parseInt(start_time_0[1].substring(0,2));
+        var minus_tart = parseInt(start_time_0[1].substring(3,5));
+        var sercon_start = parseInt(start_time_0[1].substring(6,8));
+        var hour_end = parseInt(end_time_0[1].substring(0,2));
+        var minus_end = parseInt(end_time_0[1].substring(3,5));
+        var sercon_end = parseInt(end_time_0[1].substring(6,8));
+
+        total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút "+ (sercon_end - sercon_start).toString() + " giây";
+        time_schedules.timeSchedules.map((ele, index) => {
+            if (isDateBeforeToday(new Date(Date.parse(ele.end_time)))) {
+                count ++;
+            }
+            var start_time = ele.start_time.split("T");
+            var end_time = ele.end_time.split("T");
+            return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
+        })
+    }
+
+
     return (
         promiseInProgress ?
             <div className="row" id="search-box">
@@ -189,8 +195,8 @@ const DetailClassStudent: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${numberApprovedCount}`} icon="book" class="primary" />
-                    <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
+                    <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${count}/${numberSectionCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
                     <TopCard title="NGHỈ HỌC" text={`${student_leaves.leaves.length}`} icon="book" class="danger" />
                     <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                         <button
@@ -415,7 +421,28 @@ const DetailClassStudent: React.FC = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        exercise_student.exercise_submitted.map((ele, index) => {
+                                                        exercise_student.exercise_submitted_graded.map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                        <div className="col-xl-4 col-md-4">
+                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-8 col-md-8 mb-2">
+                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name"> {ele.name}</span> </p> 
+                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name"></span> </p>
+                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name"></span> </p>   
+                                                                        </div>
+                                                                    </div>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+
+                                                    {
+                                                        exercise_student.exercise_submitted_not_grade.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>

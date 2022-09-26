@@ -3,13 +3,10 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { IScheduleTimeClassState, IStateType, IUserState } from "../../store/models/root.interface";
-import { UserModificationStatus } from "../../store/models/user.interface";
+import { IClassesStudentState, IContestStudentState, IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import "./ParentHome.css"
-import Popup from "reactjs-popup";
-import AccountChildForm from "../AccountChild/AccountChildForm";
 import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
 
 import "@syncfusion/ej2-base/styles/material.css";
@@ -23,13 +20,17 @@ import "@syncfusion/ej2-popups/styles/material.css";
 import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
+import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
+import { getContestStudentByStudent } from "../../common/service/ContestStudent/GetContestStudent";
 
 
 const StudentHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
+    const contest_students: IContestStudentState = useSelector((state: IStateType) => state.contest_students);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
-    const numberChildCount: number = users.students.length;
+    const numberChildCount: number = classes_students.classes_doing.length + classes_students.classes_done.length;
+    const contestCount: number = contest_students.contest_not_open_now.length + contest_students.contest_end.length + contest_students.contest_opening.length;
     var id_x = localStorage.getItem('id');
     var id: number = 2;
     if (id_x !== null) {
@@ -37,13 +38,6 @@ const StudentHome: React.FC = () => {
     }
 
     console.log(schedule_time_classes.schedule_time_classes)
-
-    const [popup, setPopup] = useState(false);
-
-
-    function onRemovePopup(value: boolean) {
-        setPopup(false);
-    }
 
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -72,11 +66,15 @@ const StudentHome: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
+                    trackPromise(getClassesStudent(dispatch, id))
                     trackPromise(getScheduleTimeByChild(dispatch, id))
+                    trackPromise(getContestStudentByStudent(dispatch, id))
                 }
             }
             else {
+                trackPromise(getClassesStudent(dispatch, id))
                 trackPromise(getScheduleTimeByChild(dispatch, id))
+                trackPromise(getContestStudentByStudent(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, id]);
@@ -109,7 +107,7 @@ const StudentHome: React.FC = () => {
 
                 <div className="row">
                     <TopCard title="KHÓA HỌC" text={`${numberChildCount}`} icon="book" class="primary" />
-                    <TopCard title="CUỘC THI" text={`${numberChildCount}`} icon="book" class="primary" />
+                    <TopCard title="CUỘC THI" text={`${contestCount}`} icon="book" class="primary" />
                 </div>
 
                 <div className="row" id="search-box">
@@ -128,25 +126,9 @@ const StudentHome: React.FC = () => {
                     </div>
                 </div>
 
-                <Popup
-                    open={popup}
-                    onClose={() => setPopup(false)}
-                    closeOnDocumentClick
-                >
-                    <>
-                        {
-                            function () {
-                                if ((users.modificationState === UserModificationStatus.Create) || ((users.selectedUser) && (users.modificationState === UserModificationStatus.Edit))) {
-                                    return <AccountChildForm isCheck={onRemovePopup} />
-                                }
-                            }()
-                        }
-                    </>
-                </Popup>
-
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Thành tích</h3>
+                        <h3 className=" mb-2" id="level-teacher">Thông tin chung</h3>
 
                     </div>
                     <div className="col-xl-6 col-md-6 mb-4">

@@ -11,6 +11,7 @@ import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
+import ScoreContestListStudent from "./ScoreContestListStudent";
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -131,6 +132,21 @@ const ResultGradeContestTeacher: React.FC = () => {
                                             <div className={`card shadow h-100 py-2`} id="topcard-user">
                                                 <div className="card-body">
                                                     <ScoreContestList />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+
+                            else if (roleUser === "STUDENT_USER") {
+                                return (
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <h3 className=" mb-2" id="level-teacher">Bảng xếp hạng</h3>
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                                <div className="card-body">
+                                                    <ScoreContestListStudent />
                                                 </div>
                                             </div>
                                         </div>

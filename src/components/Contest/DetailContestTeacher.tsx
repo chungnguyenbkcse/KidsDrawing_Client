@@ -140,7 +140,7 @@ const DetailContestTeacher: React.FC = () => {
                                 <div className={`card shadow h-100 py-2`} id="topcard-user">
                                     <div className="card-body">
                                         <div className="row no-gutters justify-content-left">
-                                            <h4 id="full-name">Đề bài</h4>
+                                            <h4 id="full-name">Thông tin chung</h4>
                                         </div>
                                         <div className="row no-gutters">
                                             <p id="phone">{contest_name_}</p>

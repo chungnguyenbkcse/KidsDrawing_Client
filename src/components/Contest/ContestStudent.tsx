@@ -9,8 +9,8 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getContestStudentByStudent } from "../../common/service/ContestStudent/GetContestStudent";
 import ContestStudentNotOpenNowList from "./ContestStudentNotOpenNowListList";
-import ContestStudentDoingList from "./ContestDoingStudentList";
 import ContestStudentEndList from "./ContestEndStudentList";
+import ContestStudentDoingList1 from "./ContestStudentDoingList1";
 
 const ContestStudent: React.FC = () => {
     const [checked1, setChecked1] = useState(true);
@@ -174,7 +174,7 @@ const ContestStudent: React.FC = () => {
                                                     <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
                                                 </div>
                                                 <div className="card-body">
-                                                    <ContestStudentDoingList />
+                                                    <ContestStudentDoingList1 />
                                                 </div>
                                             </div>
                                         </div>

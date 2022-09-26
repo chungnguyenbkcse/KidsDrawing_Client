@@ -3,6 +3,7 @@ export interface ISection {
     class_id: number;
     name: string;
     number: number;
+    teacher_name: string;
     teach_form: boolean;
     recording: string;
     message: string;

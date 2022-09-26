@@ -6,6 +6,7 @@ interface Section {
     name: string;
     description: string;
     number: number;
+    teacher_name: string;
     teach_form: boolean;
     recording: string;
     message: string;
@@ -48,6 +49,7 @@ export function getSectionByClass(dispatch: any, id: any) {
                         id: ele.id,
                         class_id: ele.class_id,
                         name: ele.name,
+                        teacher_name: ele.teacher_name,
                         description: ele.description,
                         number: ele.number,
                         teach_form: ele.teach_form,

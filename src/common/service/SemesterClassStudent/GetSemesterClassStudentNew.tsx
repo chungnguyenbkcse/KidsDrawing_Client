@@ -53,7 +53,7 @@ export function getSemesterClassStudent(dispatch: any, student_id: any, course_i
                 dispatch(removeSemesterClassStudentNotPayedAll())
                 dispatch(removeSemesterClassStudentNotPayedNowAll())
                 dispatch(removeSemesterClassStudentPayedAll())
-                //console.log(data.body.lessons)
+                console.log(data.body.semester_classes)
                 data.body.semester_classes.map((ele: any, index: any) => {
                     var val: SemesterClassStudent = {
                         id: ele.id,

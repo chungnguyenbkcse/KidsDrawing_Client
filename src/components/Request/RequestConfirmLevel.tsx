@@ -10,6 +10,8 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Loading from "../../common/components/Loading";
 
 const RequestConfirmLevel: React.FC = () => {
   const teacher_register_quantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
@@ -20,6 +22,8 @@ const RequestConfirmLevel: React.FC = () => {
   if (id_x !== null){
     teacher_id = parseInt(id_x)
   }
+
+  const { promiseInProgress } = usePromiseTracker();
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu xác nhận trình độ", ""));
@@ -47,21 +51,30 @@ const RequestConfirmLevel: React.FC = () => {
           dispatch(logout())
         }
         else {
-          dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_id))
-          dispatch(getTeacher(dispatch))
-          dispatch(getCourse(dispatch))
+          trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_id))
+          trackPromise(getTeacher(dispatch))
+          trackPromise(getCourse(dispatch))
         }
       }
       else {
-        dispatch(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_id))
-        dispatch(getTeacher(dispatch))
-        dispatch(getCourse(dispatch))
+        trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_id))
+        trackPromise(getTeacher(dispatch))
+        trackPromise(getCourse(dispatch))
       }
     }
   }, [dispatch, teacher_id, access_token, refresh_token])
 
   return (
-    <Fragment>
+    promiseInProgress ?
+      <div className="row" id="search-box">
+        <div className="col-xl-12 col-lg-12">
+          <div className="input-group" id="search-content">
+            <div className="form-outline">
+              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+            </div>
+          </div>
+        </div>
+      </div> : <Fragment>
       <h1 className="h3 mb-2 text-gray-800">Yêu cầu xác nhận trình độ</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
       <ToastContainer />

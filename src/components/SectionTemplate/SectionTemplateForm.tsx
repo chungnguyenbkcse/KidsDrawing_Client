@@ -180,7 +180,11 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             }))
             
 
-            let lst: PageContent[] = [...contentTutorialPage, contentPage] ;
+            let xx: PageContent[] = contentTutorialPage.filter(function(item) {
+                return item.page !== currentPage -1
+            })
+
+            let lst: PageContent[] = [...xx, contentPage] ;
 
             console.log(totalPage)
             console.log(lst)
@@ -241,27 +245,20 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             content: value
         }
 
-        let check = false;
-        contentTutorialPage.map((ele, idx) => {
-            if (ele.page === contentPage.page) {
-                ele = contentPage
-                check = true;
-            }
-            return 0
-        })
-
         var lst = localStorage.getItem('description_tutorial_template_page_list');
         let list_description_1: TutorialPageTemplate[] = []
         if (lst !== null) {
             list_description_1 = JSON.parse(lst)
         }
 
-        if (check === false) {
-            setContentTutorialPage([...contentTutorialPage, contentPage])
-        }
-        else {
-            setContentTutorialPage(contentTutorialPage)
-        }
+
+        let xx: PageContent[] = contentTutorialPage.filter(function(item) {
+            return item.page !== currentPage -1
+        })
+        
+        setContentTutorialPage([...xx, contentPage])
+        
+        
         
         if (currentPage < totalPage) {
             let x = currentPage + 1;
@@ -356,7 +353,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         let x = currentPage - 1;
         setCurrentPage(x)
         console.log(currentPage)
-        setTextHtml(list_description[currentPage-2].description)
+        setTextHtml(contentTutorialPage[currentPage-2].content)
         setChecked(false)
         setValue("")
     }

@@ -57,6 +57,7 @@ import { IAttendance, AttendanceModificationStatus } from "./attendance.interfac
 import { IProfile, ProfileModificationStatus } from "./profile.interface";
 import { CourseStudentModificationStatus, ICourseStudent } from "./course_student.interface";
 import { CourseNewModificationStatus, ICourseNew } from "./course_new.interface";
+import { ISemesterClassStudent, SemesterClassStudentModificationStatus } from "./semester_class_student.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -127,6 +128,7 @@ export interface IStateType {
     attendances: IAttendanceState;
     profiles: IProfileState;
     course_news: ICourseNewState;
+    semester_class_student: ISemesterClassStudentState;
 }
 
 export interface IProductState {
@@ -473,6 +475,15 @@ export interface ICourseStudentState {
     modificationState: CourseStudentModificationStatus;
     courses_registed: ICourseStudent[];
     courses_not_registed_now: ICourseStudent[];
+}
+
+
+export interface ISemesterClassStudentState {
+    selectedSemesterClassStudent: ISemesterClassStudent | null;
+    modificationState: SemesterClassStudentModificationStatus;
+    payed: ISemesterClassStudent[];
+    not_payed_now: ISemesterClassStudent[];
+    not_payed: ISemesterClassStudent[];
 }
 
 export interface ICourseNewState {

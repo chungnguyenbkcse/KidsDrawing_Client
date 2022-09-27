@@ -94,6 +94,7 @@ import FormSubmit from "../components/ClassStudent/FormSubmit";
 import FormSubmitContestStudent from "../components/Contest/FormSubmitContestStudent";
 import ScheduleClassStudent from "../components/ClassStudent/ScheduleClassStudent";
 import ViewExerciseSubmission from "../components/Exercise/ViewExerciseSubmission";
+import SemesterClassStudentNew from "../components/DiscoveryStudent/SemesterClasssStudentNew";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -213,6 +214,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/courses/detail`}><SemesterClassDetailStudent /></Route>
                                 <Route path={`/classes/section`}><SectionStudent /></Route>
                                 <Route path={`/section/view`}><ViewSectionStudent /></Route>
+                                <Route path={`/courses/semester-classes`}><SemesterClassStudentNew /></Route>
                                 <Route path={`/courses`}><CourseStudent /></Route>
                                 <Route path={`/exercise/detail`}><DetailExerciseStudent1 /></Route>
                                 <Route path={`/exercise/submit`}><FormSubmit /></Route>

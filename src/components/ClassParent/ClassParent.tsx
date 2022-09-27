@@ -81,8 +81,8 @@ const ClassParent: React.FC = () => {
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
             <div className="row">
-                <TopCard title="SỐ LỚP ĐANG DẠY" text={`${numberClassDoingCount}`} icon="book" class="primary" />
-                <TopCard title="SỐ LỚP ĐÃ DẠY" text={`${numberClassDoneCount}`} icon="book" class="primary" />
+                <TopCard title="KHÓA HỌC" text={`${numberClassDoingCount}`} icon="book" class="primary" />
+                <TopCard title="KHÓA HỌC ĐÃ HỌC" text={`${numberClassDoneCount}`} icon="book" class="primary" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(ClassesParentModificationStatus.Create))}>

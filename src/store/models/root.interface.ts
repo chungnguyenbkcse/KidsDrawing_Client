@@ -56,6 +56,7 @@ import { CartModificationStatus, ICart } from "./cart.interface";
 import { IAttendance, AttendanceModificationStatus } from "./attendance.interface";
 import { IProfile, ProfileModificationStatus } from "./profile.interface";
 import { CourseStudentModificationStatus, ICourseStudent } from "./course_student.interface";
+import { CourseNewModificationStatus, ICourseNew } from "./course_new.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -125,6 +126,7 @@ export interface IStateType {
     carts: ICartState;
     attendances: IAttendanceState;
     profiles: IProfileState;
+    course_news: ICourseNewState;
 }
 
 export interface IProductState {
@@ -471,6 +473,12 @@ export interface ICourseStudentState {
     modificationState: CourseStudentModificationStatus;
     courses_registed: ICourseStudent[];
     courses_not_registed_now: ICourseStudent[];
+}
+
+export interface ICourseNewState {
+    selectedCourseNew: ICourseNew | null;
+    modificationState: CourseNewModificationStatus;
+    course_news: ICourseNew[];
 }
 
 export interface IContestTeacherState {

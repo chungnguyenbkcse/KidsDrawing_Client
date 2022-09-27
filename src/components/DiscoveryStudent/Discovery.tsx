@@ -8,10 +8,10 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getSemesterClassNew } from "../../common/service/SemesterClass/GetSemesterNew";
-import SemesterClassList from "./SemesterClassList";
 import ContestList from "./ContestList";
 import { getContestByStudent } from "../../common/service/Contest/GetContestByStudent";
+import { getCourseNew } from "../../common/service/CourseNew/GetCourseNew";
+import CourseNewList from "./CourseNewList";
 
 const DiscoveryStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -48,12 +48,12 @@ const DiscoveryStudent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getSemesterClassNew(dispatch))
+                    trackPromise(getCourseNew(dispatch, id))
                     trackPromise(getContestByStudent(dispatch, id))
                 }
             }
             else {
-                trackPromise(getSemesterClassNew(dispatch))
+                trackPromise(getCourseNew(dispatch, id))
                 trackPromise(getContestByStudent(dispatch, id))
             }
         }
@@ -137,7 +137,7 @@ const DiscoveryStudent: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    <SemesterClassList />
+                                    <CourseNewList />
                                 </div>
 
                             </Fragment>

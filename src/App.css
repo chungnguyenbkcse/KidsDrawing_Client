@@ -7,6 +7,17 @@ body {
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
 }
 
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+    border-top: 20px !important;
+}
+
+.card {
+    border-top: 20px !important;
+}
+
 .popup-title {
     height          : 40px;
     position        : absolute;

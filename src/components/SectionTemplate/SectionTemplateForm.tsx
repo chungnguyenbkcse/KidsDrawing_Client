@@ -528,6 +528,21 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                             {
                                 function () {
                                     if (currentPage === totalPage) {
+                                        if (totalPage === 1) {
+                                            return (
+                                                <div className="row">
+                                                    <div className="col-xl-6 col-md-6 col-xs-6">
+                                                        <button type="submit" className={`btn btn-primary left-margin ml-2`}>Hoàn thành</button>
+                                                    </div>
+                                                    <div className="col-xl-6 col-md-6 col-xs-6">
+                                                        <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                        else {
+
+                                        }
                                         return (
                                             <div className="row">
                                                 <div className="col-xl-6 col-md-6 col-xs-6">

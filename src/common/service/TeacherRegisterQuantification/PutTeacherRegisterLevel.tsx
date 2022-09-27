@@ -35,13 +35,13 @@ export function putTeacherRegisterLevel(id: any, teacher_level: any, idx: any) {
                 }
             })
             .then (data => {
-                toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+                toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataSuccess(teacher_level))
                 getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_level.teacher_id)
                 console.log(data)
             })
             .catch(error => {
-                toast.update(idx, { render: "Gửi yêu cầu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+                toast.update(idx, { render: "Gửi yêu cầu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

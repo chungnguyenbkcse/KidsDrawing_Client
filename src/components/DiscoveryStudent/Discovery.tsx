@@ -102,7 +102,7 @@ const DiscoveryStudent: React.FC = () => {
                         }
                     }} style={{
                         color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Lớp</h6>
+                    }}>Khóa học</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",

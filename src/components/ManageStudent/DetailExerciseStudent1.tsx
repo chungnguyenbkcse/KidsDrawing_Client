@@ -102,13 +102,13 @@ const DetailExerciseStudent1: React.FC = () => {
             </div>
 
             <div className="row">
-                <div className="col-xl-6 col-lg-6">
+                <div className="col-xl-8 col-lg-8">
                     <div className="card-header py-3">
                         <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
                     </div>
                     <img className="card-img-top" src={user_grade_exercise_submissions.user_grade_exercise_submissions.length > 0 ? user_grade_exercise_submissions.user_grade_exercise_submissions[0].image_url : ""} alt="" />
                 </div>
-                <div className="col-xl-6 col-lg-6">
+                <div className="col-xl-4 col-lg-4">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Điểm của bé</h6>

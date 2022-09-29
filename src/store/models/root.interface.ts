@@ -58,6 +58,7 @@ import { IProfile, ProfileModificationStatus } from "./profile.interface";
 import { CourseStudentModificationStatus, ICourseStudent } from "./course_student.interface";
 import { CourseNewModificationStatus, ICourseNew } from "./course_new.interface";
 import { ISemesterClassStudent, SemesterClassStudentModificationStatus } from "./semester_class_student.interface";
+import { ClassHasRegisterJoinSemesterModificationStatus, IClassHasRegisterJoinSemester } from "./class_has_register_join_semester.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -129,6 +130,7 @@ export interface IStateType {
     profiles: IProfileState;
     course_news: ICourseNewState;
     semester_class_student: ISemesterClassStudentState;
+    class_has_register_join_semesters: IClassHasRegisterJoinSemesterState;
 }
 
 export interface IProductState {
@@ -490,6 +492,12 @@ export interface ICourseNewState {
     selectedCourseNew: ICourseNew | null;
     modificationState: CourseNewModificationStatus;
     course_news: ICourseNew[];
+}
+
+export interface IClassHasRegisterJoinSemesterState {
+    selectedClassHasRegisterJoinSemester: IClassHasRegisterJoinSemester | null;
+    modificationState: ClassHasRegisterJoinSemesterModificationStatus;
+    class_has_register_join_semesters: IClassHasRegisterJoinSemester[];
 }
 
 export interface IContestTeacherState {

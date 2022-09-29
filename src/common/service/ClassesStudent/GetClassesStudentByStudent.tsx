@@ -6,6 +6,7 @@ interface ClassesStudent {
     link_url: string;
     student_id: number;
     student_name: string;
+    user_register_join_semester_id: number;
     teacher_name: string;
     teacher_id: number;
     course_id: number;
@@ -64,6 +65,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         name: ele.name,
                         semester_class_name: ele.semester_class_name,
                         student_id: ele.student_id,
+                        user_register_join_semester_id: ele.user_register_join_semester_id,
                         student_name: ele.student_name,
                         teacher_id: ele.teacher_id,
                         teacher_name: ele.teacher_name,
@@ -106,6 +108,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
+                        user_register_join_semester_id: ele.user_register_join_semester_id,
                         total_student: ele.total_student,
                         total_section: ele.total_section,
                         link_url: ele.link_url,

@@ -21,6 +21,7 @@ export interface IClassesStudent {
     art_level_id: number;
     art_age_id: number;
     art_age_name: string;
+    user_register_join_semester_id: number;
 }
 
 export enum ClassesStudentModificationStatus {

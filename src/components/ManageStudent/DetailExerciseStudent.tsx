@@ -1,7 +1,5 @@
-import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import "./ManageStudent.css"
@@ -46,38 +44,7 @@ const DetailExerciseStudent: React.FC = () => {
         feedback = id_k;
     }
 
-    let access_token = localStorage.getItem("access_token");
-    let refresh_token = localStorage.getItem("refresh_token");
-    let percentage = score;
-    useEffect(() => {
-        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
-            let access_token_decode: any = jwt_decode(access_token)
-            let refresh_token_decode: any = jwt_decode(refresh_token)
-            let exp_access_token_decode = access_token_decode.exp;
-            let exp_refresh_token_decode = refresh_token_decode.exp;
-            let now_time = Date.now() / 1000;
-            console.log(exp_access_token_decode)
-            console.log(now_time)
-            if (exp_access_token_decode < now_time) {
-                if (exp_refresh_token_decode < now_time) {
-                    localStorage.removeItem('access_token') // Authorization
-                    localStorage.removeItem('refresh_token')
-                    localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
-                    localStorage.removeItem('id')
-                    localStorage.removeItem('contest_id')
-                    localStorage.removeItem('schedule_id')
-                    dispatch(logout())
-                }
-                else {
-                    
-                }
-            }
-            else {
-                
-            }
-        }
-    }, [dispatch, access_token, refresh_token]);
+    let percentage = score * 10;
 
 
     useEffect(() => {
@@ -90,13 +57,12 @@ const DetailExerciseStudent: React.FC = () => {
 
             <div className="row">
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4" id="topcard-user">
+                    <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Đề tài</h6>
                         </div>
                         <div className="card-body">
-                            <p>
-                                {description}
+                            <p dangerouslySetInnerHTML={{ __html: description}}>
                             </p>
 
                             <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Thời gian nộp: <span> {time_submit}</span></h6>
@@ -106,13 +72,17 @@ const DetailExerciseStudent: React.FC = () => {
             </div>
 
             <div className="row">
-                <div className="col-xl-6 col-lg-6">
-                    <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
+                <div className="col-xl-8 col-lg-8">
+                    <div className="card shadow mb-4">
+                        <div className="card-header py-3">
+                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
+                        </div>
+                        <div className="card-body">
+                            <img className="card-img-top" src={image_url_exercise} alt="" />
+                        </div>
                     </div>
-                    <img className="card-img-top" src={image_url_exercise} alt="" />
                 </div>
-                <div className="col-xl-6 col-lg-6">
+                <div className="col-xl-4 col-lg-4">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Điểm của bé</h6>

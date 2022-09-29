@@ -3,7 +3,7 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { IClassesStudentState, IContestStudentState, IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
+import { IClassesStudentState, IContestStudentState, IRootPageStateType, IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import "./ParentHome.css"
@@ -22,6 +22,7 @@ import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
 import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
 import { getContestStudentByStudent } from "../../common/service/ContestStudent/GetContestStudent";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 
 const StudentHome: React.FC = () => {
@@ -78,6 +79,12 @@ const StudentHome: React.FC = () => {
             }
         }
     }, [dispatch, access_token, refresh_token, id]);
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    
+    useEffect(() => {
+        dispatch(updateCurrentPath("Trang chủ", ""));
+    }, [path.area, dispatch]);
 
     let data: object[] = []
 

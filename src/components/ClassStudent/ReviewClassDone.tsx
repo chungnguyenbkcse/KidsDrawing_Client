@@ -4,17 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
 import { logout } from "../../store/actions/account.actions";
-import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import { IClassHasRegisterJoinSemesterState, IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getInfoFinalCourse } from "../../common/service/FinalCourse/GetInfoFinalCourse";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import { getInforClassHasRegisterJoinSemester } from "../../common/service/ClassHasRegisterJoinSemester/GetInfoClassHasRegisterJoinSemester";
 
 const ReivewClassDone: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
-
+    const class_has_register_join_semester: IClassHasRegisterJoinSemesterState = useSelector((state: IStateType) => state.class_has_register_join_semesters);
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('id');
@@ -66,10 +67,12 @@ const ReivewClassDone: React.FC = () => {
                 }
                 else {
                     trackPromise(getInfoFinalCourse(dispatch, student_id, class_id))
+                    trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, student_id))
                 }
             }
             else {
                 trackPromise(getInfoFinalCourse(dispatch, student_id, class_id))
+                trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, student_id))
             }
         }
     }, [dispatch, access_token, refresh_token, student_id, class_id]);
@@ -88,6 +91,13 @@ const ReivewClassDone: React.FC = () => {
         return ele
     })
 
+    const routeChangeReivewStart = () => {
+        let path = "/classes/form-review";
+        history.push({
+          pathname: path,
+      });
+      }
+
 
     const labels = list_name_user_grade_exercise;
     const data = {
@@ -104,7 +114,7 @@ const ReivewClassDone: React.FC = () => {
 
     const history = useHistory();
     const routeChange = () => {
-        let path = '/class/exercise-student';
+        let path = '/classes/exercise-student';
         history.push({
             pathname: path,
         });
@@ -153,6 +163,54 @@ const ReivewClassDone: React.FC = () => {
                     </div>
 
                 </div>
+
+            <div className="row">
+                <div className="col-xl-12 col-md-12 mb-4">
+                    <div className="card shadow mb-4">
+                        <div className="card-header py-3">
+                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Nhận xét</h6>
+                        </div>
+                        <div className="card-body"> 
+                            {
+                                class_has_register_join_semester.class_has_register_join_semesters.map((ele, idx) => {
+                                    return (
+                                        <p>{ele.teacher_feedback}</p>
+                                    )
+                                })
+                            }
+                        </div> 
+                    </div>
+                </div>
+            </div>
+
+            {
+                function () {
+                    if (class_has_register_join_semester.class_has_register_join_semesters.length > 0) {
+                        class_has_register_join_semester.class_has_register_join_semesters.map((ele, idx) => {
+                            if (ele !== undefined) {
+                                if (ele.review_star !== 0) {
+                                    return (
+                                        <div className="row">
+                                            <div className="card-body">
+                                                <div className="row justify-content-center"> 
+                                                    <button 
+                                                        type="button" 
+                                                        className="btn btn-success" 
+                                                        onClick={() => {routeChangeReivewStart()}}
+                                                    >
+                                                        Nhận xét giáo viên
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            }
+                            return (<> </>)
+                        })
+                    }
+                }()
+            }
 
             </Fragment>
     );

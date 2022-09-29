@@ -23,6 +23,8 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
     localStorage.setItem('class_id', classes_student.id.toString());
     localStorage.removeItem('course_name');
     localStorage.setItem('course_name', classes_student.course_name)
+    localStorage.removeItem('user_register_join_semester_id')
+    localStorage.setItem('user_register_join_semester_id', classes_student.user_register_join_semester_id.toString())
     history.push({
         pathname: path,
     });
@@ -32,7 +34,7 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
     //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
     if (!contest) { return null; }
     return (<tr className={`table-row `}
-      key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>
+      key={`lesson_${contest.id}`}>
       <th scope="row" className="data-table">{index + 1}</th>
       <td className="data-table">{contest.course_name}</td>
       <td className="data-table">{contest.semester_name}</td>
@@ -42,18 +44,9 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
         <button 
             type="button" 
             className="btn btn-primary" 
-            onClick={() => {}}
+            onClick={() => { routeChange(contest)}}
         >
             Xem review
-        </button>
-      </td>
-      <td className="data-table">
-        <button 
-            type="button" 
-            className="btn btn-success" 
-            onClick={() => {}}
-        >
-            Nhận xét giáo viên
         </button>
       </td>
     </tr>);
@@ -71,7 +64,6 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
               <th scope="col" className="name-row-table">Học kì</th>
               <th scope="col" className="name-row-table">Số học viên</th>
               <th scope="col" className="name-row-table">Số buổi học</th>
-              <th scope="col" className="name-row-table"></th>
               <th scope="col" className="name-row-table"></th>
             </tr>
           </thead>

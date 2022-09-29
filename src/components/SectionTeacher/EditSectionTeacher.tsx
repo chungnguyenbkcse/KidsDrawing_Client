@@ -169,11 +169,19 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                 position: toast.POSITION.TOP_CENTER
             });
             let contentPage: PageContent = {
-                page: currentPage,
+                page: currentPage - 1,
                 content: value
             }
 
-            dispatch(postUserRegisterTutorial([...contentTutorialPage, contentPage], {
+            let xx: PageContent[] = contentTutorialPage.filter(function(item) {
+                return item.page !== currentPage -1
+            })
+
+            let lst: PageContent[] = [...xx, contentPage] ;
+
+            console.log(lst)
+
+            dispatch(postUserRegisterTutorial(lst, {
                 section_id: section_id,
                 creator_id: id,
                 name: formState.name.value,
@@ -185,25 +193,24 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
     function handleNextPage() {
         let contentPage: PageContent = {
-            page: currentPage,
+            page: currentPage - 1,
             content: value
         }
 
-        let check = false;
-        contentTutorialPage.map((ele, idx) => {
-            if (ele.page === contentPage.page) {
-                ele = contentPage
-                check = true;
-            }
-            return 0
-        })
+        var lst = localStorage.getItem('description_tutorial_page_list');
+        let list_description_1: TutorialPage[] = []
+        if (lst !== null) {
+            list_description_1 = JSON.parse(lst)
+        }
 
-        if (check === false) {
-            setContentTutorialPage([...contentTutorialPage, contentPage])
-        }
-        else {
-            setContentTutorialPage(contentTutorialPage)
-        }
+
+        let xx: PageContent[] = contentTutorialPage.filter(function(item) {
+            return item.page !== currentPage -1
+        })
+        
+        setContentTutorialPage([...xx, contentPage])
+        
+        
         
         if (currentPage < totalPage) {
             let x = currentPage + 1;
@@ -213,9 +220,9 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
             let x = currentPage + 1;
             setCurrentPage(x)
         }
-        if (currentPage < list_description.length) {
+        if (currentPage < list_description_1.length) {
             console.log(currentPage - 1)
-            setTextHtml(list_description[currentPage].description)
+            setTextHtml(list_description_1[currentPage].description)
             setChecked(false)
         }
         else {
@@ -227,7 +234,14 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
     function handleNextPage1() {
 
-        setTextHtml(list_description[currentPage-1].description)
+        var lst = localStorage.getItem('description_tutorial_page_list');
+        let list_description_1: TutorialPage[] = []
+        if (lst !== null) {
+            list_description_1 = JSON.parse(lst)
+        }
+
+        console.log('current_page_back', currentPage)
+        setTextHtml(list_description_1[currentPage-1].description)
         setChecked(false)
         setValue("")
     }
@@ -271,7 +285,8 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
             setCurrentPage(x)
         }
         console.log(currentPage)
-        if (currentPage <= contentTutorialPage.length) {
+        if (currentPage > 1 ) {
+      
             console.log(`curent-page: ${currentPage}`)
             console.log(currentPage)
             setTextHtml(contentTutorialPage[currentPage - 2].content)
@@ -290,7 +305,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         let x = currentPage - 1;
         setCurrentPage(x)
         console.log(currentPage)
-        setTextHtml(list_description[currentPage-2].description)
+        setTextHtml(contentTutorialPage[currentPage-2].content)
         setChecked(false)
         setValue("")
     }
@@ -301,21 +316,22 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         setTotalPage(x);
         setTextHtml("")
         console.log(y)
+
         let list_x: TutorialPage[] = list_description;
         let isCheck = false;
         list_description.map((ele, idx) => {
             console.log(y)
             if (ele.number === y) {
                 isCheck = true;
-                list_x.splice(idx + 1, 0, {
+                list_x.splice(idx, 0, {
                     id: 0,
                     tutorial_id: ele.tutorial_id,
                     name: ele.name,
-                    number: ele.number + 1,
+                    number: ele.number,
                     description: ""
                 })
                 list_x.map((element, index) => {
-                    if (index > idx + 1) {
+                    if (index > idx) {
                         list_x.splice(index, 1, {
                             id: element.id,
                             tutorial_id: element.tutorial_id,
@@ -357,32 +373,34 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         setTextHtml("")
         console.log(y)
         let isCheck1: Boolean = false;
-        let list_x: TutorialPage[] = list_description;
-        list_description.map((ele, idx) => {
-            console.log(y)
-            if (ele.number === y && idx !== list_description.length - 1) {
-                isCheck1 = true;
-                list_x.splice(idx, 1)
-                console.log(list_x)
-                list_x.map((element, index) => {
-                    if (element.number > ele.number) {
-                        list_x.splice(index, 1, {
-                            id: element.id,
-                            tutorial_id: element.tutorial_id,
-                            name: element.name,
-                            number: element.number - 1,
-                            description: element.description
-                        })
-                    }
-                    return 0
-                })
-            }
-            else if (ele.number === y && idx === list_description.length - 1) {
-                console.log('remove')
-                list_x.splice(idx, 1);
+        var lst = localStorage.getItem('description_tutorial_page_list');
+        let list_description_1: TutorialPage[] = []
+        if (lst !== null) {
+            list_description_1 = JSON.parse(lst)
+        }
+        let list_x: TutorialPage[] = [];
+        console.log(list_description_1)
+        console.log(y)
+
+        list_x = list_description_1.filter(function(item) {
+            return item.number !== currentPage -1
+        })
+
+        let lst_1: PageContent[] = contentTutorialPage.filter(function(item) {
+            return item.page !== currentPage - 1
+        })
+
+        setContentTutorialPage(lst_1)
+
+        console.log(list_x)
+        list_x.map((element, index) => {
+            if (element.number > currentPage -1) {
+                element.number = element.number - 1;
             }
             return 0
         })
+
+        console.log(list_x)
 
         if (isCheck1 === true) {
             console.log('next')
@@ -398,7 +416,6 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         }
 
         console.log(x)
-        console.log(list_x)
     }
 
     

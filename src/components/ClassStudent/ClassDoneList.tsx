@@ -14,13 +14,15 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
 
   const history = useHistory();
   const routeChange = (classes_student: IClassesStudent) => {
-    let path = '/student/class'; 
+    let path = '/classes/review'; 
     localStorage.removeItem('teacher_id');
     localStorage.setItem('teacher_id', classes_student.teacher_id.toString())
     localStorage.removeItem('student_id');
     localStorage.setItem('student_id', classes_student.student_id.toString())
     localStorage.removeItem('class_id');
     localStorage.setItem('class_id', classes_student.id.toString());
+    localStorage.removeItem('course_name');
+    localStorage.setItem('course_name', classes_student.course_name)
     history.push({
         pathname: path,
     });
@@ -45,6 +47,15 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
             Xem review
         </button>
       </td>
+      <td className="data-table">
+        <button 
+            type="button" 
+            className="btn btn-success" 
+            onClick={() => {}}
+        >
+            Nhận xét giáo viên
+        </button>
+      </td>
     </tr>);
   });
 
@@ -60,6 +71,7 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
               <th scope="col" className="name-row-table">Học kì</th>
               <th scope="col" className="name-row-table">Số học viên</th>
               <th scope="col" className="name-row-table">Số buổi học</th>
+              <th scope="col" className="name-row-table"></th>
               <th scope="col" className="name-row-table"></th>
             </tr>
           </thead>

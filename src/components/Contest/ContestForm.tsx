@@ -127,10 +127,14 @@ const ContestForm: React.FC = () => {
       return;
     }
 
+    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+      position: toast.POSITION.TOP_CENTER
+    });
+
     var url = await setImageAction();
 
     let saveUserFn: Function = (isCreate) ? addContest : editContest;
-    saveForm(formState, saveUserFn, url);
+    saveForm(formState, saveUserFn, url, idx);
   }
 
   const history = useHistory();
@@ -140,11 +144,8 @@ const ContestForm: React.FC = () => {
       history.push(path);
   }
 
-  function saveForm(formState: IContestFormState, saveFn: Function, url: string):void {
+  function saveForm(formState: IContestFormState, saveFn: Function, url: string, idx: any):void {
     if (contest) {
-      const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-        position: toast.POSITION.TOP_CENTER
-      });
       if (saveFn === addContest) {
         dispatch(postContest(valueTeacher,{
           name: formState.name.value,

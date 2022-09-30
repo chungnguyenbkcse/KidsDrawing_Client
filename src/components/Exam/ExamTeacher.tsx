@@ -36,10 +36,10 @@ const ExamTeacher: React.FC = () => {
     }
 
     var id_y = localStorage.getItem('exercise_id');
-    let exercise_id = 0;
+    let exercise_id = "";
 
     if (id_y !== null) {
-        exercise_id = parseInt(id_y);
+        exercise_id = id_y;
     }
 
 

@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeExerciseLevelAll, addExerciseLevel } from "../../../store/actions/exercise_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ExerciseLevel {
-    id: number;
+    id: string;
     name: string;
     description: string;
     weight: number;

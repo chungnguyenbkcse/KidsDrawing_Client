@@ -58,7 +58,7 @@ const CourseNomalForm: React.FC = () => {
     }, [dispatch])
 
     if (!course || isCreate) {
-        course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
+        course = { id: "", name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: "", art_age_id: "", art_level_id: "", art_type_id: "", create_time: "", update_time: "" };
     }
 
     const levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
@@ -123,18 +123,18 @@ const CourseNomalForm: React.FC = () => {
             return;
         }
 
+        const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+
         var url = await setImageAction();
 
         let saveUserFn: Function = (isCreate) ? addCourse : editCourse;
-        saveForm(formState, saveUserFn, url);
+        saveForm(formState, saveUserFn, url, id);
     }
 
-    function saveForm(formState: ICourseNomalFormState, saveFn: Function, url: string): void {
+    function saveForm(formState: ICourseNomalFormState, saveFn: Function, url: string, idx: any): void {
         if (course) {
-            const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                position: toast.POSITION.TOP_CENTER
-            });
-
             if (saveFn === addCourse) {
                 dispatch(postCourse({
                     name: formState.name.value,
@@ -147,7 +147,7 @@ const CourseNomalForm: React.FC = () => {
                     art_age_id: formState.art_age_id.value,
                     art_level_id: formState.art_level_id.value,
                     creator_id: localStorage.getItem('id')
-                }, id))
+                }, idx))
             }
 
             else if (saveFn === editCourse) {
@@ -162,7 +162,7 @@ const CourseNomalForm: React.FC = () => {
                     art_age_id: formState.art_age_id.value,
                     art_level_id: formState.art_level_id.value,
                     creator_id: localStorage.getItem('id')
-                }, id))
+                }, idx))
             }
 
             dispatch(clearSelectedCourse());

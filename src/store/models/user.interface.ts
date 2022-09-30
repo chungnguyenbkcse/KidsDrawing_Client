@@ -1,5 +1,5 @@
 export interface IUser {
-    id: number,
+    id: string,
     username: string,
     email: string,
     password: string,
@@ -11,7 +11,7 @@ export interface IUser {
     sex: string,
     phone: string,
     address: string,
-    parents: number,
+    parents: string,
     createTime: string
 }
 

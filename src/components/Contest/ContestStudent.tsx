@@ -23,9 +23,9 @@ const ContestStudent: React.FC = () => {
     const numberContestEndCount: number = contest_student.contest_end.length;
     const numberContestOpeningCount: number = contest_student.contest_opening.length;
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     const { promiseInProgress } = usePromiseTracker();

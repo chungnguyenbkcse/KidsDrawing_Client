@@ -1,8 +1,8 @@
 export interface ICart {
-    id: number;
+    id: string;
     name: string;
     image: string;
-    student_id: number;
+    student_id: string;
     student_name: string;
     price: number;
     quantity: number;

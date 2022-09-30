@@ -1,14 +1,14 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addUserGradeExerciseSubmission, removeUserGradeExerciseSubmissionAll} from "../../../store/actions/user_grade_exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
-    student_id: number;
+    student_id: string;
     student_name: string;
     exercise_name: string;
     time_submit: string;
     image_url: string;
     description: string;
     deadline: string;
-    exercise_submission_id: number;
+    exercise_submission_id: string;
     feedback: string;
     score: number;
     time: string;

@@ -37,9 +37,9 @@ const GradeContestTeacher: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('id');
-    let id: number = 0;
+    let id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x)
+        id = id_x
     }
 
     function saveForm(){
@@ -47,7 +47,7 @@ const GradeContestTeacher: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
         
-        if (contest_submission_id === 0){
+        if (contest_submission_id === ""){
             let y = contest_submissions.contest_not_gradeds[0].id;
             console.log({
                 teacher_id: id,
@@ -142,7 +142,7 @@ const GradeContestTeacher: React.FC = () => {
     const [count, setCount] = useState(0);
     const [image_url, setImageUrl] = useState("");
     const [student_name, setStudentName] = useState("");
-    const [contest_submission_id, setContestSubmissionId] = useState(0);
+    const [contest_submission_id, setContestSubmissionId] = useState("");
     const [time_submit, setTimeSubmit] = useState("");
     return (
         promiseInProgress ?

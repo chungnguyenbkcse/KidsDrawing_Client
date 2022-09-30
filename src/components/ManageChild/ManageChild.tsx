@@ -51,9 +51,9 @@ const ManageChild: React.FC = () => {
     const numberApprovedCount: number = classes_students.classes_done.length;
     const numberNotApprovedNowCount: number = contest_teachers.contest_end.length + contest_teachers.contest_not_open_now.length + contest_teachers.contest_opening.length;
     var id_x = localStorage.getItem('student_id');
-    var student_id: number = 0;
+    var student_id: string = "";
     if (id_x !== null) {
-        student_id = parseInt(id_x);
+        student_id = id_x;
     }
 
     console.log(classes_students)

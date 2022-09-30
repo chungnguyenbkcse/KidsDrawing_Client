@@ -1,15 +1,15 @@
 import { fetchDataSuccess, fetchDataError, removeExerciseNotSubmitAll, removeExerciseSubmitGradedAll, addExerciseNotSubmit, removeExerciseSubmitNotGradeAll, addExerciseSubmitGraded, addExerciseSubmitNotGrade } from "../../../store/actions/exercise_student.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface exercise {
-    id: number;
+    id: string;
     name: string;
     description: string;
-    section_id: number;
-    exercise_submission_id: number;
+    section_id: string;
+    exercise_submission_id: string;
     teacher_name: string;
     time_submit: string;
     deadline: string;
-    level_id: number;
+    level_id: string;
     level_name: string;
     section_name: string;
     create_time: string;

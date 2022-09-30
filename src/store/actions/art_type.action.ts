@@ -48,7 +48,7 @@ export function editArtType(art_type: IArtType): IEditArtTypeActionType {
     return { type: EDIT_ART_TYPE, art_type: art_type };
 }
 
-export function removeArtType(id: number): IRemoveArtTypeActionType {
+export function removeArtType(id: string): IRemoveArtTypeActionType {
     return { type: REMOVE_ART_TYPE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ArtTypeModificationStatus): ISetModi
 
 interface IAddArtTypeActionType { type: string, art_type: IArtType };
 interface IEditArtTypeActionType { type: string, art_type: IArtType };
-interface IRemoveArtTypeActionType { type: string, id: number };
+interface IRemoveArtTypeActionType { type: string, id: string };
 interface IChangeSelectedArtTypeActionType { type: string, art_type: IArtType };
 interface IClearSelectedArtTypeActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ArtTypeModificationStatus};

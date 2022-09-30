@@ -16,9 +16,9 @@ const CourseParent: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberParentRegisterSuccessfullCount: number = course_teachers.courses_registed.length;
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     console.log(course_teachers)

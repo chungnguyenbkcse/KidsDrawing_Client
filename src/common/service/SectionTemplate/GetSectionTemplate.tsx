@@ -1,9 +1,9 @@
 import { fetchDataSuccess, fetchDataError, removeSectionTemplateAll, initialSectionTemplate, addSectionTemplate } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface SectionTemplate {
-    id: number;
-    creator_id: number;
-    course_id: number;
+    id: string;
+    creator_id: string;
+    course_id: string;
     name: string;
     description: string;
     number: number;

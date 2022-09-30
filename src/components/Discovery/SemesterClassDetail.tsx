@@ -20,7 +20,7 @@ import { postUserRegisterJoinSemester } from "../../common/service/UserRegisterJ
 
 type Option1 = {
     label: string;
-    value: number;
+    value: string;
 }
 
 const SemesterClassDetail: React.FC = () => {
@@ -36,9 +36,9 @@ const SemesterClassDetail: React.FC = () => {
     })
 
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     var id_a = localStorage.getItem('description_course');
@@ -163,7 +163,7 @@ const SemesterClassDetail: React.FC = () => {
                 "status": "Waiting"
             }))
             return dispatch(addCart({
-                id: parseInt(semester_class_id),
+                id: semester_class_id,
                 name: semester_class_name,
                 image: url_image,
                 student_id: ele.value,
@@ -190,7 +190,7 @@ const SemesterClassDetail: React.FC = () => {
                 "status": "Waiting"
             }))
             return dispatch(addCart({
-                id: parseInt(semester_class_id),
+                id: semester_class_id,
                 name: semester_class_name,
                 image: url_image,
                 student_id: ele.value,

@@ -20,9 +20,9 @@ function ChangePassword(): JSX.Element {
     const users: IUserState = useSelector((state: IStateType) => state.users);
     
     const id = localStorage.getItem('id')
-    let user_id: number = 0;
+    let user_id: string = "";
     if (id !== null) {
-        user_id = parseInt(id)
+        user_id = id
     }
     useEffect(() => {
         getUserById(dispatch, user_id)
@@ -31,7 +31,7 @@ function ChangePassword(): JSX.Element {
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
 
     if (!user || isCreate) {
-        user = { id: 0, username: "", email: "", password: "", status: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 };
+        user = { id: "", username: "", email: "", password: "", status: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: "" };
     }
 
     const [formState, setFormState] = useState({

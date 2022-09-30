@@ -48,7 +48,7 @@ export function editSchedule(schedule: ISchedule): IEditScheduleActionType {
     return { type: EDIT_SCHEDULE, schedule: schedule };
 }
 
-export function removeSchedule(id: number): IRemoveScheduleActionType {
+export function removeSchedule(id: string): IRemoveScheduleActionType {
     return { type: REMOVE_SCHEDULE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ScheduleModificationStatus): ISetMod
 
 interface IAddScheduleActionType { type: string, schedule: ISchedule };
 interface IEditScheduleActionType { type: string, schedule: ISchedule };
-interface IRemoveScheduleActionType { type: string, id: number };
+interface IRemoveScheduleActionType { type: string, id: string };
 interface IChangeSelectedScheduleActionType { type: string, schedule: ISchedule };
 interface IClearSelectedScheduleActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ScheduleModificationStatus};

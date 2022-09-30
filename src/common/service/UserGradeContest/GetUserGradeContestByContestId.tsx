@@ -1,9 +1,9 @@
 import { fetchDataSuccess, fetchDataError, initialUserGradeContest, addUserGradeContest} from "../../../store/actions/user_grade_contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
-    id: number;
-    contest_id: number;
-    teacher_id: number;
+    id: string;
+    contest_id: string;
+    teacher_id: string;
     teacher_name: string;
     contest_name: string;
 }

@@ -1,7 +1,7 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeStudentAll, initialStudent, addStudent } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user {
-    id: number,
+    id: string,
     username: string,
     email: string,
     password: string,
@@ -13,7 +13,7 @@ interface user {
     sex: string,
     phone: string,
     address: string,
-    parents: number,
+    parents: string,
     createTime: string
 }
 export function getStudentById(id: any) {

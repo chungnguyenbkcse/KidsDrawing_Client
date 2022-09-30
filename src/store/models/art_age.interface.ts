@@ -1,5 +1,5 @@
 export interface IArtAge {
-    id: number;
+    id: string;
     name: string;
     description: string;
 }

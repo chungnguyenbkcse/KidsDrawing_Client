@@ -48,7 +48,7 @@ export function editNotify(notify: INotify): IEditNotifyActionType {
     return { type: EDIT_NOTIFY, notify: notify };
 }
 
-export function removeNotify(id: number): IRemoveNotifyActionType {
+export function removeNotify(id: string): IRemoveNotifyActionType {
     return { type: REMOVE_NOTIFY, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateNotify(value: NotifyModificationStatus): ISe
 
 interface IAddNotifyActionType { type: string, notify: INotify };
 interface IEditNotifyActionType { type: string, notify: INotify };
-interface IRemoveNotifyActionType { type: string, id: number };
+interface IRemoveNotifyActionType { type: string, id: string };
 interface IChangeSelectedNotifyActionType { type: string, notify: INotify };
 interface IClearSelectedNotifyActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  NotifyModificationStatus};

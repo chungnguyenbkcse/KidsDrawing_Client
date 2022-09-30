@@ -5,9 +5,9 @@ export function addNotification(title: string, text: string): IAddNotificationAc
     return { type: ADD_NOTIFICATION, text: text, title: title };
 }
 
-export function removeNotification(id: number): IRemoveNotificationActionType {
+export function removeNotification(id: string): IRemoveNotificationActionType {
     return { type: REMOVE_NOTIFICATION, id: id };
 }
 
 interface IAddNotificationActionType { type: string, text: string, title: string };
-interface IRemoveNotificationActionType { type: string, id: number };
+interface IRemoveNotificationActionType { type: string, id: string };

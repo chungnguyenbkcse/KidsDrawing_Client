@@ -48,7 +48,7 @@ export function editContest(contest: IContest): IEditContestActionType {
     return { type: EDIT_CONTEST, contest: contest };
 }
 
-export function removeContest(id: number): IRemoveContestActionType {
+export function removeContest(id: string): IRemoveContestActionType {
     return { type: REMOVE_CONTEST, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ContestModificationStatus): ISetModi
 
 interface IAddContestActionType { type: string, contest: IContest };
 interface IEditContestActionType { type: string, contest: IContest };
-interface IRemoveContestActionType { type: string, id: number };
+interface IRemoveContestActionType { type: string, id: string };
 interface IChangeSelectedContestActionType { type: string, contest: IContest };
 interface IClearSelectedContestActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ContestModificationStatus};

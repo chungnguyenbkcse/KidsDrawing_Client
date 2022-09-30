@@ -29,16 +29,16 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('class_id');
-    var class_id: number = 0;
+    var class_id: string = "";
     if (id_x !== null) {
-        class_id = parseInt(id_x);
+        class_id = id_x;
     }
 
     var id_y = localStorage.getItem('exercise_id');
-    let exercise_id = 0;
+    let exercise_id = "";
 
     if (id_y !== null) {
-        exercise_id = parseInt(id_y);
+        exercise_id = id_y;
     }
 
     const labels = student;

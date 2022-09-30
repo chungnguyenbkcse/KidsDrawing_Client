@@ -28,21 +28,21 @@ const ManageStudent: React.FC = () => {
 
     
     var id_z = localStorage.getItem('parent_id');
-    var parent_id: number = 0;
+    var parent_id: string = "";
     if (id_z !== null) {
-        parent_id = parseInt(id_z);
+        parent_id = id_z;
     }
 
     var id_y = localStorage.getItem('student_id');
-    var student_id: number = 0;
+    var student_id: string= "";
     if (id_y !== null) {
-        student_id = parseInt(id_y);
+        student_id = id_y;
     }
 
     var id_t = localStorage.getItem('class_id');
-    var class_id: number = 0;
+    var class_id: string = "";
     if (id_t !== null) {
-        class_id = parseInt(id_t);
+        class_id = id_t;
     }
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");

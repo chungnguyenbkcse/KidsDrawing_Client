@@ -1,9 +1,9 @@
 export interface ISemester {
-    id: number;
+    id: string;
     number: number;
     year: number;
     name: string;
-    creator_id: number;
+    creator_id: string;
     description: string;
     start_time: string;
     end_time: string;

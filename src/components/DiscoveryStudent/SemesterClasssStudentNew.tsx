@@ -16,15 +16,15 @@ const SemesterClassStudentNew: React.FC = () => {
     //const semester_classs: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     var id_y = localStorage.getItem('course_id');
-    var course_id: number = 0;
+    var course_id: string = "";
     if (id_y !== null) {
-        course_id = parseInt(id_y);
+        course_id = id_y;
     }
 
     const { promiseInProgress } = usePromiseTracker();

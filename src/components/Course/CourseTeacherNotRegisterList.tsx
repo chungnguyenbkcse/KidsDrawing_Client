@@ -12,7 +12,7 @@ export type teacherRegisterQuantificationListProps = {
 function CourseTeacherNotRegisterList(props: teacherRegisterQuantificationListProps): JSX.Element {
   const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
   const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
-  let quantifications: number[] = [];
+  let quantifications: string[] = [];
   teacherRegisterQuantifications.approveds.map((ele, index) => {
     return quantifications.push(ele.course_id);
   })

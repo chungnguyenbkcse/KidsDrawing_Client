@@ -52,7 +52,7 @@ export function editTutorial(tutorial: ITutorial): IEditTutorialActionType {
     return { type: EDIT_TUTORIAL, tutorial: tutorial };
 }
 
-export function removeTutorial(id: number): IRemoveTutorialActionType {
+export function removeTutorial(id: string): IRemoveTutorialActionType {
     return { type: REMOVE_TUTORIAL, id: id };
 }
 
@@ -73,7 +73,7 @@ export function setModificationState(value: TutorialModificationStatus): ISetMod
 // register_successfull_tutorials
 interface IAddTutorialActionType { type: string, tutorial: ITutorial };
 interface IEditTutorialActionType { type: string, tutorial: ITutorial };
-interface IRemoveTutorialActionType { type: string, id: number };
+interface IRemoveTutorialActionType { type: string, id: string };
 interface IChangeSelectedTutorialActionType { type: string, tutorial: ITutorial };
 interface IClearSelectedTutorialActionType { type: string };
 interface IRemoveTutorialAllActionType { type: string }

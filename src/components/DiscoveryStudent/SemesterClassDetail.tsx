@@ -21,9 +21,9 @@ const SemesterClassDetailStudent: React.FC = () => {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     var id_a = localStorage.getItem('description_course');

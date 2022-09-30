@@ -17,7 +17,7 @@ function ScoreExamList(): JSX.Element {
     console.log(user_grade_exercise_submissions.user_grade_exercise_submissions)
 
 
-    const studentElements: (JSX.Element | null)[] = user_grade_exercise_submissions.user_grade_exercise_submissions.sort((a, b) => a.student_id- b.student_id).map((student, idx) => {
+    const studentElements: (JSX.Element | null)[] = user_grade_exercise_submissions.user_grade_exercise_submissions.map((student, idx) => {
         if (!student) { return null; }
         return (<tr className={`table-row`}
             key={`student_${idx}`} onClick={routeChange}>

@@ -1,11 +1,11 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeExerciseAll, initialExercise, addExercise } from "../../../store/actions/exercise.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface exercise {
-    id: number;
+    id: string;
     name: string;
     description: string;
-    section_id: number;
-    level_id: number;
+    section_id: string;
+    level_id: string;
     deadline: string;
     level_name: string;
     section_name: string;

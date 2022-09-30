@@ -22,7 +22,7 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
     const isCreate: boolean = (notifications.modificationState === AnonymousNotificationModificationStatus.Create);
 
     if (!notification || isCreate) {
-        notification = { id: 0, name: "", description: "", time: "" };
+        notification = { id: "", name: "", description: "", time: "" };
     }
 
     const [formState, setFormState] = useState({

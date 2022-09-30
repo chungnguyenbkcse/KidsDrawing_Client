@@ -1,7 +1,7 @@
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 
 export interface ICardProperties {
-    student_id: number;
+    student_id: string;
     fullname: string;
     username: string;
     birthday: string;

@@ -48,7 +48,7 @@ export function editReportUser(report_user: IReportUser): IEditReportUserActionT
     return { type: EDIT_REPORT_USER, report_user: report_user };
 }
 
-export function removeReportUser(id: number): IRemoveReportUserActionType {
+export function removeReportUser(id: string): IRemoveReportUserActionType {
     return { type: REMOVE_REPORT_USER, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ReportUserModificationStatus): ISetM
 
 interface IAddReportUserActionType { type: string, report_user: IReportUser };
 interface IEditReportUserActionType { type: string, report_user: IReportUser };
-interface IRemoveReportUserActionType { type: string, id: number };
+interface IRemoveReportUserActionType { type: string, id: string };
 interface IChangeSelectedReportUserActionType { type: string, report_user: IReportUser };
 interface IClearSelectedReportUserActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ReportUserModificationStatus};

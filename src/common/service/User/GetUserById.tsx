@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeTeacherAll, initialTeacher } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user {
-    id: number,
+    id: string,
     username: string,
     email: string,
     status: string,
@@ -13,7 +13,7 @@ interface user {
     sex: string,
     phone: string,
     address: string,
-    parents: number,
+    parents: string,
     createTime: string
 }
 export function getUserById(dispatch: any , id: any) {

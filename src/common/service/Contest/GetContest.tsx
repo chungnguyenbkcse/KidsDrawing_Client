@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeContestAll, initialContest, addContest } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Contest {
-    id: number;
+    id: string;
     name: string;
     description: string;
     max_participant: number;
@@ -13,9 +13,9 @@ interface Contest {
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: number;
-    art_type_id: number;
-    art_age_id: number;
+    creator_id: string;
+    art_type_id: string;
+    art_age_id: string;
     create_time: string;
     update_time: string;
 }

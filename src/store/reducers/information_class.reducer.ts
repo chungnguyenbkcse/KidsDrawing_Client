@@ -8,18 +8,7 @@ import { IInformationClass, InformationClassModificationStatus } from "../models
 const initialState: IInformationClassState = {
     modificationState: InformationClassModificationStatus.None,
     selectedInformationClass: null,
-    informationClasses: [{
-        id: 1,
-        name: "",
-        teacher: "",
-        security_code: "",
-        course: "",
-        art_age: "",
-        art_level: "",
-        art_type: "",
-        number_section: 0,
-        number_student: 0
-    }]
+    informationClasses: []
 };
 
 function informationClassesReducer(state: IInformationClassState = initialState, action: IActionBase): IInformationClassState {

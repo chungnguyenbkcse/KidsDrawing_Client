@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeLessonAll, initialLesson, addLesson } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface lesson {
-    id: number;
+    id: string;
     start_time: string;
     end_time: string;
 }

@@ -9,7 +9,7 @@ const Notifications: React.FC = () => {
   const notifications: INotification[] = useSelector((state: IStateType) =>
     state.notifications.notifications);
 
-  function closeNotification(id: number) {
+  function closeNotification(id: string) {
     dispatch(removeNotification(id));
   }
 

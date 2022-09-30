@@ -36,8 +36,8 @@ type PageContent = {
 }
 
 type TutorialPageTemplate = {
-    id: number;
-    tutorial_template_id: number;
+    id: string;
+    tutorial_template_id: string;
     name: string;
     number: number;
     description: string;
@@ -54,9 +54,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_template_id');
-    let section_template_id: number = 0;
+    let section_template_id: string = "";
     if (id_x !== null) {
-        section_template_id = parseInt(id_x)
+        section_template_id = id_x
     }
 
     var id_y = localStorage.getItem('section_number');
@@ -75,9 +75,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
 
     var id_t = localStorage.getItem('tutorial_template_id');
-    let tutorial_template_id: number = 0;
+    let tutorial_template_id: string = "";
     if (id_t !== null) {
-        tutorial_template_id = parseInt(id_t)
+        tutorial_template_id = id_t
     }
 
 
@@ -122,12 +122,12 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section_template) {
-        section_template = { id: 0, name: "",  creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: "", name: "",  creator_id: "", course_id: "", number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
     console.log(tutorial_template_pages.tutorialTemplatePages)
     if (tutorial_template_pages.tutorialTemplatePages.length === 0) {
-        section_template = { id: 0, name: "",  creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: "", name: "",  creator_id: "", course_id: "", number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
 
@@ -193,10 +193,10 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, index) => {
                         if (totalPage > index){
                             dispatch(putTutorialTemplatePage(ele.id, {
-                                description: lst[index].content,
+                                description: lst.sort((a, b) => a.page - b.page)[index].content,
                                 name: ele.name,
                                 tutorial_template_id: ele.tutorial_template_id,
-                                number: lst[index].page
+                                number: lst.sort((a, b) => a.page - b.page)[index].page
                             }))
                         }
                         else {
@@ -208,10 +208,10 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 else {
                     lst.map((ele, index) => {
                         if (index < tutorial_template_pages.tutorialTemplatePages.length){
-                            dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages[index].id, {
+                            dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].id, {
                                 description: ele.content,
-                                name: tutorial_template_pages.tutorialTemplatePages[index].name,
-                                tutorial_template_id: tutorial_template_pages.tutorialTemplatePages[0].tutorial_template_id,
+                                name: tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].name,
+                                tutorial_template_id: tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[0].tutorial_template_id,
                                 number: ele.page
                             }))
                         }
@@ -372,7 +372,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             if (ele.number === y) {
                 isCheck = true;
                 list_x.splice(idx, 0, {
-                    id: 0,
+                    id: "",
                     tutorial_template_id: ele.tutorial_template_id,
                     name: ele.name,
                     number: ele.number,
@@ -396,7 +396,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
         if (isCheck === false) {
             list_x.push({
-                id: 0,
+                id: "",
                 tutorial_template_id: list_x[0].tutorial_template_id,
                 name: list_x[0].name,
                 number: list_x.length + 1,

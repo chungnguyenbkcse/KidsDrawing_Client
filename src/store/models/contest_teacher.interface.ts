@@ -1,5 +1,5 @@
 export interface IContestTeacher{
-    id: number;
+    id: string;
     name: string;
     description: string;
     max_participant: number;

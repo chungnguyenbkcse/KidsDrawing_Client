@@ -67,7 +67,7 @@ function ContestEndList(props: contestListProps): JSX.Element {
         });
     })
 
-    const routeChange = (contest_id: number) => {
+    const routeChange = (contest_id: string) => {
         localStorage.removeItem('contest_id');
         localStorage.setItem('contest_id', contest_id.toString())
         let path = '/contests/result';

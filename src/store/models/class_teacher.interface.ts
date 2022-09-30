@@ -1,9 +1,9 @@
 export interface IClassTeacher {
-    id: number;
+    id: string;
     name: string;
-    course_id: number;
+    course_id: string;
     link_url: string;
-    semester_class_id: number;
+    semester_class_id: string;
     user_register_teach_semester: number;
     security_code: string;
     total_student: number;

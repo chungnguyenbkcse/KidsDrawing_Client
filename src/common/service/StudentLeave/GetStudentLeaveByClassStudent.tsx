@@ -1,15 +1,15 @@
 import { fetchDataSuccess, fetchDataError, removeStudentLeaveApprovedAll, removeStudentLeaveNotApprovedAll, removeStudentLeaveNotApprovedNowAll, addStudentLeaveApproved, addStudentLeaveNotApproved, addStudentLeaveNotApprovedNow } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface StudentLeave {
-    id: number;
-    section_id: number;
+    id: string;
+    section_id: string;
     section_name: string;
-    class_id: number;
+    class_id: string;
     class_name: string;
-    student_id: number;
+    student_id: string;
     section_number: number;
     student_name: string;
-    reviewer_id: number;
+    reviewer_id: string;
     description: string;
     status: string;
     create_time: string;

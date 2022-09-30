@@ -62,7 +62,7 @@ export function editCompleted(user_register_join_semester: IUserRegisterJoinSeme
     return { type: EDIT_COMPLETED, user_register_join_semester: user_register_join_semester };
 }
 
-export function removeCompleted(id: number): IRemoveCompletedActionType {
+export function removeCompleted(id: string): IRemoveCompletedActionType {
     return { type: REMOVE_COMPLETED, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editWaiting(user_register_join_semester: IUserRegisterJoinSemest
     return { type: EDIT_WAITING, user_register_join_semester: user_register_join_semester };
 }
 
-export function removeWaiting(id: number): IRemoveWaitingActionType {
+export function removeWaiting(id: string): IRemoveWaitingActionType {
     return { type: REMOVE_WAITING, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: UserRegisterJoinSemesterModification
 // register_successfull_user_register_join_semesters
 interface IAddCompletedActionType { type: string, user_register_join_semester: IUserRegisterJoinSemester };
 interface IEditCompletedActionType { type: string, user_register_join_semester: IUserRegisterJoinSemester };
-interface IRemoveCompletedActionType { type: string, id: number };
+interface IRemoveCompletedActionType { type: string, id: string };
 interface IChangeSelectedCompletedActionType { type: string, user_register_join_semester: IUserRegisterJoinSemester };
 interface IClearSelectedCompletedActionType { type: string };
 interface IRemoveCompletedAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialCompletedActionType {type: string, user_register_join_semester
 // not_register_user_register_join_semesters
 interface IAddWaitingActionType { type: string, user_register_join_semester: IUserRegisterJoinSemester };
 interface IEditWaitingActionType { type: string, user_register_join_semester: IUserRegisterJoinSemester };
-interface IRemoveWaitingActionType { type: string, id: number };
+interface IRemoveWaitingActionType { type: string, id: string };
 interface IChangeSelectedWaitingActionType { type: string, user_register_join_semester: IUserRegisterJoinSemester };
 interface IClearSelectedWaitingActionType { type: string };
 interface IRemoveWaitingAllActionType { type: string }

@@ -15,7 +15,7 @@ function FormSubmit(): JSX.Element {
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
 
     if (!user || isCreate) {
-        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
+        user = { id: "", username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: "" }
     }
 
     var id_x = localStorage.getItem("exercise_description");

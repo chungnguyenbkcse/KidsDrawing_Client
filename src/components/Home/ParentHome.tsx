@@ -38,9 +38,9 @@ const ParentHome: React.FC = () => {
     const numberChildCount: number = users.students.length;
     const totalMoney: number = user_register_join_semesters.completed.reduce((prev, next) => prev + ((next.price * 1) || 0), 0);
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     const [checked, setChecked] = useState(true);

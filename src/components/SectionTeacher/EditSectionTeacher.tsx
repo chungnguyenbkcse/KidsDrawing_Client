@@ -30,8 +30,8 @@ type PageContent = {
 }
 
 type TutorialPage = {
-    id: number;
-    tutorial_id: number;
+    id: string;
+    tutorial_id: string;
     name: string;
     number: number;
     description: string;
@@ -48,15 +48,15 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_id');
-    let section_id: number = 0;
+    let section_id: string = "";
     if (id_x !== null) {
-        section_id = parseInt(id_x)
+        section_id = id_x
     }
 
     var id_h = localStorage.getItem('id');
-    let id: number = 0;
+    let id: string = "";
     if (id_h !== null) {
-        id = parseInt(id_h)
+        id = id_h
     }
 
     var id_y = localStorage.getItem('section_number');
@@ -75,9 +75,9 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
 
     var id_t = localStorage.getItem('tutorial_id');
-    let tutorial_id: number = 0;
+    let tutorial_id: string = "";
     if (id_t !== null) {
-        tutorial_id = parseInt(id_t)
+        tutorial_id = id_t
     }
 
 
@@ -122,12 +122,12 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section) {
-        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: "", name: "", number: 0,  class_id: "", teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
     console.log(tutorial_pages.tutorialPages)
     if (tutorial_pages.tutorialPages.length === 0) {
-        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: "", name: "", number: 0,  class_id: "", teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
 
@@ -308,7 +308,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
             if (ele.number === y) {
                 isCheck = true;
                 list_x.splice(idx + 1, 0, {
-                    id: 0,
+                    id: "",
                     tutorial_id: ele.tutorial_id,
                     name: ele.name,
                     number: ele.number + 1,
@@ -332,7 +332,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
         if (isCheck === false) {
             list_x.push({
-                id: 0,
+                id: "",
                 tutorial_id: list_x[0].tutorial_id,
                 name: list_x[0].name,
                 number: list_x.length + 1,

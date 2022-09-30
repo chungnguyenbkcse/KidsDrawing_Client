@@ -1,7 +1,7 @@
 export interface ISectionTemplate {
-    id: number;
-    creator_id: number;
-    course_id: number;
+    id: string;
+    creator_id: string;
+    course_id: string;
     name: string;
     number: number;
     teaching_form: boolean;

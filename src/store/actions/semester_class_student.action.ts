@@ -73,7 +73,7 @@ export function editSemesterClassStudentNotPayedNow(semester_class_student: ISem
     return { type: EDIT_NOT_PAYED_NOW, semester_class_student: semester_class_student };
 }
 
-export function removeSemesterClassStudentNotPayedNow(id: number): IRemoveSemesterClassStudentNotPayedNowActionType {
+export function removeSemesterClassStudentNotPayedNow(id: string): IRemoveSemesterClassStudentNotPayedNowActionType {
     return { type: REMOVE_NOT_PAYED_NOW, id: id };
 }
 
@@ -102,7 +102,7 @@ export function editSemesterClassStudentPayed(semester_class_student: ISemesterC
     return { type: EDIT_PAYED, semester_class_student: semester_class_student };
 }
 
-export function removeSemesterClassStudentPayed(id: number): IRemoveSemesterClassStudentPayedActionType {
+export function removeSemesterClassStudentPayed(id: string): IRemoveSemesterClassStudentPayedActionType {
     return { type: REMOVE_PAYED, id: id };
 }
 
@@ -136,7 +136,7 @@ export function editSemesterClassStudentNotPayed(semester_class_student: ISemest
     return { type: EDIT_NOT_PAYED, semester_class_student: semester_class_student };
 }
 
-export function removeSemesterClassStudentNotPayed(id: number): IRemoveSemesterClassStudentNotPayedActionType {
+export function removeSemesterClassStudentNotPayed(id: string): IRemoveSemesterClassStudentNotPayedActionType {
     return { type: REMOVE_NOT_PAYED, id: id };
 }
 
@@ -151,7 +151,7 @@ export function clearSelectedSemesterClassStudentNotPayed(): IClearSelectedSemes
 // register_successfull_semester_class_students
 interface IAddSemesterClassStudentNotPayedNowActionType { type: string, semester_class_student: ISemesterClassStudent };
 interface IEditSemesterClassStudentNotPayedNowActionType { type: string, semester_class_student: ISemesterClassStudent };
-interface IRemoveSemesterClassStudentNotPayedNowActionType { type: string, id: number };
+interface IRemoveSemesterClassStudentNotPayedNowActionType { type: string, id: string };
 interface IChangeSelectedSemesterClassStudentNotPayedNowActionType { type: string, semester_class_student: ISemesterClassStudent };
 interface IClearSelectedSemesterClassStudentNotPayedNowActionType { type: string };
 interface IRemoveSemesterClassStudentNotPayedNowAllActionType { type: string }
@@ -160,7 +160,7 @@ interface IInitialSemesterClassStudentNotPayedNowActionType {type: string, semes
 // not_register_semester_class_students
 interface IAddSemesterClassStudentPayedActionType { type: string, semester_class_student: ISemesterClassStudent };
 interface IEditSemesterClassStudentPayedActionType { type: string, semester_class_student: ISemesterClassStudent };
-interface IRemoveSemesterClassStudentPayedActionType { type: string, id: number };
+interface IRemoveSemesterClassStudentPayedActionType { type: string, id: string };
 interface IChangeSelectedSemesterClassStudentPayedActionType { type: string, semester_class_student: ISemesterClassStudent };
 interface IClearSelectedSemesterClassStudentPayedActionType { type: string };
 interface IRemoveSemesterClassStudentPayedAllActionType { type: string }
@@ -170,7 +170,7 @@ interface IInitialSemesterClassStudentPayedActionType {type: string, semester_cl
 // register_successfull_semester_class_students
 interface IAddSemesterClassStudentNotPayedActionType { type: string, semester_class_student: ISemesterClassStudent };
 interface IEditSemesterClassStudentNotPayedActionType { type: string, semester_class_student: ISemesterClassStudent };
-interface IRemoveSemesterClassStudentNotPayedActionType { type: string, id: number };
+interface IRemoveSemesterClassStudentNotPayedActionType { type: string, id: string };
 interface IChangeSelectedSemesterClassStudentNotPayedActionType { type: string, semester_class_student: ISemesterClassStudent };
 interface IClearSelectedSemesterClassStudentNotPayedActionType { type: string };
 interface IRemoveSemesterClassStudentNotPayedAllActionType { type: string }

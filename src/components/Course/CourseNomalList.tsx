@@ -43,7 +43,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
 
   const section_templates: ISectionTemplateState = useSelector((state: IStateType) => state.section_templates);
   const listSectionTemplate: ISectionTemplate[] = section_templates.sectionTemplates
-  let listCourse: number[] = []
+  let listCourse: string[] = []
   listSectionTemplate.map((ele) => {
     return listCourse.push(ele.course_id)
   })
@@ -123,7 +123,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     if (!course) { return null; }
     return (<tr className={`table-row ${(courses.selectedCourse && courses.selectedCourse.id === course.id) ? "selected" : ""}`}
       key={`course_${index}`}>
-      <th scope="row">{course.id}</th>
+      <th scope="row">{index + 1}</th>
       <td onClick={() => {
         if(props.onSelect) props.onSelect(course);
         routeChange(course)

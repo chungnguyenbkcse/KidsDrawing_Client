@@ -12,9 +12,9 @@ export type lessonListProps = {
 };
 
 type Options = {
-    id: number;
-    student_id: number;
-    section_id: number;
+    id: string;
+    student_id: string;
+    section_id: string;
     status: boolean;
 }
 
@@ -65,7 +65,7 @@ function AttendanceList(props: lessonListProps): JSX.Element {
         })
     }
 
-    function onValueChanged(event: ChangeEvent<HTMLInputElement>, id: number): void {
+    function onValueChanged(event: ChangeEvent<HTMLInputElement>, id: string): void {
         lst.map((ele, idx) => {
             if (ele.id === id) {
                 ele.status = !ele.status;

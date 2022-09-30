@@ -50,15 +50,15 @@ export function editCart(cart: ICart): IEditCartActionType {
     return { type: EDIT_CART, cart: cart };
 }
 
-export function removeCart(id: number): IRemoveCartActionType {
+export function removeCart(id: string): IRemoveCartActionType {
     return { type: REMOVE_CART, id: id };
 }
 
-export function increaseQuantiry(id: number): IIncreaseQuantityCartActionType {
+export function increaseQuantiry(id: string): IIncreaseQuantityCartActionType {
     return { type: INCREASE_QUANTITY, id: id };
 }
 
-export function decreaseQuantiry(id: number): IDecreaseQuantityCartActionType {
+export function decreaseQuantiry(id: string): IDecreaseQuantityCartActionType {
     return { type: DECREASE_QUANTITY, id: id };
 }
 
@@ -76,10 +76,10 @@ export function setModificationState(value: CartModificationStatus): ISetModific
 
 interface IAddCartActionType { type: string, cart: ICart };
 interface IEditCartActionType { type: string, cart: ICart };
-interface IRemoveCartActionType { type: string, id: number };
+interface IRemoveCartActionType { type: string, id: string };
 interface IChangeSelectedCartActionType { type: string, cart: ICart };
-interface IIncreaseQuantityCartActionType {type: string, id: number};
-interface IDecreaseQuantityCartActionType {type: string, id: number};
+interface IIncreaseQuantityCartActionType {type: string, id: string};
+interface IDecreaseQuantityCartActionType {type: string, id: string};
 interface IClearSelectedCartActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  CartModificationStatus};
 interface IRemoveCartAllActionType { type: string }

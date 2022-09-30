@@ -1,10 +1,10 @@
 import { fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface schedule {
-    id: number;
-    lesson_time_id: number;
+    id: string;
+    lesson_time_id: string;
     lesson_time: string;
-    semester_class_id: number;
+    semester_class_id: string;
     date_of_week: number;
 }
 export function getSchedule(dispatch: any) {

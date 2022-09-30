@@ -4,8 +4,8 @@ export interface ICardProperties {
     class: string;
     total_register_contest: number;
     student_name: string;
-    student_id: number;
-    id: number;
+    student_id: string;
+    id: string;
     name: string;
     art_type_name: string;
     description: string;

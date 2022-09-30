@@ -82,7 +82,7 @@ export function editContestStudentOpening(contest: IContestStudent): IEditContes
     return { type: EDIT_CONTEST_STUDENT_OPENING, contest: contest };
 }
 
-export function removeContestStudentOpening(id: number): IRemoveContestStudentOpeningActionType {
+export function removeContestStudentOpening(id: string): IRemoveContestStudentOpeningActionType {
     return { type: REMOVE_CONTEST_STUDENT_OPENING, id: id };
 }
 
@@ -111,7 +111,7 @@ export function editContestStudentNew(contest: IContestStudent): IEditContestStu
     return { type: EDIT_CONTEST_STUDENT_NEW, contest: contest };
 }
 
-export function removeContestStudentNew(id: number): IRemoveContestStudentNewActionType {
+export function removeContestStudentNew(id: string): IRemoveContestStudentNewActionType {
     return { type: REMOVE_CONTEST_STUDENT_NEW, id: id };
 }
 
@@ -140,7 +140,7 @@ export function editContestStudentEnd(contest: IContestStudent): IEditContestStu
     return { type: EDIT_CONTEST_STUDENT_END, contest: contest };
 }
 
-export function removeContestStudentEnd(id: number): IRemoveContestStudentEndActionType {
+export function removeContestStudentEnd(id: string): IRemoveContestStudentEndActionType {
     return { type: REMOVE_CONTEST_STUDENT_END, id: id };
 }
 
@@ -169,7 +169,7 @@ export function editContestStudentNotOpenNow(contest: IContestStudent): IEditCon
     return { type: EDIT_CONTEST_STUDENT_NOT_OPEN_NOW, contest: contest };
 }
 
-export function removeContestStudentNotOpenNow(id: number): IRemoveContestStudentNotOpenNowActionType {
+export function removeContestStudentNotOpenNow(id: string): IRemoveContestStudentNotOpenNowActionType {
     return { type: REMOVE_CONTEST_STUDENT_NOT_OPEN_NOW, id: id };
 }
 
@@ -189,7 +189,7 @@ export function setModificationState(value: ContestStudentModificationStatus): I
 // register_successfull_contests
 interface IAddContestStudentOpeningActionType { type: string, contest: IContestStudent };
 interface IEditContestStudentOpeningActionType { type: string, contest: IContestStudent };
-interface IRemoveContestStudentOpeningActionType { type: string, id: number };
+interface IRemoveContestStudentOpeningActionType { type: string, id: string };
 interface IChangeSelectedContestStudentOpeningActionType { type: string, contest: IContestStudent };
 interface IClearSelectedContestStudentOpeningActionType { type: string };
 interface IRemoveContestStudentOpeningAllActionType { type: string }
@@ -198,7 +198,7 @@ interface IInitialContestStudentOpeningActionType {type: string, contest: IConte
 // not_register_contests
 interface IAddContestStudentNewActionType { type: string, contest: IContestStudent };
 interface IEditContestStudentNewActionType { type: string, contest: IContestStudent };
-interface IRemoveContestStudentNewActionType { type: string, id: number };
+interface IRemoveContestStudentNewActionType { type: string, id: string };
 interface IChangeSelectedContestStudentNewActionType { type: string, contest: IContestStudent };
 interface IClearSelectedContestStudentNewActionType { type: string };
 interface IRemoveContestStudentNewAllActionType { type: string }
@@ -207,7 +207,7 @@ interface IInitialContestStudentNewActionType {type: string, contest: IContestSt
 // not_register_contests
 interface IAddContestStudentEndActionType { type: string, contest: IContestStudent };
 interface IEditContestStudentEndActionType { type: string, contest: IContestStudent };
-interface IRemoveContestStudentEndActionType { type: string, id: number };
+interface IRemoveContestStudentEndActionType { type: string, id: string };
 interface IChangeSelectedContestStudentEndActionType { type: string, contest: IContestStudent };
 interface IClearSelectedContestStudentEndActionType { type: string };
 interface IRemoveContestStudentEndAllActionType { type: string }
@@ -216,7 +216,7 @@ interface IInitialContestStudentEndActionType {type: string, contest: IContestSt
 // not_register_contests
 interface IAddContestStudentNotOpenNowActionType { type: string, contest: IContestStudent };
 interface IEditContestStudentNotOpenNowActionType { type: string, contest: IContestStudent };
-interface IRemoveContestStudentNotOpenNowActionType { type: string, id: number };
+interface IRemoveContestStudentNotOpenNowActionType { type: string, id: string };
 interface IChangeSelectedContestStudentNotOpenNowActionType { type: string, contest: IContestStudent };
 interface IClearSelectedContestStudentNotOpenNowActionType { type: string };
 interface IRemoveContestStudentNotOpenNowAllActionType { type: string }

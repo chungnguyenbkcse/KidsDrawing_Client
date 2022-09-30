@@ -2,7 +2,7 @@ export interface ICardProperties {
     schedule: string;
     name: string;
     security_code: string;
-    class_id: number;
+    class_id: string;
     course_name: string;
     semester_name: string;
     total_student: number;

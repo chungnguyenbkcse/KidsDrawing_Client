@@ -12,7 +12,7 @@ export type user_register_semesterListProps = {
 };
 
 type CourseSemester = {
-  course_semester_id: number;
+  course_semester_id: string;
   count: number;
 }
 
@@ -90,7 +90,7 @@ function CourseMaxSign(props: user_register_semesterListProps): JSX.Element  {
 
   const user_register_semesterElements: (JSX.Element | null)[] = courseList.map((user_register_semester, index) => {
     if (!user_register_semester) { return null; }
-    return (<tr className={`table-row ${(user_register_semesters.selectedUserRegisterJoinSemester && user_register_semesters.selectedUserRegisterJoinSemester.id === index) ? "selected" : ""}`}
+    return (<tr className={`table-row`}
       key={`user_register_semester_${index}`}>
       <th scope="row">{index + 1}</th>
       <td onClick={routeChange}>{user_register_semester}</td>

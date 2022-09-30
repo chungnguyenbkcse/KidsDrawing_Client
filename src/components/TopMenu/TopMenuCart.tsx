@@ -12,8 +12,8 @@ import { trackPromise } from "react-promise-tracker";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 
 type Options = {
-  notification_id: number;
-  user_id: number;
+  notification_id: string;
+  user_id: string;
   notification_name: string;
   notification_desciption: string;
   notification_time: string;
@@ -28,9 +28,9 @@ function TopMenuCart(): JSX.Element {
   const user_register_join_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
 
   var id_x = localStorage.getItem('id');
-  let user_id: number = 0;
+  let user_id: string = "";
   if (id_x !== null) {
-    user_id = parseInt(id_x)
+    user_id = id_x
   }
 
   useEffect(() => {

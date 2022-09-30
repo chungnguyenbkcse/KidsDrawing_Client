@@ -11,31 +11,31 @@ export type productListProps = {
 
 const data = [
   {
-    'id': 1,
+    'id': "",
     'lesson': 'Buổi 1',
     'teacher': 'Chung Nguyễn',
     'number_stuent': '5/6',
   },
   {
-    'id': 2,
+    'id': "",
     'lesson': 'Buổi 2',
     'teacher': 'Chung Nguyễn',
     'number_stuent': '6/6',
   },
   {
-    'id': 3,
+    'id': "",
     'lesson': 'Buổi 3',
     'teacher': 'Chung Nguyễn',
     'number_stuent': '5/6',
   },
   {
-    'id': 4,
+    'id': "",
     'lesson': 'Buổi 4',
     'teacher': 'Chung Nguyễn',
     'number_stuent': '5/6',
   },
   {
-    'id': 5,
+    'id': '',
     'lesson': 'Buổi 5',
     'teacher': 'Chung Nguyễn',
     'number_stuent': '5/6',

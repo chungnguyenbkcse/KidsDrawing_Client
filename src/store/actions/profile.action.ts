@@ -48,7 +48,7 @@ export function editProfile(profile: IProfile): IEditProfileActionType {
     return { type: EDIT_PROFILE, profile: profile };
 }
 
-export function removeProfile(id: number): IRemoveProfileActionType {
+export function removeProfile(id: string): IRemoveProfileActionType {
     return { type: REMOVE_PROFILE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateProfile(value: ProfileModificationStatus): I
 
 interface IAddProfileActionType { type: string, profile: IProfile };
 interface IEditProfileActionType { type: string, profile: IProfile };
-interface IRemoveProfileActionType { type: string, id: number };
+interface IRemoveProfileActionType { type: string, id: string };
 interface IChangeSelectedProfileActionType { type: string, profile: IProfile };
 interface IClearSelectedProfileActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ProfileModificationStatus};

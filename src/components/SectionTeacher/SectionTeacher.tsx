@@ -39,23 +39,23 @@ const SectionTeacher: React.FC = () => {
 
     var id_y = localStorage.getItem('section_id');
 
-    let section_id = 1;
+    let section_id = "";
 
     if (id_y !== null) {
-        section_id = parseInt(id_y);
+        section_id = id_y;
     }
 
     var id_x = localStorage.getItem('id');
-    var id: number = 0;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
 
     var id_z = localStorage.getItem('class_id');
-    var class_id: number = 0;
+    var class_id: string= "";
     if (id_z !== null) {
-        class_id = parseInt(id_z);
+        class_id = id_z;
     }
 
     let link_jisti = "";
@@ -136,7 +136,7 @@ const SectionTeacher: React.FC = () => {
         })
     }
 
-    const routeChange3 = (description: string, name: string, level_name: string, id: number) => {
+    const routeChange3 = (description: string, name: string, level_name: string, id: string) => {
         let path = '/exercise';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
@@ -331,7 +331,7 @@ const SectionTeacher: React.FC = () => {
                                                         </thead>
                                                         <tbody>
                                                             {
-                                                                exercises.exercises.sort((a, b) => a.id - b.id).map((ele, index) => {
+                                                                exercises.exercises.map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>

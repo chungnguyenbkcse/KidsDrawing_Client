@@ -1,5 +1,5 @@
 export interface IProfile {
-    id: number;
+    id: string;
     profile_image_url: string;
 }
 

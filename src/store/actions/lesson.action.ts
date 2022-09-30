@@ -48,7 +48,7 @@ export function editLesson(lesson: ILesson): IEditLessonActionType {
     return { type: EDIT_LESSON, lesson: lesson };
 }
 
-export function removeLesson(id: number): IRemoveLessonActionType {
+export function removeLesson(id: string): IRemoveLessonActionType {
     return { type: REMOVE_LESSON, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: LessonModificationStatus): ISetModif
 
 interface IAddLessonActionType { type: string, lesson: ILesson };
 interface IEditLessonActionType { type: string, lesson: ILesson };
-interface IRemoveLessonActionType { type: string, id: number };
+interface IRemoveLessonActionType { type: string, id: string };
 interface IChangeSelectedLessonActionType { type: string, lesson: ILesson };
 interface IClearSelectedLessonActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  LessonModificationStatus};

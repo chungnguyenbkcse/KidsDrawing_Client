@@ -33,9 +33,9 @@ const StudentHome: React.FC = () => {
     const numberChildCount: number = classes_students.classes_doing.length + classes_students.classes_done.length;
     const contestCount: number = contest_students.contest_not_open_now.length + contest_students.contest_end.length + contest_students.contest_opening.length;
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     console.log(schedule_time_classes.schedule_time_classes)

@@ -21,9 +21,9 @@ const ClassParent: React.FC = () => {
     const numberClassDoingCount: number = classes_parents.classes_doing.length;
     const numberClassDoneCount: number = classes_parents.classes_done.length;
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
     const { promiseInProgress } = usePromiseTracker();
 

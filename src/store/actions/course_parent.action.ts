@@ -62,7 +62,7 @@ export function editCourseNotRegistedNow(course_parent: ICourseParent): IEditCou
     return { type: EDIT_DOING_COURSE, course_parent: course_parent };
 }
 
-export function removeCourseNotRegistedNow(id: number): IRemoveCourseNotRegistedNowActionType {
+export function removeCourseNotRegistedNow(id: string): IRemoveCourseNotRegistedNowActionType {
     return { type: REMOVE_DOING_COURSE, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editCourseRegisted(course_parent: ICourseParent): IEditCourseReg
     return { type: EDIT_DONE_COURSE, course_parent: course_parent };
 }
 
-export function removeCourseRegisted(id: number): IRemoveCourseRegistedActionType {
+export function removeCourseRegisted(id: string): IRemoveCourseRegistedActionType {
     return { type: REMOVE_DONE_COURSE, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: CourseParentModificationStatus): ISe
 // register_successfull_course_parents
 interface IAddCourseNotRegistedNowActionType { type: string, course_parent: ICourseParent };
 interface IEditCourseNotRegistedNowActionType { type: string, course_parent: ICourseParent };
-interface IRemoveCourseNotRegistedNowActionType { type: string, id: number };
+interface IRemoveCourseNotRegistedNowActionType { type: string, id: string };
 interface IChangeSelectedCourseNotRegistedNowActionType { type: string, course_parent: ICourseParent };
 interface IClearSelectedCourseNotRegistedNowActionType { type: string };
 interface IRemoveCourseNotRegistedNowAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialCourseNotRegistedNowActionType {type: string, course_parent: I
 // not_register_course_parents
 interface IAddCourseRegistedActionType { type: string, course_parent: ICourseParent };
 interface IEditCourseRegistedActionType { type: string, course_parent: ICourseParent };
-interface IRemoveCourseRegistedActionType { type: string, id: number };
+interface IRemoveCourseRegistedActionType { type: string, id: string };
 interface IChangeSelectedCourseRegistedActionType { type: string, course_parent: ICourseParent };
 interface IClearSelectedCourseRegistedActionType { type: string };
 interface IRemoveCourseRegistedAllActionType { type: string }

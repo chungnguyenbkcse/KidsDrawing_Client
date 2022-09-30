@@ -19,9 +19,9 @@ const CartForm: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const user_register_join_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
     var id_x = localStorage.getItem('id');
-    let id: number = 0;
+    let id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     const { promiseInProgress } = usePromiseTracker();
@@ -60,7 +60,7 @@ const CartForm: React.FC = () => {
     }, [path.area, dispatch, id, access_token, refresh_token]);
     
     function handlePayment() {
-        let ids: number[] = []; 
+        let ids: string[] = []; 
         user_register_join_semesters.waiting.map((ele, idx) => {
             return ids.push(ele.id)
         })

@@ -16,16 +16,16 @@ const ResultGradeExamTeacher: React.FC = () => {
     const max = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
     const min = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.min(a, b.score), 0);
     var class_id = localStorage.getItem('class_id');
-    var class_id_: number = 2;
+    var class_id_: string = "";
     if (class_id !== null) {
-        class_id_ = parseInt(class_id);
+        class_id_ = class_id;
     }
 
     var id_y = localStorage.getItem('exercise_id');
-    let exercise_id = 0;
+    let exercise_id = "";
 
     if (id_y !== null) {
-        exercise_id = parseInt(id_y);
+        exercise_id = id_y;
     }
 
 

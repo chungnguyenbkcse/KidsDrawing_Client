@@ -20,9 +20,9 @@ const TeacherHome: React.FC = () => {
     const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
     const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     const { promiseInProgress } = usePromiseTracker();

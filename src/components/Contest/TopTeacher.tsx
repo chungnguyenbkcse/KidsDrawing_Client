@@ -25,7 +25,7 @@ function TopTeacher(props: user_grade_contestListProps): JSX.Element {
     const user_grade_contestElements: (JSX.Element | null)[] = user_grade_contests.userGradeContests.map((user_grade_contest, index) => {
         if (!user_grade_contest) { return null; }
         if (index === user_grade_contests.userGradeContests.length - 1){
-            return (<tr className={`table-row ${(user_grade_contests.selectedUserGradeContest && user_grade_contests.selectedUserGradeContest.id === index) ? "selected" : ""}`}
+            return (<tr className={`table-row `}
                 key={`user_grade_contest_${index}`}>
                 <th scope="row">{index + 1}</th>
                 <td onClick={routeChange}>{user_grade_contest.teacher_name}</td>
@@ -33,7 +33,7 @@ function TopTeacher(props: user_grade_contestListProps): JSX.Element {
                 <th scope="row"></th>
             </tr>);
         }
-        return (<tr className={`table-row ${(user_grade_contests.selectedUserGradeContest && user_grade_contests.selectedUserGradeContest.id === index) ? "selected" : ""}`}
+        return (<tr className={`table-row }`}
             key={`user_grade_contest_${index}`}>
             <th scope="row">{index + 1}</th>
             <td onClick={routeChange}>{user_grade_contest.teacher_name}</td>

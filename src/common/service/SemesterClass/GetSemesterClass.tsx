@@ -1,13 +1,13 @@
 import { fetchDataSuccess, fetchDataError, removeSemesterClassAll, initialSemesterClass, addSemesterClass } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface SemesterClass {
-    id: number;
+    id: string;
     name: string;
-    semester_id: number;
+    semester_id: string;
     registration_time: string;
     semester_name: string;
     course_name: string;
-    course_id: number;
+    course_id: string;
     max_participant: number;
 }
 export function getSemesterClass(dispatch: any) {

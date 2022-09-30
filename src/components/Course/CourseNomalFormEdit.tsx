@@ -42,7 +42,7 @@ const CourseNomalFormEdit: React.FC = () => {
     let course: ICourse | null = courses.selectedCourse;
     console.log(course)
     if (!course || isCreate) {
-        course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
+        course = { id: "", name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: "", art_age_id: "", art_level_id: "", art_type_id: "", create_time: "", update_time: "" };
     }
     useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));

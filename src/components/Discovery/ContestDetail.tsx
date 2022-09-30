@@ -15,7 +15,7 @@ import { getStudentByParent } from "../../common/service/Student/GetStudentByPar
 import Loading from "../../common/components/Loading";
 type Option1 = {
     label: string;
-    value: number;
+    value: string;
 }
 
 const ConestDetailStudent: React.FC = () => {
@@ -31,9 +31,9 @@ const ConestDetailStudent: React.FC = () => {
     })
 
     var id_x = localStorage.getItem('contest_id');
-    let contest_id: number = 0;
+    let contest_id: string = "";
     if (id_x !== null) {
-        contest_id = parseInt(id_x);
+        contest_id = id_x;
     }
 
     console.log(contest_id)
@@ -45,9 +45,9 @@ const ConestDetailStudent: React.FC = () => {
     }
 
     var id_z = localStorage.getItem('id');
-    let id: number = 0;
+    let id: string = "";
     if (id_z !== null) {
-        id = parseInt(id_z);
+        id = id_z;
     }
 
     var id_a = localStorage.getItem('art_age_name');

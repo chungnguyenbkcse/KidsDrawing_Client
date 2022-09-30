@@ -84,7 +84,7 @@ export function editUserRegisterTutorialNotApprovedNow(user_register_tutorial: I
     return { type: EDIT_USER_REGISTER_TUTORIAL_NOT_APPROVED_NOW, user_register_tutorial: user_register_tutorial };
 }
 
-export function removeUserRegisterTutorialNotApprovedNow(id: number): IRemoveUserRegisterTutorialNotApprovedNowActionType {
+export function removeUserRegisterTutorialNotApprovedNow(id: string): IRemoveUserRegisterTutorialNotApprovedNowActionType {
     return { type: REMOVE_USER_REGISTER_TUTORIAL_NOT_APPROVED_NOW, id: id };
 }
 
@@ -113,7 +113,7 @@ export function editUserRegisterTutorialApproved(user_register_tutorial: IUserRe
     return { type: EDIT_USER_REGISTER_TUTORIAL_APPROVED, user_register_tutorial: user_register_tutorial };
 }
 
-export function removeUserRegisterTutorialApproved(id: number): IRemoveUserRegisterTutorialApprovedActionType {
+export function removeUserRegisterTutorialApproved(id: string): IRemoveUserRegisterTutorialApprovedActionType {
     return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED, id: id };
 }
 
@@ -148,7 +148,7 @@ export function editUserRegisterTutorialApprovedToTutorialTemplate(user_register
     return { type: EDIT_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE, user_register_tutorial: user_register_tutorial };
 }
 
-export function removeUserRegisterTutorialApprovedToTutorialTemplate(id: number): IRemoveUserRegisterTutorialApprovedToTutorialTemplateActionType {
+export function removeUserRegisterTutorialApprovedToTutorialTemplate(id: string): IRemoveUserRegisterTutorialApprovedToTutorialTemplateActionType {
     return { type: REMOVE_USER_REGISTER_TUTORIAL_APPROVED_TO_TUTORIAL_TEMPLATE, id: id };
 }
 
@@ -178,7 +178,7 @@ export function editUserRegisterTutorialNotApproved(user_register_tutorial: IUse
     return { type: EDIT_USER_REGISTER_TUTORIAL_NOT_APPROVED, user_register_tutorial: user_register_tutorial };
 }
 
-export function removeUserRegisterTutorialNotApproved(id: number): IRemoveUserRegisterTutorialNotApprovedActionType {
+export function removeUserRegisterTutorialNotApproved(id: string): IRemoveUserRegisterTutorialNotApprovedActionType {
     return { type: REMOVE_USER_REGISTER_TUTORIAL_NOT_APPROVED, id: id };
 }
 
@@ -193,7 +193,7 @@ export function clearSelectedUserRegisterTutorialNotApproved(): IClearSelectedUs
 // register_successfull_user_register_tutorials
 interface IAddUserRegisterTutorialNotApprovedNowActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IEditUserRegisterTutorialNotApprovedNowActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
-interface IRemoveUserRegisterTutorialNotApprovedNowActionType { type: string, id: number };
+interface IRemoveUserRegisterTutorialNotApprovedNowActionType { type: string, id: string };
 interface IChangeSelectedUserRegisterTutorialNotApprovedNowActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IClearSelectedUserRegisterTutorialNotApprovedNowActionType { type: string };
 interface IRemoveUserRegisterTutorialNotApprovedNowAllActionType { type: string }
@@ -202,7 +202,7 @@ interface IInitialUserRegisterTutorialNotApprovedNowActionType {type: string, us
 // not_register_user_register_tutorials
 interface IAddUserRegisterTutorialApprovedActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IEditUserRegisterTutorialApprovedActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
-interface IRemoveUserRegisterTutorialApprovedActionType { type: string, id: number };
+interface IRemoveUserRegisterTutorialApprovedActionType { type: string, id: string };
 interface IChangeSelectedUserRegisterTutorialApprovedActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IClearSelectedUserRegisterTutorialApprovedActionType { type: string };
 interface IRemoveUserRegisterTutorialApprovedAllActionType { type: string }
@@ -212,7 +212,7 @@ interface IInitialUserRegisterTutorialApprovedActionType {type: string, user_reg
 // not_register_user_register_tutorials
 interface IAddUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IEditUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
-interface IRemoveUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, id: number };
+interface IRemoveUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, id: string };
 interface IChangeSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IClearSelectedUserRegisterTutorialApprovedToTutorialTemplateActionType { type: string };
 interface IRemoveUserRegisterTutorialApprovedToTutorialTemplateAllActionType { type: string }
@@ -222,7 +222,7 @@ interface IInitialUserRegisterTutorialApprovedToTutorialTemplateActionType {type
 // register_successfull_user_register_tutorials
 interface IAddUserRegisterTutorialNotApprovedActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IEditUserRegisterTutorialNotApprovedActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
-interface IRemoveUserRegisterTutorialNotApprovedActionType { type: string, id: number };
+interface IRemoveUserRegisterTutorialNotApprovedActionType { type: string, id: string };
 interface IChangeSelectedUserRegisterTutorialNotApprovedActionType { type: string, user_register_tutorial: IUserRegisterTutorial };
 interface IClearSelectedUserRegisterTutorialNotApprovedActionType { type: string };
 interface IRemoveUserRegisterTutorialNotApprovedAllActionType { type: string }

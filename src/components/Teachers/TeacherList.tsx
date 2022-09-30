@@ -28,7 +28,7 @@ function TeacherList(props: userListProps): JSX.Element {
     });
   }
 
-  const onChangeRequest = (teacher_id: number) => {
+  const onChangeRequest = (teacher_id: string) => {
     let path = '/teachers/request-level';
     localStorage.removeItem("teacher_id");
     localStorage.setItem("teacher_id", teacher_id.toString())

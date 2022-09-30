@@ -1,5 +1,5 @@
 export interface INotify {
-    idx: number;
+    idx: string;
     name: string;
     description: string;
     time: string;

@@ -48,7 +48,7 @@ export function editTutorialTemplate(tutorial_template: ITutorialTemplate): IEdi
     return { type: EDIT_TUTORIAL_TEMPLATE, tutorial_template: tutorial_template };
 }
 
-export function removeTutorialTemplate(id: number): IRemoveTutorialTemplateActionType {
+export function removeTutorialTemplate(id: string): IRemoveTutorialTemplateActionType {
     return { type: REMOVE_TUTORIAL_TEMPLATE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateTutorialTemplate(value: TutorialTemplateModi
 
 interface IAddTutorialTemplateActionType { type: string, tutorial_template: ITutorialTemplate };
 interface IEditTutorialTemplateActionType { type: string, tutorial_template: ITutorialTemplate };
-interface IRemoveTutorialTemplateActionType { type: string, id: number };
+interface IRemoveTutorialTemplateActionType { type: string, id: string };
 interface IChangeSelectedTutorialTemplateActionType { type: string, tutorial_template: ITutorialTemplate };
 interface IClearSelectedTutorialTemplateActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  TutorialTemplateModificationStatus};

@@ -5,11 +5,11 @@ import { fetchDataSuccess, fetchDataError,
 } from "../../../store/actions/teacher_register_quantification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherRegisterQuantification {
-    id: number;
-    teacher_id: number;
+    id: string;
+    teacher_id: string;
     teacher_name: string;
-    reviewer_id: number;
-    course_id: number;
+    reviewer_id: string;
+    course_id: string;
     course_name: string;
     art_age_name: string;
     art_type_name: string;

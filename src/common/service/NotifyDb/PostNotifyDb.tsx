@@ -2,7 +2,7 @@ import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_age
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postUserReadNotification } from "../UserReadNotification/PostUserReadNotification";
 
-export function postNotifyDb(data: any, user_id: number) {
+export function postNotifyDb(data: any, user_id: string) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());

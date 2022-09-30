@@ -35,7 +35,7 @@ function CourseMinSign(props: productListProps): JSX.Element  {
 
   const productElements: (JSX.Element | null)[] = data.map(product => {
     if (!product) { return null; }
-    return (<tr className={`table-row ${(products.selectedProduct && products.selectedProduct.id === product.id) ? "selected" : ""}`}
+    return (<tr className={`table-row `}
       key={`product_${product.id}`}>
       <th scope="row">{product.id}</th>
       <td onClick={routeChange}>{product.name}</td>

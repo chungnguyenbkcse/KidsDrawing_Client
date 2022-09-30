@@ -48,7 +48,7 @@ export function editCourseReport(course_report: ICourseReport): IEditCourseRepor
     return { type: EDIT_COURSE_REPORT, course_report: course_report };
 }
 
-export function removeCourseReport(id: number): IRemoveCourseReportActionType {
+export function removeCourseReport(id: string): IRemoveCourseReportActionType {
     return { type: REMOVE_COURSE_REPORT, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: CourseReportModificationStatus): ISe
 
 interface IAddCourseReportActionType { type: string, course_report: ICourseReport };
 interface IEditCourseReportActionType { type: string, course_report: ICourseReport };
-interface IRemoveCourseReportActionType { type: string, id: number };
+interface IRemoveCourseReportActionType { type: string, id: string };
 interface IChangeSelectedCourseReportActionType { type: string, course_report: ICourseReport };
 interface IClearSelectedCourseReportActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  CourseReportModificationStatus};

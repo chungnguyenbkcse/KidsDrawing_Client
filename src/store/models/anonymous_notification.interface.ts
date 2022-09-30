@@ -1,5 +1,5 @@
 export interface IAnonymousNotification {
-    id: number,
+    id: string,
     name: string, 
     description: string,
     time: string

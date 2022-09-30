@@ -73,7 +73,7 @@ export function editStudentLeaveNotApprovedNow(student_leave: IStudentLeave): IE
     return { type: EDIT_STUDENT_LEAVE_NOT_APPROVED_NOW, student_leave: student_leave };
 }
 
-export function removeStudentLeaveNotApprovedNow(id: number): IRemoveStudentLeaveNotApprovedNowActionType {
+export function removeStudentLeaveNotApprovedNow(id: string): IRemoveStudentLeaveNotApprovedNowActionType {
     return { type: REMOVE_STUDENT_LEAVE_NOT_APPROVED_NOW, id: id };
 }
 
@@ -102,7 +102,7 @@ export function editStudentLeaveApproved(student_leave: IStudentLeave): IEditStu
     return { type: EDIT_STUDENT_LEAVE_APPROVED, student_leave: student_leave };
 }
 
-export function removeStudentLeaveApproved(id: number): IRemoveStudentLeaveApprovedActionType {
+export function removeStudentLeaveApproved(id: string): IRemoveStudentLeaveApprovedActionType {
     return { type: REMOVE_STUDENT_LEAVE_APPROVED, id: id };
 }
 
@@ -136,7 +136,7 @@ export function editStudentLeaveNotApproved(student_leave: IStudentLeave): IEdit
     return { type: EDIT_STUDENT_LEAVE_NOT_APPROVED, student_leave: student_leave };
 }
 
-export function removeStudentLeaveNotApproved(id: number): IRemoveStudentLeaveNotApprovedActionType {
+export function removeStudentLeaveNotApproved(id: string): IRemoveStudentLeaveNotApprovedActionType {
     return { type: REMOVE_STUDENT_LEAVE_NOT_APPROVED, id: id };
 }
 
@@ -151,7 +151,7 @@ export function clearSelectedStudentLeaveNotApproved(): IClearSelectedStudentLea
 // register_successfull_student_leaves
 interface IAddStudentLeaveNotApprovedNowActionType { type: string, student_leave: IStudentLeave };
 interface IEditStudentLeaveNotApprovedNowActionType { type: string, student_leave: IStudentLeave };
-interface IRemoveStudentLeaveNotApprovedNowActionType { type: string, id: number };
+interface IRemoveStudentLeaveNotApprovedNowActionType { type: string, id: string };
 interface IChangeSelectedStudentLeaveNotApprovedNowActionType { type: string, student_leave: IStudentLeave };
 interface IClearSelectedStudentLeaveNotApprovedNowActionType { type: string };
 interface IRemoveStudentLeaveNotApprovedNowAllActionType { type: string }
@@ -160,7 +160,7 @@ interface IInitialStudentLeaveNotApprovedNowActionType {type: string, student_le
 // not_register_student_leaves
 interface IAddStudentLeaveApprovedActionType { type: string, student_leave: IStudentLeave };
 interface IEditStudentLeaveApprovedActionType { type: string, student_leave: IStudentLeave };
-interface IRemoveStudentLeaveApprovedActionType { type: string, id: number };
+interface IRemoveStudentLeaveApprovedActionType { type: string, id: string };
 interface IChangeSelectedStudentLeaveApprovedActionType { type: string, student_leave: IStudentLeave };
 interface IClearSelectedStudentLeaveApprovedActionType { type: string };
 interface IRemoveStudentLeaveApprovedAllActionType { type: string }
@@ -170,7 +170,7 @@ interface IInitialStudentLeaveApprovedActionType {type: string, student_leave: I
 // register_successfull_student_leaves
 interface IAddStudentLeaveNotApprovedActionType { type: string, student_leave: IStudentLeave };
 interface IEditStudentLeaveNotApprovedActionType { type: string, student_leave: IStudentLeave };
-interface IRemoveStudentLeaveNotApprovedActionType { type: string, id: number };
+interface IRemoveStudentLeaveNotApprovedActionType { type: string, id: string };
 interface IChangeSelectedStudentLeaveNotApprovedActionType { type: string, student_leave: IStudentLeave };
 interface IClearSelectedStudentLeaveNotApprovedActionType { type: string };
 interface IRemoveStudentLeaveNotApprovedAllActionType { type: string }

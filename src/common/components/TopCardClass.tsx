@@ -4,7 +4,7 @@ import { ICardProperties } from "../types/TopCardClass.types";
 
 function TopCardClass(props: PropsWithChildren<ICardProperties>): ReactElement {
     const history = useHistory();
-    const routeChange = (class_id: number) =>{ 
+    const routeChange = (class_id: string) =>{ 
         let path = '/classes/detail'; 
         localStorage.removeItem("class_id");
         localStorage.setItem("class_id", class_id.toString())

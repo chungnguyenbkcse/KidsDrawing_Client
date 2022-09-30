@@ -11,19 +11,19 @@ export type userListProps = {
 
 const data = [
     {
-        'id': 1,
+        'id': "",
         'class_name': 'CM-1',
         'course_name': 'Chì màu 4-6 tuổi',
         'semester': 'Học kì 1 2022'
     },
     {
-        'id': 2,
+        'id': "",
         'class_name': 'CM-2',
         'course_name': 'Chì màu 4-6 tuổi',
         'semester': 'Học kì 1 2022'
     },
     {
-        'id': 3,
+        'id': "",
         'class_name': 'CM-3',
         'course_name': 'Chì màu 4-6 tuổi',
         'semester': 'Học kì 1 2022'

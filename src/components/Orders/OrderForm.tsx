@@ -61,7 +61,7 @@ const OrderForm: React.FC = () => {
 
             formState.product.value = selectedProduct;
             dispatch(addOrder({
-                id: 0,
+                id: "",
                 name: formState.name.value,
                 amount: formState.amount.value,
                 totalPrice: formState.totalPrice.value,

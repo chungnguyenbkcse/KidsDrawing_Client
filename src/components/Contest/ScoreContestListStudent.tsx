@@ -8,9 +8,9 @@ function ScoreContestListStudent(): JSX.Element {
 
     const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     var id_x = localStorage.getItem('id');
-    let id: number = 0;
+    let id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
     let childs: IUserGradeContestSubmission[] = [];
     user_grade_contest_submissions.userGradeContestSubmissions.map((element, idx) => {
@@ -22,7 +22,7 @@ function ScoreContestListStudent(): JSX.Element {
     const history = useHistory();
 
 
-    const routeChange = (child_id: number) => {
+    const routeChange = (child_id: string) => {
         localStorage.removeItem("child_id");
         localStorage.setItem("child_id", child_id.toString())
         let path = '/contest/detail';
@@ -37,7 +37,7 @@ function ScoreContestListStudent(): JSX.Element {
     console.log(user_grade_contest_submissions.userGradeContestSubmissions)
 
 
-    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => a.student_id - b.student_id).map((student, idx) => {
+    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.map((student, idx) => {
         if (!student) { return null; }
         else if (childs.includes(student)) {
             return (

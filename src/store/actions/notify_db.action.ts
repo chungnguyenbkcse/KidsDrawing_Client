@@ -48,7 +48,7 @@ export function editNotifyDb(notify_db: INotifyDb): IEditNotifyDbActionType {
     return { type: EDIT_NOTIFY_DB, notify_db: notify_db };
 }
 
-export function removeNotifyDb(id: number): IRemoveNotifyDbActionType {
+export function removeNotifyDb(id: string): IRemoveNotifyDbActionType {
     return { type: REMOVE_NOTIFY_DB, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: NotifyDbModificationStatus): ISetMod
 
 interface IAddNotifyDbActionType { type: string, notify_db: INotifyDb };
 interface IEditNotifyDbActionType { type: string, notify_db: INotifyDb };
-interface IRemoveNotifyDbActionType { type: string, id: number };
+interface IRemoveNotifyDbActionType { type: string, id: string };
 interface IChangeSelectedNotifyDbActionType { type: string, notify_db: INotifyDb };
 interface IClearSelectedNotifyDbActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  NotifyDbModificationStatus};

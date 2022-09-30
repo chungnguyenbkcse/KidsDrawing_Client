@@ -40,7 +40,7 @@ const LessonPlan: React.FC = () => {
 
 
   if (!course) {
-    course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "" };
+    course = { id: "", name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: "", art_age_id: "", art_level_id: "", art_type_id: "", create_time: "", update_time: "" };
   }
   let course_id = (course !== null ? course.id : 0)
 
@@ -50,7 +50,7 @@ const LessonPlan: React.FC = () => {
 
 
 
-  let section_template: ISectionTemplate = { id: 0, name: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+  let section_template: ISectionTemplate = { id: "", name: "", creator_id: "", course_id: "", number: 0, teaching_form: false, create_time: "", update_time: "" };
 
   const [contentTutorialSection, setContentTutorialSection] = useState<TutorialSectionTemplate[]>([])
   const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])

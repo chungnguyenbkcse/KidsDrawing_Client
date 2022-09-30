@@ -7,7 +7,7 @@ import { fetchDataSuccess, fetchDataError,
     addContestStudentNew, addContestStudentOpening } from "../../../store/actions/contest_student.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ContestStudent {
-    id: number;
+    id: string;
     name: string;
     description: string;
     max_participant: number;
@@ -21,11 +21,11 @@ interface ContestStudent {
     is_enabled: boolean;
     art_type_name: string;
     art_age_name: string;
-    art_type_id: number;
-    art_age_id: number;
-    student_id: number;
+    art_type_id: string;
+    art_age_id: string;
+    student_id: string;
     student_name: string;
-    creator_id: number;
+    creator_id: string;
     create_time: string;
     update_time: string;
 }

@@ -1,5 +1,5 @@
 export interface ILesson {
-    id: number;
+    id: string;
     start_time: string;
     end_time: string;
 }

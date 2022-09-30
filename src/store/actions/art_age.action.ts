@@ -48,7 +48,7 @@ export function editArtAge(art_age: IArtAge): IEditArtAgeActionType {
     return { type: EDIT_ART_AGE, art_age: art_age };
 }
 
-export function removeArtAge(id: number): IRemoveArtAgeActionType {
+export function removeArtAge(id: string): IRemoveArtAgeActionType {
     return { type: REMOVE_ART_AGE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateArtAge(value: ArtAgeModificationStatus): ISe
 
 interface IAddArtAgeActionType { type: string, art_age: IArtAge };
 interface IEditArtAgeActionType { type: string, art_age: IArtAge };
-interface IRemoveArtAgeActionType { type: string, id: number };
+interface IRemoveArtAgeActionType { type: string, id: string };
 interface IChangeSelectedArtAgeActionType { type: string, art_age: IArtAge };
 interface IClearSelectedArtAgeActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ArtAgeModificationStatus};

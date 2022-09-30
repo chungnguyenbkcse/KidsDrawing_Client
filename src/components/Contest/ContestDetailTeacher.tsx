@@ -29,10 +29,10 @@ const ContestDetailTeacher: React.FC = () => {
     }
 
     var id_y = localStorage.getItem('contest_id');
-    let contest_id = 0;
+    let contest_id = "";
 
     if (id_y !== null) {
-        contest_id = parseInt(id_y);
+        contest_id = id_y;
     }
 
     var id_z = localStorage.getItem('max_participant');

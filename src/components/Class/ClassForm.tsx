@@ -15,7 +15,7 @@ const ClassForm: React.FC = () => {
   const isCreate: boolean = (products.modificationState === ProductModificationStatus.Create);
   
   if (!product || isCreate) {
-    product = { id: 0, name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
+    product = { id: "", name: "", description: "", amount: 0, price: 0, hasExpiryDate: false, category: "" };
   }
 
   const [formState, setFormState] = useState({

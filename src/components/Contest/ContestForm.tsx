@@ -32,23 +32,23 @@ type Options = {
 
 type Option1 = {
   label: string;
-  value: number;
+  value: string;
 }
 
 const ContestForm: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const contests: IContestState | null = useSelector((state: IStateType) => state.contests);
   var id_x = localStorage.getItem('contest_id');
-  let contest_id: number = 0;
+  let contest_id: string = "";
   if (id_x !== null) {
-    contest_id = parseInt(id_x)
+    contest_id = id_x
   }
 
   const { promiseInProgress } = usePromiseTracker();
 
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
-  let contest = { id: 0, name: "", description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0 };
+  let contest = { id: "", name: "", description: "", max_participant: 0, creator_id: "", is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: "", art_type_id: "" };
 
   useEffect(() => {
     trackPromise(getArtType(dispatch))

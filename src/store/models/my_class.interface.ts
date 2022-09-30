@@ -1,6 +1,6 @@
 export interface IMyClass {
-    id: number;
-    creator_id: number;
+    id: string;
+    creator_id: string;
     user_register_teach_semester: number;
     security_code: string;
     name: string;

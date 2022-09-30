@@ -1,7 +1,7 @@
 export interface IContestStudent{
-    id: number;
+    id: string;
     name: string;
-    student_id: number;
+    student_id: string;
     student_name: string;
     description: string;
     max_participant: number;
@@ -13,9 +13,9 @@ export interface IContestStudent{
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: number;
-    art_type_id: number;
-    art_age_id: number;
+    creator_id: string;
+    art_type_id: string;
+    art_age_id: string;
     art_type_name: string;
     art_age_name: string;
     create_time: string;

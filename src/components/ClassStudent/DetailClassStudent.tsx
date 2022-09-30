@@ -41,17 +41,17 @@ const DetailClassStudent: React.FC = () => {
     const numberSectionCount: number = sections.sections.length;
     const numberNotSubmitNowCount: number = exercise_student.exercise_not_submit.length;
     var id_x = localStorage.getItem('id');
-    var id: number = 2;
+    var id: string = "";
     if (id_x !== null) {
-        id = parseInt(id_x);
+        id = id_x;
     }
 
     var id_y = localStorage.getItem('class_id');
 
-    let class_id = 1;
+    let class_id = "";
 
     if (id_y !== null) {
-        class_id = parseInt(id_y);
+        class_id = id_y;
     }
 
     const [checked1, setChecked1] = useState(true);

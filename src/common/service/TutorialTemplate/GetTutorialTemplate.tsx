@@ -1,8 +1,8 @@
 import { fetchDataSuccess, fetchDataError, removeTutorialTemplateAll, initialTutorialTemplate, addTutorialTemplate } from "../../../store/actions/tutorial_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialTemplate {
-    id: number;
-    section_template_id: number;
+    id: string;
+    section_template_id: string;
     name: string;
     description: string;
     create_time: string;

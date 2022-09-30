@@ -48,7 +48,7 @@ export function editClassHasRegisterJoinSemester(class_has_register_join_semeste
     return { type: EDIT_CLASS_HAS_REGISTER_JOIN_SEMESTER, class_has_register_join_semester: class_has_register_join_semester };
 }
 
-export function removeClassHasRegisterJoinSemester(id: number): IRemoveClassHasRegisterJoinSemesterActionType {
+export function removeClassHasRegisterJoinSemester(id: string): IRemoveClassHasRegisterJoinSemesterActionType {
     return { type: REMOVE_CLASS_HAS_REGISTER_JOIN_SEMESTER, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ClassHasRegisterJoinSemesterModifica
 
 interface IAddClassHasRegisterJoinSemesterActionType { type: string, class_has_register_join_semester: IClassHasRegisterJoinSemester };
 interface IEditClassHasRegisterJoinSemesterActionType { type: string, class_has_register_join_semester: IClassHasRegisterJoinSemester };
-interface IRemoveClassHasRegisterJoinSemesterActionType { type: string, id: number };
+interface IRemoveClassHasRegisterJoinSemesterActionType { type: string, id: string };
 interface IChangeSelectedClassHasRegisterJoinSemesterActionType { type: string, class_has_register_join_semester: IClassHasRegisterJoinSemester };
 interface IClearSelectedClassHasRegisterJoinSemesterActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ClassHasRegisterJoinSemesterModificationStatus};

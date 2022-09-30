@@ -1,8 +1,8 @@
 import { fetchDataSuccess, fetchDataError, removeSectionAll, initialSection, addSection } from "../../../store/actions/section.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Section {
-    id: number;
-    class_id: number;
+    id: string;
+    class_id: string;
     name: string;
     description: string;
     number: number;

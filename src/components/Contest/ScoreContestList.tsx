@@ -20,7 +20,7 @@ function ScoreContestList(): JSX.Element {
     const history = useHistory();
 
 
-    const routeChange = (child_id: number) => {
+    const routeChange = (child_id: string) => {
         localStorage.removeItem("child_id");
         localStorage.setItem("child_id", child_id.toString())
         let path = '/contest/detail';
@@ -35,7 +35,7 @@ function ScoreContestList(): JSX.Element {
     console.log(user_grade_contest_submissions.userGradeContestSubmissions)
 
 
-    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => a.student_id - b.student_id).map((student, idx) => {
+    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.map((student, idx) => {
         if (!student) { return null; }
         else if (childs.includes(student)) {
             return (

@@ -40,7 +40,7 @@ export function postTeacherLeave(data: any, idx: any) {
                 dispatch(postNotifyDb({
                     name: `Gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`,
                     description: `Bạn đã gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`
-                }, 1))
+                }, ""))
                 getTeacherLeaveByTeacher(dispatch, data.teacher_id)
                 toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })

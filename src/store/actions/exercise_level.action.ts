@@ -48,7 +48,7 @@ export function editExerciseLevel(exercise_level: IExerciseLevel): IEditExercise
     return { type: EDIT_EXERCISE_LEVEL, exercise_level: exercise_level };
 }
 
-export function removeExerciseLevel(id: number): IRemoveExerciseLevelActionType {
+export function removeExerciseLevel(id: string): IRemoveExerciseLevelActionType {
     return { type: REMOVE_EXERCISE_LEVEL, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ExerciseLevelModificationStatus): IS
 
 interface IAddExerciseLevelActionType { type: string, exercise_level: IExerciseLevel };
 interface IEditExerciseLevelActionType { type: string, exercise_level: IExerciseLevel };
-interface IRemoveExerciseLevelActionType { type: string, id: number };
+interface IRemoveExerciseLevelActionType { type: string, id: string };
 interface IChangeSelectedExerciseLevelActionType { type: string, exercise_level: IExerciseLevel };
 interface IClearSelectedExerciseLevelActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ExerciseLevelModificationStatus};

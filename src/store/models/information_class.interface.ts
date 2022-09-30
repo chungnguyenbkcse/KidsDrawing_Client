@@ -1,5 +1,5 @@
 export interface IInformationClass {
-    id: number,
+    id: string,
     name: string;
     teacher: string;
     security_code: string;

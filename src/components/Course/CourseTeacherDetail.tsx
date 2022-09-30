@@ -24,9 +24,9 @@ const CourseTeacherDetail: React.FC = () => {
     }
 
     var id_y = localStorage.getItem("semester_class_id");
-    let semester_class_id = 0;
+    let semester_class_id = "";
     if (id_y !== null) {
-        semester_class_id = parseInt(id_y)
+        semester_class_id = id_y
     }
 
     function handleRegister() {

@@ -33,9 +33,9 @@ const ResultContest: React.FC = () => {
     
 
     var id_x = localStorage.getItem('contest_id');
-    let contest_id: number = 0;
+    let contest_id: string = "";
     if (id_x !== null){
-        contest_id = parseInt(id_x)
+        contest_id = id_x
     }
 
     const { promiseInProgress } = usePromiseTracker();

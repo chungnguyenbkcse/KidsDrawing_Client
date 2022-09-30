@@ -27,9 +27,9 @@ const SectionTemplate: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("");
     
     var id_x = localStorage.getItem('course_id');
-    let course_id: number = 0;
+    let course_id: string = "";
     if (id_x != null){
-        course_id = parseInt(id_x);
+        course_id = id_x;
     }
 
     const { promiseInProgress } = usePromiseTracker();

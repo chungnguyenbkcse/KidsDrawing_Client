@@ -28,6 +28,7 @@ import "@syncfusion/ej2-popups/styles/material.css";
 import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
+import { ToastContainer } from "react-toastify";
 
 
 const ParentHome: React.FC = () => {
@@ -133,7 +134,7 @@ const ParentHome: React.FC = () => {
             </div> : <Fragment>
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
+                <ToastContainer />
                 <div className="row">
                     <TopCard title="TÀI KHOẢN CON" text={`${numberChildCount}`} icon="user" class="primary" />
                     <TopCard title="SỐ TIỀN" text={`${totalMoney}`} icon="donate" class="primary" />

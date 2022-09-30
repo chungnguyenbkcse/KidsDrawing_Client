@@ -13,6 +13,7 @@ import NumberInput from "../../common/components/NumberInput";
 import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
 import { toast } from "react-toastify";
+import SelectKeyValueMutiple2 from "../../common/components/SelectKeyValueMutiple2";
 
 export type semesterClassListProps = {
   isCheck: (value: boolean) => void;
@@ -176,6 +177,8 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
     saveForm(formState, saveUserFn);
   }
 
+  console.log(listLessonId)
+
   function saveForm(formState: ISemesterClassFormState, saveFn: Function): void {
     if (semester_classe) {
       let lesson_times: Option1s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
@@ -257,6 +260,8 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
 
   }, [total]) */
   function hasFormMutipleValueChanged1(value: number, index: number) {
+
+    console.log(listScheduleItemId)
     if (listScheduleItemId.length === 0) {
       setListScheduleItemId([...listScheduleItemId, { "key": index, "value": value }])
     }
@@ -282,6 +287,9 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   console.log(listScheduleItemId)
 
   function hasFormMutipleValueChanged2(value: string, index: number) {
+    console.log(value)
+    console.log(index)
+
     if (listLessonId.length === 0) {
       setListLessonId([...listLessonId, { "key": index, "value": value }])
     }
@@ -391,7 +399,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
                           />
                         </div>
                         <div className="form-group col-md-6">
-                          <SelectKeyValueMutiple
+                          <SelectKeyValueMutiple2
                             value={isCreate ? 0 : lesson_time_list[index].value}
                             inputClass={`schedule_item_lesson_time_${index}`}
                             index={index}

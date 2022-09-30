@@ -70,7 +70,7 @@ function AccountChildForm(props: lessonListProps): JSX.Element {
                     phone: null,
                     address: null,
                     parent_id: localStorage.getItem('id'),
-                    roleNames: ["PARENT_USER"]
+                    roleNames: ["STUDENT_USER"]
                 }, idx))
             }
 

@@ -56,20 +56,20 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
     if (isFormInvalid()) {
       return;
     }
+    const id = toast.loading("Yêu cầu đang được gửi. Vui lòng đợi giây lát...", {
+      position: toast.POSITION.TOP_CENTER
+    });
+
     props.isCheck(false);
 
     var url = await setImageAction();
 
     let saveUserFn: Function = (isCreate) ? addTeacherRegisterQuatificationNotApprovedNow : editTeacherRegisterQuatificationNotApproved;
-    saveForm(formState, saveUserFn, url);
+    saveForm(formState, saveUserFn, url, id);
   }
 
-  function saveForm(formState: ITeacherRegisterLevelFormState, saveFn: Function, url: string): void {
+  function saveForm(formState: ITeacherRegisterLevelFormState, saveFn: Function, url: string, idx: any): void {
     if (teacher_register_not_approved) {
-      
-      const id = toast.loading("Yêu cầu đang được gửi. Vui lòng đợi giây lát...", {
-        position: toast.POSITION.TOP_CENTER
-      });
       
       if (saveFn === addTeacherRegisterQuatificationNotApprovedNow) {
         dispatch(postTeaherLevel({
@@ -77,7 +77,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
             course_id: formState.course_id.value,
             degree_photo_url: url,
             status: "Not approved now"
-        }, id));
+        }, idx));
       }
       else {
         dispatch(putTeacherRegisterLevel(teacher_register_not_approved.id, {
@@ -85,7 +85,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
             course_id: formState.course_id.value,
             degree_photo_url: url,
             status: "Not approved now"
-        }, id));
+        }, idx));
       }
 
       console.log(saveFn)

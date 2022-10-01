@@ -16,7 +16,6 @@ import { ISemester } from "../../store/models/semester.interface";
 import { getMyClass } from "../../common/service/MyClass/GetMyClass";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
-import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { addNotification } from "../../store/actions/notifications.action";
 import { logout } from "../../store/actions/account.actions";
@@ -36,6 +35,7 @@ import { postScheduleClass } from "../../common/service/MyClass/PostScheduleClas
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getSemesterNext } from "../../common/service/semester/GetSemesterNext";
+import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 
 type Options = {
     name: string;

@@ -21,12 +21,12 @@ function SelectKeyValueNotField(props: SelectNotFieldProps): JSX.Element {
         console.log(props.inputClass)
 
         console.log(elementValue)
-        props.onChange({ value: parseInt(elementValue), error: error, touched: touched});
+        props.onChange({ value: elementValue, error: error, touched: touched});
 
         setTouch(true);
         setError(error);
         setHtmlClass(validClass);
-        setValue(parseInt(elementValue));
+        setValue(elementValue);
     }
 
     //console.log(props.options)
@@ -45,7 +45,7 @@ function SelectKeyValueNotField(props: SelectNotFieldProps): JSX.Element {
                 id={`${props.id}`}
                 className={`form-control ${props.inputClass ? props.inputClass : ""} ${htmlClass}`}
                 onChange={onValueChanged}>
-                <option value= {0}>Choose...</option>
+                <option value= {""}>Choose...</option>
                 {getOptions}
             </select>
 

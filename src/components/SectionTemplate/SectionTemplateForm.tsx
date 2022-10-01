@@ -186,32 +186,17 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
             let lst: PageContent[] = [...xx, contentPage] ;
 
-            console.log(totalPage)
-            console.log(lst)
+            
+            console.log(tutorial_template_pages !== null ? tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number): "")
+            console.log(lst.sort((a, b) => a.page - b.page))
             if (tutorial_template_pages !== null){
-                if (totalPage <= tutorial_template_pages.tutorialTemplatePages.length) {
-                    tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, index) => {
-                        if (totalPage > index){
-                            dispatch(putTutorialTemplatePage(ele.id, {
-                                description: lst.sort((a, b) => a.page - b.page)[index].content,
-                                name: ele.name,
-                                tutorial_template_id: ele.tutorial_template_id,
-                                number: lst.sort((a, b) => a.page - b.page)[index].page
-                            }))
-                        }
-                        else {
-                            dispatch(deleteTutorialTemplatePage(ele.id))
-                        }
-                        return null
-                    })
-                }
-                else {
-                    lst.map((ele, index) => {
-                        if (index < tutorial_template_pages.tutorialTemplatePages.length){
+                if (lst.sort((a, b) => a.page - b.page).length >= tutorial_template_pages.tutorialTemplatePages.length) {
+                    lst.sort((a, b) => a.page - b.page).map((ele, index) => {
+                        if (tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).length > index){
                             dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].id, {
                                 description: ele.content,
                                 name: tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].name,
-                                tutorial_template_id: tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[0].tutorial_template_id,
+                                tutorial_template_id: tutorial_template_id,
                                 number: ele.page
                             }))
                         }
@@ -226,6 +211,22 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                         return null
                     })
                 }
+                else {
+                    tutorial_template_pages.tutorialTemplatePages.map((ele, index) => {
+                        if (index < lst.sort((a, b) => a.page - b.page).length){
+                            dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].id, {
+                                description: lst.sort((a, b) => a.page - b.page)[index].content,
+                                name: tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].name,
+                                tutorial_template_id: tutorial_template_id,
+                                number: lst.sort((a, b) => a.page - b.page)[index].page
+                            }))
+                        }
+                        else {
+                            dispatch(deleteTutorialTemplatePage(ele.id))
+                        }
+                        return null
+                    })
+                }
             }
 
             toast.update(idx, { render: "Chỉnh giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
@@ -234,7 +235,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
             setTimeout(function () {
                 routeHome();
-            }, 2000); 
+            }, 2000);  
         }
     }
 

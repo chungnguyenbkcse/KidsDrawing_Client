@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
 import { IStateType, IContestState, IArtTypeState, IArtAgeState, IUserState, IUserGradeContestState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { ContestModificationStatus } from "../../store/models/contest.interface";
+import { ContestModificationStatus, IContest } from "../../store/models/contest.interface";
 import TextInput from "../../common/components/TextInput";
 import { editContest, clearSelectedContest, setModificationState, addContest } from "../../store/actions/contest.action";
 import NumberInput from "../../common/components/NumberInput";
@@ -24,6 +24,8 @@ import { IUserGradeContest } from "../../store/models/user_grade_contest.interfa
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { toast, ToastContainer } from "react-toastify";
+import { logout } from "../../store/actions/account.actions";
+import jwt_decode from "jwt-decode";
 
 type Options = {
   name: string;
@@ -38,6 +40,7 @@ type Option1 = {
 const ContestForm: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const contests: IContestState | null = useSelector((state: IStateType) => state.contests);
+  var contest: IContest | null = contests.selectedContest;
   var id_x = localStorage.getItem('contest_id');
   let contest_id: string = "";
   if (id_x !== null) {
@@ -48,8 +51,9 @@ const ContestForm: React.FC = () => {
 
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
-  let contest = { id: "", name: "", description: "", max_participant: 0, creator_id: "", is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: "", art_type_id: "" };
-
+  if (isCreate || contest === null){
+      contest = { id: "", name: "", total_contest_submission: 0, total_contest_submission_graded: 0, total_register_contest: 0,  description: "", max_participant: 0, creator_id: "", is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: "", art_type_id: "", art_age_name: "", art_type_name: "" };
+  }
   useEffect(() => {
     trackPromise(getArtType(dispatch))
     trackPromise(getArtAge(dispatch))
@@ -57,6 +61,44 @@ const ContestForm: React.FC = () => {
     trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
   }, [dispatch, contest_id])
 
+
+    let access_token = localStorage.getItem("access_token");
+    let refresh_token = localStorage.getItem("refresh_token");
+    useEffect(() => {
+        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
+            let access_token_decode: any = jwt_decode(access_token)
+            let refresh_token_decode: any = jwt_decode(refresh_token)
+            let exp_access_token_decode = access_token_decode.exp;
+            let exp_refresh_token_decode = refresh_token_decode.exp;
+            let now_time = Date.now() / 1000;
+            console.log(exp_access_token_decode)
+            console.log(now_time)
+            if (exp_access_token_decode < now_time) {
+                if (exp_refresh_token_decode < now_time) {
+                    localStorage.removeItem('access_token') // Authorization
+                    localStorage.removeItem('refresh_token')
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('id')
+                    localStorage.removeItem('contest_id')
+                    localStorage.removeItem('schedule_id')
+                    dispatch(logout())
+                }
+                else {
+                    trackPromise(getArtAge(dispatch))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getTeacher(dispatch))
+                    trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
+                }
+            }
+            else {
+                trackPromise(getArtAge(dispatch))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getTeacher(dispatch))
+                trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
+            }
+        }
+    }, [dispatch, access_token, refresh_token])
   
 
   const mytypes: IArtTypeState = useSelector((state: IStateType) => state.art_types);

@@ -57,7 +57,11 @@ function ContestNotOnYetList(props: contestListProps): JSX.Element {
             <td>{strDate1.substring(0, 10) + " " + strDate1.substring(11,19)}</td>
             <td>{strDate2.substring(0, 10) + " " + strDate2.substring(11,19)}</td>
             <td>
-                <button type="button" className="btn btn-primary" onClick={() => routeEdit(contest)}>Chỉnh sửa thông tin</button>
+                <button type="button" className="btn btn-primary" onClick={() => {
+                    if (props.onSelect) props.onSelect(contest);
+                    dispatch(setModificationState(ContestModificationStatus.Edit))
+                    routeEdit(contest)
+                }}>Chỉnh sửa thông tin</button>
             </td>
             <td>
                 <button type="button" className="btn btn-danger" onClick={() => {

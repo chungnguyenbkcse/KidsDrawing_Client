@@ -1,11 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IContestState, IArtLevelState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
+import { IStateType, IContestState } from "../../store/models/root.interface";
 import { IContest } from "../../store/models/contest.interface";
 import { useHistory } from "react-router-dom";
-import { IArtLevel } from "../../store/models/art_level.interface";
-import { IArtType } from "../../store/models/art_type.interface";
-import { IArtAge } from "../../store/models/art_age.interface";
 import { formatDate } from "../../common/components/ConverDate";
 
 export type contestListProps = {
@@ -22,50 +19,6 @@ type Options = {
 function ContestEndList(props: contestListProps): JSX.Element {
     const contests: IContestState = useSelector((state: IStateType) => state.contests);
     const history = useHistory();
-    const levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
-    const listLevel: IArtLevel[] = levels.artLevels
-    const listLevels: Options[] = [];
-    listLevel.map((ele) => {
-        let item: Options = { "name": ele.name, "value": ele.id }
-        return listLevels.push(item)
-    })
-
-    const mytypes: IArtTypeState = useSelector((state: IStateType) => state.art_types);
-    const listMytype: IArtType[] = mytypes.artTypes
-    const listMytypes: Options[] = [];
-    listMytype.map((ele) => {
-        let item: Options = { "name": ele.name, "value": ele.id }
-        return listMytypes.push(item)
-    })
-
-    const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
-    const listArtAge: IArtAge[] = art_ages.artAges
-    const listArtAges: Options[] = [];
-    listArtAge.map((ele) => {
-        let item: Options = { "name": ele.name, "value": ele.id }
-        return listArtAges.push(item)
-    })
-
-    let typeList: string[] = []
-
-    contests.contests.map((contest_item) => {
-        return mytypes.artTypes.forEach(element => {
-            if (element.id === contest_item.art_type_id) {
-                return typeList.push(element.name)
-            }
-        });
-    })
-
-
-
-    let ageList: string[] = []
-    contests.contests.map((contest_item) => {
-        return art_ages.artAges.forEach(element => {
-            if (element.id === contest_item.art_age_id) {
-                return ageList.push(element.name)
-            }
-        });
-    })
 
     const routeChange = (contest_id: string) => {
         localStorage.removeItem('contest_id');
@@ -91,8 +44,8 @@ function ContestEndList(props: contestListProps): JSX.Element {
             key={`contest_${contest.id}`}>
             <th scope="row">{index + 1}</th>
             <td onClick={() => routeChange(contest.id)}>{contest.name}</td>
-            <td>{typeList[index]}</td>
-            <td>{ageList[index]}</td>
+            <td>{contest.art_type_name}</td>
+            <td>{contest.art_age_name}</td>
             <td>{strDate1.substring(0, 10) + " " + strDate1.substring(11,19)}</td>
             <td>{strDate2.substring(0, 10) + " " + strDate2.substring(11,19)}</td>
         </tr>);

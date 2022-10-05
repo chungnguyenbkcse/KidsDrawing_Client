@@ -14,6 +14,8 @@ export interface IContest {
     creator_id: string;
     art_type_id: string;
     art_age_id: string;
+    art_type_name: string;
+    art_age_name: string;
     create_time: string;
     update_time: string;
 }

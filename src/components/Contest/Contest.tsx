@@ -16,11 +16,7 @@ import ContestEndList from "./ContestEndList";
 import ContestNotOnYetList from "./ContestNotOnYetList";
 import { useHistory } from "react-router-dom";
 import { deleteContest } from "../../common/service/Contest/DeleteContest";
-import { getArtType } from "../../common/service/ArtType/GetArtType";
-import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
-import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { getContest } from "../../common/service/Contest/GetContest";
-import { getTeacher } from "../../common/service/Teacher/GetTeacher";
 import { formatDate } from "../../common/components/ConverDate";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
@@ -95,19 +91,11 @@ const Contest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getTeacher(dispatch))
                     trackPromise(getContest(dispatch))
-                    trackPromise(getArtType(dispatch))
-                    trackPromise(getArtLevel(dispatch))
-                    trackPromise(getArtAge(dispatch))
                 }
             }
             else {
-                trackPromise(getTeacher(dispatch))
                 trackPromise(getContest(dispatch))
-                trackPromise(getArtType(dispatch))
-                trackPromise(getArtLevel(dispatch))
-                trackPromise(getArtAge(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token])

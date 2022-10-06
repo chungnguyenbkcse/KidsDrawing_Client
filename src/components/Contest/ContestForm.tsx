@@ -98,7 +98,7 @@ const ContestForm: React.FC = () => {
                 trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
             }
         }
-    }, [dispatch, access_token, refresh_token])
+    }, [dispatch, access_token, refresh_token, contest_id])
   
 
   const mytypes: IArtTypeState = useSelector((state: IStateType) => state.art_types);

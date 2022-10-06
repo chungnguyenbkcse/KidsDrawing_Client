@@ -2,14 +2,7 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { IAnonymousNotificationState, IContestState, ICourseState, IScheduleTimeClassState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
-import { getTeacher } from "../../common/service/Teacher/GetTeacher";
-import { getCourse } from "../../common/service/Course/GetCourse";
-import { getContest } from "../../common/service/Contest/GetContest";
-import { getStudent } from "../../common/service/Student/GetStudent";
-import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
-import { getParent } from "../../common/service/Parent/GetParent";
-import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
+import { IAnonymousNotificationState, IScheduleTimeClassState, IStateType} from "../../store/models/root.interface";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
@@ -33,14 +26,18 @@ import "@syncfusion/ej2-react-schedule/styles/material.css";
 
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import Loading from "../../common/components/Loading";
+import { getTotalMoney } from "../../common/service/UserRegisterJoinSemester/GetTotalMoney";
+import { getTotalTeacher } from "../../common/service/Teacher/GetTotalTeacher";
+import { getTotalParent } from "../../common/service/Parent/GetTotalParent";
+import { getTotalStudent } from "../../common/service/Student/GetTotalStudent";
+import { getTotalCourse } from "../../common/service/Course/GetTotalCourse";
+import { getTotalContest } from "../../common/service/Contest/GetTotalContest";
 
 
 
 
 
 const Home: React.FC = () => {
-  const courses: ICourseState = useSelector((state: IStateType) => state.courses);
-  const totalCourseAmount: number = courses.courses.length;
   const { promiseInProgress } = usePromiseTracker();
 
   const [popup1, setPopup1] = useState(false);
@@ -53,18 +50,51 @@ const Home: React.FC = () => {
     setPopup1(false);
   }
 
-  const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
-  const totalPrice: number = userRegisterJoinSemesters.completed.reduce((prev, next) => prev + ((next.price) || 0), 0);
-  //const numberItemsCount: number =courses.courses.length;
-  //const totalPrice: number =courses.courses.reduce((prev, next) => prev + ((next.price * next.amount) || 0), 0);
-  const contests: IContestState = useSelector((state: IStateType) => state.contests);
   const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
-  const totalContestAmount: number = contests.contests.length;
 
-  const users: IUserState = useSelector((state: IStateType) => state.users);
-  const numberStudentsCount: number = users.students.length;
-  const numberTeachersCount: number = users.teachers.length;
-  const numberParentsCount: number = users.parents.length;
+  var id_x = localStorage.getItem('total_student');
+  let  numberStudentsCount: number = 0;
+
+  if (id_x !== null) {
+    numberStudentsCount = parseInt(id_x)
+  }
+
+  var id_y = localStorage.getItem('total_parent');
+  let  numberParentsCount: number = 0;
+
+  if (id_y !== null) {
+    numberParentsCount = parseInt(id_y)
+  }
+
+  var id_z = localStorage.getItem('total_teacher');
+  let  numberTeachersCount: number = 0;
+
+  if (id_z !== null) {
+    numberTeachersCount = parseInt(id_z)
+  }
+
+  var id_k = localStorage.getItem('total_course');
+  let  numberCoursesCount: number = 0;
+
+  if (id_k !== null) {
+    numberCoursesCount = parseInt(id_k)
+  }
+
+  var id_l = localStorage.getItem('total_contest');
+  let  numberContestsCount: number = 0;
+
+  if (id_l !== null) {
+    numberContestsCount = parseInt(id_l)
+  }
+
+  var id_m = localStorage.getItem('total_money');
+  let  total_money: number = 0;
+
+  if (id_m !== null) {
+    total_money = parseFloat(id_m)
+  }
+  
+
 
   const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
   console.log(schedule_time_classes)
@@ -112,24 +142,22 @@ const Home: React.FC = () => {
           dispatch(logout())
         }
         else {
-          trackPromise(getUserRegisterJoinSemester(dispatch))
-          trackPromise(getSemesterClass(dispatch))
-          trackPromise(getTeacher(dispatch))
-          trackPromise(getCourse(dispatch))
-          trackPromise(getContest(dispatch))
-          trackPromise(getStudent(dispatch))
-          trackPromise(getParent(dispatch))
+          trackPromise(getTotalMoney(dispatch))
+          trackPromise(getTotalTeacher(dispatch))
+          trackPromise(getTotalParent(dispatch))
+          trackPromise(getTotalStudent(dispatch))
+          trackPromise(getTotalCourse(dispatch))
+          trackPromise(getTotalContest(dispatch))
           trackPromise(getScheduleTimeClass(dispatch))
         }
       }
       else {
-        trackPromise(getUserRegisterJoinSemester(dispatch))
-        trackPromise(getSemesterClass(dispatch))
-        trackPromise(getTeacher(dispatch))
-        trackPromise(getCourse(dispatch))
-        trackPromise(getContest(dispatch))
-        trackPromise(getStudent(dispatch))
-        trackPromise(getParent(dispatch))
+        trackPromise(getTotalMoney(dispatch))
+        trackPromise(getTotalTeacher(dispatch))
+        trackPromise(getTotalParent(dispatch))
+        trackPromise(getTotalStudent(dispatch))
+        trackPromise(getTotalCourse(dispatch))
+        trackPromise(getTotalContest(dispatch))
         trackPromise(getScheduleTimeClass(dispatch))
       }
     }
@@ -150,9 +178,9 @@ const Home: React.FC = () => {
         <h1 className="h3 mb-2 text-gray-800">Trang chủ</h1>
 
         <div className="row">
-          <TopCard title="KHÓA HỌC" text={`${totalCourseAmount}`} icon="book" class="primary" />
-          <TopCard title="CUỘC THI" text={`${totalContestAmount}`} icon="book" class="danger" />
-          <TopCard title="DOANH THU" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
+          <TopCard title="KHÓA HỌC" text={`${numberCoursesCount}`} icon="book" class="primary" />
+          <TopCard title="CUỘC THI" text={`${numberContestsCount}`} icon="book" class="danger" />
+          <TopCard title="DOANH THU" text={`$${total_money}`} icon="dollar-sign" class="success" />
         </div>
 
         <div className="row">

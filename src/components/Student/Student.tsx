@@ -11,7 +11,6 @@ import {clearSelectedUser, setModificationState, changeSelectedUser, removeStude
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
 import { deleteUser } from "../../common/service/User/DeleteUser";
 import { getStudent } from "../../common/service/Student/GetStudent";
-import { getParent } from "../../common/service/Parent/GetParent";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -53,17 +52,21 @@ const Student: React.FC = () => {
                 }
                 else {
                     trackPromise(getStudent(dispatch))
-                    trackPromise(getParent(dispatch))
+                    console.log("hello")
                 }
             }
             else {
                 trackPromise(getStudent(dispatch))
-                trackPromise(getParent(dispatch))
+                console.log("hello 1")
             }
         }
+        
+    }, [dispatch, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(clearSelectedUser());
         dispatch(updateCurrentPath("Học sinh", "Danh sách"));
-    }, [path.area, dispatch, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     function onUserSelect(user: IUser): void {
         dispatch(changeSelectedUser(user));

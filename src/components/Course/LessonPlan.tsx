@@ -42,7 +42,12 @@ const LessonPlan: React.FC = () => {
   if (!course) {
     course = { id: "", name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: "", art_age_id: "", art_level_id: "", art_type_id: "", create_time: "", update_time: "" };
   }
-  let course_id = (course !== null ? course.id : 0)
+
+  var id_x = localStorage.getItem('course_id');
+  let course_id = ""
+  if (id_x !== null) {
+    course_id = id_x;
+  }
 
   useEffect(() => {
     dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
@@ -119,7 +124,6 @@ const LessonPlan: React.FC = () => {
       console.log(res)
 
       if (saveFn === addSectionTemplate && course !== null) {
-        let course_id = (course !== null ? course.id : 0)
         res.map((contentSection) => {
           return dispatch(postSectionTemplate(contentSection.tutorial, {
             name: contentSection.name,
@@ -131,12 +135,12 @@ const LessonPlan: React.FC = () => {
         })
       } 
 
-      dispatch(clearSelectedSectionTemplate());
+      /* dispatch(clearSelectedSectionTemplate());
       dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
       toast.update(id, { render: "Thêm trình độ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
       setTimeout(function () {
         routeHome();
-      }, 2000);
+      }, 2000); */
     }
   }
 

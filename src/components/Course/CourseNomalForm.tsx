@@ -17,7 +17,6 @@ import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { useHistory, useLocation } from "react-router-dom";
-import { getCourse } from "../../common/service/Course/GetCourse";
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
 import { toast, ToastContainer } from "react-toastify";
@@ -50,7 +49,6 @@ const CourseNomalForm: React.FC = () => {
     }, [path.area, dispatch]);
 
     useEffect(() => {
-        trackPromise(getCourse(dispatch))
         trackPromise(getArtType(dispatch))
         trackPromise(getArtLevel(dispatch))
         trackPromise(getArtAge(dispatch))

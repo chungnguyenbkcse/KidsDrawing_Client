@@ -14,13 +14,8 @@ import {
 import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
 import { getCourse } from "../../common/service/Course/GetCourse";
-import { getArtType } from "../../common/service/ArtType/GetArtType";
-import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
-import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 import { addNotification } from "../../store/actions/notifications.action";
 import { deleteCourse } from "../../common/service/Course/DeleteCourse";
-import { getSemester } from "../../common/service/semester/GetSemester";
-import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSectionTemplate";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
@@ -67,20 +62,10 @@ const Course: React.FC = () => {
                 }
                 else {
                     trackPromise(getCourse(dispatch))
-                    trackPromise(getSemester(dispatch))
-                    trackPromise(getArtType(dispatch))
-                    trackPromise(getArtLevel(dispatch))
-                    trackPromise(getArtAge(dispatch))
-                    trackPromise(getSectionTemplate(dispatch))
                 }
             }
             else {
                 trackPromise(getCourse(dispatch))
-                trackPromise(getSemester(dispatch))
-                trackPromise(getArtType(dispatch))
-                trackPromise(getArtLevel(dispatch))
-                trackPromise(getArtAge(dispatch))
-                trackPromise(getSectionTemplate(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token])

@@ -39,7 +39,7 @@ export function postTeaherLevel(teacher_level: any, idx: any) {
                 dispatch(postNotifyDb({
                     name: `Gửi yêu cầu đăng kí trình độ!`,
                     description: `Giáo viên gửi yêu cầu đăng kí trình độ!`
-                }, ""))
+                }, "admin"))
                 toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });           
                 dispatch(fetchDataSuccess(teacher_level))
                 getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_level.teacher_id)

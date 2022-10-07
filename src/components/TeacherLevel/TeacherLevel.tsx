@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
-import { getCourse } from "../../common/service/Course/GetCourse";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
@@ -17,6 +15,7 @@ import TeacherLevelList from "./TeacherLevelList";
 import TeacherLevelNotApprovedNowList from "./TeacherLevelNotApprovedNowList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getCourseNewForTeacher } from "../../common/service/Course/GetNewCourseForTeacher";
 
 const TeacherLevel: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -57,14 +56,12 @@ const TeacherLevel: React.FC = () => {
                 }
                 else {
                     trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                    trackPromise(getUserById(dispatch, id))
-                    trackPromise(getCourse(dispatch))
+                    trackPromise(getCourseNewForTeacher(dispatch, id))
                 }
             }
             else {
                 trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                trackPromise(getUserById(dispatch, id))
-                trackPromise(getCourse(dispatch))
+                trackPromise(getCourseNewForTeacher(dispatch, id))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);

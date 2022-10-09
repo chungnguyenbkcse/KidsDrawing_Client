@@ -160,37 +160,44 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function handleRemove() {
         if (tutorial_template_pages !== null){
-            const k = currentPage;
-            let x = totalPage - 1;
-            setTotalPage(x)
-
-            const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                position: toast.POSITION.TOP_CENTER
-            });
-            if (k === tutorial_template_pages.tutorialTemplatePages.length) {
-                let y = k - 1;
-                setCurrentPage(y)
-                dispatch(deleteTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages[k-1].id))
-                handleBackPage()
+            if (checkCreateNew === true) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER
+                });
             }
             else {
-                tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, idx) => {
-                    if (k -1 === ele.number) {
-                        dispatch(deleteTutorialTemplatePage(ele.id));
-                    }
-                    else if (ele.number > k - 1 ) {
-                        dispatch(putTutorialTemplatePage1(ele.id, {
-                            description: ele.description,
-                            name: ele.name,
-                            tutorial_template_id: tutorial_template_id,
-                            number: ele.number - 1
-                        }))
-                    }
-                    return 2
-                })
-                handleBackPage()
+                const k = currentPage;
+                let x = totalPage - 1;
+                setTotalPage(x)
+    
+                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                    position: toast.POSITION.TOP_CENTER
+                });
+                if (k === tutorial_template_pages.tutorialTemplatePages.length) {
+                    let y = k - 1;
+                    setCurrentPage(y)
+                    dispatch(deleteTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages[k-1].id))
+                    handleBackPage()
+                }
+                else {
+                    tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, idx) => {
+                        if (k -1 === ele.number) {
+                            dispatch(deleteTutorialTemplatePage(ele.id));
+                        }
+                        else if (ele.number > k - 1 ) {
+                            dispatch(putTutorialTemplatePage1(ele.id, {
+                                description: ele.description,
+                                name: ele.name,
+                                tutorial_template_id: tutorial_template_id,
+                                number: ele.number - 1
+                            }))
+                        }
+                        return 2
+                    })
+                    handleBackPage()
+                }
+                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             }
-            toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
         }
     }
 
@@ -326,27 +333,41 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function handleBackPage () {
         if (tutorial_template_pages !== null) {
-            let x = currentPage - 1;
-            setCurrentPage(x)
-            console.log(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number))
-            setTextHtml(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1].description)
-            setChecked(false)
+            if (checkCreateNew === true) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER
+                });
+            }
+            else {
+                let x = currentPage - 1;
+                setCurrentPage(x)
+                console.log(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number))
+                setTextHtml(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1].description)
+                setChecked(false)
+                setValue("")
+            }
         }     
-        setValue("")
     }
 
 
 
     function handleNewPage() {
-        let x = currentPage + 1;
-        setCurrentPage(x)
-        setCheckCreateNew(true)
-        let y = totalPage + 1;
-        setTotalPage(y)
-        console.log(currentPage - 1)
-        setChecked(false)
-        setTextHtml("")
-        setValue("")
+        if (checkCreateNew === true) {
+            toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                position: toast.POSITION.TOP_CENTER
+            });
+        }
+        else {
+            let x = currentPage + 1;
+            setCurrentPage(x)
+            setCheckCreateNew(true)
+            let y = totalPage + 1;
+            setTotalPage(y)
+            console.log(currentPage - 1)
+            setChecked(false)
+            setTextHtml("")
+            setValue("")
+        }
     }
 
     

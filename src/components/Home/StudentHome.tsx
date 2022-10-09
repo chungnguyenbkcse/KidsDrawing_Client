@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
@@ -46,8 +46,6 @@ const StudentHome: React.FC = () => {
     }
 
     console.log(schedule_time_classes.schedule_time_classes)
-
-    const [searchTerm, setSearchTerm] = useState("");
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -125,28 +123,8 @@ const StudentHome: React.FC = () => {
                     <TopCard title="CUỘC THI" text={`${total_contest_student}`} icon="book" class="primary" />
                 </div>
 
-                <div className="row" id="search-box">
-                    <div className="col-xl-12 col-lg-12">
-                        <div className="input-group" id="search-content">
-                            <div className="form-outline">
-                                <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
-                                    setSearchTerm(event.target.value)
-                                    console.log(searchTerm)
-                                }} />
-                            </div>
-                            <button type="button" className="btn btn-primary">
-                                <i className="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
                 <div className="row">
-                    <div className="col-xl-6 col-md-6 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Thông tin chung</h3>
-
-                    </div>
-                    <div className="col-xl-6 col-md-6 mb-4">
+                    <div className="col-xl-12 col-md-12 mb-4">
                         <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
                         <div className="card shadow mb-4">
                             <div className="card-body">

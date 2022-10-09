@@ -33,13 +33,16 @@ const ScheduleClassStudent: React.FC = () => {
     let data: object[] = []
 
     time_schedules.timeSchedules.map((ele: any, index: any) => {
-        return data.push({
-            Id: index,
-            Subject: `Buổi học ${index + 1}`,
-            StartTime: new Date(ele.start_time),
-            EndTime: new Date(ele.end_time),
-            IsAllDay: false
-        })
+        if (ele !== null && ele !== undefined) {
+            data.push({
+                Id: index,
+                Subject: `Buổi học ${index + 1}`,
+                StartTime: new Date(ele.start_time),
+                EndTime: new Date(ele.end_time),
+                IsAllDay: false
+            })
+        }
+        return 1
     })
 
     var id_x = localStorage.getItem('class_id')

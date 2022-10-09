@@ -1,25 +1,23 @@
-import React, { useState, FormEvent, Dispatch, Fragment, useEffect, FunctionComponent } from "react";
+import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
 import { IStateType, ISectionTemplateState, ITutorialTemplatePageState, IRootPageStateType } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store/models/section_template.interface";
+import { ISectionTemplate } from "../../store/models/section_template.interface";
 import TextInput from "../../common/components/TextInput";
-import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
-import { OnChangeModel, ISectionTemplateFormState } from "../../common/types/Form.types";
+import { OnChangeModel } from "../../common/types/Form.types";
 import Editor from "../../common/components/Quill/EditorEditSection";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { toast, ToastContainer } from "react-toastify";
 import { putTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/PutTutorialTemplatePage";
 import { postTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage";
-import { putTutorialTemplate } from "../../common/service/TutorialTemplate/PutTutorialTemplate";
-import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
-import { useHistory } from "react-router-dom";
+
+
 import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
 import "./SectionTemplate.css"
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getTutorialTemplatePageByTutorialTemplateId } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePageByTutorialTemplateId";
-import { trackPromise } from "react-promise-tracker";
 import { postTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage1";
+import { putTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PutTutorialTemplatePage1";
 
 
 export type SectionTemplateListProps = {
@@ -54,11 +52,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     const [checked, setChecked] = useState(false);
 
-    var id_x = localStorage.getItem('section_template_id');
-    let section_template_id: string = "";
-    if (id_x !== null) {
-        section_template_id = id_x
-    }
 
     var id_y = localStorage.getItem('section_number');
     let section_number: number = 0;
@@ -120,12 +113,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         }
     }, [dispatch, access_token, refresh_token, tutorial_template_id])
 
-    const history = useHistory();
-    function routeHome() {
-        let path = `/courses/section-template`;
-        history.push(path);
-    }
-
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section_template) {
@@ -153,12 +140,11 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         update_time: { error: "", value: section_template.update_time }
     });
     const [totalPage, setTotalPage] = useState(list_description.length);
-    const [contentTutorialPage, setContentTutorialPage] = useState<PageContent>({
-        page: 0,
-        content: ""
-    })
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [value, setValue] = useState("")
+
+    const [checkCreateNew, setCheckCreateNew] = useState(false);
+    const [checkAfterCreate, setCheckAfterCreate] = useState(false);
 
     function hasFormValueChanged(model: OnChangeModel): void {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
@@ -172,79 +158,40 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
          handleSave()
     }
 
-    function saveForm(formState: ISectionTemplateFormState, saveFn: Function): void {
-        /* if (section_template) {
+    function handleRemove() {
+        if (tutorial_template_pages !== null){
+            const k = currentPage;
+            let x = totalPage - 1;
+            setTotalPage(x)
+
             const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
             });
-            let contentPage: PageContent = {
-                page: currentPage - 1,
-                content: value
+            if (k === tutorial_template_pages.tutorialTemplatePages.length) {
+                let y = k - 1;
+                setCurrentPage(y)
+                dispatch(deleteTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages[k-1].id))
+                handleBackPage()
             }
-
-            dispatch(putTutorialTemplate(tutorial_template_id, {
-                name: formState.name.value,
-                section_template_id: section_template_id
-            }))
-            
-
-            let xx: PageContent[] = contentTutorialPage.filter(function(item) {
-                return item.page !== currentPage -1
-            })
-
-            let lst: PageContent[] = [...xx, contentPage] ;
-
-            
-            console.log(tutorial_template_pages !== null ? tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number): "")
-            console.log(lst.sort((a, b) => a.page - b.page))
-            if (tutorial_template_pages !== null){
-                if (lst.sort((a, b) => a.page - b.page).length >= tutorial_template_pages.tutorialTemplatePages.length) {
-                    lst.sort((a, b) => a.page - b.page).map((ele, index) => {
-                        if (tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).length > index){
-                            dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].id, {
-                                description: ele.content,
-                                name: tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].name,
-                                tutorial_template_id: tutorial_template_id,
-                                number: ele.page
-                            }))
-                        }
-                        else {
-                            dispatch(postTutorialTemplatePage({
-                                description: ele.content,
-                                name: formState.name.value,
-                                tutorial_template_id: tutorial_template_id,
-                                number: ele.page
-                            }))
-                        }
-                        return null
-                    })
-                }
-                else {
-                    tutorial_template_pages.tutorialTemplatePages.map((ele, index) => {
-                        if (index < lst.sort((a, b) => a.page - b.page).length){
-                            dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].id, {
-                                description: lst.sort((a, b) => a.page - b.page)[index].content,
-                                name: tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[index].name,
-                                tutorial_template_id: tutorial_template_id,
-                                number: lst.sort((a, b) => a.page - b.page)[index].page
-                            }))
-                        }
-                        else {
-                            dispatch(deleteTutorialTemplatePage(ele.id))
-                        }
-                        return null
-                    })
-                }
+            else {
+                tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, idx) => {
+                    if (k -1 === ele.number) {
+                        dispatch(deleteTutorialTemplatePage(ele.id));
+                    }
+                    else if (ele.number > k - 1 ) {
+                        dispatch(putTutorialTemplatePage1(ele.id, {
+                            description: ele.description,
+                            name: ele.name,
+                            tutorial_template_id: tutorial_template_id,
+                            number: ele.number - 1
+                        }))
+                    }
+                    return 2
+                })
+                handleBackPage()
             }
-
-            toast.update(idx, { render: "Chỉnh giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-            trackPromise(getTutorialTemplatePage(dispatch))
-            dispatch(clearSelectedSectionTemplate());
-            dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
-            setTimeout(function () {
-                routeHome();
-            }, 2000);  
-        } */
+            toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+        }
     }
 
     function handleSave(){
@@ -252,51 +199,124 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
             });
+            const k = currentPage;
 
-            if (currentPage < tutorial_template_pages.tutorialTemplatePages.length + 1) {
-                dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[currentPage-1].id, {
-                    description: value,
-                    name: tutorial_name,
-                    tutorial_template_id: tutorial_template_id,
-                    number: currentPage-1
-                }, idx))
-               console.log({
-                    description: value,
-                    name: tutorial_name,
-                    tutorial_template_id: tutorial_template_id,
-                    number: currentPage-1
-               })
+            if (checkCreateNew === true) {
+                if (k - 1 === tutorial_template_pages.tutorialTemplatePages.length) {
+                    dispatch(postTutorialTemplatePage1({
+                        description: value,
+                        name: formState.name.value,
+                        tutorial_template_id: tutorial_template_id,
+                        number: tutorial_template_pages.tutorialTemplatePages.length
+                    }, idx))
+                }
+                else {
+                    tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, idx) => {
+                        if (ele.number === k - 1 && ele.number === tutorial_template_pages.tutorialTemplatePages.length - 1) {
+                            dispatch(postTutorialTemplatePage1({
+                                description: value,
+                                name: formState.name.value,
+                                tutorial_template_id: tutorial_template_id,
+                                number: ele.number + 1
+                            }, idx))
+                        }
+                        else if (ele.number >= k - 1) {
+                            if (ele.number < tutorial_template_pages.tutorialTemplatePages.length - 1) {
+                                dispatch(putTutorialTemplatePage1(ele.id, {
+                                    description: ele.description,
+                                    name: ele.name,
+                                    tutorial_template_id: tutorial_template_id,
+                                    number: ele.number + 1
+                                }))
+                            }
+                            else {
+                                dispatch(putTutorialTemplatePage(ele.id, {
+                                    description: ele.description,
+                                    name: ele.name,
+                                    tutorial_template_id: tutorial_template_id,
+                                    number: ele.number + 1
+                                }, idx))
+                            }
+                        }
+                        return 1
+                    })
+
+                    dispatch(postTutorialTemplatePage({
+                        description: value,
+                        name: formState.name.value,
+                        tutorial_template_id: tutorial_template_id,
+                        number: k - 1
+                    }))
+                }
+                setCheckCreateNew(false)
+                setCheckAfterCreate(true)
             }
             else {
-                dispatch(postTutorialTemplatePage1({
-                    description: value,
-                    name: formState.name.value,
-                    tutorial_template_id: tutorial_template_id,
-                    number: tutorial_template_pages.tutorialTemplatePages.length
-                }, idx))
-
-                console.log({
-                    description: value,
-                    name: tutorial_name,
-                    tutorial_template_id: tutorial_template_id,
-                    number: tutorial_template_pages.tutorialTemplatePages.length
-               })
+                if (k < tutorial_template_pages.tutorialTemplatePages.length + 1) {
+                    dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[k-1].id, {
+                        description: value,
+                        name: tutorial_name,
+                        tutorial_template_id: tutorial_template_id,
+                        number: k-1
+                    }, idx))
+                   console.log({
+                        description: value,
+                        name: tutorial_name,
+                        tutorial_template_id: tutorial_template_id,
+                        number: k-1
+                   })
+                }
+                else {
+                    dispatch(postTutorialTemplatePage1({
+                        description: value,
+                        name: formState.name.value,
+                        tutorial_template_id: tutorial_template_id,
+                        number: tutorial_template_pages.tutorialTemplatePages.length
+                    }, idx))
+    
+                    console.log({
+                        description: value,
+                        name: tutorial_name,
+                        tutorial_template_id: tutorial_template_id,
+                        number: tutorial_template_pages.tutorialTemplatePages.length
+                   })
+                }
             }
+
+            toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
         }
     }
 
 
     function handleNextPage() {  
         if (tutorial_template_pages !== null) {
-            let x = currentPage + 1;
-            setCurrentPage(x)
-            console.log(currentPage - 1)
-            console.log(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number))
-            setTextHtml(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1] !== undefined ? tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1].description : "")
-            setChecked(false)
+            if (checkCreateNew === true) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER
+                });
+            }
+            else {
+                if (checkAfterCreate === true) {
+                    let x = currentPage + 1;
+                    setCurrentPage(x)
+                    console.log(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number))
+                    setTextHtml(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1] !== undefined ? tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1].description : "")
+                    setChecked(false)
+                    setValue("")
+                    setCheckAfterCreate(false);
+                }
+                else {
+                    let x = currentPage + 1;
+                    setCurrentPage(x)
+                    console.log(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number))
+                    setTextHtml(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1] !== undefined ? tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[x-1].description : "")
+                    setChecked(false)
+                    setValue("")
+                }
+            }
         }     
-        setValue("")
     }
+
 
 
     function getValue(value: any){
@@ -316,16 +336,17 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     }
 
 
+
     function handleNewPage() {
-        let x = totalPage + 1;
-        setTotalPage(x)
+        let x = currentPage + 1;
+        setCurrentPage(x)
+        setCheckCreateNew(true)
+        let y = totalPage + 1;
+        setTotalPage(y)
+        console.log(currentPage - 1)
         setChecked(false)
         setTextHtml("")
         setValue("")
-    }
-
-    function handleRemove() {
-        
     }
 
     

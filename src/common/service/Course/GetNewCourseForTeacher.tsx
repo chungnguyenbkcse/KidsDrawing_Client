@@ -15,6 +15,7 @@ interface Course {
     art_level_id: string;
     art_age_id: string;
     art_age_name: string;
+    checked_tutoral: boolean;
     art_type_name: string;
     art_level_name: string;
     create_time: string;
@@ -68,6 +69,7 @@ export function getCourseNewForTeacher(dispatch: any, id: any) {
                         art_age_name: "", 
                         art_level_name: "",
                         art_type_name: "",
+                        checked_tutoral: false,
                         create_time: ele.create_time,
                         update_time: ele.update_time
 

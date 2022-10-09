@@ -17,6 +17,7 @@ interface Course {
     art_age_name: string;
     art_type_name: string;
     art_level_name: string;
+    checked_tutoral: boolean;
     create_time: string;
     update_time: string;
 }
@@ -67,6 +68,7 @@ export function getCourse(dispatch: any) {
                         art_age_name: ele.art_age_name, 
                         art_level_name: ele.art_level_name,
                         art_type_name: ele.art_type_name,
+                        checked_tutoral: ele.checked_tutoral,
                         art_age_id: ele.art_age_id,
                         create_time: ele.create_time,
                         update_time: ele.update_time

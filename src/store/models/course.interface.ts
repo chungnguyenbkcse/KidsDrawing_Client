@@ -14,6 +14,7 @@ export interface ICourse {
     art_age_name: string;
     art_type_name: string;
     art_level_name: string;
+    checked_tutoral: boolean;
     create_time: string;
     update_time: string;
 }

@@ -40,7 +40,7 @@ const LessonPlan: React.FC = () => {
 
 
   if (!course) {
-    course = { id: "", name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: "", art_age_id: "", art_level_id: "", art_type_id: "", create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "" };
+    course = { id: "", name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: "", art_age_id: "", art_level_id: "", art_type_id: "", create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "", checked_tutoral: false };
   }
 
   var course_id = localStorage.getItem('course_id');

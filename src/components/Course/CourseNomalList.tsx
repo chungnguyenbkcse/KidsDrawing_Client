@@ -22,14 +22,6 @@ function CourseNomalList(props: courseListProps): JSX.Element {
   const history = useHistory();
   const dispatch: Dispatch<any> = useDispatch();
 
-  const section_templates: ISectionTemplateState = useSelector((state: IStateType) => state.section_templates);
-  const listSectionTemplate: ISectionTemplate[] = section_templates.sectionTemplates
-  let listCourse: string[] = []
-  listSectionTemplate.map((ele) => {
-    return listCourse.push(ele.course_id)
-  })
-
-  console.log(listCourse)
 
 
   const routeChange = (course: ICourse) => {
@@ -82,7 +74,7 @@ function CourseNomalList(props: courseListProps): JSX.Element {
       </td>
       {
         function () {
-          if (!listCourse.includes(course.id)) {
+          if (course.checked_tutoral === false) {
             return (
               <td>
                 <button type="button" className="btn btn-warning" onClick={() => {

@@ -501,6 +501,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                             return (
                                                 <div className="row">
                                                 <div className="col-xl-4 col-md-4 col-xs-4">
+                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Lưu</button>
                                                     <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                 </div>
                                                 <div className="col-xl-8 col-md-8 col-xs-8">
@@ -514,6 +515,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                                 <div className="row">
                                                     <div className="col-xl-4 col-md-4 col-xs-4">
                                                         <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                        <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Lưu</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                     </div>
                                                     <div className="col-xl-8 col-md-8 col-xs-8">

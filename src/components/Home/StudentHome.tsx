@@ -3,7 +3,7 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { IClassesStudentState, IContestStudentState, IRootPageStateType, IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
+import { IRootPageStateType, IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import "./ParentHome.css"
@@ -19,23 +19,30 @@ import "@syncfusion/ej2-navigations/styles/material.css";
 import "@syncfusion/ej2-popups/styles/material.css";
 import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
-import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
-import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
-import { getContestStudentByStudent } from "../../common/service/ContestStudent/GetContestStudent";
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import { getTotalCourseForStudent } from "../../common/service/Course/GetTotalCourseForStudent";
+import { getTotalContestForStudent } from "../../common/service/Contest/GetTotalContestForStudent";
 
 
 const StudentHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
-    const contest_students: IContestStudentState = useSelector((state: IStateType) => state.contest_students);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
-    const numberChildCount: number = classes_students.classes_doing.length + classes_students.classes_done.length;
-    const contestCount: number = contest_students.contest_not_open_now.length + contest_students.contest_end.length + contest_students.contest_opening.length;
+    let total_contest_student: number = 0;
+    let total_course_student: number = 0;
     var id_x = localStorage.getItem('id');
     var id: string = "";
     if (id_x !== null) {
         id = id_x;
+    }
+
+    var id_y = localStorage.getItem('total_contest_student');
+    if (id_y !== null) {
+        total_contest_student = parseInt(id_y)
+    }
+
+    var id_z = localStorage.getItem('total_course_student');
+    if (id_z !== null) {
+        total_course_student = parseInt(id_z)
     }
 
     console.log(schedule_time_classes.schedule_time_classes)
@@ -67,15 +74,13 @@ const StudentHome: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getClassesStudent(dispatch, id))
-                    trackPromise(getScheduleTimeByChild(dispatch, id))
-                    trackPromise(getContestStudentByStudent(dispatch, id))
+                    trackPromise(getTotalContestForStudent(dispatch, id))
+                    trackPromise(getTotalCourseForStudent(dispatch, id))
                 }
             }
             else {
-                trackPromise(getClassesStudent(dispatch, id))
-                trackPromise(getScheduleTimeByChild(dispatch, id))
-                trackPromise(getContestStudentByStudent(dispatch, id))
+                trackPromise(getTotalContestForStudent(dispatch, id))
+                trackPromise(getTotalCourseForStudent(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, id]);
@@ -116,8 +121,8 @@ const StudentHome: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="KHÓA HỌC" text={`${numberChildCount}`} icon="book" class="primary" />
-                    <TopCard title="CUỘC THI" text={`${contestCount}`} icon="book" class="primary" />
+                    <TopCard title="KHÓA HỌC" text={`${total_course_student}`} icon="book" class="primary" />
+                    <TopCard title="CUỘC THI" text={`${total_contest_student}`} icon="book" class="primary" />
                 </div>
 
                 <div className="row" id="search-box">

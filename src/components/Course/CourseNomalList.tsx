@@ -71,9 +71,9 @@ function CourseNomalList(props: courseListProps): JSX.Element {
         if(props.onSelect) props.onSelect(course);
         routeChange(course)
       }}>{course.name}</td>
-      <td>{}</td>
-      <td>{}</td>
-      <td>{}</td>
+      <td>{course.art_type_name}</td>
+      <td>{course.art_age_name}</td>
+      <td>{course.art_level_name}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={() => {
           if(props.onSelect) props.onSelect(course);

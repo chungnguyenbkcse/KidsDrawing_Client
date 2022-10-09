@@ -156,7 +156,7 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
                                         onChange={hasFormValueChanged}
                                         required={false}
                                         maxLength={100}
-                                        type="date"
+                                        type="datetime-local"
                                         label="Hạn nộp"
                                         placeholder="" />
                                 </div>

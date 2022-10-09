@@ -14,6 +14,9 @@ interface Course {
     art_type_id: string;
     art_level_id: string;
     art_age_id: string;
+    art_age_name: string;
+    art_type_name: string;
+    art_level_name: string;
     create_time: string;
     update_time: string;
 }
@@ -61,6 +64,9 @@ export function getCourse(dispatch: any) {
                         creator_id: ele.creator_id,
                         art_type_id: ele.art_type_id,
                         art_level_id: ele.art_level_id,
+                        art_age_name: ele.art_age_name, 
+                        art_level_name: ele.art_level_name,
+                        art_type_name: ele.art_type_name,
                         art_age_id: ele.art_age_id,
                         create_time: ele.create_time,
                         update_time: ele.update_time

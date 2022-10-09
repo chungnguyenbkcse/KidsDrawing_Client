@@ -1,6 +1,5 @@
 import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./Discovery.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
@@ -59,9 +58,11 @@ const SemesterClassStudentNew: React.FC = () => {
                 trackPromise(getSemesterClassStudent(dispatch, id, course_id))
             }
         }
-        dispatch(clearSelectedTeacherRegisterQuatification());
+    }, [dispatch, id, access_token, refresh_token, course_id]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp mở", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token, course_id]);
+    }, [dispatch, path.area])
 
     return (
         promiseInProgress ?

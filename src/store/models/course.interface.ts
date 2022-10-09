@@ -11,6 +11,9 @@ export interface ICourse {
     art_type_id: string;
     art_level_id: string;
     art_age_id: string;
+    art_age_name: string;
+    art_type_name: string;
+    art_level_name: string;
     create_time: string;
     update_time: string;
 }

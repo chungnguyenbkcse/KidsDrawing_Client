@@ -3,13 +3,13 @@ import { fetchDataRequest, fetchDataError } from "../../../store/actions/semeste
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTutorialTemplatePageByTutorialTemplateId } from "./GetTutorialTemplatePageByTutorialTemplateId";
 
-export function putTutorialTemplatePage(id: any, tutorialtemplatepage: any, idx: any) {
+export function postTutorialTemplatePage1(tutorialtemplatepage: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/tutorial-template-page/${id}`, {
-                    method: "PUT",
+                `${process.env.REACT_APP_API_URL}/tutorial-template-page`, {
+                    method: "POST",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export function putTutorialTemplatePage(id: any, tutorialtemplatepage: any, idx:
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putTutorialTemplatePage(id, tutorialtemplatepage, idx))
+                        dispatch(postTutorialTemplatePage1(tutorialtemplatepage, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,10 +36,10 @@ export function putTutorialTemplatePage(id: any, tutorialtemplatepage: any, idx:
             .then (data => {
                 console.log(data)
                 dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorialtemplatepage.tutorial_template_id))
-                toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm bước cho giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Điều chỉnh không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm bước cho giáo án không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

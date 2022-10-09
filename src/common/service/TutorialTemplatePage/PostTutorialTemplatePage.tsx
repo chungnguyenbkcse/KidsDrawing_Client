@@ -34,7 +34,7 @@ export function postTutorialTemplatePage(tutorialtemplatepage: any) {
             })
             .then (data => {
                 console.log(data)
-                getTutorialTemplatePageByTutorialTemplateId(tutorialtemplatepage.tutorial_template_id)
+                dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorialtemplatepage.tutorial_template_id))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

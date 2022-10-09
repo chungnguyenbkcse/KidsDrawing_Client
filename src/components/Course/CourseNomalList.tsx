@@ -1,10 +1,9 @@
 import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, ICourseState,ISectionTemplateState } from "../../store/models/root.interface";
+import { IStateType, ICourseState } from "../../store/models/root.interface";
 import { CourseModificationStatus, ICourse } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/course.action";
-import { ISectionTemplate } from "../../store/models/section_template.interface";
 
 export type courseListProps = {
   onSelect?: (course: ICourse) => void;

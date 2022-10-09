@@ -55,6 +55,9 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element {
     history.push({
       pathname: path
     });
+
+    localStorage.removeItem("tutorial_name");
+    localStorage.setItem('tutorial_name', section_template.name)
   }
 
   var id_x = localStorage.getItem('course_name');

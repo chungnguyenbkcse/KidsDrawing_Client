@@ -1,6 +1,6 @@
 import { ITutorialPageState, IActionBase } from "../models/root.interface";
 import { ADD_TUTORIAL_PAGE, CHANGE_TUTORIAL_PAGE_PENDING_EDIT, EDIT_TUTORIAL_PAGE, REMOVE_TUTORIAL_PAGE,
-    CLEAR_TUTORIAL_PAGE_PENDING_EDIT, SET_MODIFICATION_STATE, INITIAL_TUTORIAL_PAGE, REMOVE_TUTORIAL_PAGE_ALL} from "../actions/tutorial_page.action";
+    CLEAR_TUTORIAL_PAGE_PENDING_EDIT, SET_MODIFICATION_STATE, INITIAL_TUTORIAL_PAGE, REMOVE_TUTORIAL_PAGE_ALL, REMOVE_TUTORIAL_PAGE_BY_NUMBER} from "../actions/tutorial_page.action";
 import { ITutorialPage, TutorialPageModificationStatus } from "../models/tutorial_page.interface";
 
 
@@ -27,6 +27,9 @@ function tutorialPagesReducer(state: ITutorialPageState = initialState, action: 
         }
         case REMOVE_TUTORIAL_PAGE: {
             return { ...state, tutorialPages: state.tutorialPages.filter(pr => pr.id !== action.id) };
+        }
+        case REMOVE_TUTORIAL_PAGE_BY_NUMBER: {
+            return { ...state, tutorialPages: state.tutorialPages.filter(pr => pr.number !== action.number) };
         }
         case REMOVE_TUTORIAL_PAGE_ALL: {
             return { ...state, tutorialPages: [] };

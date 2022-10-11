@@ -5,7 +5,8 @@ interface user_register_semester {
     student_id: string;
     payer_id: string;
     price: number;
-    semester_class_name: string;
+    course_name: string;
+    payer_name: string;
     student_name: string;
     link_url: string;
     status: string;

@@ -2,6 +2,7 @@ import { ITutorialPage, TutorialPageModificationStatus } from "../models/tutoria
 export const ADD_TUTORIAL_PAGE: string = "ADD_TUTORIAL_PAGE";
 export const EDIT_TUTORIAL_PAGE: string = "EDIT_TUTORIAL_PAGE";
 export const REMOVE_TUTORIAL_PAGE: string = "REMOVE_TUTORIAL_PAGE";
+export const REMOVE_TUTORIAL_PAGE_BY_NUMBER: string = "REMOVE_TUTORIAL_PAGE_BY_NUMBER";
 export const CHANGE_TUTORIAL_PAGE_AMOUNT: string = "CHANGE_TUTORIAL_PAGE_AMOUNT";
 export const CHANGE_TUTORIAL_PAGE_PENDING_EDIT: string = "CHANGE_TUTORIAL_PAGE_PENDING_EDIT";
 export const CLEAR_TUTORIAL_PAGE_PENDING_EDIT: string = "CLEAR_TUTORIAL_PAGE_PENDING_EDIT";
@@ -52,6 +53,10 @@ export function removeTutorialPage(id: string): IRemoveTutorialPageActionType {
     return { type: REMOVE_TUTORIAL_PAGE, id: id };
 }
 
+export function removeTutorialPageByNumber(number: number): IRemoveTutorialPageByNumberActionType {
+    return { type: REMOVE_TUTORIAL_PAGE_BY_NUMBER, number: number };
+}
+
 export function changeSelectedTutorialPage(tutorial_page: ITutorialPage): IChangeSelectedTutorialPageActionType {
     return { type: CHANGE_TUTORIAL_PAGE_PENDING_EDIT, tutorial_page: tutorial_page };
 }
@@ -71,4 +76,5 @@ interface IChangeSelectedTutorialPageActionType { type: string, tutorial_page: I
 interface IClearSelectedTutorialPageActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  TutorialPageModificationStatus};
 interface IRemoveTutorialPageAllActionType { type: string }
+interface IRemoveTutorialPageByNumberActionType { type: string, number: number }
 interface IInitialTutorialPageActionType {type: string, tutorial_page: ITutorialPage}

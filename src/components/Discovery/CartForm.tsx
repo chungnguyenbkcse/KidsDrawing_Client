@@ -100,7 +100,7 @@ const CartForm: React.FC = () => {
                         return(
                             <tr key={key}>   
                             <td><i className="badge badge-danger" onClick={()=>{dispatch(removeCart(item.id))}}>X</i></td>
-                            <td>{item.semester_class_name}</td>
+                            <td>{item.course_name}</td>
                             <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
                             <td>{item.student_name}</td>
                             <td>{item.price} VND</td>

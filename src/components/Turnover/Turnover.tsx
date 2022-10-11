@@ -6,10 +6,6 @@ import { IStateType, ITurnoverState, IReportUserState, ICourseReportState } from
 import { ChartBar } from "../../common/components/ChartBar";
 import TurnoverList from "./TurnoverList";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
-import { getCourse } from "../../common/service/Course/GetCourse";
-import { getSemesterClass } from "../../common/service/SemesterClass/GetSemesterClass";
-import { getStudent } from "../../common/service/Student/GetStudent";
-import { getParent } from "../../common/service/Parent/GetParent";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import CourseAnalytis from "./CourseAnalytis";
@@ -62,10 +58,6 @@ const Turnover: React.FC = () => {
         }
         else {
           trackPromise(getUserRegisterJoinSemester(dispatch))
-          trackPromise(getCourse(dispatch))
-          trackPromise(getSemesterClass(dispatch))
-          trackPromise(getStudent(dispatch))
-          trackPromise(getParent(dispatch))
           trackPromise(getTurnOverReport(dispatch))
           trackPromise(getReportUser(dispatch))
           trackPromise(getCourseReport(dispatch))
@@ -73,10 +65,6 @@ const Turnover: React.FC = () => {
       }
       else {
           trackPromise(getUserRegisterJoinSemester(dispatch))
-          trackPromise(getCourse(dispatch))
-          trackPromise(getSemesterClass(dispatch))
-          trackPromise(getStudent(dispatch))
-          trackPromise(getParent(dispatch))
           trackPromise(getTurnOverReport(dispatch))
           trackPromise(getReportUser(dispatch))
           trackPromise(getCourseReport(dispatch))

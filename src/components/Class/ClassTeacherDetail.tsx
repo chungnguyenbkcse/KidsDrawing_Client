@@ -67,8 +67,11 @@ const ClassTeacherDetail: React.FC = () => {
                 trackPromise(getInfoMyClass(dispatch, class_id))
             }
         }
+    }, [dispatch, class_id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
-    }, [path.area, dispatch, class_id, access_token, refresh_token]);
+    }, [dispatch, path.area])
 
 
     const [popup1, setPopup1] = useState(false);

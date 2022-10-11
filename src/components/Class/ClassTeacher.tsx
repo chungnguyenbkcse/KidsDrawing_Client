@@ -66,8 +66,11 @@ const ClassTeacher: React.FC = () => {
                 trackPromise(getSemester(dispatch))
             }
         }
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [dispatch, path.area])
 
     function onClassTeacherSelect(class_teacher: IClassTeacher): void {
         dispatch(changeSelectedDoinglClass(class_teacher));

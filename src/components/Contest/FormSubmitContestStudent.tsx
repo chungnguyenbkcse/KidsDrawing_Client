@@ -5,6 +5,7 @@ import { IUser, UserModificationStatus } from "../../store/models/user.interface
 import { editTeacher, setModificationState } from "../../store/actions/users.action";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { postContestSubmission } from "../../common/service/ContestSubmission/PostContestSubmission";
 
 function FormSubmitContestStudent(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
@@ -24,20 +25,40 @@ function FormSubmitContestStudent(): JSX.Element {
         contest_description = id_x;
     }
 
+    var id_y = localStorage.getItem("contest_id");
+    let contest_id: string = "";
+    if (id_y !== null) {
+        contest_id = id_y;
+    }
+
+    var id_z = localStorage.getItem("id");
+    let id: string = "";
+    if (id_z !== null) {
+        id = id_z;
+    }
+
 
     async function saveUser(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
         if (isFormInvalid()) {
             return;
         }
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+
         var url = await setImageAction();
         let saveUserFn: Function = editTeacher;
-        saveForm(saveUserFn, url);
+        saveForm(saveUserFn, url, idx);
     }
 
-    function saveForm(saveFn: Function, url: string): void {
+    function saveForm(saveFn: Function, url: string, idx: any): void {
         if (user) {
-            notify()
+            dispatch(postContestSubmission({
+                student_id: id,
+                contest_id: contest_id,
+                image_url: url
+            }, idx))
         }
     }
 

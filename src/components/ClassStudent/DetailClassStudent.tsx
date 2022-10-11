@@ -19,6 +19,7 @@ import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLe
 import { getExerciseForClassStudent } from "../../common/service/ExerciseStudent/GetExerciseForClassStudent";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { IExerciseStudent } from "../../store/models/exercise_student.interface";
+import { ToastContainer } from "react-toastify";
 
 
 const DetailClassStudent: React.FC = () => {
@@ -121,7 +122,8 @@ const DetailClassStudent: React.FC = () => {
         });
     }
 
-    const routeChange1 = () => {
+    const routeChange1 = (ele: IExerciseStudent) => {
+        localStorage.setItem('exercise_id', ele.id)
         let path = '/exercise/submit';
         history.push({
             pathname: path
@@ -218,6 +220,7 @@ const DetailClassStudent: React.FC = () => {
             </div> : <Fragment>
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-student">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+                <ToastContainer />
 
                 <div className="row">
                     <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${count}/${numberSectionCount}`} icon="book" class="primary" />
@@ -407,7 +410,7 @@ const DetailClassStudent: React.FC = () => {
                                                         exercise_student.exercise_not_submit.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1(ele) }}>
                                                                         <div className="col-xl-4 col-md-4">
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
                                                                         </div>
@@ -415,7 +418,6 @@ const DetailClassStudent: React.FC = () => {
                                                                             <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
                                                                             <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
                                                                             <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
-                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name pl-2">{ele.teacher_name}</span> </p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -447,9 +449,7 @@ const DetailClassStudent: React.FC = () => {
                                                                         <div className="col-xl-8 col-md-8 mb-2">
                                                                             <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
                                                                             <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
-                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name pl-2">{ele.time_submit}</span> </p>
                                                                             <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
-                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name pl-2">{ele.teacher_name}</span> </p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -468,9 +468,7 @@ const DetailClassStudent: React.FC = () => {
                                                                         <div className="col-xl-8 col-md-8 mb-2">
                                                                             <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
                                                                             <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
-                                                                            <p className=" mb-2 section_number">Nộp lúc: <span className="section_name pl-2">{ele.time_submit}</span> </p>
                                                                             <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
-                                                                            <p className=" mb-2 section_number">Giáo viên chấm: <span className="section_name pl-2">{ele.teacher_name}</span> </p>
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -500,7 +498,7 @@ const DetailClassStudent: React.FC = () => {
                                                         student_leaves.leaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { }}>
                                                                         <div className="col-xl-3 col-md-3">
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
                                                                         </div>
@@ -531,7 +529,7 @@ const DetailClassStudent: React.FC = () => {
                                                         student_leaves.acceptLeaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
+                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => {  }}>
                                                                         <div className="col-xl-4 col-md-4">
                                                                             <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
                                                                         </div>

@@ -5,7 +5,7 @@ import TextInput from "../../common/components/TextInput";
 import { addStudentLeaveNotApprovedNow } from "../../store/actions/student_leave.action";
 import { OnChangeModel, IStudentLeaveFormState } from "../../common/types/Form.types";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { IUser } from "../../store/models/user.interface";
 import { IStudentLeave, StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
 import { postStudentLeave } from "../../common/service/StudentLeave/PostStudentLeave";
@@ -119,7 +119,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
     return (
         <Fragment>
-            <ToastContainer />
             <div className="row text-left">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card" id="topcard-user">

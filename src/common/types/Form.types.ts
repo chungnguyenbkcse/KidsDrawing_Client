@@ -118,6 +118,10 @@ export interface IArtTypeFormState {
     description: IFormStateField<string>;
 }
 
+export interface ILessonPlanFormState {
+    total_page: IFormStateField<number>;
+}
+
 export interface ICourseNomalFormState {
     name: IFormStateField<string>;
     description: IFormStateField<string>;

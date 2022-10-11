@@ -9,6 +9,8 @@ import { ICourse } from "../../store/models/course.interface";
 import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
 import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import NumberInput from "../../common/components/NumberInput";
+import { OnChangeModel } from "../../common/types/Form.types";
 type Options = {
   name: string;
   value: any;
@@ -58,25 +60,21 @@ const LessonPlan: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0)
   const [numberSection, setNumberSection] = useState<number>(1)
 
-  const [error, setError] = useState("");
-  const [htmlClass, setHtmlClass] = useState("");
   const [value, setValue] = useState(0);
   const [text, setText] = useState("");
 
   console.log(value)
   console.log(currentPage)
 
+  const [formState, setFormState] = useState({
+    total_page: { error: "", value: 0 },
+  })
 
-  function onValueChanged(event: ChangeEvent<HTMLSelectElement>): void {
-    let [error, validClass, elementValue] = ["", "", event.target.value];
-
-    [error, validClass] = (!elementValue) ?
-      ["Value has to be selected", "is-invalid"] : ["", "is-valid"];
-    setError(error);
-    setHtmlClass(validClass);
-    setValue(parseInt(elementValue));
-    setCurrentPage(0)
+  function hasFormValueChanged(model: OnChangeModel): void {
+    setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+    setValue(model.value);
   }
+
 
   console.log(numberSection)
   const history = useHistory();
@@ -91,6 +89,14 @@ const LessonPlan: React.FC = () => {
     let saveUserFn: Function = addSectionTemplate;
 
     saveForm(saveUserFn, contentTutorialSection);
+  }
+
+  function handleSaveLesson() {
+
+  }
+
+  function handleSaveStep () {
+
   }
 
   const [textHtml, setTextHtml] = useState<string>("")
@@ -141,25 +147,6 @@ const LessonPlan: React.FC = () => {
   }
 
 
-  const listTotalPage: Options[] = [
-    {
-      "name": "1 trang",
-      "value": 1
-    },
-    {
-      "name": "2 trang",
-      "value": 2
-    },
-    {
-      "name": "3 trang",
-      "value": 3
-    },
-    {
-      "name": "4 trang",
-      "value": 4
-    }
-  ];
-
 
   const listTeachingForm: Options[] = [
     {
@@ -186,39 +173,33 @@ const LessonPlan: React.FC = () => {
 
 
   function handleNextSection() {
-    let contentPage: PageContent = {
-      page: currentPage,
-      content: textHtml
+    if (value !== 0) {
+      let contentPage: PageContent = {
+        page: currentPage,
+        content: textHtml
+      }
+      let contentSection: TutorialSectionTemplate = {
+        number: numberSection,
+        name: value1,
+        teaching_form: value2 === "true" ? true : false,
+        tutorial: [...contentTutorialPage, contentPage]
+      }
+      setContentTutorialSection([...contentTutorialSection, contentSection])
+  
+      let y = numberSection + 1;
+      setNumberSection(y)
+  
+      setTextHtml("")
+      setValue(0)
+      setHtmlClass1("")
+      setHtmlClass2("")
+      setValue1("")
+      setValue2("")
+      setCurrentPage(0)
+      setContentTutorialPage([])
     }
-    let contentSection: TutorialSectionTemplate = {
-      number: numberSection,
-      name: value1,
-      teaching_form: value2 === "true" ? true : false,
-      tutorial: [...contentTutorialPage, contentPage]
-    }
-    setContentTutorialSection([...contentTutorialSection, contentSection])
-
-    let y = numberSection + 1;
-    setNumberSection(y)
-
-    setTextHtml("")
-    setHtmlClass("")
-    setValue(0)
-    setHtmlClass1("")
-    setHtmlClass2("")
-    setValue1("")
-    setValue2("")
-    setCurrentPage(0)
-    setContentTutorialPage([])
   }
 
-
-
-  const getOptions: (JSX.Element | null)[] = listTotalPage.map((option: any, index: number) => {
-    return (
-      <option key={index} value={option.value}>{option.name}</option>
-    )
-  });
 
 
   const [error1, setError1] = useState("");
@@ -265,6 +246,14 @@ const LessonPlan: React.FC = () => {
   function getDisabledClass(): string {
     let isError: boolean = isFormInvalid();
     return isError ? "disabled" : "";
+  }
+
+  function getDisabledClassSaveSection(): string {
+    return value === 0 ? "disabled" : "";
+  }
+
+  function getDisabledClassNextSection(): string {
+    return value === 0 ? "disabled" : "";
   }
 
   function isFormInvalid(): boolean {
@@ -320,21 +309,14 @@ const LessonPlan: React.FC = () => {
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <label htmlFor={`input_total_page`}>Số trang</label>
-                  <select
-                    value={value}
-                    id={`input_total_page`}
-                    className={`form-control ${htmlClass}`}
-                    onChange={onValueChanged}>
-                    <option value={0}>Choose...</option>
-                    {getOptions}
-                  </select>
-
-                  {error ?
-                    <div className="invalid-feedback">
-                      {error}
-                    </div> : null
-                  }
+                    <NumberInput id="input_price"
+                        value={formState.total_page.value}
+                        field="total_page"
+                        onChange={hasFormValueChanged}
+                        max={10000000}
+                        min={0}
+                        label="Số bước"
+                    />
                 </div>
               </div>
               {
@@ -343,10 +325,11 @@ const LessonPlan: React.FC = () => {
                     return (
                       <>
                         <div className="form-group">
-                          <label>Nội dung trang {currentPage + 1}</label>
+                          <label>Nội dung bước {currentPage + 1} / {value}</label>
                           <Editor getValue={getValue} isCreate={textHtml} setValue={text} />
                         </div>
                         <div className="form-group">
+                          <button type="button" className="btn btn-info right-margin" onClick={handleSaveStep}>Lưu bước</button>
                           <button type="button" className="btn btn-info right-margin ml-2" onClick={handleNextPage}>Trang tiếp theo</button>
                         </div>
                       </>
@@ -355,10 +338,15 @@ const LessonPlan: React.FC = () => {
 
                   else if (value - 1 === currentPage || value === 1) {
                     return (
+                      <>
                       <div className="form-group">
                         <label>Nội dung trang {currentPage + 1}</label>
                         <Editor getValue={getValue} isCreate={textHtml} setValue={text} />
                       </div>
+                      <div className="form-group">
+                        <button type="button" className="btn btn-info right-margin" onClick={handleSaveStep}>Lưu bước</button>
+                      </div>
+                    </>
                     )
                   }
                 }()
@@ -368,7 +356,14 @@ const LessonPlan: React.FC = () => {
                 function () {
                   if (course && (numberSection < number_of_sum)) {
                     return (
-                      <button type="button" className={`btn btn-primary left-margin ml-2`} onClick={handleNextSection}>Buổi tiếp theo</button>
+                      <div className="row">
+                        <div className="col-xl-6 col-md-6 col-xs-6" >
+                        <button type="button" className={`btn btn-info right-margin ${getDisabledClassSaveSection()}`} onClick={handleSaveLesson}>Lưu buổi</button>
+                        </div>
+                        <div className="col-xl-6 col-md-6 col-xs-6">
+                        <button type="button" className={`btn btn-primary right-margin add-step ${getDisabledClassNextSection()}`} onClick={handleNextSection}>Buổi tiếp theo</button>
+                        </div>
+                      </div>
                     )
                   }
                   else if (course && (numberSection === number_of_sum)) {

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IContestTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./ContestTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
@@ -64,9 +63,12 @@ const ContestTeacher: React.FC = () => {
                 trackPromise(getContestTeacher(dispatch, id))
             }
         }
-        dispatch(clearSelectedTeacherRegisterQuatification());
+        
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Cuộc thi", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
 
     const [checked1, setChecked1] = useState(true);

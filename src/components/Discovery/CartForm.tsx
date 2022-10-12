@@ -56,8 +56,12 @@ const CartForm: React.FC = () => {
                 trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
             }
         }
+        
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Giỏ hàng", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
     
     function handlePayment() {
         let ids: string[] = []; 

@@ -88,8 +88,11 @@ const AnalytisResultGradeContestTeacher: React.FC = () => {
                 trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
             }
         }
+    }, [dispatch, contest_id, class_id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
-    }, [path.area, dispatch, contest_id, class_id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     return (
         promiseInProgress ?

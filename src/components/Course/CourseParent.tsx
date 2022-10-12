@@ -55,8 +55,11 @@ const CourseParent: React.FC = () => {
                 trackPromise(getCourseParent(dispatch, id))
             }
         }
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     const [checked, setChecked] = useState(true);
     return (

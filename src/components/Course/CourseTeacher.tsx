@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { changeSelectedTeacherRegisterQuatificationApproved, clearSelectedTeacherRegisterQuatification, setModificationState } from "../../store/actions/teacher_register_quantification.action";
+import { changeSelectedTeacherRegisterQuatificationApproved, setModificationState } from "../../store/actions/teacher_register_quantification.action";
 import { ICourseTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./CourseTeacher.css"
@@ -62,10 +62,12 @@ const CourseTeacher: React.FC = () => {
                 trackPromise(getUserById(dispatch, id))
                 trackPromise(getCourseTeacher(dispatch, id))
             }
-        }
-        dispatch(clearSelectedTeacherRegisterQuatification());
+        }      
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp theo kì", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     function onTeacherRegisterQuantificationSelect(teacherRegisterQuantification: ITeacherRegisterQuantification): void {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));

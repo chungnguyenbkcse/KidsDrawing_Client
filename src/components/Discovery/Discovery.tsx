@@ -1,6 +1,5 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./Discovery.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
@@ -60,9 +59,12 @@ const Discovery: React.FC = () => {
                 trackPromise(getContestStudentByParent(dispatch, id))
             }
         }
-        dispatch(clearSelectedTeacherRegisterQuatification());
+        
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Khám phá", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
 
     const [checked, setChecked] = useState(true);

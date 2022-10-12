@@ -1,7 +1,6 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-import { clearSelectedTeacherRegisterQuatification } from "../../store/actions/teacher_register_quantification.action";
 import { IRootPageStateType, IStateType, IStudentLeaveState, ITeacherLeaveState } from "../../store/models/root.interface";
 import "./RequestTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
@@ -63,9 +62,12 @@ const RequestTeacher: React.FC = () => {
                 trackPromise(getTeacherLeaveByTeacher(dispatch, id))
             }
         }
-        dispatch(clearSelectedTeacherRegisterQuatification());
+        
+    }, [dispatch, access_token, refresh_token, id]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp theo kì", ""));
-    }, [path.area, dispatch, access_token, refresh_token, id]);
+    }, [path.area, dispatch])
 
     
     const [checked, setChecked] = useState(true);

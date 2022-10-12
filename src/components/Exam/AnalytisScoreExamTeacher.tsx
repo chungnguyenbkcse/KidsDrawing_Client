@@ -85,8 +85,12 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
                 dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id)) 
             }
         }
+        
+    }, [dispatch, exercise_id, class_id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp", "Chi tiết"));
-    }, [path.area, dispatch, exercise_id, class_id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     return (
         <Fragment>

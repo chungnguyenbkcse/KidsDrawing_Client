@@ -134,8 +134,12 @@ const SemesterClassDetailStudent: React.FC = () => {
                 trackPromise(getUserById(dispatch, id))
             }
         }
+    }, [dispatch, id, access_token, refresh_token]);
+
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     function handleRegister() {
         dispatch(postUserRegisterJoinSemester({

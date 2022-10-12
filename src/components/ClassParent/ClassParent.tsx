@@ -57,8 +57,12 @@ const ClassParent: React.FC = () => {
                 trackPromise(getClassesParent(dispatch,id))
             }
         }
+    }, [ dispatch, id, access_token, refresh_token]);
+
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     function onClassesParentSelect(classes_parent: IClassesParent): void {
         dispatch(changeSelectedDoinglClass(classes_parent));

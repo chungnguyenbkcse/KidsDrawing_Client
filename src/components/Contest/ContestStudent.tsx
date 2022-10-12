@@ -60,8 +60,12 @@ const ContestStudent: React.FC = () => {
                 trackPromise(getContestStudentByStudent(dispatch, id))
             }
         }
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Cuộc thi của bé", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
+
     return (
         promiseInProgress ?
             <div className="row" id="search-box">

@@ -62,12 +62,6 @@ function FormSubmitContestStudent(): JSX.Element {
         }
     }
 
-    function notify() {
-        toast.info("Cập nhật thành công!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000
-        });
-    }
 
     function cancelForm(): void {
         dispatch(setModificationState(UserModificationStatus.None));

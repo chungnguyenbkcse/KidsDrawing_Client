@@ -150,8 +150,12 @@ const SemesterClassDetail: React.FC = () => {
                 trackPromise(getStudentByParent(dispatch, id))
             }
         }
+        
+    }, [dispatch, id, access_token, refresh_token]);
+
+    useEffect(() => {
         dispatch(updateCurrentPath("Lớp", ""));
-    }, [path.area, dispatch, id, access_token, refresh_token]);
+    }, [path.area, dispatch])
 
     function handleRegister() {
         valueTeacher.map((ele, idx) => {

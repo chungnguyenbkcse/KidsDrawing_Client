@@ -7,13 +7,12 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getSemesterClassNew } from "../../common/service/SemesterClass/GetSemesterNew";
-import SemesterClassList from "./SemesterClassList";
-import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
-import { getContestStudentByParent } from "../../common/service/ContestStudent/GetContestStudentByParent";
 import ContestList from "./ContestList";
+import CourseNewList from "./CourseNewList";
+import { getCourseParentNew } from "../../common/service/CourseParentNew/GetCourseParentNew";
+import { getContestStudentByParent } from "../../common/service/ContestStudent/GetContestStudentByParent";
 
-const Discovery: React.FC = () => {
+const DiscoveryParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     //const semester_classs: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -48,14 +47,12 @@ const Discovery: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getSemesterClassNew(dispatch))
-                    trackPromise(getStudentByParent(dispatch, id))
+                    trackPromise(getCourseParentNew(dispatch, id))
                     trackPromise(getContestStudentByParent(dispatch, id))
                 }
             }
             else {
-                trackPromise(getSemesterClassNew(dispatch))
-                trackPromise(getStudentByParent(dispatch, id))
+                trackPromise(getCourseParentNew(dispatch, id))
                 trackPromise(getContestStudentByParent(dispatch, id))
             }
         }
@@ -142,7 +139,7 @@ const Discovery: React.FC = () => {
                         return (
                             <Fragment>
                                 <div className="row">
-                                    <SemesterClassList />
+                                    <CourseNewList />
                                 </div>
 
                             </Fragment>
@@ -166,4 +163,4 @@ const Discovery: React.FC = () => {
     );
 };
 
-export default Discovery;
+export default DiscoveryParent;

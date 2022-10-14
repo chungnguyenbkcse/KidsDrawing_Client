@@ -1,4 +1,4 @@
-export interface ICardSemesterClassStudentProperties {
+export interface ICardSemesterClassParentProperties {
     id: string;
     url_image: string;
     schedule: string;
@@ -18,4 +18,6 @@ export interface ICardSemesterClassStudentProperties {
     icon: string;
     course_id: string;
     class: string;
+    student_registered_name: string[];
+    student_registered_id: string[];
 }

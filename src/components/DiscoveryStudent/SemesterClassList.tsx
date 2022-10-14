@@ -12,7 +12,7 @@ function SemesterClassList(): JSX.Element {
     return (
       <TopCardSemesterClassStudent
         name={ele.name}
-        semester_class_id={ele.semester_class_id}
+        id={ele.id}
         course_name={ele.course_name}
         icon="book"
         class="primary"
@@ -39,7 +39,7 @@ function SemesterClassList(): JSX.Element {
     return (
       <TopCardSemesterClassStudent
         name={ele.name}
-        semester_class_id={ele.semester_class_id}
+        id={ele.id}
         course_name={ele.course_name}
         icon="book"
         class="primary"
@@ -66,7 +66,7 @@ function SemesterClassList(): JSX.Element {
     return (
       <TopCardSemesterClassStudent
         name={ele.name}
-        semester_class_id={ele.semester_class_id}
+        id={ele.id}
         course_name={ele.course_name}
         icon="book"
         class="primary"

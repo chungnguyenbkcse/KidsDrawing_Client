@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, ReactElement } from "react";
 import { useHistory } from "react-router-dom";
-import { ICardSemesterClassStudentProperties } from "../types/TopCardSemesterClassStudent.types";
+import { ICardSemesterClassParentProperties } from "../types/TopCardSemesterClassParent.types";
 
-function TopCardSemesterClassStudent(props: PropsWithChildren<ICardSemesterClassStudentProperties>): ReactElement {
+function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassParentProperties>): ReactElement {
     const history = useHistory();
-    const routeChange = (course: PropsWithChildren<ICardSemesterClassStudentProperties>) =>{ 
+    const routeChange = (course: PropsWithChildren<ICardSemesterClassParentProperties>) =>{ 
         localStorage.removeItem('description_course');
         localStorage.setItem('description_course', course.description);
         localStorage.removeItem('course_id');
@@ -56,6 +56,31 @@ function TopCardSemesterClassStudent(props: PropsWithChildren<ICardSemesterClass
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Giá:</span> <span className="header-card-course-value-teacher">{props.price} VNĐ</span></p>
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Trạng thái:</span> <span className="header-card-course-value-teacher">{props.status}</span></p>
                     </div>
+                    {
+                        function () {
+                            if (props.student_registered_id.length > 0) {
+                                return (
+                                    <div className="row">
+                                        <p className="col-xl-6 col-md-6 col-xs-6" >
+                                            <span className="header-card-course-teacher">Đã mua:</span> 
+                                            {
+                                                props.student_registered_name.map((ele, idx) => {
+                                                    if (idx === props.student_registered_name.length - 1) {
+                                                        return (
+                                                            <span className="header-card-course-value-teacher">{ele}</span>
+                                                        )
+                                                    }
+                                                    return (
+                                                        <span className="header-card-course-value-teacher">{ele}, </span>
+                                                    )
+                                                })
+                                            }
+                                        </p>
+                                    </div>
+                                )
+                            }
+                        }()
+                    }
                         {/* <div className="col-xl-4 col-md-4 col-xs-4">
                             <div className="row justify-content-center">
                                 <img className="image-course-teacher" src={props.url_image} alt="Preview"/>
@@ -75,4 +100,4 @@ function TopCardSemesterClassStudent(props: PropsWithChildren<ICardSemesterClass
 }
 
 
-export default TopCardSemesterClassStudent;
+export default TopCardSemesterClassParent;

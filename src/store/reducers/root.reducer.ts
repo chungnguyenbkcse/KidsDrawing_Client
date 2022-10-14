@@ -63,6 +63,7 @@ import course_newsReducer from "./course_new.reducer";
 import semesterClassStudentReducer from "./semester_class_student.reducer";
 import class_has_register_join_semestersReducer from "./class_has_register_join_semester.reducer";
 import course_parent_newsReducer from "./course_parent_new.reducer";
+import semesterClassParentReducer from "./semester_class_parent.reducer";
 
 
 const initialState: IRootStateType = {
@@ -141,6 +142,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     semester_class_student: semesterClassStudentReducer,
     class_has_register_join_semesters: class_has_register_join_semestersReducer,
     course_parent_news: course_parent_newsReducer,
+    semester_class_parent: semesterClassParentReducer,
 });
 
 

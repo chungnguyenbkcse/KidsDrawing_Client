@@ -98,6 +98,7 @@ import SemesterClassStudentNew from "../components/DiscoveryStudent/SemesterClas
 import ReivewClassDone from "../components/ClassStudent/ReviewClassDone";
 import ExerciseStudentList1 from "../components/ClassStudent/ExerciseStudentList1";
 import ReviewStart from "../components/ClassStudent/ReviewStart";
+import SemesterClassParentNew from "../components/Discovery/SemesterClassParentNew";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -167,6 +168,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>  
+                                <Route path={`/courses/semester-classes`}><SemesterClassParentNew /></Route>
                                 <Route path={`/contests/detail`}><ContestDetailTeacher /></Route>
                                 <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
                                 <Route path={`/contest/result-grade`}><ResultGradeContestTeacher /></Route>

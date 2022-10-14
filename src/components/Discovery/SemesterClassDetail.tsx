@@ -13,7 +13,7 @@ import { getSemesterClassNew } from "../../common/service/SemesterClass/GetSemes
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 import jwt_decode from "jwt-decode";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { GrLinkNext } from "react-icons/gr";
+import { GrLinkDown, GrLinkNext } from "react-icons/gr";
 import { addCart } from "../../store/actions/cart.action";
 import { toast, ToastContainer } from "react-toastify";
 import { postUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/PostUserRegisterJoinSemester";
@@ -30,6 +30,12 @@ const SemesterClassDetail: React.FC = () => {
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listTeacher: IUser[] = users.students
     const listTeachers: Option1[] = [];
+    const [checked, setChecked] = useState(false);
+
+    function handleClick() {
+        setChecked(!checked)
+    }
+
     listTeacher.map((ele) => {
         let item: Option1 = { "label": ele.username, "value": ele.id }
         return listTeachers.push(item)
@@ -300,15 +306,31 @@ const SemesterClassDetail: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-xl-12 col-lg-12">
-                <div className="card-header py-3">
-                    <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
-                </div>
-                <div className="card shadow mb-4">
-                    <div className="card-body" dangerouslySetInnerHTML={{ __html: description_course }}>
-                    </div>
+            <div className="row" id="btn-register-course">
+                <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                    <button className="btn btn-success btn-green" id="btn-create-register-course4" onClick={() => handleClick()}>
+                    <GrLinkDown id="btn-payment" color="#ffffff" />
+                    Xem miêu tả
+                    </button>
                 </div>
             </div>
+            {
+                function () {
+                    if (checked === true) {
+                        return (
+                            <div className="col-xl-12 col-lg-12">
+                                <div className="card-header py-3">
+                                    <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
+                                </div>
+                                <div className="card shadow mb-4">
+                                    <div className="card-body" dangerouslySetInnerHTML={{ __html: description_course }}>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                }()
+            }
 
             </Fragment >
     );

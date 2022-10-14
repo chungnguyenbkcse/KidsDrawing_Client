@@ -13,6 +13,7 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 import Loading from "../../common/components/Loading";
+import { GrLinkDown } from "react-icons/gr";
 type Option1 = {
     label: string;
     value: string;
@@ -125,7 +126,7 @@ const ConestDetail: React.FC = () => {
                 trackPromise(getStudentByParent(dispatch, id))
             }
         }
-       
+
     }, [dispatch, id, access_token, refresh_token]);
 
 
@@ -162,6 +163,12 @@ const ConestDetail: React.FC = () => {
 
     function changeValueTeacher(value: any) {
         setValueTeacher(value)
+    }
+
+    const [checked, setChecked] = useState(false);
+
+    function handleClick() {
+        setChecked(!checked)
     }
 
     return (
@@ -220,12 +227,6 @@ const ConestDetail: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="form-group col-md-6 ml-2">
-                                <label>Bé</label>
-                                <ReactSelect setValue={listTeachers} value={[]} changeValue={changeValueTeacher} />
-                            </div>
-                        </div>
                         <div className="row text-center justify-content-center" id="btn-register-course">
                             <button className="btn btn-success btn-green" id="btn-create-register-course" onClick={() => handleRegister()}>
                                 <i className="fas fa fa-plus"></i>
@@ -234,15 +235,32 @@ const ConestDetail: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
-                    </div>
-                    <div className="card shadow mb-4">
-                        <div className="card-body" dangerouslySetInnerHTML={{ __html: description_contest }}>
-                        </div>
+                <div className="row" id="btn-register-course">
+                    <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                        <button className="btn btn-success btn-green" id="btn-create-register-course4" onClick={() => handleClick()}>
+                            <GrLinkDown id="btn-payment" color="#ffffff" />
+                            Xem miêu tả
+                        </button>
                     </div>
                 </div>
+                {
+                    function () {
+                        if (checked === true) {
+                            return (
+                                <div className="col-xl-12 col-lg-12">
+                                    <div className="card-header py-3">
+                                        <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
+                                    </div>
+                                    <div className="card shadow mb-4">
+                                        <div className="card-body" dangerouslySetInnerHTML={{ __html: description_contest }}>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }()
+                }
+
 
             </Fragment >
     );

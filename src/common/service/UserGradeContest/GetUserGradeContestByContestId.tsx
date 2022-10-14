@@ -1,4 +1,4 @@
-import { fetchDataSuccess, fetchDataError, initialUserGradeContest, addUserGradeContest} from "../../../store/actions/user_grade_contest.action";
+import { fetchDataSuccess, fetchDataError, initialUserGradeContest, addUserGradeContest, removeUserGradeContestAll} from "../../../store/actions/user_grade_contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
     id: string;
@@ -37,6 +37,7 @@ export function getUserGradeContestByContestId(dispatch: any, id: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
+                dispatch(removeUserGradeContestAll())
                 console.log(data.body.teacher_grade_contest)
                 data.body.teacher_grade_contest.map((ele: any, index: any) => {
                     var user_grade_contest: user_grade_contest = {

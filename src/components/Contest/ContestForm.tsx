@@ -121,13 +121,8 @@ const ContestForm: React.FC = () => {
   const listTeacherGradeContest: IUserGradeContest[] = user_grade_contests.userGradeContests;
   const listTeacherGradeContests: Option1[] = [];
   listTeacherGradeContest.map((ele) => {
-    return  users.teachers.map((value) => {
-      if (value.id === ele.teacher_id){
-        let item: Option1 = { "label": value.username, "value": value.id }
-        return listTeacherGradeContests.push(item)
-      }
-      return null
-    })
+    let item: Option1 = { "label": ele.teacher_name, "value": ele.teacher_id }
+    return listTeacherGradeContests.push(item)
   })
 
   console.log(listTeacherGradeContests)
@@ -217,7 +212,7 @@ const ContestForm: React.FC = () => {
           end_time: formState.end_time.value,
           art_age_id: formState.art_age_id.value,
           art_type_id: formState.art_type_id.value
-        }, idx, routeHome))
+        },valueTeacher,  idx, routeHome))
       }
 
       dispatch(clearSelectedContest());

@@ -1,9 +1,11 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { deleteUserGradeContestByContest } from "../UserGradeContest/DeleteUserGradeContestByContest";
+import { postUserGradeContest } from "../UserGradeContest/PostUserGradeContest";
 import { getContest } from "./GetContest";
 
-export function putContest(id: any,data: any, idx: any, routeHome: any) {
+export function putContest(id: any,data: any, valueTeacher: any[], idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -23,7 +25,7 @@ export function putContest(id: any,data: any, idx: any, routeHome: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putContest(id,data, idx, routeHome))
+                        dispatch(putContest(id,data, valueTeacher, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,6 +38,13 @@ export function putContest(id: any,data: any, idx: any, routeHome: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
+                dispatch(deleteUserGradeContestByContest(id));
+                valueTeacher.map((value, index) =>  {
+                    return dispatch(postUserGradeContest({
+                        contest_id: id,
+                        teacher_id: value.value
+                    }))
+                })
                 toast.update(idx, { render: "Chỉnh cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 setTimeout(function () {
                     routeHome(true);

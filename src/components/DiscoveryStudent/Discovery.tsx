@@ -8,9 +8,9 @@ import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import ContestList from "./ContestList";
-import { getContestByStudent } from "../../common/service/Contest/GetContestByStudent";
 import { getCourseNew } from "../../common/service/CourseNew/GetCourseNew";
 import CourseNewList from "./CourseNewList";
+import { getContestStudentByStudent } from "../../common/service/ContestStudent/GetContestStudent";
 
 const DiscoveryStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -48,12 +48,12 @@ const DiscoveryStudent: React.FC = () => {
                 }
                 else {
                     trackPromise(getCourseNew(dispatch, id))
-                    trackPromise(getContestByStudent(dispatch, id))
+                    trackPromise(getContestStudentByStudent(dispatch, id))
                 }
             }
             else {
                 trackPromise(getCourseNew(dispatch, id))
-                trackPromise(getContestByStudent(dispatch, id))
+                trackPromise(getContestStudentByStudent(dispatch, id))
             }
         }
         

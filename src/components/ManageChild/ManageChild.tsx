@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
-import { IClassesStudentState, IContestTeacherState, IMyClassState, IScheduleTimeClassState, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IClassesStudentState, IContestTeacherState, IScheduleTimeClassState, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import "./ManageChild.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -11,7 +11,6 @@ import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { IoMdAnalytics } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
 import { ChartLine } from "../../common/components/CharLine";
-import { getAllClassByStudent } from "../../common/service/MyClass/GetAllClassByStudent";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { getContestByStudent } from "../../common/service/Contest/GetContestByStudent";
@@ -44,11 +43,10 @@ const ManageChild: React.FC = () => {
     const [checked, setChecked] = useState(true);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
-    const myclasses: IMyClassState = useSelector((state: IStateType) => state.myclasses);
     const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
     const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
     const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
-    const numberApprovedCount: number = classes_students.classes_done.length;
+    const numberApprovedCount: number = classes_students.classes_done.length + classes_students.classes_doing.length;
     const numberNotApprovedNowCount: number = contest_teachers.contest_end.length + contest_teachers.contest_not_open_now.length + contest_teachers.contest_opening.length;
     var id_x = localStorage.getItem('student_id');
     var student_id: string = "";
@@ -86,7 +84,6 @@ const ManageChild: React.FC = () => {
                 else {
                     trackPromise(getUserById(dispatch, student_id))
                     trackPromise(getScheduleTimeByChild(dispatch, student_id))
-                    trackPromise(getAllClassByStudent(dispatch, student_id))
                     trackPromise(getContestByStudent(dispatch, student_id))
                     trackPromise(getClassesStudent(dispatch, student_id))
                 }
@@ -94,15 +91,16 @@ const ManageChild: React.FC = () => {
             else {
                 trackPromise(getUserById(dispatch, student_id))
                 trackPromise(getScheduleTimeByChild(dispatch, student_id))
-                trackPromise(getAllClassByStudent(dispatch, student_id))
                 trackPromise(getContestByStudent(dispatch, student_id))
                 trackPromise(getClassesStudent(dispatch, student_id))
             }
         }
     }, [dispatch, access_token, refresh_token, student_id]);
 
-    const [value, setValue] = useState(0);
-    const [value1, setValue1] = useState(0);
+    const [value, setValue] = useState<number>(0);
+    const [value1, setValue1] = useState<number>(0);
+    console.log(checked)
+    console.log(value)
     const listOptions: Options[] = [
         {
             name: 'Khóa học',
@@ -115,7 +113,7 @@ const ManageChild: React.FC = () => {
     ];
 
     const listClasses: Options[] = [];
-    myclasses.myClasses.map((ele, idx) => {
+    classes_students.classes_doing.map((ele, idx) => {
         let item: Options = {
             name: ele.name,
             value: ele.id
@@ -283,7 +281,9 @@ const ManageChild: React.FC = () => {
                                     </div>
                                     {
                                         function () {
-                                            if (checked === true && value === 1) {
+                                            console.log(checked)
+                                            console.log(typeof(value))
+                                            if (checked === true && value == 1) {
                                                 return (
                                                     <>
                                                         <div className="row">
@@ -319,7 +319,7 @@ const ManageChild: React.FC = () => {
                                                 )
                                             }
 
-                                            else if (checked === true && value === 2) {
+                                            else if (checked === true && value == 2) {
                                                 return (
                                                     <div className="row">
                                                         <div className="col-xl-12 col-lg-12">
@@ -333,7 +333,7 @@ const ManageChild: React.FC = () => {
                                                 )
                                             }
 
-                                            else if (checked === false && value === 1) {
+                                            else if (checked === false && value == 1) {
                                                 return classes_students.classes_done.map((ele, idx) => {
                                                     console.log(ele)
                                                     return (
@@ -375,7 +375,7 @@ const ManageChild: React.FC = () => {
                                             }
 
 
-                                            if (checked === false && value === 2) {
+                                            if (checked === false && value == 2) {
                                                 return contest_teachers.contest_end.map((ele, idx) => {
                                                     return (
                                                         <div className="row">

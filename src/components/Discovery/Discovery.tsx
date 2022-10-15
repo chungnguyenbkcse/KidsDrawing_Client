@@ -10,7 +10,6 @@ import Loading from "../../common/components/Loading";
 import ContestList from "./ContestList";
 import CourseNewList from "./CourseNewList";
 import { getCourseParentNew } from "../../common/service/CourseParentNew/GetCourseParentNew";
-import { getContestStudentByParent } from "../../common/service/ContestStudent/GetContestStudentByParent";
 import { getContestParentNew } from "../../common/service/ContestParentNew/GetContestParentNew";
 
 const DiscoveryParent: React.FC = () => {

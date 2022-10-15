@@ -1,26 +1,21 @@
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TopCard from "../../common/components/TopCardUser";
-import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
-import { getUserById } from "../../common/service/User/GetUserById";
 import { changeSelectedTeacherRegisterQuatificationApproved, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { ICourseTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
+import { IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./CourseTeacher.css"
-import CourseTeacherRegisterSuccessfullList from "./CourseTeacherRegisterSuccessfullList";
-import { getCourseTeacher } from "../../common/service/CourseTeacher/GetCourseTeacherByTeacher";
 import CourseTeacherNotRegisterList from "./CourseTeacherNotRegisterList";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getCourseTeacherNew } from "../../common/service/CourseTeacherNew/GetCourseTeacherNew";
 
 const CourseTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const course_teachers: ICourseTeacherState = useSelector((state: IStateType) => state.course_teachers);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberTeacherRegisterSuccessfullCount: number = course_teachers.register_successfull_courses.length;
+
     var id_x = localStorage.getItem('id');
     var id: string = "";
     if (id_x !== null) {
@@ -52,15 +47,11 @@ const CourseTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                    trackPromise(getUserById(dispatch, id))
-                    trackPromise(getCourseTeacher(dispatch, id))
+                    trackPromise(getCourseTeacherNew(dispatch, id))
                 }
             }
             else {
-                trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                trackPromise(getUserById(dispatch, id))
-                trackPromise(getCourseTeacher(dispatch, id))
+                trackPromise(getCourseTeacherNew(dispatch, id))
             }
         }      
     }, [dispatch, id, access_token, refresh_token]);
@@ -74,7 +65,6 @@ const CourseTeacher: React.FC = () => {
         dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
     }
 
-    const [checked, setChecked] = useState(true);
     return (
         promiseInProgress ?
       <div className="row" id="search-box">
@@ -89,16 +79,6 @@ const CourseTeacher: React.FC = () => {
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-            <div className="row">
-                <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
-                {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
-                        <i className="fas fa fa-plus"></i>
-                        Đăng kí trình độ
-                    </button>
-                </div> */}
-            </div>
 
             <div className="row" id="search-box">
                 <div className="col-xl-12 col-lg-12">
@@ -114,72 +94,12 @@ const CourseTeacher: React.FC = () => {
             </div>
 
             <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked === false) {
-                            setChecked(true)
-                        }
-                    }} style={{
-                        color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Khám phá</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
-                    }}></div>
-                </div>
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked === true) {
-                            setChecked(false)
-                        }
-                    }}
-                        style={{
-                            color: checked ? "#2F4F4F" : "#F24E1E"
-                        }}>Đã đăng kí</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
-                    }}></div>
-                </div>
+                <CourseTeacherNotRegisterList
+                    onSelect={onTeacherRegisterQuantificationSelect}
+                />
+
+
             </div>
-
-
-            {
-                function () {
-                    if (checked === true) {
-                        return (
-                            <Fragment>
-                                <div className="row">
-                                    <CourseTeacherNotRegisterList
-                                        onSelect={onTeacherRegisterQuantificationSelect}
-                                    />
-
-
-                                </div>
-
-                            </Fragment>
-                        )
-                    }
-                    else {
-                        return (
-                            <Fragment>
-                                <div className="row">
-                                    <CourseTeacherRegisterSuccessfullList
-                                        onSelect={onTeacherRegisterQuantificationSelect}
-                                    />
-                                </div>
-
-                            </Fragment>
-                        )
-                    }
-                }()
-            }
 
 
         </Fragment>

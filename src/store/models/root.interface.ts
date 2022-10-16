@@ -63,6 +63,7 @@ import { CourseParentNewModificationStatus, ICourseParentNew } from "./course_pa
 import { ISemesterClassParent, SemesterClassParentModificationStatus } from "./semester_class_parent.interface";
 import { ContestParentNewModificationStatus, IContestParentNew } from "./contest_parent_new.interface";
 import { CourseTeacherNewModificationStatus, ICourseTeacherNew } from "./course_teacher_new.interface";
+import { ISemesterClassTeacher, SemesterClassTeacherModificationStatus } from "./semester_class_teacher.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -139,6 +140,7 @@ export interface IStateType {
     semester_class_parent: ISemesterClassParentState;
     contest_parent_new: IContestParentNewState;
     course_teacher_new: ICourseTeacherNewState;
+    semester_class_teachers: ISemesterClassTeacherState;
 }
 
 export interface IProductState {
@@ -298,6 +300,12 @@ export interface ISemesterClassState {
     selectedSemesterClass: ISemesterClass | null;
     modificationState: SemesterClassModificationStatus;
     semesterClasses: ISemesterClass[];
+}
+
+export interface ISemesterClassTeacherState {
+    selectedSemesterClassTeacher: ISemesterClassTeacher | null;
+    modificationState: SemesterClassTeacherModificationStatus;
+    semester_class_teachers: ISemesterClassTeacher[];
 }
 
 export interface ICourseState {

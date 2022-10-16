@@ -29,7 +29,7 @@ function TopCardSemesterClassStudent(props: PropsWithChildren<ICardSemesterClass
         localStorage.setItem('semester_class_id', course.id.toString())
         localStorage.removeItem('url_image');
         localStorage.setItem('url_image', course.url_image.toString())
-        let path = '/courses/detail'; 
+        let path = '/semester-class/detail'; 
         history.push({
             pathname: path
         });

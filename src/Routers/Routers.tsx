@@ -99,6 +99,7 @@ import ReivewClassDone from "../components/ClassStudent/ReviewClassDone";
 import ExerciseStudentList1 from "../components/ClassStudent/ExerciseStudentList1";
 import ReviewStart from "../components/ClassStudent/ReviewStart";
 import SemesterClassParentNew from "../components/Discovery/SemesterClassParentNew";
+import SemesterClassTeacherNew from "../components/Course/SemesterClassTeacherNew";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -123,7 +124,8 @@ const Routers: React.FC = () => {
                                 <Route path={`/student-leave/detail`}><StudentLeaveDetail /></Route>
                                 <Route path={`/teacher-level/detail`}><TeacherLevelDetail /></Route>                              
                                 <Route path={`/teacher-level`}><TeacherLevel /></Route>
-                                <Route path={`/courses/detail`}><CourseTeacherDetail /></Route>
+                                <Route path={`/courses/semester-classes`}><SemesterClassTeacherNew /></Route>
+                                <Route path={`/semester-class/detail`}><CourseTeacherDetail /></Route>
                                 <Route path={`/courses`}><CourseTeacher /></Route>
                                 <Route path={`/contests/detail`}><ContestDetailTeacher /></Route>
                                 <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
@@ -184,7 +186,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/student/class`}><ManageClassesDone /></Route>                        
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>
-                                <Route path={`/courses/detail`}><SemesterClassDetail /></Route>
+                                <Route path={`/semester-class/detail`}><SemesterClassDetail /></Route>
                                 <Route path={`/courses`}><CourseParent /></Route>
                                 <Route path={`/classes`}><ClassParent /></Route>
                                 <Route path={`/contests/register`}><ConestDetail /></Route>
@@ -216,7 +218,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
                                 <Route path={`/contest/result-grade`}><ResultGradeContestTeacher /></Route>
                                 <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>
-                                <Route path={`/courses/detail`}><SemesterClassDetailStudent /></Route>
+                                <Route path={`/semester-class/detail`}><SemesterClassDetailStudent /></Route>
                                 <Route path={`/classes/section`}><SectionStudent /></Route>
                                 <Route path={`/section/view`}><ViewSectionStudent /></Route>
                                 <Route path={`/courses/semester-classes`}><SemesterClassStudentNew /></Route>

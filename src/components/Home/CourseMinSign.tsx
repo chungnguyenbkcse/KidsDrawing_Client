@@ -29,7 +29,7 @@ function CourseMinSign(props: productListProps): JSX.Element  {
   const history = useHistory();
   
   const routeChange = () =>{ 
-    let path = '/courses/detail'; 
+    let path = '/semester-class/detail'; 
     history.push(path);
   }
 

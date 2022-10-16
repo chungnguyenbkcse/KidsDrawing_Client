@@ -32,7 +32,7 @@ function TopCardCourseTeacherNew(props: PropsWithChildren<ICardProperties>): Rea
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Giá:</span> <span className="header-card-course-value-teacher">{props.price} VNĐ</span></p>
                     </div>
                     <div className="row">
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Đã đăng kí:</span> <span className="header-card-course-value-teacher">{props.total_register}</span></p>
+                        <p className="col-xl-12 col-md-12 col-xs-12" ><span className="header-card-course-teacher">Đã đăng kí:</span> <span className="header-card-course-value-teacher">{props.total_register}</span></p>
                     </div>
                 </div>
             </div>

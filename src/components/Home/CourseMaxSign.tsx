@@ -21,7 +21,7 @@ function CourseMaxSign(props: user_register_semesterListProps): JSX.Element  {
   const history = useHistory();
   
   const routeChange = () =>{ 
-    let path = '/courses/detail'; 
+    let path = '/semester-class/detail'; 
     history.push(path);
   }
 

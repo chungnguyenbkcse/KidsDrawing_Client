@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, ReactElement } from "react";
 import { useHistory } from "react-router-dom";
-import { ICardSemesterClassParentProperties } from "../types/TopCardSemesterClassParent.types";
+import { ICardSemesterClassTeacherProperties } from "../types/TopCardSemesterClassTeacher.types";
 
-function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassParentProperties>): ReactElement {
+function TopCardSemesterClassTeacher(props: PropsWithChildren<ICardSemesterClassTeacherProperties>): ReactElement {
     const history = useHistory();
-    const routeChange = (course: PropsWithChildren<ICardSemesterClassParentProperties>) =>{ 
+    const routeChange = (course: PropsWithChildren<ICardSemesterClassTeacherProperties>) =>{ 
         localStorage.removeItem('description_course');
         localStorage.setItem('description_course', course.description);
         localStorage.removeItem('course_id');
@@ -53,46 +53,8 @@ function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassP
                         <p className="col-12" ><span className="header-card-course-teacher">Lịch học:</span> <span className="header-card-course-value-teacher">{props.schedule}</span></p>
                     </div>
                     <div className="row">
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Giá:</span> <span className="header-card-course-value-teacher">{props.price} VNĐ</span></p>
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Trạng thái:</span> <span className="header-card-course-value-teacher">{props.status}</span></p>
+                        <p className="col-xl-12 col-md-12 col-xs-12" ><span className="header-card-course-teacher">Trạng thái:</span> <span className="header-card-course-value-teacher">{props.status}</span></p>
                     </div>
-                    {
-                        function () {
-                            if (props.student_registered_id.length > 0) {
-                                return (
-                                    <div className="row">
-                                        <p className="col-xl-6 col-md-6 col-xs-6" >
-                                            <span className="header-card-course-teacher">Đã mua:</span> 
-                                            {
-                                                props.student_registered_name.map((ele, idx) => {
-                                                    if (idx === props.student_registered_name.length - 1) {
-                                                        return (
-                                                            <span className="header-card-course-value-teacher">{ele}</span>
-                                                        )
-                                                    }
-                                                    return (
-                                                        <span className="header-card-course-value-teacher">{ele}, </span>
-                                                    )
-                                                })
-                                            }
-                                        </p>
-                                    </div>
-                                )
-                            }
-                        }()
-                    }
-                        {/* <div className="col-xl-4 col-md-4 col-xs-4">
-                            <div className="row justify-content-center">
-                                <img className="image-course-teacher" src={props.url_image} alt="Preview"/>
-                            </div>
-                        </div> */}
-                       {/*  <div className="col-xl-8 col-md-8 col-xs-8"> */}
-                            {/* <div className="row justify-content-center">
-                                <h5 id="name-course-teacher">{props.name}</h5>
-                            </div> */}
-                            
-                            
-                        {/* </div> */}
                 </div>
             </div>
         </div>
@@ -100,4 +62,4 @@ function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassP
 }
 
 
-export default TopCardSemesterClassParent;
+export default TopCardSemesterClassTeacher;

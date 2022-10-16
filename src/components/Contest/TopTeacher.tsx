@@ -16,7 +16,7 @@ function TopTeacher(props: user_grade_contestListProps): JSX.Element {
     const history = useHistory();
 
     const routeChange = () => {
-        let path = '/courses/detail';
+        let path = '/semester-class/detail';
         history.push(path);
     }
 

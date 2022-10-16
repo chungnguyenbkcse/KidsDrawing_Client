@@ -5,8 +5,8 @@ interface Attendance {
     student_id: string;
     section_id: string;
     status: string;
-    section_number: number;
     email: string;
+    section_number: number;
     course_name: string;
     course_id: string;
     student_name: string;
@@ -14,11 +14,11 @@ interface Attendance {
     create_time: string;
     update_time: string;
 }
-export function getAttendance(dispatch: any) {
+export function getAttendanceBySection(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/user-attendance`, {
+                `${process.env.REACT_APP_API_URL}/user-attendance/section/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -32,7 +32,7 @@ export function getAttendance(dispatch: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getAttendance(dispatch))
+                        dispatch(getAttendanceBySection(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -49,8 +49,8 @@ export function getAttendance(dispatch: any) {
                 data.body.UserAttendance.map((ele: any, index: any) => {
                     var attendance: Attendance = {
                         id: ele.id,
-                        email: ele.email,
                         student_id: ele.student_id,
+                        email: ele.email,
                         section_number: ele.section_number,
                         course_id: ele.course_id,
                         course_name: ele.course_name,

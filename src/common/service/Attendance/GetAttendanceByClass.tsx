@@ -18,7 +18,7 @@ export function getAttendanceByClass(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/attendance/classes/${id}`, {
+                `${process.env.REACT_APP_API_URL}/user-attendance/classes/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -45,8 +45,8 @@ export function getAttendanceByClass(dispatch: any, id: any) {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeAttendanceAll())
-                console.log(data.body.art_type)
-                data.body.art_type.map((ele: any, index: any) => {
+                console.log(data.body.UserAttendance)
+                data.body.UserAttendance.map((ele: any, index: any) => {
                     var attendance: Attendance = {
                         id: ele.id,
                         student_id: ele.student_id,

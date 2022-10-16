@@ -10,17 +10,17 @@ import { useDispatch } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getAttendanceByClass } from "../../common/service/Attendance/GetAttendanceByClass";
+import { getAttendanceBySection } from "../../common/service/Attendance/GetAttendanceBySection";
 
 const Attendance: React.FC = () => {
   const { promiseInProgress } = usePromiseTracker();
 
   const dispatch: Dispatch<any> = useDispatch();
 
-  var id_x = localStorage.getItem('class_id');
-  var class_id: string = "";
+  var id_x = localStorage.getItem('section_id');
+  var section_id: string = "";
   if (id_x !== null) {
-    class_id = id_x;
+    section_id = id_x;
   }
 
   let access_token = localStorage.getItem("access_token");
@@ -46,15 +46,15 @@ const Attendance: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getAttendanceByClass(dispatch, class_id))
+                    trackPromise(getAttendanceBySection(dispatch, section_id))
                 }
             }
             else {
-              trackPromise(getAttendanceByClass(dispatch, class_id))
+              trackPromise(getAttendanceBySection(dispatch, section_id))
             }
         }
         dispatch(updateCurrentPath("Điểm danh", ""));
-    }, [dispatch, access_token, refresh_token, class_id]);
+    }, [dispatch, access_token, refresh_token, section_id]);
 
   return (
     promiseInProgress ?

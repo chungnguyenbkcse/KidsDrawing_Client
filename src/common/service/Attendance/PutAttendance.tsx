@@ -8,7 +8,7 @@ export function putAttendance(data: any, id: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/attendance/${id}`, {
+                `${process.env.REACT_APP_API_URL}/user-attendance/${id}`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,

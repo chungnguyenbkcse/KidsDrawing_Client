@@ -6,6 +6,8 @@ import { logout } from "../../store/actions/account.actions";
 import { IStateType, ITutorialPageState } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { putAttendanceByUserAndSection } from "../../common/service/Attendance/PutAttendanceByUserAndSection";
+import { toast, ToastContainer } from "react-toastify";
 
 const ViewSectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -17,6 +19,14 @@ const ViewSectionStudent: React.FC = () => {
 
     if (id_y !== null) {
         section_id = id_y;
+    }
+
+    var id_x = localStorage.getItem('id');
+    
+    let id = "";
+
+    if (id_x !== null) {
+        id = id_x;
     }
 
     const [count, setCount] = useState(1);
@@ -39,6 +49,13 @@ const ViewSectionStudent: React.FC = () => {
         if (x > 1){
             setCount(y);
         }
+    }
+
+    function handleChecked() {
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+          });
+        dispatch(putAttendanceByUserAndSection(section_id,id, idx));
     }
 
     let access_token = localStorage.getItem("access_token");
@@ -84,6 +101,7 @@ const ViewSectionStudent: React.FC = () => {
           </div>
         </div>
       </div> :  <Fragment>
+            <ToastContainer />
             <div className="row">
                 <div className="col-xl-12 col-md-12 mb-4">
                     <div className="row">
@@ -129,6 +147,17 @@ const ViewSectionStudent: React.FC = () => {
                                                     else {
                                                         return (
                                                             <button className={`btn btn-warning left-margin`} onClick={() => {setChangeCountBack()}}>Trở về</button>
+                                                        )
+                                                    }
+                                                }()
+                                            }
+                                        </div>
+                                        <div className="row no-gutters justify-content-right">
+                                            {
+                                                function() {
+                                                    if (count === TutorialPages.tutorialPages.length) {
+                                                        return (
+                                                            <button className={`btn btn-success left-margin mt-2`} onClick={() => {handleChecked()}}>Điểm danh</button>
                                                         )
                                                     }
                                                 }()

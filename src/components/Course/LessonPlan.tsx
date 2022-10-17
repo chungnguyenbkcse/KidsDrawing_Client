@@ -1,13 +1,10 @@
 import React, { useState, Dispatch, Fragment, useEffect, ChangeEvent } from "react";
 import { IStateType, IRootPageStateType, ICourseState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { ISectionTemplate, SectionTemplateModificationStatus } from "../../store/models/section_template.interface";
-import { clearSelectedSectionTemplate, setModificationStateSectionTemplate, addSectionTemplate } from "../../store/actions/section_template.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import Editor from "../../common/components/Quill/EditorSectionTemplate";
 import { ICourse } from "../../store/models/course.interface";
-import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel } from "../../common/types/Form.types";
@@ -53,7 +50,6 @@ const LessonPlan: React.FC = () => {
 
 
 
-  let section_template: ISectionTemplate = { id: "", name: "", creator_id: "", course_id: "", number: 0, teaching_form: false, create_time: "", update_time: "" };
 
   const [contentTutorialSection, setContentTutorialSection] = useState<TutorialSectionTemplate[]>([])
   const [contentTutorialPage, setContentTutorialPage] = useState<PageContent[]>([])
@@ -84,13 +80,6 @@ const LessonPlan: React.FC = () => {
     history.push(path);
   }
 
-
-  function saveUser(): void {
-    let saveUserFn: Function = addSectionTemplate;
-
-    saveForm(saveUserFn, contentTutorialSection);
-  }
-
   function handleSaveLesson() {
 
   }
@@ -102,48 +91,6 @@ const LessonPlan: React.FC = () => {
   const [textHtml, setTextHtml] = useState<string>("")
   function getValue(value: string) {
     setTextHtml(value);
-  }
-
-  function saveForm(saveFn: Function, contentTutorialSections: TutorialSectionTemplate[]): void {
-    if (section_template) {
-      const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-        position: toast.POSITION.TOP_CENTER
-      });
-
-      let contentPage: PageContent = {
-        page: currentPage,
-        content: textHtml
-      }
-      let contentSection: TutorialSectionTemplate = {
-        number: numberSection,
-        name: value1,
-        teaching_form: value2 === "true" ? true : false,
-        tutorial: [...contentTutorialPage, contentPage]
-      }
-
-      let res = [...contentTutorialSections, contentSection];
-
-      console.log(res)
-
-      if (saveFn === addSectionTemplate && course !== null) {
-        res.map((contentSection) => {
-          return dispatch(postSectionTemplate(contentSection.tutorial, {
-            name: contentSection.name,
-            number: contentSection.number,
-            teaching_form: contentSection.teaching_form,
-            course_id: course_id,
-            creator_id: localStorage.getItem('id')
-          }, id))
-        })
-      } 
-
-      dispatch(clearSelectedSectionTemplate());
-      dispatch(setModificationStateSectionTemplate(SectionTemplateModificationStatus.None));
-      toast.update(id, { render: "Thêm trình độ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-      setTimeout(function () {
-        routeHome();
-      }, 2000); 
-    }
   }
 
 
@@ -242,22 +189,16 @@ const LessonPlan: React.FC = () => {
     )
   });
 
+  function handleBackPage() {
 
-  function getDisabledClass(): string {
-    let isError: boolean = isFormInvalid();
-    return isError ? "disabled" : "";
   }
 
-  function getDisabledClassSaveSection(): string {
-    return value === 0 ? "disabled" : "";
+  function handleRemove() {
+
   }
 
-  function getDisabledClassNextSection(): string {
-    return value === 0 ? "disabled" : "";
-  }
+  function handleNewPage() {
 
-  function isFormInvalid(): boolean {
-    return (value === 0 && textHtml === "") as boolean;
   }
 
 
@@ -328,9 +269,16 @@ const LessonPlan: React.FC = () => {
                           <label>Nội dung bước {currentPage + 1} / {value}</label>
                           <Editor getValue={getValue} isCreate={textHtml} setValue={text} />
                         </div>
-                        <div className="form-group">
-                          <button type="button" className="btn btn-info right-margin" onClick={handleSaveStep}>Lưu bước</button>
-                          <button type="button" className="btn btn-info right-margin ml-2" onClick={handleNextPage}>Trang tiếp theo</button>
+                        <div className="row mt-2">
+                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveStep}>Lưu</button>
+                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
+                            </div>
+                            <div className="col-xl-8 col-md-8 col-xs-8">
+                                <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
+                                <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                            </div>
                         </div>
                       </>
                     )
@@ -343,8 +291,15 @@ const LessonPlan: React.FC = () => {
                         <label>Nội dung trang {currentPage + 1}</label>
                         <Editor getValue={getValue} isCreate={textHtml} setValue={text} />
                       </div>
-                      <div className="form-group">
-                        <button type="button" className="btn btn-info right-margin" onClick={handleSaveStep}>Lưu bước</button>
+                      <div className="row mt-2">
+                      <div className="col-xl-4 col-md-4 col-xs-4">
+                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveStep}>Lưu</button>
+                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
+                            </div>
+                            <div className="col-xl-8 col-md-8 col-xs-8">
+                                <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                            </div>
+                              
                       </div>
                     </>
                     )
@@ -354,21 +309,28 @@ const LessonPlan: React.FC = () => {
 
               {
                 function () {
-                  if (course && (numberSection < number_of_sum)) {
+                  if (course && numberSection === 1){
                     return (
-                      <div className="row">
-                        <div className="col-xl-6 col-md-6 col-xs-6" >
-                        <button type="button" className={`btn btn-info right-margin ${getDisabledClassSaveSection()}`} onClick={handleSaveLesson}>Lưu buổi</button>
+                      <div className="row mt-2">
+                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                            </div>
+                            <div className="col-xl-8 col-md-8 col-xs-8">
+                                <button type="button" className="btn btn-success right-margin add-step" onClick={handleNextSection}>Buổi tiếp theo</button>
+                            </div>
                         </div>
-                        <div className="col-xl-6 col-md-6 col-xs-6">
-                        <button type="button" className={`btn btn-primary right-margin add-step ${getDisabledClassNextSection()}`} onClick={handleNextSection}>Buổi tiếp theo</button>
-                        </div>
-                      </div>
                     )
                   }
-                  else if (course && (numberSection === number_of_sum)) {
+                  else if (course && (numberSection <= number_of_sum)) {
                     return (
-                      <button type="button" className={`btn btn-success left-right  ${getDisabledClass()}`} onClick={() => {saveUser()}}>Hoàn thành</button>
+                      <div className="row mt-2">
+                            <div className="col-xl-4 col-md-4 col-xs-4">
+                                <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                            </div>
+                            <div className="col-xl-8 col-md-8 col-xs-8">
+                                <button type="button" className="btn btn-success right-margin add-step" onClick={handleNextSection}>Buổi tiếp theo</button>
+                            </div>
+                        </div>
                     )
                   }
                 }()

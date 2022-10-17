@@ -13,7 +13,7 @@ import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
@@ -21,12 +21,14 @@ import { getTutorial } from "../../common/service/Tutorial/GetTutorial";
 import { getTutorialPage } from "../../common/service/TutorialPage/GetTutorialPage";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 
 
 const DetailClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
+    const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
     const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
@@ -78,20 +80,16 @@ const DetailClassTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
+                    trackPromise(getInfoMyClass(dispatch, class_id))
                     trackPromise(getSectionByClass(dispatch, class_id))
-                    trackPromise(getTutorial(dispatch))
-                    trackPromise(getTutorialPage(dispatch))
-                    trackPromise(getUserById(dispatch, id))
                     trackPromise(getTeacher(dispatch))
                     trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
                     trackPromise(getTeacherLeaveByTeacher(dispatch, id))
                 }
             }
             else {
+                trackPromise(getInfoMyClass(dispatch, class_id))
                 trackPromise(getSectionByClass(dispatch, class_id))
-                trackPromise(getTutorial(dispatch))
-                trackPromise(getTutorialPage(dispatch))
-                trackPromise(getUserById(dispatch, id))
                 trackPromise(getTeacher(dispatch))
                 trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
                 trackPromise(getTeacherLeaveByTeacher(dispatch, id))
@@ -156,6 +154,36 @@ const DetailClassTeacher: React.FC = () => {
         history.push({
             pathname: path
         })
+    }
+
+    function isDateBeforeToday(date: any) {
+        return new Date(date.toDateString()) < new Date(new Date().toDateString());
+    }
+
+    let count = 0;
+    let data: string[] = []
+    let total_time = "";
+    if (time_schedules.timeSchedules.length > 1 && promiseInProgress === false) {
+            if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null){
+                var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
+                var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
+                var hour_start = parseInt(start_time_0[1].substring(0, 2));
+                var minus_tart = parseInt(start_time_0[1].substring(3, 5));
+                var sercon_start = parseInt(start_time_0[1].substring(6, 8));
+                var hour_end = parseInt(end_time_0[1].substring(0, 2));
+                var minus_end = parseInt(end_time_0[1].substring(3, 5));
+                var sercon_end = parseInt(end_time_0[1].substring(6, 8));
+    
+                total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
+                time_schedules.timeSchedules.map((ele, index) => {
+                    if (isDateBeforeToday(new Date(Date.parse(ele.end_time)))) {
+                        count++;
+                    }
+                    var start_time = ele.start_time.split("T");
+                    var end_time = ele.end_time.split("T");
+                    return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
+                })
+            }
     }
 
     return (
@@ -286,12 +314,50 @@ const DetailClassTeacher: React.FC = () => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
-                                                                        <div className="col-xl-4 col-md-4 mb-4">
-                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                        <div className="col-xl-3 col-md-3">
+                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8 mb-4">
-                                                                            <h3 className=" mb-2" id="level-teacher">Buổi {ele.number}</h3>
-                                                                            <h4 className=" mb-2" id="level-teacher">{ele.name}</h4>
+                                                                        <div className="col-xl-9 col-md-9">
+                                                                            <div className="row">
+                                                                                <div className="col-xl-3 col-md-3">
+                                                                                    <p className=" mt-2 section_number">Buổi {ele.number}: </p>
+                                                                                </div>
+                                                                                <div className="col-xl-9 col-md-9">
+                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-xl-3 col-md-3">
+                                                                                    <p className=" mb-2 section_number">Lịch học: </p>
+                                                                                </div>
+                                                                                <div className="col-xl-9 col-md-9">
+                                                                                    <p className=" mb-2 section_number"><span className="section_name">{data[index]}</span> </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-xl-3 col-md-3">
+                                                                                    <p className=" mb-2 section_number">Thời gian buổi học: </p>
+                                                                                </div>
+                                                                                <div className="col-xl-9 col-md-9">
+                                                                                    <p className=" mb-2 section_number"><span className="section_name">{total_time}</span> </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-xl-3 col-md-3">
+                                                                                    <p className=" mb-2 section_number">Hình thức học: </p>
+                                                                                </div>
+                                                                                <div className="col-xl-9 col-md-9">
+                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-xl-3 col-md-3">
+                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>
+                                                                                </div>
+                                                                                <div className="col-xl-9 col-md-9">
+                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </tr>

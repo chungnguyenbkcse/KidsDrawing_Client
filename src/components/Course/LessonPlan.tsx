@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import Editor from "../../common/components/Quill/EditorSectionTemplate";
 import { ICourse } from "../../store/models/course.interface";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import NumberInput from "../../common/components/NumberInput";
 import { OnChangeModel } from "../../common/types/Form.types";
+import { postTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage1";
 type Options = {
   name: string;
   value: any;
@@ -43,6 +44,18 @@ const LessonPlan: React.FC = () => {
   }
 
   var course_id = localStorage.getItem('course_id');
+
+  var id_t = localStorage.getItem('tutorial_template_id');
+  let tutorial_template_id: string = "";
+  if (id_t !== null) {
+      tutorial_template_id = id_t
+  }
+
+  var id_y = localStorage.getItem('num_of_section');
+  let num_of_section: number = 0;
+  if (id_y !== null) {
+    num_of_section = parseInt(id_y)
+  }
 
   useEffect(() => {
     dispatch(updateCurrentPath("Khóa học chung", "Soạn giáo án"));
@@ -80,12 +93,31 @@ const LessonPlan: React.FC = () => {
     history.push(path);
   }
 
-  function handleSaveLesson() {
-
-  }
-
   function handleSaveStep () {
+    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+      position: toast.POSITION.TOP_CENTER
+    });
 
+    if (numberSection === num_of_section) {
+      dispatch(postTutorialTemplatePage1({
+        description: value,
+        name: value1,
+        tutorial_template_id: tutorial_template_id,
+        number: currentPage
+      }, idx))
+
+      setTimeout(() =>
+        routeHome()
+      , 2000)
+    }
+    else {
+      dispatch(postTutorialTemplatePage1({
+        description: value,
+        name: value1,
+        tutorial_template_id: tutorial_template_id,
+        number: currentPage
+      }, idx))
+    }
   }
 
   const [textHtml, setTextHtml] = useState<string>("")

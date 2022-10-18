@@ -1,11 +1,12 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/tutorial.action";
+import { ITutorialPage } from "../../../store/models/tutorial_page.interface";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postUserRegisterTutorialPage } from "../UserRegisterTutorialPage/PostUserRegisterTutorialPage";
 import { postUserRegisterTutorialPageToast } from "../UserRegisterTutorialPage/PostUserRegisterTutorialPageToast";
 
 
-export function postUserRegisterTutorial(tutorial: any[], data: any, idx: any, routeHome: any) {
+export function postUserRegisterTutorial(tutorial: ITutorialPage[], data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -45,15 +46,15 @@ export function postUserRegisterTutorial(tutorial: any[], data: any, idx: any, r
                         return dispatch(postUserRegisterTutorialPageToast({
                             user_register_tutorial_id: data.id,
                             name: data.name,
-                            description: value.content,
-                            number: value.page
+                            description: value.description,
+                            number: value.number
                         }, idx))
                     }
                     return dispatch(postUserRegisterTutorialPage({
                         user_register_tutorial_id: data.id,
                         name: data.name,
-                        description: value.content,
-                        number: value.page
+                        description: value.description,
+                        number: value.number
                     }))
                 })
             })

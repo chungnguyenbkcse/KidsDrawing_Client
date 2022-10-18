@@ -219,16 +219,24 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 }
                 else {
                     tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, idx) => {
-                        if (ele.number === k - 1 && ele.number === tutorial_template_pages.tutorialTemplatePages.length - 1) {
+                        if (ele.number === k - 1 ) {
+                            console.log('1')
+                            dispatch(putTutorialTemplatePage1(ele.id, {
+                                description: ele.description,
+                                name: ele.name,
+                                tutorial_template_id: tutorial_template_id,
+                                number: ele.number + 1
+                            }))
                             dispatch(postTutorialTemplatePage1({
                                 description: value,
                                 name: formState.name.value,
                                 tutorial_template_id: tutorial_template_id,
-                                number: ele.number + 1
+                                number: ele.number
                             }, idx))
                         }
-                        else if (ele.number >= k - 1) {
+                        else if (ele.number > k - 1) {
                             if (ele.number < tutorial_template_pages.tutorialTemplatePages.length - 1) {
+                                console.log('2')
                                 dispatch(putTutorialTemplatePage1(ele.id, {
                                     description: ele.description,
                                     name: ele.name,
@@ -248,12 +256,12 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                         return 1
                     })
 
-                    dispatch(postTutorialTemplatePage({
+                    /* dispatch(postTutorialTemplatePage({
                         description: value,
                         name: formState.name.value,
                         tutorial_template_id: tutorial_template_id,
                         number: k - 1
-                    }))
+                    })) */
                 }
                 setCheckCreateNew(false)
                 setCheckAfterCreate(true)

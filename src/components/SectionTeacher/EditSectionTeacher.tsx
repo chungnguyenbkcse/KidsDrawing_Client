@@ -13,6 +13,7 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getTutorialPageByTutorialId } from "../../common/service/TutorialPage/GetTutorialPageByTutorialId";
 import { postUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PostUserRegisterTutorial";
+import { addTutorialPage, editTutorialPage } from "../../store/actions/tutorial_page.action";
 
 
 export type SectionListProps = {
@@ -80,6 +81,12 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         tutorial_id = id_t
     }
 
+    var id_k = localStorage.getItem('tutorial_name');
+    let tutorial_name: string = "";
+    if (id_k !== null) {
+        tutorial_name = id_k
+    }
+
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -137,7 +144,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
 
     const [formState, setFormState] = useState({
-        name: { error: "", value: section.name },
+        name: { error: "", value: tutorial_name},
         number: { error: "", value: section.number },
         teach_form: { error: "", value: section.teach_form },
         class_id: { error: "", value: section.class_id },
@@ -401,6 +408,58 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         console.log(list_x)
     }
 
+    function handleSaveEdit() {
+
+        if (tutorial_pages !== null && tutorial_pages.tutorialPages.length > 0) {
+            if (totalPage > tutorial_pages.tutorialPages.length) {
+
+                tutorial_pages.tutorialPages.map((ele, idx) => {
+                    if (ele.number >= currentPage){
+                        dispatch(editTutorialPage({
+                            id: ele.id,
+                            tutorial_id: tutorial_id,
+                            name: formState.name.value,
+                            description: value,
+                            number: currentPage + 1
+                        }))
+            
+                        console.log(tutorial_pages.tutorialPages)
+                    }
+                    return 1
+                })
+
+                dispatch(addTutorialPage({
+                    id: tutorial_pages.tutorialPages.length.toString(),
+                    tutorial_id: tutorial_id,
+                    name: formState.name.value,
+                    description: value,
+                    number: currentPage
+                }))
+    
+                console.log(tutorial_pages.tutorialPages)
+            }
+            else {
+                tutorial_pages.tutorialPages.map((ele, idx) => {
+                    if (ele.number === currentPage){
+                        dispatch(editTutorialPage({
+                            id: ele.id,
+                            tutorial_id: tutorial_id,
+                            name: formState.name.value,
+                            description: value,
+                            number: currentPage
+                        }))
+            
+                        console.log(tutorial_pages.tutorialPages)
+                    }
+                    return 1
+                })
+            }
+        }
+    }
+
+
+    function handleSave() {}
+
     
     return (
         <Fragment>
@@ -435,6 +494,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                                             return (
                                                 <div className="row">
                                                 <div className="col-xl-4 col-md-4 col-xs-4">
+                                                    <button type="button" className="btn btn-info right-margin" onClick={handleSaveEdit}>Lưu</button>
                                                     <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                 </div>
                                                 <div className="col-xl-8 col-md-8 col-xs-8">
@@ -448,6 +508,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                                                 <div className="row">
                                                     <div className="col-xl-4 col-md-4 col-xs-4">
                                                         <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                        <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveEdit}>Lưu</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                     </div>
                                                     <div className="col-xl-8 col-md-8 col-xs-8">
@@ -467,7 +528,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                                             <div className="row">
                                                 <div className="col-xl-6 col-md-6 col-xs-6">
                                                     <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
-                                                    <button type="submit" className={`btn btn-primary left-margin ml-2`}>Hoàn thành</button>
+                                                    <button type="button" className={`btn btn-primary left-margin ml-2`} onClick={handleSave}>Hoàn thành</button>
                                                 </div>
                                                 <div className="col-xl-6 col-md-6 col-xs-6">
                                                 <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>

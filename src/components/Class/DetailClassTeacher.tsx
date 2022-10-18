@@ -126,7 +126,7 @@ const DetailClassTeacher: React.FC = () => {
         localStorage.setItem('section_id', section.id.toString())
         localStorage.removeItem('section_number')
         localStorage.setItem('section_number', section.number.toString())
-        let tutorial_page_list: any[] = []
+        /* let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
         localStorage.removeItem('tutorial_id')
         tutorials.tutorials.map(ele => {
@@ -150,7 +150,7 @@ const DetailClassTeacher: React.FC = () => {
         })
         console.log(tutorial_page_list)
         localStorage.removeItem('description_tutorial_page_list')
-        localStorage.setItem('description_tutorial_page_list', JSON.stringify(tutorial_page_list.sort((a, b) => a.number - b.number)))
+        localStorage.setItem('description_tutorial_page_list', JSON.stringify(tutorial_page_list.sort((a, b) => a.number - b.number))) */
         history.push({
             pathname: path
         })

@@ -71,21 +71,13 @@ function CourseNomalList(props: courseListProps): JSX.Element {
           routeEdit(course)}}
         >Chỉnh thông tin</button>
       </td>
-      {
-        function () {
-          if (course.checked_tutoral === false) {
-            return (
-              <td>
-                <button type="button" className="btn btn-warning" onClick={() => {
-                  if (props.onSelect) props.onSelect(course);
-                  routeChange1(course)
-                }}
-                >Tạo giáo án</button>
-              </td>
-            )
-          }
-        }()
-      }
+      <td>
+        <button type="button" className="btn btn-warning" onClick={() => {
+          if (props.onSelect) props.onSelect(course);
+          routeChange(course)
+        }}
+        >Chỉnh giáo án</button>
+      </td>
     </tr>);
   });
 

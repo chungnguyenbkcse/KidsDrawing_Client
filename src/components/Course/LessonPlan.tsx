@@ -304,7 +304,7 @@ const LessonPlan: React.FC = () => {
                         <div className="row mt-2">
                             <div className="col-xl-4 col-md-4 col-xs-4">
                                 <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
-                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveStep}>Lưu</button>
+                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveStep}>Lưu tạm</button>
                                 <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                             </div>
                             <div className="col-xl-8 col-md-8 col-xs-8">
@@ -325,7 +325,7 @@ const LessonPlan: React.FC = () => {
                       </div>
                       <div className="row mt-2">
                       <div className="col-xl-4 col-md-4 col-xs-4">
-                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveStep}>Lưu</button>
+                                <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveStep}>Lưu tạm</button>
                                 <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                             </div>
                             <div className="col-xl-8 col-md-8 col-xs-8">
@@ -345,7 +345,8 @@ const LessonPlan: React.FC = () => {
                     return (
                       <div className="row mt-2">
                             <div className="col-xl-4 col-md-4 col-xs-4">
-                                <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                            <button type="button" className="btn left-margin step-continue" onClick={handleSaveStep}>Lưu buổi</button>
+                                <button type="button" className="btn btn-info right-margin ml-2" onClick={handleBackPage}>Trở về</button>
                             </div>
                             <div className="col-xl-8 col-md-8 col-xs-8">
                                 <button type="button" className="btn btn-success right-margin add-step" onClick={handleNextSection}>Buổi tiếp theo</button>
@@ -357,7 +358,8 @@ const LessonPlan: React.FC = () => {
                     return (
                       <div className="row mt-2">
                             <div className="col-xl-4 col-md-4 col-xs-4">
-                                <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                            <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSaveStep}>Lưu buổi</button>
+                                <button type="button" className="btn btn-info right-margin ml-2" onClick={handleBackPage}>Trở về</button>
                             </div>
                             <div className="col-xl-8 col-md-8 col-xs-8">
                                 <button type="button" className="btn btn-success right-margin add-step" onClick={handleNextSection}>Buổi tiếp theo</button>

@@ -174,9 +174,16 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function handleRemove() {
         if (tutorial_template_pages !== null) {
-            if (checkCreateNew === true) {
+            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
                 });
             }
             else {
@@ -286,7 +293,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     })) */
                 }
                 setCheckCreateNew(false)
-                setCheckAfterCreate(true)
             }
             else {
                 if (k < tutorial_template_pages.tutorialTemplatePages.length + 1) {
@@ -319,6 +325,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     })
                 }
             }
+            setCheckAfterCreate(true)
 
             toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
         }
@@ -327,9 +334,10 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function handleNextPage() {
         if (tutorial_template_pages !== null) {
-            if (checkCreateNew === true) {
+            if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
                 });
             }
             else {
@@ -361,11 +369,20 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         setChecked(true)
     }
 
+    console.log(checkCreateNew)
+    console.log(checkAfterCreate)
     function handleBackPage() {
         if (tutorial_template_pages !== null) {
-            if (checkCreateNew === true) {
+            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
                 });
             }
             else {
@@ -382,9 +399,16 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
 
     function handleNewPage() {
-        if (checkCreateNew === true) {
+        if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
             toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                position: toast.POSITION.TOP_CENTER
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+            });
+        }
+        else if (checkCreateNew === true  && currentPage !== totalPage) {
+            toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
             });
         }
         else {

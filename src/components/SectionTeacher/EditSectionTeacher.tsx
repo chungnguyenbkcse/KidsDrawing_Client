@@ -170,22 +170,31 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
     function saveForm(): void {
         if (section) {
-            const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                position: toast.POSITION.TOP_CENTER
-            });
-            /* let contentPage: PageContent = {
-                page: currentPage,
-                content: value
-            }*/
+            if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                });
+            }
 
-            if (tutorial_pages !== null) {
-                if (tutorial_pages.tutorialPages.length > 0) {
-                    dispatch(postUserRegisterTutorial(tutorial_pages.tutorialPages, {
-                        section_id: section_id,
-                        creator_id: id,
-                        name: formState.name.value,
-                        status: "Not approved now"
-                    }, idx, routeHome)) 
+            else {
+                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                    position: toast.POSITION.TOP_CENTER
+                });
+                /* let contentPage: PageContent = {
+                    page: currentPage,
+                    content: value
+                }*/
+    
+                if (tutorial_pages !== null) {
+                    if (tutorial_pages.tutorialPages.length > 0) {
+                        dispatch(postUserRegisterTutorial(tutorial_pages.tutorialPages, {
+                            section_id: section_id,
+                            creator_id: id,
+                            name: formState.name.value,
+                            status: "Not approved now"
+                        }, idx, routeHome)) 
+                    }
                 }
             }
         }
@@ -194,9 +203,10 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
     function handleNextPage() {  
         if (tutorial_pages !== null) {
-            if (checkCreateNew === true) {
+            if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
                 });
             }
             else {
@@ -224,9 +234,16 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
     function handleBackPage () {
         if (tutorial_pages !== null) {
-            if (checkCreateNew === true) {
+            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
                 });
             }
             else {
@@ -244,9 +261,16 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
     function handleRemove() {
         if (tutorial_pages !== null){
-            if (checkCreateNew === true) {
+            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
                 });
             }
             else {
@@ -294,9 +318,16 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
 
     function handleNewPage() {
-        if (checkCreateNew === true) {
+        if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
             toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                position: toast.POSITION.TOP_CENTER
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+            });
+        }
+        else if (checkCreateNew === true  && currentPage !== totalPage) {
+            toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
             });
         }
         else {
@@ -392,7 +423,6 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                     })) */
                 }
                 setCheckCreateNew(false)
-                setCheckAfterCreate(true)
             }
             else {
                 if (k < tutorial_pages.tutorialPages.length + 1) {
@@ -428,6 +458,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                 }
             }
             console.log(tutorial_pages.tutorialPages)
+            setCheckAfterCreate(true)
 
             toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
         }
@@ -500,11 +531,10 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                                         return (
                                             <div className="row">
                                                 <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
-                                                    <button type="button" className={`btn btn-primary left-margin ml-2`} onClick={saveForm}>Hoàn thành</button>
+                                                    <button type="button" className="btn btn-info right-margin" onClick={handleSave}>Lưu tạm</button>
+                                                    <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
                                                 </div>
                                                 <div className="col-xl-6 col-md-6 col-xs-6">
-                                                <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
                                                     <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                 </div>
                                             </div>

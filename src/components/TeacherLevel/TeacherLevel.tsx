@@ -15,7 +15,7 @@ import TeacherLevelList from "./TeacherLevelList";
 import TeacherLevelNotApprovedNowList from "./TeacherLevelNotApprovedNowList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getCourseNewForTeacher } from "../../common/service/Course/GetNewCourseForTeacher";
+import { getCourse } from "../../common/service/Course/GetCourse";
 
 const TeacherLevel: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -56,12 +56,12 @@ const TeacherLevel: React.FC = () => {
                 }
                 else {
                     trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                    trackPromise(getCourseNewForTeacher(dispatch, id))
+                    trackPromise(getCourse(dispatch))
                 }
             }
             else {
                 trackPromise(getTeacherRegisterQuantificationByTeacherId(dispatch, id))
-                trackPromise(getCourseNewForTeacher(dispatch, id))
+                trackPromise(getCourse(dispatch))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);

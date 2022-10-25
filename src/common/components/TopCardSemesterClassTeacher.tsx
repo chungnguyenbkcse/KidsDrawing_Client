@@ -29,6 +29,8 @@ function TopCardSemesterClassTeacher(props: PropsWithChildren<ICardSemesterClass
         localStorage.setItem('semester_class_id', course.id.toString())
         localStorage.removeItem('url_image');
         localStorage.setItem('url_image', course.url_image.toString())
+        localStorage.removeItem('status');
+        localStorage.setItem('status', course.status.toString())
         let path = '/semester-class/detail'; 
         history.push({
             pathname: path

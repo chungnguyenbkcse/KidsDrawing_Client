@@ -84,89 +84,103 @@ const CourseTeacherDetail: React.FC = () => {
         semester_class_id = id_n;
     }
 
+    var id_nx = localStorage.getItem('status');
+    var status: string = '';
+    if (id_nx !== null) {
+        status = id_nx;
+    }
+
     function handleRegister() {
-            dispatch(postRegisterTeachSemester({
-                teacher_id: id,
-                semester_classes_id: semester_class_id
-            }))
-            console.log({
-                teacher_id: id,
-                semester_classes_id: semester_class_id
-            })
-            toast.success("Đăng kí lớp thành công!", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+        dispatch(postRegisterTeachSemester({
+            teacher_id: id,
+            semester_classes_id: semester_class_id
+        }))
+        console.log({
+            teacher_id: id,
+            semester_classes_id: semester_class_id
+        })
+        toast.success("Đăng kí lớp thành công!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000
+        });
+        let path = '/courses';
+        setTimeout(function () {
+            history.push({
+                pathname: path
             });
-            let path = '/courses'; 
-            setTimeout(function () {
-                history.push({
-                    pathname: path
-                });
-            }, 2000); 
+        }, 2000);
     }
 
     return (
         <Fragment>
             <ToastContainer />
             <div className="col-xl-12 col-lg-12">
-            <div className="card shadow mb-4 shadow-1">
-                        <div className="row no-gutters align-items-center">
-                            <div className="text-xs font-weight-bold text-green text-uppercase ">
-                                <p className="fullname ml-2 mt-4">{semester_class_name}</p>
+                <div className="card shadow mb-4 shadow-1">
+                    <div className="row no-gutters align-items-center">
+                        <div className="text-xs font-weight-bold text-green text-uppercase ">
+                            <p className="fullname ml-2 mt-4">{semester_class_name}</p>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-xl-6 col-md-6">
+                            <div className="row no-gutters align-items-center">
+                                <div className="text-xs ">
+                                    <p className="birthday ml-2">Khóa học: {course_name}</p>
+                                </div>
+                            </div>
+                            <div className="row no-gutters align-items-center">
+                                <div className="text-xs">
+                                    <p className="birthday ml-2">Thể loại: {art_type_name}</p>
+                                </div>
+                            </div>
+                            <div className="row no-gutters align-items-center">
+                                <div className="text-xs">
+                                    <p className="birthday ml-2">Độ tuổi: {art_age_name}</p>
+                                </div>
+                            </div>
+                            <div className="row no-gutters align-items-center">
+                                <div className="text-xs">
+                                    <p className="birthday ml-2">Trình độ: {art_level_name}</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-xl-6 col-md-6">
-                                <div className="row no-gutters align-items-center">
-                                    <div className="text-xs ">
-                                        <p className="birthday ml-2">Khóa học: {course_name}</p>
-                                    </div>
+
+                        <div className="col-xl-6 col-md-6">
+                            <div className="row no-gutters align-items-center">
+                                <div className="text-xs mr-2">
+                                    <p className="birthday">Lịch học: {schedule}</p>
                                 </div>
-                                <div className="row no-gutters align-items-center">
-                                    <div className="text-xs">
-                                        <p className="birthday ml-2">Thể loại: {art_type_name}</p>
-                                    </div>
-                                </div>
-                                <div className="row no-gutters align-items-center">
-                                    <div className="text-xs">
-                                        <p className="birthday ml-2">Độ tuổi: {art_age_name}</p>
-                                    </div>
-                                </div>
-                                <div className="row no-gutters align-items-center">
-                                    <div className="text-xs">
-                                        <p className="birthday ml-2">Trình độ: {art_level_name}</p>
-                                    </div>
+                            </div>
+                            <div className="row no-gutters align-items-center">
+                                <div className="text-xs">
+                                    <p className="birthday">Số buổi học: {num_of_section}</p>
                                 </div>
                             </div>
 
-                            <div className="col-xl-6 col-md-6">
-                                <div className="row no-gutters align-items-center">
-                                    <div className="text-xs mr-2">
-                                        <p className="birthday">Lịch học: {schedule}</p>
-                                    </div>
-                                </div>
-                                <div className="row no-gutters align-items-center">
-                                    <div className="text-xs">
-                                        <p className="birthday">Số buổi học: {num_of_section}</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
                         </div>
-                    <div className="row text-center justify-content-center" id="btn-register-course">
-                    <button className="btn btn-success btn-green" id="btn-create-register-course" onClick={() => handleRegister()}>
-                        <i className="fas fa fa-plus"></i>
-                        Đăng kí ngay
-                    </button>
-                </div>
+                    </div>
+                    {
+                        function() {
+                            if (status !== "Registed") {
+                                return (
+                                    <div className="row text-center justify-content-center" id="btn-register-course">
+                                        <button className="btn btn-success btn-green" id="btn-create-register-course" onClick={() => handleRegister()}>
+                                            <i className="fas fa fa-plus"></i>
+                                            Đăng kí ngay
+                                        </button>
+                                    </div>
+                                )
+                            }
+                        }
+                    }
                 </div>
             </div>
 
             <div className="row" id="btn-register-course">
                 <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
                     <button className="btn btn-success btn-green" id="btn-create-register-course4" onClick={() => handleClick()}>
-                    <GrLinkDown id="btn-payment" color="#ffffff" />
-                    Xem miêu tả
+                        <GrLinkDown id="btn-payment" color="#ffffff" />
+                        Xem miêu tả
                     </button>
                 </div>
             </div>

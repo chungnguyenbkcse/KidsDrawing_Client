@@ -7,6 +7,11 @@ import { getTeacherRegisterQuantificationByTeacherId } from "./GetTeacherRegiste
 export function postTeaherLevel(teacher_level: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     console.log(teacher_level)
+    let id_x = localStorage.getItem('id');
+    var id = "";
+    if (id_x !== null) {
+        id = id_x;
+    }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -39,7 +44,7 @@ export function postTeaherLevel(teacher_level: any, idx: any) {
                 dispatch(postNotifyDb({
                     name: `Gửi yêu cầu đăng kí trình độ!`,
                     description: `Giáo viên gửi yêu cầu đăng kí trình độ!`
-                }, "admin"))
+                }, id))
                 toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });           
                 dispatch(fetchDataSuccess(teacher_level))
                 getTeacherRegisterQuantificationByTeacherId(dispatch, teacher_level.teacher_id)

@@ -58,26 +58,28 @@ function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassP
                     </div>
                     {
                         function () {
-                            if (props.student_registered_id.length > 0) {
-                                return (
-                                    <div className="row">
-                                        <p className="col-xl-6 col-md-6 col-xs-6" >
-                                            <span className="header-card-course-teacher">Đã mua:</span> 
-                                            {
-                                                props.student_registered_name.map((ele, idx) => {
-                                                    if (idx === props.student_registered_name.length - 1) {
+                            if (props.student_registered_id !== undefined && props.student_registered_id !== null) {
+                                if (props.student_registered_id.length > 0) {
+                                    return (
+                                        <div className="row">
+                                            <p className="col-xl-6 col-md-6 col-xs-6" >
+                                                <span className="header-card-course-teacher">Đã mua:</span> 
+                                                {
+                                                    props.student_registered_name.map((ele, idx) => {
+                                                        if (idx === props.student_registered_name.length - 1) {
+                                                            return (
+                                                                <span className="header-card-course-value-teacher">{ele}</span>
+                                                            )
+                                                        }
                                                         return (
-                                                            <span className="header-card-course-value-teacher">{ele}</span>
+                                                            <span className="header-card-course-value-teacher">{ele}, </span>
                                                         )
-                                                    }
-                                                    return (
-                                                        <span className="header-card-course-value-teacher">{ele}, </span>
-                                                    )
-                                                })
-                                            }
-                                        </p>
-                                    </div>
-                                )
+                                                    })
+                                                }
+                                            </p>
+                                        </div>
+                                    )
+                                }
                             }
                         }()
                     }

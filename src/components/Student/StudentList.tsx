@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/users.action";
 import { UserModificationStatus, IUser } from "../../store/models/user.interface";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
+import { useMemo, useRef } from 'react'
+import { Demo } from "./Demo";
 
 export type userListProps = {
   onSelect?: (user: IUser) => void;
@@ -74,22 +76,7 @@ function StudentList(props: userListProps): JSX.Element {
 
   return (
     <Fragment>
-      <div className="table-responsive portlet">
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Tên</th>
-              <th scope="col">Tài khoản</th>
-              <th scope="col">Trạng thái</th>
-              <th scope="col">Hành động</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userElements}
-          </tbody>
-        </table>
-      </div>
+      <Demo data={users.students}/>
     </Fragment>
 
   );

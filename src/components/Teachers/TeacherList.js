@@ -153,7 +153,7 @@ function TeacherList(props) {
           />
         </div>
       </div>
-      <PaginationListStandalone {...paginationProps} />
+      {/* <PaginationListStandalone {...paginationProps} /> */}
     </div>
   );
 

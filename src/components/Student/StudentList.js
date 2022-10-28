@@ -22,7 +22,6 @@ function StudentList(props) {
   }
 
   const options = {
-    custom: true,
     paginationSize: 5,
     pageStartIndex: 1,
     firstPageText: 'First',
@@ -34,7 +33,17 @@ function StudentList(props) {
     firstPageTitle: 'Next page',
     lastPageTitle: 'Last page',
     showTotal: true,
-    totalSize: datas.length
+    totalSize: datas.length,
+    onSizePerPageChange: (sizePerPage, page) => {
+      console.log('Size per page change!!!');
+      console.log('Newest size per page:' + sizePerPage);
+      console.log('Newest page:' + page);
+    },
+    onPageChange: (page, sizePerPage) => {
+      console.log('Page change!!!');
+      console.log('Newest size per page:' + sizePerPage);
+      console.log('Newest page:' + page);
+    }
   };
 
   function removeButton(cell, row) {
@@ -105,7 +114,6 @@ function StudentList(props) {
           />
         </div>
       </div>
-      <PaginationListStandalone {...paginationProps} />
     </div>
   );
 

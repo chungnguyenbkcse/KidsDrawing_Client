@@ -11,6 +11,10 @@
     width: 150px;
 }
 
+.btn-import-teacher {
+    padding-left: 50px !important;
+}
+
 .btn-blue {
     background-color: lightblue !important;
     border-color: lightblue !important;

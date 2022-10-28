@@ -18,6 +18,10 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import CSVReader from "react-csv-reader";
+import { toast, ToastContainer } from "react-toastify";
+import { postTeacher } from "../../common/service/Teacher/PostTeacher";
+import { postTeacher1 } from "../../common/service/Teacher/PostTeacher1";
 
 
 
@@ -29,6 +33,88 @@ const Teacher: React.FC = () => {
     const [popup, setPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const { promiseInProgress } = usePromiseTracker();
+    const [datas, setDatas] = useState<any[]>([]);
+    const handleForce = (data: any, fileInfo: any) => {
+        if (data.length === 0) {
+            toast.error("File không chưa dữ liệu", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000
+            });
+        }
+        else {
+            let is_check = true;
+            for (let index = 0; index < data.length; index++) {
+                const ele = data[index];
+                if (ele.username === null || ele.username === "" || ele.email === null || ele.email === "" || ele.password === null || ele.password === "")   {
+                    toast.error(`Lỗi tại dòng ${index + 1}`, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 2000
+                    });
+                    is_check = false;
+                    break;
+                }
+            }
+
+            if (is_check === true) {
+                setDatas(data);
+            }
+        }
+    };
+
+    function getDisabledClass(): string {
+        let isError: boolean = datas.length === 0;
+        return isError ? "disabled" : "";
+    }
+
+    const handleImport = () => {
+        let isError: boolean = datas.length === 0;
+        if (isError === false) {
+            const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
+            datas.map((ele: any, idx: any) => {
+                if (idx === datas.length - 1) {
+                    dispatch(postTeacher({
+                        username: ele.username,
+                        email: ele.email,
+                        password: ele.password,
+                        firstName: null,
+                        lastName: null,
+                        dateOfBirth: null,
+                        profile_image_url: null,
+                        sex: null,
+                        phone: null,
+                        address: null,
+                        roleNames: ["TEACHER_USER"]
+                      }, id));
+                }
+                else {
+                    dispatch(postTeacher1({
+                        username: ele.username,
+                        email: ele.email,
+                        password: ele.password,
+                        firstName: null,
+                        lastName: null,
+                        dateOfBirth: null,
+                        profile_image_url: null,
+                        sex: null,
+                        phone: null,
+                        address: null,
+                        roleNames: ["TEACHER_USER"]
+                      }));
+                }
+            })
+            trackPromise(getTeacher(dispatch))
+        } 
+    }
+
+    const papaparseOptions = {
+      header: true,
+      dynamicTyping: true,
+      skipEmptyLines: true,
+      transformHeader: (header: any) => header.toLowerCase().replace(/\W/g, "_")
+    };
+
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -95,41 +181,45 @@ const Teacher: React.FC = () => {
           </div>
         </div>
       </div> :<Fragment>
+        <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Giáo viên</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
                 <TopCard title="GIÁO VIÊN" text={`${numberItemsCount}`} icon="user" class="primary" />
-            </div>
+                <div className="col-xl-4 col-lg-4">
 
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
-                                setSearchTerm(event.target.value)
-                                console.log(searchTerm)
-                            }}/>
-                        </div>
-                        <button type="button" className="btn btn-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
+                </div>
+                <div className="col-xl-2 col-lg-2">
+                    <div>
+                        <h6 className="m-0 font-weight-bold text-green">Import</h6>
                     </div>
+                    <div>
+                        <CSVReader
+                            cssClass="csv-reader-input import-teacher"
+                            label=""
+                            onFileLoaded={handleForce}
+                            parserOptions={papaparseOptions}
+                        />
+                    </div>
+                </div>
+                <div className="col-xl-2 col-lg-2 btn-import-teacher">
+                    <button type="button" className={`btn btn-success left-margin mt-2 ${getDisabledClass()}`} onClick={handleImport}>Gửi</button>
                 </div>
             </div>
 
-            <div className="row">
+            <div className="row mt-2">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green">Danh sách giáo viên</h6>
                             <div className="header-buttons">
-                                <button className="btn btn-success btn-green" onClick={() => {
+                                {/* <button className="btn btn-success btn-green" onClick={() => {
                                     dispatch(setModificationState(UserModificationStatus.ImportFile))
                                     onUserRemove()
                                 }}>
                                     <i className="fas fa fa-plus"></i>
                                     Import file
-                                </button>
+                                </button> */}
                                 <button className="btn btn-success btn-green" onClick={() => {
                                     dispatch(setModificationState(UserModificationStatus.Create))
                                     onUserRemove()

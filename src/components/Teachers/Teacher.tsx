@@ -60,6 +60,7 @@ const Teacher: React.FC = () => {
             }
         }
     };
+    console.log(datas)
 
     function getDisabledClass(): string {
         let isError: boolean = datas.length === 0;
@@ -72,7 +73,20 @@ const Teacher: React.FC = () => {
             const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
             });
-            datas.map((ele: any, idx: any) => {
+            dispatch(postTeacher1({
+                username: datas[0].username,
+                email: datas[0].email,
+                password: datas[0].password,
+                firstName: null,
+                lastName: null,
+                dateOfBirth: null,
+                profile_image_url: null,
+                sex: null,
+                phone: null,
+                address: null,
+                roleNames: ["TEACHER_USER"]
+              }, datas.slice(1, datas.length), id));
+            /* datas.map((ele: any, idx: any) => {
                 if (idx === datas.length - 1) {
                     dispatch(postTeacher({
                         username: ele.username,
@@ -103,8 +117,7 @@ const Teacher: React.FC = () => {
                         roleNames: ["TEACHER_USER"]
                       }));
                 }
-            })
-            trackPromise(getTeacher(dispatch))
+            }) */
         } 
     }
 

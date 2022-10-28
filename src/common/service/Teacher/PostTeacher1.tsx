@@ -1,7 +1,8 @@
 import { fetchDataRequest } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { postTeacher } from "./PostTeacher";
 
-export function postTeacher1(data: any) {
+export function postTeacher1(data: any, lst: any[], idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
@@ -22,7 +23,7 @@ export function postTeacher1(data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postTeacher1(data))
+                        dispatch(postTeacher1(data, lst, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -34,6 +35,37 @@ export function postTeacher1(data: any) {
             })
             .then (val => {
                 console.log(val)
+                console.log(lst)
+                if (lst.length > 1) {
+                    dispatch(postTeacher1({
+                        username: lst[0].username,
+                        email: lst[0].email,
+                        password: lst[0].password,
+                        firstName: null,
+                        lastName: null,
+                        dateOfBirth: null,
+                        profile_image_url: null,
+                        sex: null,
+                        phone: null,
+                        address: null,
+                        roleNames: ["TEACHER_USER"]
+                      }, lst.slice(1, lst.length), idx));
+                }
+                else if (lst.length === 1) {
+                    dispatch(postTeacher({
+                        username: lst[0].username,
+                        email: lst[0].email,
+                        password: lst[0].password,
+                        firstName: null,
+                        lastName: null,
+                        dateOfBirth: null,
+                        profile_image_url: null,
+                        sex: null,
+                        phone: null,
+                        address: null,
+                        roleNames: ["TEACHER_USER"]
+                      }, idx));
+                }
             })
             .catch(error => {
                 

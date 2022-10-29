@@ -84,8 +84,8 @@ const Header = () => {
                   </Link>
                 </MenuItem>
                 <MenuItem icon={<AiOutlineFileText />}> 
-                  <Link className="nav-link" to={`/contests`}>
-                      <span> Cuộc thi</span>
+                  <Link className="nav-link" to={`/courses`}>
+                      <span> Khóa học</span>
                   </Link>
                 </MenuItem>
               </SubMenu>

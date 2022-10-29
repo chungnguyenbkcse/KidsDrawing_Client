@@ -100,6 +100,7 @@ import ExerciseStudentList1 from "../components/ClassStudent/ExerciseStudentList
 import ReviewStart from "../components/ClassStudent/ReviewStart";
 import SemesterClassParentNew from "../components/Discovery/SemesterClassParentNew";
 import SemesterClassTeacherNew from "../components/Course/SemesterClassTeacherNew";
+import Header from "../components/LeftMenu/LeftMenu";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -248,7 +249,7 @@ const Routers: React.FC = () => {
     else {
         return (
             <Fragment>
-                <LeftMenu />
+                <Header />
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
                         <TopMenu />

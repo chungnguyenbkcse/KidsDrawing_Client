@@ -1,0 +1,89 @@
+#header {
+    position: absolute;
+    width: 220px;
+  }
+  .pro-sidebar > .pro-sidebar-inner {
+    background-color: #0e1e24 !important
+  }
+  .logo-x {
+    padding-top: 7px;
+  }
+  #header .pro-sidebar {
+    height: 100%;
+  }
+  .pro-sidebar-header {
+    padding: 12px;
+  }
+  #collapseMenu .closemenu {
+    color: #ffffff;
+    position: absolute;
+    right: 0;
+    z-index: 9999;
+    line-height: 20px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 22px;
+    top: 55px;
+    cursor: pointer;
+  }
+  #header .pro-sidebar {
+    width: 100%;
+    min-width: 100%;
+  }
+  #collapseMenu .pro-sidebar.collapsed {
+    width: 80px;
+    min-width: 80px;
+  }
+  .collapsed .pro-sidebar-header {
+    padding: 12px;
+  }
+  .collapsed .logo-x {
+    left: 0 !important;
+  }
+  #header .pro-sidebar-inner {
+    background-color: white;
+    box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);
+  }
+  #header .pro-sidebar-inner .pro-sidebar-layout {
+    overflow-y: hidden;
+  }
+  #collapseMenu .pro-sidebar-inner .pro-sidebar-layout .logotext p {
+    font-size: 20px;
+    padding: 0 20px;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  #header .pro-sidebar-inner .pro-sidebar-layout ul {
+    padding: 0 5px;
+  }
+  #collapseMenu .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
+    color: #ffffff;
+    margin: 10px 0px;
+    font-weight: bold;
+  }
+  #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
+    background-color: #fbf4cd;
+    color: #000;
+    border-radius: 3px;
+  }
+  #collapseMenu .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper .pro-item-content {
+    color: #ffffff;
+  }
+  .pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header {
+    border-bottom: 0px solid rgba(173, 173, 173, 0.2);
+}
+  #header .pro-sidebar-inner .pro-sidebar-layout .active {
+      
+  }
+  .pro-menu-item {
+    list-style-type: none !important;
+  }
+  #collapseMenu .logo {
+    padding: 20px;
+  }
+  
+  @media only screen and (max-width: 720px) {
+    html {
+      overflow: hidden;
+    }
+  }

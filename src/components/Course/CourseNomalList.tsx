@@ -42,17 +42,6 @@ function CourseNomalList(props: courseListProps): JSX.Element {
     history.push(path);
   }
 
-  function routeChange1 (course: ICourse) {
-    localStorage.removeItem('course_id')
-    localStorage.setItem('course_id', course.id.toString())
-    localStorage.removeItem('number_of_sum')
-    localStorage.setItem('number_of_sum', course.num_of_section.toString())
-    localStorage.removeItem('course_name')
-    localStorage.setItem('course_name', course.name)
-    let path = '/courses/lesson-plan';
-    history.push(path);
-  }
-
   const courseElements: (JSX.Element | null)[] = courses.courses.map((course, index) => {
     if (!course) { return null; }
     return (<tr className={`table-row ${(courses.selectedCourse && courses.selectedCourse.id === course.id) ? "selected" : ""}`}

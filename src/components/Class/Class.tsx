@@ -36,7 +36,6 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getSemesterNext } from "../../common/service/semester/GetSemesterNext";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import { getSemester } from "../../common/service/semester/GetSemester";
 
 type Options = {
     name: string;
@@ -98,7 +97,7 @@ const Class: React.FC = () => {
                 }
                 else {
                     trackPromise(getMyClass(dispatch))
-                    trackPromise(getSemester(dispatch))
+                    trackPromise(getSemesterNext(dispatch))
                     trackPromise(getSemesterClass(dispatch))
                     trackPromise(getSchedule(dispatch))
                     trackPromise(getLesson(dispatch))
@@ -107,7 +106,7 @@ const Class: React.FC = () => {
             }
             else {
                 trackPromise(getMyClass(dispatch))
-                trackPromise(getSemester(dispatch))
+                trackPromise(getSemesterNext(dispatch))
                 trackPromise(getSemesterClass(dispatch))
                 trackPromise(getSchedule(dispatch))
                 trackPromise(getLesson(dispatch))

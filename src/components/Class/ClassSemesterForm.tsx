@@ -7,7 +7,6 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { OnChangeModel, ISemesterClassFormState } from "../../common/types/Form.types";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { postSemesterClass } from "../../common/service/SemesterClass/PostSemesterClass";
-import { putSemesterClass } from "../../common/service/SemesterClass/PutSemesterClass";
 import TextInput from "../../common/components/TextInput";
 import NumberInput from "../../common/components/NumberInput";
 import { ILesson } from "../../store/models/lesson.interface";
@@ -15,7 +14,7 @@ import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple
 import { toast } from "react-toastify";
 import SelectKeyValueMutiple2 from "../../common/components/SelectKeyValueMutiple2";
 import { deleteScheduleBySemesterClass } from "../../common/service/Schedule/DeleteScheduleBySemesterClass";
-import { postSchedule } from "../../common/service/Schedule/PostSchedule";
+import { putSemesterClass } from "../../common/service/SemesterClass/PutSemesterClass";
 
 export type semesterClassListProps = {
   isCheck: (value: boolean) => void;
@@ -208,6 +207,12 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
       }
 
       else if (saveFn === editSemesterClass) {
+        dispatch(putSemesterClass(semester_classe.id, {
+          semester_id: formState.semester_id.value,
+          name: formState.name.value,
+          registration_time: formState.registration_time.value,
+          course_id: formState.course_id.value
+        }, idx))
         dispatch(deleteScheduleBySemesterClass(semester_classe.id, schedule_element, idx));
       }
 

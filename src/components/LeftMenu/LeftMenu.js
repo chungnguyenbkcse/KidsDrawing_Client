@@ -100,8 +100,8 @@ const Header = () => {
                 </Link>
               </MenuItem>
               <SubMenu active={active2} icon={<FaList />} title="Giáo vụ" color="#ffffff" className={active2 ? "link-active" : ""}>
-                <MenuItem icon={<MdSchool />} active={active2}>
-                  <Link to={`/contests`} className={active7 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                <MenuItem icon={<AiOutlineFileText />}>
+                  <Link className={active9 ? "nav-link link-active" : "nav-link"} to={`/courses`} onClick={() => {
                     if (active2 === false) {
                       setActive1(false);
                       setActive2(true);
@@ -110,13 +110,13 @@ const Header = () => {
                       setActive5(false);
                       setActive6(false);
                     }
-                    if (active7 === false) {
-                      setActive7(true);
+                    if (active9 === false) {
+                      setActive7(false);
                       setActive8(false);
-                      setActive9(false);
+                      setActive9(true);
                     }
                   }}>
-                    <span> Cuộc thi</span>
+                    <span> Khóa học</span>
                   </Link>
                 </MenuItem>
                 <MenuItem icon={<GiVideoConference />}>
@@ -138,8 +138,8 @@ const Header = () => {
                     <span> Lớp</span>
                   </Link>
                 </MenuItem>
-                <MenuItem icon={<AiOutlineFileText />}>
-                  <Link className={active9 ? "nav-link link-active" : "nav-link"} to={`/courses`} onClick={() => {
+                <MenuItem icon={<MdSchool />} active={active2}>
+                  <Link to={`/contests`} className={active7 ? "nav-link link-active" : "nav-link"} onClick={() => {
                     if (active2 === false) {
                       setActive1(false);
                       setActive2(true);
@@ -148,13 +148,13 @@ const Header = () => {
                       setActive5(false);
                       setActive6(false);
                     }
-                    if (active9 === false) {
-                      setActive7(false);
+                    if (active7 === false) {
+                      setActive7(true);
                       setActive8(false);
-                      setActive9(true);
+                      setActive9(false);
                     }
                   }}>
-                    <span> Khóa học</span>
+                    <span> Cuộc thi</span>
                   </Link>
                 </MenuItem>
               </SubMenu>

@@ -14,6 +14,8 @@ import { ILesson } from "../../store/models/lesson.interface";
 import SelectKeyValueMutiple from "../../common/components/SelectKeyValueMutiple";
 import { toast } from "react-toastify";
 import SelectKeyValueMutiple2 from "../../common/components/SelectKeyValueMutiple2";
+import { deleteScheduleBySemesterClass } from "../../common/service/Schedule/DeleteScheduleBySemesterClass";
+import { postSchedule } from "../../common/service/Schedule/PostSchedule";
 
 export type semesterClassListProps = {
   isCheck: (value: boolean) => void;
@@ -206,12 +208,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
       }
 
       else if (saveFn === editSemesterClass) {
-        dispatch(putSemesterClass(semester_classe.id, {
-          semester_id: formState.semester_id.value,
-          registration_time: formState.registration_time.value,
-          name: formState.name.value,
-          course_id: formState.course_id.value
-        }, idx))
+        dispatch(deleteScheduleBySemesterClass(semester_classe.id, schedule_element, idx));
       }
 
       dispatch(addNotification("Mở lớp đăng kí theo kì ", `chỉnh bởi bạn`));
@@ -389,7 +386,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
                       <div className="form-row" key={index}>
                         <div className="form-group col-md-6">
                           <SelectKeyValueMutiple
-                            value={isCreate ? 0 : lesson_time_list[index].key}
+                            value={isCreate || index >= lesson_time_list.length  ? 0 : lesson_time_list[index].key}
                             index={index}
                             inputClass={`schedule_item_date_of_week_${index}`}
                             onChange={hasFormMutipleValueChanged1}
@@ -400,7 +397,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
                         </div>
                         <div className="form-group col-md-6">
                           <SelectKeyValueMutiple2
-                            value={isCreate ? 0 : lesson_time_list[index].value}
+                            value={isCreate || index >= lesson_time_list.length ? 0 : lesson_time_list[index].value}
                             inputClass={`schedule_item_lesson_time_${index}`}
                             index={index}
                             onChange={hasFormMutipleValueChanged2}

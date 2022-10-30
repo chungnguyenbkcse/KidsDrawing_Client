@@ -46,6 +46,24 @@ const Header = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
 
+  const [active1, setActive1] = useState(true);
+  const [active2, setActive2] = useState(false);
+  const [active3, setActive3] = useState(false);
+  const [active4, setActive4] = useState(false);
+  const [active5, setActive5] = useState(false);
+  const [active6, setActive6] = useState(false);
+  const [active7, setActive7] = useState(false);
+  const [active8, setActive8] = useState(false);
+  const [active9, setActive9] = useState(false);
+  const [active10, setActive10] = useState(false);
+  const [active11, setActive11] = useState(false);
+  const [active12, setActive12] = useState(false);
+  const [active13, setActive13] = useState(false);
+  const [active14, setActive14] = useState(false);
+  const [active15, setActive15] = useState(false);
+  const [active16, setActive16] = useState(false);
+  const [active17, setActive17] = useState(false);
+
   return (
     <>
       <div id="collapseMenu" className="navbar-nav bg-gradient-primary-green sidebar-dark accordion">
@@ -67,77 +85,274 @@ const Header = () => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
-              <MenuItem active={true} icon={<FiHome />}>
-                <Link to={`/home`}>
+              <MenuItem active={active1} icon={<FiHome />}>
+                <Link to={`/home`} className={active1 ? "link-active" : ""} onClick={() => {
+                  if (active1 === false) {
+                    setActive1(true);
+                    setActive2(false);
+                    setActive3(false);
+                    setActive4(false);
+                    setActive5(false);
+                    setActive6(false);
+                  }
+                }}>
                   Trang chủ
                 </Link>
               </MenuItem>
-              <SubMenu icon={<FaList />} title="Giáo vụ" color="#ffffff">
-                <MenuItem icon={<MdSchool />}> 
-                  <Link className="nav-link" to={`/contests`}>
-                      <span> Cuộc thi</span>
+              <SubMenu active={active2} icon={<FaList />} title="Giáo vụ" color="#ffffff" className={active2 ? "link-active" : ""}>
+                <MenuItem icon={<MdSchool />} active={active2}>
+                  <Link to={`/contests`} className={active7 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (active2 === false) {
+                      setActive1(false);
+                      setActive2(true);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(false);
+                    }
+                    if (active7 === false) {
+                      setActive7(true);
+                      setActive8(false);
+                      setActive9(false);
+                    }
+                  }}>
+                    <span> Cuộc thi</span>
                   </Link>
                 </MenuItem>
-                <MenuItem icon={<GiVideoConference />}> 
-                  <Link className="nav-link" to={`/class`}>
-                      <span> Lớp</span>
+                <MenuItem icon={<GiVideoConference />}>
+                  <Link className={active8 ? "nav-link link-active" : "nav-link"} to={`/class`} onClick={() => {
+                    if (active2 === false) {
+                      setActive1(false);
+                      setActive2(true);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(false);
+                    }
+                    if (active8 === false) {
+                      setActive7(false);
+                      setActive8(true);
+                      setActive9(false);
+                    }
+                  }}>
+                    <span> Lớp</span>
                   </Link>
                 </MenuItem>
-                <MenuItem icon={<AiOutlineFileText />}> 
-                  <Link className="nav-link" to={`/courses`}>
-                      <span> Khóa học</span>
+                <MenuItem icon={<AiOutlineFileText />}>
+                  <Link className={active9 ? "nav-link link-active" : "nav-link"} to={`/courses`} onClick={() => {
+                    if (active2 === false) {
+                      setActive1(false);
+                      setActive2(true);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(false);
+                    }
+                    if (active9 === false) {
+                      setActive7(false);
+                      setActive8(false);
+                      setActive9(true);
+                    }
+                  }}>
+                    <span> Khóa học</span>
                   </Link>
                 </MenuItem>
               </SubMenu>
-              <SubMenu icon={<RiPencilLine />} title="Người dùng" color="#ffffff">
-                <MenuItem icon={<FaChalkboardTeacher />}> 
-                  <Link className="nav-link" to={`/teachers`}>
-                      <span> Giáo viên</span>
-                  </Link> 
-                </MenuItem>
-                <MenuItem icon={<FaChild />}> 
-                  <Link className="nav-link" to={`/students`}>
-                      <span> Học sinh</span>
+              <SubMenu active={active3} icon={<RiPencilLine />} title="Người dùng" color="#ffffff" className={active3 ? "link-active" : ""} onClick={() => {
+                if (active3 === false) {
+                  setActive1(false);
+                  setActive2(false);
+                  setActive3(true);
+                  setActive4(false);
+                  setActive5(false);
+                  setActive6(false);
+                }
+              }}>
+                <MenuItem icon={<FaChalkboardTeacher />}>
+                  <Link to={`/teachers`} className={active10 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (setActive3 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(true);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(false);
+                    }
+                    if (active10 === false) {
+                      setActive10(true);
+                      setActive11(false);
+                      setActive12(false);
+                    }
+                  }}>
+                    <span> Giáo viên</span>
                   </Link>
                 </MenuItem>
-                <MenuItem icon={<RiParentFill />}> 
-                  <Link className="nav-link" to={`/parents`}>
-                      <span> Phụ huynh</span>
+                <MenuItem icon={<FaChild />}>
+                  <Link to={`/students`}  className={active11 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (setActive3 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(true);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(false);
+                    }
+                    if (active11 === false) {
+                      setActive10(false);
+                      setActive11(true);
+                      setActive12(false);
+                    }
+                  }}>
+                    <span> Học sinh</span>
+                  </Link>
+                </MenuItem>
+                <MenuItem icon={<RiParentFill />}>
+                  <Link to={`/parents`} className={active12 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (setActive3 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(true);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(false);
+                    }
+                    if (active12 === false) {
+                      setActive7(false);
+                      setActive8(false);
+                      setActive12(true);
+                    }
+                  }}>
+                    <span> Phụ huynh</span>
                   </Link>
                 </MenuItem>
               </SubMenu>
-              <MenuItem icon={<FaRegHeart />}>
-                <Link to={`/turnovers`}>
-                    <span> Phân tích</span>
+              <MenuItem active={active4} icon={<FaRegHeart />}>
+                <Link to={`/turnovers`} className={active4 ? "link-active" : ""} onClick={() => {
+                  if (active4 === false) {
+                    setActive1(false);
+                    setActive2(false);
+                    setActive3(false);
+                    setActive4(true);
+                    setActive5(false);
+                    setActive6(false);
+                  }
+                }}>
+                  <span> Phân tích</span>
                 </Link>
               </MenuItem>
-              <SubMenu icon={<BiCog />} title="Thiết lâp" color="#ffffff">
+              <SubMenu active={active5} icon={<BiCog />} title="Thiết lâp" color="#ffffff" className={active5 ? "link-active" : ""} onClick={() => {
+                if (active5 === false) {
+                  setActive1(false);
+                  setActive2(false);
+                  setActive3(false);
+                  setActive4(false);
+                  setActive5(true);
+                  setActive6(false);
+                }
+              }}>
                 <MenuItem icon={<BsMap />}>
-                  <Link className="nav-link" to={`/semesters`}>
+                  <Link to={`/semesters`} className={active13 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (active5 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(true);
+                      setActive6(false);
+                    }
+                    if (active13 === false) {
+                      setActive13(true);
+                      setActive14(false);
+                      setActive15(false);
+                    }
+                  }}>
                     <span> Học kì</span>
                   </Link>
                 </MenuItem>
-                <MenuItem icon={<AiOutlineBook />}> 
-                  <Link className="nav-link" to={`/lessons`}>
-                      <span> Tiết học</span>
+                <MenuItem icon={<AiOutlineBook />}>
+                  <Link to={`/lessons`} className={active14 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (active5 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(true);
+                      setActive6(false);
+                    }
+                    if (active14 === false) {
+                      setActive13(false);
+                      setActive14(true);
+                      setActive15(false);
+                    }
+                  }}>
+                    <span> Tiết học</span>
                   </Link>
                 </MenuItem>
-                <MenuItem icon={<FaPaintBrush />}> 
-                  <Link className="nav-link" to={`/arts`}>
-                      <span> Nghệ thuật</span>
+                <MenuItem icon={<FaPaintBrush />}>
+                  <Link to={`/arts`} className={active15 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (active5 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(true);
+                      setActive6(false);
+                    }
+                    if (active15 === false) {
+                      setActive13(false);
+                      setActive14(false);
+                      setActive15(true);
+                    }
+                  }}>
+                    <span> Nghệ thuật</span>
                   </Link>
                 </MenuItem>
               </SubMenu>
-              <SubMenu icon={<BiCog />} title="Yêu cầu" color="#ffffff">
-                <MenuItem icon={<BsMap />}> 
-                  <Link className="nav-link" to={`/tutorial-edit`}>
-                  <span> Giáo án</span>
-                  </Link> 
+              <SubMenu active={active6} icon={<BiCog />} title="Yêu cầu" color="#ffffff" className={active6 ? "link-active" : ""} onClick={() => {
+                if (active6 === false) {
+                  setActive1(false);
+                  setActive2(false);
+                  setActive3(false);
+                  setActive4(false);
+                  setActive5(false);
+                  setActive6(true);
+                }
+              }}>
+                <MenuItem icon={<BsMap />}>
+                  <Link to={`/tutorial-edit`} className={active16 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (active6 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(true);
+                    }
+                    if (active16 === false) {
+                      setActive16(true);
+                      setActive17(false);
+                    }
+                  }}>
+                    <span> Giáo án</span>
+                  </Link>
                 </MenuItem>
-                <MenuItem icon={<AiOutlineBook />}> 
-                  <Link className="nav-link" to={`/request-teacher-off`}>
+                <MenuItem icon={<AiOutlineBook />}>
+                  <Link to={`/request-teacher-off`} className={active17 ? "nav-link link-active" : "nav-link"} onClick={() => {
+                    if (active6 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(true);
+                    }
+                    if (active17 === false) {
+                      setActive16(false);
+                      setActive17(true);
+                    }
+                  }}>
                     <span> Nghỉ dạy</span>
-                  </Link> 
+                  </Link>
                 </MenuItem>
               </SubMenu>
             </Menu>

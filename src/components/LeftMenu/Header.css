@@ -57,7 +57,7 @@
     padding: 0 5px;
   }
   #collapseMenu .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
-    color: #ffffff;
+    color: #adadad;
     margin: 10px 0px;
     font-weight: bold;
   }
@@ -73,8 +73,21 @@
     border-bottom: 0px solid rgba(173, 173, 173, 0.2);
 }
   #header .pro-sidebar-inner .pro-sidebar-layout .active {
-      
+      background-color: #ffffff;
   }
+
+  .link-active {
+    color: #ffffff !important;
+  }
+
+  .link-active > .pro-inner-item > .pro-item-content {
+    color: #ffffff !important;
+  }
+
+  .active > .pro-inner-item > .pro-icon-wrapper {
+    background-color: #ffffff;
+  }
+
   .pro-menu-item {
     list-style-type: none !important;
   }

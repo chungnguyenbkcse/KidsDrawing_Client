@@ -18,7 +18,7 @@ export function postRegisterStudent(data: any, id: any) {
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
-                return response.json()
+                return response
             })
             .then(data => {
 

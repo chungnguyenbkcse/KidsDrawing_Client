@@ -8,7 +8,6 @@ import Editor from "../../common/components/Quill/EditorEditSection";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { toast, ToastContainer } from "react-toastify";
 import { putTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/PutTutorialTemplatePage";
-import { postTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage";
 
 
 import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
@@ -18,9 +17,7 @@ import { logout } from "../../store/actions/account.actions";
 import { getTutorialTemplatePageByTutorialTemplateId } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePageByTutorialTemplateId";
 import { postTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage1";
 import { putTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PutTutorialTemplatePage1";
-import { postSectionTemplate } from "../../common/service/SectionTemplate/PostSectionTemplate";
 import { putSectionTemplate } from "../../common/service/SectionTemplate/PutSectionTemplate";
-import { getSectionTemplate } from "../../common/service/SectionTemplate/GetSectionTemplate";
 
 
 export type SectionTemplateListProps = {

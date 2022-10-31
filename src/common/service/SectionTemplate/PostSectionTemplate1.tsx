@@ -1,6 +1,5 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postTutorialTemplate } from "../TutorialTemplate/PostTutorialTemplate";
 import { postTutorialTemplate1 } from "../TutorialTemplate/PostTutorialTemplate1";
 import { getSectionTemplate } from "./GetSectionTemplate";
 

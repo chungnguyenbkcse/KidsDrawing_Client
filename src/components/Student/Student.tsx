@@ -24,7 +24,6 @@ const Student: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = users.students.length;
     const [popup, setPopup] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
     const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
@@ -103,7 +102,7 @@ const Student: React.FC = () => {
                         </div>
                         <div className="card-body">
                             <StudentList
-                                onSelect={onUserSelect} value={searchTerm}
+                                onSelect={onUserSelect}
                             />
                         </div>
                     </div>

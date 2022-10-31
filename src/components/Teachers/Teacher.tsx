@@ -20,7 +20,6 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import CSVReader from "react-csv-reader";
 import { toast, ToastContainer } from "react-toastify";
-import { postTeacher } from "../../common/service/Teacher/PostTeacher";
 import { postTeacher1 } from "../../common/service/Teacher/PostTeacher1";
 
 
@@ -31,7 +30,6 @@ const Teacher: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = users.teachers.length;
     const [popup, setPopup] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
     const { promiseInProgress } = usePromiseTracker();
     const [datas, setDatas] = useState<any[]>([]);
     const handleForce = (data: any, fileInfo: any) => {
@@ -244,7 +242,7 @@ const Teacher: React.FC = () => {
                         </div>
                         <div className="card-body">
                             <TeacherList
-                                onSelect={onUserSelect} value={searchTerm}
+                                onSelect={onUserSelect} 
                             />
                         </div>
                     </div>

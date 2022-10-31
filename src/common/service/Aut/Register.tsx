@@ -18,7 +18,7 @@ export function postRegister(data: any, changeRouteHome: any, id: any) {
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
-                return response.json()
+                return response
             })
             .then(data => {
 

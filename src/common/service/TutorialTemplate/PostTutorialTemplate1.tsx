@@ -1,8 +1,6 @@
-import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/tutorial_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postTutorialTemplatePage } from "../TutorialTemplatePage/PostTutorialTemplatePage";
-import { getTutorialTemplate } from "./GetTutorialTemplate";
 
 export function postTutorialTemplate1(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");

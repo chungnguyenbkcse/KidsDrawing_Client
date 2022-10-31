@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postSectionTemplate } from "../SectionTemplate/PostSectionTemplate";
 import { postSectionTemplate1 } from "../SectionTemplate/PostSectionTemplate1";
 import { getCourse } from "./GetCourse";
 

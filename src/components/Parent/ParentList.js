@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { setModificationState } from "../../store/actions/users.action";
 import { UserModificationStatus } from "../../store/models/user.interface";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -13,13 +12,8 @@ function ParentList(props) {
   const dispatch = useDispatch();
 
   const users = useSelector((state) => state.users);
-  const history = useHistory();
 
   const datas = users.parents;
-  function routeChange() {
-    let path = '/parents/detail';
-    history.push(path);
-  }
 
   const options = {
     paginationSize: 5,

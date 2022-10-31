@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import { DateInputProps } from "../types/DateInput.types";
 
-function DateInput(props: DateInputProps): JSX.Element {
+function DateInput1(props: DateInputProps): JSX.Element {
     const [touched, setTouch] = useState(false);
     const [error, setError] = useState("");
     const [htmlClass, setHtmlClass] = useState("");
@@ -27,6 +27,8 @@ function DateInput(props: DateInputProps): JSX.Element {
         setValue(elementValue);
     }
 
+    console.log(props.active)
+
     return (
         <div>
             <label htmlFor={props.id.toString()}>{props.label}</label>
@@ -34,8 +36,8 @@ function DateInput(props: DateInputProps): JSX.Element {
                 value={props.value}
                 type={props.type}
                 onChange={onValueChanged}
+                className={`form-control ${props.inputClass} ${htmlClass}'}`}
                 disabled={props.active}
-                className={`form-control ${props.inputClass} ${htmlClass}`}
                 id={`id_${props.label}`}
                 placeholder={props.placeholder} />
             {error ?
@@ -47,4 +49,4 @@ function DateInput(props: DateInputProps): JSX.Element {
     );
 }
 
-export default DateInput;
+export default DateInput1;

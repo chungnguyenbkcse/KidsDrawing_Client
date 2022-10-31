@@ -372,6 +372,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
                       field="registration_time"
                       value={formState.registration_time.value}
                       onChange={hasFormValueChanged}
+                      active={true}
                       type="datetime-local"
                       required={false}
                       maxLength={time_now}

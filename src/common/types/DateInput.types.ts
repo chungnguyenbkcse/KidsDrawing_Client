@@ -8,5 +8,6 @@ export type DateInputProps = {
     type?: string,
     maxLength: string,
     inputClass?: string,
-    field: string
+    field: string,
+    active: boolean
 };

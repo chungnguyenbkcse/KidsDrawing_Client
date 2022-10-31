@@ -33,6 +33,7 @@ function DateInput2(props: DateInputProps): JSX.Element {
             <input
                 value={props.value}
                 type={props.type}
+                disabled={props.active}
                 onChange={onValueChanged}
                 className={`form-control ${props.inputClass} ${htmlClass}`}
                 id={`id_${props.label}`}

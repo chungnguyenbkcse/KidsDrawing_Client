@@ -26,6 +26,9 @@ import Loading from "../../common/components/Loading";
 import { toast, ToastContainer } from "react-toastify";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
+import DateInput from "../../common/components/DateInput";
+import DateInput2 from "../../common/components/DateInput2";
+import DateInput1 from "../../common/components/DateInput1";
 
 type Options = {
   name: string;
@@ -281,6 +284,14 @@ const ContestForm: React.FC = () => {
     setValueTeacher(value)
   }
 
+  var now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  var time_now = now.toISOString().slice(0,16);
+
+  console.log(formState.start_time.value)
+
+  console.log(formState.start_time.value !== null && formState.start_time.value !== "" ? false: true)
+
   return (
     promiseInProgress ?
       <div className="row" id="search-box">
@@ -370,13 +381,14 @@ const ContestForm: React.FC = () => {
                     label="Số người đăng kí tối đa" />
                 </div>
                 <div className="form-group col-md-6">
-                  <TextInput id="input_registration_time"
+                  <DateInput id="input_registration_time"
                     field="registration_time"
                     value={formState.registration_time.value}
                     onChange={hasFormValueChanged}
                     type="datetime-local"
+                    active={false}
                     required={false}
-                    maxLength={100}
+                    maxLength={time_now}
                     label="Thời gian bắt đầu đăng kí"
                     placeholder="" />
                 </div>
@@ -384,24 +396,26 @@ const ContestForm: React.FC = () => {
 
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <TextInput id="input_start_time"
+                  <DateInput2 id="input_start_time"
                     field="start_time"
                     value={formState.start_time.value}
                     onChange={hasFormValueChanged}
                     type="datetime-local"
+                    active={formState.registration_time.value !== null && formState.registration_time.value !== "" ? false: true}
                     required={false}
-                    maxLength={100}
+                    maxLength={formState.registration_time.value}
                     label="Thời gian bắt đầu cuộc thi"
                     placeholder="" />
                 </div>
                 <div className="form-group col-md-6">
-                  <TextInput id="input_end_time"
+                  <DateInput1 id="input_end_time"
                     field="end_time"
                     value={formState.end_time.value}
                     onChange={hasFormValueChanged}
                     type="datetime-local"
+                    active={formState.start_time.value !== null && formState.start_time.value !== ""? false: true}
                     required={false}
-                    maxLength={100}
+                    maxLength={formState.start_time.value}
                     label="Thời gian kết thúc cuộc thi"
                     placeholder="" />
                 </div>

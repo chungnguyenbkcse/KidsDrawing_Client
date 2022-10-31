@@ -12,11 +12,20 @@
     background-color: #503E9D !important
   }
 
+  #teacher_navbar {
+    border-top-left-radius: 50px !important;
+    border-top-right-radius: 50px !important;
+  }
+
+  .teacher-navbar-nav .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
+    background-color: #7659f7 !important;
+  } 
+
   .logo-x {
     padding-top: 7px;
   }
-  #header .pro-sidebar {
-    height: 100%;
+  #collapseMenu .pro-sidebar {
+    min-height: 100vh
   }
   .pro-sidebar-header {
     padding: 12px;
@@ -70,7 +79,7 @@
     padding: 0 5px;
   }
   #collapseMenu .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
-    color: #adadad;
+    color: #ffffff !important;
     margin: 10px 0px;
     font-weight: bold;
   }
@@ -89,12 +98,29 @@
       background-color: #ffffff;
   }
 
+
+  .pro-inner-item > .pro-item-content {
+    color: #ffffff !important;
+  }
+
   .link-active {
+    color: #FFBF08 !important;
+  }
+
+  .not-active {
+    color: #ffffff !important;
+  }
+
+  .link-active .pro-icon {
+    color: #FFBF08 !important;
+  }
+
+  .link-not-active {
     color: #ffffff !important;
   }
 
   .link-active > .pro-inner-item > .pro-item-content {
-    color: #ffffff !important;
+    color: #FFBF08 !important;
   }
 
   .active > .pro-inner-item > .pro-icon-wrapper {

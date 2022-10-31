@@ -163,8 +163,8 @@ const Routers: React.FC = () => {
         return (
             <Fragment>
                 <LeftMenu />
-                <div id="content-wrapper" className="d-flex flex-column">
-                    <div id="content">
+                <div id="content-wrapper" className="d-flex flex-column content-wrapper-teacher">
+                    <div id="content" className="teacher-content">
                         <TopMenu />
                         <div className="container-fluid content-page">
                             <Switch>
@@ -205,8 +205,8 @@ const Routers: React.FC = () => {
         return (
             <Fragment>
                 <LeftMenu />
-                <div id="content-wrapper" className="d-flex flex-column">
-                    <div id="content">
+                <div id="content-wrapper" className="d-flex flex-column content-wrapper-teacher">
+                    <div id="content" className="teacher-content">
                         <TopMenu />
                         <div className="container-fluid content-page">
                             <Switch>

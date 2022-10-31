@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import SelectKeyValueMutiple2 from "../../common/components/SelectKeyValueMutiple2";
 import { deleteScheduleBySemesterClass } from "../../common/service/Schedule/DeleteScheduleBySemesterClass";
 import { putSemesterClass } from "../../common/service/SemesterClass/PutSemesterClass";
+import DateInput from "../../common/components/DateInput";
 
 export type semesterClassListProps = {
   isCheck: (value: boolean) => void;
@@ -67,6 +68,10 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
     let item: Options = { "name": ele.name, "value": ele.id }
     return listSemesters.push(item)
   })
+
+  var now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  var time_now = now.toISOString().slice(0,16);
 
   const listCourses: Options[] = [];
   courses.courses.map((ele) => {
@@ -363,13 +368,13 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
 
                 <div className="form-row">
                 <div className="form-group col-md-6">
-                    <TextInput id="input_registration_time"
+                    <DateInput id="input_registration_time"
                       field="registration_time"
                       value={formState.registration_time.value}
                       onChange={hasFormValueChanged}
                       type="datetime-local"
                       required={false}
-                      maxLength={100}
+                      maxLength={time_now}
                       label="Thời gian bắt đầu đăng kí"
                       placeholder="" />
                   </div>

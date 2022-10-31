@@ -116,7 +116,7 @@ function FormSubmitContestStudent(): JSX.Element {
         <Fragment>
             <div className="row text-left">
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
+                    <div className="card shadow shadow-xx">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green">Đề bài</h6>
                         </div>

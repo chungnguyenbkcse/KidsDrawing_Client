@@ -41,3 +41,12 @@
 .selected {
     background-color: lavender;
 }
+
+.card-header {
+    border-top-left-radius: 100px !important;
+    border-top-right-radius: 100px !important;
+}
+
+.shadow-xx {
+    border-radius: 50px !important;
+}

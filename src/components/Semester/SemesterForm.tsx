@@ -10,6 +10,8 @@ import { OnChangeModel, ISemesterFormState } from "../../common/types/Form.types
 import { postSemester } from "../../common/service/semester/PostSemester";
 import { putSemester } from "../../common/service/semester/PutSemester";
 import { toast } from "react-toastify";
+import DateInput from "../../common/components/DateInput";
+import DateInput2 from "../../common/components/DateInput2";
 
 export type semesterListProps = {
   isCheck: (value: boolean) => void;
@@ -104,11 +106,15 @@ function SemesterForm(props: semesterListProps): JSX.Element {
       || !formState.name.value || !formState.start_time.value || !formState.end_time.value) as boolean;
   }
 
+  var now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  var time_now = now.toISOString().slice(0,16);
+
   return (
     <Fragment>
       <div className="row text-left">
       <div className="col-xl-12 col-lg-12">
-        <div className="card shadow mb-4">
+        <div className="card shadow shadow-xx">
           <div className="card-header py-3">
             <h6 className="m-0 font-weight-bold text-green">{(isCreate ? "Tạo" : "Sửa")} học kì</h6>
           </div>
@@ -152,24 +158,24 @@ function SemesterForm(props: semesterListProps): JSX.Element {
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <TextInput id="input_start_time"
+                  <DateInput id="input_start_time"
                     field="start_time"
                     value={formState.start_time.value}
                     onChange={hasFormValueChanged}
                     type="datetime-local"
                     required={false}
-                    maxLength={100}
+                    maxLength={time_now}
                     label="Thời gian bắt đầu"
                     placeholder="" />
                 </div>
                 <div className="form-group col-md-6">
-                  <TextInput id="input_end_time"
+                  <DateInput2 id="input_end_time"
                     field="end_time"
                     value={formState.end_time.value}
                     onChange={hasFormValueChanged}
                     type="datetime-local"
                     required={false}
-                    maxLength={100}
+                    maxLength={formState.start_time.value}
                     label="Thời gian kết thúc"
                     placeholder="" />
                 </div>

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import { DateInputProps } from "../types/DateInput.types";
 
-function DateInput(props: DateInputProps): JSX.Element {
+function DateInput2(props: DateInputProps): JSX.Element {
     const [touched, setTouch] = useState(false);
     const [error, setError] = useState("");
     const [htmlClass, setHtmlClass] = useState("");
@@ -46,4 +46,4 @@ function DateInput(props: DateInputProps): JSX.Element {
     );
 }
 
-export default DateInput;
+export default DateInput2;

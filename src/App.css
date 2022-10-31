@@ -28,6 +28,8 @@ body {
     text-align      : center;
     padding-top     : 5px;
     color           : black;
+    border-top-right-radius: 100px;
+    border-top-left-radius: 100px;
 }
 
 .popup-content {
@@ -37,9 +39,6 @@ body {
     text-align : center;
 }
 
-.popup-modal {
-    height: 70px;
-}
 
 .left-margin {
     margin-left: 10px;

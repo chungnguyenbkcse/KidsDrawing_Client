@@ -76,7 +76,7 @@ const Header = () => {
   if (roleUser === 'ADMIN_USER') {
     return (
       <>
-        <div id="collapseMenu" className="navbar-nav bg-gradient-primary-green sidebar-dark accordion">
+        <div id="collapseMenu" className="navbar-nav admin-navbar-nav bg-gradient-primary-green sidebar-dark accordion">
           {/* collapsed props to change menu size using menucollapse state */}
           <ProSidebar collapsed={menuCollapse}>
             <SidebarHeader>
@@ -380,7 +380,7 @@ const Header = () => {
   else if (roleUser === 'TEACHER_USER') {
     return (
       <>
-        <div id="collapseMenu" className="navbar-nav bg-gradient-primary-green sidebar-dark accordion">
+        <div id="collapseMenu" className="navbar-nav teacher-navbar-nav bg-gradient-primary-green sidebar-dark accordion">
           {/* collapsed props to change menu size using menucollapse state */}
           <ProSidebar collapsed={menuCollapse}>
             <SidebarHeader>
@@ -586,6 +586,9 @@ const Header = () => {
             </SidebarContent>
             <SidebarFooter>
               <Menu iconShape="square">
+                <MenuItem>
+                  <img className="img-profile rounded-circle img-sideleft" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                </MenuItem>
                 <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
               </Menu>
             </SidebarFooter>
@@ -597,7 +600,7 @@ const Header = () => {
   else if (roleUser === 'PARENT_USER') {
     return (
       <>
-        <div id="collapseMenu" className="navbar-nav bg-gradient-primary-green sidebar-dark accordion">
+        <div id="collapseMenu" className="navbar-nav teacher-navbar-nav bg-gradient-primary-green sidebar-dark accordion">
           {/* collapsed props to change menu size using menucollapse state */}
           <ProSidebar collapsed={menuCollapse}>
             <SidebarHeader>
@@ -742,6 +745,9 @@ const Header = () => {
             </SidebarContent>
             <SidebarFooter>
               <Menu iconShape="square">
+                <MenuItem>
+                  <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                </MenuItem>
                 <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
               </Menu>
             </SidebarFooter>
@@ -752,7 +758,7 @@ const Header = () => {
   }
   return (
     <>
-      <div id="collapseMenu" className="navbar-nav bg-gradient-primary-green sidebar-dark accordion">
+      <div id="collapseMenu" className="navbar-nav  teacher-navbar-nav bg-gradient-primary-green sidebar-dark accordion">
         {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader>
@@ -911,6 +917,9 @@ const Header = () => {
           </SidebarContent>
           <SidebarFooter>
             <Menu iconShape="square">
+              <MenuItem>
+                  <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                </MenuItem>
               <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
             </Menu>
           </SidebarFooter>

@@ -2,9 +2,16 @@
     position: absolute;
     width: 220px;
   }
-  .pro-sidebar > .pro-sidebar-inner {
+  .admin-navbar-nav > .pro-sidebar > .pro-sidebar-inner {
     background-color: #0e1e24 !important
   }
+  .teacher-navbar-nav > .pro-sidebar > .pro-sidebar-inner {
+    background-color: #503E9D !important
+  }
+  .teacher-navbar-nav  .pro-sidebar  .pro-sidebar-inner  .pro-icon-wrapper {
+    background-color: #503E9D !important
+  }
+
   .logo-x {
     padding-top: 7px;
   }
@@ -33,6 +40,12 @@
   #collapseMenu .pro-sidebar.collapsed {
     width: 80px;
     min-width: 80px;
+  }
+  
+
+  .img-sideleft {
+    width: 200px;
+    min-width: 200px;
   }
   .collapsed .pro-sidebar-header {
     padding: 12px;

@@ -161,7 +161,7 @@ const CourseTeacherDetail: React.FC = () => {
                     </div>
                     {
                         function() {
-                            if (status !== "Registed") {
+                            if (status == "Not register") {
                                 return (
                                     <div className="row text-center justify-content-center" id="btn-register-course">
                                         <button className="btn btn-success btn-green" id="btn-create-register-course" onClick={() => handleRegister()}>
@@ -171,7 +171,7 @@ const CourseTeacherDetail: React.FC = () => {
                                     </div>
                                 )
                             }
-                        }
+                        }()
                     }
                 </div>
             </div>

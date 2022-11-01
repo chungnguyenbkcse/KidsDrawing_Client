@@ -162,7 +162,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
                     field="start_time"
                     value={formState.start_time.value}
                     onChange={hasFormValueChanged}
-                    active={true}
+                    active={false}
                     type="datetime-local"
                     required={false}
                     maxLength={time_now}
@@ -174,7 +174,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
                     field="end_time"
                     value={formState.end_time.value}
                     onChange={hasFormValueChanged}
-                    active={formState.start_time.value !== null || formState.start_time.value !== "" ? true: false}
+                    active={formState.start_time.value !== null && formState.start_time.value !== "" ? false: true}
                     type="datetime-local"
                     required={false}
                     maxLength={formState.start_time.value}

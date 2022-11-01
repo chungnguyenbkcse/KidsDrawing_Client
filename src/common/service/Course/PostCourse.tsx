@@ -43,7 +43,7 @@ export function postCourse(course: any, idx: any) {
                     course_id: data.id,
                     name: "",
                     number: 1,
-                    teaching_form: ""
+                    teaching_form: true
                 }, data.num_of_section))
             })
             .catch(error => {

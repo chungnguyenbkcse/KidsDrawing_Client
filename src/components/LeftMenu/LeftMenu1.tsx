@@ -255,7 +255,7 @@ const LeftMenu: React.FC = () => {
                     </li>
 
                     <hr className="sidebar-divider d-none d-md-block" />
-                    <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                    <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </ul>
             </Fragment>
         );
@@ -319,7 +319,7 @@ const LeftMenu: React.FC = () => {
                     </li>
 
                     <hr className="sidebar-divider d-none d-md-block" />
-                    <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                    <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </ul>
             </Fragment>
         );
@@ -390,7 +390,7 @@ const LeftMenu: React.FC = () => {
                 </li>
 
                 <hr className="sidebar-divider d-none d-md-block" />
-                <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
             </ul>
         </Fragment>
     );

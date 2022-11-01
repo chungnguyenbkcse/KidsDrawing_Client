@@ -73,7 +73,7 @@ const Login: React.FC = () => {
             <div className="card-body p-0">
               <div className="row">
                 <div className="col-lg-6 d-none d-lg-block text-center" id="image-login-page">
-                  <img src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" alt="First slide" />
+                  <img src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" alt="First slide" />
                 </div>
                 <div className="col-lg-6 shadow-lg">
                   <div className="p-5">

@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
                     </div>
                     <div className="col-lg-6 col-sm-6 text-center">
                         <div className='slide-bar'>
-                            <img src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" alt="First slide" />
+                            <img src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" alt="First slide" />
                         </div>
                     </div>
                 </div>

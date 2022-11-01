@@ -587,7 +587,7 @@ const Header = () => {
             <SidebarFooter>
               <Menu iconShape="square">
                 <MenuItem>
-                  <img className="img-profile rounded-circle img-sideleft" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                  <img className="img-profile rounded-circle img-sideleft" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </MenuItem>
                 <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
               </Menu>
@@ -746,7 +746,7 @@ const Header = () => {
             <SidebarFooter>
               <Menu iconShape="square">
                 <MenuItem>
-                  <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                  <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </MenuItem>
                 <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
               </Menu>
@@ -918,7 +918,7 @@ const Header = () => {
           <SidebarFooter>
             <Menu iconShape="square">
               <MenuItem>
-                  <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1653726835/yfzr51aot4uof2awbush.png" />
+                  <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </MenuItem>
               <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
             </Menu>

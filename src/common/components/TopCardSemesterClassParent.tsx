@@ -42,8 +42,10 @@ function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassP
                 <div className="card-body">
                     <h5 className="card-title">{props.name}</h5>
                     <div className="row">
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">{props.art_type_name}</span></p>
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Trình độ:</span> <span className="header-card-course-value-teacher">{props.art_level_name}</span></p>
+                        <p className="col-12" ><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">{props.art_type_name}</span></p>
+                    </div>
+                    <div className="row">
+                        <p className="col-12" ><span className="header-card-course-teacher">Trình độ:</span> <span className="header-card-course-value-teacher">{props.art_level_name}</span></p>
                     </div>
                     <div className="row">
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">{props.art_age_name}</span></p>
@@ -54,7 +56,9 @@ function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassP
                     </div>
                     <div className="row">
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Giá:</span> <span className="header-card-course-value-teacher">{props.price} VNĐ</span></p>
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Trạng thái:</span> <span className="header-card-course-value-teacher">{props.status}</span></p>
+                    </div>
+                    <div className="row">
+                        <p className="col-12" ><span className="header-card-course-teacher">Trạng thái:</span> <span className="header-card-course-value-teacher">{props.status}</span></p>
                     </div>
                     {
                         function () {
@@ -62,13 +66,13 @@ function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassP
                                 if (props.student_registered_id.length > 0) {
                                     return (
                                         <div className="row">
-                                            <p className="col-xl-6 col-md-6 col-xs-6" >
+                                            <p className="col-12" >
                                                 <span className="header-card-course-teacher">Đã mua:</span> 
                                                 {
                                                     props.student_registered_name.map((ele, idx) => {
                                                         if (idx === props.student_registered_name.length - 1) {
                                                             return (
-                                                                <span className="header-card-course-value-teacher">{ele}</span>
+                                                                <span className="header-card-course-value-teacher"> {ele}</span>
                                                             )
                                                         }
                                                         return (

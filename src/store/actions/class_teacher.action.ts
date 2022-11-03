@@ -62,7 +62,7 @@ export function editDoinglClass(class_teacher: IClassTeacher): IEditDoinglClassA
     return { type: EDIT_DOING_CLASS, class_teacher: class_teacher };
 }
 
-export function removeDoinglClass(id: string): IRemoveDoinglClassActionType {
+export function removeDoinglClass(id: any): IRemoveDoinglClassActionType {
     return { type: REMOVE_DOING_CLASS, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editDoneClass(class_teacher: IClassTeacher): IEditDoneClassActio
     return { type: EDIT_DONE_CLASS, class_teacher: class_teacher };
 }
 
-export function removeDoneClass(id: string): IRemoveDoneClassActionType {
+export function removeDoneClass(id: any): IRemoveDoneClassActionType {
     return { type: REMOVE_DONE_CLASS, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: ClassTeacherModificationStatus): ISe
 // register_successfull_class_teachers
 interface IAddDoinglClassActionType { type: string, class_teacher: IClassTeacher };
 interface IEditDoinglClassActionType { type: string, class_teacher: IClassTeacher };
-interface IRemoveDoinglClassActionType { type: string, id: string };
+interface IRemoveDoinglClassActionType { type: string, id: any };
 interface IChangeSelectedDoinglClassActionType { type: string, class_teacher: IClassTeacher };
 interface IClearSelectedDoinglClassActionType { type: string };
 interface IRemoveDoinglClassAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialDoinglClassActionType {type: string, class_teacher: IClassTeac
 // not_register_class_teachers
 interface IAddDoneClassActionType { type: string, class_teacher: IClassTeacher };
 interface IEditDoneClassActionType { type: string, class_teacher: IClassTeacher };
-interface IRemoveDoneClassActionType { type: string, id: string };
+interface IRemoveDoneClassActionType { type: string, id: any };
 interface IChangeSelectedDoneClassActionType { type: string, class_teacher: IClassTeacher };
 interface IClearSelectedDoneClassActionType { type: string };
 interface IRemoveDoneClassAllActionType { type: string }

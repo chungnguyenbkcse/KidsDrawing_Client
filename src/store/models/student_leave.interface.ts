@@ -1,13 +1,13 @@
 export interface IStudentLeave {
-    id: string;
-    section_id: string;
+    id: any;
+    section_id: any;
     section_name: string;
-    class_id: string;
+    class_id: any;
     class_name: string;
     section_number: number;
-    student_id: string;
+    student_id: any;
     student_name: string;
-    reviewer_id: string;
+    reviewer_id: any;
     description: string;
     status: string;
     create_time: string;

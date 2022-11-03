@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError, removeArtLevel } from "../../../store/actions/art_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function deleteArtLevel(id: string, idx: any) {
+export function deleteArtLevel(id: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());

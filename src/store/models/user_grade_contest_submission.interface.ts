@@ -1,11 +1,11 @@
 export interface IUserGradeContestSubmission {
-    student_id: string;
+    student_id: any;
     teacher_name: string;
-    teacher_id: string;
+    teacher_id: any;
     student_name: string;
-    contest_id: string;
+    contest_id: any;
     contest_name: string;
-    contest_submission_id: string;
+    contest_submission_id: any;
     feedback: string;
     score: number;
     time: string;

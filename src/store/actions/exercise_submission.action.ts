@@ -62,7 +62,7 @@ export function editExerciseNotGraded(exercise_submission: IExerciseSubmission):
     return { type: EDIT_EXERCISE_SUBMISSION_NOT_GRADED, exercise_submission: exercise_submission };
 }
 
-export function removeExerciseNotGraded(id: string): IRemoveExerciseNotGradedActionType {
+export function removeExerciseNotGraded(id: any): IRemoveExerciseNotGradedActionType {
     return { type: REMOVE_EXERCISE_SUBMISSION_NOT_GRADED, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editExerciseGraded(exercise_submission: IExerciseSubmission): IE
     return { type: EDIT_EXERCISE_SUBMISSION_GRADED, exercise_submission: exercise_submission };
 }
 
-export function removeExerciseGraded(id: string): IRemoveExerciseGradedActionType {
+export function removeExerciseGraded(id: any): IRemoveExerciseGradedActionType {
     return { type: REMOVE_EXERCISE_SUBMISSION_GRADED, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: ExerciseSubmissionModificationStatus
 // register_successfull_exercise_submissions
 interface IAddExerciseNotGradedActionType { type: string, exercise_submission: IExerciseSubmission };
 interface IEditExerciseNotGradedActionType { type: string, exercise_submission: IExerciseSubmission };
-interface IRemoveExerciseNotGradedActionType { type: string, id: string };
+interface IRemoveExerciseNotGradedActionType { type: string, id: any };
 interface IChangeSelectedExerciseNotGradedActionType { type: string, exercise_submission: IExerciseSubmission };
 interface IClearSelectedExerciseNotGradedActionType { type: string };
 interface IRemoveExerciseNotGradedAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialExerciseNotGradedActionType {type: string, exercise_submission
 // not_register_exercise_submissions
 interface IAddExerciseGradedActionType { type: string, exercise_submission: IExerciseSubmission };
 interface IEditExerciseGradedActionType { type: string, exercise_submission: IExerciseSubmission };
-interface IRemoveExerciseGradedActionType { type: string, id: string };
+interface IRemoveExerciseGradedActionType { type: string, id: any };
 interface IChangeSelectedExerciseGradedActionType { type: string, exercise_submission: IExerciseSubmission };
 interface IClearSelectedExerciseGradedActionType { type: string };
 interface IRemoveExerciseGradedAllActionType { type: string }

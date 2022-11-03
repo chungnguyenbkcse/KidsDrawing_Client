@@ -7,7 +7,7 @@ import { getExerciseBySection } from "./GetExerciseBySection";
 export function postExercise(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('section_id');
-    let section_id: string = "";
+    let section_id: any = "";
     if(id_x !== null){
         section_id = id_x
     }
@@ -41,9 +41,8 @@ export function postExercise(data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                dispatch(fetchDataSuccess(data))
                 toast.update(idx, { render: "Thêm bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
-                dispatch(getExerciseBySection(dispatch, section_id));
+                getExerciseBySection(dispatch, section_id);
             })
             .catch(error => {
                 toast.update(idx, { render: "Thêm bài tập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

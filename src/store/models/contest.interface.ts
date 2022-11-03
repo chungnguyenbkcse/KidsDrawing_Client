@@ -1,5 +1,5 @@
 export interface IContest {
-    id: string;
+    id: any;
     name: string;
     description: string;
     max_participant: number;
@@ -11,9 +11,9 @@ export interface IContest {
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: string;
-    art_type_id: string;
-    art_age_id: string;
+    creator_id: any;
+    art_type_id: any;
+    art_age_id: any;
     art_type_name: string;
     art_age_name: string;
     create_time: string;

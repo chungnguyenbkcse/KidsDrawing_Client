@@ -48,7 +48,7 @@ export function editCourseTeacherNew(course_teacher_new: ICourseTeacherNew): IEd
     return { type: EDIT_COURSE_TEACHER_NEW, course_teacher_new: course_teacher_new };
 }
 
-export function removeCourseTeacherNew(id: string): IRemoveCourseTeacherNewActionType {
+export function removeCourseTeacherNew(id: any): IRemoveCourseTeacherNewActionType {
     return { type: REMOVE_COURSE_TEACHER_NEW, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: CourseTeacherNewModificationStatus):
 
 interface IAddCourseTeacherNewActionType { type: string, course_teacher_new: ICourseTeacherNew };
 interface IEditCourseTeacherNewActionType { type: string, course_teacher_new: ICourseTeacherNew };
-interface IRemoveCourseTeacherNewActionType { type: string, id: string };
+interface IRemoveCourseTeacherNewActionType { type: string, id: any };
 interface IChangeSelectedCourseTeacherNewActionType { type: string, course_teacher_new: ICourseTeacherNew };
 interface IClearSelectedCourseTeacherNewActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  CourseTeacherNewModificationStatus};

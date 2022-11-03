@@ -48,7 +48,7 @@ export function editArtLevel(art_level: IArtLevel): IEditArtLevelActionType {
     return { type: EDIT_ART_LEVEL, art_level: art_level };
 }
 
-export function removeArtLevel(id: string): IRemoveArtLevelActionType {
+export function removeArtLevel(id: any): IRemoveArtLevelActionType {
     return { type: REMOVE_ART_LEVEL, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateArtLevel(value: ArtLevelModificationStatus):
 
 interface IAddArtLevelActionType { type: string, art_level: IArtLevel };
 interface IEditArtLevelActionType { type: string, art_level: IArtLevel };
-interface IRemoveArtLevelActionType { type: string, id: string };
+interface IRemoveArtLevelActionType { type: string, id: any };
 interface IChangeSelectedArtLevelActionType { type: string, art_level: IArtLevel };
 interface IClearSelectedArtLevelActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ArtLevelModificationStatus};

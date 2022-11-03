@@ -48,7 +48,7 @@ export function editInformationClass(information_class: IInformationClass): IEdi
     return { type: EDIT_INFORMATION_CLASS, information_class: information_class };
 }
 
-export function removeInformationClass(id: string): IRemoveInformationClassActionType {
+export function removeInformationClass(id: any): IRemoveInformationClassActionType {
     return { type: REMOVE_INFORMATION_CLASS, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: InformationClassModificationStatus):
 
 interface IAddInformationClassActionType { type: string, information_class: IInformationClass };
 interface IEditInformationClassActionType { type: string, information_class: IInformationClass };
-interface IRemoveInformationClassActionType { type: string, id: string };
+interface IRemoveInformationClassActionType { type: string, id: any };
 interface IChangeSelectedInformationClassActionType { type: string, information_class: IInformationClass };
 interface IClearSelectedInformationClassActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  InformationClassModificationStatus};

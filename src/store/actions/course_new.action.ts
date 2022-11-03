@@ -48,7 +48,7 @@ export function editCourseNew(course_new: ICourseNew): IEditCourseNewActionType 
     return { type: EDIT_COURSE_NEW, course_new: course_new };
 }
 
-export function removeCourseNew(id: string): IRemoveCourseNewActionType {
+export function removeCourseNew(id: any): IRemoveCourseNewActionType {
     return { type: REMOVE_COURSE_NEW, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: CourseNewModificationStatus): ISetMo
 
 interface IAddCourseNewActionType { type: string, course_new: ICourseNew };
 interface IEditCourseNewActionType { type: string, course_new: ICourseNew };
-interface IRemoveCourseNewActionType { type: string, id: string };
+interface IRemoveCourseNewActionType { type: string, id: any };
 interface IChangeSelectedCourseNewActionType { type: string, course_new: ICourseNew };
 interface IClearSelectedCourseNewActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  CourseNewModificationStatus};

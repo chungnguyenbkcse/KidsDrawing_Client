@@ -48,7 +48,7 @@ export function editMyClass(myclass: IMyClass): IEditMyClassActionType {
     return { type: EDIT_MY_CLASS, myclass: myclass };
 }
 
-export function removeMyClass(id: string): IRemoveMyClassActionType {
+export function removeMyClass(id: any): IRemoveMyClassActionType {
     return { type: REMOVE_MY_CLASS, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: MyClassModificationStatus): ISetModi
 
 interface IAddMyClassActionType { type: string, myclass: IMyClass };
 interface IEditMyClassActionType { type: string, myclass: IMyClass };
-interface IRemoveMyClassActionType { type: string, id: string };
+interface IRemoveMyClassActionType { type: string, id: any };
 interface IChangeSelectedMyClassActionType { type: string, myclass: IMyClass };
 interface IClearSelectedMyClassActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  MyClassModificationStatus};

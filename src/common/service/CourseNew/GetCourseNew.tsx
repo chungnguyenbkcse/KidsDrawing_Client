@@ -2,7 +2,7 @@ import { logout } from "../../../store/actions/account.actions";
 import { fetchDataSuccess, fetchDataError, removeCourseNewAll, initialCourseNew, addCourseNew } from "../../../store/actions/course_new.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseNew {
-    id: string;
+    id: any;
     name: string;
     description: string;
     max_participant: number;
@@ -10,10 +10,10 @@ interface CourseNew {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: string;
-    art_type_id: string;
-    art_level_id: string;
-    art_age_id: string;
+    creator_id: any;
+    art_type_id: any;
+    art_level_id: any;
+    art_age_id: any;
     art_type_name: string;
     art_level_name: string;
     art_age_name: string;

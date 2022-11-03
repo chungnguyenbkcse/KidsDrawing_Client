@@ -27,7 +27,7 @@ const ClassTeacherDetail: React.FC = () => {
     const students: IUserState = useSelector((state: IStateType) => state.users);
     const numberStudentsCount: number = students.students.length;
     var id_x = localStorage.getItem('class_id');
-    let class_id: string = "";
+    let class_id: any = "";
     if (id_x !== null) {
         class_id = id_x;
     }

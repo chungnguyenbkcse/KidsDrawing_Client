@@ -48,7 +48,7 @@ export function editContestParentNew(contest_parent_new: IContestParentNew): IEd
     return { type: EDIT_CONTEST_PARENT_NEW, contest_parent_new: contest_parent_new };
 }
 
-export function removeContestParentNew(id: string): IRemoveContestParentNewActionType {
+export function removeContestParentNew(id: any): IRemoveContestParentNewActionType {
     return { type: REMOVE_CONTEST_PARENT_NEW, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ContestParentNewModificationStatus):
 
 interface IAddContestParentNewActionType { type: string, contest_parent_new: IContestParentNew };
 interface IEditContestParentNewActionType { type: string, contest_parent_new: IContestParentNew };
-interface IRemoveContestParentNewActionType { type: string, id: string };
+interface IRemoveContestParentNewActionType { type: string, id: any };
 interface IChangeSelectedContestParentNewActionType { type: string, contest_parent_new: IContestParentNew };
 interface IClearSelectedContestParentNewActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ContestParentNewModificationStatus};

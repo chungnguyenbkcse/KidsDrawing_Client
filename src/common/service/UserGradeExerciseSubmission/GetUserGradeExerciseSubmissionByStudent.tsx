@@ -2,14 +2,14 @@ import jwt_decode from "jwt-decode";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addUserGradeExerciseSubmission, removeUserGradeExerciseSubmissionAll} from "../../../store/actions/user_grade_exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
-    student_id: string;
+    student_id: any;
     student_name: string;
     exercise_name: string;
     time_submit: string;
     deadline: string;
     description: string;
     image_url: string;
-    exercise_submission_id: string;
+    exercise_submission_id: any;
     feedback: string;
     score: number;
     time: string;

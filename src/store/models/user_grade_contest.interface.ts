@@ -1,7 +1,7 @@
 export interface IUserGradeContest {
-    id: string;
-    contest_id: string;
-    teacher_id: string;
+    id: any;
+    contest_id: any;
+    teacher_id: any;
     teacher_name: string;
     contest_name: string;
 }

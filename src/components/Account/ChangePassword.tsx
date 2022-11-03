@@ -20,7 +20,7 @@ function ChangePassword(): JSX.Element {
     const users: IUserState = useSelector((state: IStateType) => state.users);
     
     const id = localStorage.getItem('id')
-    let user_id: string = "";
+    let user_id: any = "";
     if (id !== null) {
         user_id = id
     }

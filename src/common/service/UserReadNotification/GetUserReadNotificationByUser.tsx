@@ -1,8 +1,8 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, addUserNotReadedNotification, removeUserNotReadedNotificationAll, addUserReadedNotification, removeUserReadedNotificationAll} from "../../../store/actions/user_read_notification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface UserReadNotification {
-    notification_id: string;
-    user_id: string;
+    notification_id: any;
+    user_id: any;
     is_read: boolean;
 }
 export function getUserReadNotification(id: any) {

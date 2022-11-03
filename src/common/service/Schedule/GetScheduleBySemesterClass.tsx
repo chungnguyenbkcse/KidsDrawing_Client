@@ -1,16 +1,16 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, addSchedule } from "../../../store/actions/schedule.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface schedule {
-    id: string;
-    lesson_time_id: string;
+    id: any;
+    lesson_time_id: any;
     lesson_time: string;
-    semester_class_id: string;
+    semester_class_id: any;
     date_of_week: number;
 }
 export function getScheduleBySemesterClass(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem("id");
-    var creator_id: string = "";
+    var creator_id: any = "";
     if (id_x !== null) {
         creator_id = id_x
     }

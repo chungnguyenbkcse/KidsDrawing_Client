@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeArtAgeAll, initialArtAge, addArtAge } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ArtAge {
-    id: string;
+    id: any;
     name: string;
     description: string;
 }

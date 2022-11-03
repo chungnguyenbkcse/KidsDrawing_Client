@@ -63,7 +63,7 @@ export function editRemoveTeacherLeave(teacher_leave: ITeacherLeave): IEditRemov
     return { type: EDIT_REMOVE_LEAVE, teacher_leave: teacher_leave };
 }
 
-export function removeRemoveTeacherLeave(id: string): IRemoveRemoveTeacherLeaveActionType {
+export function removeRemoveTeacherLeave(id: any): IRemoveRemoveTeacherLeaveActionType {
     return { type: REMOVE_REMOVE_LEAVE, id: id };
 }
 
@@ -84,7 +84,7 @@ export function editAcceptTeacherLeave(teacher_leave: ITeacherLeave): IEditAccep
     return { type: EDIT_ACCEPT_LEAVE, teacher_leave: teacher_leave };
 }
 
-export function removeAcceptTeacherLeave(id: string): IRemoveAcceptTeacherLeaveActionType {
+export function removeAcceptTeacherLeave(id: any): IRemoveAcceptTeacherLeaveActionType {
     return { type: REMOVE_ACCEPT_LEAVE, id: id };
 }
 
@@ -105,7 +105,7 @@ export function editLeaves(teacher_leave: ITeacherLeave): IEditLeavesActionType 
     return { type: EDIT_LEAVES, teacher_leave: teacher_leave };
 }
 
-export function removeLeaves(id: string): IRemoveLeavesActionType {
+export function removeLeaves(id: any): IRemoveLeavesActionType {
     return { type: REMOVE_LEAVES, id: id };
 }
 
@@ -113,16 +113,16 @@ interface IInitialLeavesActionType {type: string, teacher_leave: ITeacherLeave};
 interface IRemoveLeavesAllActionType { type: string };
 interface IAddLeavesActionType { type: string, teacher_leave: ITeacherLeave };
 interface IEditLeavesActionType { type: string, teacher_leave: ITeacherLeave };
-interface IRemoveLeavesActionType { type: string, id: string };
+interface IRemoveLeavesActionType { type: string, id: any };
 
 interface IInitialAcceptTeacherLeaveActionType {type: string, teacher_leave: ITeacherLeave};
 interface IRemoveAcceptTeacherLeaveAllActionType { type: string };
 interface IAddAcceptTeacherLeaveActionType { type: string, teacher_leave: ITeacherLeave };
 interface IEditAcceptTeacherLeaveActionType { type: string, teacher_leave: ITeacherLeave };
-interface IRemoveAcceptTeacherLeaveActionType { type: string, id: string };
+interface IRemoveAcceptTeacherLeaveActionType { type: string, id: any };
 
 interface IInitialRemoveTeacherLeaveActionType {type: string, teacher_leave: ITeacherLeave};
 interface IRemoveRemoveTeacherLeaveAllActionType { type: string };
 interface IAddRemoveTeacherLeaveActionType { type: string, teacher_leave: ITeacherLeave };
 interface IEditRemoveTeacherLeaveActionType { type: string, teacher_leave: ITeacherLeave };
-interface IRemoveRemoveTeacherLeaveActionType { type: string, id: string };
+interface IRemoveRemoveTeacherLeaveActionType { type: string, id: any };

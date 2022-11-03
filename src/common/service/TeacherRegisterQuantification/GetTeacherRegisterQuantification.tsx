@@ -1,11 +1,11 @@
 import { fetchDataSuccess, fetchDataError, removeTeacherRegisterQuatificationApprovedAll, initialTeacherRegisterQuatificationApproved, addTeacherRegisterQuatificationApproved, removeTeacherRegisterQuatificationNotApprovedNowAll, removeTeacherRegisterQuatificationNotApprovedAll, initialTeacherRegisterQuatificationNotApproved, addTeacherRegisterQuatificationNotApproved, initialTeacherRegisterQuatificationNotApprovedNow, addTeacherRegisterQuatificationNotApprovedNow } from "../../../store/actions/teacher_register_quantification.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherRegisterQuantification {
-    id: string;
-    teacher_id: string;
+    id: any;
+    teacher_id: any;
     teacher_name: string;
-    reviewer_id: string;
-    course_id: string;
+    reviewer_id: any;
+    course_id: any;
     course_name: string;
     art_age_name: string;
     art_type_name: string;

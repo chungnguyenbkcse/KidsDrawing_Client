@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError, removeArtAge } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function deleteArtAge(id: string, idx: any) {
+export function deleteArtAge(id: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());

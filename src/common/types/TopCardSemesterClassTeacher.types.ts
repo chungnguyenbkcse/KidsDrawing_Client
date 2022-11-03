@@ -1,5 +1,5 @@
 export interface ICardSemesterClassTeacherProperties {
-    id: string;
+    id: any;
     url_image: string;
     schedule: string;
     course_name: string;
@@ -8,7 +8,7 @@ export interface ICardSemesterClassTeacherProperties {
     art_type_name: string;
     price: number;
     status: string;
-    semester_id: string;
+    semester_id: any;
     description: string;
     art_level_name: string;
     art_age_name: string;
@@ -16,6 +16,6 @@ export interface ICardSemesterClassTeacherProperties {
     max_participant: number;
     num_of_section: number;
     icon: string;
-    course_id: string;
+    course_id: any;
     class: string;
 }

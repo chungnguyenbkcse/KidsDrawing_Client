@@ -48,7 +48,7 @@ export function editSemesterClass(semester_class: ISemesterClass): IEditSemester
     return { type: EDIT_SEMESTER_CLASS, semester_class: semester_class };
 }
 
-export function removeSemesterClass(id: string): IRemoveSemesterClassActionType {
+export function removeSemesterClass(id: any): IRemoveSemesterClassActionType {
     return { type: REMOVE_SEMESTER_CLASS, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateSemesterClass(value: SemesterClassModificati
 
 interface IAddSemesterClassActionType { type: string, semester_class: ISemesterClass };
 interface IEditSemesterClassActionType { type: string, semester_class: ISemesterClass };
-interface IRemoveSemesterClassActionType { type: string, id: string };
+interface IRemoveSemesterClassActionType { type: string, id: any };
 interface IChangeSelectedSemesterClassActionType { type: string, semester_class: ISemesterClass };
 interface IClearSelectedSemesterClassActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  SemesterClassModificationStatus};

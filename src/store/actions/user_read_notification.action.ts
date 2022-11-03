@@ -62,7 +62,7 @@ export function editUserReadedNotification(user_read_notification: IUserReadNoti
     return { type: EDIT_USER_READED_NOTIFICATION, user_read_notification: user_read_notification };
 }
 
-export function removeUserReadedNotification(id: string): IRemoveUserReadedNotificationActionType {
+export function removeUserReadedNotification(id: any): IRemoveUserReadedNotificationActionType {
     return { type: REMOVE_USER_READED_NOTIFICATION, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editUserNotReadedNotification(user_read_notification: IUserReadN
     return { type: EDIT_USER_NOT_READED_NOTIFICATION, user_read_notification: user_read_notification };
 }
 
-export function removeUserNotReadedNotification(id: string): IRemoveUserNotReadedNotificationActionType {
+export function removeUserNotReadedNotification(id: any): IRemoveUserNotReadedNotificationActionType {
     return { type: REMOVE_USER_NOT_READED_NOTIFICATION, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: UserReadNotificationModificationStat
 // register_successfull_user_read_notifications
 interface IAddUserReadedNotificationActionType { type: string, user_read_notification: IUserReadNotification };
 interface IEditUserReadedNotificationActionType { type: string, user_read_notification: IUserReadNotification };
-interface IRemoveUserReadedNotificationActionType { type: string, id: string };
+interface IRemoveUserReadedNotificationActionType { type: string, id: any };
 interface IChangeSelectedUserReadedNotificationActionType { type: string, user_read_notification: IUserReadNotification };
 interface IClearSelectedUserReadedNotificationActionType { type: string };
 interface IRemoveUserReadedNotificationAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialUserReadedNotificationActionType {type: string, user_read_noti
 // not_register_user_read_notifications
 interface IAddUserNotReadedNotificationActionType { type: string, user_read_notification: IUserReadNotification };
 interface IEditUserNotReadedNotificationActionType { type: string, user_read_notification: IUserReadNotification };
-interface IRemoveUserNotReadedNotificationActionType { type: string, id: string };
+interface IRemoveUserNotReadedNotificationActionType { type: string, id: any };
 interface IChangeSelectedUserNotReadedNotificationActionType { type: string, user_read_notification: IUserReadNotification };
 interface IClearSelectedUserNotReadedNotificationActionType { type: string };
 interface IRemoveUserNotReadedNotificationAllActionType { type: string }

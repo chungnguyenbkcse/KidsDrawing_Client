@@ -55,7 +55,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const courses: ICourseState | null = useSelector((state: IStateType) => state.courses);
   let semester_classe: ISemesterClass | null = semester_classes.selectedSemesterClass;
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
-  let semester_class_id: string = "";
+  let semester_class_id: any = "";
   if (!semester_classe || isCreate) {
     semester_classe = { id: "", max_participant: 0, semester_name: "", course_id: "", course_name: "", semester_id: "", name: "", registration_time: "" };
   }

@@ -24,7 +24,7 @@ const ClassTeacher: React.FC = () => {
     const numberClassDoingCount: number = class_teachers.class_doing.length;
     const numberClassDoneCount: number = class_teachers.class_done.length;
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }

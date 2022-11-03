@@ -1,6 +1,6 @@
 export type NumberInputProps = {
     onChange: Function,
-    id: string,
+    id: any,
     label: string,
     value: number,
     max?: number,

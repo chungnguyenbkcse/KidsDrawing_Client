@@ -1,7 +1,7 @@
 export type SelectProps = {
     required?: boolean,
     onChange: Function,
-    id: string,
+    id: any,
     label: string,
     value: any,
     inputClass?: string,

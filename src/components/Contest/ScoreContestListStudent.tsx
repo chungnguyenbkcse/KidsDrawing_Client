@@ -8,7 +8,7 @@ function ScoreContestListStudent(): JSX.Element {
 
     const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     var id_x = localStorage.getItem('id');
-    let id: string = "";
+    let id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
@@ -22,7 +22,7 @@ function ScoreContestListStudent(): JSX.Element {
     const history = useHistory();
 
 
-    const routeChange = (child_id: string) => {
+    const routeChange = (child_id: any) => {
         localStorage.removeItem("child_id");
         localStorage.setItem("child_id", child_id.toString())
         let path = '/contest/detail';

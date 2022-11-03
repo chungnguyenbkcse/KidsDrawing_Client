@@ -1,8 +1,8 @@
 export interface ISchedule {
-    id: string;
-    lesson_time_id: string;
+    id: any;
+    lesson_time_id: any;
     lesson_time: string;
-    semester_class_id: string;
+    semester_class_id: any;
     date_of_week: number;
 }
 

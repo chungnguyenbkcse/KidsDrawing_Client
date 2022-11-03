@@ -15,11 +15,11 @@ export function editProduct(product: IProduct): IEditProductActionType {
     return { type: EDIT_PRODUCT, product: product };
 }
 
-export function removeProduct(id: string): IRemoveProductActionType {
+export function removeProduct(id: any): IRemoveProductActionType {
     return { type: REMOVE_PRODUCT, id: id };
 }
 
-export function changeProductAmount(id: string, amount: number): IChangeProductAmountType {
+export function changeProductAmount(id: any, amount: number): IChangeProductAmountType {
     return { type: CHANGE_PRODUCT_AMOUNT, id: id, amount: amount };
 }
 
@@ -37,8 +37,8 @@ export function setModificationState(value: ProductModificationStatus): ISetModi
 
 interface IAddProductActionType { type: string, product: IProduct };
 interface IEditProductActionType { type: string, product: IProduct };
-interface IRemoveProductActionType { type: string, id: string };
+interface IRemoveProductActionType { type: string, id: any };
 interface IChangeSelectedProductActionType { type: string, product: IProduct };
 interface IClearSelectedProductActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ProductModificationStatus};
-interface IChangeProductAmountType {type: string, id: string, amount: number};
+interface IChangeProductAmountType {type: string, id: any, amount: number};

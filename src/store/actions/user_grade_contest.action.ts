@@ -48,7 +48,7 @@ export function editUserGradeContest(user_grade_contest: IUserGradeContest): IEd
     return { type: EDIT_TUTORIAL_TEMPLATE, user_grade_contest: user_grade_contest };
 }
 
-export function removeUserGradeContest(id: string): IRemoveUserGradeContestActionType {
+export function removeUserGradeContest(id: any): IRemoveUserGradeContestActionType {
     return { type: REMOVE_TUTORIAL_TEMPLATE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateUserGradeContest(value: UserGradeContestModi
 
 interface IAddUserGradeContestActionType { type: string, user_grade_contest: IUserGradeContest };
 interface IEditUserGradeContestActionType { type: string, user_grade_contest: IUserGradeContest };
-interface IRemoveUserGradeContestActionType { type: string, id: string };
+interface IRemoveUserGradeContestActionType { type: string, id: any };
 interface IChangeSelectedUserGradeContestActionType { type: string, user_grade_contest: IUserGradeContest };
 interface IClearSelectedUserGradeContestActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  UserGradeContestModificationStatus};

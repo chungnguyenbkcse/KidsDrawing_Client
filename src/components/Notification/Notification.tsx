@@ -9,8 +9,8 @@ import { INotifyDbState, IStateType, IUserReadNotificationState } from "../../st
 import './Notification.css'
 
 type Options = {
-    notification_id: string;
-    user_id: string;
+    notification_id: any;
+    user_id: any;
     notification_name: string;
     notification_desciption: string;
     notification_time: string;
@@ -26,7 +26,7 @@ const Notification: React.FC = () => {
     const user_read_notifications: IUserReadNotificationState = useSelector((state: IStateType) => state.user_read_notifications);
 
     var id_x = localStorage.getItem('id');
-    let user_id: string = "";
+    let user_id: any = "";
     if (id_x !== null) {
         user_id = id_x
     }

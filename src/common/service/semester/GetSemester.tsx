@@ -1,11 +1,11 @@
 import { fetchDataSuccess, fetchDataError, removeSemesterAll, initialSemester, addSemester } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface semester {
-    id: string;
+    id: any;
     number: number;
     year: number;
     name: string;
-    creator_id: string;
+    creator_id: any;
     description: string;
     start_time: string;
     end_time: string;

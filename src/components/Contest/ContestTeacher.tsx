@@ -23,7 +23,7 @@ const ContestTeacher: React.FC = () => {
     const numberContestEndCount: number = contest_teachers.contest_end.length;
     const numberContestNotOpenNowCount: number = contest_teachers.contest_not_open_now.length;
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }

@@ -48,7 +48,7 @@ export function editAttendance(attendance: IAttendance): IEditAttendanceActionTy
     return { type: EDIT_ATTENDANCE, attendance: attendance };
 }
 
-export function removeAttendance(id: string): IRemoveAttendanceActionType {
+export function removeAttendance(id: any): IRemoveAttendanceActionType {
     return { type: REMOVE_ATTENDANCE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: AttendanceModificationStatus): ISetM
 
 interface IAddAttendanceActionType { type: string, attendance: IAttendance };
 interface IEditAttendanceActionType { type: string, attendance: IAttendance };
-interface IRemoveAttendanceActionType { type: string, id: string };
+interface IRemoveAttendanceActionType { type: string, id: any };
 interface IChangeSelectedAttendanceActionType { type: string, attendance: IAttendance };
 interface IClearSelectedAttendanceActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  AttendanceModificationStatus};

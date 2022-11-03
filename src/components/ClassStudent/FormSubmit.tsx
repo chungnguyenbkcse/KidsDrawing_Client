@@ -26,13 +26,13 @@ function FormSubmit(): JSX.Element {
     }
 
     var id_y = localStorage.getItem("id");
-    let id: string = "";
+    let id: any = "";
     if (id_y !== null) {
         id = id_y;
     }
 
     var id_z = localStorage.getItem("exercise_id");
-    let exercise_id: string = "";
+    let exercise_id: any = "";
     if (id_z !== null) {
         exercise_id = id_z;
     }

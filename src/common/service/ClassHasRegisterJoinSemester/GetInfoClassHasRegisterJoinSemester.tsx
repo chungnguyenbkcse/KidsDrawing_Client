@@ -1,8 +1,8 @@
 import { fetchDataError, removeClassHasRegisterJoinSemesterAll, addClassHasRegisterJoinSemester } from "../../../store/actions/class_has_register_join_semester.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ClassHasRegisterJoinSemester {
-    classes_id: string;
-    user_register_join_semester_id: string;
+    classes_id: any;
+    user_register_join_semester_id: any;
     review_star: number;
     student_feedback: string;
     teacher_feedback: string;

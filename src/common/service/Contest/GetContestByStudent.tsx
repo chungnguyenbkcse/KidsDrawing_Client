@@ -5,7 +5,7 @@ import { fetchDataSuccess, fetchDataError,
     addContestTeacherEnd, addContestTeacherNotOpenNow, addContestTeacherOpening } from "../../../store/actions/contest_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ContestTeacher {
-    id: string;
+    id: any;
     name: string;
     description: string;
     max_participant: number;

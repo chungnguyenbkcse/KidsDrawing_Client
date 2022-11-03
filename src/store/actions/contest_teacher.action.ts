@@ -82,7 +82,7 @@ export function editContestTeacherOpening(contest: IContestTeacher): IEditContes
     return { type: EDIT_CONTEST_TEACHER_OPENING, contest: contest };
 }
 
-export function removeContestTeacherOpening(id: string): IRemoveContestTeacherOpeningActionType {
+export function removeContestTeacherOpening(id: any): IRemoveContestTeacherOpeningActionType {
     return { type: REMOVE_CONTEST_TEACHER_OPENING, id: id };
 }
 
@@ -111,7 +111,7 @@ export function editContestTeacherNotOpenNowNotTeacher(contest: IContestTeacher)
     return { type: EDIT_CONTEST_TEACHER_NOT_OPEN_NOW_NOT_TEACHER, contest: contest };
 }
 
-export function removeContestTeacherNotOpenNowNotTeacher(id: string): IRemoveContestTeacherNotOpenNowNotTeacherActionType {
+export function removeContestTeacherNotOpenNowNotTeacher(id: any): IRemoveContestTeacherNotOpenNowNotTeacherActionType {
     return { type: REMOVE_CONTEST_TEACHER_NOT_OPEN_NOW_NOT_TEACHER, id: id };
 }
 
@@ -140,7 +140,7 @@ export function editContestTeacherEnd(contest: IContestTeacher): IEditContestTea
     return { type: EDIT_CONTEST_TEACHER_END, contest: contest };
 }
 
-export function removeContestTeacherEnd(id: string): IRemoveContestTeacherEndActionType {
+export function removeContestTeacherEnd(id: any): IRemoveContestTeacherEndActionType {
     return { type: REMOVE_CONTEST_TEACHER_END, id: id };
 }
 
@@ -169,7 +169,7 @@ export function editContestTeacherNotOpenNow(contest: IContestTeacher): IEditCon
     return { type: EDIT_CONTEST_TEACHER_NOT_OPEN_NOW, contest: contest };
 }
 
-export function removeContestTeacherNotOpenNow(id: string): IRemoveContestTeacherNotOpenNowActionType {
+export function removeContestTeacherNotOpenNow(id: any): IRemoveContestTeacherNotOpenNowActionType {
     return { type: REMOVE_CONTEST_TEACHER_NOT_OPEN_NOW, id: id };
 }
 
@@ -189,7 +189,7 @@ export function setModificationState(value: ContestTeacherModificationStatus): I
 // register_successfull_contests
 interface IAddContestTeacherOpeningActionType { type: string, contest: IContestTeacher };
 interface IEditContestTeacherOpeningActionType { type: string, contest: IContestTeacher };
-interface IRemoveContestTeacherOpeningActionType { type: string, id: string };
+interface IRemoveContestTeacherOpeningActionType { type: string, id: any };
 interface IChangeSelectedContestTeacherOpeningActionType { type: string, contest: IContestTeacher };
 interface IClearSelectedContestTeacherOpeningActionType { type: string };
 interface IRemoveContestTeacherOpeningAllActionType { type: string }
@@ -198,7 +198,7 @@ interface IInitialContestTeacherOpeningActionType {type: string, contest: IConte
 // not_register_contests
 interface IAddContestTeacherNotOpenNowNotTeacherActionType { type: string, contest: IContestTeacher };
 interface IEditContestTeacherNotOpenNowNotTeacherActionType { type: string, contest: IContestTeacher };
-interface IRemoveContestTeacherNotOpenNowNotTeacherActionType { type: string, id: string };
+interface IRemoveContestTeacherNotOpenNowNotTeacherActionType { type: string, id: any };
 interface IChangeSelectedContestTeacherNotOpenNowNotTeacherActionType { type: string, contest: IContestTeacher };
 interface IClearSelectedContestTeacherNotOpenNowNotTeacherActionType { type: string };
 interface IRemoveContestTeacherNotOpenNowNotTeacherAllActionType { type: string }
@@ -207,7 +207,7 @@ interface IInitialContestTeacherNotOpenNowNotTeacherActionType {type: string, co
 // not_register_contests
 interface IAddContestTeacherEndActionType { type: string, contest: IContestTeacher };
 interface IEditContestTeacherEndActionType { type: string, contest: IContestTeacher };
-interface IRemoveContestTeacherEndActionType { type: string, id: string };
+interface IRemoveContestTeacherEndActionType { type: string, id: any };
 interface IChangeSelectedContestTeacherEndActionType { type: string, contest: IContestTeacher };
 interface IClearSelectedContestTeacherEndActionType { type: string };
 interface IRemoveContestTeacherEndAllActionType { type: string }
@@ -216,7 +216,7 @@ interface IInitialContestTeacherEndActionType {type: string, contest: IContestTe
 // not_register_contests
 interface IAddContestTeacherNotOpenNowActionType { type: string, contest: IContestTeacher };
 interface IEditContestTeacherNotOpenNowActionType { type: string, contest: IContestTeacher };
-interface IRemoveContestTeacherNotOpenNowActionType { type: string, id: string };
+interface IRemoveContestTeacherNotOpenNowActionType { type: string, id: any };
 interface IChangeSelectedContestTeacherNotOpenNowActionType { type: string, contest: IContestTeacher };
 interface IClearSelectedContestTeacherNotOpenNowActionType { type: string };
 interface IRemoveContestTeacherNotOpenNowAllActionType { type: string }

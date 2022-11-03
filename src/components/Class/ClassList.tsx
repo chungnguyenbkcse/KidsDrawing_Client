@@ -22,7 +22,7 @@ function ClassList(props: myclassListProps): JSX.Element  {
 
   const [popup, setPopup] = useState(false);
   
-  const routeChange = (class_id: string) =>{ 
+  const routeChange = (class_id: any) =>{ 
     let path = '/class/detail'; 
     history.push({
       pathname: path,
@@ -34,7 +34,7 @@ function ClassList(props: myclassListProps): JSX.Element  {
     setPopup(true);
 }
 
-const routeViewSchedule = (class_id: string, class_name: string) =>{ 
+const routeViewSchedule = (class_id: any, class_name: string) =>{ 
   localStorage.removeItem('class_id')
   localStorage.setItem('class_id', class_id.toString())
   localStorage.removeItem('class_name')

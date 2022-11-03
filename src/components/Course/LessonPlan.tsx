@@ -46,7 +46,7 @@ const LessonPlan: React.FC = () => {
   var course_id = localStorage.getItem('course_id');
 
   var id_t = localStorage.getItem('tutorial_template_id');
-  let tutorial_template_id: string = "";
+  let tutorial_template_id: any = "";
   if (id_t !== null) {
       tutorial_template_id = id_t
   }

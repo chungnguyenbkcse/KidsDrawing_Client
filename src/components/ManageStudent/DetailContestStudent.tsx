@@ -25,7 +25,7 @@ const DetailContestStudent: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
     var id_k = localStorage.getItem('child_id');
-    let child_id: string = "";
+    let child_id: any = "";
     if (id_k !== null) {
         child_id = id_k;
     }
@@ -85,7 +85,7 @@ const DetailContestStudent: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }

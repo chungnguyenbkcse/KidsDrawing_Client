@@ -8,7 +8,7 @@ export function putStudentLeaveStatus(id: any, data: any, idx: any) {
         dispatch(fetchDataRequest());
         fetch(
                 `${process.env.REACT_APP_API_URL}/student-leave/admin/${id}`, {
-                    method: "POST",
+                    method: "PUT",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 export interface ITutorialTemplate {
-    id: string;
-    section_template_id: string;
+    id: any;
+    section_template_id: any;
     name: string;
     create_time: string;
     update_time: string;

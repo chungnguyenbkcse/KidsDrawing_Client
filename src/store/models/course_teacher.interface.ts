@@ -1,9 +1,9 @@
 export interface ICourseTeacher {
-    id: string;
+    id: any;
     name: string;
     course_name: string;
-    course_id: string;
-    semester_class_id: string;
+    course_id: any;
+    semester_class_id: any;
     description: string;
     max_participant: number;
     num_of_section: number;

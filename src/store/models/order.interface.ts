@@ -1,7 +1,7 @@
 import { IProduct } from "./product.interface";
 
 export interface IOrder {
-    id: string;
+    id: any;
     name: string;
     product: IProduct;
     amount: number;

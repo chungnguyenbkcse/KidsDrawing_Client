@@ -1,12 +1,12 @@
 import { fetchDataSuccess, fetchDataError, removeTutorialAll, addTutorial } from "../../../store/actions/tutorial.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Tutorial {
-    id: string;
-    section_id: string;
-    creator_id: string;
+    id: any;
+    section_id: any;
+    creator_id: any;
     creator_name: string;
     class_name: string;
-    class_id: string;
+    class_id: any;
     section_number: number;
     name: string;
     create_time: string;

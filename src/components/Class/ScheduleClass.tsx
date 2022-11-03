@@ -43,7 +43,7 @@ const ScheduleClass: React.FC = () => {
     })
 
     var id_x = localStorage.getItem('class_id')
-    let class_id: string = "";
+    let class_id: any = "";
     if (id_x !== null){
         class_id = id_x
     }

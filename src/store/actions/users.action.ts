@@ -87,7 +87,7 @@ export function editAdmin(user: IUser): IEditAdminActionType {
     return { type: EDIT_ADMIN, user: user };
 }
 
-export function removeAdmin(id: string): IRemoveAdminActionType {
+export function removeAdmin(id: any): IRemoveAdminActionType {
     return { type: REMOVE_ADMIN, id: id };
 }
 
@@ -99,7 +99,7 @@ export function editTeacher(user: IUser): IEditTeacherActionType {
     return { type: EDIT_TEACHER, user: user };
 }
 
-export function removeTeacher(id: string): IRemoveTeacherActionType {
+export function removeTeacher(id: any): IRemoveTeacherActionType {
     return { type: REMOVE_TEACHER, id: id };
 }
 
@@ -111,7 +111,7 @@ export function editStudent(user: IUser): IEditStudentActionType {
     return { type: EDIT_STUDENT, user: user };
 }
 
-export function removeStudent(id: string): IRemoveStudentActionType {
+export function removeStudent(id: any): IRemoveStudentActionType {
     return { type: REMOVE_STUDENT, id: id };
 }
 
@@ -123,7 +123,7 @@ export function editParent(user: IUser): IEditParentActionType {
     return { type: EDIT_PARENT, user: user };
 }
 
-export function removeParent(id: string): IRemoveParentActionType {
+export function removeParent(id: any): IRemoveParentActionType {
     return { type: REMOVE_PARENT, id: id };
 }
 
@@ -142,14 +142,14 @@ export function setModificationState(value: UserModificationStatus): ISetModific
 // Admin
 interface IAddAdminActionType { type: string, user: IUser };
 interface IEditAdminActionType { type: string, user: IUser };
-interface IRemoveAdminActionType { type: string, id: string };
+interface IRemoveAdminActionType { type: string, id: any };
 
 // Teacher
 interface IInitialUserTeacherActionType {type: string, user: IUser};
 interface IRemoveUserTeacherAllActionType { type: string };
 interface IAddTeacherActionType { type: string, user: IUser };
 interface IEditTeacherActionType { type: string, user: IUser };
-interface IRemoveTeacherActionType { type: string, id: string };
+interface IRemoveTeacherActionType { type: string, id: any };
 interface IChangeSelectedTeacherActionType { type: string, user: IUser };
 interface IClearSelectedTeacherActionType { type: string };
 
@@ -158,14 +158,14 @@ interface IInitialUserStudentActionType {type: string, user: IUser};
 interface IRemoveUserStudentAllActionType { type: string };
 interface IAddStudentActionType { type: string, user: IUser };
 interface IEditStudentActionType { type: string, user: IUser };
-interface IRemoveStudentActionType { type: string, id: string };
+interface IRemoveStudentActionType { type: string, id: any };
 
 //Parent
 interface IInitialUserParentActionType {type: string, user: IUser};
 interface IRemoveUserParentAllActionType { type: string };
 interface IAddParentActionType { type: string, user: IUser };
 interface IEditParentActionType { type: string, user: IUser };
-interface IRemoveParentActionType { type: string, id: string };
+interface IRemoveParentActionType { type: string, id: any };
 
 
 interface ISetModificationStateActionType { type: string, value:  UserModificationStatus};

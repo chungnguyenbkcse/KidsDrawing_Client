@@ -1,5 +1,5 @@
 export interface IArtLevel {
-    id: string;
+    id: any;
     name: string;
     description: string;
 }

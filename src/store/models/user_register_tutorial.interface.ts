@@ -1,11 +1,11 @@
 export interface IUserRegisterTutorial {
-    id: string;
-    section_id: string;
-    creator_id: string;
+    id: any;
+    section_id: any;
+    creator_id: any;
     creator_name: string;
     section_name: string;
     section_number: number;
-    class_id: string;
+    class_id: any;
     class_name: string;
     name: string;
     status: string;

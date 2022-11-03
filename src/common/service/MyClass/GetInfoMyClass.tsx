@@ -17,7 +17,7 @@ interface MyClass {
 }
 
 interface user {
-    id: string,
+    id: any,
     username: string,
     email: string,
     password: string,

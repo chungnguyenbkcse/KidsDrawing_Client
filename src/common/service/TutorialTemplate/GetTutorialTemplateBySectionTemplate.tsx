@@ -2,8 +2,8 @@ import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTempl
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTutorialTemplatePageByTutorialTemplateId } from "../TutorialTemplatePage/GetTutorialTemplatePageByTutorialTemplateId";
 interface TutorialTemplate {
-    id: string;
-    section_template_id: string;
+    id: any;
+    section_template_id: any;
     name: string;
     description: string;
     create_time: string;

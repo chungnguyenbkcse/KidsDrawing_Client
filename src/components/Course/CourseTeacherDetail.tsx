@@ -25,7 +25,7 @@ const CourseTeacherDetail: React.FC = () => {
     const history = useHistory();
 
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
@@ -79,7 +79,7 @@ const CourseTeacherDetail: React.FC = () => {
     }
 
     var id_n = localStorage.getItem('semester_class_id');
-    var semester_class_id: string = '';
+    var semester_class_id: any = '';
     if (id_n !== null) {
         semester_class_id = id_n;
     }

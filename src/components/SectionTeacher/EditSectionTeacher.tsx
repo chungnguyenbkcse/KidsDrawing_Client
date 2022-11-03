@@ -30,8 +30,8 @@ type PageContent = {
 }
 
 type TutorialPage = {
-    id: string;
-    tutorial_id: string;
+    id: any;
+    tutorial_id: any;
     name: string;
     number: number;
     description: string;
@@ -48,7 +48,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_id');
-    let section_id: string = "";
+    let section_id: any = "";
     if (id_x !== null) {
         section_id = id_x
     }
@@ -69,7 +69,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
 
     var id_t = localStorage.getItem('tutorial_id');
-    let tutorial_id: string = "";
+    let tutorial_id: any = "";
     if (id_t !== null) {
         tutorial_id = id_t
     }
@@ -81,7 +81,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     }
 
     var id_k = localStorage.getItem('id');
-    let id: string = "";
+    let id: any = "";
     if (id_k !== null) {
         id = id_k
     }

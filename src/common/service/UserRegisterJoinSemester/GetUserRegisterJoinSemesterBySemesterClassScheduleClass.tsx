@@ -1,19 +1,19 @@
 import { fetchDataError } from "../../../store/actions/user_register_join_semester.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_register_semester {
-    id: string;
-    student_id: string;
-    payer_id: string;
+    id: any;
+    student_id: any;
+    payer_id: any;
     price: number;
     course_name: string;
     payer_name: string;
     student_name: string;
     link_url: string;
     status: string;
-    semester_class_id: string;
+    semester_class_id: any;
     time: string;
 }
-export function getUserRegisterJoinSemesterBySemesterClassScheduleClass(id: string, data_1: any) {
+export function getUserRegisterJoinSemesterBySemesterClassScheduleClass(id: any, data_1: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  (dispatch: any) => {
         fetch(

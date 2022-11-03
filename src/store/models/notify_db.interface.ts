@@ -1,5 +1,5 @@
 export interface INotifyDb {
-    id: string;
+    id: any;
     name: string;
     description: string;
     time: string;

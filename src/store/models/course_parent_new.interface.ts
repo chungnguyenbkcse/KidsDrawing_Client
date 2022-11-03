@@ -1,5 +1,5 @@
 export interface ICourseParentNew {
-    id: string;
+    id: any;
     name: string;
     description: string;
     max_participant: number;
@@ -7,16 +7,16 @@ export interface ICourseParentNew {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: string;
-    art_type_id: string;
-    art_level_id: string;
-    art_age_id: string;
+    creator_id: any;
+    art_type_id: any;
+    art_level_id: any;
+    art_age_id: any;
     art_type_name: string;
     art_level_name: string;
     art_age_name: string;
     total: number;
     student_registered_name: string[];
-    student_registered_id: string[];
+    student_registered_id: any[];
     create_time: string;
     update_time: string;
 }

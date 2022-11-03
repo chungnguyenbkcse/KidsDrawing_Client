@@ -1,14 +1,14 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeStudentLeaveApprovedAll, removeStudentLeaveNotApprovedAll, removeStudentLeaveNotApprovedNowAll, addStudentLeaveApproved, addStudentLeaveNotApproved, addStudentLeaveNotApprovedNow } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface StudentLeave {
-    id: string;
-    section_id: string;
+    id: any;
+    section_id: any;
     section_name: string;
-    class_id: string;
+    class_id: any;
     class_name: string;
-    student_id: string;
+    student_id: any;
     student_name: string;
-    reviewer_id: string;
+    reviewer_id: any;
     section_number: number;
     description: string;
     status: string;
@@ -49,7 +49,7 @@ export function getStudentLeave() {
                 dispatch(removeStudentLeaveApprovedAll())
                 dispatch(removeStudentLeaveNotApprovedAll())
                 dispatch(removeStudentLeaveNotApprovedNowAll())
-                //console.log(data.body.student_leaves)
+                console.log(data.body.student_leaves)
                 data.body.student_leave.map((ele: any, index: any) => {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;

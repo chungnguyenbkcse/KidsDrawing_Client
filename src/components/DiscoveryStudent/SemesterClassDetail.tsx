@@ -21,7 +21,7 @@ const SemesterClassDetailStudent: React.FC = () => {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
@@ -33,7 +33,7 @@ const SemesterClassDetailStudent: React.FC = () => {
     }
 
     var id_b = localStorage.getItem('course_id');
-    var course_id: string = '';
+    var course_id: any = '';
     if (id_b !== null) {
         course_id = id_b;
     }
@@ -87,7 +87,7 @@ const SemesterClassDetailStudent: React.FC = () => {
     }
 
     var id_n = localStorage.getItem('semester_class_id');
-    var semester_class_id: string = '';
+    var semester_class_id: any = '';
     if (id_n !== null) {
         semester_class_id = id_n;
     }

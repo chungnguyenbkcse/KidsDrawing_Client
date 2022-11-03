@@ -37,7 +37,7 @@ const GradeContestTeacher: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('id');
-    let id: string = "";
+    let id: any = "";
     if (id_x !== null) {
         id = id_x
     }

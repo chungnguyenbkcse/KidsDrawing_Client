@@ -30,7 +30,7 @@ const StudentHome: React.FC = () => {
     let total_contest_student: number = 0;
     let total_course_student: number = 0;
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }

@@ -33,27 +33,32 @@ const SectionStudent: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
 
 
     var id_z = localStorage.getItem('class_id');
-    var class_id: string= "";
+    var class_id: any= "";
     if (id_z !== null) {
         class_id = id_z;
     }
 
+    console.log(class_id);
+    console.log(class_students.classes_doing)
+
     let link_jisti = "";
     if (class_students.classes_doing.length > 0) {
         class_students.classes_doing.map((ele, idx) => {
-            if (ele.id === class_id) {
+            if (ele.id == class_id) {
                 link_jisti = ele.link_url;
             }
             return ele
         })
     }
+
+    console.log(link_jisti)
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -109,7 +114,7 @@ const SectionStudent: React.FC = () => {
     }
 
 
-    const routeChange3 = (description: string, name: string, level_name: string, id: string) => {
+    const routeChange3 = (description: string, name: string, level_name: string, id: any) => {
         let path = '/exercise/detail';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
@@ -138,7 +143,7 @@ const SectionStudent: React.FC = () => {
         });
     }
 
-    const routeChange5 = (description: string, name: string, level_name: string, id: string) => {
+    const routeChange5 = (description: string, name: string, level_name: string, id: any) => {
         let path = '/exercise/submit';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
@@ -269,7 +274,7 @@ const SectionStudent: React.FC = () => {
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2 row-not-submit" onClick={() => { routeChange5(ele.description, ele.name, ele.level_name, ele.id) }}>
                                                                                 <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                                 </div>
                                                                                 <div className="col-xl-8 col-md-8 mb-4">
                                                                                     <h3 className=" mb-2" id="level-student">{ele.name}</h3>
@@ -287,7 +292,7 @@ const SectionStudent: React.FC = () => {
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
                                                                                 <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                                 </div>
                                                                                 <div className="col-xl-8 col-md-8 mb-4">
                                                                                     <h3 className=" mb-2" id="level-student">{ele.name}</h3>
@@ -305,7 +310,7 @@ const SectionStudent: React.FC = () => {
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
                                                                                 <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                                 </div>
                                                                                 <div className="col-xl-8 col-md-8 mb-4">
                                                                                     <h3 className=" mb-2" id="level-student">{ele.name}</h3>

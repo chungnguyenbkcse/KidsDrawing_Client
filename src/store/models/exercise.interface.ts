@@ -1,10 +1,10 @@
 export interface IExercise {
-    id: string;
+    id: any;
     name: string;
     description: string;
     deadline: string;
-    section_id: string;
-    level_id: string;
+    section_id: any;
+    level_id: any;
     level_name: string;
     section_name: string;
     create_time: string;

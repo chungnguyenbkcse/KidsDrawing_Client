@@ -1,16 +1,16 @@
 import { fetchDataSuccess, fetchDataError, removeAcceptTeacherLeaveAll, addAcceptTeacherLeave, removeRemoveTeacherLeaveAll, addRemoveTeacherLeave, addLeaves, removeLeavesAll } from "../../../store/actions/teacher_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherLeave {
-    id: string;
-    section_id: string;
+    id: any;
+    section_id: any;
     section_name: string;
-    class_id: string;
+    class_id: any;
     class_name: string;
-    teacher_id: string;
+    teacher_id: any;
     teacher_name: string;
     section_number: number;
-    reviewer_id: string;
-    substitute_teacher_id: string;
+    reviewer_id: any;
+    substitute_teacher_id: any;
     substitute_teacher_name: string;
     description: string;
     status: string;

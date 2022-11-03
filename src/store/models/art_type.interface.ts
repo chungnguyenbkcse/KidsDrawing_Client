@@ -1,5 +1,5 @@
 export interface IArtType {
-    id: string;
+    id: any;
     name: string;
     description: string;
 }

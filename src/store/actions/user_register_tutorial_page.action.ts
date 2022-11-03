@@ -48,7 +48,7 @@ export function editUserRegisterTutorialPage(user_register_tutorial_page: IUserR
     return { type: EDIT_USER_REGISTER_JOIN_SEMESTER, user_register_tutorial_page: user_register_tutorial_page };
 }
 
-export function removeUserRegisterTutorialPage(id: string): IRemoveUserRegisterTutorialPageActionType {
+export function removeUserRegisterTutorialPage(id: any): IRemoveUserRegisterTutorialPageActionType {
     return { type: REMOVE_USER_REGISTER_JOIN_SEMESTER, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateUserRegisterTutorialPage(value: UserRegister
 
 interface IAddUserRegisterTutorialPageActionType { type: string, user_register_tutorial_page: IUserRegisterTutorialPage };
 interface IEditUserRegisterTutorialPageActionType { type: string, user_register_tutorial_page: IUserRegisterTutorialPage };
-interface IRemoveUserRegisterTutorialPageActionType { type: string, id: string };
+interface IRemoveUserRegisterTutorialPageActionType { type: string, id: any };
 interface IChangeSelectedUserRegisterTutorialPageActionType { type: string, user_register_tutorial_page: IUserRegisterTutorialPage };
 interface IClearSelectedUserRegisterTutorialPageActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  UserRegisterTutorialPageModificationStatus};

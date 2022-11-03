@@ -40,14 +40,14 @@ const DetailClassTeacher: React.FC = () => {
     const numberApprovedCount: number = sections.sections.length;
     const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
 
     var id_y = localStorage.getItem('class_id');
 
-    let class_id: string = "";
+    let class_id: any = "";
 
     if (id_y !== null) {
         class_id = id_y;
@@ -315,7 +315,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
                                                                         <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-9 col-md-9">
                                                                             <div className="row">
@@ -389,7 +389,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
                                                                         <div className="col-xl-4 col-md-4 mb-4">
-                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                            <img className="card-img image-section" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-4">
                                                                             <h3 className=" mb-2" id="level-teacher">{ele.exercise_name}</h3>
@@ -425,7 +425,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
                                                                         <div className="col-xl-4 col-md-4 mb-4">
-                                                                            <img className="card-img image-section" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                            <img className="card-img image-section" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-4">
                                                                             <h3 className=" mb-2" id="level-teacher">{ele.section_name}</h3>

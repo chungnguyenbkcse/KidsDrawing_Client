@@ -1,11 +1,11 @@
 export interface IUserRegisterJoinSemester {
-    id: string;
-    student_id: string;
-    semester_class_id: string;
+    id: any;
+    student_id: any;
+    semester_class_id: any;
     student_name: string;
     link_url: string;
     status: string;
-    payer_id: string;
+    payer_id: any;
     payer_name: string;
     course_name: string;
     price: number;

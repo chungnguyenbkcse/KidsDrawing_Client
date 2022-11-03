@@ -38,7 +38,7 @@ const ConestDetailStudent: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('contest_id');
-    let contest_id: string = "";
+    let contest_id: any = "";
     if (id_x !== null) {
         contest_id = id_x;
     }
@@ -52,7 +52,7 @@ const ConestDetailStudent: React.FC = () => {
     }
 
     var id_z = localStorage.getItem('id');
-    let id: string = "";
+    let id: any = "";
     if (id_z !== null) {
         id = id_z;
     }

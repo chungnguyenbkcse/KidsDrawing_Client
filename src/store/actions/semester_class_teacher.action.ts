@@ -48,7 +48,7 @@ export function editSemesterClassTeacher(semester_class_teacher: ISemesterClassT
     return { type: EDIT_SEMESTER_CLASS_TEACHER, semester_class_teacher: semester_class_teacher };
 }
 
-export function removeSemesterClassTeacher(id: string): IRemoveSemesterClassTeacherActionType {
+export function removeSemesterClassTeacher(id: any): IRemoveSemesterClassTeacherActionType {
     return { type: REMOVE_SEMESTER_CLASS_TEACHER, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateSemesterClassTeacher(value: SemesterClassTea
 
 interface IAddSemesterClassTeacherActionType { type: string, semester_class_teacher: ISemesterClassTeacher };
 interface IEditSemesterClassTeacherActionType { type: string, semester_class_teacher: ISemesterClassTeacher };
-interface IRemoveSemesterClassTeacherActionType { type: string, id: string };
+interface IRemoveSemesterClassTeacherActionType { type: string, id: any };
 interface IChangeSelectedSemesterClassTeacherActionType { type: string, semester_class_teacher: ISemesterClassTeacher };
 interface IClearSelectedSemesterClassTeacherActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  SemesterClassTeacherModificationStatus};

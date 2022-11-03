@@ -62,7 +62,7 @@ export function editTurnoverNow(turnover: ITurnover): IEditTurnoverNowActionType
     return { type: EDIT_TURNOVER_NOW, turnover: turnover };
 }
 
-export function removeTurnoverNow(id: string): IRemoveTurnoverNowActionType {
+export function removeTurnoverNow(id: any): IRemoveTurnoverNowActionType {
     return { type: REMOVE_TURNOVER_NOW, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editTurnoverLast(turnover: ITurnover): IEditTurnoverLastActionTy
     return { type: EDIT_TURNOVER_LAST, turnover: turnover };
 }
 
-export function removeTurnoverLast(id: string): IRemoveTurnoverLastActionType {
+export function removeTurnoverLast(id: any): IRemoveTurnoverLastActionType {
     return { type: REMOVE_TURNOVER_LAST, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: TurnoverModificationStatus): ISetMod
 // register_successfull_turnovers
 interface IAddTurnoverNowActionType { type: string, turnover: ITurnover };
 interface IEditTurnoverNowActionType { type: string, turnover: ITurnover };
-interface IRemoveTurnoverNowActionType { type: string, id: string };
+interface IRemoveTurnoverNowActionType { type: string, id: any };
 interface IChangeSelectedTurnoverNowActionType { type: string, turnover: ITurnover };
 interface IClearSelectedTurnoverNowActionType { type: string };
 interface IRemoveTurnoverNowAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialTurnoverNowActionType {type: string, turnover: ITurnover}
 // not_register_turnovers
 interface IAddTurnoverLastActionType { type: string, turnover: ITurnover };
 interface IEditTurnoverLastActionType { type: string, turnover: ITurnover };
-interface IRemoveTurnoverLastActionType { type: string, id: string };
+interface IRemoveTurnoverLastActionType { type: string, id: any };
 interface IChangeSelectedTurnoverLastActionType { type: string, turnover: ITurnover };
 interface IClearSelectedTurnoverLastActionType { type: string };
 interface IRemoveTurnoverLastAllActionType { type: string }

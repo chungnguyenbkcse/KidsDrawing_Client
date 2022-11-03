@@ -1,5 +1,5 @@
 export interface ICourseTeacherNew {
-    id: string;
+    id: any;
     name: string;
     description: string;
     max_participant: number;
@@ -7,9 +7,9 @@ export interface ICourseTeacherNew {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    art_type_id: string;
-    art_level_id: string;
-    art_age_id: string;
+    art_type_id: any;
+    art_level_id: any;
+    art_age_id: any;
     art_type_name: string;
     art_level_name: string;
     art_age_name: string;

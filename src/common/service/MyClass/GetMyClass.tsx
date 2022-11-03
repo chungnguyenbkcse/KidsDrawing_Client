@@ -1,8 +1,8 @@
 import { fetchDataSuccess, fetchDataError, removeMyClassAll, initialMyClass, addMyClass } from "../../../store/actions/my_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
-    id: string;
-    creator_id: string;
+    id: any;
+    creator_id: any;
     user_register_teach_semester: number;
     security_code: string;
     name: string;

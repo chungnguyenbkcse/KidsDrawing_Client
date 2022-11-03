@@ -1,17 +1,17 @@
 import { fetchDataSuccess, fetchDataError, removeSemesterClassStudentNotPayedAll, removeSemesterClassStudentNotPayedNowAll, removeSemesterClassStudentPayedAll, addSemesterClassStudentNotPayed, addSemesterClassStudentNotPayedNow, addSemesterClassStudentPayed } from "../../../store/actions/semester_class_student.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface SemesterClassStudent {
-    id: string;
+    id: any;
     name: string;
     course_name: string;
-    course_id: string;
-    semester_class_id: string;
+    course_id: any;
+    semester_class_id: any;
     description: string;
     max_participant: number;
     num_of_section: number;
     price: number;
     semester_name: string;
-    semester_id: string;
+    semester_id: any;
     status: string;
     image_url: string;
     art_type_name: string;

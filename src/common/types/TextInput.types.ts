@@ -1,7 +1,7 @@
 export type TextInputProps = {
     required: boolean,
     onChange: Function,
-    id: string,
+    id: any,
     label: string,
     placeholder: string,
     value: string,

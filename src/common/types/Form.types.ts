@@ -1,7 +1,7 @@
 import { IProduct } from "../../store/models/product.interface";
 
 export type ScheduleItem = {
-    schedule_id: string;
+    schedule_id: any;
     lesson_time: number;
     date_of_week: number;
 }

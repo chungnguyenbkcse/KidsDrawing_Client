@@ -48,7 +48,7 @@ export function editAnonymousNotification(anonymous_notification: IAnonymousNoti
     return { type: EDIT_ANONYMOUS_NOTIFICATION, anonymous_notification: anonymous_notification };
 }
 
-export function removeAnonymousNotification(id: string): IRemoveAnonymousNotificationActionType {
+export function removeAnonymousNotification(id: any): IRemoveAnonymousNotificationActionType {
     return { type: REMOVE_ANONYMOUS_NOTIFICATION, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateAnonymousNotification(value: AnonymousNotifi
 
 interface IAddAnonymousNotificationActionType { type: string, anonymous_notification: IAnonymousNotification };
 interface IEditAnonymousNotificationActionType { type: string, anonymous_notification: IAnonymousNotification };
-interface IRemoveAnonymousNotificationActionType { type: string, id: string };
+interface IRemoveAnonymousNotificationActionType { type: string, id: any };
 interface IChangeSelectedAnonymousNotificationActionType { type: string, anonymous_notification: IAnonymousNotification };
 interface IClearSelectedAnonymousNotificationActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  AnonymousNotificationModificationStatus};

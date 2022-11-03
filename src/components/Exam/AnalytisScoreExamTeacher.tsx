@@ -29,7 +29,7 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('class_id');
-    var class_id: string = "";
+    var class_id: any = "";
     if (id_x !== null) {
         class_id = id_x;
     }

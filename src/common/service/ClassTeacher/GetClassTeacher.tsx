@@ -1,11 +1,11 @@
 import { fetchDataSuccess, fetchDataError, removeDoinglClassAll, removeDoneClassAll, initialDoinglClass, initialDoneClass,  addDoinglClass, addDoneClass } from "../../../store/actions/class_teacher.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ClassTeacher {
-    id: string;
+    id: any;
     name: string;
-    course_id: string;
+    course_id: any;
     link_url: string;
-    semester_class_id: string;
+    semester_class_id: any;
     user_register_teach_semester: number;
     security_code: string;
     total_student: number;

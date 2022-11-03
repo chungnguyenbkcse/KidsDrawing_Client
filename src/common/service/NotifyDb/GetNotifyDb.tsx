@@ -1,7 +1,7 @@
 import { fetchDataRequest, fetchDataError, removeNotifyDbAll, initialNotifyDb } from "../../../store/actions/notify_db.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface NotifyDb {
-    id: string;
+    id: any;
     name: string;
     description: string;
     time: string;

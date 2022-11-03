@@ -1,10 +1,10 @@
 export interface IExerciseStudent {
-    id: string;
+    id: any;
     name: string;
-    exercise_submission_id: string;
+    exercise_submission_id: any;
     description: string;
-    section_id: string;
-    level_id: string;
+    section_id: any;
+    level_id: any;
     level_name: string;
     deadline: string;
     time_submit:  string;

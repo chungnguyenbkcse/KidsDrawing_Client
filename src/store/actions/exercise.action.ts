@@ -48,7 +48,7 @@ export function editExercise(exercise: IExercise): IEditExerciseActionType {
     return { type: EDIT_EXERCISE, exercise: exercise };
 }
 
-export function removeExercise(id: string): IRemoveExerciseActionType {
+export function removeExercise(id: any): IRemoveExerciseActionType {
     return { type: REMOVE_EXERCISE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: ExerciseModificationStatus): ISetMod
 
 interface IAddExerciseActionType { type: string, exercise: IExercise };
 interface IEditExerciseActionType { type: string, exercise: IExercise };
-interface IRemoveExerciseActionType { type: string, id: string };
+interface IRemoveExerciseActionType { type: string, id: any };
 interface IChangeSelectedExerciseActionType { type: string, exercise: IExercise };
 interface IClearSelectedExerciseActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  ExerciseModificationStatus};

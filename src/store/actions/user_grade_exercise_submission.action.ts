@@ -48,7 +48,7 @@ export function editUserGradeExerciseSubmission(user_grade_exercise_submission: 
     return { type: EDIT_USER_GRADE_EXERCISE_SUBMISSION, user_grade_exercise_submission: user_grade_exercise_submission };
 }
 
-export function removeUserGradeExerciseSubmission(id: string): IRemoveUserGradeExerciseSubmissionActionType {
+export function removeUserGradeExerciseSubmission(id: any): IRemoveUserGradeExerciseSubmissionActionType {
     return { type: REMOVE_USER_GRADE_EXERCISE_SUBMISSION, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: UserGradeExerciseSubmissionModificat
 
 interface IAddUserGradeExerciseSubmissionActionType { type: string, user_grade_exercise_submission: IUserGradeExerciseSubmission };
 interface IEditUserGradeExerciseSubmissionActionType { type: string, user_grade_exercise_submission: IUserGradeExerciseSubmission };
-interface IRemoveUserGradeExerciseSubmissionActionType { type: string, id: string };
+interface IRemoveUserGradeExerciseSubmissionActionType { type: string, id: any };
 interface IChangeSelectedUserGradeExerciseSubmissionActionType { type: string, user_grade_exercise_submission: IUserGradeExerciseSubmission };
 interface IClearSelectedUserGradeExerciseSubmissionActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  UserGradeExerciseSubmissionModificationStatus};

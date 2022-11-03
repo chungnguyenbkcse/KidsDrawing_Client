@@ -29,7 +29,7 @@ const ScheduleTeacher: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const time_schedule_teacherss: ITimeScheduleTeacherState = useSelector((state: IStateType) => state.time_schedule_teachers);
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }

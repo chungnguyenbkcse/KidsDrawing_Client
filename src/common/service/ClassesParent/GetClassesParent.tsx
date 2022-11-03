@@ -1,15 +1,15 @@
 import { fetchDataSuccess, fetchDataError, removeDoinglClassAll, removeDoneClassAll, initialDoinglClass, initialDoneClass,  addDoinglClass, addDoneClass } from "../../../store/actions/classes_parent.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ClassesParent {
-    id: string;
+    id: any;
     name: string;
     link_url: string;
-    student_id: string;
+    student_id: any;
     student_name: string;
     teacher_name: string;
-    teacher_id: string;
-    course_id: string;
-    semester_class_id: string;
+    teacher_id: any;
+    course_id: any;
+    semester_class_id: any;
     semester_class_name: string;
     user_register_teach_semester: number;
     security_code: string;
@@ -19,9 +19,9 @@ interface ClassesParent {
     semester_name: string;
     art_type_name: string;
     art_level_name: string;
-    art_type_id: string;
-    art_level_id: string;
-    art_age_id: string;
+    art_type_id: any;
+    art_level_id: any;
+    art_age_id: any;
     art_age_name: string;
 }
 export function getClassesParent(dispatch: any, id: any) {

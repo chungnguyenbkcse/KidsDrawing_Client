@@ -1,8 +1,8 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTemplatePageAll, initialTutorialTemplatePage, addTutorialTemplatePage } from "../../../store/actions/tutorial_template_page.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialTemplatePage {
-    id: string;
-    tutorial_template_id: string;
+    id: any;
+    tutorial_template_id: any;
     name: string;
     description: string;
     number: number;

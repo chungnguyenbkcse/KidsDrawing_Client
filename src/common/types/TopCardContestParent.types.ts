@@ -3,7 +3,7 @@ export interface ICardProperties {
     max_participant: number;
     class: string;
     total_register_contest: number;
-    id: string;
+    id: any;
     name: string;
     art_type_name: string;
     description: string;
@@ -13,5 +13,5 @@ export interface ICardProperties {
     icon: string;
     start_time: string;
     student_registered_name: string[];
-    student_registered_id: string[];
+    student_registered_id: any[];
 }

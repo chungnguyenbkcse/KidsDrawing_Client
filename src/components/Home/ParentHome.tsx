@@ -39,7 +39,7 @@ const ParentHome: React.FC = () => {
     const numberChildCount: number = users.students.length;
     const totalMoney: number = user_register_join_semesters.completed.reduce((prev, next) => prev + ((next.price * 1) || 0), 0);
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }

@@ -1,7 +1,7 @@
 export type CheckboxProps = {
     required?: boolean,
     onChange: Function,
-    id: string,
+    id: any,
     label: string,
     value: boolean,
     inputClass?: string,

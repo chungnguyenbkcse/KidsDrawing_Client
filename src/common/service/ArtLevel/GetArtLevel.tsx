@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeArtLevelAll, initialArtLevel, addArtLevel } from "../../../store/actions/art_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ArtLevel {
-    id: string;
+    id: any;
     name: string;
     description: string;
 }

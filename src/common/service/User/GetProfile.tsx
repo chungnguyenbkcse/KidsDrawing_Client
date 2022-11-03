@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeProfileAll, addProfile } from "../../../store/actions/profile.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Profile {
-    id: string,
+    id: any,
     profile_image_url: string,
 }
 export function getProfile(dispatch: any , id: any) {

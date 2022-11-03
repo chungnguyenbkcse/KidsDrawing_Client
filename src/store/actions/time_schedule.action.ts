@@ -48,7 +48,7 @@ export function editTimeSchedule(time_schedule: ITimeSchedule): IEditTimeSchedul
     return { type: EDIT_TIME_SCHEDULE, time_schedule: time_schedule };
 }
 
-export function removeTimeSchedule(id: string): IRemoveTimeScheduleActionType {
+export function removeTimeSchedule(id: any): IRemoveTimeScheduleActionType {
     return { type: REMOVE_TIME_SCHEDULE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: TimeScheduleModificationStatus): ISe
 
 interface IAddTimeScheduleActionType { type: string, time_schedule: ITimeSchedule };
 interface IEditTimeScheduleActionType { type: string, time_schedule: ITimeSchedule };
-interface IRemoveTimeScheduleActionType { type: string, id: string };
+interface IRemoveTimeScheduleActionType { type: string, id: any };
 interface IChangeSelectedTimeScheduleActionType { type: string, time_schedule: ITimeSchedule };
 interface IClearSelectedTimeScheduleActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  TimeScheduleModificationStatus};

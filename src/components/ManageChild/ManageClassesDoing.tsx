@@ -28,19 +28,19 @@ const ManageClassesDoing: React.FC = () => {
 
     
     var id_z = localStorage.getItem('teacher_id');
-    var teacher_id: string = "";
+    var teacher_id: any = "";
     if (id_z !== null) {
         teacher_id = id_z;
     }
 
     var id_y = localStorage.getItem('student_id');
-    var student_id: string= "";
+    var student_id: any= "";
     if (id_y !== null) {
         student_id = id_y;
     }
 
     var id_t = localStorage.getItem('class_id');
-    var class_id: string = "";
+    var class_id: any = "";
     if (id_t !== null) {
         class_id = id_t;
     }

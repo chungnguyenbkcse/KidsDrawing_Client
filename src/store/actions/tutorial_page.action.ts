@@ -49,7 +49,7 @@ export function editTutorialPage(tutorial_page: ITutorialPage): IEditTutorialPag
     return { type: EDIT_TUTORIAL_PAGE, tutorial_page: tutorial_page };
 }
 
-export function removeTutorialPage(id: string): IRemoveTutorialPageActionType {
+export function removeTutorialPage(id: any): IRemoveTutorialPageActionType {
     return { type: REMOVE_TUTORIAL_PAGE, id: id };
 }
 
@@ -71,7 +71,7 @@ export function setModificationStateTutorialPage(value: TutorialPageModification
 
 interface IAddTutorialPageActionType { type: string, tutorial_page: ITutorialPage };
 interface IEditTutorialPageActionType { type: string, tutorial_page: ITutorialPage };
-interface IRemoveTutorialPageActionType { type: string, id: string };
+interface IRemoveTutorialPageActionType { type: string, id: any };
 interface IChangeSelectedTutorialPageActionType { type: string, tutorial_page: ITutorialPage };
 interface IClearSelectedTutorialPageActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  TutorialPageModificationStatus};

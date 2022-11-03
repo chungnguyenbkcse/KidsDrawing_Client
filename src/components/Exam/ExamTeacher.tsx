@@ -12,8 +12,8 @@ import Loading from "../../common/components/Loading";
 const ExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
-    const numberApprovedCount: number = exercise_submissions.exercise_not_gradeds.length;
-    const numberNotApprovedNowCount: number = exercise_submissions.exercise_gradeds.length;
+    const numberApprovedCount: number = exercise_submissions.exercise_gradeds.length;
+    const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
 
     const { promiseInProgress } = usePromiseTracker();
 

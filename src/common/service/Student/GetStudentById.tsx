@@ -1,7 +1,7 @@
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeStudentAll, initialStudent, addStudent } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user {
-    id: string,
+    id: any,
     username: string,
     email: string,
     password: string,

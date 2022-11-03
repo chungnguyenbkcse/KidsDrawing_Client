@@ -25,7 +25,7 @@ const RequestTeacher: React.FC = () => {
     const numberTeacherRegisterSuccessfullCount: number = student_leaves.leaves.length;
     const numberTeacherNotRegisterCount: number = teacher_leaves.leaves.length;
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }

@@ -62,7 +62,7 @@ export function editDoinglClass(classes_parent: IClassesParent): IEditDoinglClas
     return { type: EDIT_DOING_CLASS, classes_parent: classes_parent };
 }
 
-export function removeDoinglClass(id: string): IRemoveDoinglClassActionType {
+export function removeDoinglClass(id: any): IRemoveDoinglClassActionType {
     return { type: REMOVE_DOING_CLASS, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editDoneClass(classes_parent: IClassesParent): IEditDoneClassAct
     return { type: EDIT_DONE_CLASS, classes_parent: classes_parent };
 }
 
-export function removeDoneClass(id: string): IRemoveDoneClassActionType {
+export function removeDoneClass(id: any): IRemoveDoneClassActionType {
     return { type: REMOVE_DONE_CLASS, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: ClassesParentModificationStatus): IS
 // register_successfull_classes_parents
 interface IAddDoinglClassActionType { type: string, classes_parent: IClassesParent };
 interface IEditDoinglClassActionType { type: string, classes_parent: IClassesParent };
-interface IRemoveDoinglClassActionType { type: string, id: string };
+interface IRemoveDoinglClassActionType { type: string, id: any };
 interface IChangeSelectedDoinglClassActionType { type: string, classes_parent: IClassesParent };
 interface IClearSelectedDoinglClassActionType { type: string };
 interface IRemoveDoinglClassAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialDoinglClassActionType {type: string, classes_parent: IClassesP
 // not_register_classes_parents
 interface IAddDoneClassActionType { type: string, classes_parent: IClassesParent };
 interface IEditDoneClassActionType { type: string, classes_parent: IClassesParent };
-interface IRemoveDoneClassActionType { type: string, id: string };
+interface IRemoveDoneClassActionType { type: string, id: any };
 interface IChangeSelectedDoneClassActionType { type: string, classes_parent: IClassesParent };
 interface IClearSelectedDoneClassActionType { type: string };
 interface IRemoveDoneClassAllActionType { type: string }

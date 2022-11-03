@@ -48,7 +48,7 @@ export function editSection(section: ISection): IEditSectionActionType {
     return { type: EDIT_SECTION, section: section };
 }
 
-export function removeSection(id: string): IRemoveSectionActionType {
+export function removeSection(id: any): IRemoveSectionActionType {
     return { type: REMOVE_SECTION, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateSection(value: SectionModificationStatus): I
 
 interface IAddSectionActionType { type: string, section: ISection };
 interface IEditSectionActionType { type: string, section: ISection };
-interface IRemoveSectionActionType { type: string, id: string };
+interface IRemoveSectionActionType { type: string, id: any };
 interface IChangeSelectedSectionActionType { type: string, section: ISection };
 interface IClearSelectedSectionActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  SectionModificationStatus};

@@ -77,7 +77,7 @@ export function editTeacherRegisterQuatificationApproved(teacher_register_quanti
     return { type: EDIT_TEACHER_REGISTER_QUANTIFICATION_APPROVED, teacher_register_quantification_approved: teacher_register_quantification_approved };
 }
 
-export function removeTeacherRegisterQuatificationApproved(id: string): IRemoveTeacherRegisterQuatificationApprovedActionType {
+export function removeTeacherRegisterQuatificationApproved(id: any): IRemoveTeacherRegisterQuatificationApprovedActionType {
     return { type: REMOVE_TEACHER_REGISTER_QUANTIFICATION_APPROVED, id: id };
 }
 
@@ -107,7 +107,7 @@ export function editTeacherRegisterQuatificationNotApproved(teacher_register_qua
     return { type: EDIT_TEACHER_REGISTER_QUANTIFICATION_NOT_APPROVED, teacher_register_quantification_not_approved: teacher_register_quantification_not_approved };
 }
 
-export function removeTeacherRegisterQuatificationNotApproved(id: string): IRemoveTeacherRegisterQuatificationNotApprovedActionType {
+export function removeTeacherRegisterQuatificationNotApproved(id: any): IRemoveTeacherRegisterQuatificationNotApprovedActionType {
     return { type: REMOVE_TEACHER_REGISTER_QUANTIFICATION_NOT_APPROVED, id: id };
 }
 
@@ -138,7 +138,7 @@ export function editTeacherRegisterQuatificationNotApprovedNow(teacher_register_
     return { type: EDIT_TEACHER_REGISTER_QUANTIFICATION_NOT_APPROVED_NOW, teacher_register_quantification_not_approved_now: teacher_register_quantification_not_approved_now };
 }
 
-export function removeTeacherRegisterQuatificationNotApprovedNow(id: string): IRemoveTeacherRegisterQuatificationNotApprovedNowActionType {
+export function removeTeacherRegisterQuatificationNotApprovedNow(id: any): IRemoveTeacherRegisterQuatificationNotApprovedNowActionType {
     return { type: REMOVE_TEACHER_REGISTER_QUANTIFICATION_NOT_APPROVED_NOW, id: id };
 }
 
@@ -153,7 +153,7 @@ export function clearSelectedTeacherRegisterNotQuatificationNow(): IClearSelecte
 // Approved
 interface IAddTeacherRegisterQuatificationApprovedActionType { type: string, teacher_register_quantification_approved: ITeacherRegisterQuantification };
 interface IEditTeacherRegisterQuatificationApprovedActionType { type: string, teacher_register_quantification_approved: ITeacherRegisterQuantification };
-interface IRemoveTeacherRegisterQuatificationApprovedActionType { type: string, id: string };
+interface IRemoveTeacherRegisterQuatificationApprovedActionType { type: string, id: any };
 interface IChangeSelectedTeacherRegisterQuatificationApprovedActionType { type: string, teacher_register_quantification_approved: ITeacherRegisterQuantification };
 interface IClearSelectedTeacherRegisterQuatificationApprovedActionType { type: string };
 interface IRemoveTeacherRegisterQuatificationAllApprovedActionType { type: string }
@@ -162,7 +162,7 @@ interface IInitialTeacherRegisterQuatificationApprovedActionType {type: string, 
 // Not Approved
 interface IAddTeacherRegisterQuatificationNotApprovedActionType { type: string, teacher_register_quantification_not_approved: ITeacherRegisterQuantification };
 interface IEditTeacherRegisterQuatificationNotApprovedActionType { type: string, teacher_register_quantification_not_approved: ITeacherRegisterQuantification };
-interface IRemoveTeacherRegisterQuatificationNotApprovedActionType { type: string, id: string };
+interface IRemoveTeacherRegisterQuatificationNotApprovedActionType { type: string, id: any };
 interface IChangeSelectedTeacherRegisterQuatificationNotApprovedActionType { type: string, teacher_register_quantification_not_approved: ITeacherRegisterQuantification };
 interface IClearSelectedTeacherRegisterQuatificationNotApprovedActionType { type: string };
 interface IRemoveTeacherRegisterQuatificationAllNotApprovedActionType { type: string }
@@ -171,7 +171,7 @@ interface IInitialTeacherRegisterQuatificationNotApprovedActionType {type: strin
 // Not Approved now
 interface IAddTeacherRegisterQuatificationNotApprovedNowActionType { type: string, teacher_register_quantification_not_approved_now: ITeacherRegisterQuantification };
 interface IEditTeacherRegisterQuatificationNotApprovedNowActionType { type: string, teacher_register_quantification_not_approved_now: ITeacherRegisterQuantification };
-interface IRemoveTeacherRegisterQuatificationNotApprovedNowActionType { type: string, id: string };
+interface IRemoveTeacherRegisterQuatificationNotApprovedNowActionType { type: string, id: any };
 interface IChangeSelectedTeacherRegisterQuatificationNotApprovedNowActionType { type: string, teacher_register_quantification_not_approved_now: ITeacherRegisterQuantification };
 interface IClearSelectedTeacherRegisterQuatificationNotApprovedNowActionType { type: string };
 interface IRemoveTeacherRegisterQuatificationAllNotApprovedNowActionType { type: string }

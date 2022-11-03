@@ -1,10 +1,10 @@
 export interface ITutorial {
-    id: string;
-    section_id: string;
-    creator_id: string;
+    id: any;
+    section_id: any;
+    creator_id: any;
     creator_name: string;
     class_name: string;
-    class_id: string;
+    class_id: any;
     section_number: number;
     name: string;
     create_time: string;

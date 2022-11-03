@@ -62,7 +62,7 @@ export function editContestNotGraded(contest_submission: IContestSubmission): IE
     return { type: EDIT_EXERCISE_SUBMISSION_NOT_GRADED, contest_submission: contest_submission };
 }
 
-export function removeContestNotGraded(id: string): IRemoveContestNotGradedActionType {
+export function removeContestNotGraded(id: any): IRemoveContestNotGradedActionType {
     return { type: REMOVE_EXERCISE_SUBMISSION_NOT_GRADED, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editContestGraded(contest_submission: IContestSubmission): IEdit
     return { type: EDIT_EXERCISE_SUBMISSION_GRADED, contest_submission: contest_submission };
 }
 
-export function removeContestGraded(id: string): IRemoveContestGradedActionType {
+export function removeContestGraded(id: any): IRemoveContestGradedActionType {
     return { type: REMOVE_EXERCISE_SUBMISSION_GRADED, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: ContestSubmissionModificationStatus)
 // register_successfull_contest_submissions
 interface IAddContestNotGradedActionType { type: string, contest_submission: IContestSubmission };
 interface IEditContestNotGradedActionType { type: string, contest_submission: IContestSubmission };
-interface IRemoveContestNotGradedActionType { type: string, id: string };
+interface IRemoveContestNotGradedActionType { type: string, id: any };
 interface IChangeSelectedContestNotGradedActionType { type: string, contest_submission: IContestSubmission };
 interface IClearSelectedContestNotGradedActionType { type: string };
 interface IRemoveContestNotGradedAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialContestNotGradedActionType {type: string, contest_submission: 
 // not_register_contest_submissions
 interface IAddContestGradedActionType { type: string, contest_submission: IContestSubmission };
 interface IEditContestGradedActionType { type: string, contest_submission: IContestSubmission };
-interface IRemoveContestGradedActionType { type: string, id: string };
+interface IRemoveContestGradedActionType { type: string, id: any };
 interface IChangeSelectedContestGradedActionType { type: string, contest_submission: IContestSubmission };
 interface IClearSelectedContestGradedActionType { type: string };
 interface IRemoveContestGradedAllActionType { type: string }

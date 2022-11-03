@@ -73,7 +73,7 @@ export function editSemesterClassParentNotPayedNow(semester_class_parent: ISemes
     return { type: EDIT_NOT_PAYED_NOW, semester_class_parent: semester_class_parent };
 }
 
-export function removeSemesterClassParentNotPayedNow(id: string): IRemoveSemesterClassParentNotPayedNowActionType {
+export function removeSemesterClassParentNotPayedNow(id: any): IRemoveSemesterClassParentNotPayedNowActionType {
     return { type: REMOVE_NOT_PAYED_NOW, id: id };
 }
 
@@ -102,7 +102,7 @@ export function editSemesterClassParentPayed(semester_class_parent: ISemesterCla
     return { type: EDIT_PAYED, semester_class_parent: semester_class_parent };
 }
 
-export function removeSemesterClassParentPayed(id: string): IRemoveSemesterClassParentPayedActionType {
+export function removeSemesterClassParentPayed(id: any): IRemoveSemesterClassParentPayedActionType {
     return { type: REMOVE_PAYED, id: id };
 }
 
@@ -136,7 +136,7 @@ export function editSemesterClassParentNotPayed(semester_class_parent: ISemester
     return { type: EDIT_NOT_PAYED, semester_class_parent: semester_class_parent };
 }
 
-export function removeSemesterClassParentNotPayed(id: string): IRemoveSemesterClassParentNotPayedActionType {
+export function removeSemesterClassParentNotPayed(id: any): IRemoveSemesterClassParentNotPayedActionType {
     return { type: REMOVE_NOT_PAYED, id: id };
 }
 
@@ -151,7 +151,7 @@ export function clearSelectedSemesterClassParentNotPayed(): IClearSelectedSemest
 // register_successfull_semester_class_parents
 interface IAddSemesterClassParentNotPayedNowActionType { type: string, semester_class_parent: ISemesterClassParent };
 interface IEditSemesterClassParentNotPayedNowActionType { type: string, semester_class_parent: ISemesterClassParent };
-interface IRemoveSemesterClassParentNotPayedNowActionType { type: string, id: string };
+interface IRemoveSemesterClassParentNotPayedNowActionType { type: string, id: any };
 interface IChangeSelectedSemesterClassParentNotPayedNowActionType { type: string, semester_class_parent: ISemesterClassParent };
 interface IClearSelectedSemesterClassParentNotPayedNowActionType { type: string };
 interface IRemoveSemesterClassParentNotPayedNowAllActionType { type: string }
@@ -160,7 +160,7 @@ interface IInitialSemesterClassParentNotPayedNowActionType {type: string, semest
 // not_register_semester_class_parents
 interface IAddSemesterClassParentPayedActionType { type: string, semester_class_parent: ISemesterClassParent };
 interface IEditSemesterClassParentPayedActionType { type: string, semester_class_parent: ISemesterClassParent };
-interface IRemoveSemesterClassParentPayedActionType { type: string, id: string };
+interface IRemoveSemesterClassParentPayedActionType { type: string, id: any };
 interface IChangeSelectedSemesterClassParentPayedActionType { type: string, semester_class_parent: ISemesterClassParent };
 interface IClearSelectedSemesterClassParentPayedActionType { type: string };
 interface IRemoveSemesterClassParentPayedAllActionType { type: string }
@@ -170,7 +170,7 @@ interface IInitialSemesterClassParentPayedActionType {type: string, semester_cla
 // register_successfull_semester_class_parents
 interface IAddSemesterClassParentNotPayedActionType { type: string, semester_class_parent: ISemesterClassParent };
 interface IEditSemesterClassParentNotPayedActionType { type: string, semester_class_parent: ISemesterClassParent };
-interface IRemoveSemesterClassParentNotPayedActionType { type: string, id: string };
+interface IRemoveSemesterClassParentNotPayedActionType { type: string, id: any };
 interface IChangeSelectedSemesterClassParentNotPayedActionType { type: string, semester_class_parent: ISemesterClassParent };
 interface IClearSelectedSemesterClassParentNotPayedActionType { type: string };
 interface IRemoveSemesterClassParentNotPayedAllActionType { type: string }

@@ -73,7 +73,7 @@ export function editExerciseNotSubmit(exercise_student: IExerciseStudent): IEdit
     return { type: EDIT_EXERCISE_NOT_SUBMIT, exercise_student: exercise_student };
 }
 
-export function removeExerciseNotSubmit(id: string): IRemoveExerciseNotSubmitActionType {
+export function removeExerciseNotSubmit(id: any): IRemoveExerciseNotSubmitActionType {
     return { type: REMOVE_EXERCISE_NOT_SUBMIT, id: id };
 }
 
@@ -102,7 +102,7 @@ export function editExerciseSubmitNotGrade(exercise_student: IExerciseStudent): 
     return { type: EDIT_EXERCISE_SUBMITED_NOT_GRADE, exercise_student: exercise_student };
 }
 
-export function removeExerciseSubmitNotGrade(id: string): IRemoveExerciseSubmitNotGradeActionType {
+export function removeExerciseSubmitNotGrade(id: any): IRemoveExerciseSubmitNotGradeActionType {
     return { type: REMOVE_EXERCISE_SUBMITED_NOT_GRADE, id: id };
 }
 
@@ -136,7 +136,7 @@ export function editExerciseSubmitGraded(exercise_student: IExerciseStudent): IE
     return { type: EDIT_EXERCISE_SUBMITED_GRADED, exercise_student: exercise_student };
 }
 
-export function removeExerciseSubmitGraded(id: string): IRemoveExerciseSubmitGradedActionType {
+export function removeExerciseSubmitGraded(id: any): IRemoveExerciseSubmitGradedActionType {
     return { type: REMOVE_EXERCISE_SUBMITED_GRADED, id: id };
 }
 
@@ -151,7 +151,7 @@ export function clearSelectedExerciseSubmitGraded(): IClearSelectedExerciseSubmi
 // register_successfull_exercise_students
 interface IAddExerciseNotSubmitActionType { type: string, exercise_student: IExerciseStudent };
 interface IEditExerciseNotSubmitActionType { type: string, exercise_student: IExerciseStudent };
-interface IRemoveExerciseNotSubmitActionType { type: string, id: string };
+interface IRemoveExerciseNotSubmitActionType { type: string, id: any };
 interface IChangeSelectedExerciseNotSubmitActionType { type: string, exercise_student: IExerciseStudent };
 interface IClearSelectedExerciseNotSubmitActionType { type: string };
 interface IRemoveExerciseNotSubmitAllActionType { type: string }
@@ -160,7 +160,7 @@ interface IInitialExerciseNotSubmitActionType {type: string, exercise_student: I
 // not_register_exercise_students
 interface IAddExerciseSubmitNotGradeActionType { type: string, exercise_student: IExerciseStudent };
 interface IEditExerciseSubmitNotGradeActionType { type: string, exercise_student: IExerciseStudent };
-interface IRemoveExerciseSubmitNotGradeActionType { type: string, id: string };
+interface IRemoveExerciseSubmitNotGradeActionType { type: string, id: any };
 interface IChangeSelectedExerciseSubmitNotGradeActionType { type: string, exercise_student: IExerciseStudent };
 interface IClearSelectedExerciseSubmitNotGradeActionType { type: string };
 interface IRemoveExerciseSubmitNotGradeAllActionType { type: string }
@@ -170,7 +170,7 @@ interface IInitialExerciseSubmitNotGradeActionType {type: string, exercise_stude
 // register_successfull_exercise_students
 interface IAddExerciseSubmitGradedActionType { type: string, exercise_student: IExerciseStudent };
 interface IEditExerciseSubmitGradedActionType { type: string, exercise_student: IExerciseStudent };
-interface IRemoveExerciseSubmitGradedActionType { type: string, id: string };
+interface IRemoveExerciseSubmitGradedActionType { type: string, id: any };
 interface IChangeSelectedExerciseSubmitGradedActionType { type: string, exercise_student: IExerciseStudent };
 interface IClearSelectedExerciseSubmitGradedActionType { type: string };
 interface IRemoveExerciseSubmitGradedAllActionType { type: string }

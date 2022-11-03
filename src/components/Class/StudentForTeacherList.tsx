@@ -9,7 +9,7 @@ function StudentList(): JSX.Element {
     const history = useHistory();
 
 
-    const routeChange = (student_id: string, parent_id: string) => {
+    const routeChange = (student_id: any, parent_id: any) => {
         localStorage.removeItem('student_id');
         localStorage.setItem('student_id', student_id.toString());
         localStorage.removeItem('parent_id');

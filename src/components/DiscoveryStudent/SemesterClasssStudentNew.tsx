@@ -15,13 +15,13 @@ const SemesterClassStudentNew: React.FC = () => {
     //const semester_classs: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
 
     var id_y = localStorage.getItem('course_id');
-    var course_id: string = "";
+    var course_id: any = "";
     if (id_y !== null) {
         course_id = id_y;
     }

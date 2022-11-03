@@ -1,5 +1,5 @@
 export interface IExerciseLevel {
-    id: string;
+    id: any;
     name: string;
     description: string;
     weight: number;

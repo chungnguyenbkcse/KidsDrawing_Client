@@ -1,5 +1,5 @@
 export interface IContestParentNew{
-    id: string;
+    id: any;
     name: string;
     description: string;
     max_participant: number;
@@ -9,15 +9,15 @@ export interface IContestParentNew{
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: string;
-    art_type_id: string;
-    art_age_id: string;
+    creator_id: any;
+    art_type_id: any;
+    art_age_id: any;
     art_type_name: string;
     art_age_name: string;
     create_time: string;
     update_time: string;
     student_registered_name: string[];
-    student_registered_id: string[];
+    student_registered_id: any[];
 }
 
 export enum ContestParentNewModificationStatus {

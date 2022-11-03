@@ -54,7 +54,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     }
 
     var id_x = localStorage.getItem('id');
-    var student_id: string = "";
+    var student_id: any = "";
     if (id_x !== null) {
         student_id = id_x;
     }

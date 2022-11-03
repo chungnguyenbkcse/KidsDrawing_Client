@@ -3,7 +3,7 @@ import { fetchDataRequest } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getArtAge } from "./GetArtAge";
 
-export function putArtAge(id: string, data: any, idx: any) {
+export function putArtAge(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());

@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeCourseRegistedAll, removeCourseNotRegistedNowAll, addCourseNotRegistedNow, addCourseRegisted } from "../../../store/actions/course_parent.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface CourseParent {
-    id: string;
+    id: any;
     name: string;
     description: string;
     max_participant: number;
@@ -9,12 +9,12 @@ interface CourseParent {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: string;
-    art_type_id: string;
+    creator_id: any;
+    art_type_id: any;
     art_type_name: string;
-    art_level_id: string;
+    art_level_id: any;
     art_level_name: string;
-    art_age_id: string;
+    art_age_id: any;
     art_age_name: string;
     create_time: string;
     update_time: string;

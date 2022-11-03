@@ -42,7 +42,7 @@ const DetailClassStudent: React.FC = () => {
     const numberSectionCount: number = sections.sections.length;
     const numberNotSubmitNowCount: number = exercise_student.exercise_not_submit.length;
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
@@ -338,7 +338,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
                                                                         <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-9 col-md-9">
                                                                             <div className="row">
@@ -412,7 +412,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1(ele) }}>
                                                                         <div className="col-xl-4 col-md-4">
-                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
+                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-2">
                                                                             <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
@@ -444,7 +444,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2(ele) }}>
                                                                         <div className="col-xl-4 col-md-4">
-                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
+                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-2">
                                                                             <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
@@ -463,7 +463,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
                                                                         <div className="col-xl-4 col-md-4">
-                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/exam1_clcq5z.png" alt="" />
+                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8 mb-2">
                                                                             <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
@@ -500,7 +500,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { }}>
                                                                         <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
+                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399584/wazcmdgbmxy2amdmjjdv.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-9 col-md-9">
                                                                             <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
@@ -531,7 +531,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => {  }}>
                                                                         <div className="col-xl-4 col-md-4">
-                                                                            <img className="card-img image-section-1" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088283/timetable_dpbx2a.png" alt="" />
+                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399584/wazcmdgbmxy2amdmjjdv.png" alt="" />
                                                                         </div>
                                                                         <div className="col-xl-8 col-md-8">
                                                                             <p className=" mb-2 section_number">Buổi {ele.section_number}</p>

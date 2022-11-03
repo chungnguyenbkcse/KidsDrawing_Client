@@ -50,14 +50,14 @@ const SectionTeacher: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('id');
-    var id: string = "";
+    var id: any = "";
     if (id_x !== null) {
         id = id_x;
     }
 
 
     var id_z = localStorage.getItem('class_id');
-    var class_id: string= "";
+    var class_id: any= "";
     if (id_z !== null) {
         class_id = id_z;
     }
@@ -150,7 +150,7 @@ const SectionTeacher: React.FC = () => {
         })
     }
 
-    const routeChange3 = (description: string, name: string, level_name: string, id: string) => {
+    const routeChange3 = (description: string, name: string, level_name: string, id: any) => {
         let path = '/exercise';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
@@ -350,7 +350,7 @@ const SectionTeacher: React.FC = () => {
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
                                                                                 <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1661088297/teacher_hfstak.png" alt="" />
+                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                                 </div>
                                                                                 <div className="col-xl-8 col-md-8 mb-4">
                                                                                     <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>

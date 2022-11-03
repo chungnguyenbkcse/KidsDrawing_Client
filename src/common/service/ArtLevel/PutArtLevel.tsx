@@ -3,7 +3,7 @@ import { fetchDataRequest } from "../../../store/actions/art_level.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getArtLevel } from "./GetArtLevel";
 
-export function putArtLevel(id: string, data: any, idx: any) {
+export function putArtLevel(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());

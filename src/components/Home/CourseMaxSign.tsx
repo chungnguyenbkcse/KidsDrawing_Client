@@ -12,7 +12,7 @@ export type user_register_semesterListProps = {
 };
 
 type CourseSemester = {
-  course_semester_id: string;
+  course_semester_id: any;
   count: number;
 }
 

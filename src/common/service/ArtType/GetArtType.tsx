@@ -1,7 +1,7 @@
 import { fetchDataSuccess, fetchDataError, removeArtTypeAll, initialArtType, addArtType } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ArtType {
-    id: string;
+    id: any;
     name: string;
     description: string;
 }

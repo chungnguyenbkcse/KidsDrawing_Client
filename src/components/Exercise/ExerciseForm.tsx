@@ -9,6 +9,7 @@ import { IExerciseLevel } from "../../store/models/exercise_level.interface";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { postExercise } from "../../common/service/Exercise/PostExercise";
 import { toast } from "react-toastify";
+import DateInput from "../../common/components/DateInput";
 
 export type exerciseListProps = {
     isCheck: (value: boolean) => void;
@@ -106,6 +107,10 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
         return (formState.name.error || !formState.name.value) as boolean;
     }
 
+    var now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  var time_now = now.toISOString().slice(0,16);
+
     return (
         <Fragment>
             <div className="row text-left">
@@ -150,12 +155,13 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
                                 </div>
 
                                 <div className="form-group">
-                                    <TextInput id="input_deadline"
+                                    <DateInput id="input_deadline"
                                         field="deadline"
                                         value={formState.deadline.value}
                                         onChange={hasFormValueChanged}
                                         required={false}
-                                        maxLength={100}
+                                        maxLength={time_now}
+                                        active={false}
                                         type="datetime-local"
                                         label="Hạn nộp"
                                         placeholder="" />

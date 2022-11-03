@@ -48,7 +48,7 @@ export function editCourseParentNew(course_parent_new: ICourseParentNew): IEditC
     return { type: EDIT_COURSE_PARENT_NEW, course_parent_new: course_parent_new };
 }
 
-export function removeCourseParentNew(id: string): IRemoveCourseParentNewActionType {
+export function removeCourseParentNew(id: any): IRemoveCourseParentNewActionType {
     return { type: REMOVE_COURSE_PARENT_NEW, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationState(value: CourseParentNewModificationStatus): 
 
 interface IAddCourseParentNewActionType { type: string, course_parent_new: ICourseParentNew };
 interface IEditCourseParentNewActionType { type: string, course_parent_new: ICourseParentNew };
-interface IRemoveCourseParentNewActionType { type: string, id: string };
+interface IRemoveCourseParentNewActionType { type: string, id: any };
 interface IChangeSelectedCourseParentNewActionType { type: string, course_parent_new: ICourseParentNew };
 interface IClearSelectedCourseParentNewActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  CourseParentNewModificationStatus};

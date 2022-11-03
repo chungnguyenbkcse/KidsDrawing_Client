@@ -1,6 +1,6 @@
 export interface IClassHasRegisterJoinSemester {
-    classes_id: string;
-    user_register_join_semester_id: string;
+    classes_id: any;
+    user_register_join_semester_id: any;
     review_star: number;
     student_feedback: string;
     teacher_feedback: string;

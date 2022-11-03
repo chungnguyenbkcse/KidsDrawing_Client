@@ -62,7 +62,7 @@ export function editRegisterSuccessfullCourse(course: ICourseTeacher): IEditRegi
     return { type: EDIT_REGISTER_SUCCESSFULL_COURSE, course: course };
 }
 
-export function removeRegisterSuccessfullCourse(id: string): IRemoveRegisterSuccessfullCourseActionType {
+export function removeRegisterSuccessfullCourse(id: any): IRemoveRegisterSuccessfullCourseActionType {
     return { type: REMOVE_REGISTER_SUCCESSFULL_COURSE, id: id };
 }
 
@@ -91,7 +91,7 @@ export function editNotRegisterCourse(course: ICourseTeacher): IEditNotRegisterC
     return { type: EDIT_NOT_REGISTER_COURSE, course: course };
 }
 
-export function removeNotRegisterCourse(id: string): IRemoveNotRegisterCourseActionType {
+export function removeNotRegisterCourse(id: any): IRemoveNotRegisterCourseActionType {
     return { type: REMOVE_NOT_REGISTER_COURSE, id: id };
 }
 
@@ -110,7 +110,7 @@ export function setModificationState(value: CourseTeacherModificationStatus): IS
 // register_successfull_courses
 interface IAddRegisterSuccessfullCourseActionType { type: string, course: ICourseTeacher };
 interface IEditRegisterSuccessfullCourseActionType { type: string, course: ICourseTeacher };
-interface IRemoveRegisterSuccessfullCourseActionType { type: string, id: string };
+interface IRemoveRegisterSuccessfullCourseActionType { type: string, id: any };
 interface IChangeSelectedRegisterSuccessfullCourseActionType { type: string, course: ICourseTeacher };
 interface IClearSelectedRegisterSuccessfullCourseActionType { type: string };
 interface IRemoveRegisterSuccessfullCourseAllActionType { type: string }
@@ -119,7 +119,7 @@ interface IInitialRegisterSuccessfullCourseActionType {type: string, course: ICo
 // not_register_courses
 interface IAddNotRegisterCourseActionType { type: string, course: ICourseTeacher };
 interface IEditNotRegisterCourseActionType { type: string, course: ICourseTeacher };
-interface IRemoveNotRegisterCourseActionType { type: string, id: string };
+interface IRemoveNotRegisterCourseActionType { type: string, id: any };
 interface IChangeSelectedNotRegisterCourseActionType { type: string, course: ICourseTeacher };
 interface IClearSelectedNotRegisterCourseActionType { type: string };
 interface IRemoveNotRegisterCourseAllActionType { type: string }

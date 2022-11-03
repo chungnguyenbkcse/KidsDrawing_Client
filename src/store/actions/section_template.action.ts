@@ -48,7 +48,7 @@ export function editSectionTemplate(section_template: ISectionTemplate): IEditSe
     return { type: EDIT_SECTION_TEMPLATE, section_template: section_template };
 }
 
-export function removeSectionTemplate(id: string): IRemoveSectionTemplateActionType {
+export function removeSectionTemplate(id: any): IRemoveSectionTemplateActionType {
     return { type: REMOVE_SECTION_TEMPLATE, id: id };
 }
 
@@ -66,7 +66,7 @@ export function setModificationStateSectionTemplate(value: SectionTemplateModifi
 
 interface IAddSectionTemplateActionType { type: string, section_template: ISectionTemplate };
 interface IEditSectionTemplateActionType { type: string, section_template: ISectionTemplate };
-interface IRemoveSectionTemplateActionType { type: string, id: string };
+interface IRemoveSectionTemplateActionType { type: string, id: any };
 interface IChangeSelectedSectionTemplateActionType { type: string, section_template: ISectionTemplate };
 interface IClearSelectedSectionTemplateActionType { type: string };
 interface ISetModificationStateActionType { type: string, value:  SectionTemplateModificationStatus};

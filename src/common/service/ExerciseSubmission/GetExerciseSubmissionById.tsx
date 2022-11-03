@@ -1,9 +1,9 @@
 import { fetchDataSuccess, fetchDataError, removeExerciseGradedAll, removeExerciseNotGradedAll, addExerciseNotGraded } from "../../../store/actions/exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ExerciseSubmission {
-    id: string;
-    student_id: string;
-    exercise_id: string;
+    id: any;
+    student_id: any;
+    exercise_id: any;
     student_name: string;
     exercise_name: string;
     image_url: string;

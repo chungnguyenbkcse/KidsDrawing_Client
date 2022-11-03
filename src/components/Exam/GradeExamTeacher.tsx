@@ -45,14 +45,14 @@ const GradeExamTeacher: React.FC = () => {
             let x = exercise_submissions.exercise_not_gradeds[0].student_id;
             let y = exercise_submissions.exercise_not_gradeds[0].id;
             console.log({
-                student_id: x,
+                teacher_id: localStorage.getItem('id'),
                 exercise_submission_id: y,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             })
 
             dispatch(postUserGradeExercise({
-                student_id: x,
+                teacher_id: localStorage.getItem('id'),
                 exercise_submission_id: y,
                 score: formState.score.value,
                 feedback: formState.feedback.value
@@ -60,7 +60,7 @@ const GradeExamTeacher: React.FC = () => {
         }
         else {
             dispatch(postUserGradeExercise({
-                student_id: student_id,
+                teacher_id: localStorage.getItem('id'),
                 exercise_submission_id: exercise_submission_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value

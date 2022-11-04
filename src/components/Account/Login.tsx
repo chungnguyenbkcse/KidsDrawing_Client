@@ -7,7 +7,6 @@ import { postAut } from "../../common/service/Aut/Login";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router-dom";
-import { postAutAxios } from "../../common/service/Aut/LoginAxios";
 
 const Login: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -42,8 +41,7 @@ const Login: React.FC = () => {
     const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
       position: toast.POSITION.TOP_CENTER
     });
-    //dispatch(postAut(formState.username.value, formState.password.value, changeRouteHome, id))
-    postAutAxios(formState.username.value, formState.password.value);
+    dispatch(postAut(formState.username.value, formState.password.value, changeRouteHome, id))
   }
 
   function isFormInvalid() {

@@ -1,23 +1,43 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { CourseModificationStatus } from "../../store/models/course.interface";
 import { useHistory } from "react-router-dom";
-import { setModificationState } from "../../store/actions/users.action";
-import { UserModificationStatus } from "../../store/models/user.interface";
+import { setModificationState } from "../../store/actions/course.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
-function TeacherList(props) {
+function CourseNomalList(props) {
 
-  const dispatch = useDispatch();
+    const courses = useSelector((state) => state.courses);
+    const history = useHistory();
+    const dispatch = useDispatch();
+  
+  
+  
+    const routeChange = (course) => {
+      localStorage.removeItem('course_id')
+      localStorage.setItem('course_id', course.id.toString())
+      localStorage.removeItem('number_of_sum')
+      localStorage.setItem('number_of_sum', course.num_of_section.toString())
+      localStorage.removeItem('course_name')
+      localStorage.setItem('course_name', course.name)
+      let path = '/courses/section-template';
+      history.push({
+        pathname: path
+      })
+      ;
+    }
 
-  const users = useSelector((state) => state.users);
-  const teacher_register_quantifications = useSelector((state) => state.teacher_register_quantifications);
-  const history = useHistory();
+    const routeEdit = (course) => {
+        dispatch(setModificationState(CourseModificationStatus.None));
+        let path = `/courses/edit-course`;
+        history.push(path);
+      }
 
 
-  const datas = users.teachers;
+  const datas = courses.courses;
 
   const options = {
     paginationSize: 5,
@@ -46,84 +66,51 @@ function TeacherList(props) {
 
   function removeButton(cell, row) {
     return (
-      <button type="button" className="btn btn-danger" onClick={() => {
-        if (props.onSelect) props.onSelect(row);
-        dispatch(setModificationState(UserModificationStatus.Remove))
-      }}>Xóa</button>
+        <button type="button" className="btn btn-primary" onClick={() => {
+            if(props.onSelect) props.onSelect(row);
+            routeEdit(row)}}
+          >Chỉnh thông tin</button>
     );
   }
 
   function editButton(cell, row) {
     return (
-      <button type="button" className="btn btn-primary" onClick={() => {
-        if(props.onSelect) props.onSelect(row);
-        dispatch(setModificationState(UserModificationStatus.Edit))
-      }}>Chỉnh sửa</button>
+        <button type="button" className="btn btn-warning" onClick={() => {
+            if (props.onSelect) props.onSelect(row);
+            routeChange(row)
+          }}
+          >Chỉnh giáo án</button>
     )
-  }
-
-  function totalQuatification(cell, row) {
-    let total = 0;
-    let teacher_level = 0;
-    teacher_register_quantifications.not_approved_now.map((ele, index) => {
-      if (ele.teacher_id === row.id){
-        total ++;
-      }
-      return ele
-    })
-    teacher_register_quantifications.approveds.map((ele, index) => {
-      if (ele.teacher_id === row.id){
-        teacher_level ++;
-      }
-      return ele
-    })
-    return (
-      <span onClick={() => {
-        onChangeRequest(row.id)
-      }}>
-        <strong style={ { color: 'red', cursor: "pointer" } }>{teacher_level}/{total}</strong>
-      </span>
-    );
   }
 
   const columns = [
     {
-      dataField: 'username',
-      text: 'Tên đăng nhập',
-      filter: textFilter()
-    },
-    {
-      dataField: 'email',
-      text: 'Email',
-      filter: textFilter()
-    },
-    {
-      dataField: 'firstName',
-      text: 'Họ',
-      filter: textFilter()
-    },
-    {
-      dataField: 'lastName',
+      dataField: 'name',
       text: 'Tên',
       filter: textFilter()
     },
     {
-      dataField: 'phone',
-      text: 'Số điện thoại',
+      dataField: 'art_type_name',
+      text: 'Thể loại',
       filter: textFilter()
     },
     {
-      dataField: 'sex',
-      text: 'Trình động',
-      formatter: totalQuatification
+      dataField: 'art_age_name',
+      text: 'Độ tuổi',
+      filter: textFilter()
     },
     {
-      dataField: 'dateOfBirth',
-      text: '',
+      dataField: 'art_level_name',
+      text: 'Câp độ',
+      filter: textFilter()
+    },
+    {
+      dataField: '',
+      text: 'Hành động',
       formatter: editButton
     },
     {
-      dataField: 'address',
+      dataField: '',
       text: '',
       formatter: removeButton
     },
@@ -148,15 +135,6 @@ function TeacherList(props) {
     </div>
   );
 
-  const onChangeRequest = (teacher_id) => {
-    let path = '/teachers/request-level';
-    localStorage.removeItem("teacher_id");
-    localStorage.setItem("teacher_id", teacher_id.toString())
-    history.push({
-      pathname: path
-    });
-  }
-
 
   return (
       <Fragment>
@@ -174,4 +152,4 @@ function TeacherList(props) {
   );
 }
 
-export default TeacherList;
+export default CourseNomalList;

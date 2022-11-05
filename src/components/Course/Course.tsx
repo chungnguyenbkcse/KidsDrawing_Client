@@ -113,19 +113,6 @@ const Course: React.FC = () => {
                 <TopCard title="KHÓA HỌC" text={`${numberCourseCount}`} icon="box" class="primary" />
             </div>
 
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
-                        </div>
-                        <button type="button" className="btn btn-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
 
             <div className="row">
                 <div className="col-xl-12 col-lg-12">

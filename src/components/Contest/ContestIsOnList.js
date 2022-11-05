@@ -67,6 +67,20 @@ function ContestIsOnList(props) {
     )
   }
 
+  function showStartTime(cell, row) {
+    var strDate = row.start_time;
+    return (
+        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+    )
+  }
+
+  function showEndTime(cell, row) {
+    var strDate = row.start_time;
+    return (
+        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+    )
+  }
+
 
   const columns = [
     {
@@ -87,12 +101,12 @@ function ContestIsOnList(props) {
     {
       dataField: 'start_time',
       text: 'Thời gian bắt đầu',
-      filter: textFilter()
+      formatter: showStartTime,
     },
     {
       dataField: 'end_time',
       text: 'Thời gian kết thúc',
-      filter: textFilter()
+      formatter: showEndTime,
     },
     {
         dataField: 'total_register_contest',

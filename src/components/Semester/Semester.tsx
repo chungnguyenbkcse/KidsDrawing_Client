@@ -1,5 +1,4 @@
 import React, { Fragment, Dispatch, useState, useEffect } from "react";
-import SemesterList from "./SemesterList";
 import SemesterForm from "./SemesterForm";
 import TopCard from "../../common/components/TopCard";
 import "./Semester.css";
@@ -20,6 +19,7 @@ import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { ToastContainer } from "react-toastify";
+import SemesterList from "./SemesterlList";
 
 
 const Semester: React.FC = () => {

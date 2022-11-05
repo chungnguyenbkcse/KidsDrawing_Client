@@ -104,6 +104,18 @@ const Header = () => {
                       setActive4(false);
                       setActive5(false);
                       setActive6(false);
+                      setActive7(false);
+                      setActive8(false);
+                      setActive9(false);
+
+                      setActive10(false);
+                      setActive11(false);
+                      setActive12(false);
+                      setActive13(false);
+                      setActive14(false);
+                      setActive15(false);
+                      setActive16(false);
+                      setActive17(false);
                     }
                   }}>
                     Trang chủ
@@ -119,11 +131,35 @@ const Header = () => {
                         setActive4(false);
                         setActive5(false);
                         setActive6(false);
+                        setActive10(false);
+                        setActive11(false);
+                        setActive12(false);
+                        setActive13(false);
+                        setActive14(false);
+                        setActive15(false);
+                        setActive16(false);
+                        setActive17(false);
                       }
                       if (active9 === false) {
+                        setActive1(false);
+                        setActive2(false);
+                        setActive3(false);
+                        setActive4(false);
+                        setActive5(false);
+                        setActive6(false);
+
                         setActive7(false);
                         setActive8(false);
                         setActive9(true);
+
+                        setActive10(false);
+                        setActive11(false);
+                        setActive12(false);
+                        setActive13(false);
+                        setActive14(false);
+                        setActive15(false);
+                        setActive16(false);
+                        setActive17(false);
                       }
                     }}>
                       <span> Khóa học</span>
@@ -138,11 +174,40 @@ const Header = () => {
                         setActive4(false);
                         setActive5(false);
                         setActive6(false);
+
+                        setActive7(false);
+                        setActive8(false);
+                        setActive9(false);
+
+                        setActive10(false);
+                        setActive11(false);
+                        setActive12(false);
+                        setActive13(false);
+                        setActive14(false);
+                        setActive15(false);
+                        setActive16(false);
+                        setActive17(false);
                       }
                       if (active8 === false) {
+                        setActive1(false);
+                        setActive2(false);
+                        setActive3(false);
+                        setActive4(false);
+                        setActive5(false);
+                        setActive6(false);
+
                         setActive7(false);
                         setActive8(true);
                         setActive9(false);
+
+                        setActive10(false);
+                        setActive11(false);
+                        setActive12(false);
+                        setActive13(false);
+                        setActive14(false);
+                        setActive15(false);
+                        setActive16(false);
+                        setActive17(false);
                       }
                     }}>
                       <span> Lớp</span>
@@ -151,17 +216,47 @@ const Header = () => {
                   <MenuItem icon={<MdSchool />} active={active2}>
                     <Link to={`/contests`} className={active7 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
                       if (active2 === false) {
+                        
                         setActive1(false);
                         setActive2(true);
                         setActive3(false);
                         setActive4(false);
                         setActive5(false);
                         setActive6(false);
+
+                        setActive7(false);
+                        setActive8(false);
+                        setActive9(false);
+
+                        setActive10(false);
+                        setActive11(false);
+                        setActive12(false);
+                        setActive13(false);
+                        setActive14(false);
+                        setActive15(false);
+                        setActive16(false);
+                        setActive17(false);
                       }
                       if (active7 === false) {
+                        setActive1(false);
+                        setActive2(false);
+                        setActive3(false);
+                        setActive4(false);
+                        setActive5(false);
+                        setActive6(false);
+
                         setActive7(true);
                         setActive8(false);
                         setActive9(false);
+
+                        setActive10(false);
+                        setActive11(false);
+                        setActive12(false);
+                        setActive13(false);
+                        setActive14(false);
+                        setActive15(false);
+                        setActive16(false);
+                        setActive17(false);
                       }
                     }}>
                       <span> Cuộc thi</span>
@@ -176,6 +271,19 @@ const Header = () => {
                     setActive4(false);
                     setActive5(false);
                     setActive6(false);
+
+                    setActive7(false);
+                    setActive8(false);
+                    setActive9(false);
+
+                    setActive10(false);
+                    setActive11(false);
+                    setActive12(false);
+                    setActive13(false);
+                    setActive14(false);
+                    setActive15(false);
+                    setActive16(false);
+                    setActive17(false);
                   }
                 }}>
                   <MenuItem icon={<FaChalkboardTeacher />}>
@@ -187,6 +295,19 @@ const Header = () => {
                         setActive4(false);
                         setActive5(false);
                         setActive6(false);
+
+                        setActive7(false);
+                        setActive8(false);
+                        setActive9(false);
+                          
+                        setActive10(false);
+                        setActive11(false);
+                        setActive12(false);
+                        setActive13(false);
+                        setActive14(false);
+                        setActive15(false);
+                        setActive16(false);
+                        setActive17(false);
                       }
                       if (active10 === false) {
                         setActive10(true);

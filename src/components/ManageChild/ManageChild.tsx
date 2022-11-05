@@ -49,7 +49,7 @@ const ManageChild: React.FC = () => {
     const numberApprovedCount: number = classes_students.classes_done.length + classes_students.classes_doing.length;
     const numberNotApprovedNowCount: number = contest_teachers.contest_end.length + contest_teachers.contest_not_open_now.length + contest_teachers.contest_opening.length;
     var id_x = localStorage.getItem('student_id');
-    var student_id: any = "";
+    var student_id: any = 0;
     if (id_x !== null) {
         student_id = id_x;
     }

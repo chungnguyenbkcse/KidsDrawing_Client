@@ -47,7 +47,7 @@ const DetailClassTeacher: React.FC = () => {
 
     var id_y = localStorage.getItem('class_id');
 
-    let class_id: any = "";
+    let class_id: any = 0;
 
     if (id_y !== null) {
         class_id = id_y;

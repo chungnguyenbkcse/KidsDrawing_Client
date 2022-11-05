@@ -28,7 +28,7 @@ const ManageStudent: React.FC = () => {
 
     
     var id_z = localStorage.getItem('parent_id');
-    var parent_id: any = "";
+    var parent_id: any = 0;
     if (id_z !== null) {
         parent_id = id_z;
     }
@@ -40,7 +40,7 @@ const ManageStudent: React.FC = () => {
     }
 
     var id_t = localStorage.getItem('class_id');
-    var class_id: any = "";
+    var class_id: any = 0;
     if (id_t !== null) {
         class_id = id_t;
     }

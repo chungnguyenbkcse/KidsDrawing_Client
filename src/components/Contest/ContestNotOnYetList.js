@@ -12,7 +12,8 @@ function ContestNotOnYetList(props) {
     const contests = useSelector((state) => state.contests);
     const history = useHistory();
 
-    const routeChange = () => {
+    const routeChange = (id) => {
+        localStorage.setItem('contest_id', id)
         let path = '/contests/detail';
         history.push(path);
     }
@@ -62,8 +63,16 @@ function ContestNotOnYetList(props) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
         if(props.onSelect) props.onSelect(row);
-        routeChange()
-      }}>Chi tiết</button>
+        routeChange(row.id)
+      }}>Chỉnh sửa</button>
+    )
+  }
+
+  function viewGenarationGradeButton(cell, row) {
+    return (
+      <button type="button" className="btn btn-info" onClick={() => {
+        if(props.onSelect) props.onSelect(row);
+      }}>Xếp chấm thi</button>
     )
   }
 
@@ -109,19 +118,22 @@ function ContestNotOnYetList(props) {
       formatter: showEndTime,
     },
     {
-        dataField: 'total_register_contest',
-        text: 'Tổng số đăng kí',
-        filter: textFilter()
-      },
-      {
-        dataField: 'total_contest_submission_graded',
-        text: 'Tổng số bài nộp',
-        filter: textFilter()
-      },
+      dataField: 'total_register_contest',
+      text: 'Đã kí',
+    },
+    {
+      dataField: 'total_contest_submission_graded',
+      text: 'Đã nộp',
+    },
     {
       dataField: '',
-      text: 'Trình động',
+      text: 'Hành động',
       formatter: viewDetailButton
+    },
+    {
+      dataField: '',
+      text: '',
+      formatter: viewGenarationGradeButton
     }
   ];
 

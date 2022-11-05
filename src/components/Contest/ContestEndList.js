@@ -12,7 +12,8 @@ function ContestEndList(props) {
     const contests = useSelector((state) => state.contests);
     const history = useHistory();
 
-    const routeChange = () => {
+    const routeChange = (id) => {
+      localStorage.setItem('contest_id', id)
         let path = '/contests/detail';
         history.push(path);
     }
@@ -62,8 +63,8 @@ function ContestEndList(props) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
         if(props.onSelect) props.onSelect(row);
-        routeChange()
-      }}>Chi tiết</button>
+        routeChange(row.id)
+      }}>Chỉnh sửa</button>
     )
   }
 
@@ -110,17 +111,15 @@ function ContestEndList(props) {
     },
     {
         dataField: 'total_register_contest',
-        text: 'Tổng số đăng kí',
-        filter: textFilter()
+        text: 'Đã kí',
       },
       {
         dataField: 'total_contest_submission_graded',
-        text: 'Tổng số bài nộp',
-        filter: textFilter()
+        text: 'Đã nộp',
       },
     {
       dataField: '',
-      text: 'Trình động',
+      text: 'Hành động',
       formatter: viewDetailButton
     }
   ];

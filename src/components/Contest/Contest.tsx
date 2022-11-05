@@ -153,18 +153,6 @@ const Contest: React.FC = () => {
                 <TopCard title="CHƯA DIỄN RA" text={`${numberContestNotStartCount}`} icon="box" class="primary" />
             </div>
 
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
-                        </div>
-                        <button type="button" className="btn btn-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
             <div className="row">
                 <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">

@@ -25,7 +25,7 @@ const ReivewClassDone: React.FC = () => {
     }
 
     var id_t = localStorage.getItem('class_id');
-    var class_id: any = "";
+    var class_id: any = 0;
     if (id_t !== null) {
         class_id = id_t;
     }

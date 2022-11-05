@@ -114,7 +114,7 @@ function TeacherList(props) {
     },
     {
       dataField: 'sex',
-      text: 'Trình động',
+      text: 'Hành động',
       formatter: totalQuatification
     },
     {

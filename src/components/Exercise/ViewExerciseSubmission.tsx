@@ -19,7 +19,7 @@ const ViewExerciseSubmission: React.FC = () => {
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
 
     var id_y = localStorage.getItem('exercise_submission_id');
-    var exercise_submission_id: any = "";
+    var exercise_submission_id: any = 0;
     if (id_y !== null) {
         exercise_submission_id = id_y;
     }

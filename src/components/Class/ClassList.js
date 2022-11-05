@@ -126,7 +126,7 @@ function ClassList(props) {
       },
     {
       dataField: '',
-      text: 'Trình động',
+      text: 'Hành động',
       formatter: editButton
     },
     {

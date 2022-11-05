@@ -28,7 +28,7 @@ function TopMenuCart(): JSX.Element {
   const user_register_join_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
 
   var id_x = localStorage.getItem('id');
-  let user_id: any = "";
+  let user_id: any = 0;
   if (id_x !== null) {
     user_id = id_x
   }

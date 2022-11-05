@@ -7,7 +7,7 @@ import { getExerciseBySection } from "./GetExerciseBySection";
 export function postExercise(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('section_id');
-    let section_id: any = "";
+    let section_id: any = 0;
     if(id_x !== null){
         section_id = id_x
     }

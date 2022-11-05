@@ -32,7 +32,7 @@ function FormSubmit(): JSX.Element {
     }
 
     var id_z = localStorage.getItem("exercise_id");
-    let exercise_id: any = "";
+    let exercise_id: any = 0;
     if (id_z !== null) {
         exercise_id = id_z;
     }

@@ -112,7 +112,7 @@ function ClassSemesterList(props) {
     },
     {
       dataField: '',
-      text: 'Trình động',
+      text: 'Hành động',
       formatter: editButton
     },
     {

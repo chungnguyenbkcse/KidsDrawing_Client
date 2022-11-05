@@ -48,7 +48,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_id');
-    let section_id: any = "";
+    let section_id: any = 0;
     if (id_x !== null) {
         section_id = id_x
     }
@@ -69,7 +69,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
 
     var id_t = localStorage.getItem('tutorial_id');
-    let tutorial_id: any = "";
+    let tutorial_id: any = 0;
     if (id_t !== null) {
         tutorial_id = id_t
     }

@@ -53,7 +53,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_template_id');
-    let section_template_id: any = "";
+    let section_template_id: any = 0;
     if (id_x !== null) {
         section_template_id = id_x
     }
@@ -74,7 +74,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
 
     var id_t = localStorage.getItem('tutorial_template_id');
-    let tutorial_template_id: any = "";
+    let tutorial_template_id: any = 0;
     if (id_t !== null) {
         tutorial_template_id = id_t
     }

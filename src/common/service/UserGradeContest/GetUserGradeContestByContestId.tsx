@@ -11,7 +11,7 @@ export function getUserGradeContestByContestId(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/user-grade-contest/contest/${id}?page=0&size=100`, {
+                `${process.env.REACT_APP_API_URL}/user-grade-contest/contest/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

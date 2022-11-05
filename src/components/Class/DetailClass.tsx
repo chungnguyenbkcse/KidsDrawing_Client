@@ -32,7 +32,7 @@ const DetailClass: React.FC = () => {
     }, [path.area, dispatch]);
 
     var id_x = localStorage.getItem('class_id')
-    let class_id: any = "";
+    let class_id: any = 0;
     if (id_x !== null){
         class_id = id_x
     }

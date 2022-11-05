@@ -20,7 +20,7 @@ const SemesterClassTeacherNew: React.FC = () => {
     }
 
     var id_y = localStorage.getItem('course_id');
-    var course_id: any = "";
+    var course_id: any = 0;
     if (id_y !== null) {
         course_id = id_y;
     }

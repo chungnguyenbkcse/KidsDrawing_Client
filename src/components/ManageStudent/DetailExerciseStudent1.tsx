@@ -29,7 +29,7 @@ const DetailExerciseStudent1: React.FC = () => {
     }
 
     var id_k = localStorage.getItem('exercise_id');
-    var exercise_id: any = "";
+    var exercise_id: any = 0;
     if (id_k !== null) {
         exercise_id = id_k;
     }

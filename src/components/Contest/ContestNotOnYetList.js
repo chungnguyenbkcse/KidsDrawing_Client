@@ -1,16 +1,29 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment  } from "react";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { formatDate } from "../../common/components/ConverDate";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { postGenerationContestSubmissionGrade } from "../../common/service/ContestSubmission/PostGenerationForTeacher";
 
 
 function ContestNotOnYetList(props) {
 
+  const dispatch = useDispatch();
+
     const contests = useSelector((state) => state.contests);
     const history = useHistory();
+
+    const generationContestSubmission = (id) => {
+      localStorage.setItem('contest_id', id)
+        const idx = toast.info("Xếp thành công", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000
+        });
+        dispatch(postGenerationContestSubmissionGrade(id, idx))
+    }
 
     const routeChange = (id) => {
         localStorage.setItem('contest_id', id)
@@ -69,9 +82,13 @@ function ContestNotOnYetList(props) {
   }
 
   function viewGenarationGradeButton(cell, row) {
+    if (localStorage.getItem('check_generation') === "true") {
+      return null
+    }
     return (
       <button type="button" className="btn btn-info" onClick={() => {
         if(props.onSelect) props.onSelect(row);
+        generationContestSubmission(row.id)
       }}>Xếp chấm thi</button>
     )
   }
@@ -119,7 +136,7 @@ function ContestNotOnYetList(props) {
     },
     {
       dataField: 'total_register_contest',
-      text: 'Đã kí',
+      text: 'Đã đăng kí',
     },
     {
       dataField: 'total_contest_submission_graded',

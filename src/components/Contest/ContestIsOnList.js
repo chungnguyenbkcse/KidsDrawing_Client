@@ -111,7 +111,7 @@ function ContestIsOnList(props) {
     },
     {
       dataField: 'total_register_contest',
-      text: 'Đã kí',
+      text: 'Đã đăng kí',
     },
     {
       dataField: 'total_contest_submission_graded',

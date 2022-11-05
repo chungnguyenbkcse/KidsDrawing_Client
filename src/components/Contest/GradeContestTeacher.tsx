@@ -3,7 +3,7 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IContestSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
+import { IContestSubmissionTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./GradeContestTeacher.css"
 import 'react-circular-progressbar/dist/styles.css';
 import TextInput from "../../common/components/TextInput";
@@ -11,15 +11,15 @@ import { useHistory } from "react-router-dom";
 import { OnChangeModel } from "../../common/types/Form.types";
 import NumberInput from "../../common/components/NumberInput";
 import { toast, ToastContainer } from "react-toastify";
-import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
-import { postUserGradeContestSubmission } from "../../common/service/UserGradeContestSubmission/PostUserGradeContestSubmission";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { postUserGradeContestSubmission } from "../../common/service/UserGradeContestSubmission/PostUserGradeContestSubmission";
+import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
 
 
 const GradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
+    const contest_submissions: IContestSubmissionTeacherState = useSelector((state: IStateType) => state.contest_submission_teacher);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const { promiseInProgress } = usePromiseTracker();
     let user_grade_contest_submission = {
@@ -48,7 +48,7 @@ const GradeContestTeacher: React.FC = () => {
         });
         
         if (contest_submission_id === ""){
-            let y = contest_submissions.contest_not_gradeds[0].id;
+            let y = contest_submissions.contest_submission_not_grade[0].id;
             console.log({
                 teacher_id: id,
                 contest_submission_id: y,
@@ -103,14 +103,14 @@ const GradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
+                    trackPromise(getContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
                 }
             }
             else {
-                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
+                trackPromise(getContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
             }
         }
-    }, [dispatch, access_token, refresh_token, contest_id]);
+    }, [dispatch, access_token, refresh_token, contest_id, id]);
 
     useEffect(() => {
         dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
@@ -120,15 +120,15 @@ const GradeContestTeacher: React.FC = () => {
     const routeChange = () => {
         let x = count + 1;
         setCount(x);
-        if (x < contest_submissions.contest_not_gradeds.length){
-            let image_url_ = contest_submissions.contest_not_gradeds[x].image_url;
-            let student_name_ = contest_submissions.contest_not_gradeds[x].student_name;
-            let time_submit_ = contest_submissions.contest_not_gradeds[x].update_time;
-            let contest_submission_id_ = contest_submissions.contest_not_gradeds[x].id;
+        if (x < contest_submissions.contest_submission_not_grade.length){
+            let image_url_ = contest_submissions.contest_submission_not_grade[x].image_url;
+            let student_name_ = contest_submissions.contest_submission_not_grade[x].student_name;
+            let time_submit_ = contest_submissions.contest_submission_not_grade[x].update_time;
+            let contest_submission_id_ = contest_submissions.contest_submission_not_grade[x].id;
             setImageUrl(image_url_);
             setStudentName(student_name_);
             setTimeSubmit(time_submit_);
-            setContestSubmissionId(contest_submission_id_);
+            setContestSubmissionTeacherId(contest_submission_id_);
         }
     }
 
@@ -142,7 +142,7 @@ const GradeContestTeacher: React.FC = () => {
     const [count, setCount] = useState(0);
     const [image_url, setImageUrl] = useState("");
     const [student_name, setStudentName] = useState("");
-    const [contest_submission_id, setContestSubmissionId] = useState("");
+    const [contest_submission_id, setContestSubmissionTeacherId] = useState("");
     const [time_submit, setTimeSubmit] = useState("");
     return (
         promiseInProgress ?
@@ -168,9 +168,9 @@ const GradeContestTeacher: React.FC = () => {
                                     <img className="card-img-top" src={image_url} alt="" />
                                 )
                             else {
-                                if (contest_submissions.contest_not_gradeds.length > 0) {
+                                if (contest_submissions.contest_submission_not_grade.length > 0) {
                                     return (
-                                        <img className="card-img-top" src={contest_submissions.contest_not_gradeds[0].image_url} alt="" />
+                                        <img className="card-img-top" src={contest_submissions.contest_submission_not_grade[0].image_url} alt="" />
                                     )
                                 }
                             }
@@ -197,17 +197,17 @@ const GradeContestTeacher: React.FC = () => {
                                             </div>
                                         )
                                     else {
-                                        if (contest_submissions.contest_not_gradeds.length > 0) {
+                                        if (contest_submissions.contest_submission_not_grade.length > 0) {
                                             return (
                                                 <div className="card-body">
                                                     <div className="row no-gutters justify-content-left">
                                                         <h4 id="full-name">Thông tin bài nộp</h4>
                                                     </div>
                                                     <div className="row no-gutters justify-content-left">
-                                                        <p id="username-teacher">Tên học sinh: {contest_submissions.contest_not_gradeds[0].student_name}</p>
+                                                        <p id="username-teacher">Tên học sinh: {contest_submissions.contest_submission_not_grade[0].student_name}</p>
                                                     </div>
                                                     <div className="row no-gutters justify-content-left">
-                                                        <p id="username-teacher">Thời gian nộp: {contest_submissions.contest_not_gradeds[0].update_time}</p>
+                                                        <p id="username-teacher">Thời gian nộp: {contest_submissions.contest_submission_not_grade[0].update_time}</p>
                                                     </div>
                                                 </div>
                                             )
@@ -253,7 +253,7 @@ const GradeContestTeacher: React.FC = () => {
                             <button className="btn btn-warning" onClick={() => {saveForm()}}>Lưu</button>
                             {
                                 function () {
-                                    if (count === contest_submissions.contest_not_gradeds.length - 1) {
+                                    if (count === contest_submissions.contest_submission_not_grade.length - 1) {
                                         return (
                                             <button className={`btn btn-success left-margin`} onClick={() => { routeChange1() }}>Hoàn thành</button>
                                         )

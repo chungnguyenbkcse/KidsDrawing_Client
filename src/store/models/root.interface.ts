@@ -64,6 +64,7 @@ import { ISemesterClassParent, SemesterClassParentModificationStatus } from "./s
 import { ContestParentNewModificationStatus, IContestParentNew } from "./contest_parent_new.interface";
 import { CourseTeacherNewModificationStatus, ICourseTeacherNew } from "./course_teacher_new.interface";
 import { ISemesterClassTeacher, SemesterClassTeacherModificationStatus } from "./semester_class_teacher.interface";
+import { ContestSubmissionTeacherModificationStatus, IContestSubmissionTeacher } from "./contest_submission_teacher.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -141,6 +142,7 @@ export interface IStateType {
     contest_parent_new: IContestParentNewState;
     course_teacher_new: ICourseTeacherNewState;
     semester_class_teachers: ISemesterClassTeacherState;
+    contest_submission_teacher: IContestSubmissionTeacherState;
 }
 
 export interface IProductState {
@@ -404,6 +406,13 @@ export interface IContestSubmissionState {
     modificationState: ContestSubmissionModificationStatus;
     contest_not_gradeds: IContestSubmission[];
     contest_gradeds: IContestSubmission[];
+}
+
+export interface IContestSubmissionTeacherState {
+    selectedContestSubmissionTeacher: IContestSubmissionTeacher | null;
+    modificationState: ContestSubmissionTeacherModificationStatus;
+    contest_submission_not_grade: IContestSubmissionTeacher[];
+    contest_submission_grade: IContestSubmissionTeacher[];
 }
 
 export interface IStudentLeaveState {

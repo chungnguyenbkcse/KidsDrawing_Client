@@ -62,9 +62,8 @@ function ContestEndList(props) {
   function viewDetailButton(cell, row) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
-        if(props.onSelect) props.onSelect(row);
         routeChange(row.id)
-      }}>Chỉnh sửa</button>
+      }}>Chi tiết</button>
     )
   }
 
@@ -111,7 +110,7 @@ function ContestEndList(props) {
     },
     {
         dataField: 'total_register_contest',
-        text: 'Đã kí',
+        text: 'Đã đăng kí',
       },
       {
         dataField: 'total_contest_submission_graded',

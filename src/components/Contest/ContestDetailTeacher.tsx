@@ -3,17 +3,17 @@ import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
-import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
-import { IContestSubmissionState, IStateType } from "../../store/models/root.interface";
+import { IContestSubmissionTeacherState, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
 
 const ContestDetailTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
-    const numberNotGradedCount: number = contest_submissions.contest_not_gradeds.length;
-    const numberGradedCount: number = contest_submissions.contest_gradeds.length;
+    const contest_submissions: IContestSubmissionTeacherState = useSelector((state: IStateType) => state.contest_submission_teacher);
+    const numberNotGradedCount: number = contest_submissions.contest_submission_not_grade.length;
+    const numberGradedCount: number = contest_submissions.contest_submission_grade.length;
 
 
     var contest_description = localStorage.getItem('contest_description');
@@ -33,6 +33,13 @@ const ContestDetailTeacher: React.FC = () => {
 
     if (id_y !== null) {
         contest_id = id_y;
+    }
+
+    var id_x = localStorage.getItem('id');
+    let id = 0;
+
+    if (id_x !== null) {
+        id = parseInt(id_x);
     }
 
     var id_z = localStorage.getItem('max_participant');
@@ -103,14 +110,14 @@ const ContestDetailTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
+                    trackPromise(getContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
                 }
             }
             else {
-                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
+                trackPromise(getContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
             }
         }
-    }, [dispatch, access_token, refresh_token, contest_id]);
+    }, [dispatch, access_token, refresh_token, contest_id, id]);
 
     
 

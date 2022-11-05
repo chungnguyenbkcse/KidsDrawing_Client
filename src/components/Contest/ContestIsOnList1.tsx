@@ -15,7 +15,7 @@ type Options = {
     value: any;
 }
 
-function ContestIsOnList(props: contestListProps): JSX.Element {
+function ContestIsOnList1(props: contestListProps): JSX.Element {
     const contests: IContestState = useSelector((state: IStateType) => state.contests);
     const history = useHistory();
 
@@ -67,4 +67,4 @@ function ContestIsOnList(props: contestListProps): JSX.Element {
     );
 }
 
-export default ContestIsOnList;
+export default ContestIsOnList1;

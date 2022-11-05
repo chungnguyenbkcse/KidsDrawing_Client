@@ -1,38 +1,49 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
-import { setModificationStateSemesterClass } from "../../store/actions/semester_class.action";
+import { useHistory } from "react-router-dom";
+import { MyClassModificationStatus } from "../../store/models/my_class.interface";
+import { setModificationState } from "../../store/actions/my_class.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
-import filterFactory, { textFilter, numberFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
-function ClassSemesterList(props) {
+function ClassList(props) {
 
     const dispatch = useDispatch();
-    const semester_classes = useSelector((state) => state.semester_classes);
-    const schedules = useSelector((state) => state.schedules);
-    let schedule_list = []
-    console.log(semester_classes.semesterClasses)
-    if (schedules.schedules.length > 0){
-      semester_classes.semesterClasses.map(ele => {
-        let item = "";
-        schedules.schedules.map(element => {
-          if (element.semester_class_id === ele.id) {
-            console.log(element.lesson_time)
-            item += element.lesson_time
-          }
-          return element
-        })
-        return schedule_list.push({
-          name: ele.name,
-          value: item
-        })
-      })
+
+    const myclasss = useSelector((state) => state.myclasses);
+  
+    const history = useHistory();
+  
+    const [popup, setPopup] = useState(false);
+    
+    const routeChange = (class_id) =>{ 
+      let path = '/class/detail'; 
+      history.push({
+        pathname: path,
+        state: { class_id: class_id }
+      });
     }
+  
+    function onMyClassRemove() {
+      setPopup(true);
+  }
+
+  const routeViewSchedule = (class_id, class_name) =>{ 
+    localStorage.removeItem('class_id')
+    localStorage.setItem('class_id', class_id.toString())
+    localStorage.removeItem('class_name')
+    localStorage.setItem('class_name', class_name)
+    let path = '/class/schedule'; 
+    history.push({
+      pathname: path,
+      state: { class_id: class_id }
+    });
+  }
 
 
-  const datas = semester_classes.semesterClasses;
+  const datas = myclasss.myClasses;
 
   const options = {
     paginationSize: 5,
@@ -63,7 +74,7 @@ function ClassSemesterList(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={()=> {
             if(props.onSelect) props.onSelect(row);
-            dispatch(setModificationStateSemesterClass(row))
+            dispatch(setModificationState(row))
           }}>Chỉnh sửa</button>
     );
   }
@@ -72,16 +83,29 @@ function ClassSemesterList(props) {
     return (
         <button type="button" className="btn btn-danger" onClick={() =>{
             if(props.onSelect) props.onSelect(row);
-            dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Remove))
+            dispatch(setModificationState(MyClassModificationStatus.Remove))
           }}>Xóa</button>
     )
   }
 
-  function schduleShow(cell, row, rowIndex) {
+  function viewScheduleButton(cell, row) {
     return (
-        <span>{schedule_list[rowIndex].value}</span>
+        <button type="button" className="btn btn-primary" onClick={() => {
+            if(props.onSelect) props.onSelect(row);
+            routeViewSchedule(row.id, row.name)}}
+          >Chi tiết</button>
     )
   }
+
+  function detailClassButton(cell, row) {
+    return (
+        <button type="button" className="btn btn-primary" onClick={() => {
+            if(props.onSelect) props.onSelect(row);
+            routeChange(row.id)}}
+          >Chi tiết</button>
+    )
+  }
+
 
 
   const columns = [
@@ -91,25 +115,15 @@ function ClassSemesterList(props) {
       filter: textFilter()
     },
     {
-      dataField: 'course_name',
-      text: 'Khóa học',
-      filter: textFilter()
-    },
-    {
-      dataField: 'semester_name',
-      text: 'Học kì',
-      filter: textFilter()
-    },
-    {
-      dataField: 'max_participant',
-      text: 'Số học sinh tối đa',
-      filter: numberFilter()
-    },
-    {
       dataField: '',
       text: 'Lịch học',
-      formatter: schduleShow
+      formatter: viewScheduleButton
     },
+    {
+        dataField: '',
+        text: 'Thống kê',
+        formatter: detailClassButton
+      },
     {
       dataField: '',
       text: 'Trình động',
@@ -158,4 +172,4 @@ function ClassSemesterList(props) {
   );
 }
 
-export default ClassSemesterList;
+export default ClassList;

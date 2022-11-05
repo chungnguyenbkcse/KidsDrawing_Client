@@ -1,5 +1,4 @@
 import React, { Fragment, Dispatch, useState, useEffect } from "react";
-import LessonList from "./LessonList";
 import LessonForm from "./LessonForm";
 import TopCard from "../../common/components/TopCard";
 import "./Lesson.css";
@@ -20,6 +19,7 @@ import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import LessonList from "./LessonList";
 
 
 const Lesson: React.FC = () => {

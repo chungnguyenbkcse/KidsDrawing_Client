@@ -126,6 +126,8 @@ const DetailClassTeacher: React.FC = () => {
         localStorage.setItem('section_id', section.id.toString())
         localStorage.removeItem('section_number')
         localStorage.setItem('section_number', section.number.toString())
+        localStorage.removeItem('recording')
+        localStorage.setItem('recording', section.recording.toString())
         /* let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
         localStorage.removeItem('tutorial_id')

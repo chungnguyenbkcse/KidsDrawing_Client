@@ -93,6 +93,10 @@
     border-radius: 30px;
 }
 
+#btn-add-exercise1 {
+    border-radius: 30px;
+}
+
 #normal-tutorial {
     background: #C3DFF9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

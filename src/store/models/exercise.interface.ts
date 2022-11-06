@@ -16,5 +16,6 @@ export enum ExerciseModificationStatus {
     Create = 1,
     Edit = 2,
     Remove = 3,
-    ClosePopup = 4
+    ClosePopup = 4,
+    Create1 = 5
 }

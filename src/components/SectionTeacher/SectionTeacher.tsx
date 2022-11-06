@@ -18,6 +18,7 @@ import Loading from "../../common/components/Loading";
 import { getClassTeacher } from "../../common/service/ClassTeacher/GetClassTeacher";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { getTutorialBySection } from "../../common/service/Tutorial/GetTutorialBySection";
+import SubmitRecordForm from "./SubmitRecordForm";
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -30,6 +31,7 @@ const SectionTeacher: React.FC = () => {
     console.log(users.teachers)
 
     const [popup, setPopup] = useState(false);
+    const [popup1, setPopup1] = useState(false);
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -37,8 +39,16 @@ const SectionTeacher: React.FC = () => {
         setPopup(true);
     }
 
+    function onRecordRemove() {
+        setPopup1(true);
+    }
+
     function onRemovePopup(value: boolean) {
         setPopup(false);
+    }
+
+    function onRemovePopup1(value: boolean) {
+        setPopup1(false);
     }
 
     var id_y = localStorage.getItem('section_id');
@@ -57,7 +67,7 @@ const SectionTeacher: React.FC = () => {
 
 
     var id_z = localStorage.getItem('class_id');
-    var class_id: any= "";
+    var class_id: any = "";
     if (id_z !== null) {
         class_id = id_z;
     }
@@ -177,32 +187,86 @@ const SectionTeacher: React.FC = () => {
                 </div>
             </div> : <Fragment>
                 <ToastContainer />
-                <div className="row mb-2">
-                    <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
-                        <button
-                            className="btn btn-success ml-3"
-                            id="btn-edit-tutorial"
-                            onClick={onChangeRoute1}
-                        >
-                            <i className="fas fa-edit"></i>
-                            Chỉnh giáo án
-                        </button>
-                    </div>
+                {
+                    function () {
+                        if (sections.sections.length <= 0) {
+                            return ""
+                        }
+                        else {
+                            if (sections.sections[0].teach_form === true) {
+                                return <div className="row mb-2">
+                                    <div className="col-xl-4 col-md-4 col-xs-4 md-4 ">
+                                        <button
+                                            className="btn btn-success ml-3"
+                                            id="btn-edit-tutorial"
+                                            onClick={onChangeRoute1}
+                                        >
+                                            <i className="fas fa-edit"></i>
+                                            Chỉnh giáo án
+                                        </button>
+                                    </div>
 
-                    <div className="col-xl-6 col-md-6 col-xs-6 md-4">
-                        <button
-                            className="btn btn-success ml-3"
-                            id="btn-add-exercise"
-                            onClick={() => {
-                                dispatch(setModificationState(ExerciseModificationStatus.Create))
-                                onExerciseRemove()
-                            }}
-                        >
-                            <i className="fas fa fa-plus"></i>
-                            Thêm bài tập
-                        </button>
-                    </div>
-                </div>
+                                    <div className="col-xl-4 col-md-4 col-xs-4 md-4">
+                                        <button
+                                            className="btn btn-success ml-3"
+                                            id="btn-add-exercise"
+                                            onClick={() => {
+                                                dispatch(setModificationState(ExerciseModificationStatus.Create))
+                                                onExerciseRemove()
+                                            }}
+                                        >
+                                            <i className="fas fa fa-plus"></i>
+                                            Thêm bài tập
+                                        </button>
+                                    </div>
+
+                                    <div className="col-xl-4 col-md-4 col-xs-4 md-4">
+                                        <button
+                                            className="btn btn-info ml-3"
+                                            id="btn-add-exercise1"
+                                            onClick={() => {
+                                                dispatch(setModificationState(ExerciseModificationStatus.Create1))
+                                                onRecordRemove()
+                                            }}
+                                        >
+                                            <i className="fas fa fa-plus"></i>
+                                            Nộp record
+                                        </button>
+                                    </div>
+                                </div>;
+                            }
+                            else {
+                                return <div className="row mb-2">
+                                    <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
+                                        <button
+                                            className="btn btn-success ml-3"
+                                            id="btn-edit-tutorial"
+                                            onClick={onChangeRoute1}
+                                        >
+                                            <i className="fas fa-edit"></i>
+                                            Chỉnh giáo án
+                                        </button>
+                                    </div>
+
+                                    <div className="col-xl-6 col-md-6 col-xs-6 md-4">
+                                        <button
+                                            className="btn btn-success ml-3"
+                                            id="btn-add-exercise"
+                                            onClick={() => {
+                                                dispatch(setModificationState(ExerciseModificationStatus.Create))
+                                                onExerciseRemove()
+                                            }}
+                                        >
+                                            <i className="fas fa fa-plus"></i>
+                                            Thêm bài tập
+                                        </button>
+                                    </div>
+
+                                </div>;
+                            }
+                        }
+                    }()
+                }
 
                 <Popup
                     open={popup}
@@ -219,6 +283,23 @@ const SectionTeacher: React.FC = () => {
                         }
                     </>
                 </Popup>
+
+                <Popup
+                    open={popup1}
+                    onClose={() => setPopup1(false)}
+                    closeOnDocumentClick
+                >
+                    <>
+                        {
+                            function () {
+                                if ((exercises.modificationState === ExerciseModificationStatus.Create1)) {
+                                    return <SubmitRecordForm isCheck={onRemovePopup1} />
+                                }
+                            }()
+                        }
+                    </>
+                </Popup>
+
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
                         <div className="row">

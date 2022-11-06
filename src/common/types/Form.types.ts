@@ -51,6 +51,10 @@ export interface IStudentLeaveFormState {
     description: IFormStateField<string>;
 }
 
+export interface ISubmitRecordFormState {
+    link_url: IFormStateField<string>;
+}
+
 export  interface IOrderFormState {
     name: IFormStateField<string>;
     product: IFormStateField<IProduct | null>;

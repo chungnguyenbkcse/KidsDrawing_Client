@@ -72,6 +72,12 @@ const SectionTeacher: React.FC = () => {
         class_id = id_z;
     }
 
+    var id_t = localStorage.getItem('recording');
+    var recording: any = "";
+    if (id_t !== null) {
+        recording = id_t;
+    }
+
     let link_jisti = "";
     if (class_teachers.class_doing.length > 0) {
         class_teachers.class_doing.map((ele, idx) => {
@@ -193,7 +199,7 @@ const SectionTeacher: React.FC = () => {
                             return ""
                         }
                         else {
-                            if (sections.sections[0].teach_form === true) {
+                            if (sections.sections[0].recording === "") {
                                 return <div className="row mb-2">
                                     <div className="col-xl-4 col-md-4 col-xs-4 md-4 ">
                                         <button

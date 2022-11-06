@@ -59,7 +59,8 @@ function SubmitRecordForm(props: lessonListProps): JSX.Element {
             }
         )
         const data = await res.json()
-        dispatch(putSection(section_id, data.link_url, idx))
+        console.log(data)
+        dispatch(putSection(section_id, {recording: data.url_video}, idx))
     };
 
     return (

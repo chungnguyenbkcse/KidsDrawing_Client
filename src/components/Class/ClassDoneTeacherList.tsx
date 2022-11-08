@@ -14,9 +14,11 @@ function ClassDoneList(props: classTeacherListProps): JSX.Element {
 
   const history = useHistory();
   const routeChange = (class_teacher: IClassTeacher) => {
-    let path = '/classes/detail';
+    let path = '/classes-end/detail';
     localStorage.removeItem("class_id");
     localStorage.setItem("class_id", class_teacher.id.toString())
+    localStorage.removeItem('class_end');
+    localStorage.setItem('class_end', 'true');
     history.push({
       pathname: path,
       state: { class_id: class_teacher.id }

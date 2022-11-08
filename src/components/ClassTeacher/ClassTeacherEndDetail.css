@@ -10,9 +10,16 @@
     background-color: #FFF8E5 !important;
 }
 
-.form-x  .ql-editor{
-    max-height: 500px !important;
-    min-height: 100px !important;
+.not_active {
+    background: #CCEBF4 !important;
+}
+
+.active_now {
+    background: #21FC36 !important;
+}
+
+.not_active_now {
+    background: #B7BBBC !important;
 }
 
 #topcard-user {
@@ -82,4 +89,27 @@
 
 .data-table {
     color: #B51CEB;
+}
+
+.row-section {
+    border-radius: 20px;
+}
+
+.row-off-section {
+    background: #C2EB80;
+    border-radius: 20px;
+}
+
+.row-off-section-2 {
+    background: #C3C9BB;
+    border-radius: 20px;
+}
+
+.image-section {
+    height: auto;
+    width: 50% !important;
+}
+
+.table-section {
+    min-height: 1000px;
 }

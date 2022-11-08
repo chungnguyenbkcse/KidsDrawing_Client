@@ -595,7 +595,7 @@ const Header = () => {
                     </Link>
                   </MenuItem>
                 </SubMenu>
-                <SubMenu active={active4} icon={<BiCog />} title="Giáo vụ" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
+                <SubMenu active={active4} icon={<BiCog />} title="Quản lý" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
                   if (active4 === false) {
                     setActive1(false);
                     setActive2(false);
@@ -642,7 +642,7 @@ const Header = () => {
                     </Link>
                   </MenuItem>
                 </SubMenu>
-                <SubMenu active={active5} icon={<BiCog />} title="Giáo vụ" color="#ffffff" className={active5 ? "link-active" : "not-active"} onClick={() => {
+                <SubMenu active={active5} icon={<BiCog />} title="Yêu cầu" color="#ffffff" className={active5 ? "link-active" : "not-active"} onClick={() => {
                   if (active5 === false) {
                     setActive1(false);
                     setActive2(false);

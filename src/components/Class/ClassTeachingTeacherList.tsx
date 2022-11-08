@@ -18,6 +18,8 @@ function ClassDoingList(props: classTeacherListProps): JSX.Element {
     let path = '/classes/detail';
     localStorage.removeItem("class_id");
     localStorage.setItem("class_id", class_teacher.id.toString())
+    localStorage.removeItem('class_end');
+    localStorage.setItem('class_end', 'false');
     history.push({
       pathname: path,
       state: { class_id: class_teacher.id }

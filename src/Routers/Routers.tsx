@@ -101,6 +101,8 @@ import ReviewStart from "../components/ClassStudent/ReviewStart";
 import SemesterClassParentNew from "../components/Discovery/SemesterClassParentNew";
 import SemesterClassTeacherNew from "../components/Course/SemesterClassTeacherNew";
 import Header from "../components/LeftMenu/LeftMenu";
+import ClassTeacherEndDetail from "../components/ClassTeacher/ClassTeacherEndDetail";
+import ManageStudentEnd from "../components/ManageStudent/ManageStudentEnd";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -145,9 +147,11 @@ const Routers: React.FC = () => {
                                 <Route path={`/notification`}><Notification /></Route>
                                 <Route path={`/exercise/result-grade`}><ResultGradeExamTeacher /></Route>
                                 <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
+                                <Route path={`/classes-end/detail`}><ClassTeacherEndDetail /></Route>
                                 <Route path={`/classes/detail`}><ClassTeacherDetail /></Route>
                                 <Route path={`/classes`}><ClassTeacher /></Route>
                                 <Route path={`/schedule-teacher`}><ScheduleTeacher /></Route>
+                                <Route path={`/manage-student-end`}><ManageStudentEnd /></Route>
                                 <Route path={`/manage-student`}><ManageStudent /></Route>
                                 <Route path={`/exercise/detail`}><DetailExerciseStudent /></Route>
                                 <Route path={`/exercise`}><ExamTeacher /></Route>

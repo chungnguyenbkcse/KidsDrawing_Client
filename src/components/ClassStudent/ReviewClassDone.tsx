@@ -174,7 +174,7 @@ const ReivewClassDone: React.FC = () => {
                             {
                                 class_has_register_join_semester.class_has_register_join_semesters.map((ele, idx) => {
                                     return (
-                                        <p>{ele.teacher_feedback}</p>
+                                        <p dangerouslySetInnerHTML={{__html: ele.teacher_feedback}}></p>
                                     )
                                 })
                             }

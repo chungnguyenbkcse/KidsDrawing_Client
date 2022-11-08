@@ -8,14 +8,30 @@ function StudentList(): JSX.Element {
     const students: IUserState = useSelector((state: IStateType) => state.users);
     const history = useHistory();
 
+    var id_x = localStorage.getItem('class_end');
+    let class_end = false;
+    if (id_x !== null) {
+        if (id_x == 'true') {
+            class_end = true;
+        }
+        else {
+            class_end = false;
+        }
+    }
+
 
     const routeChange = (student_id: number, parent_id: number) => {
         localStorage.removeItem('student_id');
         localStorage.setItem('student_id', student_id.toString());
         localStorage.removeItem('parent_id');
         localStorage.setItem('parent_id', parent_id.toString());
-        let path = '/manage-student';
-        history.push(path);
+        if (class_end == true) {
+            let path = '/manage-student-end';
+            history.push(path);
+        }else {
+            let path = '/manage-student';
+            history.push(path);
+        }
     }
 
 

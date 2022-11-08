@@ -13,9 +13,9 @@ interface Contest {
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: any;
-    art_type_id: any;
-    art_age_id: any;
+    creator_id: number;
+    art_type_id: number;
+    art_age_id: number;
     art_type_name: string;
     art_age_name: string;
     create_time: string;

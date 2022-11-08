@@ -2,15 +2,15 @@ import { fetchDataError } from "../../../store/actions/user_register_join_semest
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_register_semester {
     id: any;
-    student_id: any;
-    payer_id: any;
+    student_id: number;
+    payer_id: number;
     price: number;
     course_name: string;
     payer_name: string;
     student_name: string;
     link_url: string;
     status: string;
-    semester_class_id: any;
+    semester_class_id: number;
     time: string;
 }
 export function getUserRegisterJoinSemesterBySemesterClassScheduleClass(id: any, data_1: any) {

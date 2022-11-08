@@ -18,9 +18,9 @@ const Attendance: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
 
   var id_x = localStorage.getItem('section_id');
-  var section_id: any = 0;
+  var section_id: number = 0;
   if (id_x !== null) {
-    section_id = id_x;
+    section_id = parseInt(id_x);
   }
 
   let access_token = localStorage.getItem("access_token");

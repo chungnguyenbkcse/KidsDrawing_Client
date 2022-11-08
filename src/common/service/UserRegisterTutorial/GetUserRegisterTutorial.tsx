@@ -2,12 +2,12 @@ import { fetchDataSuccess, fetchDataError, removeUserRegisterTutorialApprovedAll
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface UserRegisterTutorial {
     id: any;
-    section_id: any;
-    creator_id: any;
+    section_id: number;
+    creator_id: number;
     creator_name: string;
     section_name: string;
     section_number: number;
-    class_id: any;
+    class_id: number;
     class_name: string;
     name: string;
     status: string;

@@ -33,9 +33,9 @@ const SemesterClassDetailStudent: React.FC = () => {
     }
 
     var id_b = localStorage.getItem('course_id');
-    var course_id: any = '';
+    var course_id: number = 0;
     if (id_b !== null) {
-        course_id = id_b;
+        course_id = parseInt(id_b);
     }
 
     var id_c = localStorage.getItem('course_name');
@@ -87,9 +87,9 @@ const SemesterClassDetailStudent: React.FC = () => {
     }
 
     var id_n = localStorage.getItem('semester_class_id');
-    var semester_class_id: any = '';
+    var semester_class_id: number = 0;
     if (id_n !== null) {
-        semester_class_id = id_n;
+        semester_class_id = parseInt(id_n);
     }
 
     function handleClick() {

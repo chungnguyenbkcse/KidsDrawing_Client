@@ -4,7 +4,7 @@ import { ICardProperties } from "../types/ICardAccountChild.types";
 
 function TopCardAccount(props: PropsWithChildren<ICardProperties>): ReactElement {
     const history = useHistory();
-    const routeChange = (student_id: any) =>{ 
+    const routeChange = (student_id: number) =>{ 
         let path = '/students/detail'; 
         localStorage.removeItem('student_id');
         localStorage.setItem('student_id', student_id.toString())

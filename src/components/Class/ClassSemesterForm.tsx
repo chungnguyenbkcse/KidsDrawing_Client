@@ -29,17 +29,22 @@ type Options = {
 
 type LessonTime = {
   key: number;
-  value: string;
+  value: number;
 }
 
 type ScheduleType = {
-  lesson_time: string;
+  lesson_time: number;
   date_of_week: number;
 }
 
 type Option1s = {
   key: number;
   value: string;
+}
+
+type Option3s = {
+  key: number;
+  value: number;
 }
 
 type Option2s = {
@@ -55,9 +60,9 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const courses: ICourseState | null = useSelector((state: IStateType) => state.courses);
   let semester_classe: ISemesterClass | null = semester_classes.selectedSemesterClass;
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
-  let semester_class_id: any = 0;
+  let semester_class_id: number = 0;
   if (!semester_classe || isCreate) {
-    semester_classe = { id: "", max_participant: 0, semester_name: "", course_id: "", course_name: "", semester_id: "", name: "", registration_time: "" };
+    semester_classe = { id: 0, max_participant: 0, semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "", registration_time: "" };
   }
   else {
     semester_class_id = semester_classe.id;
@@ -82,7 +87,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const schedules: IScheduleState = useSelector((state: IStateType) => state.schedules);
   let lesson_time_list: LessonTime[] = []
   console.log(schedules.schedules)
-  if (semester_class_id !== "") {
+  if (semester_class_id !== 0) {
     schedules.schedules.forEach(element => {
       if (element.semester_class_id === semester_class_id) {
         lesson_time_list.push({
@@ -146,7 +151,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
 
 
   const [listScheduleItemId, setListScheduleItemId] = useState<Option2s[]>([])
-  const [listLessonId, setListLessonId] = useState<Option1s[]>([])
+  const [listLessonId, setListLessonId] = useState<Option3s[]>([])
 
   function hasFormValueChanged(model: OnChangeModel): void {
     setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
@@ -158,7 +163,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
           key: index,
           value: schedule_list[index].date_of_week
         }
-        let lesson_time_obj: Option1s = {
+        let lesson_time_obj: Option3s = {
           key: index,
           value: schedule_list[index].lesson_time_id
         }
@@ -187,7 +192,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
 
   function saveForm(formState: ISemesterClassFormState, saveFn: Function): void {
     if (semester_classe) {
-      let lesson_times: Option1s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
+      let lesson_times: Option3s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
       let date_of_weeks: Option2s[] = listScheduleItemId.filter((value, index) => value.key < formState.total_date_of_week.value)
       let schedule_element: ScheduleType[] = [];
       lesson_times.map((ele, idx) => {
@@ -293,7 +298,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
 
   console.log(listScheduleItemId)
 
-  function hasFormMutipleValueChanged2(value: string, index: number) {
+  function hasFormMutipleValueChanged2(value: number, index: number) {
     console.log(value)
     console.log(index)
 

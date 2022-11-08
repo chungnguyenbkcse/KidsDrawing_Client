@@ -20,7 +20,7 @@ function ScoreContestList(): JSX.Element {
     const history = useHistory();
 
 
-    const routeChange = (child_id: any) => {
+    const routeChange = (child_id: number) => {
         localStorage.removeItem("child_id");
         localStorage.setItem("child_id", child_id.toString())
         let path = '/contest/detail';

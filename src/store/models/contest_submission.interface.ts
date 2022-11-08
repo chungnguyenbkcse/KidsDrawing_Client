@@ -1,7 +1,7 @@
 export interface IContestSubmission {
     id: any;
-    student_id: any;
-    contest_id: any;
+    student_id: number;
+    contest_id: number;
     student_name: string;
     contest_name: string;
     image_url: string;

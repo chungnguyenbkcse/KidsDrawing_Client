@@ -1,19 +1,19 @@
 import { fetchDataError, addUserGradeExerciseSubmission, removeUserGradeExerciseSubmissionAll} from "../../../store/actions/user_grade_exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
-    student_id: any;
+    student_id: number;
     student_name: string;
     exercise_name: string;
     time_submit: string;
     image_url: string;
     deadline: string;
     description: string;
-    exercise_submission_id: any;
+    exercise_submission_id: number;
     feedback: string;
     score: number;
     time: string;
 }
-export function getUserGradeExerciseByStudentAndClass(dispatch: any, class_id: any, student_id: any) {
+export function getUserGradeExerciseByStudentAndClass(dispatch: any, class_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return  fetch(

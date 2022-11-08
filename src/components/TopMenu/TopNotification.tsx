@@ -9,8 +9,8 @@ import { INotifyState, IStateType, IUserReadNotificationState } from "../../stor
 import "./TopNotification.css"
 
 type Options = {
-  notification_id: any;
-  user_id: any;
+  notification_id: number;
+  user_id: number;
   notification_name: string;
   notification_desciption: string;
   notification_time: string;
@@ -24,9 +24,9 @@ function TopMenuNotification(): JSX.Element {
   const [isShow, setShow] = useState(false);
 
   var id_x = localStorage.getItem('id');
-  let user_id: any = 0;
+  let user_id: number = 0;
   if (id_x !== null) {
-    user_id = id_x
+    user_id = parseInt(id_x)
   }
 
   useEffect(() => {

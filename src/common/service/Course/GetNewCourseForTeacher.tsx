@@ -10,10 +10,10 @@ interface Course {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: any;
-    art_type_id: any;
-    art_level_id: any;
-    art_age_id: any;
+    creator_id: number;
+    art_type_id: number;
+    art_level_id: number;
+    art_age_id: number;
     art_age_name: string;
     checked_tutoral: boolean;
     art_type_name: string;
@@ -63,9 +63,9 @@ export function getCourseNewForTeacher(dispatch: any, id: any) {
                         image_url: ele.image_url,
                         is_enabled: ele.is_enabled,
                         creator_id: ele.creator_id,
-                        art_type_id: "",
-                        art_level_id: "",
-                        art_age_id: "",
+                        art_type_id: 0,
+                        art_level_id: 0,
+                        art_age_id: 0,
                         art_age_name: "", 
                         art_level_name: "",
                         art_type_name: "",

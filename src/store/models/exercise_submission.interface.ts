@@ -1,7 +1,7 @@
 export interface IExerciseSubmission {
     id: any;
-    student_id: any;
-    exercise_id: any;
+    student_id: number;
+    exercise_id: number;
     student_name: string;
     exercise_name: string;
     image_url: string;

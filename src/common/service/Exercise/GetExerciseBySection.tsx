@@ -4,9 +4,9 @@ interface exercise {
     id: any;
     name: string;
     description: string;
-    section_id: any;
+    section_id: number;
     deadline: string;
-    level_id: any;
+    level_id: number;
     level_name: string;
     section_name: string;
     create_time: string;

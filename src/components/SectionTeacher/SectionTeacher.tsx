@@ -53,10 +53,10 @@ const SectionTeacher: React.FC = () => {
 
     var id_y = localStorage.getItem('section_id');
 
-    let section_id = "";
+    let section_id = 0;
 
     if (id_y !== null) {
-        section_id = id_y;
+        section_id = parseInt(id_y);
     }
 
     var id_x = localStorage.getItem('id');
@@ -67,9 +67,9 @@ const SectionTeacher: React.FC = () => {
 
 
     var id_z = localStorage.getItem('class_id');
-    var class_id: any = "";
+    var class_id: number = 0;
     if (id_z !== null) {
-        class_id = id_z;
+        class_id = parseInt(id_z);
     }
 
     var id_t = localStorage.getItem('recording');

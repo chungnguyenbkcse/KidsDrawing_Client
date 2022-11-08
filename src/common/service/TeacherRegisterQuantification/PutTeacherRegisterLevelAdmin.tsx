@@ -3,7 +3,7 @@ import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/teach
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacherRegisterQuantificationByTeacherId } from "./GetTeacherRegisterQuantificationByTeacherId";
 
-export function putTeacherRegisterLevelAdmin(id: any, teacher_id: any, teacher_level: any, idx: any) {
+export function putTeacherRegisterLevelAdmin(id: any, teacher_id: number, teacher_level: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {

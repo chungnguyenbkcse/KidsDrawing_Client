@@ -19,9 +19,9 @@ const ViewExerciseSubmission: React.FC = () => {
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
 
     var id_y = localStorage.getItem('exercise_submission_id');
-    var exercise_submission_id: any = 0;
+    var exercise_submission_id: number = 0;
     if (id_y !== null) {
-        exercise_submission_id = id_y;
+        exercise_submission_id = parseInt(id_y);
     }
 
     const { promiseInProgress } = usePromiseTracker();
@@ -70,7 +70,7 @@ const ViewExerciseSubmission: React.FC = () => {
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
 
     if (!user || isCreate) {
-        user = { id: "", username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: "" }
+        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
     }
 
     async function saveUser(e: FormEvent<HTMLFormElement>): Promise<void> {

@@ -29,9 +29,9 @@ const DetailExerciseStudent1: React.FC = () => {
     }
 
     var id_k = localStorage.getItem('exercise_id');
-    var exercise_id: any = 0;
+    var exercise_id: number = 0;
     if (id_k !== null) {
-        exercise_id = id_k;
+        exercise_id = parseInt(id_k);
     }
 
     let access_token = localStorage.getItem("access_token");

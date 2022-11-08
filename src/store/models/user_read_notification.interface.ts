@@ -1,6 +1,6 @@
 export interface IUserReadNotification {
-    notification_id: any;
-    user_id: any;
+    notification_id: number;
+    user_id: number;
     is_read: boolean;
 }
 

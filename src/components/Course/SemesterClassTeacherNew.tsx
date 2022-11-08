@@ -20,9 +20,9 @@ const SemesterClassTeacherNew: React.FC = () => {
     }
 
     var id_y = localStorage.getItem('course_id');
-    var course_id: any = 0;
+    var course_id: number = 0;
     if (id_y !== null) {
-        course_id = id_y;
+        course_id = parseInt(id_y);
     }
 
     const { promiseInProgress } = usePromiseTracker();

@@ -1,13 +1,13 @@
 import { fetchDataError, removeClassHasRegisterJoinSemesterAll, addClassHasRegisterJoinSemester } from "../../../store/actions/class_has_register_join_semester.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ClassHasRegisterJoinSemester {
-    classes_id: any;
-    user_register_join_semester_id: any;
+    classes_id: number;
+    user_register_join_semester_id: number;
     review_star: number;
     student_feedback: string;
     teacher_feedback: string;
 }
-export function getInforClassHasRegisterJoinSemester(dispatch: any, classes_id: any, student_id: any) {
+export function getInforClassHasRegisterJoinSemester(dispatch: any, classes_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return  fetch(

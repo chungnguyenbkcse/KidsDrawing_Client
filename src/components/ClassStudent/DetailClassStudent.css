@@ -10,6 +10,18 @@
     background-color: #FFF8E5 !important;
 }
 
+.not_active {
+    background: #CCEBF4 !important;
+}
+
+.active_now {
+    background: #21FC36 !important;
+}
+
+.not_active_now {
+    background: #B7BBBC !important;
+}
+
 .section_number {
     font-style: normal;
     font-weight: bold;
@@ -115,8 +127,24 @@
     border-radius: 20px;
 }
 
+.not_active {
+    background: #CCEBF4 !important;
+}
+
+.active_now {
+    background: #21FC36 !important;
+}
+
+.not_active_now {
+    background: #B7BBBC !important;
+}
+
 .row-off-section {
     background: #C2EB80;
+    border-radius: 20px;
+}
+
+.row-section {
     border-radius: 20px;
 }
 

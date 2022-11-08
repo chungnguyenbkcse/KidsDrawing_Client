@@ -41,7 +41,7 @@ const GradeExamTeacher: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
         
-        if (student_id === "" && exercise_submission_id === ""){
+        if (student_id === 0 && exercise_submission_id === 0){
             let x = exercise_submissions.exercise_not_gradeds[0].student_id;
             let y = exercise_submissions.exercise_not_gradeds[0].id;
             console.log({
@@ -69,10 +69,10 @@ const GradeExamTeacher: React.FC = () => {
     }
     
     var id_y = localStorage.getItem('exercise_id');
-    let exercise_id = "";
+    let exercise_id = 0;
 
     if (id_y !== null) {
-        exercise_id = id_y;
+        exercise_id = parseInt(id_y);
     }
     
     let access_token = localStorage.getItem("access_token");
@@ -139,8 +139,8 @@ const GradeExamTeacher: React.FC = () => {
     const [count, setCount] = useState(0);
     const [image_url, setImageUrl] = useState("");
     const [student_name, setStudentName] = useState("");
-    const [student_id, setStudentId] = useState("");
-    const [exercise_submission_id, setExerciseSubmissionId] = useState("");
+    const [student_id, setStudentId] = useState(0);
+    const [exercise_submission_id, setExerciseSubmissionId] = useState(0);
     const [time_submit, setTimeSubmit] = useState("");
     return (
         promiseInProgress ?

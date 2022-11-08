@@ -2,11 +2,11 @@ import { fetchDataSuccess, fetchDataError, removeTutorialAll, addTutorial } from
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Tutorial {
     id: any;
-    section_id: any;
-    creator_id: any;
+    section_id: number;
+    creator_id: number;
     creator_name: string;
     class_name: string;
-    class_id: any;
+    class_id: number;
     section_number: number;
     name: string;
     create_time: string;

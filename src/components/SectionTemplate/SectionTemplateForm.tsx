@@ -36,7 +36,7 @@ type PageContent = {
 
 type TutorialPageTemplate = {
     id: any;
-    tutorial_template_id: any;
+    tutorial_template_id: number;
     name: string;
     number: number;
     description: string;
@@ -53,9 +53,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_template_id');
-    let section_template_id: any = 0;
+    let section_template_id: number = 0;
     if (id_x !== null) {
-        section_template_id = id_x
+        section_template_id = parseInt(id_x)
     }
 
     var id_y = localStorage.getItem('section_number');
@@ -74,9 +74,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
 
     var id_t = localStorage.getItem('tutorial_template_id');
-    let tutorial_template_id: any = 0;
+    let tutorial_template_id: number = 0;
     if (id_t !== null) {
-        tutorial_template_id = id_t
+        tutorial_template_id = parseInt(id_t)
     }
 
     var id_h = localStorage.getItem('tutorial_name');
@@ -127,12 +127,12 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section_template) {
-        section_template = { id: "", name: "", creator_id: "", course_id: "", number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: 0, name: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
     console.log(tutorial_template_pages.tutorialTemplatePages)
     if (tutorial_template_pages.tutorialTemplatePages.length === 0) {
-        section_template = { id: "", name: "", creator_id: "", course_id: "", number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: 0, name: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
 

@@ -27,9 +27,9 @@ const ClassTeacherDetail: React.FC = () => {
     const students: IUserState = useSelector((state: IStateType) => state.users);
     const numberStudentsCount: number = students.students.length;
     var id_x = localStorage.getItem('class_id');
-    let class_id: any = 0;
+    let class_id: number = 0;
     if (id_x !== null) {
-        class_id = id_x;
+        class_id = parseInt(id_x);
     }
 
     const { promiseInProgress } = usePromiseTracker();

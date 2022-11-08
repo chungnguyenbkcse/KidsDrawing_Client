@@ -29,7 +29,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     const isCreate: boolean = (teacherleaves.modificationState === TeacherLeaveModificationStatus.Create);
     
     if (!teacher_leave || isCreate){
-        teacher_leave = { id: "", section_id: "", class_id: "", section_number: 0, teacher_id: "", substitute_teacher_id: "", description: "", section_name: "", class_name: "", teacher_name: "", reviewer_id: "", status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
+        teacher_leave = { id: 0, section_id: 0, class_id: 0, section_number: 0, teacher_id: 0, substitute_teacher_id: 0, description: "", section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
     }
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listTeacher: IUser[] = users.teachers
@@ -54,9 +54,9 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     }
 
     var id_x = localStorage.getItem('id');
-    var teacher_id: any = 0;
+    var teacher_id: number = 0;
     if (id_x !== null) {
-        teacher_id = id_x;
+        teacher_id = parseInt(id_x);
     }
 
 

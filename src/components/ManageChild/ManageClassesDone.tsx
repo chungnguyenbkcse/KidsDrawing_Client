@@ -33,21 +33,21 @@ const ManageClassesDone: React.FC = () => {
 
     
     var id_z = localStorage.getItem('teacher_id');
-    var teacher_id: any = 0;
+    var teacher_id: number = 0;
     if (id_z !== null) {
-        teacher_id = id_z;
+        teacher_id = parseInt(id_z);
     }
 
     var id_y = localStorage.getItem('student_id');
-    var student_id: any= "";
+    var student_id: number= 0;
     if (id_y !== null) {
-        student_id = id_y;
+        student_id = parseInt(id_y);
     }
 
     var id_t = localStorage.getItem('class_id');
-    var class_id: any = 0;
+    var class_id: number = 0;
     if (id_t !== null) {
-        class_id = id_t;
+        class_id = parseInt(id_t);
     }
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");

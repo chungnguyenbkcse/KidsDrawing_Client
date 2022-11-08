@@ -18,9 +18,9 @@ const RequestConfirmLevel: React.FC = () => {
   const numberItemsCount: number = teacher_register_quantifications.not_approved_now.length;
 
   var id_x = localStorage.getItem('teacher_id');
-  let teacher_id: any = 0;
+  let teacher_id: number = 0;
   if (id_x !== null){
-    teacher_id = id_x
+    teacher_id = parseInt(id_x)
   }
 
   const { promiseInProgress } = usePromiseTracker();

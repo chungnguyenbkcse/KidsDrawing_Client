@@ -16,7 +16,7 @@ function FormSubmit(): JSX.Element {
     const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
 
     if (!user || isCreate) {
-        user = { id: "", username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: "" }
+        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
     }
 
     var id_x = localStorage.getItem("exercise_description");
@@ -32,9 +32,9 @@ function FormSubmit(): JSX.Element {
     }
 
     var id_z = localStorage.getItem("exercise_id");
-    let exercise_id: any = 0;
+    let exercise_id: number = 0;
     if (id_z !== null) {
-        exercise_id = id_z;
+        exercise_id = parseInt(id_z);
     }
 
 

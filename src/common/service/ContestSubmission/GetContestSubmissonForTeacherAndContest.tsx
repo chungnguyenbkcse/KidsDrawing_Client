@@ -2,15 +2,15 @@ import { fetchDataSuccess, fetchDataError, removeContestSubmissionGradeAll, remo
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ContestSubmission {
     id: any;
-    student_id: any;
-    contest_id: any;
+    student_id: number;
+    contest_id: number;
     student_name: string;
     contest_name: string;
     image_url: string;
     create_time: string;
     update_time: string;
 }
-export function getContestSubmissionByContestAndTeacher(dispatch: any, contest_id: any, teacher_id: any) {
+export function getContestSubmissionByContestAndTeacher(dispatch: any, contest_id: number, teacher_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
                 `${process.env.REACT_APP_API_URL}/contest-submission/contest-teacher/${contest_id}/${teacher_id}`, {

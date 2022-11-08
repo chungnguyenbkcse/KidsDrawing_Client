@@ -49,10 +49,10 @@ const DetailClassStudent: React.FC = () => {
 
     var id_y = localStorage.getItem('class_id');
 
-    let class_id = "";
+    let class_id = 0;
 
     if (id_y !== null) {
-        class_id = id_y;
+        class_id = parseInt(id_y);
     }
 
     const [checked1, setChecked1] = useState(true);
@@ -143,7 +143,7 @@ const DetailClassStudent: React.FC = () => {
         });
     }
 
-    const onChangeRoute = (section: ISection) => {
+    const onChangeRoute = (section: ISection, is_active: string) => {
         let path = "/classes/section";
         localStorage.removeItem('section_id')
         localStorage.setItem('section_id', section.id.toString())
@@ -152,6 +152,7 @@ const DetailClassStudent: React.FC = () => {
         let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
         localStorage.removeItem('tutorial_id')
+        localStorage.setItem('is_active', is_active)
         tutorials.tutorials.map(ele => {
             if (ele.section_id === section.id) {
                 localStorage.setItem('tutorial_id', ele.id.toString())
@@ -183,6 +184,8 @@ const DetailClassStudent: React.FC = () => {
     let count = 0;
     let data: string[] = []
     let total_time = "";
+    let check_active: string[] = [];
+
     if (time_schedules.timeSchedules.length > 1 && promiseInProgress === false) {
             if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null){
                 var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
@@ -196,6 +199,21 @@ const DetailClassStudent: React.FC = () => {
     
                 total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
                 time_schedules.timeSchedules.map((ele, index) => {
+                    var start_date = new Date(ele.start_time);
+                    var end_date = new Date(ele.end_time);
+                    // Do your operations
+                    var date_now   = new Date();
+
+                    if ((date_now.getTime() - start_date.getTime()) / 1000 < 0) {
+                        check_active.push('Chưa diễn ra');
+                    }
+                    else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
+                        check_active.push('Đang diễn ra');
+                    }
+                    else {
+                        check_active.push('Đã diễn ra');
+                    }
+
                     if (isDateBeforeToday(new Date(Date.parse(ele.end_time)))) {
                         count++;
                     }
@@ -204,6 +222,18 @@ const DetailClassStudent: React.FC = () => {
                     return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
                 })
             }
+    }
+
+    function checkActive(index: number) {
+        if (check_active[index] === "Chưa diễn ra") {
+            return "not_active_now";
+        }
+        else if (check_active[index] === "Đang diễn ra") {
+            return 'active_now';
+        }
+        else {
+            return "not_active";
+        }
     }
 
 
@@ -223,7 +253,7 @@ const DetailClassStudent: React.FC = () => {
                 <ToastContainer />
 
                 <div className="row">
-                    <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${count}/${numberSectionCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}/${numberSectionCount}`} icon="book" class="primary" />
                     <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
                     <TopCard title="NGHỈ HỌC" text={`${student_leaves.leaves.length}`} icon="book" class="danger" />
                     <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
@@ -336,7 +366,7 @@ const DetailClassStudent: React.FC = () => {
                                                         sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
+                                                                    <div className={`row row-section mb-4 ml-2 mr-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele, checkActive(index)) }}>
                                                                         <div className="col-xl-3 col-md-3">
                                                                             <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                         </div>

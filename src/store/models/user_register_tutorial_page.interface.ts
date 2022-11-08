@@ -1,6 +1,6 @@
 export interface IUserRegisterTutorialPage {
     id: any;
-    user_register_tutorial_id: any;
+    user_register_tutorial_id: number;
     name: string;
     description: string;
 }

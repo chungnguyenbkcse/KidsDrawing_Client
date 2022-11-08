@@ -2,12 +2,12 @@ export interface IClassesParent {
     id: any;
     name: string;
     link_url: string;
-    student_id: any;
+    student_id: number;
     student_name: string;
     teacher_name: string;
-    teacher_id: any;
-    course_id: any;
-    semester_class_id: any;
+    teacher_id: number;
+    course_id: number;
+    semester_class_id: number;
     semester_class_name: string;
     user_register_teach_semester: number;
     security_code: string;
@@ -17,9 +17,9 @@ export interface IClassesParent {
     semester_name: string;
     art_type_name: string;
     art_level_name: string;
-    art_type_id: any;
-    art_level_id: any;
-    art_age_id: any;
+    art_type_id: number;
+    art_level_id: number;
+    art_age_id: number;
     art_age_name: string;
 }
 

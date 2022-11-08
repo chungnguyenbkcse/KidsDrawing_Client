@@ -21,7 +21,7 @@ function TeachTypeForm(props: artTypeListProps): JSX.Element {
   const isCreate: boolean = (art_types.modificationState === ArtTypeModificationStatus.Create);
   
   if (!art_type || isCreate) {
-    art_type = { id: "", name: "", description: "" };
+    art_type = { id: 0, name: "", description: "" };
   }
 
   const [formState, setFormState] = useState({

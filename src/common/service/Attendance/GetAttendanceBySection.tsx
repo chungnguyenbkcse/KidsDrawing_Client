@@ -2,13 +2,13 @@ import { fetchDataSuccess, fetchDataError, removeAttendanceAll, initialAttendanc
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Attendance {
     id: any;
-    student_id: any;
-    section_id: any;
+    student_id: number;
+    section_id: number;
     status: string;
     email: string;
     section_number: number;
     course_name: string;
-    course_id: any;
+    course_id: number;
     student_name: string;
     section_name: string;
     create_time: string;

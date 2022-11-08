@@ -13,15 +13,15 @@ const ExerciseStudentList1: React.FC = () => {
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('student_id');
-    var student_id: any= "";
+    var student_id: number= 0;
     if (id_y !== null) {
-        student_id = id_y;
+        student_id = parseInt(id_y);
     }
 
     var id_z = localStorage.getItem('class_id');
-    var class_id: any= "";
+    var class_id: number= 0;
     if (id_z !== null) {
-        class_id = id_z;
+        class_id = parseInt(id_z);
     }
     
     let access_token = localStorage.getItem("access_token");

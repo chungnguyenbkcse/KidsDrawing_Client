@@ -15,18 +15,18 @@ const ViewSectionStudent: React.FC = () => {
 
     var id_y = localStorage.getItem('section_id');
     
-    let section_id = "";
+    let section_id = 0;
 
     if (id_y !== null) {
-        section_id = id_y;
+        section_id = parseInt(id_y);
     }
 
     var id_x = localStorage.getItem('id');
     
-    let id = "";
+    let id = 0;
 
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
 
     const [count, setCount] = useState(1);

@@ -2,7 +2,7 @@ import { fetchDataSuccess, fetchDataError, removeMyClassAll, initialMyClass, add
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
     id: any;
-    creator_id: any;
+    creator_id: number;
     user_register_teach_semester: number;
     security_code: string;
     name: string;

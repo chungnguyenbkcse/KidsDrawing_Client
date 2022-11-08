@@ -13,8 +13,8 @@ export type lessonListProps = {
 
 type Options = {
     id: any;
-    student_id: any;
-    section_id: any;
+    student_id: number;
+    section_id: number;
     status: boolean;
 }
 

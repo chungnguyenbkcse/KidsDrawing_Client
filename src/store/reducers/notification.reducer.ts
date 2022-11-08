@@ -2,7 +2,7 @@ import { IActionBase, INotificationState } from "../models/root.interface";
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "../actions/notifications.action";
 
 const initialState: INotificationState = {
-    notifications: [{id: "", date: new Date(), text: "", title: "Xin chào"}]
+    notifications: [{id: 0, date: new Date(), text: "", title: "Xin chào"}]
 };
 
 function notificationReducer(state: INotificationState = initialState, action: IActionBase): INotificationState {

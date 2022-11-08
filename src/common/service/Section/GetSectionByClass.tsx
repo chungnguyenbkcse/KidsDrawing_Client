@@ -2,7 +2,7 @@ import { fetchDataSuccess, fetchDataError, removeSectionAll, initialSection, add
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Section {
     id: any;
-    class_id: any;
+    class_id: number;
     name: string;
     description: string;
     number: number;

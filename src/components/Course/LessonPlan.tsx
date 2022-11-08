@@ -40,15 +40,15 @@ const LessonPlan: React.FC = () => {
 
 
   if (!course) {
-    course = { id: "", name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: "", art_age_id: "", art_level_id: "", art_type_id: "", create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "", checked_tutoral: false };
+    course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "", checked_tutoral: false };
   }
 
   var course_id = localStorage.getItem('course_id');
 
   var id_t = localStorage.getItem('tutorial_template_id');
-  let tutorial_template_id: any = 0;
+  let tutorial_template_id: number = 0;
   if (id_t !== null) {
-      tutorial_template_id = id_t
+      tutorial_template_id = parseInt(id_t)
   }
 
   var id_y = localStorage.getItem('num_of_section');

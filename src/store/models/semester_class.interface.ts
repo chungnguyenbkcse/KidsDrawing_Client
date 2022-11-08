@@ -1,10 +1,10 @@
 export interface ISemesterClass {
     id: any;
     name: string;
-    semester_id: any;
+    semester_id: number;
     semester_name: string;
     registration_time: string;
-    course_id: any;
+    course_id: number;
     course_name: string;
     max_participant: number;
 }

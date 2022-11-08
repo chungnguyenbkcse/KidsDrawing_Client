@@ -6,10 +6,10 @@ import { fetchDataSuccess, fetchDataError,
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TeacherRegisterQuantification {
     id: any;
-    teacher_id: any;
+    teacher_id: number;
     teacher_name: string;
-    reviewer_id: any;
-    course_id: any;
+    reviewer_id: number;
+    course_id: number;
     course_name: string;
     art_age_name: string;
     art_type_name: string;

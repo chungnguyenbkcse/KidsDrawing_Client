@@ -6,7 +6,7 @@ interface ScheduleTimeClass {
     start_time: string;
     end_time: string;
 }
-export function getScheduleTimeByParent(dispatch: any, parent_id: any) {
+export function getScheduleTimeByParent(dispatch: any, parent_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return fetch(

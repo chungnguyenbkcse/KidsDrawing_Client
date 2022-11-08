@@ -3,7 +3,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTutorialTemplatePageByTutorialTemplateId } from "../TutorialTemplatePage/GetTutorialTemplatePageByTutorialTemplateId";
 interface TutorialTemplate {
     id: any;
-    section_template_id: any;
+    section_template_id: number;
     name: string;
     description: string;
     create_time: string;

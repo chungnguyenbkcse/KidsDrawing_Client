@@ -4,18 +4,18 @@ interface exercise {
     id: any;
     name: string;
     description: string;
-    section_id: any;
+    section_id: number;
     teacher_name: string;
-    exercise_submission_id: any;
+    exercise_submission_id: number;
     time_submit: string;
     deadline: string;
-    level_id: any;
+    level_id: number;
     level_name: string;
     section_name: string;
     create_time: string;
     update_time: string;
 }
-export function getExerciseForClassStudent(dispatch: any, class_id: any, student_id: any) {
+export function getExerciseForClassStudent(dispatch: any, class_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
                 `${process.env.REACT_APP_API_URL}/exercises/class-student/${class_id}/${student_id}`, {

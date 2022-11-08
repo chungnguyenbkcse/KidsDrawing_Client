@@ -26,11 +26,12 @@ const SectionStudent: React.FC = () => {
 
     var id_y = localStorage.getItem('section_id');
 
-    let section_id = "";
+    let section_id = 0;
 
     if (id_y !== null) {
-        section_id = id_y;
+        section_id = parseInt(id_y);
     }
+
 
     var id_x = localStorage.getItem('id');
     var id: any = "";
@@ -40,9 +41,15 @@ const SectionStudent: React.FC = () => {
 
 
     var id_z = localStorage.getItem('class_id');
-    var class_id: any= "";
+    var class_id: number = 0;
     if (id_z !== null) {
-        class_id = id_z;
+        class_id = parseInt(id_z);
+    }
+
+    var id_t = localStorage.getItem('is_active');
+    var is_active = "";
+    if (id_t !== null) {
+        is_active = id_t;
     }
 
     console.log(class_id);
@@ -130,7 +137,7 @@ const SectionStudent: React.FC = () => {
     }
 
 
-    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseStudent){
+    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseStudent) {
         let path = '/exercise-submission/view';
         localStorage.removeItem('exercise_submission_id');
         localStorage.setItem('exercise_submission_id', exercise_student.exercise_submission_id.toString())
@@ -221,15 +228,19 @@ const SectionStudent: React.FC = () => {
                                                             }
                                                             else {
                                                                 if (sections.sections[0].teach_form === true) {
-                                                                    return (
-                                                                        <button
-                                                                            className="btn btn-success ml-2"
-                                                                            id="btn-into-room"
-                                                                            onClick={routeChange4}
-                                                                        >
-                                                                            Vào metting room
-                                                                        </button>
-                                                                    )
+                                                                    if (is_active === "not_active_now" || is_active === "active_now") {
+                                                                        return (
+                                                                            <button
+                                                                                className="btn btn-success ml-2"
+                                                                                id="btn-into-room"
+                                                                                onClick={routeChange4}
+                                                                            >
+                                                                                Vào metting room
+                                                                            </button>
+                                                                        )
+                                                                    }
+
+
                                                                 }
                                                                 else {
                                                                     return (
@@ -257,78 +268,98 @@ const SectionStudent: React.FC = () => {
                     <div className="col-xl-6 col-md-6 mb-4">
                         <div className="row">
                             <div className="col-xl-12 col-md-12 mb-4">
-                                    <div className={`card shadow py-2`} >
-                                        <div className="card-body">
-                                            <div className="row no-gutters justify-content-left exercise-list">
-                                                <h4 id="full-name">Bài tập</h4>
-                                                <div className="table-responsive portlet  exercise-list">
-                                                    <table className="table">
-                                                        <thead className="thead-light">
-                                                            <tr>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {
-                                                                exercise_student.exercise_not_submit.map((ele, index) => {
-                                                                    return (
-                                                                        <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row row-section mb-4 ml-2 mr-2 row-not-submit" onClick={() => { routeChange5(ele.description, ele.name, ele.level_name, ele.id) }}>
-                                                                                <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                                </div>
-                                                                                <div className="col-xl-8 col-md-8 mb-4">
-                                                                                    <h3 className=" mb-2" id="level-student">{ele.name}</h3>
-                                                                                    <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
-                                                                                </div>
+                                <div className={`card shadow py-2`} >
+                                    <div className="card-body">
+                                        <div className="row no-gutters justify-content-left exercise-list">
+                                            <h4 id="full-name">Bài tập</h4>
+                                            <div className="table-responsive portlet  exercise-list">
+                                                <table className="table">
+                                                    <thead className="thead-light">
+                                                        <tr>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            exercise_student.exercise_not_submit.map((ele, index) => {
+                                                                return (
+                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                        <div className="row row-section mb-4 ml-2 mr-2 row-not-submit" onClick={() => { routeChange5(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                            <div className="col-xl-4 col-md-4 mb-4">
+                                                                                <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                             </div>
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
+                                                                            <div className="col-xl-8 col-md-8 mb-4">
+                                                                                <h3 className=" mb-2" id="level-student">{ele.name}</h3>
+                                                                                <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
 
-                                                            {
-                                                                exercise_student.exercise_submitted_graded.map((ele, index) => {
-                                                                    return (
-                                                                        <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
-                                                                                <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                                </div>
-                                                                                <div className="col-xl-8 col-md-8 mb-4">
-                                                                                    <h3 className=" mb-2" id="level-student">{ele.name}</h3>
-                                                                                    <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
-                                                                                </div>
+                                                        {
+                                                            exercise_student.exercise_submitted_graded.map((ele, index) => {
+                                                                return (
+                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                        <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                            <div className="col-xl-4 col-md-4 mb-4">
+                                                                                <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                             </div>
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
+                                                                            <div className="col-xl-8 col-md-8 mb-4">
+                                                                                <h3 className=" mb-2" id="level-student">{ele.name}</h3>
+                                                                                <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
 
-{
-                                                                exercise_student.exercise_submitted_not_grade.map((ele, index) => {
-                                                                    return (
-                                                                        <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
-                                                                                <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                                </div>
-                                                                                <div className="col-xl-8 col-md-8 mb-4">
-                                                                                    <h3 className=" mb-2" id="level-student">{ele.name}</h3>
-                                                                                    <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
-                                                                                </div>
+                                                        {
+                                                            exercise_student.exercise_submitted_not_grade.map((ele, index) => {
+                                                                return (
+                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                        <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
+                                                                            <div className="col-xl-4 col-md-4 mb-4">
+                                                                                <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                             </div>
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                                            <div className="col-xl-8 col-md-8 mb-4">
+                                                                                <h3 className=" mb-2" id="level-student">{ele.name}</h3>
+                                                                                <h4 className=" mb-2" id="level-student">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12 col-lg-12">
+                    {
+                        function () {
+                            if (sections.sections.length <= 0) {
+                                return ""
+                            }
+                            else {
+                                if (sections.sections[0].teach_form === true) {
+                                    if (is_active === "not_active") {
+                                        return (
+                                            <iframe width="100%" height="500" src="https://www.youtube.com/embed/r0Gh2eIR7w0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                        )
+                                    }
+                                }
+                            }
+                        }()
+                    }
                     </div>
                 </div>
 

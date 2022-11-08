@@ -3,7 +3,7 @@ export interface ISemester {
     number: number;
     year: number;
     name: string;
-    creator_id: any;
+    creator_id: number;
     description: string;
     start_time: string;
     end_time: string;

@@ -7,10 +7,10 @@ export interface ICardProperties {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: any;
-    art_type_id: any;
-    art_level_id: any;
-    art_age_id: any;
+    creator_id: number;
+    art_type_id: number;
+    art_level_id: number;
+    art_age_id: number;
     art_type_name: string;
     art_level_name: string;
     art_age_name: string;

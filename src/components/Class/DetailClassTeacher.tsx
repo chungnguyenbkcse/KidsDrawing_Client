@@ -47,10 +47,10 @@ const DetailClassTeacher: React.FC = () => {
 
     var id_y = localStorage.getItem('class_id');
 
-    let class_id: any = 0;
+    let class_id: number = 0;
 
     if (id_y !== null) {
-        class_id = id_y;
+        class_id = parseInt(id_y);
     }
 
     const [checked1, setChecked1] = useState(true);
@@ -165,6 +165,8 @@ const DetailClassTeacher: React.FC = () => {
     let count = 0;
     let data: string[] = []
     let total_time = "";
+    let check_active: string[] = [];
+
     if (time_schedules.timeSchedules.length > 1 && promiseInProgress === false) {
             if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null){
                 var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
@@ -178,6 +180,22 @@ const DetailClassTeacher: React.FC = () => {
     
                 total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
                 time_schedules.timeSchedules.map((ele, index) => {
+                    var start_date = new Date(ele.start_time);
+                    var end_date = new Date(ele.end_time);
+                    // Do your operations
+                    var date_now   = new Date();
+
+                    if ((date_now.getTime() - start_date.getTime()) / 1000 < 0) {
+                        check_active.push('Chưa diễn ra');
+                    }
+                    else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
+                        check_active.push('Đang diễn ra');
+                    }
+                    else {
+                        check_active.push('Đã diễn ra');
+                    }
+
+
                     if (isDateBeforeToday(new Date(Date.parse(ele.end_time)))) {
                         count++;
                     }
@@ -186,6 +204,18 @@ const DetailClassTeacher: React.FC = () => {
                     return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
                 })
             }
+    }
+
+    function checkActive(index: number) {
+        if (check_active[index] === "Chưa diễn ra") {
+            return "not_active_now";
+        }
+        else if (check_active[index] === "Đang diễn ra") {
+            return 'active_now';
+        }
+        else {
+            return "not_active";
+        }
     }
 
     return (
@@ -203,7 +233,7 @@ const DetailClassTeacher: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberApprovedCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}`} icon="book" class="primary" />
                     <TopCard title="SỐ BÀI KIỂM TRA CHƯA CHẤM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
                     <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                         <button
@@ -315,7 +345,7 @@ const DetailClassTeacher: React.FC = () => {
                                                         sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { onChangeRoute(ele) }}>
+                                                                    <div className={`row row-section mb-4 ml-2 mr-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele) }}>
                                                                         <div className="col-xl-3 col-md-3">
                                                                             <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                         </div>

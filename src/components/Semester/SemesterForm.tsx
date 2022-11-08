@@ -25,7 +25,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
   const isCreate: boolean = (semesters.modificationState === SemesterModificationStatus.Create);
 
   if (!semester || isCreate) {
-    semester = { id: "", name: "", description: "", number: 0, year: 0, start_time: "", end_time: "", create_time: "", update_time: "", creator_id: "" };
+    semester = { id: 0, name: "", description: "", number: 0, year: 0, start_time: "", end_time: "", create_time: "", update_time: "", creator_id: 0 };
   }
 
   const [formState, setFormState] = useState({

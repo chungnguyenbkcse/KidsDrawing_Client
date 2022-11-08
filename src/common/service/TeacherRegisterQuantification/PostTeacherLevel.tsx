@@ -8,9 +8,9 @@ export function postTeaherLevel(teacher_level: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     console.log(teacher_level)
     let id_x = localStorage.getItem('id');
-    var id = "";
+    var id = 0;
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());

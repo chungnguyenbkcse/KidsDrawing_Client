@@ -19,15 +19,15 @@ const ReivewClassDone: React.FC = () => {
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('id');
-    var student_id: any= "";
+    var student_id: number= 0;
     if (id_y !== null) {
-        student_id = id_y;
+        student_id = parseInt(id_y);
     }
 
     var id_t = localStorage.getItem('class_id');
-    var class_id: any = 0;
+    var class_id: number = 0;
     if (id_t !== null) {
-        class_id = id_t;
+        class_id = parseInt(id_t);
     }
 
     var id_x = localStorage.getItem("final_grade");

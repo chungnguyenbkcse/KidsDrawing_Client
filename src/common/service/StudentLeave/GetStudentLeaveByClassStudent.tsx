@@ -2,20 +2,20 @@ import { fetchDataSuccess, fetchDataError, removeStudentLeaveApprovedAll, remove
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface StudentLeave {
     id: any;
-    section_id: any;
+    section_id: number;
     section_name: string;
-    class_id: any;
+    class_id: number;
     class_name: string;
-    student_id: any;
+    student_id: number;
     section_number: number;
     student_name: string;
-    reviewer_id: any;
+    reviewer_id: number;
     description: string;
     status: string;
     create_time: string;
     update_time: string;
 }
-export function getStudentLeaveByClassAndStudent(dispatch: any, class_id: any, student_id: any) {
+export function getStudentLeaveByClassAndStudent(dispatch: any, class_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
                 `${process.env.REACT_APP_API_URL}/student-leave/class-student/${class_id}/${student_id}`, {

@@ -38,9 +38,9 @@ const ConestDetailStudent: React.FC = () => {
     }
 
     var id_x = localStorage.getItem('contest_id');
-    let contest_id: any = 0;
+    let contest_id: number = 0;
     if (id_x !== null) {
-        contest_id = id_x;
+        contest_id = parseInt(id_x);
     }
 
     console.log(contest_id)

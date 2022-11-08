@@ -3,9 +3,9 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface ClassTeacher {
     id: any;
     name: string;
-    course_id: any;
+    course_id: number;
     link_url: string;
-    semester_class_id: any;
+    semester_class_id: number;
     user_register_teach_semester: number;
     security_code: string;
     total_student: number;

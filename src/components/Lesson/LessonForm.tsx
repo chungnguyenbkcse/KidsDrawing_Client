@@ -21,7 +21,7 @@ function LessonForm(props: lessonListProps): JSX.Element {
   const isCreate: boolean = (lessons.modificationState === LessonModificationStatus.Create);
 
   if (!lesson || isCreate) {
-    lesson = { id: "", start_time: "",end_time: ""};
+    lesson = { id: 0, start_time: "",end_time: ""};
   }
 
   const [formState, setFormState] = useState({

@@ -31,15 +31,15 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
     const isCreate: boolean = (exercises.modificationState === ExerciseModificationStatus.Create);
 
     if (!exercise || isCreate) {
-        exercise = { id: "", name: "", deadline: "", description: "", section_id: "", section_name: "", level_id: "", level_name: "", create_time: "", update_time: "" };
+        exercise = { id: 0, name: "", deadline: "", description: "", section_id: 0, section_name: "", level_id: 0, level_name: "", create_time: "", update_time: "" };
     }
 
     var id_y = localStorage.getItem('section_id');
     
-    let section_id = "";
+    let section_id = 0;
 
     if (id_y !== null) {
-        section_id = id_y;
+        section_id = parseInt(id_y);
     }
 
     const listExerciseLevel: IExerciseLevel[] = exercise_levels.exercise_levels

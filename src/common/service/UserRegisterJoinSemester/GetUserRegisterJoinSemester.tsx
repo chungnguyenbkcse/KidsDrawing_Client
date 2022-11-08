@@ -2,15 +2,15 @@ import { fetchDataError, addCompleted, addWaiting, removeCompletedAll, removeWai
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_register_semester {
     id: any;
-    student_id: any;
-    payer_id: any;
+    student_id: number;
+    payer_id: number;
     payer_name: string;
     course_name: string;
     price: number;
     student_name: string;
     link_url: string;
     status: string;
-    semester_class_id: any;
+    semester_class_id: number;
     time: string;
 }
 export function getUserRegisterJoinSemester(dispatch: any) {

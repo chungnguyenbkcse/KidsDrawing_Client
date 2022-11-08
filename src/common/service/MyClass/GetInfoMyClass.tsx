@@ -4,7 +4,7 @@ import { addTimeSchedule, removeTimeScheduleAll } from "../../../store/actions/t
 import { addStudent, removeStudentAll } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
-    id: "",
+    id: 0,
     name: string;
     teacher: string;
     security_code: string;
@@ -29,7 +29,7 @@ interface user {
     sex: string,
     phone: string,
     address: string,
-    parents: string,
+    parents: number,
     createTime: string
 }
 export function getInfoMyClass(dispatch: any, id: any) {
@@ -86,7 +86,7 @@ export function getInfoMyClass(dispatch: any, id: any) {
                 console.log(data.body.classes.security_code)
                 dispatch(removeInformationClassAll())
                 let information_class: MyClass = {
-                    id: "",
+                    id: 0,
                     name: data.body.classes.name,
                     teacher: data.body.teacher.username,
                     security_code: data.body.classes.security_code,

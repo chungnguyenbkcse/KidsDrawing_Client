@@ -59,10 +59,10 @@ const ExerciseForm: React.FC = () => {
 
     var id_y = localStorage.getItem('section_id');
     
-    let section_id = "";
+    let section_id = 0;
 
     if (id_y !== null) {
-        section_id = id_y;
+        section_id = parseInt(id_y);
     }
     
     let access_token = localStorage.getItem("access_token");

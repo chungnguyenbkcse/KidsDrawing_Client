@@ -20,7 +20,7 @@ function ContestEndList(props: contestListProps): JSX.Element {
     const contests: IContestState = useSelector((state: IStateType) => state.contests);
     const history = useHistory();
 
-    const routeChange = (contest_id: any) => {
+    const routeChange = (contest_id: number) => {
         localStorage.removeItem('contest_id');
         localStorage.setItem('contest_id', contest_id.toString())
         let path = '/contests/result';

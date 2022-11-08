@@ -3,11 +3,11 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface SemesterClass {
     id: any;
     name: string;
-    semester_id: any;
+    semester_id: number;
     registration_time: string;
     semester_name: string;
     course_name: string;
-    course_id: any;
+    course_id: number;
     max_participant: number;
 }
 export function getSemesterClass(dispatch: any) {

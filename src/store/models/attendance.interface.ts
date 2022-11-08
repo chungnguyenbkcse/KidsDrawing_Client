@@ -1,12 +1,12 @@
 export interface IAttendance {
     id: any;
-    student_id: any;
-    section_id: any;
+    student_id: number;
+    section_id: number;
     status: string;
     section_number: number;
     email: string;
     course_name: string;
-    course_id: any;
+    course_id: number;
     student_name: string;
     section_name: string;
     create_time: string;

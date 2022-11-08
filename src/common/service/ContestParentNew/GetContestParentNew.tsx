@@ -12,15 +12,15 @@ interface ContestParentNew {
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: any;
-    art_type_id: any;
-    art_age_id: any;
+    creator_id: number;
+    art_type_id: number;
+    art_age_id: number;
     art_type_name: string;
     art_age_name: string;
     create_time: string;
     update_time: string;
     student_registered_name: string[];
-    student_registered_id: any[];
+    student_registered_id: number[];
 }
 export function getContestParentNew(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");

@@ -1,19 +1,19 @@
 import { fetchDataSuccess, fetchDataError, addUserGradeExerciseSubmission, removeUserGradeExerciseSubmissionAll} from "../../../store/actions/user_grade_exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface user_grade_contest {
-    student_id: any;
+    student_id: number;
     student_name: string;
     exercise_name: string;
     time_submit: string;
     deadline: string;
     description: string;
     image_url: string;
-    exercise_submission_id: any;
+    exercise_submission_id: number;
     feedback: string;
     score: number;
     time: string;
 }
-export function getInfoFinalCourse(dispatch: any, student_id: any, classes_id: any) {
+export function getInfoFinalCourse(dispatch: any, student_id: number, classes_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return  fetch(

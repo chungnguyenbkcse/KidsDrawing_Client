@@ -21,7 +21,7 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
   const isCreate: boolean = (art_ages.modificationState === ArtAgeModificationStatus.Create);
   
   if (!art_age || isCreate) {
-    art_age = { id: "", name: "", description: ""};
+    art_age = { id: 0, name: "", description: ""};
   }
 
   const [formState, setFormState] = useState({

@@ -79,9 +79,9 @@ const CourseTeacherDetail: React.FC = () => {
     }
 
     var id_n = localStorage.getItem('semester_class_id');
-    var semester_class_id: any = '';
+    var semester_class_id: number = 0;
     if (id_n !== null) {
-        semester_class_id = id_n;
+        semester_class_id = parseInt(id_n);
     }
 
     var id_nx = localStorage.getItem('status');

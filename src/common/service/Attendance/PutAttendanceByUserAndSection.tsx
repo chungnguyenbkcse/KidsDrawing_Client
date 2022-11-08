@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function putAttendanceByUserAndSection( section_id: any, student_id: any,idx: any) {
+export function putAttendanceByUserAndSection( section_id: number, student_id: number,idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return (dispatch: any) => {

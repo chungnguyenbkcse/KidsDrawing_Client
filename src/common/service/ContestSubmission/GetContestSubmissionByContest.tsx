@@ -2,8 +2,8 @@ import { fetchDataSuccess, fetchDataError, removeContestGradedAll, removeContest
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ContestSubmission {
     id: any;
-    student_id: any;
-    contest_id: any;
+    student_id: number;
+    contest_id: number;
     student_name: string;
     contest_name: string;
     image_url: string;

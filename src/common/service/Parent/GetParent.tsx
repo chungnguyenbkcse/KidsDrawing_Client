@@ -13,7 +13,7 @@ interface user {
     sex: string,
     phone: string,
     address: string,
-    parents: string,
+    parents: number,
     createTime: string
 }
 export function getParent(dispatch: any) {

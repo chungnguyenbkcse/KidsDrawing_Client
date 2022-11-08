@@ -1,6 +1,6 @@
 export interface ISection {
     id: any;
-    class_id: any;
+    class_id: number;
     name: string;
     number: number;
     teacher_name: string;

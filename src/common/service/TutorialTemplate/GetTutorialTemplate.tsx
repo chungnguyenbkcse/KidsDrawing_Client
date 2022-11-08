@@ -2,7 +2,7 @@ import { fetchDataSuccess, fetchDataError, removeTutorialTemplateAll, initialTut
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialTemplate {
     id: any;
-    section_template_id: any;
+    section_template_id: number;
     name: string;
     description: string;
     create_time: string;

@@ -2,9 +2,9 @@ import { fetchDataSuccess, fetchDataError, removeScheduleAll, initialSchedule, a
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface schedule {
     id: any;
-    lesson_time_id: any;
+    lesson_time_id: number;
     lesson_time: string;
-    semester_class_id: any;
+    semester_class_id: number;
     date_of_week: number;
 }
 export function getSchedule(dispatch: any) {

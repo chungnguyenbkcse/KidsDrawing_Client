@@ -21,7 +21,7 @@ function TeachLevelForm(props: artLevelListProps): JSX.Element {
   const isCreate: boolean = (art_levels.modificationState === ArtLevelModificationStatus.Create);
   
   if (!art_level || isCreate) {
-    art_level = { id: "", name: "", description: "" };
+    art_level = { id: 0, name: "", description: "" };
   }
 
   const [formState, setFormState] = useState({

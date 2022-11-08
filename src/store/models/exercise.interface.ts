@@ -3,8 +3,8 @@ export interface IExercise {
     name: string;
     description: string;
     deadline: string;
-    section_id: any;
-    level_id: any;
+    section_id: number;
+    level_id: number;
     level_name: string;
     section_name: string;
     create_time: string;

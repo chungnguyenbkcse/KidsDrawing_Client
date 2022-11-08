@@ -1,7 +1,7 @@
 import { IProduct } from "../../store/models/product.interface";
 
 export type ScheduleItem = {
-    schedule_id: any;
+    schedule_id: number;
     lesson_time: number;
     date_of_week: number;
 }
@@ -40,14 +40,14 @@ export interface ISemesterFormState {
 }
 
 export interface ITeacherLeaveFormState {
-    section_id: IFormStateField<string>;
-    substitute_teacher_id: IFormStateField<string>;
+    section_id: IFormStateField<number>;
+    substitute_teacher_id: IFormStateField<number>;
     description: IFormStateField<string>;
 }
 
 
 export interface IStudentLeaveFormState {
-    section_id: IFormStateField<string>;
+    section_id: IFormStateField<number>;
     description: IFormStateField<string>;
 }
 
@@ -87,8 +87,8 @@ export interface IUser1FormState {
 }
 
 export interface ITeacherRegisterLevelFormState {
-    teacher_id: IFormStateField<string>;
-    course_id: IFormStateField<string>;
+    teacher_id: IFormStateField<number>;
+    course_id: IFormStateField<number>;
     degree_photo_url: IFormStateField<string>;
     status: IFormStateField<string>;
 }
@@ -99,8 +99,8 @@ export interface ILessonFormState {
 }
 
 export interface IExerciseFormState {
-    section_id: IFormStateField<string>;
-    level_id: IFormStateField<string>;
+    section_id: IFormStateField<number>;
+    level_id: IFormStateField<number>;
     name: IFormStateField<string>;
     description: IFormStateField<string>;
     deadline: IFormStateField<string>;
@@ -133,17 +133,17 @@ export interface ICourseNomalFormState {
     price: IFormStateField<number>;
     image_url: IFormStateField<string>;
     is_enabled: IFormStateField<boolean>;
-    creator_id: IFormStateField<string>;
-    art_type_id: IFormStateField<string>;
-    art_level_id: IFormStateField<string>;
-    art_age_id: IFormStateField<string>;
+    creator_id: IFormStateField<number>;
+    art_type_id: IFormStateField<number>;
+    art_level_id: IFormStateField<number>;
+    art_age_id: IFormStateField<number>;
     create_time: IFormStateField<string>;
     update_time: IFormStateField<string>;
 }
 
 export interface ISemesterClassFormState {
-    semester_id: IFormStateField<string>;
-    course_id: IFormStateField<string>;
+    semester_id: IFormStateField<number>;
+    course_id: IFormStateField<number>;
     registration_time: IFormStateField<string>;
     max_participant: IFormStateField<number>;
     name: IFormStateField<string>;
@@ -157,14 +157,14 @@ export interface IAnonymousNotificationFormState {
 }
 
 export interface IScheduleFormState {
-    creator_id: IFormStateField<string>;
+    creator_id: IFormStateField<number>;
     name: IFormStateField<string>;
     total_date_of_week: IFormStateField<number>;
     list_schedule_item: IFormStateField<ScheduleItem[]>;
 }
 
 export interface IScheduleItemFormState {
-    schedule_id: IFormStateField<string>;
+    schedule_id: IFormStateField<number>;
     lesson_time: IFormStateField<string>;
     date_of_week: IFormStateField<number>;
 }
@@ -178,16 +178,16 @@ export interface IContestFormState {
     start_time: IFormStateField<string>;
     end_time: IFormStateField<string>;
     is_enabled: IFormStateField<boolean>;
-    creator_id: IFormStateField<string>;
-    art_type_id: IFormStateField<string>;
-    art_age_id: IFormStateField<string>;
+    creator_id: IFormStateField<number>;
+    art_type_id: IFormStateField<number>;
+    art_age_id: IFormStateField<number>;
     create_time: IFormStateField<string>;
     update_time: IFormStateField<string>;
 }
 
 export interface ISectionTemplateFormState {
-    creator_id: IFormStateField<string>;
-    course_id: IFormStateField<string>;
+    creator_id: IFormStateField<number>;
+    course_id: IFormStateField<number>;
     name: IFormStateField<string>;
     teaching_form: IFormStateField<any>;
     number: IFormStateField<number>;
@@ -200,7 +200,7 @@ export interface ISectionFormState {
 }
 
 export interface ITutorialTemplateFormState {
-    section_template_id: IFormStateField<string>;
+    section_template_id: IFormStateField<number>;
     name: IFormStateField<string>;
     create_time: IFormStateField<string>;
     update_time: IFormStateField<string>;

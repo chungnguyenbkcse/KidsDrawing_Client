@@ -4,8 +4,8 @@ interface CourseTeacher {
     id: any;
     name: string;
     course_name: string;
-    course_id: any;
-    semester_class_id: any;
+    course_id: number;
+    semester_class_id: number;
     description: string;
     max_participant: number;
     num_of_section: number;

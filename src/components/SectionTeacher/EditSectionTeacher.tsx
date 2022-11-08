@@ -31,7 +31,7 @@ type PageContent = {
 
 type TutorialPage = {
     id: any;
-    tutorial_id: any;
+    tutorial_id: number;
     name: string;
     number: number;
     description: string;
@@ -48,9 +48,9 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('section_id');
-    let section_id: any = 0;
+    let section_id: number = 0;
     if (id_x !== null) {
-        section_id = id_x
+        section_id = parseInt(id_x)
     }
 
     var id_y = localStorage.getItem('section_number');
@@ -69,9 +69,9 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
 
     var id_t = localStorage.getItem('tutorial_id');
-    let tutorial_id: any = 0;
+    let tutorial_id: number = 0;
     if (id_t !== null) {
-        tutorial_id = id_t
+        tutorial_id = parseInt(id_t)
     }
 
     var id_h = localStorage.getItem('tutorial_name');
@@ -128,12 +128,12 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section) {
-        section = { id: "", name: "", number: 0,  class_id: "", teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
     console.log(tutorial_pages.tutorialPages)
     if (tutorial_pages.tutorialPages.length === 0) {
-        section = { id: "", name: "", number: 0,  class_id: "", teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
 

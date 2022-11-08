@@ -60,14 +60,14 @@ const DetailTeacher: React.FC = () => {
     }, [dispatch, access_token, refresh_token])
 
     const { state } = useLocation<any>();
-    let user: IUser = { id: "", username: "", email: "", password: "", status: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: "" };
+    let user: IUser = { id: 0, username: "", email: "", password: "", status: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 };
     if (typeof state !== undefined){
         user = state.user
     }
 
     console.log(user)
 
-    let course_ids: string[] = [];
+    let course_ids: number[] = [];
     teacher_register_quantifications.approveds.map((ele, index) => {
         if (ele.teacher_id === user.id && ele.status === "Approved"){
             course_ids.push(ele.course_id)

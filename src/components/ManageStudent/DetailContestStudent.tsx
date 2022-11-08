@@ -25,19 +25,19 @@ const DetailContestStudent: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
     var id_k = localStorage.getItem('child_id');
-    let child_id: any = 0;
+    let child_id: number = 0;
     if (id_k !== null) {
-        child_id = id_k;
+        child_id = parseInt(id_k);
     }
 
     let childs: IUserGradeContestSubmission = {
-        student_id: "",
+        student_id: 0,
         student_name: "",
-        teacher_id: "",
+        teacher_id: 0,
         teacher_name: "",
-        contest_id: "",
+        contest_id: 0,
         contest_name: '',
-        contest_submission_id: "",
+        contest_submission_id: 0,
         feedback: "",
         score: 0,
         time: ""
@@ -52,10 +52,10 @@ const DetailContestStudent: React.FC = () => {
     })
 
     let submistions: IContestSubmission = {
-        id: "",
-        student_id: "",
+        id: 0,
+        student_id: 0,
         student_name: '',
-        contest_id: "",
+        contest_id: 0,
         contest_name: "",
         image_url: '',
         create_time: "",
@@ -71,10 +71,10 @@ const DetailContestStudent: React.FC = () => {
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('contest_id');
-    let contest_id = "";
+    let contest_id = 0;
 
     if (id_y !== null) {
-        contest_id = id_y;
+        contest_id = parseInt(id_y);
     }
 
     var id_z = localStorage.getItem('contest_name');

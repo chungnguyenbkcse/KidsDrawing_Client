@@ -2,17 +2,17 @@ import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeScheduleAll, 
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface schedule {
     id: any;
-    lesson_time_id: any;
+    lesson_time_id: number;
     lesson_time: string;
-    semester_class_id: any;
+    semester_class_id: number;
     date_of_week: number;
 }
 export function getScheduleBySemesterClass(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem("id");
-    var creator_id: any = 0;
+    var creator_id: number = 0;
     if (id_x !== null) {
-        creator_id = id_x
+        creator_id = parseInt(id_x)
     }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());

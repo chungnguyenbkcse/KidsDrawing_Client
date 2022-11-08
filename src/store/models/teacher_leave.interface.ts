@@ -1,14 +1,14 @@
 export interface ITeacherLeave {
     id: any;
-    section_id: any;
+    section_id: number;
     section_name: string;
-    class_id: any;
+    class_id: number;
     class_name: string;
-    teacher_id: any;
+    teacher_id: number;
     teacher_name: string;
     section_number: number;
-    reviewer_id: any;
-    substitute_teacher_id: any;
+    reviewer_id: number;
+    substitute_teacher_id: number;
     substitute_teacher_name: string;
     description: string;
     status: string;

@@ -32,16 +32,16 @@ const AnalytisResultGradeContestTeacher: React.FC = () => {
     const { promiseInProgress } = usePromiseTracker();
 
     var id_x = localStorage.getItem('class_id');
-    var class_id: any = 0;
+    var class_id: number = 0;
     if (id_x !== null) {
-        class_id = id_x;
+        class_id = parseInt(id_x);
     }
 
     var id_y = localStorage.getItem('contest_id');
-    let contest_id = "";
+    let contest_id = 0;
 
     if (id_y !== null) {
-        contest_id = id_y;
+        contest_id = parseInt(id_y);
     }
 
     const labels = student;

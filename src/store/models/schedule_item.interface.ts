@@ -1,6 +1,6 @@
 export interface IScheduleItem {
     id: any;
-    schedule_id: any;
+    schedule_id: number;
     lesson_time: number;
     date_of_week: number;
 }

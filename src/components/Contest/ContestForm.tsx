@@ -37,7 +37,7 @@ type Options = {
 
 type Option1 = {
   label: string;
-  value: string;
+  value: number;
 }
 
 const ContestForm: React.FC = () => {
@@ -45,9 +45,9 @@ const ContestForm: React.FC = () => {
   const contests: IContestState | null = useSelector((state: IStateType) => state.contests);
   var contest: IContest | null = contests.selectedContest;
   var id_x = localStorage.getItem('contest_id');
-  let contest_id: any = 0;
+  let contest_id: number = 0;
   if (id_x !== null) {
-    contest_id = id_x
+    contest_id = parseInt(id_x)
   }
 
   const { promiseInProgress } = usePromiseTracker();
@@ -55,7 +55,7 @@ const ContestForm: React.FC = () => {
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
   if (isCreate || contest === null){
-      contest = { id: "", name: "", total_contest_submission: 0, total_contest_submission_graded: 0, total_register_contest: 0,  description: "", max_participant: 0, creator_id: "", is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: "", art_type_id: "", art_age_name: "", art_type_name: "" };
+      contest = { id: 0, name: "", total_contest_submission: 0, total_contest_submission_graded: 0, total_register_contest: 0,  description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0, art_age_name: "", art_type_name: "" };
   }
   useEffect(() => {
     trackPromise(getArtType(dispatch))

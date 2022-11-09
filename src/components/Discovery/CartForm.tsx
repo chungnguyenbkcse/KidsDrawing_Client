@@ -1,6 +1,6 @@
 import React, { Dispatch, Fragment, useEffect } from "react";
 import "./SemesterClassDetail.css"
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { GrLinkNext } from "react-icons/gr";
 import { IRootPageStateType, IStateType, IUserRegisterJoinSemesterState } from "../../store/models/root.interface";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
+import { deleteUserRegisterJoinSemester1 } from "../../common/service/UserRegisterJoinSemester/DeleteUserRegisterJoinSemester";
 
 
 const CartForm: React.FC = () => {
@@ -112,7 +113,12 @@ const CartForm: React.FC = () => {
                         user_register_join_semesters.waiting.map((item,key)=>{
                             return(
                                 <tr key={key}>   
-                                <td><i className="badge badge-danger" onClick={()=>{dispatch(removeCart(item.id))}}>X</i></td>
+                                <td><i className="badge badge-danger" onClick={()=>{
+                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                        position: toast.POSITION.TOP_CENTER
+                                      });
+                                    dispatch(deleteUserRegisterJoinSemester1(item.id, idx))
+                                }}>X</i></td>
                                 <td>{item.course_name}</td>
                                 <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
                                 <td>{item.student_name}</td>
@@ -181,7 +187,12 @@ const CartForm: React.FC = () => {
                         user_register_join_semesters.waiting.map((item,key)=>{
                             return(
                                 <tr key={key}>   
-                                <td><i className="badge badge-danger" onClick={()=>{dispatch(removeCart(item.id))}}>X</i></td>
+                                <td><i className="badge badge-danger" onClick={()=>{
+                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                        position: toast.POSITION.TOP_CENTER
+                                      });
+                                    dispatch(deleteUserRegisterJoinSemester1(item.id, idx))
+                                }}>X</i></td>
                                 <td>{item.course_name}</td>
                                 <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
                                 <td>{item.student_name}</td>

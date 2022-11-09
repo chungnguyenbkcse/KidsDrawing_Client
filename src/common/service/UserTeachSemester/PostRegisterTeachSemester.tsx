@@ -36,7 +36,7 @@ export function postRegisterTeachSemester(data: any, idx: any,routeHome: any) {
             .then (x => {
                 console.log(x)
                 getCourseTeacher(dispatch, data.teacher_id)
-                toast.update(idx, { render: "Thêm cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Đăng kí thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 setTimeout(() => {
                     routeHome()
                 }, 2000)

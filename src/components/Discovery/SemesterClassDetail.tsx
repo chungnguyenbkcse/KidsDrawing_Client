@@ -17,6 +17,7 @@ import { GrLinkDown, GrLinkNext } from "react-icons/gr";
 import { addCart } from "../../store/actions/cart.action";
 import { toast, ToastContainer } from "react-toastify";
 import { postUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/PostUserRegisterJoinSemester";
+import { postUserRegisterJoinSemester1 } from "../../common/service/UserRegisterJoinSemester/postUserRegisterJoinSemester1";
 
 type Option1 = {
     label: string;
@@ -164,14 +165,28 @@ const SemesterClassDetail: React.FC = () => {
     }, [path.area, dispatch])
 
     function handleRegister() {
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
         valueTeacher.map((ele, idx) => {
-            dispatch(postUserRegisterJoinSemester({
-                "student_id": ele.value,
-                "semester_classes_id": semester_class_id,
-                "payer_id": id,
-                "price": price,
-                "status": "Waiting"
-            }))
+            if (idx === valueTeacher.length - 1) {
+                dispatch(postUserRegisterJoinSemester1({
+                    "student_id": ele.value,
+                    "semester_classes_id": semester_class_id,
+                    "payer_id": id,
+                    "price": price,
+                    "status": "Waiting"
+                }, idx))
+            }
+            else {
+                dispatch(postUserRegisterJoinSemester({
+                    "student_id": ele.value,
+                    "semester_classes_id": semester_class_id,
+                    "payer_id": id,
+                    "price": price,
+                    "status": "Waiting"
+                }, idx, routeHome))
+            }
             return dispatch(addCart({
                 id: semester_class_id,
                 name: semester_class_name,
@@ -192,13 +207,24 @@ const SemesterClassDetail: React.FC = () => {
     const history = useHistory();
     function handleRegister1() {
         valueTeacher.map((ele, idx) => {
-            dispatch(postUserRegisterJoinSemester({
-                "student_id": ele.value,
-                "semester_classes_id": semester_class_id,
-                "payer_id": id,
-                "price": price,
-                "status": "Waiting"
-            }))
+            if (idx === valueTeacher.length - 1) {
+                dispatch(postUserRegisterJoinSemester1({
+                    "student_id": ele.value,
+                    "semester_classes_id": semester_class_id,
+                    "payer_id": id,
+                    "price": price,
+                    "status": "Waiting"
+                }, idx))
+            }
+            else {
+                dispatch(postUserRegisterJoinSemester({
+                    "student_id": ele.value,
+                    "semester_classes_id": semester_class_id,
+                    "payer_id": id,
+                    "price": price,
+                    "status": "Waiting"
+                }, idx, routeHome))
+            }
             return dispatch(addCart({
                 id: semester_class_id,
                 name: semester_class_name,
@@ -213,6 +239,11 @@ const SemesterClassDetail: React.FC = () => {
         history.push({
             pathname: path
         });
+    }
+
+    function routeHome() {
+        let path = '/discover';
+        history.push(path)
     }
 
     const [valueTeacher, setValueTeacher] = useState<any[]>([])

@@ -12,6 +12,7 @@ import { GrLinkDown, GrLinkNext } from "react-icons/gr";
 import { toast, ToastContainer } from "react-toastify";
 import { postUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/PostUserRegisterJoinSemester";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { useHistory } from "react-router-dom";
 
 
 const SemesterClassDetailStudent: React.FC = () => {
@@ -142,17 +143,22 @@ const SemesterClassDetailStudent: React.FC = () => {
     }, [path.area, dispatch])
 
     function handleRegister() {
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
         dispatch(postUserRegisterJoinSemester({
             "student_id": id,
             "semester_classes_id": semester_class_id,
             "payer_id": users.teachers.length > 0 ? users.teachers[0].parents : 0,
             "price": price,
             "status": "Waiting"
-        }))
-        toast.success("Đăng kí thành công! Vui lòng đợi ba mẹ thanh toán...", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000
-        })
+        }, idx, routeHome))
+    }
+
+    const history = useHistory();
+    function routeHome() {
+        let path = '/discover';
+        history.push(path)
     }
 
     return (

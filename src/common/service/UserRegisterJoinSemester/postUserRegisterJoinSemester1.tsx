@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataError } from "../../../store/actions/user_register_join_semester.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any) {
+export function postUserRegisterJoinSemester1(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -22,7 +22,7 @@ export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postUserRegisterJoinSemester(data, idx, routeHome))
+                        dispatch(postUserRegisterJoinSemester1(data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -34,10 +34,6 @@ export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Đăng kí thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                setTimeout(() => {
-                    routeHome()
-                }, 2000)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

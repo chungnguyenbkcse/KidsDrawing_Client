@@ -10,6 +10,7 @@ import "./TopNotification.css"
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { trackPromise } from "react-promise-tracker";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
+import { getUserRegisterJoinSemesterByStudent } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterStudent";
 
 type Options = {
   notification_id: number;
@@ -47,8 +48,13 @@ function TopMenuCart(): JSX.Element {
   }, [dispatch, user_id])
 
   useEffect(() => {
-    trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, user_id))
-  }, [dispatch, user_id])
+    if (roleUser == "PARENT_USER") {
+      trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, user_id))
+    }
+    else if (roleUser == "STUDENT_USER") {
+      trackPromise(getUserRegisterJoinSemesterByStudent(dispatch, user_id))
+    }
+  }, [dispatch, user_id, roleUser])
 
   console.log(notifys.notifys)
   console.log(user_read_notifications.user_not_readed_notifications)

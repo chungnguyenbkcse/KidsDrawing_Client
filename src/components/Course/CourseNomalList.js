@@ -118,7 +118,7 @@ function CourseNomalList(props) {
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
     <div>
-      <PaginationListStandalone {...paginationProps} />
+      {/* <PaginationListStandalone {...paginationProps} /> */}
       <div>
         <div>
           <BootstrapTable

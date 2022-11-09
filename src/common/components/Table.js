@@ -77,7 +77,7 @@ export function Table(props) {
     };
     const contentTable = ({ paginationProps, paginationTableProps }) => (
         <div>
-            <PaginationListStandalone {...paginationProps} />
+            {/* <PaginationListStandalone {...paginationProps} /> */}
             <div>
                 <div>
                     <BootstrapTable
@@ -91,7 +91,7 @@ export function Table(props) {
                     />
                 </div>
             </div>
-            <PaginationListStandalone {...paginationProps} />
+            {/* <PaginationListStandalone {...paginationProps} /> */}
         </div>
     );
 

@@ -102,8 +102,7 @@ function ClassSemesterList(props) {
     },
     {
       dataField: 'max_participant',
-      text: 'Số học sinh tối đa',
-      filter: numberFilter()
+      text: 'Số học sinh tối đa'
     },
     {
       dataField: '',
@@ -124,7 +123,7 @@ function ClassSemesterList(props) {
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
     <div>
-      <PaginationListStandalone {...paginationProps} />
+      {/* <PaginationListStandalone {...paginationProps} /> */}
       <div>
         <div>
           <BootstrapTable

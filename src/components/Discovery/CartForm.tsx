@@ -13,6 +13,7 @@ import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 import { deleteUserRegisterJoinSemester1 } from "../../common/service/UserRegisterJoinSemester/DeleteUserRegisterJoinSemester";
+import { getUserRegisterJoinSemesterByStudent } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterStudent";
 
 
 const CartForm: React.FC = () => {
@@ -58,15 +59,23 @@ const CartForm: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
+                    if (roleUser === "PARENT_USER") {
+                        trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
+                    }else {
+                        trackPromise(getUserRegisterJoinSemesterByStudent(dispatch, id))
+                    }
                 }
             }
             else {
-                trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
+                if (roleUser === "PARENT_USER") {
+                    trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
+                }else {
+                    trackPromise(getUserRegisterJoinSemesterByStudent(dispatch, id))
+                }
             }
         }
         
-    }, [dispatch, id, access_token, refresh_token]);
+    }, [dispatch, id, access_token, refresh_token, roleUser]);
 
     useEffect(() => {
         dispatch(updateCurrentPath("Giỏ hàng", ""));

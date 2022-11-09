@@ -1,8 +1,9 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getCourseTeacher } from "../CourseTeacher/GetCourseTeacherByTeacher";
 
-export function postRegisterTeachSemester(data: any) {
+export function postRegisterTeachSemester(data: any, idx: any,routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -22,7 +23,7 @@ export function postRegisterTeachSemester(data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postRegisterTeachSemester(data))
+                        dispatch(postRegisterTeachSemester(data, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -34,9 +35,14 @@ export function postRegisterTeachSemester(data: any) {
             })
             .then (x => {
                 console.log(x)
-                dispatch(getCourseTeacher(dispatch, data.teacher_id))
+                getCourseTeacher(dispatch, data.teacher_id)
+                toast.update(idx, { render: "Thêm cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                setTimeout(() => {
+                    routeHome()
+                }, 2000)
             })
             .catch(error => {
+                toast.update(idx, { render: "Đăng kí không thành công vì trùng lịch!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

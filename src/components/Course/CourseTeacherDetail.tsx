@@ -91,24 +91,23 @@ const CourseTeacherDetail: React.FC = () => {
     }
 
     function handleRegister() {
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
         dispatch(postRegisterTeachSemester({
             teacher_id: id,
             semester_classes_id: semester_class_id
-        }))
+        }, idx, routeHome))
         console.log({
             teacher_id: id,
             semester_classes_id: semester_class_id
         })
-        toast.success("Đăng kí lớp thành công!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000
-        });
+        
+    }
+
+    function routeHome() {
         let path = '/courses';
-        setTimeout(function () {
-            history.push({
-                pathname: path
-            });
-        }, 2000);
+        history.push(path)
     }
 
     return (

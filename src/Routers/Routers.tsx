@@ -226,6 +226,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/semester-class/detail`}><SemesterClassDetailStudent /></Route>
                                 <Route path={`/classes/section`}><SectionStudent /></Route>
                                 <Route path={`/section/view`}><ViewSectionStudent /></Route>
+                                <Route path={`/cart`}><CartForm /></Route>
                                 <Route path={`/courses/semester-classes`}><SemesterClassStudentNew /></Route>
                                 <Route path={`/courses`}><CourseStudent /></Route>
                                 <Route path={`/exercise/detail`}><DetailExerciseStudent1 /></Route>

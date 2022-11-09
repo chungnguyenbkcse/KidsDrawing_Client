@@ -33,6 +33,14 @@ function TopMenuCart(): JSX.Element {
     user_id = parseInt(id_x)
   }
 
+  var role_privilege = localStorage.getItem('role_privilege')
+  var rolePrivilege: string[] = []
+  var roleUser: string = ""
+  if (role_privilege !== null) {
+      rolePrivilege = role_privilege.split(',')
+      roleUser = rolePrivilege[0]
+  }
+
   useEffect(() => {
     dispatch(getUserReadNotification(user_id))
     dispatch(getNotify())
@@ -115,61 +123,68 @@ function TopMenuCart(): JSX.Element {
     });
   }
 
-  return (
+  if (roleUser === "PARENT_USER" || roleUser === "STUDENT_USER") {
+    return (
 
-    <li className="nav-item dropdown no-arrow">
-
-
-      <p className="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" onClick={() => {
-        routeCart();
-      }}>
-        <span className="badge badge-danger ml-2">{user_register_join_semesters.waiting.length}</span>
-        <AiOutlineShoppingCart />
-      </p>
-
-      <div className={`dropdown-menu dropdown-menu-right shadow dropdown-secondary animated--grow-in ${(isShow) ? "show" : ""} notification`}
-        aria-labelledby="userDropdown">
-          <ul className="list-notify">
-            {
-              data_not_read.map((ele, idx) => {
-                return (
-                  <li key={idx}>
-                    <p className="dropdown-item waves-light"
-                      onClick={() => {routeChange(ele)}}
-                      data-toggle="modal"
-                      data-target="#logoutModal">
-                      <i className="fas fa-bell fa-sm fa-fw mr-2"></i>
-                      {ele.notification_name}
-                      <span className="badge badge-danger ml-2">*</span>
-                    </p>
-                  </li>
-                )
-              })
-            }
-
-
-            {
-              data_readed.map((ele, idx) => {
-                return (
-                  <li>
-                    <p className="dropdown-item waves-light"
-                      onClick={() => dispatch(logout())}
-                      data-toggle="modal"
-                      data-target="#logoutModal">
-                      <i className="fas fa-bell fa-sm fa-fw mr-2 text-gray-400"></i>
-                      {ele.notification_name}
-                    </p>
-                  </li>
-                )
-              })
-            }
-          </ul>
-          <div className="view-all-notify text-center">
-            <a href="/notification">Xem toàn bộ</a>
-          </div>
-      </div>
-    </li>
-  );
+      <li className="nav-item dropdown no-arrow">
+  
+  
+        <p className="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" onClick={() => {
+          routeCart();
+        }}>
+          <span className="badge badge-danger ml-2">{user_register_join_semesters.waiting.length}</span>
+          <AiOutlineShoppingCart />
+        </p>
+  
+        <div className={`dropdown-menu dropdown-menu-right shadow dropdown-secondary animated--grow-in ${(isShow) ? "show" : ""} notification`}
+          aria-labelledby="userDropdown">
+            <ul className="list-notify">
+              {
+                data_not_read.map((ele, idx) => {
+                  return (
+                    <li key={idx}>
+                      <p className="dropdown-item waves-light"
+                        onClick={() => {routeChange(ele)}}
+                        data-toggle="modal"
+                        data-target="#logoutModal">
+                        <i className="fas fa-bell fa-sm fa-fw mr-2"></i>
+                        {ele.notification_name}
+                        <span className="badge badge-danger ml-2">*</span>
+                      </p>
+                    </li>
+                  )
+                })
+              }
+  
+  
+              {
+                data_readed.map((ele, idx) => {
+                  return (
+                    <li>
+                      <p className="dropdown-item waves-light"
+                        onClick={() => dispatch(logout())}
+                        data-toggle="modal"
+                        data-target="#logoutModal">
+                        <i className="fas fa-bell fa-sm fa-fw mr-2 text-gray-400"></i>
+                        {ele.notification_name}
+                      </p>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+            <div className="view-all-notify text-center">
+              <a href="/notification">Xem toàn bộ</a>
+            </div>
+        </div>
+      </li>
+    );
+  }
+  else {
+    return (
+      <></>
+    )
+  }
 };
 
 export default TopMenuCart;

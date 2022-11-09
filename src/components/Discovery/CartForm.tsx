@@ -24,6 +24,14 @@ const CartForm: React.FC = () => {
         id = id_x;
     }
 
+    var role_privilege = localStorage.getItem('role_privilege')
+    var rolePrivilege: string[] = []
+    var roleUser: string = ""
+    if (role_privilege !== null) {
+        rolePrivilege = role_privilege.split(',')
+        roleUser = rolePrivilege[0]
+    }
+
     const { promiseInProgress } = usePromiseTracker();
 
     let access_token = localStorage.getItem("access_token");
@@ -72,73 +80,135 @@ const CartForm: React.FC = () => {
         postMomo(user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0), ids);
     }
 
-    return (
-        promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+    if (roleUser === "PARENT_USER") {
+        return (
+            promiseInProgress ?
+          <div className="row" id="search-box">
+            <div className="col-xl-12 col-lg-12">
+              <div className="input-group" id="search-content">
+                <div className="form-outline">
+                  <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            <ToastContainer />
-            <div className="row">
-            <div className="col-md-12">
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Tên</th>
-                        <th>Ảnh</th>
-                        <th>Bé</th>
-                        <th>Gía</th>
-                        <th>Số lượng</th>
-                        <th>Tiền</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    user_register_join_semesters.waiting.map((item,key)=>{
-                        return(
-                            <tr key={key}>   
-                            <td><i className="badge badge-danger" onClick={()=>{dispatch(removeCart(item.id))}}>X</i></td>
-                            <td>{item.course_name}</td>
-                            <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
-                            <td>{item.student_name}</td>
-                            <td>{item.price} VND</td>
-                            <td>
-                                    <span className="btn btn-info">1</span>
-                            </td>
-                            <td>{item.price * 1} VND</td>
+          </div> : <Fragment>
+                <ToastContainer />
+                <div className="row">
+                <div className="col-md-12">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Tên</th>
+                            <th>Ảnh</th>
+                            <th>Bé</th>
+                            <th>Gía</th>
+                            <th>Số lượng</th>
+                            <th>Tiền</th>
                         </tr>
-                        )
-                    })
-                         
-                }
-                <tr>
-                    <td colSpan={5}>Tổng tiền</td>
-                    <td>{user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0)} $</td>
-                </tr>
-                <tr>
-                    <td colSpan={5}></td>
-                    <td>
-                        <button className="btn btn-success btn-green" id="btn-create-register-course3" onClick={() => {handlePayment()}}>
-                            <GrLinkNext id="btn-payment" color="#ffffff"/>
-                            Thanh toán
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-               
-            </table>
+                    </thead>
+                    <tbody>
+                    {
+                        user_register_join_semesters.waiting.map((item,key)=>{
+                            return(
+                                <tr key={key}>   
+                                <td><i className="badge badge-danger" onClick={()=>{dispatch(removeCart(item.id))}}>X</i></td>
+                                <td>{item.course_name}</td>
+                                <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
+                                <td>{item.student_name}</td>
+                                <td>{item.price} VND</td>
+                                <td>
+                                        <span className="btn btn-info">1</span>
+                                </td>
+                                <td>{item.price * 1} VND</td>
+                            </tr>
+                            )
+                        })
+                             
+                    }
+                    <tr>
+                        <td colSpan={5}>Tổng tiền</td>
+                        <td>{user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0)} $</td>
+                    </tr>
+                    <tr>
+                        <td colSpan={5}></td>
+                        <td>
+                            <button className="btn btn-success btn-green" id="btn-create-register-course3" onClick={() => {handlePayment()}}>
+                                <GrLinkNext id="btn-payment" color="#ffffff"/>
+                                Thanh toán
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                   
+                </table>
+                </div>
             </div>
-        </div>
-
-
-        </Fragment >
-    );
+    
+    
+            </Fragment >
+        );
+    }
+    else {
+        return (
+            promiseInProgress ?
+          <div className="row" id="search-box">
+            <div className="col-xl-12 col-lg-12">
+              <div className="input-group" id="search-content">
+                <div className="form-outline">
+                  <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                </div>
+              </div>
+            </div>
+          </div> : <Fragment>
+                <ToastContainer />
+                <div className="row">
+                <div className="col-md-12">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Tên</th>
+                            <th>Ảnh</th>
+                            <th>Bé</th>
+                            <th>Gía</th>
+                            <th>Số lượng</th>
+                            <th>Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        user_register_join_semesters.waiting.map((item,key)=>{
+                            return(
+                                <tr key={key}>   
+                                <td><i className="badge badge-danger" onClick={()=>{dispatch(removeCart(item.id))}}>X</i></td>
+                                <td>{item.course_name}</td>
+                                <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
+                                <td>{item.student_name}</td>
+                                <td>{item.price} VND</td>
+                                <td>
+                                        <span className="btn btn-info">1</span>
+                                </td>
+                                <td>{item.price * 1} VND</td>
+                            </tr>
+                            )
+                        })
+                             
+                    }
+                    <tr>
+                        <td colSpan={5}>Tổng tiền</td>
+                        <td>{user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0)} $</td>
+                    </tr>
+                    </tbody>
+                   
+                </table>
+                </div>
+            </div>
+    
+    
+            </Fragment >
+        );
+    }
 };
 
 export default CartForm;

@@ -7,10 +7,10 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getCourseParentNew } from "../../common/service/CourseParentNew/GetCourseParentNew";
-import CourseNewListTest from "./CourseNewListTest";
+import ContestList from "./ContestList";
+import { getContestParentNew } from "../../common/service/ContestParentNew/GetContestParentNew";
 
-const DiscoveryParent: React.FC = () => {
+const DiscoveryParentContest: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     //const semester_classs: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -45,21 +45,19 @@ const DiscoveryParent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getCourseParentNew(dispatch, id))
+                    trackPromise(getContestParentNew(dispatch, id))
                 }
             }
             else {
-                trackPromise(getCourseParentNew(dispatch, id))
+                trackPromise(getContestParentNew(dispatch, id))
             }
         }
 
     }, [dispatch, id, access_token, refresh_token]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Khám phá", "Khóa học"));
+        dispatch(updateCurrentPath("Khám phá", ""));
     }, [path.area, dispatch])
-
-    const [searchTerm, setSearchTerm] = useState("");
 
 
     return (
@@ -80,24 +78,21 @@ const DiscoveryParent: React.FC = () => {
                 <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
             </div> */}
 
-            <div className="row" id="search-box">
-            <div className="col-xl-12 col-lg-12">
-                <div className="input-group" id="search-content">
-                    <div className="form-outline">
-                        <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
-                            setSearchTerm(event.target.value)
-                            console.log(searchTerm)
-                        }}/>
+                <div className="row" id="search-box">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="input-group" id="search-content">
+                            <div className="form-outline">
+                                <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
+                            </div>
+                            <button type="button" className="btn btn-primary">
+                                <i className="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
-                    <button type="button" className="btn btn-primary">
-                        <i className="fas fa-search"></i>
-                    </button>
                 </div>
-            </div>
-        </div>
 
                 <div className="row">
-                    <CourseNewListTest value={searchTerm}/>
+                    <ContestList />
                 </div>
 
 
@@ -105,4 +100,4 @@ const DiscoveryParent: React.FC = () => {
     );
 };
 
-export default DiscoveryParent;
+export default DiscoveryParentContest;

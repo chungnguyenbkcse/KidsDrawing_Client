@@ -5,7 +5,7 @@ import { putTeacherRegisterLevelAdmin } from "../../common/service/TeacherRegist
 import { addNotification } from "../../store/actions/notifications.action";
 import { toast } from "react-toastify";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
@@ -87,6 +87,14 @@ function RequestConfirmLevelList(props) {
     )
   }
 
+  function detailButton(cell, row) {
+    return (
+      <button type="button" className="btn btn-primary" onClick={() => {
+        routeChange(row.degree_photo)
+      }}>Chi tiết</button>
+    )
+  }
+
   const columns = [
     {
       dataField: 'teacher_name',
@@ -108,6 +116,11 @@ function RequestConfirmLevelList(props) {
       dataField: 'address',
       text: '',
       formatter: removeButton
+    },
+    {
+      dataField: '',
+      text: '',
+      formatter: detailButton
     },
   ];
 

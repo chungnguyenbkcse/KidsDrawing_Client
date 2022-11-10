@@ -89,13 +89,13 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                             return (
                                 <div className="col-md-4" onClick={() => {routeChange(ele)}}>
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
-                                        <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" /></div>
+                                        <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" alt=""/></div>
                                         <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span><span className="d-block mb-5">Hiện tại khóa học mở {ele.total} lớp.</span>
                                         <div
                                             className="d-flex justify-content-between stats">
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
                                             <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" width="30" /></div><span className="ml-3">12</span></div>
+                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">12</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -173,15 +173,15 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                 <div className="d-flex justify-content-end text-right mt-2">
                     <nav>
                         <ul className="pagination">
-                        <li className="page-item"><a className="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li className="page-item"><a className="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
                             {
                                 Array.from(Array(Math.round(totalPage)).keys()).map((ele, idx) => {
                                     return (
-                                        <li className="page-item"><a className="page-link" href="#" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
+                                        <li className="page-item"><a className="page-link" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
                                     )
                                 })
                             }
-                            <li className="page-item"><a className="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                            <li className="page-item"><a className="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
                         </ul>
                     </nav>
                 </div>

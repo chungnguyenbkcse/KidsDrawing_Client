@@ -4,7 +4,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { GrLinkNext } from "react-icons/gr";
 import { IRootPageStateType, IStateType, IUserRegisterJoinSemesterState } from "../../store/models/root.interface";
 import { useDispatch, useSelector } from "react-redux";
-import {removeCart } from "../../store/actions/cart.action";
 import { postMomo } from "../../common/service/Payment/PostPayment";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";

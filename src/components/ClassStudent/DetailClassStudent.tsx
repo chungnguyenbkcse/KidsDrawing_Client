@@ -33,10 +33,6 @@ const DetailClassStudent: React.FC = () => {
     const exercise_student: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const { promiseInProgress } = usePromiseTracker();
 
-    function isDateBeforeToday(date: any) {
-        return new Date(date.toDateString()) < new Date(new Date().toDateString());
-    }
-
 
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberSectionCount: number = sections.sections.length;
@@ -181,7 +177,6 @@ const DetailClassStudent: React.FC = () => {
     }
 
 
-    let count = 0;
     let data: string[] = []
     let total_time = "";
     let check_active: string[] = [];
@@ -214,9 +209,6 @@ const DetailClassStudent: React.FC = () => {
                         check_active.push('Đã diễn ra');
                     }
 
-                    if (isDateBeforeToday(new Date(Date.parse(ele.end_time)))) {
-                        count++;
-                    }
                     var start_time = ele.start_time.split("T");
                     var end_time = ele.end_time.split("T");
                     return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])

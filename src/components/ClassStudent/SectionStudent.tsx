@@ -58,7 +58,7 @@ const SectionStudent: React.FC = () => {
     let link_jisti = "";
     if (class_students.classes_doing.length > 0) {
         class_students.classes_doing.map((ele, idx) => {
-            if (ele.id == class_id) {
+            if (ele.id === class_id) {
                 link_jisti = ele.link_url;
             }
             return ele

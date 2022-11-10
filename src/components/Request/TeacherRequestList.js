@@ -1,11 +1,11 @@
-import React, { Fragment, Dispatch } from "react";
+import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { putTeacherLeaveStatus } from "../../common/service/TeacherLeave/PutTeacherLeave";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 

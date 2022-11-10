@@ -72,12 +72,6 @@ const SectionTeacher: React.FC = () => {
         class_id = parseInt(id_z);
     }
 
-    var id_t = localStorage.getItem('recording');
-    var recording: any = "";
-    if (id_t !== null) {
-        recording = id_t;
-    }
-
     let link_jisti = "";
     if (class_teachers.class_doing.length > 0) {
         class_teachers.class_doing.map((ele, idx) => {

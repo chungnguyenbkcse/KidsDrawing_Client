@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/exercise.action";
+import { fetchDataRequest } from "../../../store/actions/exercise.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getExerciseBySection } from "./GetExerciseBySection";
 

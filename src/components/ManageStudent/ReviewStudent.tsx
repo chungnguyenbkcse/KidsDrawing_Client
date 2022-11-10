@@ -3,8 +3,7 @@ import { IStateType, IAnonymousNotificationState } from "../../store/models/root
 import { useSelector, useDispatch } from "react-redux";
 import { IAnonymousNotification, AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import { editAnonymousNotification, clearSelectedAnonymousNotification, setModificationStateAnonymousNotification, addAnonymousNotification } from "../../store/actions/anonymous_notification.action";
-import { OnChangeModel, IAnonymousNotificationFormState } from "../../common/types/Form.types";
-import { postNotificationByClass } from "../../common/service/Notification/PostNotificationByClass";
+import { IAnonymousNotificationFormState } from "../../common/types/Form.types";
 import { toast } from "react-toastify";
 import Editor from "../../common/components/Quill/EditReviewStudent";
 import { putClassHasRegisterJoinSemesterTeacher } from "../../common/service/ClassHasRegisterJoinSemester/PutClassHasRegisterJoinSemesterTeacher";
@@ -26,11 +25,11 @@ function ReviewStudent(props: artAgeListProps): JSX.Element {
         notification = { id: 0, name: "", description: "", time: "" };
     }
 
-    const [formState, setFormState] = useState({
+    let formState = {
         name: { error: "", value: notification.name },
         description: { error: "", value: notification.description },
         type_send: { error: "", value: "Chon gửi tới" },
-    });
+    };
 
     var id_x = localStorage.getItem('class_id');
     let classes_id: number = 0;

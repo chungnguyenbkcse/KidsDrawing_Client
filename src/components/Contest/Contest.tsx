@@ -23,7 +23,6 @@ import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getCheckGenerationByContest } from "../../common/service/ContestSubmission/GetCheckGenerationByContest";
 
 
 const Contest: React.FC = () => {

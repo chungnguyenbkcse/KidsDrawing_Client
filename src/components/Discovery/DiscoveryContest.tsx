@@ -1,4 +1,4 @@
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./Discovery.css"

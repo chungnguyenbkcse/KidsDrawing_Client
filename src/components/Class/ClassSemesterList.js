@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { SemesterClassModificationStatus } from "../../store/models/semester_class.interface";
 import { setModificationStateSemesterClass } from "../../store/actions/semester_class.action";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
-import filterFactory, { textFilter, numberFilter } from 'react-bootstrap-table2-filter';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
 function ClassSemesterList(props) {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { formatDate } from "../../common/components/ConverDate";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { postGenerationContestSubmissionGrade } from "../../common/service/ContestSubmission/PostGenerationForTeacher";
 
@@ -38,7 +38,6 @@ function ContestNotOnYetList(props) {
 
   const datas = contests.contests.filter((contest, index) => {
     var strDate1 = contest.start_time;
-    var strDate2 = contest.end_time;
     if (!contest || strDate1 < date_now) {
         return null
     }
@@ -172,15 +171,6 @@ function ContestNotOnYetList(props) {
       {/* <PaginationListStandalone {...paginationProps} /> */}
     </div>
   );
-
-  const onChangeRequest = (teacher_id) => {
-    let path = '/teachers/request-level';
-    localStorage.removeItem("teacher_id");
-    localStorage.setItem("teacher_id", teacher_id.toString())
-    history.push({
-      pathname: path
-    });
-  }
 
 
   return (

@@ -1,7 +1,6 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import TopCard from "../../common/components/TopCardUser";
@@ -85,14 +84,14 @@ const ClassTeacherEndDetail: React.FC = () => {
         setPopup1(false);
     }
 
-    const history = useHistory();
+    /* const history = useHistory();
     const onRouteChange = () =>{ 
         let path = '/classes/detail-student'; 
         history.push({
             pathname: path,
             state: {class_id: class_id}
         });
-    }
+    } */
     return (
         promiseInProgress ?
       <div className="row" id="search-box">

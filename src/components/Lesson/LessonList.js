@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LessonModificationStatus } from "../../store/models/lesson.interface";
 import { setModificationState } from "../../store/actions/lesson.action";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory from 'react-bootstrap-table2-filter';
 
 

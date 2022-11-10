@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { MyClassModificationStatus } from "../../store/models/my_class.interface";
 import { setModificationState } from "../../store/actions/my_class.action";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
@@ -16,7 +16,6 @@ function ClassList(props) {
   
     const history = useHistory();
   
-    const [popup, setPopup] = useState(false);
     
     const routeChange = (class_id) =>{ 
       let path = '/class/detail'; 
@@ -25,10 +24,7 @@ function ClassList(props) {
         state: { class_id: class_id }
       });
     }
-  
-    function onMyClassRemove() {
-      setPopup(true);
-  }
+
 
   const routeViewSchedule = (class_id, class_name) =>{ 
     localStorage.removeItem('class_id')

@@ -76,7 +76,6 @@ import ManageChild from "../components/ManageChild/ManageChild";
 import ManageClassesDone from "../components/ManageChild/ManageClassesDone";
 import ClassParent from "../components/ClassParent/ClassParent";
 import ManageClassesDoing from "../components/ManageChild/ManageClassesDoing";
-import Discovery from "../components/Discovery/Discovery";
 import SemesterClassDetail from "../components/Discovery/SemesterClassDetail";
 import ConestDetail from "../components/Discovery/ContestDetail";
 import CartForm from "../components/Discovery/CartForm";

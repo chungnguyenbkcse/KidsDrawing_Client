@@ -42,7 +42,6 @@ const GradeExamTeacher: React.FC = () => {
         });
         
         if (student_id === 0 && exercise_submission_id === 0){
-            let x = exercise_submissions.exercise_not_gradeds[0].student_id;
             let y = exercise_submissions.exercise_not_gradeds[0].id;
             console.log({
                 teacher_id: localStorage.getItem('id'),

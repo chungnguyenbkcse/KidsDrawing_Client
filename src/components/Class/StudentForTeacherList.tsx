@@ -11,7 +11,7 @@ function StudentList(): JSX.Element {
     var id_x = localStorage.getItem('class_end');
     let class_end = false;
     if (id_x !== null) {
-        if (id_x == 'true') {
+        if (id_x === 'true') {
             class_end = true;
         }
         else {
@@ -25,7 +25,7 @@ function StudentList(): JSX.Element {
         localStorage.setItem('student_id', student_id.toString());
         localStorage.removeItem('parent_id');
         localStorage.setItem('parent_id', parent_id.toString());
-        if (class_end == true) {
+        if (class_end === true) {
             let path = '/manage-student-end';
             history.push(path);
         }else {

@@ -143,15 +143,6 @@ function ContestIsOnList(props) {
     </div>
   );
 
-  const onChangeRequest = (teacher_id) => {
-    let path = '/teachers/request-level';
-    localStorage.removeItem("teacher_id");
-    localStorage.setItem("teacher_id", teacher_id.toString())
-    history.push({
-      pathname: path
-    });
-  }
-
 
   return (
       <Fragment>

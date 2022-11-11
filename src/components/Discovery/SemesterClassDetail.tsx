@@ -165,7 +165,7 @@ const SemesterClassDetail: React.FC = () => {
     }, [path.area, dispatch])
 
     function handleRegister() {
-        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        const idxx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
         valueTeacher.map((ele, idx) => {
@@ -176,7 +176,7 @@ const SemesterClassDetail: React.FC = () => {
                     "payer_id": id,
                     "price": price,
                     "status": "Waiting"
-                }, idx))
+                }, idxx))
             }
             else {
                 dispatch(postUserRegisterJoinSemester({
@@ -185,7 +185,7 @@ const SemesterClassDetail: React.FC = () => {
                     "payer_id": id,
                     "price": price,
                     "status": "Waiting"
-                }, idx, routeHome))
+                }, idxx, routeHome))
             }
             return dispatch(addCart({
                 id: semester_class_id,
@@ -206,6 +206,9 @@ const SemesterClassDetail: React.FC = () => {
 
     const history = useHistory();
     function handleRegister1() {
+        const idxx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
         valueTeacher.map((ele, idx) => {
             if (idx === valueTeacher.length - 1) {
                 dispatch(postUserRegisterJoinSemester1({
@@ -214,7 +217,7 @@ const SemesterClassDetail: React.FC = () => {
                     "payer_id": id,
                     "price": price,
                     "status": "Waiting"
-                }, idx))
+                }, idxx))
             }
             else {
                 dispatch(postUserRegisterJoinSemester({
@@ -223,7 +226,7 @@ const SemesterClassDetail: React.FC = () => {
                     "payer_id": id,
                     "price": price,
                     "status": "Waiting"
-                }, idx, routeHome))
+                }, idxx, routeHome))
             }
             return dispatch(addCart({
                 id: semester_class_id,

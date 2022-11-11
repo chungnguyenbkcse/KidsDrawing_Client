@@ -173,15 +173,23 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                 <div className="d-flex justify-content-end text-right mt-2">
                     <nav>
                         <ul className="pagination">
-                        <li className="page-item"><a className="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li className="page-item">
+                            <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
                             {
                                 Array.from(Array(Math.round(totalPage)).keys()).map((ele, idx) => {
                                     return (
-                                        <li className="page-item"><a className="page-link" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
+                                        <li className="page-item"><a className="page-link" href="/" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
                                     )
                                 })
                             }
-                            <li className="page-item"><a className="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                            <li className="page-item">
+                                <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>

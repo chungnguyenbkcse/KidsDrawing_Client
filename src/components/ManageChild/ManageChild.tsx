@@ -40,7 +40,7 @@ type Options = {
 
 const ManageChild: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState<Boolean>(true);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
     const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
@@ -283,7 +283,7 @@ const ManageChild: React.FC = () => {
                                         function () {
                                             console.log(checked)
                                             console.log(typeof(value))
-                                            if (checked === true && value === 1) {
+                                            if (checked === true && value.toString() === "1") {
                                                 return (
                                                     <>
                                                         <div className="row">
@@ -319,7 +319,7 @@ const ManageChild: React.FC = () => {
                                                 )
                                             }
 
-                                            else if (checked === true && value === 2) {
+                                            else if (checked === true && value.toString() === "2") {
                                                 return (
                                                     <div className="row">
                                                         <div className="col-xl-12 col-lg-12">
@@ -333,7 +333,7 @@ const ManageChild: React.FC = () => {
                                                 )
                                             }
 
-                                            else if (checked === false && value === 1) {
+                                            else if (checked === false && value.toString() === "1") {
                                                 return classes_students.classes_done.map((ele, idx) => {
                                                     console.log(ele)
                                                     return (
@@ -375,7 +375,7 @@ const ManageChild: React.FC = () => {
                                             }
 
 
-                                            if (checked === false && value === 2) {
+                                            if (checked === false && value.toString() === "2") {
                                                 return contest_teachers.contest_end.map((ele, idx) => {
                                                     return (
                                                         <div className="row">

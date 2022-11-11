@@ -63,7 +63,7 @@ function ClassSemesterList(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={()=> {
             if(props.onSelect) props.onSelect(row);
-            dispatch(setModificationStateSemesterClass(row))
+            dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Edit))
           }}>Chỉnh sửa</button>
     );
   }

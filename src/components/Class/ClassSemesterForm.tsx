@@ -16,6 +16,7 @@ import SelectKeyValueMutiple2 from "../../common/components/SelectKeyValueMutipl
 import { deleteScheduleBySemesterClass } from "../../common/service/Schedule/DeleteScheduleBySemesterClass";
 import { putSemesterClass } from "../../common/service/SemesterClass/PutSemesterClass";
 import DateInput from "../../common/components/DateInput";
+import DateInput2 from "../../common/components/DateInput2";
 
 export type semesterClassListProps = {
   isCheck: (value: boolean) => void;
@@ -62,7 +63,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
   let semester_class_id: number = 0;
   if (!semester_classe || isCreate) {
-    semester_classe = { id: 0, max_participant: 0, semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "", registration_time: "" };
+    semester_classe = { id: 0, max_participant: 0,registration_expiration_time: "", semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "", registration_time: "" };
   }
   else {
     semester_class_id = semester_classe.id;
@@ -143,6 +144,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const [formState, setFormState] = useState({
     semester_id: { error: "", value: semester_classe.semester_id },
     name: { error: "", value: semester_classe.name },
+    registration_expiration_time: {error: "", value: semester_classe.registration_expiration_time},
     max_participant: { error: "", value: semester_classe.max_participant },
     course_id: { error: "", value: semester_classe.course_id },
     total_date_of_week: { error: "", value: total },
@@ -212,6 +214,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
           semester_id: formState.semester_id.value,
           name: formState.name.value,
           registration_time: formState.registration_time.value,
+          registration_expiration_time: formState.registration_expiration_time.value,
           course_id: formState.course_id.value
         }, schedule_element, idx))
       }
@@ -221,6 +224,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
           semester_id: formState.semester_id.value,
           name: formState.name.value,
           registration_time: formState.registration_time.value,
+          registration_expiration_time: formState.registration_expiration_time.value,
           course_id: formState.course_id.value
         }, idx))
         dispatch(deleteScheduleBySemesterClass(semester_classe.id, schedule_element, idx));
@@ -385,7 +389,21 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
                       placeholder="" />
                   </div>
                   <div className="form-group col-md-6">
-                    <NumberInput id="input_total_date_of_week"
+                  <DateInput2 id="input_registration_expiration_time"
+                    field="registration_expiration_time"
+                    value={formState.registration_expiration_time.value}
+                    onChange={hasFormValueChanged}
+                    active={formState.registration_time.value !== null && formState.registration_time.value !== "" ? false: true}
+                    type="datetime-local"
+                    required={false}
+                    maxLength={formState.registration_time.value}
+                    label="Thời gian hết hạn đăng ký"
+                    placeholder="" />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                  <NumberInput id="input_total_date_of_week"
                       value={formState.total_date_of_week.value}
                       field="total_date_of_week"
                       onChange={hasFormValueChanged}

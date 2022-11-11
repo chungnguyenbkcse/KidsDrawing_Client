@@ -29,6 +29,10 @@
     margin-bottom: 0px;
 }
 
+.card  {
+    border-radius: 30px !important;
+}
+
 #search-content {
     display: flex;
     justify-content: center;

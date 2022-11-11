@@ -186,6 +186,7 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
                                         <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" alt="" /></div>
                                         <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span>
                                         <span className="d-block schedule-x">Lịch học: {ele.schedule}</span>
+                                        <span className="d-block">Ngày bắt đầu học: {ele.start_date}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
                                         <span className="d-block">Ngày bắt đầu đăng kí: {ele.registration_deadline.substring(0, 10) + " " + ele.registration_deadline.substring(11, 19)}</span>
                                         <span className="d-block mb-5">Ngày hết hạn đăng kí: {ele.registration_expiration_time.substring(0, 10) + " " + ele.registration_expiration_time.substring(11, 19)}</span>
@@ -193,7 +194,30 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
                                             className="d-flex justify-content-between stats">
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
                                             <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">12</span></div>
+                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
+                                                    {
+                                                        function () {
+                                                            if (filter === "2") {
+                                                                if (ele.student_registered_id !== undefined && ele.student_registered_id !== null) {
+                                                                    let xx = ""
+                                                                    ele.student_registered_name.map((elex, idxx) => {
+                                                                        if (idxx < ele.student_registered_id.length - 1) {
+                                                                            xx  +=  elex + ","
+                                                                        }
+                                                                        else {
+                                                                            xx += ele
+                                                                        }
+                                                                        return null
+                                                                    })
+                                                                    return xx
+                                                                }
+                                                                else {
+                                                                    return 0
+                                                                }
+                                                            }
+                                                        }()
+                                                    }
+                                                </span></div>
                                         </div>
                                     </div>
                                 </div>

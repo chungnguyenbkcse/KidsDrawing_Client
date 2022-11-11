@@ -18,6 +18,7 @@ export interface ISemesterClassParent {
     registration_deadline: string;
     student_registered_name: string[];
     student_registered_id: number[];
+    start_date: string;
     status: string;
 }
 

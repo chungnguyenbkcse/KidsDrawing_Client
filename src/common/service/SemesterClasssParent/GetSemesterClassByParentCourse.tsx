@@ -18,6 +18,7 @@ interface SemesterClassParent {
     art_level_name: string;
     art_age_name: string;
     schedule: string;
+    start_date: string;
     registration_expiration_time: string;
     registration_deadline: string;
     student_registered_name: string[];
@@ -70,6 +71,7 @@ export function getSemesterClassByParentCourse(dispatch: any, parent_id: number,
                         num_of_section: ele.num_of_section,
                         price: ele.price,
                         image_url: ele.image_url,
+                        start_date: ele.start_date,
                         registration_expiration_time: ele.registration_expiration_time,
                         art_type_name: ele.art_type_name,
                         art_age_name: ele.art_age_name,

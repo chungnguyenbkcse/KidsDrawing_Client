@@ -35,7 +35,7 @@ function ScoreContestList(): JSX.Element {
     console.log(user_grade_contest_submissions.userGradeContestSubmissions)
 
 
-    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.map((student, idx) => {
+    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => b.score - a.score).map((student, idx) => {
         if (!student) { return null; }
         else if (childs.includes(student)) {
             return (

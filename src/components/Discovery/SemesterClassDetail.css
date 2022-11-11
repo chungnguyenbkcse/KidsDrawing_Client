@@ -9,6 +9,10 @@
     min-width: 200px !important;
 }
 
+.card-semester-class-detail {
+    border-radius: 30px !important;
+}
+
 #shadow-1 {
     border-radius: 20px;
     background-color: #AFE1F1;

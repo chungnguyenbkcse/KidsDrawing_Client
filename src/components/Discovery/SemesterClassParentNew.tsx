@@ -1,4 +1,4 @@
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./Discovery.css"
@@ -7,8 +7,8 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import SemesterClassList from "./SemesterClassList";
 import { getSemesterClassByParentCourse } from "../../common/service/SemesterClasssParent/GetSemesterClassByParentCourse";
+import SemesterClassNewList from "./SemesterClassNewList";
 
 const SemesterClassParentNew: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -64,6 +64,8 @@ const SemesterClassParentNew: React.FC = () => {
         dispatch(updateCurrentPath("Lớp mở", ""));
     }, [dispatch, path.area])
 
+    const [searchTerm, setSearchTerm] = useState("");
+
     return (
         promiseInProgress ?
             <div className="row" id="search-box">
@@ -82,20 +84,23 @@ const SemesterClassParentNew: React.FC = () => {
                 <TopCard title="ĐÃ ĐĂNG KÍ" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
             </div> */}
 
-                <div className="row" id="search-box">
-                    <div className="col-xl-12 col-lg-12">
-                        <div className="input-group" id="search-content">
-                            <div className="form-outline">
-                                <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
-                            </div>
-                            <button type="button" className="btn btn-primary">
-                                <i className="fas fa-search"></i>
-                            </button>
-                        </div>
+            <div className="row" id="search-box">
+            <div className="col-xl-12 col-lg-12">
+                <div className="input-group" id="search-content">
+                    <div className="form-outline">
+                        <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                            setSearchTerm(event.target.value)
+                            console.log(searchTerm)
+                        }}/>
                     </div>
+                    <button type="button" className="btn btn-primary">
+                        <i className="fas fa-search"></i>
+                    </button>
                 </div>
+            </div>
+        </div>
                 <div className="row">
-                    <SemesterClassList />
+                    <SemesterClassNewList value={searchTerm}/>
                 </div>
 
 

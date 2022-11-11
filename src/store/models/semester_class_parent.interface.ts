@@ -10,6 +10,7 @@ export interface ISemesterClassParent {
     semester_name: string;
     semester_id: number;
     image_url: string;
+    registration_expiration_time: string;
     art_type_name: string;
     art_level_name: string;
     art_age_name: string;

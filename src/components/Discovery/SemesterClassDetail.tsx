@@ -165,87 +165,100 @@ const SemesterClassDetail: React.FC = () => {
     }, [path.area, dispatch])
 
     function handleRegister() {
-        const idxx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-            position: toast.POSITION.TOP_CENTER
-        });
-        valueTeacher.map((ele, idx) => {
-            if (idx === valueTeacher.length - 1) {
-                dispatch(postUserRegisterJoinSemester1({
-                    "student_id": ele.value,
-                    "semester_classes_id": semester_class_id,
-                    "payer_id": id,
-                    "price": price,
-                    "status": "Waiting"
-                }, idxx))
-            }
-            else {
-                dispatch(postUserRegisterJoinSemester({
-                    "student_id": ele.value,
-                    "semester_classes_id": semester_class_id,
-                    "payer_id": id,
-                    "price": price,
-                    "status": "Waiting"
-                }, idxx, routeHome))
-            }
-            return dispatch(addCart({
-                id: semester_class_id,
-                name: semester_class_name,
-                image: url_image,
-                student_id: ele.value,
-                student_name: ele.label,
-                quantity: 1,
-                price: parseInt(price)
-            }))
-        })
+        if (valueTeacher.length === 0) {
+            toast.error("Vui lòng chọn ít nhất một bé!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000
+            });
+        }
+        else {
+            const idxx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
 
-        toast.success("Thêm giỏ hàng thành công...", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000
-        })
+            valueTeacher.map((ele, idx) => {
+                if (idx !== valueTeacher.length - 1) {
+                    dispatch(postUserRegisterJoinSemester1({
+                        "student_id": ele.value,
+                        "semester_classes_id": semester_class_id,
+                        "payer_id": id,
+                        "price": price,
+                        "status": "Waiting"
+                    }, idxx))
+                }
+                else {
+                    dispatch(postUserRegisterJoinSemester({
+                        "student_id": ele.value,
+                        "semester_classes_id": semester_class_id,
+                        "payer_id": id,
+                        "price": price,
+                        "status": "Waiting"
+                    }, idxx, routeHome))
+                }
+                return dispatch(addCart({
+                    id: semester_class_id,
+                    name: semester_class_name,
+                    image: url_image,
+                    student_id: ele.value,
+                    student_name: ele.label,
+                    quantity: 1,
+                    price: parseInt(price)
+                }))
+            })
+        }
     }
 
     const history = useHistory();
     function handleRegister1() {
-        const idxx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-            position: toast.POSITION.TOP_CENTER
-        });
-        valueTeacher.map((ele, idx) => {
-            if (idx === valueTeacher.length - 1) {
-                dispatch(postUserRegisterJoinSemester1({
-                    "student_id": ele.value,
-                    "semester_classes_id": semester_class_id,
-                    "payer_id": id,
-                    "price": price,
-                    "status": "Waiting"
-                }, idxx))
-            }
-            else {
-                dispatch(postUserRegisterJoinSemester({
-                    "student_id": ele.value,
-                    "semester_classes_id": semester_class_id,
-                    "payer_id": id,
-                    "price": price,
-                    "status": "Waiting"
-                }, idxx, routeHome))
-            }
-            return dispatch(addCart({
-                id: semester_class_id,
-                name: semester_class_name,
-                image: url_image,
-                student_id: ele.value,
-                student_name: ele.label,
-                quantity: 1,
-                price: parseInt(price)
-            }))
-        })
-        let path = '/cart';
-        history.push({
-            pathname: path
-        });
+        if (valueTeacher.length === 0) {
+            toast.error("Vui lòng chọn ít nhất một bé!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000
+            });
+        }
+        else {
+            const idxx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
+
+            valueTeacher.map((ele, idx) => {
+                if (idx !== valueTeacher.length - 1) {
+                    dispatch(postUserRegisterJoinSemester1({
+                        "student_id": ele.value,
+                        "semester_classes_id": semester_class_id,
+                        "payer_id": id,
+                        "price": price,
+                        "status": "Waiting"
+                    }, idxx))
+                }
+                else {
+                    dispatch(postUserRegisterJoinSemester({
+                        "student_id": ele.value,
+                        "semester_classes_id": semester_class_id,
+                        "payer_id": id,
+                        "price": price,
+                        "status": "Waiting"
+                    }, idxx, routeHome))
+                }
+                return dispatch(addCart({
+                    id: semester_class_id,
+                    name: semester_class_name,
+                    image: url_image,
+                    student_id: ele.value,
+                    student_name: ele.label,
+                    quantity: 1,
+                    price: parseInt(price)
+                }))
+            })
+            let path = '/cart';
+            history.push({
+                pathname: path
+            });
+        }
     }
 
     function routeHome() {
-        let path = '/discover';
+        let path = '/discover/course';
         history.push(path)
     }
 
@@ -270,32 +283,32 @@ const SemesterClassDetail: React.FC = () => {
             </div> : <Fragment>
                 <ToastContainer />
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4 shadow-1">
+                    <div className="card shadow mb-4 shadow-1 card-semester-class-detail">
                         <div className="row no-gutters align-items-center">
                             <div className="text-xs font-weight-bold text-green text-uppercase ">
-                                <p className="fullname ml-2 mt-4">{semester_class_name}</p>
+                                <p className="fullname ml-4 mt-4">{semester_class_name}</p>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-xl-6 col-md-6">
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs ">
-                                        <p className="birthday ml-2">Khóa học: {course_name}</p>
+                                        <p className="birthday ml-4">Khóa học: {course_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Thể loại: {art_type_name}</p>
+                                        <p className="birthday ml-4">Thể loại: {art_type_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Độ tuổi: {art_age_name}</p>
+                                        <p className="birthday ml-4">Độ tuổi: {art_age_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Trình độ: {art_level_name}</p>
+                                        <p className="birthday ml-4">Trình độ: {art_level_name}</p>
                                     </div>
                                 </div>
                             </div>
@@ -319,7 +332,7 @@ const SemesterClassDetail: React.FC = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="form-group col-md-6 ml-2">
+                            <div className="form-group col-md-6 ml-4">
                                 <label>Bé</label>
                                 <ReactSelect setValue={listTeachers} value={[]} changeValue={changeValueTeacher} />
                             </div>

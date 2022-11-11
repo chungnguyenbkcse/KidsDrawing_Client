@@ -26,7 +26,7 @@ function CourseNewList(props: semesterListProps): JSX.Element {
     }
 
     useEffect(() => {
-        let x = course_parent_news.courses.length / 10;
+        let x = (course_parent_news.courses.length - course_parent_news.courses.length % 10) /10;
         if (x === 1) {
             setElement(course_parent_news.courses)
         }
@@ -34,10 +34,10 @@ function CourseNewList(props: semesterListProps): JSX.Element {
             setElement(course_parent_news.courses.slice(0,10))
         }
         
-        setTotalPage(x)
+         setTotalPage((x+1))
     }, [course_parent_news.courses])
 
-    console.log(Math.round(totalPage))
+    console.log((totalPage))
 
     function handlePagination(count: number) {
         console.log(count)
@@ -47,6 +47,13 @@ function CourseNewList(props: semesterListProps): JSX.Element {
         else {
             setElement(course_parent_news.courses.slice(count*10,count*10 + 10))
         }
+    }
+
+    const [filter, setFilter] = useState("0")
+
+
+    function handleChange(e: any) {
+        setFilter(e.target.value)
     }
 
     console.log(element)
@@ -67,11 +74,35 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                             }
                             return null
                           }).length} kết quả</h6>
-                            {/* <div className="right-sort">
+                            <div className="right-sort">
                                 <div className="sort-by mr-3">
-                                    <span className="mr-1">Lọc theo:
-                                        </span><a href="#">Most popular</a><i className="fa fa-angle-down ml-1"></i><button className="btn btn-outline-dark btn-sm ml-3 filter" type="button">Lọc&nbsp;<i className="fa fa-flask"></i></button></div>
-                            </div> */}
+                                    <span className="mr-1">Lọc theo:</span>
+                                    <select name="cars" id="cars"
+                                        value={filter}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">--Thể loại--</option>
+                                        <option value="0">Chì màu</option>
+                                        <option value="1">Sơn dầu</option>
+                                    </select>   
+                                    <select name="cars" id="cars" className="pl-2"
+                                        value={filter}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">--Độ tuổi--</option>
+                                        <option value="0">5-8 tuổi</option>
+                                        <option value="1">10-12 tuổi</option>
+                                    </select>
+                                    <select name="cars" id="cars" className="pl-2"
+                                        value={filter}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">--Cấp độ--</option>
+                                        <option value="0">Cơ bản</option>
+                                        <option value="1">Nâng cao</option>
+                                    </select>                                 
+                                    <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button">Lọc&nbsp;<i className="fa fa-flask"></i></button></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,7 +210,7 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                             </a>
                         </li>
                             {
-                                Array.from(Array(Math.round(totalPage)).keys()).map((ele, idx) => {
+                                Array.from(Array((totalPage)).keys()).map((ele, idx) => {
                                     return (
                                         <li className="page-item"><a className="page-link" href="/" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
                                     )

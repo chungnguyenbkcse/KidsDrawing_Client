@@ -6,13 +6,13 @@ import "./RequestTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import StudentLeaveList from "./StudentLeaveList";
-import { getStudentLeaveByTeacher } from "../../common/service/StudentLeave/GetStudentLeaveByTeacher";
+import TeacherLeaveList from "./TeacherLeaveList";
+import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 
-const RequestTeacher: React.FC = () => {
+const RequestTeacher1: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
     const teacher_leaves: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
@@ -21,6 +21,7 @@ const RequestTeacher: React.FC = () => {
     const { promiseInProgress } = usePromiseTracker();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberTeacherRegisterSuccessfullCount: number = student_leaves.leaves.length;
+    const numberTeacherNotRegisterCount: number = teacher_leaves.leaves.length;
     var id_x = localStorage.getItem('id');
     var id: any = "";
     if (id_x !== null) {
@@ -50,19 +51,21 @@ const RequestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getStudentLeaveByTeacher(dispatch, id))
+                    trackPromise(getTeacherLeaveByTeacher(dispatch, id))
                 }
             }
             else {
-                trackPromise(getStudentLeaveByTeacher(dispatch, id))
+
+                trackPromise(getTeacherLeaveByTeacher(dispatch, id))
             }
         }
 
     }, [dispatch, access_token, refresh_token, id]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Yêu cầu", "Học sinh"));
+        dispatch(updateCurrentPath("Yêu cầu", "Giáo viên"));
     }, [path.area, dispatch])
+
 
     return (
         promiseInProgress ?
@@ -80,6 +83,7 @@ const RequestTeacher: React.FC = () => {
                 <ToastContainer />
                 <div className="row">
                     <TopCard title="SỐ YÊU CẦU NGHỈ HỌC" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ YÊU CẦU DẠY THAY" text={`${numberTeacherNotRegisterCount}`} icon="book" class="primary" />
                     {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
@@ -89,15 +93,14 @@ const RequestTeacher: React.FC = () => {
                 </div> */}
                 </div>
 
-
                 <div className="row">
                     <div className="col-xl-12 col-lg-12">
                         <div className="card shadow mb-4" id="topcard-user">
                             <div className="card-header py-3">
-                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách yêu cầu nghỉ học</h6>
+                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách yêu cầu dạy thay</h6>
                             </div>
                             <div className="card-body">
-                                <StudentLeaveList />
+                                <TeacherLeaveList />
                             </div>
                         </div>
                     </div>
@@ -108,4 +111,4 @@ const RequestTeacher: React.FC = () => {
     );
 };
 
-export default RequestTeacher;
+export default RequestTeacher1;

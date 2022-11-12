@@ -9,7 +9,6 @@ import { IUser, UserModificationStatus } from "../../store/models/user.interface
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
-import AccountChildList from "./AccountChildList";
 import "./ParentHome.css"
 import Popup from "reactjs-popup";
 import AccountChildForm from "../AccountChild/AccountChildForm";
@@ -29,6 +28,8 @@ import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 import { ToastContainer } from "react-toastify";
+import AccountChildList from "./AccountChildList";
+import AccountChildList1 from "./AccountChildList1";
 
 
 const ParentHome: React.FC = () => {

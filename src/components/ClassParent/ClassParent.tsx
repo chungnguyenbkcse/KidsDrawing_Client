@@ -13,6 +13,7 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import ClassDoingList from "./ClassDoingList";
 import ClassDoneList from "./ClassDoneList";
+import ClassDoingList1 from "./ClassDoingList1";
 
 const ClassParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -158,7 +159,7 @@ const ClassParent: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ClassDoingList
+                                                <ClassDoingList1
                                                     onSelect={onClassesParentSelect}
                                                 />
                                             </div>

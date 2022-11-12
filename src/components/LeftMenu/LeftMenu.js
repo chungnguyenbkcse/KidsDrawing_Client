@@ -653,7 +653,7 @@ const Header = () => {
                   }
                 }}>
                   <MenuItem icon={<BsMap />}>
-                    <Link to={`/request`} className={active11 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
+                    <Link to={`/request/student`} className={active11 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
                       if (active5 === false) {
                         setActive1(false);
                         setActive2(false);
@@ -671,7 +671,7 @@ const Header = () => {
                     </Link>
                   </MenuItem>
                   <MenuItem icon={<AiOutlineBook />}>
-                    <Link to={`/request`} className={active12 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
+                    <Link to={`/request/teacher`} className={active12 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
                       if (active5 === false) {
                         setActive1(false);
                         setActive2(false);

@@ -14,23 +14,23 @@ function TopCardAccount(props: PropsWithChildren<ICardProperties>): ReactElement
     }
 
     return (
-        <div className="col-xl-12 col-md-12 mb-4" onClick={() => {
+        <div className="col-md-8 col-xd-8 col-xs-8 mx-auto" onClick={() => {
             routeChange(props.student_id)}}
         >
-            <div className={`card shadow h-100 py-2`} id="topcard-account">
+            <div className={`card shadow`} id="topcard-account">
                 <div className="card-body">
                     <div className="row no-gutters align-items-center">
-                        <div className="col-xl-2 col-md-2">
+                        <div className="col-xl-4 col-md-4">
                             <i className={`far fa-user-circle fa-7x text-gray-300`} id="icon-user"></i>
                         </div> 
-                        <div className="col-xl-10 col-md-10">
+                        <div className="col-xl-8 col-md-8">
                         <div className="row no-gutters align-items-center">
                                         <div className="text-xs font-weight-bold text-green text-uppercase ">
                                             <p className="fullname">{props.fullname}</p>
                                         </div>
                                     </div>
                             <div className="row">
-                                <div className="col-xl-4 col-md 4">
+                                <div className="col-xl-4 col-md-4">
                                     <div className="row no-gutters align-items-center">
                                         <div className="text-xs ">
                                             <p className="birthday">Email: {props.email}</p>

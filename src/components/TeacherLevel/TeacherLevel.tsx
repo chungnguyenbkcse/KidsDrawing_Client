@@ -7,7 +7,7 @@ import TopCard from "../../common/components/TopCardUser";
 import { getTeacherRegisterQuantificationByTeacherId } from "../../common/service/TeacherRegisterQuantification/GetTeacherRegisterQuantificationByTeacherId";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedTeacherRegisterQuatificationApproved, setModificationState } from "../../store/actions/teacher_register_quantification.action";
-import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
+import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification, TeacherRegisterQuantificationModificationStatus } from "../../store/models/teacher_register_quantification.interface";
 import "./TeacherLevel.css"
 import TeacherLevelForm from "./TeacherLevelForm";
@@ -16,9 +16,11 @@ import TeacherLevelNotApprovedNowList from "./TeacherLevelNotApprovedNowList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getCourse } from "../../common/service/Course/GetCourse";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const TeacherLevel: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const numberApprovedCount: number = teacherRegisterQuantifications.approveds.length;
     const numberNotApprovedNowCount: number = teacherRegisterQuantifications.not_approved_now.length;
@@ -84,6 +86,10 @@ const TeacherLevel: React.FC = () => {
             setPopup(true)
         }
     }, [teacherRegisterQuantifications.modificationState, popup])
+
+    useEffect(() => {
+        dispatch(updateCurrentPath("Trình độ", ""));
+    }, [path.area, dispatch])
 
 
     return (

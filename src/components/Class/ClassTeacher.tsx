@@ -16,6 +16,7 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 import { getSemester } from "../../common/service/semester/GetSemester";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import ClassDoingList1 from "./ClassTeachingTeacherList1";
 
 const ClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -186,7 +187,7 @@ const ClassTeacher: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ClassDoneList
+                                                <ClassDoingList1
                                                     onSelect={onClassTeacherSelect}
                                                 />
                                             </div>

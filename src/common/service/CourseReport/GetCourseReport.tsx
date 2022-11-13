@@ -6,9 +6,8 @@ interface CourseReport {
 }
 export function getCourseReport(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    const currentYear = new Date().getFullYear();
     return fetch(
-                `${process.env.REACT_APP_API_URL}/course/report/${currentYear}`, {
+                `${process.env.REACT_APP_API_URL}/course/report`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

@@ -8,7 +8,7 @@ export type userRegisterJoinSemesterListProps = {
   children?: React.ReactNode;
 };
 
-function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
+function TurnoverList1(props: userRegisterJoinSemesterListProps): JSX.Element  {
   const userRegisterJoinSemesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
 
 
@@ -48,4 +48,4 @@ function TurnoverList(props: userRegisterJoinSemesterListProps): JSX.Element  {
   );
 }
 
-export default TurnoverList;
+export default TurnoverList1;

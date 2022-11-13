@@ -4,7 +4,6 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
 import { IStateType, ITurnoverState, IReportUserState, ICourseReportState } from "../../store/models/root.interface";
 import { ChartBar } from "../../common/components/ChartBar";
-import TurnoverList from "./TurnoverList";
 import { getUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemester";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
@@ -15,6 +14,7 @@ import { getReportUser } from "../../common/service/ReportUser/GetUserReport";
 import { getCourseReport } from "../../common/service/CourseReport/GetCourseReport";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import TurnoverList from "./TurnoverList";
 
 const Turnover: React.FC = () => {
   const turnovers: ITurnoverState = useSelector((state: IStateType) => state.turnovers);

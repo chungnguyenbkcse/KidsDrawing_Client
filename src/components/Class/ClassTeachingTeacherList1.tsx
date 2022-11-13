@@ -46,7 +46,7 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
                         </div>
                         <h6>Chapter 4</h6>
                         <h2>Callbacks & Closures</h2>
-                        <button className="btn">Continue</button>
+                        <button className="btn-x">Continue</button>
                     </div>
                 </div>
             </div>

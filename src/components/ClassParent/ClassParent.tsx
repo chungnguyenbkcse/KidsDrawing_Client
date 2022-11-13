@@ -11,9 +11,8 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import ClassDoingList from "./ClassDoingList";
-import ClassDoneList from "./ClassDoneList";
 import ClassDoingList1 from "./ClassDoingList1";
+import ClassDoneList1 from "./ClassDoneList1";
 
 const ClassParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -179,7 +178,7 @@ const ClassParent: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ClassDoneList
+                                                <ClassDoneList1
                                                     onSelect={onClassesParentSelect}
                                                 />
                                             </div>

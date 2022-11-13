@@ -10,14 +10,12 @@ export type classTeacherListProps = {
     children?: React.ReactNode;
 };
 
-
-function ClassDoingList1(props: classTeacherListProps): JSX.Element {
+function ClassDoneList1(props: classTeacherListProps): JSX.Element {
     const classes_parents: IClassesParentState = useSelector((state: IStateType) => state.classes_parents);
-
 
     const history = useHistory();
     const routeChange = (classes_parent: IClassesParent) => {
-        let path = '/student/classes-doing';
+        let path = '/student/class';
         localStorage.removeItem('teacher_id');
         localStorage.setItem('teacher_id', classes_parent.teacher_id.toString())
         localStorage.removeItem('student_id');
@@ -29,29 +27,30 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
         });
     }
 
+
     return (
         <Fragment>
             {
-                classes_parents.classes_doing.map((contest, index) => {
+                classes_parents.classes_done.map((contest, index) => {
                     return (
                         <>
-                            <div className="courses-container" key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>
+                            <div className="courses-container" key={`lesson_${contest.id}`}>
                                 <div className="course">
                                     <div className="course-preview">
-                                        <h6>Course</h6>
-                                        <h2>JavaScript Fundamentals</h2>
-                                        <a href="/#">View all chapters <i className="fas fa-chevron-right"></i></a>
+                                        <h6>Khóa học</h6>
+                                        <h2>{contest.course_name}</h2>
+                                        <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
                                     </div>
                                     <div className="course-info">
                                         <div className="progress-container">
                                             <div className="progress"></div>
                                             <span className="progress-text">
-                                                6/9 Challenges
+                                                {contest.total_section}/{contest.total_section} Buổi
                                             </span>
                                         </div>
-                                        <h6>Chapter 4</h6>
-                                        <h2>Callbacks & Closures</h2>
-                                        <button className="btn-x">Continue</button>
+                                        <h2>{contest.student_name}</h2>
+                                        <h6>Giáo viên: {contest.teacher_name}</h6>
+                                        <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
                                     </div>
                                 </div>
                             </div>
@@ -87,4 +86,4 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
     );
 }
 
-export default ClassDoingList1;
+export default ClassDoneList1;

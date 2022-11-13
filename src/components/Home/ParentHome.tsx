@@ -29,7 +29,6 @@ import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 import { ToastContainer } from "react-toastify";
 import AccountChildList from "./AccountChildList";
-import AccountChildList1 from "./AccountChildList1";
 
 
 const ParentHome: React.FC = () => {

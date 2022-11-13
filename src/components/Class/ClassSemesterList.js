@@ -79,7 +79,12 @@ function ClassSemesterList(props) {
 
   function schduleShow(cell, row, rowIndex) {
     return (
-        <span>{schedule_list[rowIndex].value}</span>
+        <span>
+        {schedule_list.map((ele, idx) => {
+          if (ele.name === row.name) {
+            return ele.value
+          }
+        })}</span>
     )
   }
 

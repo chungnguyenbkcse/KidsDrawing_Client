@@ -10,10 +10,12 @@ interface ClassesStudent {
     teacher_name: string;
     teacher_id: number;
     course_id: number;
+    schedule_section_next: string;
     semester_class_id: number;
     semester_class_name: string;
     user_register_teach_semester: number;
     security_code: string;
+    total_section_studied: number;
     total_student: number;
     total_section: number;
     course_name: string;
@@ -65,6 +67,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         name: ele.name,
                         semester_class_name: ele.semester_class_name,
                         student_id: ele.student_id,
+                        schedule_section_next: ele.schedule_section_next,
                         user_register_join_semester_id: ele.user_register_join_semester_id,
                         student_name: ele.student_name,
                         teacher_id: ele.teacher_id,
@@ -76,6 +79,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         security_code: ele.security_code,
                         total_student: ele.total_student,
                         total_section: ele.total_section,
+                        total_section_studied: ele.total_section_studied,
                         link_url: ele.link_url,
                         art_age_id: ele.art_age_id,
                         art_level_id: ele.art_level_id,
@@ -104,6 +108,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         teacher_id: ele.teacher_id,
                         teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
+                        schedule_section_next: ele.schedule_section_next,
                         semester_name: ele.semester_name,
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
@@ -114,6 +119,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         link_url: ele.link_url,
                         art_age_id: ele.art_age_id,
                         art_level_id: ele.art_level_id,
+                        total_section_studied: ele.total_section_studied,
                         art_type_id: ele.art_type_id,
                         course_name: ele.course_name,
                         art_age_name: ele.art_age_name,

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { IClassesStudent } from "../../store/models/classes_student.interface";
@@ -12,6 +12,30 @@ export type classTeacherListProps = {
 
 function ClassDoneList1(props: classTeacherListProps): JSX.Element {
     const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
+
+    const [totalPage, setTotalPage] = useState(0)
+    const [element, setElement] = useState<IClassesStudent[]>([])
+    useEffect(() => {
+        let x = (classes_students.classes_done.length - classes_students.classes_done.length % 10) /10;
+        if (x === 1) {
+            setElement(classes_students.classes_done)
+        }
+        else {
+            setElement(classes_students.classes_done.slice(0,10))
+        }
+        
+         setTotalPage((x+1))
+    }, [classes_students.classes_done])
+
+    function handlePagination(count: number) {
+        console.log(count)
+        if (count === totalPage) {
+            setElement(classes_students.classes_done.slice(count*10))
+        }
+        else {
+            setElement(classes_students.classes_done.slice(count*10,count*10 + 10))
+        }
+    }
 
     const history = useHistory();
     const routeChange = (classes_student: IClassesStudent) => {
@@ -40,47 +64,47 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
                         <div className="courses-container" key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>
                             <div className="course">
                                 <div className="course-preview">
-                                    <h6>Course</h6>
-                                    <h2>JavaScript Fundamentals</h2>
-                                    <a href="#">View all chapters <i className="fas fa-chevron-right"></i></a>
+                                    <h6>Khóa học</h6>
+                                    <h2>{contest.course_name}</h2>
+                                    <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
                                 </div>
                                 <div className="course-info">
                                     <div className="progress-container">
                                         <div className="progress"></div>
                                         <span className="progress-text">
-                                            6/9 Challenges
+                                            {contest.total_section}/{contest.total_section} Buổi
                                         </span>
                                     </div>
-                                    <h6>Chapter 4</h6>
-                                    <h2>Callbacks & Closures</h2>
-                                    <button className="btn-x">Continue</button>
+                                    <h2>{contest.student_name}</h2>
+                                    <h6>Giáo viên: {contest.teacher_name}</h6>
+                                    <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
                                 </div>
                             </div>
                         </div>
 
                         <div className="d-flex justify-content-end text-right mt-2">
-                            <nav>
-                                <ul className="pagination">
-                                    <li className="page-item">
-                                        <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    {
-                                        Array.from(Array((10)).keys()).map((ele, idx) => {
-                                            return (
-                                                <li className="page-item"><a className="page-link" href="/" onClick={() => { }}>{ele + 1}</a></li>
-                                            )
-                                        })
-                                    }
-                                    <li className="page-item">
-                                        <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                    <nav>
+                        <ul className="pagination">
+                        <li className="page-item">
+                            <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                            {
+                                Array.from(Array((totalPage)).keys()).map((ele, idx) => {
+                                    return (
+                                        <li className="page-item"><a className="page-link" href="/" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
+                                    )
+                                })
+                            }
+                            <li className="page-item">
+                                <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
                     </>
                 )
             })

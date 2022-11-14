@@ -7,10 +7,12 @@ export interface IClassesStudent {
     teacher_name: string;
     teacher_id: number;
     course_id: number;
+    schedule_section_next: string;
     semester_class_id: number;
     semester_class_name: string;
     user_register_teach_semester: number;
     security_code: string;
+    total_section_studied: number;
     total_student: number;
     total_section: number;
     course_name: string;

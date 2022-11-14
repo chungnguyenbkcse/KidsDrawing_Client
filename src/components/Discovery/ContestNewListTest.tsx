@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
-import { ICourseParentNew } from "../../store/models/course_parent_new.interface";
-import { ICourseParentNewState, IStateType } from "../../store/models/root.interface";
+import { IContestParentNew } from "../../store/models/contest_parent_new.interface";
+import { IContestParentNewState, IStateType } from "../../store/models/root.interface";
 import "./CourseNewTest.css"
 
 export type semesterListProps = {
@@ -11,41 +11,59 @@ export type semesterListProps = {
     children?: React.ReactNode;
   };
 
-function CourseNewList(props: semesterListProps): JSX.Element {
-    const course_parent_news: ICourseParentNewState = useSelector((state: IStateType) => state.course_parent_news);
+function ContestNewListTest(props: semesterListProps): JSX.Element {
+    const contest_parent_news: IContestParentNewState = useSelector((state: IStateType) => state.contest_parent_new);
     const [totalPage, setTotalPage] = useState(0)
-    const [element, setElement] = useState<ICourseParentNew[]>([])
+    const [element, setElement] = useState<IContestParentNew[]>([])
+
     const history = useHistory();
-    const routeChange = (course: ICourseParentNew) =>{ 
-        localStorage.removeItem('course_id');
-        localStorage.setItem('course_id', course.id.toString())
-        let path = '/courses/semester-classes'; 
+    const routeChange = (contest: IContestParentNew) =>{ 
+        localStorage.removeItem('description_contest');
+        localStorage.setItem('description_contest', contest.description);
+        localStorage.removeItem('contest_id');
+        localStorage.setItem('contest_id', contest.id.toString())
+        localStorage.removeItem('contest_name');
+        localStorage.setItem('contest_name', contest.name)
+        localStorage.removeItem('art_age_name');
+        localStorage.setItem('art_age_name', contest.art_age_name.toString())
+        localStorage.removeItem('art_type_name');
+        localStorage.setItem('art_type_name', contest.art_type_name.toString())
+        localStorage.removeItem('registration_time');
+        localStorage.setItem('registration_time', contest.registration_time.toString())
+        localStorage.removeItem('start_time');
+        localStorage.setItem('start_time', contest.start_time.toString())
+        localStorage.removeItem('end_time');
+        localStorage.setItem('end_time', contest.end_time.toString())
+        localStorage.removeItem('max_participant');
+        localStorage.setItem('max_participant', contest.max_participant.toString())
+        let path = '/contests/register'; 
         history.push({
-            pathname: path
+            pathname: path,
+            state: { description: contest.description, id: contest.id}
         });
     }
 
     useEffect(() => {
-        let x = (course_parent_news.courses.length - course_parent_news.courses.length % 10) /10;
+        let x = (contest_parent_news.contests.length - contest_parent_news.contests.length % 10) /10;
         if (x === 1) {
-            setElement(course_parent_news.courses)
+            setElement(contest_parent_news.contests)
         }
         else {
-            setElement(course_parent_news.courses.slice(0,10))
+            setElement(contest_parent_news.contests.slice(0,10))
         }
         
          setTotalPage((x+1))
-    }, [course_parent_news.courses])
+    }, [contest_parent_news.contests])
 
     console.log((totalPage))
 
     function handlePagination(count: number) {
         console.log(count)
         if (count === totalPage) {
-            setElement(course_parent_news.courses.slice(count*10))
+            setElement(contest_parent_news.contests.slice(count*10))
         }
         else {
-            setElement(course_parent_news.courses.slice(count*10,count*10 + 10))
+            setElement(contest_parent_news.contests.slice(count*10,count*10 + 10))
         }
     }
 
@@ -121,12 +139,14 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                                 <div className="col-md-4" onClick={() => {routeChange(ele)}}>
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
                                         <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" alt=""/></div>
-                                        <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span><span className="d-block mb-5">Hiện tại khóa học mở {ele.total} lớp.</span>
+                                        <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span><span className="d-block mb-5">Hiện tại số đăng kí {ele.student_registered_id.length} học sinh.</span>
                                         <div
                                             className="d-flex justify-content-between stats">
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
+                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Ngày đăng kí: {ele.registration_time.replaceAll("T", " ")}</span></div>
+                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Ngày bắt đầu thi: {ele.start_time.replaceAll("T", " ")}</span></div>
+                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Ngày kết thúc: {ele.end_time.replaceAll("T", " ")}</span></div>
                                             <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">12</span></div>
+                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">{ele.student_registered_id.length}</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -164,4 +184,4 @@ function CourseNewList(props: semesterListProps): JSX.Element {
     );
 }
 
-export default CourseNewList;
+export default ContestNewListTest;

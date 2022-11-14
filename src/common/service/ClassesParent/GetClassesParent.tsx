@@ -13,8 +13,10 @@ interface ClassesParent {
     semester_class_name: string;
     user_register_teach_semester: number;
     security_code: string;
+    total_section_studied: number;
     total_student: number;
     total_section: number;
+    schedule_section_next: string;
     course_name: string;
     semester_name: string;
     art_type_name: string;
@@ -72,8 +74,10 @@ export function getClassesParent(dispatch: any, id: any) {
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
+                        schedule_section_next: ele.schedule_section_next,
                         total_student: ele.total_student,
                         total_section: ele.total_section,
+                        total_section_studied: ele.total_section_studied,
                         link_url: ele.link_url,
                         art_age_id: ele.art_age_id,
                         art_level_id: ele.art_level_id,
@@ -102,11 +106,13 @@ export function getClassesParent(dispatch: any, id: any) {
                         teacher_id: ele.teacher_id,
                         teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
+                        schedule_section_next: ele.schedule_section_next,
                         semester_name: ele.semester_name,
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
                         total_student: ele.total_student,
+                        total_section_studied: ele.total_section_studied,
                         total_section: ele.total_section,
                         link_url: ele.link_url,
                         art_age_id: ele.art_age_id,

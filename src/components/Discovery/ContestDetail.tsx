@@ -187,24 +187,24 @@ const ConestDetailStudent: React.FC = () => {
                     <div className="card shadow mb-4">
                         <div className="row no-gutters align-items-center">
                             <div className="text-xs font-weight-bold text-green text-uppercase ">
-                                <p className="fullname ml-2 mt-4">{contest_name}</p>
+                                <p className="fullname ml-4 mt-4">{contest_name}</p>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-xl-6 col-md-6">
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs ">
-                                        <p className="birthday ml-2">Độ tuổi đăng kí: {art_age_name}</p>
+                                        <p className="birthday ml-4">Độ tuổi đăng kí: {art_age_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Thể loại: {art_type_name}</p>
+                                        <p className="birthday ml-4">Thể loại: {art_type_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Thời gian đăng kí: {registration_time}</p>
+                                        <p className="birthday ml-4">Thời gian đăng kí: {registration_time}</p>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +228,7 @@ const ConestDetailStudent: React.FC = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="form-group col-md-6 ml-2">
+                            <div className="form-group col-md-6 ml-4">
                                 <label>Bé</label>
                                 <ReactSelect setValue={listTeachers} value={[]} changeValue={changeValueTeacher} />
                             </div>

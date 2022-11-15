@@ -73,6 +73,9 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
     function handleChange(e: any) {
         setFilter(e.target.value)
     }
+    
+    function handleFilter() { 
+    }
 
     console.log(element)
 
@@ -84,14 +87,14 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                     <div className="col-md-12">
                         <div className="d-flex flex-row justify-content-between align-items-center filters">
                             <h6 className="ml-3">Có {element.filter((val) => {
-                            if (props.value === ""){
-                              return val;
-                            }
-                            else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
-                              return val;
-                            }
-                            return null
-                          }).length} kết quả</h6>
+                                if (props.value === "") {
+                                    return val;
+                                }
+                                else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))) {
+                                    return val;
+                                }
+                                return null
+                            }).length} kết quả</h6>
                             <div className="right-sort">
                                 <div className="sort-by mr-3">
                                     <span className="mr-1">Lọc theo:</span>
@@ -110,16 +113,8 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         <option value="">--Độ tuổi--</option>
                                         <option value="0">5-8 tuổi</option>
                                         <option value="1">10-12 tuổi</option>
-                                    </select>
-                                    <select name="cars" id="cars" className="pl-2"
-                                        value={filter}
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">--Cấp độ--</option>
-                                        <option value="0">Cơ bản</option>
-                                        <option value="1">Nâng cao</option>
-                                    </select>                                 
-                                    <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button">Lọc&nbsp;<i className="fa fa-flask"></i></button></div>
+                                    </select>                                
+                                    <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button" onClick={() => {handleFilter()}}>Lọc&nbsp;<i className="fa fa-flask"></i></button></div>
                             </div>
                         </div>
                     </div>
@@ -127,26 +122,53 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                 <div className="row mt-1">
                     {
                         element.filter((val) => {
-                            if (props.value === ""){
-                              return val;
+                            if (props.value === "") {
+                                return val;
                             }
-                            else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))){
-                              return val;
+                            else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))) {
+                                return val;
                             }
                             return null
-                          }).map((ele, index) => {
+                        }).map((ele, index) => {
+                            if (ele === undefined) {
+                                return null
+                            }
                             return (
-                                <div className="col-md-4" onClick={() => {routeChange(ele)}}>
+                                <div className="col-md-4" onClick={() => { routeChange(ele) }}>
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
-                                        <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" alt=""/></div>
-                                        <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span><span className="d-block mb-5">Hiện tại số đăng kí {ele.student_registered_id.length} học sinh.</span>
+                                        <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" alt="" /></div>
+                                        <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
+                                        <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ")}</span>
+                                        <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ")}</span>
+                                        <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
+                                        <span className="d-block mb-5">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ")}</span>
                                         <div
                                             className="d-flex justify-content-between stats">
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Ngày đăng kí: {ele.registration_time.replaceAll("T", " ")}</span></div>
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Ngày bắt đầu thi: {ele.start_time.replaceAll("T", " ")}</span></div>
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Ngày kết thúc: {ele.end_time.replaceAll("T", " ")}</span></div>
                                             <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">{ele.student_registered_id.length}</span></div>
+                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div>{ele.total_register_contest}<span className="ml-3">
+                                                    {
+                                                        function () {
+                                                            if (filter === "2") {
+                                                                if (ele.student_registered_id !== undefined && ele.student_registered_id !== null) {
+                                                                    let xx = ""
+                                                                    ele.student_registered_name.map((elex, idxx) => {
+                                                                        if (idxx < ele.student_registered_id.length - 1) {
+                                                                            xx  +=  elex + ","
+                                                                        }
+                                                                        else {
+                                                                            xx += ele
+                                                                        }
+                                                                        return null
+                                                                    })
+                                                                    return xx
+                                                                }
+                                                                else {
+                                                                    return 0
+                                                                }
+                                                            }
+                                                        }()
+                                                    }
+                                                </span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -157,15 +179,15 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                 <div className="d-flex justify-content-end text-right mt-2">
                     <nav>
                         <ul className="pagination">
-                        <li className="page-item">
-                            <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
+                            <li className="page-item">
+                                <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
                             {
                                 Array.from(Array((totalPage)).keys()).map((ele, idx) => {
                                     return (
-                                        <li className="page-item"><a className="page-link" href="/" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
+                                        <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination(ele) }}>{ele + 1}</a></li>
                                     )
                                 })
                             }

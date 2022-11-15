@@ -65,6 +65,9 @@ const ContestParent: React.FC = () => {
     useEffect(() => {
         dispatch(updateCurrentPath("Cuộc thi của bé", ""));
     }, [path.area, dispatch])
+
+    const [searchTerm, setSearchTerm] = useState("");
+
     return (
         promiseInProgress ?
             <div className="row" id="search-box">
@@ -96,7 +99,10 @@ const ContestParent: React.FC = () => {
                     <div className="col-xl-12 col-lg-12">
                         <div className="input-group" id="search-content">
                             <div className="form-outline">
-                                <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
+                                <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                                    setSearchTerm(event.target.value)
+                                    console.log(searchTerm)
+                                }} />
                             </div>
                             <button type="button" className="btn btn-primary">
                                 <i className="fas fa-search"></i>
@@ -195,7 +201,7 @@ const ContestParent: React.FC = () => {
                                                     <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
                                                 </div>
                                                 <div className="card-body">
-                                                    <ContestStudentNotOpenNowList />
+                                                    <ContestStudentNotOpenNowList value={searchTerm}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -215,7 +221,7 @@ const ContestParent: React.FC = () => {
                                                     <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
                                                 </div>
                                                 <div className="card-body">
-                                                    <ContestStudentEndList />
+                                                    <ContestStudentEndList value={searchTerm}/>
                                                 </div>
                                             </div>
                                         </div>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
-import { IExerciseStudentState, IStateType, IStudentLeaveState } from "../../store/models/root.interface";
+import { IExerciseStudentState, IStateType } from "../../store/models/root.interface";
 import ExerciseSectionList from "./ExerciseSectionList";
 import "./ManageStudent.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -13,10 +13,8 @@ import Loading from "../../common/components/Loading";
 const ExerciseStudentList: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
-    const student_leave: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
     const numberSubmittedCount: number = exercise_students.exercise_submitted_graded.length + exercise_students.exercise_submitted_not_grade.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
-    const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('student_id');
@@ -81,7 +79,6 @@ const ExerciseStudentList: React.FC = () => {
             <div className="row">
                 <TopCard title="BÀI TẬP ĐÃ NỘP" text={`${numberSubmittedCount}`} icon="book" class="primary" />
                 <TopCard title="BÀI TẬP CHƯA NỘP" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
-                <TopCard title="SỐ BUỔI NGHỈ" text={`${numberStudentLeaveCount}`} icon="book" class="danger" />
                 {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>

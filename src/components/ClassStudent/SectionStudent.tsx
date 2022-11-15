@@ -52,6 +52,12 @@ const SectionStudent: React.FC = () => {
         is_active = id_t;
     }
 
+    var id_tt = localStorage.getItem('link_record');
+    var link_record = "";
+    if (id_tt !== null) {
+        link_record = id_tt;
+    }
+
     console.log(class_id);
     console.log(class_students.classes_doing)
 
@@ -353,7 +359,7 @@ const SectionStudent: React.FC = () => {
                                 if (sections.sections[0].teach_form === true) {
                                     if (is_active === "not_active") {
                                         return (
-                                            <iframe width="100%" height="500" src="https://www.youtube.com/embed/r0Gh2eIR7w0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                            <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                                         )
                                     }
                                 }

@@ -202,7 +202,7 @@ const DetailClassStudent: React.FC = () => {
                     const link = "https://recording-jitsi-chung.s3.ap-southeast-1.amazonaws.com/recording/"
                     const class_id = 1;
                     const days = ele.end_time;
-                    let str = link + class_id.toString() + "_" + days.slice(0,10);
+                    let str = link + class_id.toString() + "_" + days.slice(0,10) + ".mp4";
                     list_link_record.push(str);
                     // Do your operations
                     var date_now   = new Date();

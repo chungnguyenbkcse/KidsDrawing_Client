@@ -11,7 +11,7 @@ html, body {
   left: 50%;
 }
 
-.card {
+.card-cc {
   width: 100%;
   height: 200px;
   background-color: #fff;
@@ -23,11 +23,11 @@ html, body {
   margin: 1.5rem;
 }
 
-.card h1 {
+.card-cc h1 {
   text-align: center;
 }
 
-.card .additional {
+.card-cc .additional {
   position: absolute;
   width: 150px;
   height: 100%;
@@ -37,24 +37,24 @@ html, body {
   z-index: 2;
 }
 
-.card.green .additional {
-  background: linear-gradient(#92bCa6, #A2CCB6);
+.card-cc.green .additional {
+  background: #1FFCEF;
 }
 
 
-.card .additional {
+.card-cc .additional {
   width: 100%;
   border-radius: 0 5px 5px 0;
 }
 
-.card .additional .user-card {
+.card-cc .additional .user-card-cc {
   width: 150px;
   height: 100%;
   position: relative;
   float: left;
 }
 
-.card .additional .user-card::after {
+.card-cc .additional .user-card-cc::after {
   content: "";
   display: block;
   position: absolute;
@@ -64,8 +64,8 @@ html, body {
   border-left: 2px solid rgba(0,0,0,0.025);
 }
 
-.card .additional .user-card .level,
-.card .additional .user-card .points {
+.card-cc .additional .user-card-cc .level,
+.card-cc .additional .user-card-cc .points {
   top: 15%;
   color: #fff;
   text-transform: uppercase;
@@ -77,15 +77,15 @@ html, body {
   white-space: nowrap;
 }
 
-.card .additional .user-card .points {
+.card-cc .additional .user-card-cc .points {
   top: 85%;
 }
 
-.card .additional .user-card svg {
+.card-cc .additional .user-card-cc svg {
   top: 50%;
 }
 
-.card .additional .more-info {
+.card-cc .additional .more-info {
   width: 300px;
   float: left;
   position: absolute;
@@ -93,30 +93,30 @@ html, body {
   height: 100%;
 }
 
-.card .additional .more-info h1 {
+.card-cc .additional .more-info h1 {
   color: #fff;
   margin-bottom: 0;
 }
 
-.card.green .additional .more-info h1 {
+.card-cc.green .additional .more-info h1 {
   color: #224C36;
 }
 
-.card .additional .coords {
+.card-cc .additional .coords {
   margin: 0 1rem;
   color: #fff;
   font-size: 1rem;
 }
 
-.card.green .additional .coords {
+.card-cc.green .additional .coords {
   color: #325C46;
 }
 
-.card .additional .coords span + span {
+.card-cc .additional .coords span + span {
   float: right;
 }
 
-.card .additional .stats {
+.card-cc .additional .stats {
   font-size: 2rem;
   display: flex;
   position: absolute;
@@ -127,36 +127,36 @@ html, body {
   color: #fff;
 }
 
-.card.green .additional .stats {
+.card-cc.green .additional .stats {
   color: #325C46;
 }
 
-.card .additional .stats > div {
+.card-cc .additional .stats > div {
   flex: 1;
   text-align: center;
 }
 
-.card .additional .stats i {
+.card-cc .additional .stats i {
   display: block;
 }
 
-.card .additional .stats div.title {
+.card-cc .additional .stats div.title {
   font-size: 0.75rem;
   font-weight: bold;
   text-transform: uppercase;
 }
 
-.card .additional .stats div.value {
+.card-cc .additional .stats div.value {
   font-size: 1.5rem;
   font-weight: bold;
   line-height: 1.5rem;
 }
 
-.card .additional .stats div.value.infinity {
+.card-cc .additional .stats div.value.infinity {
   font-size: 2.5rem;
 }
 
-.card .general {
+.card-cc .general {
   width: 70%;
   height: 100%;
   position: absolute;
@@ -175,7 +175,7 @@ html, body {
         width: 50%;
 }
 
-.card .general .more {
+.card-cc .general .more {
   position: absolute;
   bottom: 1rem;
   right: 1rem;

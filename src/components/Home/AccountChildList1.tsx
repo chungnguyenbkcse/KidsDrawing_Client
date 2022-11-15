@@ -24,9 +24,10 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
 
 
 
-                            <div className="card green">
+                            <div className="card-cc green">
                                 <div className="additional">
-                                    <div className="user-card">
+                                    <div className="row">
+                                    <div className="user-card-cc col-md-4 col-lg-4">
                                         <svg width="110" height="110" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" className="image-child">
                                             <title id="title">Teacher</title>
                                             <desc id="desc">Cartoon of a Caucasian woman smiling, and wearing black glasses and a purple shirt with white collar drawn by Alvaro Montoro.</desc>
@@ -80,14 +81,19 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
                                             </g>
                                         </svg>
                                     </div>
-                                    <div className="more-info">
+                                    <div className="more-info col-md-8 col-lg-8 mx-auto">
                                         <h1>{ele.username}</h1>
-                                        <div className="coords">
-                                            <span>{ele.username}</span>
+                                        <div className="coords pl-2">
                                             <span>Tham gia ngày: {ele.createTime.substring(0, 10) + " " + ele.createTime.substring(11,19)}</span>
                                         </div>
-                                        <div className="coords">
+                                        <div className="coords pl-2">
                                             <span>Ngày sinh: {ele.dateOfBirth}</span>
+                                        </div>
+                                        <div className="coords pl-2">
+                                            <span>Giới tính: {ele.sex}</span>
+                                        </div>
+                                        <div className="coords pl-2">
+                                            <span>Trạng thái: {ele.status}</span>
                                         </div>
                                         <div className="stats">
                                             <div>
@@ -100,18 +106,14 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
                                                 <i className="fa fa-gamepad"></i>
                                                 <div className="value">27</div>
                                             </div>
-                                            <div>
-                                                <div className="title">Cần thanh toán</div>
-                                                <i className="fa fa-group"></i>
-                                                <div className="value">123</div>
-                                            </div>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                                 <div className="general">
                                     <h1>{ele.username}</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a volutpat mauris, at molestie lacus. Nam vestibulum sodales odio ut pulvinar.</p>
-                                    <span className="more">Mouse over the card for more info</span>
+                                    <span className="more">Mouse over the card-cc for more info</span>
                                 </div>
                             </div>
 

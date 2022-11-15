@@ -28,7 +28,7 @@ import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 import { ToastContainer } from "react-toastify";
-import AccountChildList from "./AccountChildList";
+import AccountChildList1 from "./AccountChildList1";
 
 
 const ParentHome: React.FC = () => {
@@ -225,7 +225,7 @@ const ParentHome: React.FC = () => {
                                     <div className="row">
                                         <div className="col-xl-12 col-md-12 mb-4">
                                             <h3 className=" mb-2" id="level-teacher">Danh sách tài khoản con</h3>
-                                            <AccountChildList
+                                            <AccountChildList1
                                                 onSelect={onUserSelect}
                                             />
                                         </div>

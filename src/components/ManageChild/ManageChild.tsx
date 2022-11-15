@@ -31,6 +31,7 @@ import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { IClassesStudent } from "../../store/models/classes_student.interface";
 import { useHistory } from "react-router-dom";
+import { IContestTeacher } from "../../store/models/contest_teacher.interface";
 
 
 type Options = {
@@ -53,6 +54,56 @@ const ManageChild: React.FC = () => {
     if (id_x !== null) {
         student_id = parseInt(id_x);
     }
+
+    const [totalPage, setTotalPage] = useState(0)
+    const [element, setElement] = useState<IClassesStudent[]>([])
+    useEffect(() => {
+        let x = (classes_students.classes_done.length - classes_students.classes_done.length % 10) / 10;
+        if (x === 1) {
+            setElement(classes_students.classes_done)
+        }
+        else {
+            setElement(classes_students.classes_done.slice(0, 10))
+        }
+
+        setTotalPage((x + 1))
+    }, [classes_students.classes_done])
+
+    function handlePagination(count: number) {
+        console.log(count)
+        if (count === totalPage) {
+            setElement(classes_students.classes_done.slice(count * 10))
+        }
+        else {
+            setElement(classes_students.classes_done.slice(count * 10, count * 10 + 10))
+        }
+    }
+
+    const [totalPage1, setTotalPage1] = useState(0)
+    const [element1, setElement1] = useState<IContestTeacher[]>([])
+    useEffect(() => {
+        let x = (contest_teachers.contest_end.length - contest_teachers.contest_end.length % 10) / 10;
+        if (x === 1) {
+            setElement1(contest_teachers.contest_end)
+        }
+        else {
+            setElement1(contest_teachers.contest_end.slice(0, 10))
+        }
+
+        setTotalPage((x + 1))
+    }, [contest_teachers.contest_end])
+
+    function handlePagination1(count: number) {
+        console.log(count)
+        if (count === totalPage) {
+            setElement1(contest_teachers.contest_end.slice(count * 10))
+        }
+        else {
+            setElement1(contest_teachers.contest_end.slice(count * 10, count * 10 + 10))
+        }
+    }
+
+
 
     console.log(classes_students)
     console.log(contest_teachers)
@@ -169,7 +220,7 @@ const ManageChild: React.FC = () => {
 
     const history = useHistory();
     function onChangeRouter1(classes_student: IClassesStudent) {
-        let path = '/student/class'; 
+        let path = '/student/class';
         localStorage.removeItem('teacher_id');
         localStorage.setItem('teacher_id', value1.toString())
         localStorage.removeItem('class_id');
@@ -180,9 +231,22 @@ const ManageChild: React.FC = () => {
     }
 
     function onChangeRoute2() {
-        let path = '/class/exercise-student'; 
+        let path = '/class/exercise-student';
         localStorage.removeItem('class_id');
         localStorage.setItem('class_id', value1.toString());
+        history.push({
+            pathname: path,
+        });
+    }
+
+    const routeChange = (classes_parent: IClassesStudent) => {
+        let path = '/student/class';
+        localStorage.removeItem('teacher_id');
+        localStorage.setItem('teacher_id', classes_parent.teacher_id.toString())
+        localStorage.removeItem('student_id');
+        localStorage.setItem('student_id', classes_parent.student_id.toString())
+        localStorage.removeItem('class_id');
+        localStorage.setItem('class_id', classes_parent.id.toString());
         history.push({
             pathname: path,
         });
@@ -282,7 +346,7 @@ const ManageChild: React.FC = () => {
                                     {
                                         function () {
                                             console.log(checked)
-                                            console.log(typeof(value))
+                                            console.log(typeof (value))
                                             if (checked === true && value.toString() === "1") {
                                                 return (
                                                     <>
@@ -306,7 +370,7 @@ const ManageChild: React.FC = () => {
                                                                         <button
                                                                             className="btn btn-success btn-green"
                                                                             id="btn-into-class-student"
-                                                                            onClick={() => {onChangeRoute2()}}
+                                                                            onClick={() => { onChangeRoute2() }}
                                                                         >
                                                                             Xem chi tiết
                                                                             <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
@@ -334,42 +398,67 @@ const ManageChild: React.FC = () => {
                                             }
 
                                             else if (checked === false && value.toString() === "1") {
-                                                return classes_students.classes_done.map((ele, idx) => {
-                                                    console.log(ele)
-                                                    return (
-                                                        <div className="row" key={idx} onClick={() => {onChangeRouter1(ele)}}>
-                                                            <div className="col-xl-12 col-lg-12">
-                                                                <div className="card mb-4 card-course">
-                                                                    <div className="card-body">
-                                                                        <h5 className="card-title">{ele.name}</h5>
-                                                                        <div className="row">
-                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                <img className="card-img-top" src={ele.link_url} alt="" />
-                                                                            </div>
-
-                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                <div className="row">
-                                                                                    <p><span className="header-card-course-teacher">Thể loại:</span> <span className="header-card-course-value-teacher">{ele.art_type_name}</span></p>
-
-                                                                                </div>
-                                                                                <div className="row">
-                                                                                    <p ><span className="header-card-course-teacher">Trình độ:</span> <span className="header-card-course-value-teacher">{ele.art_level_name}</span></p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="col-xl-4 col-md-4 col-xs-4">
-                                                                                <div className="row">
-                                                                                    <p><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">{ele.art_age_name}</span></p>
-
-                                                                                </div>
-                                                                                <div className="row">
-                                                                                    <p ><span className="header-card-course-teacher">Số buổi:</span> <span className="header-card-course-value-teacher">{ele.total_section}</span></p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                return element.map((contest, index) => {
+                                                    if (index === element.length - 1) {
+                                                        return (
+                                                            <>
+                                                            <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
+                                                                <div className="course">
+                                                                    <div className="course-preview">
+                                                                        <h6>Khóa học</h6>
+                                                                        <h5>{contest.course_name}</h5>
+                                                                        <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
+                                                                    </div>
+                                                                    <div className="course-info">
+                                                                        <h3>{contest.student_name}</h3>
+                                                                        <h6>Giáo viên: {contest.teacher_name}</h6>
+                                                                        <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                            <div className="d-flex justify-content-end text-right mt-2">
+                                                                <nav>
+                                                                    <ul className="pagination">
+                                                                        <li className="page-item">
+                                                                            <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
+                                                                                <span aria-hidden="true">&laquo;</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        {
+                                                                            Array.from(Array((totalPage)).keys()).map((ele, idx) => {
+                                                                                return (
+                                                                                    <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination(ele) }}>{ele + 1}</a></li>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                        <li className="page-item">
+                                                                            <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
+                                                                                <span aria-hidden="true">&raquo;</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            </>
+                                                        )
+                                                    }
+                                                    return (
+                                                        <>
+                                                            <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
+                                                                <div className="course">
+                                                                    <div className="course-preview">
+                                                                        <h6>Khóa học</h6>
+                                                                        <h5>{contest.course_name}</h5>
+                                                                        <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
+                                                                    </div>
+                                                                    <div className="course-info">
+                                                                        <h3>{contest.student_name}</h3>
+                                                                        <h6>Giáo viên: {contest.teacher_name}</h6>
+                                                                        <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </>
                                                     )
                                                 })
                                             }
@@ -423,7 +512,7 @@ const ManageChild: React.FC = () => {
                         <h3 className=" mb-2" id="level-teacher">Lịch học của bé</h3>
                         <div className="card shadow mb-4">
                             <div className="card-body">
-                            <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                                <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
                                     dataSource: data, fields: {
                                         id: 'Id',
                                         subject: { name: 'Subject' },

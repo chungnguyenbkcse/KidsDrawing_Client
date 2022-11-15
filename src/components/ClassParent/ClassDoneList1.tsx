@@ -16,27 +16,27 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
     const [totalPage, setTotalPage] = useState(0)
     const [element, setElement] = useState<IClassesParent[]>([])
     useEffect(() => {
-        let x = (classes_parents.classes_done.length - classes_parents.classes_done.length % 10) /10;
+        let x = (classes_parents.classes_done.length - classes_parents.classes_done.length % 10) / 10;
         if (x === 1) {
             setElement(classes_parents.classes_done)
         }
         else {
-            setElement(classes_parents.classes_done.slice(0,10))
+            setElement(classes_parents.classes_done.slice(0, 10))
         }
-        
-         setTotalPage((x+1))
+
+        setTotalPage((x + 1))
     }, [classes_parents.classes_done])
 
     function handlePagination(count: number) {
         console.log(count)
         if (count === totalPage) {
-            setElement(classes_parents.classes_done.slice(count*10))
+            setElement(classes_parents.classes_done.slice(count * 10))
         }
         else {
-            setElement(classes_parents.classes_done.slice(count*10,count*10 + 10))
+            setElement(classes_parents.classes_done.slice(count * 10, count * 10 + 10))
         }
     }
-    
+
     const history = useHistory();
     const routeChange = (classes_parent: IClassesParent) => {
         let path = '/student/class';
@@ -83,29 +83,29 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
                 })
             }
 
-<div className="d-flex justify-content-end text-right mt-2">
-                    <nav>
-                        <ul className="pagination">
+            <div className="d-flex justify-content-end text-right mt-2">
+                <nav>
+                    <ul className="pagination">
                         <li className="page-item">
                             <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                            {
-                                Array.from(Array((totalPage)).keys()).map((ele, idx) => {
-                                    return (
-                                        <li className="page-item"><a className="page-link" href="/" onClick={() => {handlePagination(ele)}}>{ele+1}</a></li>
-                                    )
-                                })
-                            }
-                            <li className="page-item">
-                                <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                        {
+                            Array.from(Array((totalPage)).keys()).map((ele, idx) => {
+                                return (
+                                    <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination(ele) }}>{ele + 1}</a></li>
+                                )
+                            })
+                        }
+                        <li className="page-item">
+                            <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </Fragment>
     );
 }

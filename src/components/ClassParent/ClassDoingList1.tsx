@@ -57,31 +57,35 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
         <Fragment>
             {
                 classes_parents.classes_doing.map((contest, index) => {
-                    return (
-                        <>
-                            <div className="courses-container" key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>
-                                <div className="course">
-                                    <div className="course-preview">
-                                        <h6>Khóa học</h6>
-                                        <h2>{contest.course_name}</h2>
-                                        <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
-                                    </div>
-                                    <div className="course-info">
-                                        <div className="progress-container">
-                                            <div className="progress"></div>
-                                            <span className="progress-text">
-                                                {contest.total_section_studied}/{contest.total_section} Buổi
-                                            </span>
+                    if (contest !== undefined && contest !== null){
+                        return (
+                            <>
+                                <div className="courses-container" key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>
+                                    <div className="course">
+                                        <div className="course-preview">
+                                            <h6>Khóa học</h6>
+                                            <h2>{contest.course_name}</h2>
+                                            <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
                                         </div>
-                                        <h2>{contest.student_name}</h2>
-                                        <h6 className="mt-4">Giáo viên: {contest.teacher_name}</h6>
-                                        <h6 className="mt-4">Lịch học buổi kế: {contest.schedule_section_next.replaceAll("T", " ")}</h6>
-                                        <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
+                                        <div className="course-info">
+                                            <div className="progress-container">
+                                                <div className="progress"></div>
+                                                <span className="progress-text">
+                                                    {contest.total_section_studied}/{contest.total_section} Buổi
+                                                </span>
+                                            </div>
+                                            <h2>{contest.student_name}</h2>
+                                            <h6 className="mt-4">Giáo viên: {contest.teacher_name}</h6>
+                                            <h6 className="mt-4">Lịch học buổi kế: {contest.schedule_section_next.replaceAll("T", " ")}</h6>
+                                            <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </>
-                    )
+                            </>
+                        )
+                    }
+                    return null
+                    
                 })
             }
 

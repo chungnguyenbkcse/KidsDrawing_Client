@@ -709,9 +709,9 @@ const Header = () => {
             </SidebarContent>
             <SidebarFooter>
               <Menu iconShape="square">
-                <MenuItem>
+                {/* <MenuItem>
                   <img className="img-profile rounded-circle img-sideleft" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
               </Menu>
             </SidebarFooter>
@@ -868,9 +868,9 @@ const Header = () => {
             </SidebarContent>
             <SidebarFooter>
               <Menu iconShape="square">
-                <MenuItem>
+                {/* <MenuItem>
                   <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
               </Menu>
             </SidebarFooter>
@@ -1040,9 +1040,9 @@ const Header = () => {
           </SidebarContent>
           <SidebarFooter>
             <Menu iconShape="square">
-              <MenuItem>
+              {/* <MenuItem>
                   <img className="img-profile rounded-circle" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
-                </MenuItem>
+                </MenuItem> */}
               <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
             </Menu>
           </SidebarFooter>

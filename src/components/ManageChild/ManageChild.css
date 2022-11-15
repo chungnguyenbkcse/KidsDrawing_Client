@@ -10,6 +10,12 @@
     background-color: #FFF8E5 !important;
 }
 
+.select_type_study {
+    width: 150px !important;
+    left: 0;
+    margin-top: -20px;
+}
+
 .course-preview img {
     height: 100%;
     width: 100%;
@@ -77,7 +83,7 @@
 }
 
 .tabbar-x {
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .select-selected {

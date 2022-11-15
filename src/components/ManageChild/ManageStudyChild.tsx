@@ -193,33 +193,20 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
                         <div className={`card shadow h-100 py-2`} id="infor-student">
                             <div className="card-body">
                                 <div className="row">
-                                    <div className="col-xl-4 col-md-4 col-xs-4">
-                                        <i className={`far fa-user-circle fa-7x text-gray-300`} id="icon-user"></i>
+                                    <div className="col-xl-6 col-lg-6 col-xs-6 text-center">
+                                       <div className="row">
+                                            <h6 className="ml-4">Loại hình: </h6>
+                                       </div>
+                                        <SelectKeyValueNotField
+                                            value={value}
+                                            id="input_total_page"
+                                            inputClass="select_type_study"
+                                            onChange={hasFormValueChangedNotFiled}
+                                            required={true}
+                                            label=" "
+                                            options={listOptions}
+                                        />
                                     </div>
-                                    <div className="col-xl-8 col-md-8 col-xs-8">
-                                        <div className="row">
-                                            <h2>{users.teachers.length > 0 ? users.teachers[0].firstName + " " + users.teachers[0].lastName : ""}</h2>
-                                        </div>
-                                        <div className="row">
-                                            <p>@{users.teachers.length > 0 ? users.teachers[0].username : ""}</p>
-                                        </div>
-                                        <div className="row no-gutters align-items-center">
-                                            <i className={`fa fa-calendar fa-2x text-gray-300`} id="icon-calendar"></i>
-                                            <div className="text-xs mb-1 ml-2">
-                                                <p className="birthday">Ngày sinh: {users.teachers.length > 0 ? users.teachers[0].dateOfBirth : ""}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row dropdown-content mr-2">
-                                    <SelectKeyValueNotField
-                                        value={value}
-                                        id="input_total_page"
-                                        onChange={hasFormValueChangedNotFiled}
-                                        required={true}
-                                        label=""
-                                        options={listOptions}
-                                    />
                                 </div>
                                 <div className="row tabbar-x" >
                                     <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
@@ -385,19 +372,24 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
 
                                         if (checked === false && value.toString() === "2") {
                                             return element1.map((contest, index) => {
-                                                if (index === element.length - 1) {
+                                                if (index === element1.length - 1) {
                                                     return (
                                                         <>
                                                             <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
                                                                 <div className="course">
                                                                     <div className="course-preview">
-                                                                    <img src={contest.image_url} alt="" />
+                                                                        <h6>Cuộc thi</h6>
+                                                                        <h5>{contest.name}</h5>
+                                                                        <a href="/#">Xem miêu tả <i className="fas fa-chevron-right"></i></a>
                                                                     </div>
                                                                     <div className="course-info">
-                                                                        <h3>{contest.name}</h3>
-                                                                        <h6>Thể loại: {contest.art_type_name}</h6>
-                                                                        <h6>Độ tuổi: {contest.art_age_name}</h6>
-                                                                        <button className="btn-x" onClick={() => { routeChange1(contest) }}>Chi tiết</button>
+                                                                        <h6 className="pd-2">Thể loại: {contest.art_type_name}</h6>
+                                                                        <h6 className="pd-2">Độ tuổi: {contest.art_age_name}</h6>
+                                                                        <h6 className="pd-2">Thời gian: {contest.start_time.replaceAll("T", " ")} đến {contest.end_time.replaceAll("T", " ")}</h6>
+                                                                        <h6 className="pd-2">Số học sinh tham gia: {contest.total_register_contest}</h6>
+                                                                        <h6 className="pd-2">Số bài nộp: {contest.total_contest_submission}</h6>
+                                                                        <h6>Số bài đã chấm: {contest.total_contest_submission_graded}</h6>
+                                                                        <button className="btn-x" onClick={() => { routeChange1(contest) }}>Kết quả</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -430,18 +422,23 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
                                                 return (
                                                     <>
                                                         <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
-                                                                <div className="course">
-                                                                    <div className="course-preview">
-                                                                    <img src={contest.image_url} alt="" />
-                                                                    </div>
-                                                                    <div className="course-info">
-                                                                        <h3>{contest.name}</h3>
-                                                                        <h6>Thể loại: {contest.art_type_name}</h6>
-                                                                        <h6>Độ tuổi: {contest.art_age_name}</h6>
-                                                                        <button className="btn-x" onClick={() => { routeChange1(contest) }}>Chi tiết</button>
-                                                                    </div>
+                                                            <div className="course">
+                                                                <div className="course-preview">
+                                                                    <h6>Cuộc thi</h6>
+                                                                    <h5>{contest.name}</h5>
+                                                                    <a href="/#">Xem miêu tả <i className="fas fa-chevron-right"></i></a>
+                                                                </div>
+                                                                <div className="course-info">
+                                                                    <h6 className="pd-2">Thể loại: {contest.art_type_name}</h6>
+                                                                    <h6 className="pd-2">Độ tuổi: {contest.art_age_name}</h6>
+                                                                    <h6 className="pd-2">Thời gian: {contest.start_time.replaceAll("T", " ")} đến {contest.end_time.replaceAll("T", " ")}</h6>
+                                                                    <h6 className="pd-2">Số học sinh tham gia: {contest.total_register_contest}</h6>
+                                                                    <h6 className="pd-2">Số bài nộp: {contest.total_contest_submission}</h6>
+                                                                    <h6 className="pd-2">Số bài đã chấm: {contest.total_contest_submission_graded}</h6>
+                                                                    <button className="btn-x" onClick={() => { routeChange1(contest) }}>Kết quả</button>
                                                                 </div>
                                                             </div>
+                                                        </div>
                                                     </>
                                                 )
                                             })

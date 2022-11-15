@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
@@ -7,6 +7,7 @@ import { IContestSubmissionTeacherState, IStateType } from "../../store/models/r
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
+import { GrLinkDown } from "react-icons/gr";
 
 const DetailContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -86,6 +87,12 @@ const DetailContestTeacher: React.FC = () => {
         end_time = id_m;
     }
 
+    const [checked, setChecked] = useState(false);
+
+    function handleClick() {
+        setChecked(!checked)
+    }
+
 
 
     let access_token = localStorage.getItem("access_token");
@@ -120,66 +127,102 @@ const DetailContestTeacher: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);
 
-    
+
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
-            {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+            <div className="row" id="search-box">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                        </div>
+                    </div>
+                </div>
+            </div> : <Fragment>
+                {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
+                {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-            <div className="row">
-                <TopCard title="SỐ BÀI ĐÃ NỘP" text={`${numberGradedCount + numberNotGradedCount}`} icon="book" class="primary" />
-                <TopCard title="SỐ BÀI ĐÃ CHẤM" text={`${numberGradedCount}`} icon="book" class="primary" />
-            </div>
-            <div className="row">
-                <div className="col-xl-12 col-md-12 mb-4">
-                    <div className="row">
-                        <div className="col-xl-12 col-md-12 mb-4">
-                            <div className="col-xl-12 col-md-12 mb-4">
-                                <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                    <div className="card-body">
-                                        <div className="row no-gutters justify-content-left">
-                                            <h4 id="full-name">Thông tin chung</h4>
+                <div className="row">
+                    <TopCard title="SỐ BÀI ĐÃ NỘP" text={`${numberGradedCount + numberNotGradedCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BÀI ĐÃ CHẤM" text={`${numberGradedCount}`} icon="book" class="primary" />
+                </div>
+                <div className="row">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="card shadow mb-4">
+                            <div className="row no-gutters align-items-center">
+                                <div className="text-xs font-weight-bold text-green text-uppercase ">
+                                    <p className="fullname ml-4 mt-4">{contest_name}</p>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-xl-6 col-md-6">
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="text-xs ">
+                                            <p className="birthday ml-4">Độ tuổi đăng kí: {art_age_contest}</p>
                                         </div>
-                                        <div className="row no-gutters">
-                                            <p id="phone">{contest_name_}</p>
+                                    </div>
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="text-xs">
+                                            <p className="birthday ml-4">Thể loại: {art_type_contest}</p>
                                         </div>
-                                        <div className="row no-gutters">
-                                            <p>Thể loại: {art_type_contest}</p>
+                                    </div>
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="text-xs">
+                                            <p className="birthday ml-4">Thời gian đăng kí: {registration_time}</p>
                                         </div>
-                                        <div className="row no-gutters">
-                                            <p>Độ tuổi: {art_age_contest}</p>
+                                    </div>
+                                </div>
+
+                                <div className="col-xl-6 col-md-6">
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="text-xs ">
+                                            <p className="birthday">Thời gian bắt đầu: {start_time}</p>
                                         </div>
-                                        <div className="row no-gutters">
-                                            <p>Số người tham gia tối đa: {max_participant}</p>
+                                    </div>
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="text-xs">
+                                            <p className="birthday">Thời gian kết thúc: {end_time}</p>
                                         </div>
-                                        <div className="row no-gutters">
-                                            <p>Thời gian đăng kí: {registration_time}</p>
+                                    </div>
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="text-xs">
+                                            <p className="birthday">Số người tham gia tối đa: {max_participant}</p>
                                         </div>
-                                        <div className="row no-gutters">
-                                            <p>Thời gian bắt đầu: {start_time}</p>
-                                        </div>
-                                        <div className="row no-gutters">
-                                            <p>Thời gian kết thúc: {end_time}</p>
-                                        </div>
-                                        <div className="row no-gutters" dangerouslySetInnerHTML={{ __html: contest_description_ }}></div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-                </div>              
-            </div>
+                </div>
 
-        </Fragment>
+                <div className="row" id="btn-register-course">
+                    <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                        <button className="btn btn-success btn-green" id="btn-create-register-course4" onClick={() => handleClick()}>
+                            <GrLinkDown id="btn-payment" color="#ffffff" />
+                            Xem miêu tả
+                        </button>
+                    </div>
+                </div>
+                {
+                    function () {
+                        if (checked === true) {
+                            return (
+                                <div className="col-xl-12 col-lg-12">
+                                    <div className="card-header py-3">
+                                        <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
+                                    </div>
+                                    <div className="card shadow mb-4">
+                                        <div className="card-body" dangerouslySetInnerHTML={{ __html: contest_description_ }}>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }()
+                }
+
+            </Fragment>
     );
 };
 

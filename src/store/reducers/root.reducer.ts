@@ -68,6 +68,7 @@ import contest_parent_newsReducer from "./contest_parent_new.reducer";
 import course_teacher_newsReducer from "./course_teacher_new.reducer";
 import semester_class_teachersReducer from "./semester_class_teacher.reducer";
 import contestSubmissionTeachersReducer from "./contest_submission_teacher.reducer";
+import childsReducer from "./child.reducer";
 
 
 const initialState: IRootStateType = {
@@ -151,6 +152,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     course_teacher_new: course_teacher_newsReducer,
     semester_class_teachers: semester_class_teachersReducer,
     contest_submission_teacher: contestSubmissionTeachersReducer,
+    childs: childsReducer,
 });
 
 

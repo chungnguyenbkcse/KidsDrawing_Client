@@ -3,12 +3,11 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { changeSelectedUser, setModificationState } from "../../store/actions/users.action";
-import { IScheduleTimeClassState, IStateType, IUserRegisterJoinSemesterState, IUserState } from "../../store/models/root.interface";
-import { IUser, UserModificationStatus } from "../../store/models/user.interface";
+import { changeSelectedChild, setModificationState } from "../../store/actions/child.action";
+import { IChildState, IScheduleTimeClassState, IStateType, IUserRegisterJoinSemesterState } from "../../store/models/root.interface";
+import { IChild, ChildModificationStatus } from "../../store/models/child.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 import "./ParentHome.css"
 import Popup from "reactjs-popup";
 import AccountChildForm from "../AccountChild/AccountChildForm";
@@ -29,14 +28,15 @@ import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 import { ToastContainer } from "react-toastify";
 import AccountChildList1 from "./AccountChildList1";
+import { getInforChildByParent } from "../../common/service/Childs/GetInforChildByParent";
 
 
 const ParentHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const childs: IChildState = useSelector((state: IStateType) => state.childs);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
     const user_register_join_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
-    const numberChildCount: number = users.students.length;
+    const numberChildCount: number = childs.childs.length;
     const totalMoney: number = user_register_join_semesters.completed.reduce((prev, next) => prev + ((next.price * 1) || 0), 0);
     var id_x = localStorage.getItem('id');
     var id: any = "";
@@ -50,10 +50,10 @@ const ParentHome: React.FC = () => {
 
     const [popup, setPopup] = useState(false);
 
-    function onUserSelect(lesson: IUser): void {
-        dispatch(changeSelectedUser(lesson));
+    function onUserSelect(lesson: IChild): void {
+        dispatch(changeSelectedChild(lesson));
         onUserRemove();
-        dispatch(setModificationState(UserModificationStatus.None));
+        dispatch(setModificationState(ChildModificationStatus.None));
     }
 
     function onUserRemove() {
@@ -93,13 +93,13 @@ const ParentHome: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getStudentByParent(dispatch, id))
+                    trackPromise(getInforChildByParent(dispatch, id))
                     trackPromise(getScheduleTimeByParent(dispatch, id))
                     trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
                 }
             }
             else {
-                trackPromise(getStudentByParent(dispatch, id))
+                trackPromise(getInforChildByParent(dispatch, id))
                 trackPromise(getScheduleTimeByParent(dispatch, id))
                 trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
             }
@@ -140,7 +140,7 @@ const ParentHome: React.FC = () => {
                     <TopCard title="SỐ TIỀN" text={`${totalMoney}`} icon="donate" class="primary" />
                     <div className="col-xl-6 col-md-6 mb-4" id="content-button-create-teacher-level">
                         <button className="btn btn-success btn-green mr-0" id="btn-create-teacher-level" onClick={() => {
-                            dispatch(setModificationState(UserModificationStatus.Create))
+                            dispatch(setModificationState(ChildModificationStatus.Create))
                             onUserRemove()
                         }}>
                             <i className="fas fa fa-plus"></i>
@@ -173,7 +173,7 @@ const ParentHome: React.FC = () => {
                     <>
                         {
                             function () {
-                                if ((users.modificationState === UserModificationStatus.Create) || ((users.selectedUser) && (users.modificationState === UserModificationStatus.Edit))) {
+                                if ((childs.modificationState === ChildModificationStatus.Create) || ((childs.selectedChild) && (childs.modificationState === ChildModificationStatus.Edit))) {
                                     return <AccountChildForm isCheck={onRemovePopup} />
                                 }
                             }()

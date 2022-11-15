@@ -1,10 +1,10 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, IUserState } from "../../store/models/root.interface";
+import { IStateType, IChildState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
-import { editStudent, clearSelectedUser, setModificationState, addStudent } from "../../store/actions/users.action";
+import { editChild, clearSelectedChild, setModificationState, addChild } from "../../store/actions/child.action";
 import { OnChangeModel } from "../../common/types/Form.types";
 import { toast } from "react-toastify";
-import { IUser, UserModificationStatus } from "../../store/models/user.interface";
+import { IChild, ChildModificationStatus } from "../../store/models/child.interface";
 import TextInput from "../../common/components/TextInput";
 import { postUser } from "../../common/service/User/PostUser";
 
@@ -20,12 +20,12 @@ type Options = {
 
 function AccountChildForm(props: lessonListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
-    const users: IUserState | null = useSelector((state: IStateType) => state.users);
-    let user: IUser | null = users.selectedUser;
-    const isCreate: boolean = (users.modificationState === UserModificationStatus.Create);
+    const childs: IChildState | null = useSelector((state: IStateType) => state.childs);
+    let user: IChild | null = childs.selectedChild;
+    const isCreate: boolean = (childs.modificationState === ChildModificationStatus.Create);
 
     if (!user || isCreate) {
-        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
+        user = { id: 0, total_contest: 0, total_course: 0,  username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
     }
 
     const [formState, setFormState] = useState({
@@ -46,7 +46,7 @@ function AccountChildForm(props: lessonListProps): JSX.Element {
         }
         props.isCheck(false);
 
-        let saveUserFn: Function = (isCreate) ? addStudent : editStudent;
+        let saveUserFn: Function = (isCreate) ? addChild : editChild;
         saveForm(formState, saveUserFn);
     }
 
@@ -57,7 +57,7 @@ function AccountChildForm(props: lessonListProps): JSX.Element {
                 position: toast.POSITION.TOP_CENTER
             });
 
-            if (saveFn === addStudent) {
+            if (saveFn === addChild) {
                 dispatch(postUser({
                     username: formState.username.value,
                     password: formState.password.value,
@@ -76,14 +76,14 @@ function AccountChildForm(props: lessonListProps): JSX.Element {
 
             console.log(saveFn)
 
-            dispatch(clearSelectedUser());
-            dispatch(setModificationState(UserModificationStatus.None));
+            dispatch(clearSelectedChild());
+            dispatch(setModificationState(ChildModificationStatus.None));
         }
     }
 
     function cancelForm(): void {
         props.isCheck(false);
-        dispatch(setModificationState(UserModificationStatus.None));
+        dispatch(setModificationState(ChildModificationStatus.None));
     }
 
     function getDisabledClass(): string {

@@ -1,26 +1,36 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IUserState } from "../../store/models/root.interface";
-import { IUser } from "../../store/models/user.interface";
+import { IStateType, IChildState } from "../../store/models/root.interface";
+import { IChild } from "../../store/models/child.interface";
 import "./AccountChildList.css"
+import { useHistory } from "react-router-dom";
 
 export type accountChildListProps = {
-    onSelect?: (accountChild: IUser) => void;
+    onSelect?: (accountChild: IChild) => void;
     children?: React.ReactNode;
 };
 
 function AccountChildList1(props: accountChildListProps): JSX.Element {
-    const users: IUserState = useSelector((state: IStateType) => state.users);
+    const childs: IChildState = useSelector((state: IStateType) => state.childs);
 
+    const history = useHistory();
+    const routeChange = (student_id: number) =>{ 
+        let path = '/students/detail'; 
+        localStorage.removeItem('student_id');
+        localStorage.setItem('student_id', student_id.toString())
+        history.push({
+            pathname: path
+        });
+    }
 
     return (
         <>
 
             {
-                users.students.map((ele, index) => {
+                childs.childs.map((ele, index) => {
                     if (!ele) { return null; }
                     return (
-                        <div className="col-md-8 col-xd-8 col-xs-8 mx-auto">
+                        <div className="col-md-8 col-xd-8 col-xs-8 mx-auto" onClick={() => {routeChange(ele.id)}}>
 
 
 
@@ -99,12 +109,12 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
                                             <div>
                                                 <div className="title">Khóa học đã học</div>
                                                 <i className="fa fa-trophy"></i>
-                                                <div className="value">2</div>
+                                                <div className="value">{ele.total_course}</div>
                                             </div>
                                             <div>
                                                 <div className="title">Cuộc thi đã tham gia</div>
                                                 <i className="fa fa-gamepad"></i>
-                                                <div className="value">27</div>
+                                                <div className="value">{ele.total_contest}</div>
                                             </div>
                                         </div>
                                     </div>

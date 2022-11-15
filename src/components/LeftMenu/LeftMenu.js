@@ -29,6 +29,8 @@ import { FaPaintBrush } from "react-icons/fa";
 import { MdSchool } from "react-icons/md";
 import { GiVideoConference } from "react-icons/gi";
 import { BsCashCoin } from "react-icons/bs";
+import { SiGoogletagmanager } from "react-icons/si"
+import { RiCompassDiscoverFill } from "react-icons/ri"
 
 
 //import sidebar css from react-pro-sidebar module and our custom css 
@@ -548,7 +550,7 @@ const Header = () => {
                     Trình độ
                   </Link>
                 </MenuItem>
-                <SubMenu active={active3} icon={<BiCog />} title="Khám phá" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
+                <SubMenu active={active3} icon={<RiCompassDiscoverFill />} title="Khám phá" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
                   if (active3 === false) {
                     setActive1(false);
                     setActive2(false);
@@ -595,7 +597,7 @@ const Header = () => {
                     </Link>
                   </MenuItem>
                 </SubMenu>
-                <SubMenu active={active4} icon={<BiCog />} title="Quản lý" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
+                <SubMenu active={active4} icon={<SiGoogletagmanager />} title="Quản lý" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
                   if (active4 === false) {
                     setActive1(false);
                     setActive2(false);
@@ -754,7 +756,7 @@ const Header = () => {
                     Trang chủ
                   </Link>
                 </MenuItem>
-                <SubMenu active={active3} icon={<BiCog />} title="Quản lý" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
+                <SubMenu active={active3} icon={<SiGoogletagmanager />} title="Quản lý" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
                   if (active3 === false) {
                     setActive1(false);
                     setActive2(false);
@@ -801,7 +803,7 @@ const Header = () => {
                     </Link>
                   </MenuItem>
                 </SubMenu>
-                <SubMenu active={active4} icon={<BiCog />} title="Khám phá" color="#ffffff" className={active4 ? "link-active" : "not-active"} onClick={() => {
+                <SubMenu active={active4} icon={<RiCompassDiscoverFill />} title="Khám phá" color="#ffffff" className={active4 ? "link-active" : "not-active"} onClick={() => {
                   if (active4 === false) {
                     setActive1(false);
                     setActive2(false);
@@ -959,7 +961,7 @@ const Header = () => {
                   </Link>
                 </MenuItem>
               </SubMenu>
-              <SubMenu active={active4} icon={<BiCog />} title="Khám phá" color="#ffffff" className={active4 ? "link-active" : "not-active"} onClick={() => {
+              <SubMenu active={active4} icon={<RiCompassDiscoverFill />} title="Khám phá" color="#ffffff" className={active4 ? "link-active" : "not-active"} onClick={() => {
                 if (active4 === false) {
                   setActive1(false);
                   setActive2(false);

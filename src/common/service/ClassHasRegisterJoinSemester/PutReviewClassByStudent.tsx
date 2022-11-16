@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function putClassHasRegisterJoinSemesterStudent(data: any, idx: any) {
+export function putReviewClassByStudent(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return (dispatch: any) => {
@@ -23,7 +23,7 @@ export function putClassHasRegisterJoinSemesterStudent(data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putClassHasRegisterJoinSemesterStudent(data, idx))
+                        dispatch(putReviewClassByStudent(data, idx))
                     }
                     else {
                         throw Error(response.statusText);

@@ -21,6 +21,10 @@
     background-color: #7659f7 !important;
   } 
 
+  .img-logo {
+    width: 100%;
+}
+
   .logo-x {
     padding-top: 7px;
   }

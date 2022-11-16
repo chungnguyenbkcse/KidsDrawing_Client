@@ -8,8 +8,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { Rating } from "react-simple-star-rating";
 import { IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { putClassHasRegisterJoinSemester } from "../../common/service/ClassHasRegisterJoinSemester/PutClassHasRegisterJoinSemesterStudent";
 import { useHistory } from "react-router-dom";
+import { putReviewClassByStudent } from "../../common/service/ClassHasRegisterJoinSemester/PutReviewClassByStudent";
 
 
 function ReviewStart(): JSX.Element {
@@ -43,7 +43,7 @@ function ReviewStart(): JSX.Element {
                 position: toast.POSITION.TOP_CENTER
             });
             console.log(idx)
-            dispatch(putClassHasRegisterJoinSemester({
+            dispatch(putReviewClassByStudent({
                 classes_id: localStorage.getItem('class_id'),
                 user_register_join_semester_id: localStorage.getItem('user_register_join_semester_id'),
                 student_feedback: formState.review.value,

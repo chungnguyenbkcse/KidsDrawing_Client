@@ -6,6 +6,7 @@ import { clearSelectedAnonymousNotification, setModificationStateAnonymousNotifi
 import { OnChangeModel } from "../../common/types/Form.types";
 import { toast } from "react-toastify";
 import { Rating } from "react-simple-star-rating";
+import { putReviewClassByStudent } from "../../common/service/ClassHasRegisterJoinSemester/PutReviewClassByStudent";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -35,6 +36,18 @@ function FormReviewClass(props: artAgeListProps): JSX.Element {
         saveForm(saveUserFn);
     }
 
+    var id_x = localStorage.getItem('class_id');
+    let class_id = 0;
+    if (id_x !== null) {
+        class_id = parseInt(id_x)
+    }
+
+    var id_y = localStorage.getItem('student_id');
+    let student_id = 0;
+    if (id_y !== null) {
+        student_id = parseInt(id_y)
+    }
+
     function saveForm(saveFn: Function): void {
             const idx = toast.loading("Đang xử lý yêu cầu. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
@@ -42,6 +55,14 @@ function FormReviewClass(props: artAgeListProps): JSX.Element {
             
             if (saveFn === addAnonymousNotification) {
                 console.log(idx)
+                let x = {
+                    classes_id: class_id,
+                    student_id: student_id,
+                    student_feedback: formState.review.value,
+                    review_star: rating
+                }
+
+                dispatch(putReviewClassByStudent(x, idx))
             }
 
             dispatch(clearSelectedAnonymousNotification());
@@ -59,7 +80,7 @@ function FormReviewClass(props: artAgeListProps): JSX.Element {
     }
 
     function isFormInvalid(): boolean {
-        return (formState.review_start.error || !formState.review_start.value 
+        return (rating === null || rating === undefined
             || formState.review.error || !formState.review.value ) as boolean;
     }
 

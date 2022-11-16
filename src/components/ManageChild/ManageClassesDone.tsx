@@ -19,6 +19,7 @@ import { setModificationState } from "../../store/actions/lesson.action";
 import { LessonModificationStatus } from "../../store/models/lesson.interface";
 import Popup from "reactjs-popup";
 import FormReviewClass from "./FormReviewClass";
+import { ToastContainer } from "react-toastify";
 
 const ManageClassesDone: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -142,6 +143,7 @@ const ManageClassesDone: React.FC = () => {
           </div>
         </div>
       </div> : <Fragment>
+      <ToastContainer />
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 

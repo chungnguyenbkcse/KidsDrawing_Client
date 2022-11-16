@@ -5,10 +5,10 @@ import TopCard from "../../common/components/TopCardUser";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
 import { IExerciseStudentState, IStateType } from "../../store/models/root.interface";
-import ExerciseSectionList from "./ExerciseSectionList";
 import "./ManageStudent.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import ExerciseSectionList from "./ExerciseSectionList";
 
 const ExerciseStudentList: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -88,25 +88,6 @@ const ExerciseStudentList: React.FC = () => {
                 </div> */}
             </div>
 
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="row">
-                        <div className="col-xl-12 col-lg-12">
-                        <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
-                        </div>
-                        <button type="button" className="btn btn-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </div>
-                        </div>
-                    </div>
-                    <div> 
-
-                    </div>
-                </div>
-            </div>
 
             <div className="row">
                 <div className="col-xl-12 col-lg-12">

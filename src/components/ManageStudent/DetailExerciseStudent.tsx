@@ -57,52 +57,25 @@ const DetailExerciseStudent: React.FC = () => {
 
             <div className="row">
                 <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Đề tài</h6>
-                        </div>
-                        <div className="card-body">
-                            <p dangerouslySetInnerHTML={{ __html: description}}>
-                            </p>
-
-                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Thời gian nộp: <span> {time_submit}</span></h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="col-xl-8 col-lg-8">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
-                        </div>
-                        <div className="card-body">
-                            <img className="card-img-top" src={image_url_exercise} alt="" />
-                        </div>
-                    </div>
-                </div>
-                <div className="col-xl-4 col-lg-4">
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Điểm của bé</h6>
-                        </div>
-                        <div className="card-body">
-                            <CircularProgressbar value={percentage} text={`${percentage}`} />;
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow mb-4">
+                    <div className="card shadow mb-4 form-review">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Nhận xét</h6>
                         </div>
                         <div className="card-body">
                             {feedback}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                        <div className="card-header py-3">
+                            <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
+                        </div>
+                        <div className="card-body">
+                            <img className="img-exercise" src={image_url_exercise} alt="" />
                         </div>
                     </div>
                 </div>

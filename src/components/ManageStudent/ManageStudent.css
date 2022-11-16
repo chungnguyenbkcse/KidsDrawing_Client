@@ -10,6 +10,15 @@
     background-color: #FFF8E5 !important;
 }
 
+.form-review{
+    background-color: #1FFCEF !important;
+}
+
+.img-exercise {
+    width: 100%;
+    max-height: 500px;
+}
+
 .form-x  .ql-editor{
     max-height: 500px !important;
     min-height: 100px !important;

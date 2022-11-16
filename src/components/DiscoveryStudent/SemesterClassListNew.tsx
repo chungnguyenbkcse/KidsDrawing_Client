@@ -2,32 +2,34 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
-import { ISemesterClassParentState, IStateType } from "../../store/models/root.interface";
-import { ISemesterClassParent } from "../../store/models/semester_class_parent.interface";
-import "./CourseNewTest.css"
+import { ISemesterClassStudentState, IStateType } from "../../store/models/root.interface";
+import { ISemesterClassStudent } from "../../store/models/semester_class_student.interface";
+import "./CourseListNew.css"
 
 export type semesterListProps = {
     value?: string;
     children?: React.ReactNode;
 };
 
-function SemesterClassNewList(props: semesterListProps): JSX.Element {
-    const semester_class_parent: ISemesterClassParentState = useSelector((state: IStateType) => state.semester_class_parent);
+function SemesterClassListNew(props: semesterListProps): JSX.Element {
+    const semester_class_student: ISemesterClassStudentState = useSelector((state: IStateType) => state.semester_class_student);
     const [totalPage, setTotalPage] = useState(0)
-    const [element, setElement] = useState<ISemesterClassParent[]>([])
+    const [element, setElement] = useState<ISemesterClassStudent[]>([])
     const [filter, setFilter] = useState("0")
 
+    console.log(semester_class_student.payed)
+
     useEffect(() => {
-        let x = (semester_class_parent.not_payed.length - (semester_class_parent.not_payed.length) % 10) / 10;
+        let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
         if (x === 0) {
-            setElement(semester_class_parent.not_payed)
+            setElement(semester_class_student.not_payed)
         }
         else {
-            setElement(semester_class_parent.not_payed.slice(0, 10))
+            setElement(semester_class_student.not_payed.slice(0, 6))
         }
 
         setTotalPage((x + 1))
-    }, [semester_class_parent.not_payed])
+    }, [semester_class_student.not_payed])
 
     console.log((totalPage))
 
@@ -35,33 +37,33 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
         console.log(count)
         if (filter === "0") {
             if (count === totalPage) {
-                setElement(semester_class_parent.not_payed.slice(count * 10))
+                setElement(semester_class_student.not_payed.slice(count * 6))
             }
             else {
-                setElement(semester_class_parent.not_payed.slice(count * 10, count * 10 + 10))
+                setElement(semester_class_student.not_payed.slice(count * 6, count * 6 + 6))
             }
         }
         else if (filter === "1") {
             if (count === totalPage) {
-                setElement(semester_class_parent.not_payed_now.slice(count * 10))
+                setElement(semester_class_student.not_payed_now.slice(count * 6))
             }
             else {
-                setElement(semester_class_parent.not_payed_now.slice(count * 10, count * 10 + 10))
+                setElement(semester_class_student.not_payed_now.slice(count * 6, count * 6 + 6))
             }
         }
         else if (filter === "2") {
             if (count === totalPage) {
-                setElement(semester_class_parent.payed.slice(count * 10))
+                setElement(semester_class_student.payed.slice(count * 6))
             }
             else {
-                setElement(semester_class_parent.payed.slice(count * 10, count * 10 + 10))
+                setElement(semester_class_student.payed.slice(count * 6, count * 6 + 6))
             }
         }
 
     }
 
     const history = useHistory();
-    const routeChange = (course: ISemesterClassParent) => {
+    const routeChange = (course: ISemesterClassStudent) => {
         localStorage.removeItem('description_course');
         localStorage.setItem('description_course', course.description);
         localStorage.removeItem('course_id');
@@ -98,34 +100,34 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
 
     function handleFilter() {
         if (filter === "0") {
-            let x = (semester_class_parent.not_payed.length - (semester_class_parent.not_payed.length) % 10) / 10;
+            let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
             if (x === 0) {
-                setElement(semester_class_parent.not_payed)
+                setElement(semester_class_student.not_payed)
             }
             else {
-                setElement(semester_class_parent.not_payed.slice(0, 10))
+                setElement(semester_class_student.not_payed.slice(0, 6))
             }
 
             setTotalPage((x + 1))
         }
         else if (filter === "1") {
-            let x = (semester_class_parent.not_payed.length - (semester_class_parent.not_payed.length) % 10) / 10;
+            let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
             if (x === 0) {
-                setElement(semester_class_parent.payed)
+                setElement(semester_class_student.payed)
             }
             else {
-                setElement(semester_class_parent.payed.slice(0, 10))
+                setElement(semester_class_student.payed.slice(0, 6))
             }
 
             setTotalPage((x + 1))
         }
         else if (filter === "2") {
-            let x = (semester_class_parent.not_payed.length - (semester_class_parent.not_payed.length) % 10) / 10;
+            let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
             if (x === 0) {
-                setElement(semester_class_parent.not_payed_now)
+                setElement(semester_class_student.not_payed_now)
             }
             else {
-                setElement(semester_class_parent.not_payed_now.slice(0, 10))
+                setElement(semester_class_student.not_payed_now.slice(0, 6))
             }
 
             setTotalPage((x + 1))
@@ -195,28 +197,7 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
                                             <div className="d-flex flex-row align-items-center">
                                                 <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
-                                                    {
-                                                        function () {
-                                                            if (filter === "2") {
-                                                                if (ele.student_registered_id !== undefined && ele.student_registered_id !== null) {
-                                                                    let xx = ""
-                                                                    ele.student_registered_name.map((elex, idxx) => {
-                                                                        if (idxx < ele.student_registered_id.length - 1) {
-                                                                            xx  +=  elex + ","
-                                                                        }
-                                                                        else {
-                                                                            xx += ele
-                                                                        }
-                                                                        return null
-                                                                    })
-                                                                    return xx
-                                                                }
-                                                                else {
-                                                                    return 0
-                                                                }
-                                                            }
-                                                        }()
-                                                    }
+                                                    
                                                 </span></div>
                                         </div>
                                     </div>
@@ -257,4 +238,4 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
     );
 }
 
-export default SemesterClassNewList;
+export default SemesterClassListNew;

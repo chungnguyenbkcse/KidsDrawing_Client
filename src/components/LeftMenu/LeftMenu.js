@@ -972,7 +972,7 @@ const Header = () => {
                 }
               }}>
                 <MenuItem icon={<BsMap />}>
-                  <Link to={`/discover`} className={active9 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
+                  <Link to={`/discover/course`} className={active9 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
                     if (active4 === false) {
                       setActive1(false);
                       setActive2(false);
@@ -990,7 +990,7 @@ const Header = () => {
                   </Link>
                 </MenuItem>
                 <MenuItem icon={<AiOutlineBook />}>
-                  <Link to={`/discover`} className={active10 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
+                  <Link to={`/discover/contest`} className={active10 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
                     if (active4 === false) {
                       setActive1(false);
                       setActive2(false);

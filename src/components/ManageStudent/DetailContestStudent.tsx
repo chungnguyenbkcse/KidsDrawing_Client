@@ -90,6 +90,18 @@ const DetailContestStudent: React.FC = () => {
         id = id_x;
     }
 
+    var id_k = localStorage.getItem('score_contest');
+    var score_contest: number = 0;
+    if (id_k !== null) {
+        score_contest = parseFloat(id_k);
+    }
+
+    var id_e = localStorage.getItem('feedback_contest');
+    var feedback_contest: string = "";
+    if (id_e !== null) {
+        feedback_contest = id_e;
+    }
+
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -148,33 +160,19 @@ const DetailContestStudent: React.FC = () => {
             </div> : <Fragment>
 
                 <div className="row">
-                    <div className="col-xl-12 col-lg-12">
-                        <div className="card shadow mb-4" id="topcard-user">
-                            <div className="card-header py-3">
-                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Cuộc thi</h6>
-                            </div>
-                            <div className="card-body">
-                                <p>
-                                    {contest_name}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xl-6 col-lg-6">
+                    <div className="col-xl-8 col-lg-8">
                         <div className="card-header py-3">
                             <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Bài làm của bé: {childs.student_name}</h6>
                         </div>
-                        <img className="card-img-top" src={submistions.image_url} alt="" />
+                        <img className="img-exercise" src={submistions.image_url} alt="" />
                     </div>
-                    <div className="col-xl-6 col-lg-6">
+                    <div className="col-xl-4 col-lg-4">
                         <div className="card shadow mb-4">
                             <div className="card-header py-3">
                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Điểm của bé</h6>
                             </div>
                             <div className="card-body">
-                                <CircularProgressbar value={childs.score * 10} text={`${childs.score}`} />;
+                                <CircularProgressbar value={score_contest * 10} text={`${score_contest}`} />;
                             </div>
                         </div>
                     </div>
@@ -186,7 +184,7 @@ const DetailContestStudent: React.FC = () => {
                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Nhận xét</h6>
                             </div>
                             <div className="card-body">
-                                {childs.feedback}
+                                {feedback_contest}
                             </div>
                         </div>
                     </div>

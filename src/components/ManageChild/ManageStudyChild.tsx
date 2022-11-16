@@ -95,7 +95,7 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
     const [element, setElement] = useState<IClassesStudent[]>([])
     useEffect(() => {
         let x = (classes_students.classes_done.length - classes_students.classes_done.length % 10) / 10;
-        if (x === 1) {
+        if (x === 0) {
             setElement(classes_students.classes_done)
         }
         else {
@@ -119,7 +119,7 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
     const [element1, setElement1] = useState<IContestTeacher[]>([])
     useEffect(() => {
         let x = (contest_teachers.contest_end.length - contest_teachers.contest_end.length % 10) / 10;
-        if (x === 1) {
+        if (x === 0) {
             setElement1(contest_teachers.contest_end)
         }
         else {

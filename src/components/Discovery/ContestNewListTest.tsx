@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 import { IContestParentNew } from "../../store/models/contest_parent_new.interface";
-import { IContestParentNewState, IStateType } from "../../store/models/root.interface";
+import { IArtAgeState, IArtTypeState, IContestParentNewState, IStateType } from "../../store/models/root.interface";
 import "./CourseNewTest.css"
 
 export type semesterListProps = {
@@ -13,6 +13,9 @@ export type semesterListProps = {
 
 function ContestNewListTest(props: semesterListProps): JSX.Element {
     const contest_parent_news: IContestParentNewState = useSelector((state: IStateType) => state.contest_parent_new);
+    const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
+    const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
+    
     const [totalPage, setTotalPage] = useState(0)
     const [element, setElement] = useState<IContestParentNew[]>([])
 
@@ -45,7 +48,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
 
     useEffect(() => {
         let x = (contest_parent_news.contests.length - contest_parent_news.contests.length % 10) /10;
-        if (x === 1) {
+        if (x === 0) {
             setElement(contest_parent_news.contests)
         }
         else {
@@ -67,17 +70,38 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
         }
     }
 
-    const [filter, setFilter] = useState("0")
+    const [filter, setFilter] = useState(1)
+    const [filter1, setFilter1] = useState(1)
 
 
     function handleChange(e: any) {
         setFilter(e.target.value)
     }
-    
-    function handleFilter() { 
+
+    function handleChange1(e: any) {
+        setFilter1(e.target.value)
     }
 
+
     console.log(element)
+
+    function handleFilter() {
+        console.log(filter)
+        console.log(filter1)
+        let k = contest_parent_news.contests.filter((ele, idx) => 
+        ele !== undefined && ele.art_type_id == filter && ele.art_age_id == filter1
+        )
+
+        let x = (k.length - (k.length) % 10) / 10;
+        if (x === 0) {
+            setElement(k)
+        }
+        else {
+            setElement(k.slice(0, 10))
+        }
+        setTotalPage((x + 1))
+    }
+
 
 
     return (
@@ -102,18 +126,26 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         value={filter}
                                         onChange={handleChange}
                                     >
-                                        <option value="">--Thể loại--</option>
-                                        <option value="0">Chì màu</option>
-                                        <option value="1">Sơn dầu</option>
+                                        {
+                                            art_types.artTypes.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele.id}>{ele.name}</option>
+                                                )
+                                            })
+                                        }
                                     </select>   
                                     <select name="cars" id="cars" className="pl-2"
-                                        value={filter}
-                                        onChange={handleChange}
+                                        value={filter1}
+                                        onChange={handleChange1}
                                     >
-                                        <option value="">--Độ tuổi--</option>
-                                        <option value="0">5-8 tuổi</option>
-                                        <option value="1">10-12 tuổi</option>
-                                    </select>                                
+                                        {
+                                            art_ages.artAges.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele.id}>{ele.name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>                              
                                     <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button" onClick={() => {handleFilter()}}>Lọc&nbsp;<i className="fa fa-flask"></i></button></div>
                             </div>
                         </div>
@@ -148,7 +180,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                                 <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div>{ele.total_register_contest}<span className="ml-3">
                                                     {
                                                         function () {
-                                                            if (filter === "2") {
+                                                            if (filter == 2) {
                                                                 if (ele.student_registered_id !== undefined && ele.student_registered_id !== null) {
                                                                     let xx = ""
                                                                     ele.student_registered_name.map((elex, idxx) => {
@@ -187,7 +219,9 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                             {
                                 Array.from(Array((totalPage)).keys()).map((ele, idx) => {
                                     return (
-                                        <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination(ele) }}>{ele + 1}</a></li>
+                                        <li className="page-item"><a className="page-link" href="/" onClick={(e) => { 
+                                        e.preventDefault()
+                                        handlePagination(ele) }}>{ele + 1}</a></li>
                                     )
                                 })
                             }

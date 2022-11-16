@@ -7,10 +7,13 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { getSemesterClassStudent } from "../../common/service/SemesterClassStudent/GetSemesterClassStudentNew";
-import SemesterClassListNew from "./SemesterClassListNew";
+import { getContestStudentByStudent } from "../../common/service/ContestStudent/GetContestStudent";
+import ContestNewListTest from "./ContestListNew";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 
-const SemesterClassStudentNew: React.FC = () => {
+const DiscoveryStudentContest: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     //const semester_classs: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -18,12 +21,6 @@ const SemesterClassStudentNew: React.FC = () => {
     var id: any = "";
     if (id_x !== null) {
         id = id_x;
-    }
-
-    var id_y = localStorage.getItem('course_id');
-    var course_id: number = 0;
-    if (id_y !== null) {
-        course_id = parseInt(id_y);
     }
 
     const { promiseInProgress } = usePromiseTracker();
@@ -51,19 +48,28 @@ const SemesterClassStudentNew: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getSemesterClassStudent(dispatch, id, course_id))
+                    trackPromise(getContestStudentByStudent(dispatch, id))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtAge(dispatch))
+                    trackPromise(getArtLevel(dispatch))
                 }
             }
             else {
-                trackPromise(getSemesterClassStudent(dispatch, id, course_id))
+                trackPromise(getContestStudentByStudent(dispatch, id))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtAge(dispatch))
+                trackPromise(getArtLevel(dispatch))
             }
         }
-    }, [dispatch, id, access_token, refresh_token, course_id]);
+
+    }, [dispatch, id, access_token, refresh_token]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp mở", ""));
-    }, [dispatch, path.area])
+        dispatch(updateCurrentPath("Khám phá", ""));
+    }, [path.area, dispatch])
 
+
+    const [checked, setChecked] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
 
     return (
@@ -99,13 +105,14 @@ const SemesterClassStudentNew: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className="row">
-                    <SemesterClassListNew value={searchTerm} />
+                    <ContestNewListTest value={searchTerm}/>
                 </div>
-        </Fragment>
-    )
 
 
+            </Fragment>
+    );
 };
 
-export default SemesterClassStudentNew;
+export default DiscoveryStudentContest;

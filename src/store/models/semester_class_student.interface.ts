@@ -4,6 +4,8 @@ export interface ISemesterClassStudent {
     course_name: string;
     course_id: number;
     semester_class_id: number;
+    start_date: string;
+    registration_expiration_time: string;
     description: string;
     max_participant: number;
     num_of_section: number;

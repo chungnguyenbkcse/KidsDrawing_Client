@@ -146,7 +146,7 @@ const ResultGradeContestTeacher: React.FC = () => {
                                         <div className="col-xl-12 col-md-12 mb-4">
                                             <div className={`card shadow h-100 py-2`} id="topcard-user">
                                                 <div className="card-body">
-                                                    <ScoreContestListStudent />
+                                                    <ScoreContestList />
                                                 </div>
                                             </div>
                                         </div>

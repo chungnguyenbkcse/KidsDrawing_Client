@@ -105,6 +105,7 @@ import ManageStudentEnd from "../components/ManageStudent/ManageStudentEnd";
 import DiscoveryParent from "../components/Discovery/Discovery";
 import DiscoveryParentContest from "../components/Discovery/DiscoveryContest";
 import RequestTeacher1 from "../components/RequestTeacher/RequestTeacher1";
+import DiscoveryStudentContest from "../components/DiscoveryStudent/Discovery1";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -237,12 +238,14 @@ const Routers: React.FC = () => {
                                 <Route path={`/exercise/score`}><DetailExerciseStudent /></Route>
                                 <Route path={`/classes/form-review`}><ReviewStart /></Route>
                                 <Route path={`/exercise/submit`}><FormSubmit /></Route>
-                                <Route path={`/discover`}><DiscoveryStudent /></Route>
+                                <Route path={`/discover/course`}><DiscoveryStudent /></Route>
+                                <Route path={`/discover/contest`}><DiscoveryStudentContest /></Route>
                                 <Route path={`/classes/exercise-student`}><ExerciseStudentList1 /></Route>
                                 <Route path={`/classes/review`}><ReivewClassDone /></Route>
                                 <Route path={`/classes/schedule`}><ScheduleClassStudent /></Route>
                                 <Route path={`/classes/detail-student`}><DetailClassStudent /></Route>
                                 <Route path={`/contests/register`}><ConestDetailStudent /></Route>
+                                <Route path={`/contest/detail`}><DetailContestStudent /></Route>
                                 <Route path={`/contests`}><ContestStudent /></Route>
                                 <Route path={`/classes`}><ClassStudent /></Route>
                                 <Route path={`/schedules`}><ScheduleStudent /></Route>

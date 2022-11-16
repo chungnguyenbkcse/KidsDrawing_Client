@@ -22,9 +22,11 @@ function ScoreContestListStudent(): JSX.Element {
     const history = useHistory();
 
 
-    const routeChange = (child_id: number) => {
+    const routeChange = (student: IUserGradeContestSubmission) => {
         localStorage.removeItem("child_id");
-        localStorage.setItem("child_id", child_id.toString())
+        localStorage.setItem("child_id", student.student_id.toString())
+        localStorage.setItem('score_contest', student.score.toString())
+        localStorage.setItem('feedback_contest', student.feedback.toString())
         let path = '/contest/detail';
         history.push(path);
     }
@@ -37,12 +39,12 @@ function ScoreContestListStudent(): JSX.Element {
     console.log(user_grade_contest_submissions.userGradeContestSubmissions)
 
 
-    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.map((student, idx) => {
+    const studentElements: (JSX.Element | null)[] = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => a.score - b.score).map((student, idx) => {
         if (!student) { return null; }
         else if (childs.includes(student)) {
             return (
                 <tr className="table-row"
-                    key={`student_${idx}`} onClick={() => {routeChange(student.student_id)}}>
+                    key={`student_${idx}`} onClick={() => {routeChange(student)}}>
                     <div className="col-xl-12 col-md-12 mb-4" >
                         <div className={`card shadow h-100 py-0 child-row`} id="topcard-user">
                             <div className="card-body">
@@ -63,7 +65,7 @@ function ScoreContestListStudent(): JSX.Element {
             )
         }
         return (<tr className={`table-row`}
-            key={`student_${idx}`} onClick={routeChange1}>
+            key={`student_${idx}`}>
             <div className="col-xl-12 col-md-12 mb-4" >
                 <div className={`card shadow h-100 py-0 content-student-teacher`} id="topcard-user">
                     <div className="card-body">

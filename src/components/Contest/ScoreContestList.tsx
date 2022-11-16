@@ -34,14 +34,11 @@ function ScoreContestList(): JSX.Element {
     }
 
 
-    const routeChange = (child_id: number) => {
+    const routeChange = (student: IUserGradeContestSubmission) => {
         localStorage.removeItem("child_id");
-        localStorage.setItem("child_id", child_id.toString())
-        let path = '/contest/detail';
-        history.push(path);
-    }
-
-    const routeChange1 = () => {
+        localStorage.setItem("child_id", student.student_id.toString())
+        localStorage.setItem('score_contest', student.score.toString())
+        localStorage.setItem('feedback_contest', student.feedback.toString())
         let path = '/contest/detail';
         history.push(path);
     }
@@ -54,7 +51,7 @@ function ScoreContestList(): JSX.Element {
         else if (childs.includes(student)) {
             return (
                 <tr className="table-row"
-                    key={`student_${idx}`} onClick={() => {routeChange(student.student_id)}}>
+                    key={`student_${idx}`} onClick={() => {routeChange(student)}}>
                     <div className="col-xl-12 col-md-12 mb-4" >
                         <div className={`card shadow h-100 py-0 child-row`}>
                             <div className="card-body">
@@ -101,7 +98,7 @@ function ScoreContestList(): JSX.Element {
         else if (student.student_id === id) {
             return (
                 <tr className="table-row"
-                    key={`student_${idx}`} onClick={() => {routeChange(student.student_id)}}>
+                    key={`student_${idx}`} onClick={() => {routeChange(student)}}>
                     <div className="col-xl-12 col-md-12 mb-4" >
                         <div className={`card shadow h-100 py-0 child-row`}>
                             <div className="card-body">
@@ -146,7 +143,7 @@ function ScoreContestList(): JSX.Element {
         if (!student) { return null; }
             return (
                 <tr className="table-row"
-                    key={`student_${idx}`} onClick={() => {routeChange(student.student_id)}}>
+                    key={`student_${idx}`} onClick={() => {routeChange(student)}}>
                     <div className="col-xl-12 col-md-12 mb-4" >
                         <div className={`card shadow h-100 py-0 element-row`}>
                             <div className="card-body">

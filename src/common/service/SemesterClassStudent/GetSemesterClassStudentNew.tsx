@@ -9,6 +9,8 @@ interface SemesterClassStudent {
     description: string;
     max_participant: number;
     num_of_section: number;
+    registration_expiration_time: string;
+    start_date: string;
     price: number;
     semester_name: string;
     semester_id: number;
@@ -63,6 +65,8 @@ export function getSemesterClassStudent(dispatch: any, student_id: number, cours
                         semester_name: ele.semester_name,
                         semester_class_id: ele.semster_class_id,
                         description: ele.description,
+                        registration_expiration_time: ele.registration_expiration_time,
+                        start_date: ele.start_date,
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,
                         price: ele.price,
@@ -73,13 +77,13 @@ export function getSemesterClassStudent(dispatch: any, student_id: number, cours
                         schedule: ele.schedule,
                         semester_id: ele.semester_id,
                         status: ele.status,
-                        registration_deadline: ele.registration_deadline
+                        registration_deadline: ele.registration_time
                     }
                     //console.log(strDate.substring(0, 16))
-                    if (ele.status === "Payed") {
+                    if (ele.status === "Registed") {
                         dispatch(addSemesterClassStudentPayed(val))
                     }
-                    else if (ele.status === "Not Payed") {
+                    else if (ele.status === "Not register") {
                         dispatch(addSemesterClassStudentNotPayed(val))
                     }
                     else {

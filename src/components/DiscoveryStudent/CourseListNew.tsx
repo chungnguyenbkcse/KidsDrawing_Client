@@ -2,25 +2,25 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
-import { ICourseParentNew } from "../../store/models/course_parent_new.interface";
-import { IArtAgeState, IArtLevelState, IArtTypeState, ICourseParentNewState, IStateType } from "../../store/models/root.interface";
-import "./CourseNewTest.css"
+import { ICourseNew } from "../../store/models/course_new.interface";
+import { IArtAgeState, IArtLevelState, IArtTypeState, ICourseNewState, IStateType } from "../../store/models/root.interface";
+import "./CourseListNew.css"
 
 export type semesterListProps = {
     value?: string;
     children?: React.ReactNode;
   };
 
-function CourseNewList(props: semesterListProps): JSX.Element {
-    const course_parent_news: ICourseParentNewState = useSelector((state: IStateType) => state.course_parent_news);
+function CourseListNew(props: semesterListProps): JSX.Element {
+    const course_news: ICourseNewState = useSelector((state: IStateType) => state.course_news);
     const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
     const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
     const art_levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
     
     const [totalPage, setTotalPage] = useState(0)
-    const [element, setElement] = useState<ICourseParentNew[]>([])
+    const [element, setElement] = useState<ICourseNew[]>([])
     const history = useHistory();
-    const routeChange = (course: ICourseParentNew) =>{ 
+    const routeChange = (course: ICourseNew) =>{ 
         localStorage.removeItem('course_id');
         localStorage.setItem('course_id', course.id.toString())
         let path = '/courses/semester-classes'; 
@@ -30,26 +30,26 @@ function CourseNewList(props: semesterListProps): JSX.Element {
     }
 
     useEffect(() => {
-        let x = (course_parent_news.courses.length - course_parent_news.courses.length % 10) /10;
+        let x = (course_news.course_news.length - course_news.course_news.length % 6) /6;
         if (x === 0) {
-            setElement(course_parent_news.courses)
+            setElement(course_news.course_news)
         }
         else {
-            setElement(course_parent_news.courses.slice(0,10))
+            setElement(course_news.course_news.slice(0,6))
         }
         
          setTotalPage((x+1))
-    }, [course_parent_news.courses])
+    }, [course_news.course_news])
 
     console.log((totalPage))
 
     function handlePagination(count: number) {
         console.log(count)
         if (count === totalPage) {
-            setElement(course_parent_news.courses.slice(count*10))
+            setElement(course_news.course_news.slice(count*6))
         }
         else {
-            setElement(course_parent_news.courses.slice(count*10,count*10 + 10))
+            setElement(course_news.course_news.slice(count*6,count*6 + 6))
         }
     }
 
@@ -76,16 +76,16 @@ function CourseNewList(props: semesterListProps): JSX.Element {
         console.log(filter)
         console.log(filter1)
         console.log(filter2)
-        let k = course_parent_news.courses.filter((ele, idx) => 
+        let k = course_news.course_news.filter((ele, idx) => 
         ele !== undefined && ele.art_type_id == filter && ele.art_age_id == filter1 && ele.art_level_id == filter2
         )
 
-        let x = (k.length - (k.length) % 10) / 10;
+        let x = (k.length - (k.length) % 6) / 6;
         if (x === 0) {
             setElement(k)
         }
         else {
-            setElement(k.slice(0, 10))
+            setElement(k.slice(0, 6))
         }
         setTotalPage((x + 1))
     }
@@ -183,21 +183,21 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                     <nav>
                         <ul className="pagination">
                         <li className="page-item">
-                            <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
+                            <a className="page-link" aria-label="Previous" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                             {
                                 Array.from(Array((totalPage)).keys()).map((ele, idx) => {
                                     return (
-                                        <li className="page-item"><a className="page-link" href="/" onClick={(e) => {
+                                        <li className="page-item"><a className="page-link" href="javascript:void(0);" onClick={(e) => {
                                             e.preventDefault()
                                             handlePagination(ele)}}>{ele+1}</a></li>
                                     )
                                 })
                             }
                             <li className="page-item">
-                                <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
+                                <a className="page-link" aria-label="Next" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -211,4 +211,4 @@ function CourseNewList(props: semesterListProps): JSX.Element {
     );
 }
 
-export default CourseNewList;
+export default CourseListNew;

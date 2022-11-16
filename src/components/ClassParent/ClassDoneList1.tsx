@@ -20,7 +20,7 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
     const [element, setElement] = useState<IClassesParent[]>([])
     useEffect(() => {
         let x = (classes_parents.classes_done.length - classes_parents.classes_done.length % 10) / 10;
-        if (x === 1) {
+        if (x === 0) {
             setElement(classes_parents.classes_done)
         }
         else {
@@ -68,7 +68,7 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
         )
 
         let x = (k.length - (k.length) % 10) / 10;
-        if (x === 1) {
+        if (x === 0) {
             setElement(k)
         }
         else {
@@ -161,7 +161,9 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
                             {
                                 Array.from(Array((totalPage)).keys()).map((ele, idx) => {
                                     return (
-                                        <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination(ele) }}>{ele + 1}</a></li>
+                                        <li className="page-item"><a className="page-link" href="/" onClick={(e) => { 
+                                        e.preventDefault()
+                                        handlePagination(ele) }}>{ele + 1}</a></li>
                                     )
                                 })
                             }

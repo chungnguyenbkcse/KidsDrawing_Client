@@ -45,7 +45,7 @@ function ContestStudentNotOpenNowList(props: lessonListProps): JSX.Element {
 
     useEffect(() => {
         let x = (contest_students.contest_not_open_now.length - contest_students.contest_not_open_now.length % 10) /10;
-        if (x === 1) {
+        if (x === 0) {
             setElement(contest_students.contest_not_open_now)
         }
         else {
@@ -176,7 +176,9 @@ function ContestStudentNotOpenNowList(props: lessonListProps): JSX.Element {
                             {
                                 Array.from(Array((totalPage)).keys()).map((ele, idx) => {
                                     return (
-                                        <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination(ele) }}>{ele + 1}</a></li>
+                                        <li className="page-item"><a className="page-link" href="/" onClick={(e) => { 
+                                            e.preventDefault()
+                                            handlePagination(ele) }}>{ele + 1}</a></li>
                                     )
                                 })
                             }

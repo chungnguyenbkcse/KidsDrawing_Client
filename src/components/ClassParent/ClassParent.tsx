@@ -13,6 +13,7 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import ClassDoingList1 from "./ClassDoingList1";
 import ClassDoneList1 from "./ClassDoneList1";
+import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 
 const ClassParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -51,13 +52,15 @@ const ClassParent: React.FC = () => {
                 }
                 else {
                     trackPromise(getClassesParent(dispatch, id))
+                    trackPromise(getStudentByParent(dispatch, id))
                 }
             }
             else {
-                trackPromise(getClassesParent(dispatch,id))
+                trackPromise(getClassesParent(dispatch, id))
+                trackPromise(getStudentByParent(dispatch, id))
             }
         }
-    }, [ dispatch, id, access_token, refresh_token]);
+    }, [dispatch, id, access_token, refresh_token]);
 
 
     useEffect(() => {
@@ -69,130 +72,135 @@ const ClassParent: React.FC = () => {
         dispatch(setModificationState(ClassesParentModificationStatus.None));
     }
 
+    const [searchTerm, setSearchTerm] = useState("");
+
     const [checked, setChecked] = useState(true);
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
-            {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+            <div className="row" id="search-box">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                        </div>
+                    </div>
+                </div>
+            </div> : <Fragment>
+                {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
+                {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-            <div className="row">
-                <TopCard title="KHÓA HỌC" text={`${numberClassDoingCount}`} icon="book" class="primary" />
-                <TopCard title="KHÓA HỌC ĐÃ HỌC" text={`${numberClassDoneCount}`} icon="book" class="primary" />
-                {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
+                <div className="row">
+                    <TopCard title="KHÓA HỌC" text={`${numberClassDoingCount}`} icon="book" class="primary" />
+                    <TopCard title="KHÓA HỌC ĐÃ HỌC" text={`${numberClassDoneCount}`} icon="book" class="primary" />
+                    {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(ClassesParentModificationStatus.Create))}>
                         <i className="fas fa fa-plus"></i>
                         Đăng kí trình độ
                     </button>
                 </div> */}
-            </div>
+                </div>
 
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
+                <div className="row" id="search-box">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="input-group" id="search-content">
+                            <div className="form-outline">
+                                <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                                    setSearchTerm(event.target.value)
+                                    console.log(searchTerm)
+                                }} />
+                            </div>
+                            <button type="button" className="btn btn-primary">
+                                <i className="fas fa-search"></i>
+                            </button>
                         </div>
-                        <button type="button" className="btn btn-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
                     </div>
                 </div>
-            </div>
 
-            <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked === false) {
-                            setChecked(true)
-                        }
-                    }} style={{
-                        color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Đang học</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
-                    }}></div>
+                <div className="row">
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                            if (checked === false) {
+                                setChecked(true)
+                            }
+                        }} style={{
+                            color: checked ? "#F24E1E" : "#2F4F4F"
+                        }}>Đang học</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked === true) {
+                                setChecked(false)
+                            }
+                        }}
+                            style={{
+                                color: checked ? "#2F4F4F" : "#F24E1E"
+                            }}>Đã học</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                        }}></div>
+                    </div>
                 </div>
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+
+
+                {
+                    function () {
                         if (checked === true) {
-                            setChecked(false)
+                            return (
+                                <Fragment>
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4" id="topcard-user">
+                                                <div className="card-header py-3">
+                                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
+                                                </div>
+                                                <div className="card-body">
+                                                    <ClassDoingList1
+                                                        onSelect={onClassesParentSelect} value={searchTerm}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Fragment>
+                            )
                         }
-                    }}
-                        style={{
-                            color: checked ? "#2F4F4F" : "#F24E1E"
-                        }}>Đã học</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
-                    }}></div>
-                </div>
-            </div>
-
-
-            {
-                function () {
-                    if (checked === true) {
-                        return (
-                            <Fragment>
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
-                                            </div>
-                                            <div className="card-body">
-                                                <ClassDoingList1
-                                                    onSelect={onClassesParentSelect}
-                                                />
+                        else {
+                            return (
+                                <Fragment>
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4" id="topcard-user">
+                                                <div className="card-header py-3">
+                                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
+                                                </div>
+                                                <div className="card-body">
+                                                    <ClassDoneList1
+                                                        onSelect={onClassesParentSelect} value={searchTerm}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Fragment>
-                        )
-                    }
-                    else {
-                        return (
-                            <Fragment>
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
-                                            </div>
-                                            <div className="card-body">
-                                                <ClassDoneList1
-                                                    onSelect={onClassesParentSelect}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Fragment>
-                        )
-                    }
-                }()
-            }
+                                </Fragment>
+                            )
+                        }
+                    }()
+                }
 
 
-        </Fragment>
+            </Fragment>
     );
 };
 

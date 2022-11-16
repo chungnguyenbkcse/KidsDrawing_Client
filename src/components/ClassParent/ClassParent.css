@@ -6,6 +6,10 @@
     color: #FFBF08 !important;
 }
 
+.courses-container {
+    width: 100%;
+}
+
 #topcard-teacher {
     background-color: #FFF8E5 !important;
 }

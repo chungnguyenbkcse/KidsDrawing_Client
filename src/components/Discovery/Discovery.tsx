@@ -9,6 +9,9 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getCourseParentNew } from "../../common/service/CourseParentNew/GetCourseParentNew";
 import CourseNewListTest from "./CourseNewListTest";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 
 const DiscoveryParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -46,10 +49,16 @@ const DiscoveryParent: React.FC = () => {
                 }
                 else {
                     trackPromise(getCourseParentNew(dispatch, id))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtAge(dispatch))
+                    trackPromise(getArtLevel(dispatch))
                 }
             }
             else {
                 trackPromise(getCourseParentNew(dispatch, id))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtAge(dispatch))
+                trackPromise(getArtLevel(dispatch))
             }
         }
 

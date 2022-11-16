@@ -9,6 +9,7 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getSemesterClassByParentCourse } from "../../common/service/SemesterClasssParent/GetSemesterClassByParentCourse";
 import SemesterClassNewList from "./SemesterClassNewList";
+import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 
 const SemesterClassParentNew: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -52,10 +53,12 @@ const SemesterClassParentNew: React.FC = () => {
                 }
                 else {
                     trackPromise(getSemesterClassByParentCourse(dispatch, id, course_id))
+                    trackPromise(getStudentByParent(dispatch, id))
                 }
             }
             else {
                 trackPromise(getSemesterClassByParentCourse(dispatch, id, course_id))
+                trackPromise(getStudentByParent(dispatch, id))
             }
         }
     }, [dispatch, id, access_token, refresh_token, course_id]);

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 import { ICourseParentNew } from "../../store/models/course_parent_new.interface";
-import { ICourseParentNewState, IStateType } from "../../store/models/root.interface";
+import { IArtAgeState, IArtLevelState, IArtTypeState, ICourseParentNewState, IStateType } from "../../store/models/root.interface";
 import "./CourseNewTest.css"
 
 export type semesterListProps = {
@@ -13,6 +13,10 @@ export type semesterListProps = {
 
 function CourseNewList(props: semesterListProps): JSX.Element {
     const course_parent_news: ICourseParentNewState = useSelector((state: IStateType) => state.course_parent_news);
+    const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
+    const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
+    const art_levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
+    
     const [totalPage, setTotalPage] = useState(0)
     const [element, setElement] = useState<ICourseParentNew[]>([])
     const history = useHistory();
@@ -49,14 +53,42 @@ function CourseNewList(props: semesterListProps): JSX.Element {
         }
     }
 
-    const [filter, setFilter] = useState("0")
+    const [filter, setFilter] = useState(1)
+    const [filter1, setFilter1] = useState(1)
+    const [filter2, setFilter2] = useState(1)
 
 
     function handleChange(e: any) {
         setFilter(e.target.value)
     }
 
+    function handleChange1(e: any) {
+        setFilter1(e.target.value)
+    }
+
+    function handleChange2(e: any) {
+        setFilter2(e.target.value)
+    }
+
     console.log(element)
+
+    function handleFilter() {
+        console.log(filter)
+        console.log(filter1)
+        console.log(filter2)
+        let k = course_parent_news.courses.filter((ele, idx) => 
+        ele !== undefined && ele.art_type_id == filter && ele.art_age_id == filter1 && ele.art_level_id == filter2
+        )
+
+        let x = (k.length - (k.length) % 10) / 10;
+        if (x === 1) {
+            setElement(k)
+        }
+        else {
+            setElement(k.slice(0, 10))
+        }
+        setTotalPage((x + 1))
+    }
 
 
     return (
@@ -81,27 +113,40 @@ function CourseNewList(props: semesterListProps): JSX.Element {
                                         value={filter}
                                         onChange={handleChange}
                                     >
-                                        <option value="">--Thể loại--</option>
-                                        <option value="0">Chì màu</option>
-                                        <option value="1">Sơn dầu</option>
+                                        {
+                                            art_types.artTypes.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele.id}>{ele.name}</option>
+                                                )
+                                            })
+                                        }
                                     </select>   
                                     <select name="cars" id="cars" className="pl-2"
-                                        value={filter}
-                                        onChange={handleChange}
+                                        value={filter1}
+                                        onChange={handleChange1}
                                     >
-                                        <option value="">--Độ tuổi--</option>
-                                        <option value="0">5-8 tuổi</option>
-                                        <option value="1">10-12 tuổi</option>
+                                        {
+                                            art_ages.artAges.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele.id}>{ele.name}</option>
+                                                )
+                                            })
+                                        }
                                     </select>
                                     <select name="cars" id="cars" className="pl-2"
-                                        value={filter}
-                                        onChange={handleChange}
+                                        value={filter2}
+                                        onChange={handleChange2}
                                     >
-                                        <option value="">--Cấp độ--</option>
-                                        <option value="0">Cơ bản</option>
-                                        <option value="1">Nâng cao</option>
+                                        {
+                                            art_levels.artLevels.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele.id}>{ele.name}</option>
+                                                )
+                                            })
+                                        }
                                     </select>                                 
-                                    <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button">Lọc&nbsp;<i className="fa fa-flask"></i></button></div>
+                                    <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button" onClick={() => handleFilter()}>Lọc&nbsp;<i className="fa fa-flask"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>

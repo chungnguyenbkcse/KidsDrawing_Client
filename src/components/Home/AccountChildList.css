@@ -182,4 +182,14 @@ html, body {
   font-size: 0.9em;
 }
 
+.card-cc {
+  background-color: #C3DFF9 !important;
+  border-radius: 50px !important;
+}
+
+.additional {
+  background-color: #C3DFF9 !important;
+  border-radius: 50px !important;
+}
+
 

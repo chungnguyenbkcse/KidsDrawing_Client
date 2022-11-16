@@ -7,6 +7,7 @@ import "./ClassStudentList.css"
 
 export type classTeacherListProps = {
   onSelect?: (classTeacher: IClassesStudent) => void;
+  value?: string;
   children?: React.ReactNode;
 };
 

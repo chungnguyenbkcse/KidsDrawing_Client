@@ -13,6 +13,8 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import ClassDoingList from "./ClassDoingList";
 import ClassDoneList from "./ClassDoneList";
+import ClassDoneList1 from "./ClassDoneList1";
+import ClassDoingList1 from "./ClassDoingList1";
 
 const ClassStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -69,6 +71,8 @@ const ClassStudent: React.FC = () => {
     }
 
     const [checked, setChecked] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+
     return (
         promiseInProgress ?
       <div className="row" id="search-box">
@@ -95,18 +99,21 @@ const ClassStudent: React.FC = () => {
                 </div> */}
             </div>
 
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
-                        </div>
-                        <button type="button" className="btn btn-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+<div className="row" id="search-box">
+<div className="col-xl-12 col-lg-12">
+    <div className="input-group" id="search-content">
+        <div className="form-outline">
+            <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                setSearchTerm(event.target.value)
+                console.log(searchTerm)
+            }} />
+        </div>
+        <button type="button" className="btn btn-primary">
+            <i className="fas fa-search"></i>
+        </button>
+    </div>
+</div>
+</div>
 
             <div className="row">
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
@@ -157,8 +164,8 @@ const ClassStudent: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách khóa học</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ClassDoingList
-                                                    onSelect={onClassesStudentSelect}
+                                                <ClassDoingList1
+                                                    onSelect={onClassesStudentSelect} value={searchTerm}
                                                 />
                                             </div>
                                         </div>
@@ -177,8 +184,8 @@ const ClassStudent: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách khóa học</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ClassDoneList
-                                                    onSelect={onClassesStudentSelect}
+                                                <ClassDoneList1
+                                                    onSelect={onClassesStudentSelect} value={searchTerm}
                                                 />
                                             </div>
                                         </div>

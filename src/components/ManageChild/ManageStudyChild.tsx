@@ -10,7 +10,7 @@ import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { IClassesStudent } from "../../store/models/classes_student.interface";
 import { IContestStudent } from "../../store/models/contest_student.interface";
 import { IContestTeacher } from "../../store/models/contest_teacher.interface";
-import { IClassesStudentState, IContestTeacherState, IStateType, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IClassesStudentState, IContestTeacherState, IFinalScoreChildState, IStateType, IUserGradeContestSubmissionState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 
 export type classTeacherListProps = {
     onSelect?: (classTeacher: IClassesStudent) => void;
@@ -25,10 +25,11 @@ type Options = {
 function ManageStudyChild(props: classTeacherListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const [checked, setChecked] = useState<Boolean>(true);
-    const users: IUserState = useSelector((state: IStateType) => state.users);
-    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    
     const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
     const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
+    const user_grade_contest_submisson: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
+    const final_score_childs: IFinalScoreChildState = useSelector((state: IStateType) => state.final_score_childs);
 
     var id_x = localStorage.getItem('student_id');
     var student_id: number = 0;
@@ -36,7 +37,7 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
         student_id = parseInt(id_x);
     }
 
-    const [value, setValue] = useState<number>(0);
+    const [value, setValue] = useState<number>(1);
     const [value1, setValue1] = useState<number>(0);
     console.log(checked)
     console.log(value)
@@ -67,25 +68,28 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
         setValue(model.value);
     }
 
-    function hasFormValueChangedNotFiled1(model: OnChangeModelNotFiled): void {
-        setValue1(model.value);
-        console.log(model.value)
-        console.log(student_id);
-        getUserGradeExerciseByStudentAndClass(dispatch, model.value, student_id)
-    }
-
-    let list_score_user_grade_exercise: number[] = [];
-    let list_name_user_grade_exercise: string[] = [];
-    user_grade_exercise_submission.user_grade_exercise_submissions.map((ele, idx) => {
+    let list_score_final: number[] = [];
+    let list_name_final: string[] = [];
+    final_score_childs.final_score_childs.map((ele, idx) => {
         if (ele !== undefined && ele !== null ){
-            list_score_user_grade_exercise.push(ele.score)
-            list_name_user_grade_exercise.push(ele.exercise_name)
+            list_score_final.push(ele.final_score * 10)
+            list_name_final.push(ele.course_name)
             return ele
         }
         return null
     })
 
-    console.log(user_grade_exercise_submission.user_grade_exercise_submissions)
+    let list_score_user_grade_contest: number[] = [];
+    let list_name_user_grade_contest: string[] = [];
+    console.log(user_grade_contest_submisson.userGradeContestSubmissions)
+    user_grade_contest_submisson.userGradeContestSubmissions.map((ele, idx) => {
+        if (ele !== undefined && ele !== null ){
+            list_score_user_grade_contest.push(ele.score)
+            list_name_user_grade_contest.push(ele.contest_name)
+            return ele
+        }
+        return null
+    })
 
     const [totalPage, setTotalPage] = useState(0)
     const [element, setElement] = useState<IClassesStudent[]>([])
@@ -160,18 +164,35 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
     }
 
 
-    const labels = list_name_user_grade_exercise;
+    const labels = list_name_final;
     const datax = {
-        labels,
+        labels: labels,
         datasets: [
             {
-                label: 'Điểm kiểm tra',
-                data: list_score_user_grade_exercise,
+                label: 'Điểm tổng kết các khóa',
+                data: list_score_final,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }
         ],
     };
+
+    const labels_c = list_name_user_grade_contest;
+    const datax_c = {
+        labels: labels_c,
+        datasets: [
+            {
+                label: 'Điểm thi',
+                data: list_score_user_grade_contest,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ],
+    };
+
+    console.log(datax_c)
+
+    console.log(list_score_user_grade_contest)
 
     function onChangeRoute2() {
         let path = '/class/exercise-student';
@@ -188,7 +209,7 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
         <Fragment>
             <div className="row">
                 <div className="col-xl-12 col-md-12 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Thông tin của bé</h3>
+                    <h3 className=" mb-2" id="level-teacher">Thống kê học tập của bé</h3>
                     <div className="col-xl-12 col-md-12 mb-4">
                         <div className={`card shadow h-100 py-2`} id="infor-student">
                             <div className="card-body">
@@ -208,79 +229,19 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
                                         />
                                     </div>
                                 </div>
-                                <div className="row tabbar-x" >
-                                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                                        <IoMdAnalytics style={{
-                                            color: checked ? "#F24E1E" : "#2F4F4F"
-                                        }} />
-                                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                                            if (checked === false) {
-                                                setChecked(true)
-                                            }
-                                        }} style={{
-                                            color: checked ? "#F24E1E" : "#2F4F4F"
-                                        }}>Thống kê</h6>
-                                        <div style={{
-                                            height: "5px",
-                                            textAlign: "center",
-                                            margin: "auto",
-                                            width: "30%",
-                                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
-                                        }}></div>
-                                    </div>
-                                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                                        <FaHistory style={{
-                                            color: !checked ? "#F24E1E" : "#2F4F4F"
-                                        }} />
-                                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                                            if (checked === true) {
-                                                setChecked(false)
-                                            }
-                                        }}
-                                            style={{
-                                                color: checked ? "#2F4F4F" : "#F24E1E"
-                                            }}>Lịch sử</h6>
-                                        <div style={{
-                                            height: "5px",
-                                            textAlign: "center",
-                                            margin: "auto",
-                                            width: "30%",
-                                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
-                                        }}></div>
-                                    </div>
-                                </div>
+                                
                                 {
                                     function () {
                                         console.log(checked)
                                         console.log(typeof (value))
-                                        if (checked === true && value.toString() === "1") {
+                                        if (value.toString() === "1") {
                                             return (
                                                 <>
-                                                    <div className="row">
-                                                        <SelectKeyValueNotField
-                                                            value={value1}
-                                                            id="input_classes"
-                                                            onChange={hasFormValueChangedNotFiled1}
-                                                            required={true}
-                                                            label=""
-                                                            options={listClasses}
-                                                        />
-                                                    </div>
                                                     <div className="row">
                                                         <div className="col-xl-12 col-lg-12">
                                                             <div className="card mb-4">
                                                                 <div className="card-body chart-line">
                                                                     <ChartLine data={datax} />
-                                                                </div>
-                                                                <div className="row justify-content-center chart-line">
-                                                                    <button
-                                                                        className="btn btn-success btn-green"
-                                                                        id="btn-into-class-student"
-                                                                        onClick={() => { onChangeRoute2() }}
-                                                                    >
-                                                                        Xem chi tiết
-                                                                        <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
-                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -289,13 +250,13 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
                                             )
                                         }
 
-                                        else if (checked === true && value.toString() === "2") {
+                                        else if (value.toString() === "2") {
                                             return (
                                                 <div className="row">
                                                     <div className="col-xl-12 col-lg-12">
                                                         <div className="card mb-4">
                                                             <div className="card-body chart-line">
-                                                                <ChartLine data={datax} />
+                                                                <ChartLine data={datax_c} />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -303,147 +264,9 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
                                             )
                                         }
 
-                                        else if (checked === false && value.toString() === "1") {
-                                            return element.map((contest, index) => {
-                                                if (index === element.length - 1) {
-                                                    return (
-                                                        <>
-                                                            <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
-                                                                <div className="course">
-                                                                    <div className="course-preview">
-                                                                        <h6>Khóa học</h6>
-                                                                        <h5>{contest.course_name}</h5>
-                                                                        <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
-                                                                    </div>
-                                                                    <div className="course-info">
-                                                                        <h3>{contest.student_name}</h3>
-                                                                        <h6>Giáo viên: {contest.teacher_name}</h6>
-                                                                        <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="d-flex justify-content-end text-right mt-2">
-                                                                <nav>
-                                                                    <ul className="pagination">
-                                                                        <li className="page-item">
-                                                                            <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
-                                                                                <span aria-hidden="true">&laquo;</span>
-                                                                            </a>
-                                                                        </li>
-                                                                        {
-                                                                            Array.from(Array((totalPage)).keys()).map((ele, idx) => {
-                                                                                return (
-                                                                                    <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination(ele) }}>{ele + 1}</a></li>
-                                                                                )
-                                                                            })
-                                                                        }
-                                                                        <li className="page-item">
-                                                                            <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
-                                                                                <span aria-hidden="true">&raquo;</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                        </>
-                                                    )
-                                                }
-                                                return (
-                                                    <>
-                                                        <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
-                                                            <div className="course">
-                                                                <div className="course-preview">
-                                                                    <h6>Khóa học</h6>
-                                                                    <h5>{contest.course_name}</h5>
-                                                                    <a href="/#">Xem toàn bộ buổi <i className="fas fa-chevron-right"></i></a>
-                                                                </div>
-                                                                <div className="course-info">
-                                                                    <h3>{contest.student_name}</h3>
-                                                                    <h6>Giáo viên: {contest.teacher_name}</h6>
-                                                                    <button className="btn-x" onClick={() => { routeChange(contest) }}>Chi tiết</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                )
-                                            })
-                                        }
+                                        
 
-
-                                        if (checked === false && value.toString() === "2") {
-                                            return element1.map((contest, index) => {
-                                                if (index === element1.length - 1) {
-                                                    return (
-                                                        <>
-                                                            <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
-                                                                <div className="course">
-                                                                    <div className="course-preview">
-                                                                        <h6>Cuộc thi</h6>
-                                                                        <h5>{contest.name}</h5>
-                                                                        <a href="/#">Xem miêu tả <i className="fas fa-chevron-right"></i></a>
-                                                                    </div>
-                                                                    <div className="course-info">
-                                                                        <h6 className="pd-2">Thể loại: {contest.art_type_name}</h6>
-                                                                        <h6 className="pd-2">Độ tuổi: {contest.art_age_name}</h6>
-                                                                        <h6 className="pd-2">Thời gian: {contest.start_time.replaceAll("T", " ")} đến {contest.end_time.replaceAll("T", " ")}</h6>
-                                                                        <h6 className="pd-2">Số học sinh tham gia: {contest.total_register_contest}</h6>
-                                                                        <h6 className="pd-2">Số bài nộp: {contest.total_contest_submission}</h6>
-                                                                        <h6>Số bài đã chấm: {contest.total_contest_submission_graded}</h6>
-                                                                        <button className="btn-x" onClick={() => { routeChange1(contest) }}>Kết quả</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="d-flex justify-content-end text-right mt-2">
-                                                                <nav>
-                                                                    <ul className="pagination">
-                                                                        <li className="page-item">
-                                                                            <a className="page-link" aria-label="Previous" href="/" onClick={(e) => e.preventDefault()}>
-                                                                                <span aria-hidden="true">&laquo;</span>
-                                                                            </a>
-                                                                        </li>
-                                                                        {
-                                                                            Array.from(Array((totalPage1)).keys()).map((ele, idx) => {
-                                                                                return (
-                                                                                    <li className="page-item"><a className="page-link" href="/" onClick={() => { handlePagination1(ele) }}>{ele + 1}</a></li>
-                                                                                )
-                                                                            })
-                                                                        }
-                                                                        <li className="page-item">
-                                                                            <a className="page-link" aria-label="Next" href="/" onClick={(e) => e.preventDefault()}>
-                                                                                <span aria-hidden="true">&raquo;</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-                                                            </div>
-                                                        </>
-                                                    )
-                                                }
-                                                return (
-                                                    <>
-                                                        <div className="courses-container courses-container-xx" key={`lesson_${contest.id}`}>
-                                                            <div className="course">
-                                                                <div className="course-preview">
-                                                                    <h6>Cuộc thi</h6>
-                                                                    <h5>{contest.name}</h5>
-                                                                    <a href="/#">Xem miêu tả <i className="fas fa-chevron-right"></i></a>
-                                                                </div>
-                                                                <div className="course-info">
-                                                                    <h6 className="pd-2">Thể loại: {contest.art_type_name}</h6>
-                                                                    <h6 className="pd-2">Độ tuổi: {contest.art_age_name}</h6>
-                                                                    <h6 className="pd-2">Thời gian: {contest.start_time.replaceAll("T", " ")} đến {contest.end_time.replaceAll("T", " ")}</h6>
-                                                                    <h6 className="pd-2">Số học sinh tham gia: {contest.total_register_contest}</h6>
-                                                                    <h6 className="pd-2">Số bài nộp: {contest.total_contest_submission}</h6>
-                                                                    <h6 className="pd-2">Số bài đã chấm: {contest.total_contest_submission_graded}</h6>
-                                                                    <button className="btn-x" onClick={() => { routeChange1(contest) }}>Kết quả</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                )
-                                            })
-
-                                        }
+                                        
                                     }()
                                 }
                             </div>

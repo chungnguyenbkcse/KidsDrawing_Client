@@ -66,6 +66,7 @@ import { CourseTeacherNewModificationStatus, ICourseTeacherNew } from "./course_
 import { ISemesterClassTeacher, SemesterClassTeacherModificationStatus } from "./semester_class_teacher.interface";
 import { ContestSubmissionTeacherModificationStatus, IContestSubmissionTeacher } from "./contest_submission_teacher.interface";
 import { ChildModificationStatus, IChild } from "./child.interface";
+import { FinalScoreChildModificationStatus, IFinalScoreChild } from "./final_score_child.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -145,6 +146,7 @@ export interface IStateType {
     semester_class_teachers: ISemesterClassTeacherState;
     contest_submission_teacher: IContestSubmissionTeacherState;
     childs: IChildState;
+    final_score_childs: IFinalScoreChildState;
 }
 
 export interface IProductState {
@@ -310,6 +312,12 @@ export interface IChildState {
     selectedChild: IChild | null;
     modificationState: ChildModificationStatus;
     childs: IChild[];
+}
+
+export interface IFinalScoreChildState {
+    selectedFinalScoreChild: IFinalScoreChild | null;
+    modificationState: FinalScoreChildModificationStatus;
+    final_score_childs: IFinalScoreChild[];
 }
 
 export interface ISemesterClassTeacherState {

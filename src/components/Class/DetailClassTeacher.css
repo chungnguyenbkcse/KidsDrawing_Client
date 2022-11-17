@@ -18,14 +18,53 @@
     background: #21FC36 !important;
 }
 
+.pre_active_now {
+    background: #1aaef3 !important;
+}
+
 .not_active_now {
     background: #B7BBBC !important;
 }
 
+.img-exam {
+    width: 100%;
+    height: 100%;
+}
+
+.section_number {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+
+    color: #FC9011;
+}
+
+.row-section-1 {
+    background: #21FC36 !important;
+    border-radius: 20px;
+}
+
+.section_name {
+    font-style: normal;
+    font-weight: 200;
+    font-size: 10px;
+    line-height: 15px;
+    /* identical to box height */
+
+    display: flex;
+    color: #B51CEB !important;
+
+}
+
 #topcard-user {
-    background: #1FFCEF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: #ffffff !important;
     border-radius: 30px;
+    border-color: #ffffff;
 }
 
 #content {
@@ -92,12 +131,37 @@
 }
 
 .row-section {
+    background: #CCEBF4;
     border-radius: 20px;
+}
+
+.not_active {
+    background: #CCEBF4 !important;
+}
+
+.active_now {
+    background: #21FC36 !important;
+}
+
+.not_active_now {
+    background: #B7BBBC !important;
 }
 
 .row-off-section {
     background: #C2EB80;
     border-radius: 20px;
+}
+
+.row-section {
+    border-radius: 20px;
+}
+
+.avatar-x {
+    margin-top: -5px !important;
+}
+
+.icon-user-xx {
+    padding-right: 20px !important;
 }
 
 .row-off-section-2 {
@@ -106,8 +170,19 @@
 }
 
 .image-section {
-    height: auto;
-    width: 50% !important;
+    height: 100%;
+    width: 60% !important;
+}
+
+.image-section-1 {
+    height: 100%;
+    width: 80% !important;
+}
+
+.popup-content {
+    background: #ffffff !important;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
 }
 
 .table-section {

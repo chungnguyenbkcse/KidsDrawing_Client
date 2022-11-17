@@ -56,7 +56,7 @@ function UserRegisterTutorialEditRequestList(props: studentListProps): JSX.Eleme
             <th scope="col">Buổi</th>
             <th scope="col">Giáo viên</th>
             <th scope="col">Thời gian</th>
-            <th scope="col">Hành động</th>
+            <th scope="col">Làm giáo trình chung</th>
             <th scope="col"></th>
           </tr>
         </thead>

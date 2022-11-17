@@ -554,7 +554,7 @@ const DetailClassStudent: React.FC = () => {
                                                                             </div>
                                                                             <div className="row">
                                                                                 <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Thời gian buổi học: </p>
+                                                                                    <p className=" mb-2 section_number">Thời lượng: </p>
                                                                                 </div>
                                                                                 <div className="col-xl-9 col-md-9">
                                                                                     <p className=" mb-2 section_number"><span className="section_name">{total_time}</span> </p>
@@ -606,10 +606,10 @@ const DetailClassStudent: React.FC = () => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1(ele) }}>
-                                                                        <div className="col-xl-4 col-md-4">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
-                                                                        </div>
-                                                                        <div className="col-xl-8 col-md-8 mb-2">
+                                                                    <div className="col-xl-4 col-md-4 avatar-x">
+                                                                        <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                    </div>
+                                                                        <div className="col-xl-8 col-md-8 mb-4">
                                                                             <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
                                                                             <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
                                                                             <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>

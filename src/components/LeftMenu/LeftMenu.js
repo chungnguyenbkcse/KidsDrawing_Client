@@ -658,8 +658,8 @@ const Header = () => {
                     </Link>
                   </MenuItem>
                 </SubMenu>
-                <MenuItem active={active5} icon={<MdSchool />}>
-                  <Link to={`/schedule-teacher`} className={active5 ? "link-active" : "not-active"} onClick={() => {
+                <MenuItem active={active6} icon={<MdSchool />}>
+                  <Link to={`/schedule-teacher`} className={active6 ? "link-active" : "not-active"} onClick={() => {
                     if (active6 === false) {
                       setActive1(false);
                       setActive2(false);

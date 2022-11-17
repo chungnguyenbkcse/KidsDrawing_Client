@@ -126,6 +126,7 @@ const Routers: React.FC = () => {
                             <Switch>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>
+                                <Route path={`/class/schedule`}><ScheduleClass /></Route>
                                 <Route path={`/attendance`}><Attendance /></Route>
                                 <Route path={`/student-leave/detail`}><StudentLeaveDetail /></Route>
                                 <Route path={`/teacher-level/detail`}><TeacherLevelDetail /></Route>                              

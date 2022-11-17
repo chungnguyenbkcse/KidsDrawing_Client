@@ -6,11 +6,11 @@ import "./RequestTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import StudentLeaveList from "./StudentLeaveList";
 import { getStudentLeaveByTeacher } from "../../common/service/StudentLeave/GetStudentLeaveByTeacher";
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import StudentLeaveList from "./StudentLeaveList1";
 
 const RequestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();

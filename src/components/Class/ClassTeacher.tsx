@@ -17,6 +17,8 @@ import { getSemester } from "../../common/service/semester/GetSemester";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import ClassDoingList1 from "./ClassTeachingTeacherList1";
+import ClassTeacherDoingList from "./ClassTeacherDoingList";
+import ClassTeacherEndList from "./ClassTeacherEndList";
 
 const ClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -105,19 +107,6 @@ const ClassTeacher: React.FC = () => {
                 </div> */}
             </div>
 
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <input type="search" id="form1" className="form-control" placeholder="Tìm kiếm" />
-                        </div>
-                        <button type="button" className="btn btn-primary">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
             <div className="row">
                 <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
@@ -167,7 +156,7 @@ const ClassTeacher: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ClassDoingList
+                                                <ClassTeacherDoingList
                                                     onSelect={onClassTeacherSelect}
                                                 />
                                             </div>
@@ -187,7 +176,7 @@ const ClassTeacher: React.FC = () => {
                                                 <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
                                             </div>
                                             <div className="card-body">
-                                                <ClassDoingList1
+                                                <ClassTeacherEndList
                                                     onSelect={onClassTeacherSelect}
                                                 />
                                             </div>

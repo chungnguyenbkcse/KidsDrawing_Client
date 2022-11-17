@@ -6,11 +6,11 @@ import "./RequestTeacher.css"
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import TeacherLeaveList from "./TeacherLeaveList";
 import { getTeacherLeaveByTeacher } from "../../common/service/TeacherLeave/GetTeacherLeaveByTeacher";
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import TeacherLeaveList from "./TeacherLeaveList1";
 
 const RequestTeacher1: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -82,7 +82,6 @@ const RequestTeacher1: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
                 <ToastContainer />
                 <div className="row">
-                    <TopCard title="SỐ YÊU CẦU NGHỈ HỌC" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
                     <TopCard title="SỐ YÊU CẦU DẠY THAY" text={`${numberTeacherNotRegisterCount}`} icon="book" class="primary" />
                     {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>

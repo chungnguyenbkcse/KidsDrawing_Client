@@ -32,16 +32,12 @@ export function postStudentLeave(data: any, idx: any) {
                     }
                 }
                 else {
-                    return response.json()
+                    return response
                 }
             })
             .then (val => {
                 console.log(val)
-                dispatch(postNotifyDb({
-                    name: `Gửi yêu cầu nghỉ học buổi học ${val.section_number} lớp ${val.class_name}!`,
-                    description: `Bạn đã gửi yêu cầu nghỉ học buổi học ${val.section_number} lớp ${val.class_name}!`
-                }, 0))
-                getStudentLeave()
+                dispatch(getStudentLeave())
                 toast.update(idx, { render: "Yêu cầu nghỉ học đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {

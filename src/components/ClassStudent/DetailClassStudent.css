@@ -18,6 +18,10 @@
     background: #21FC36 !important;
 }
 
+.pre_active_now {
+    background: #1aaef3 !important;
+}
+
 .not_active_now {
     background: #B7BBBC !important;
 }

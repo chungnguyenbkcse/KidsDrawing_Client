@@ -165,7 +165,7 @@ const ViewExerciseSubmission: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Nộp bài</h6>
                         </div>
                         <div className="card-body">
-                            <div className="row">
+                            <div className="row ml-4">
                                 <form onSubmit={saveUser}>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
@@ -190,7 +190,9 @@ const ViewExerciseSubmission: React.FC = () => {
                     <div className="card-header py-3">
                         <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Bài làm của bé</h6>
                     </div>
-                    <img className="card-img-top" src={exercise_submissions.exercise_not_gradeds.length > 0 ? exercise_submissions.exercise_not_gradeds[0].image_url : ""} alt="" />
+                    <div className="card-body">
+                        <img className="exercise-submission-img" src={exercise_submissions.exercise_not_gradeds.length > 0 ? exercise_submissions.exercise_not_gradeds[0].image_url : ""} alt="" />
+                    </div>
                 </div>
             </div>
 

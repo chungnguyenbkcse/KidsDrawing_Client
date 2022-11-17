@@ -72,6 +72,9 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
     <Fragment>
         {
             classes_students.classes_doing.map((contest, index) => {
+                if (contest === null || contest === undefined){
+                    return null
+                }
                 return (
                     <>
                         <div className="courses-container" key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>

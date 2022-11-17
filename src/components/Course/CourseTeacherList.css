@@ -1,0 +1,29 @@
+body {
+    background: #eee;
+  }
+
+  .product-x, .product-x div {
+    cursor: pointer;
+  }
+
+  #cars {
+    margin-left: 5px !important;
+  }
+
+  .schedule-x {
+    white-space: pre-line !important;
+  }
+  
+  .filter {
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  } 
+  
+  .profiles img {
+    margin-right: -6px;
+  }
+  
+  .col-md-4 {
+    margin-top: 26px;
+  }

@@ -550,18 +550,8 @@ const Header = () => {
                     Trình độ
                   </Link>
                 </MenuItem>
-                <SubMenu active={active3} icon={<RiCompassDiscoverFill />} title="Khám phá" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
-                  if (active3 === false) {
-                    setActive1(false);
-                    setActive2(false);
-                    setActive3(true);
-                    setActive4(false);
-                    setActive5(false);
-                    setActive6(false);
-                  }
-                }}>
-                  <MenuItem icon={<BsMap />}>
-                    <Link to={`/courses`} className={active7 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
+                <MenuItem active={active3} icon={<RiCompassDiscoverFill />}>
+                  <Link to={`/courses`} className={active3 ? "link-active" : "not-active"} onClick={() => {
                       if (active3 === false) {
                         setActive1(false);
                         setActive2(false);
@@ -570,33 +560,10 @@ const Header = () => {
                         setActive5(false);
                         setActive6(false);
                       }
-                      if (active7 === false) {
-                        setActive7(true);
-                        setActive8(false);
-                      }
                     }}>
-                      <span> Khóa học</span>
-                    </Link>
-                  </MenuItem>
-                  <MenuItem icon={<AiOutlineBook />}>
-                    <Link to={`/courses`} className={active8 ? "nav-link link-active" : "nav-link link-not-active"} onClick={() => {
-                      if (active3 === false) {
-                        setActive1(false);
-                        setActive2(false);
-                        setActive3(true);
-                        setActive4(false);
-                        setActive5(false);
-                        setActive6(false);
-                      }
-                      if (active8 === false) {
-                        setActive7(false);
-                        setActive8(true);
-                      }
-                    }}>
-                      <span> Cuộc thi</span>
-                    </Link>
-                  </MenuItem>
-                </SubMenu>
+                      Khám phá
+                  </Link>
+                </MenuItem>
                 <SubMenu active={active4} icon={<SiGoogletagmanager />} title="Quản lý" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
                   if (active4 === false) {
                     setActive1(false);

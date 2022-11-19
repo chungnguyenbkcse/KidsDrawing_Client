@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, ITeacherLeaveState, IUserState, ISectionState } from "../../store/models/root.interface";
+import { IStateType, ITeacherLeaveState, IUserState, ISectionState, IAnonymousNotificationState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import TextInput from "../../common/components/TextInput";
 import { addLeaves } from "../../store/actions/teacher_leave.action";
@@ -9,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { IUser } from "../../store/models/user.interface";
 import { ITeacherLeave, TeacherLeaveModificationStatus } from "../../store/models/teacher_leave.interface";
 import { postTeacherLeave } from "../../common/service/TeacherLeave/PostTeacherLeave";
+import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -26,10 +27,55 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherleaves: ITeacherLeaveState | null = useSelector((state: IStateType) => state.teacher_leaves);
     let teacher_leave: ITeacherLeave | null = teacherleaves.selectedTeacherLeave;
-    const isCreate: boolean = (teacherleaves.modificationState === TeacherLeaveModificationStatus.Create);
+    const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
+    const isCreate: boolean = (anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create);
     
-    if (!teacher_leave || isCreate){
+    var id_y = localStorage.getItem('class_id');
+    let class_id = 0;
+    if (id_y !== null) {
+        class_id = parseInt(id_y);
+    }
+
+    var id_x = localStorage.getItem('id');
+    var teacher_id: number = 0;
+    if (id_x !== null) {
+        teacher_id = parseInt(id_x);
+    }
+
+    var id_z = localStorage.getItem('section_id');
+    var section_id: number = 0;
+    if (id_z !== null) {
+        section_id = parseInt(id_z);
+    }
+
+    var id_k = localStorage.getItem('section_number');
+    var section_number: number = 0;
+    if (id_k !== null) {
+        section_number = parseInt(id_k);
+    }
+
+    var id_h = localStorage.getItem('substitute_teacher_id');
+    var substitute_teacher_id: number = 0;
+    if (id_h !== null) {
+        substitute_teacher_id = parseInt(id_h);
+    }
+
+    var id_k = localStorage.getItem('teacher_leave_id');
+    var teacher_leave_id: number = 0;
+    if (id_k !== null) {
+        teacher_leave_id = parseInt(id_k);
+    }
+
+    var id_t = localStorage.getItem('description');
+    var description = "";
+    if (id_t !== null) {
+        description = id_t;
+    }
+    
+    if (isCreate){
         teacher_leave = { id: 0, section_id: 0, class_id: 0, section_number: 0, teacher_id: 0, substitute_teacher_id: 0, description: "", section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
+    }else {
+        teacher_leave = { id: teacher_leave_id, section_id: section_id, class_id: class_id, section_number: section_number, teacher_id: teacher_id, substitute_teacher_id: substitute_teacher_id, description: description, section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
     }
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listTeacher: IUser[] = users.teachers
@@ -46,18 +92,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         let item: Option1 = { "name": ele.name, "value": ele.id }
         return listSections.push(item)
     })
-
-    var id_y = localStorage.getItem('class_id');
-    let class_id = 0;
-    if (id_y !== null) {
-        class_id = parseInt(id_y);
-    }
-
-    var id_x = localStorage.getItem('id');
-    var teacher_id: number = 0;
-    if (id_x !== null) {
-        teacher_id = parseInt(id_x);
-    }
 
 
     const [formState, setFormState] = useState({

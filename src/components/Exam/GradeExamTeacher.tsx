@@ -189,7 +189,7 @@ const GradeExamTeacher: React.FC = () => {
                                                     <p id="username-teacher">Tên học sinh: {student_name}</p>
                                                 </div>
                                                 <div className="row no-gutters justify-content-left">
-                                                    <p id="username-teacher">Thời gian nộp: {time_submit}</p>
+                                                    <p id="username-teacher">Thời gian nộp: {time_submit.replaceAll("T", " ")}</p>
                                                 </div>
                                             </div>
                                         )
@@ -204,7 +204,7 @@ const GradeExamTeacher: React.FC = () => {
                                                         <p id="username-teacher">Tên học sinh: {exercise_submissions.exercise_not_gradeds[0].student_name}</p>
                                                     </div>
                                                     <div className="row no-gutters justify-content-left">
-                                                        <p id="username-teacher">Thời gian nộp: {exercise_submissions.exercise_not_gradeds[0].update_time}</p>
+                                                        <p id="username-teacher">Thời gian nộp: {exercise_submissions.exercise_not_gradeds[0].update_time.replaceAll("T", " ")}</p>
                                                     </div>
                                                 </div>
                                             )

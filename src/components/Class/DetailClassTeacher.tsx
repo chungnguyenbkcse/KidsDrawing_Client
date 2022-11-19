@@ -19,6 +19,8 @@ import { ISection } from "../../store/models/section.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
+import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
+import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
 
 
 const DetailClassTeacher: React.FC = () => {
@@ -108,11 +110,33 @@ const DetailClassTeacher: React.FC = () => {
 
     const history = useHistory();
 
-    const routeChange1 = () => {
-        let path = '/exercise';
+    const routeChange1 = (exercise_submission: IExerciseSubmission) => {
+        let path = '/exercise-grade';
+        localStorage.setItem('student_name', exercise_submission.student_name);
+        localStorage.setItem('student_id', exercise_submission.student_id.toString())
+        localStorage.setItem('exercise_submission_id', exercise_submission.id.toString())
+        localStorage.setItem('exercise_name', exercise_submission.exercise_name)
+        localStorage.setItem('exercise_id', exercise_submission.exercise_id.toString())
+        localStorage.setItem('image_url_exercise_submission', exercise_submission.image_url)
+        localStorage.setItem('time_submit', exercise_submission.update_time)
         history.push({
             pathname: path
         });
+    }
+
+    const routeChange2 = (teacher_leave: ITeacherLeave) => {
+        localStorage.setItem('section_name', teacher_leave.section_name);
+        localStorage.setItem('section_number', teacher_leave.section_number.toString());
+        localStorage.setItem('section_id', teacher_leave.section_id.toString());
+        localStorage.setItem('teacher_name', teacher_leave.teacher_name.toString());
+        localStorage.setItem('substitute_teacher_id', teacher_leave.substitute_teacher_id.toString());
+        localStorage.setItem('substitute_teacher_name', teacher_leave.substitute_teacher_name.toString());
+        localStorage.setItem('description', teacher_leave.description.toString());
+        localStorage.setItem('update_time', teacher_leave.update_time);
+        localStorage.setItem('class_name', teacher_leave.class_name);
+        localStorage.setItem('teacher_leave_id', teacher_leave.id.toString())
+        dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Edit))
+        onAnonymousNotificationRemove()
     }
 
     const onChangeRoute = (section: ISection) => {
@@ -158,38 +182,38 @@ const DetailClassTeacher: React.FC = () => {
     let check_active: string[] = [];
 
     if (time_schedules.timeSchedules.length > 1 && promiseInProgress === false) {
-            if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null){
-                var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
-                var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
-                var hour_start = parseInt(start_time_0[1].substring(0, 2));
-                var minus_tart = parseInt(start_time_0[1].substring(3, 5));
-                var sercon_start = parseInt(start_time_0[1].substring(6, 8));
-                var hour_end = parseInt(end_time_0[1].substring(0, 2));
-                var minus_end = parseInt(end_time_0[1].substring(3, 5));
-                var sercon_end = parseInt(end_time_0[1].substring(6, 8));
-    
-                total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
-                time_schedules.timeSchedules.map((ele, index) => {
-                    var start_date = new Date(ele.start_time);
-                    var end_date = new Date(ele.end_time);
-                    // Do your operations
-                    var date_now   = new Date();
+        if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null) {
+            var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
+            var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
+            var hour_start = parseInt(start_time_0[1].substring(0, 2));
+            var minus_tart = parseInt(start_time_0[1].substring(3, 5));
+            var sercon_start = parseInt(start_time_0[1].substring(6, 8));
+            var hour_end = parseInt(end_time_0[1].substring(0, 2));
+            var minus_end = parseInt(end_time_0[1].substring(3, 5));
+            var sercon_end = parseInt(end_time_0[1].substring(6, 8));
 
-                    if ((date_now.getTime() - start_date.getTime()) / 1000 < 0) {
-                        check_active.push('Chưa diễn ra');
-                    }
-                    else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
-                        check_active.push('Đang diễn ra');
-                    }
-                    else {
-                        check_active.push('Đã diễn ra');
-                    }
+            total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
+            time_schedules.timeSchedules.map((ele, index) => {
+                var start_date = new Date(ele.start_time);
+                var end_date = new Date(ele.end_time);
+                // Do your operations
+                var date_now = new Date();
 
-                    var start_time = ele.start_time.split("T");
-                    var end_time = ele.end_time.split("T");
-                    return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
-                })
-            }
+                if ((date_now.getTime() - start_date.getTime()) / 1000 < 0) {
+                    check_active.push('Chưa diễn ra');
+                }
+                else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
+                    check_active.push('Đang diễn ra');
+                }
+                else {
+                    check_active.push('Đã diễn ra');
+                }
+
+                var start_time = ele.start_time.split("T");
+                var end_time = ele.end_time.split("T");
+                return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
+            })
+        }
     }
 
     function checkActive(index: number) {
@@ -305,7 +329,7 @@ const DetailClassTeacher: React.FC = () => {
                     <>
                         {
                             function () {
-                                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
+                                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create || anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Edit)) {
                                     return <RequestOffSectionForm isCheck={onRemovePopup1} />
                                 }
                             }()
@@ -318,74 +342,65 @@ const DetailClassTeacher: React.FC = () => {
                         if (checked1 === true) {
                             return (
                                 <div className="row">
-                                    <div className="col-xl-12 col-md-12 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
-                                        <div className="table-responsive portlet table-section">
-                                            <table className="table">
-                                                <thead className="thead-light">
-                                                    <tr>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
-                                                            return (
-                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className={`row row-section mb-4 ml-2 mr-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele) }}>
-                                                                        <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                        </div>
-                                                                        <div className="col-xl-9 col-md-9">
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mt-2 section_number">Buổi {ele.number}: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Lịch học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{data[index]}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Thời lượng: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{total_time}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Hình thức học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    {
+                                        sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
+                                            return (
+                                                <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
+                    
+
+                                                    <div className={`row section-ele row-section mb-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele) }}>
+                                                        <div className="col-xl-2 col-md-2 avatar-x">
+                                                            <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                        </div>
+                                                        <div className="col-xl-10 col-md-10">
+                                                            <div className="row mt-2">
+                                                                <div className="col-md-3">
+                                                                    Buổi {ele.number}
+                                                                </div>
+                                                                <div className="col-md-9">
+                                                                    {ele.name}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-md-3">
+                                                                    Lịch học:
+                                                                </div>
+                                                                <div className="col-md-9">
+                                                                    {data[index]}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-md-3">
+                                                                    Thời lượng:
+                                                                </div>
+                                                                <div className="col-md-9">
+                                                                    {total_time}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-md-3">
+                                                                    Hình thức:
+                                                                </div>
+                                                                <div className="col-md-9">
+                                                                    {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row mb-2">
+                                                                <div className="col-md-3">
+                                                                    Giáo viên:
+                                                                </div>
+                                                                <div className="col-md-9">
+                                                                    {ele.teacher_name}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            )
+
+                                        })
+                                    }
                                 </div>
                             )
                         }
@@ -405,10 +420,10 @@ const DetailClassTeacher: React.FC = () => {
                                                         exercise_submissions.exercise_not_gradeds.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
-                                                                    <div className="col-xl-3 col-md-3 avatar-x">
-                                                                        <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
-                                                                    </div>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1(ele) }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
+                                                                            <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                        </div>
                                                                         <div className="col-xl-9 col-md-9 mt-2">
                                                                             <div className="row">
                                                                                 <div className="col-md-5">
@@ -434,7 +449,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                                     {ele.update_time.replaceAll("T", " ")}
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -464,10 +479,10 @@ const DetailClassTeacher: React.FC = () => {
                                                         teacher_leaves.leaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1() }}>
-                                                                    <div className="col-xl-3 col-md-3 avatar-x">
-                                                                        <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399584/wazcmdgbmxy2amdmjjdv.png" alt="" />
-                                                                    </div>
+                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange2(ele) }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
+                                                                            <img className="img-exam mt-2 mb-2" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399584/wazcmdgbmxy2amdmjjdv.png" alt="" />
+                                                                        </div>
                                                                         <div className="col-xl-9 col-md-9 mt-2">
                                                                             <div className="row">
                                                                                 <div className="col-md-5">
@@ -493,7 +508,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                                     {ele.status}
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </tr>

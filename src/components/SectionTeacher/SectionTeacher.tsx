@@ -429,7 +429,7 @@ const SectionTeacher: React.FC = () => {
                                                                 exercises.exercises.map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                            <div className="row row-section section-ele mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
                                                                                 <div className="col-xl-3 col-md-3 avatar-x pt-4 pb-2">
                                                                                     <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                                 </div>

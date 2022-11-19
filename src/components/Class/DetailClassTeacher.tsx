@@ -349,7 +349,7 @@ const DetailClassTeacher: React.FC = () => {
                     
 
                                                     <div className={`row section-ele row-section mb-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele) }}>
-                                                        <div className="col-xl-2 col-md-2 avatar-x">
+                                                        <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
                                                             <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                         </div>
                                                         <div className="col-xl-10 col-md-10">

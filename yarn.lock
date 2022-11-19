@@ -9689,6 +9689,11 @@
     "rollup-plugin-json" "^4.0.0"
     "yarn" "^1.21.1"
 
+"react-photo-view@^1.2.3":
+  "integrity" "sha512-dtaFjU8nAB/rD8mxBaaJcvESlDOweAd1tmvXujS/d3oh1QyGew3xD4C02l46E6Dhn3Tshzl2+IM1h0MWV9nG7g=="
+  "resolved" "https://registry.npmjs.org/react-photo-view/-/react-photo-view-1.2.3.tgz"
+  "version" "1.2.3"
+
 "react-pro-sidebar@^0.5.0":
   "integrity" "sha512-Lt4+dhnhFyDyZTIgajhB421YWyL1rDLhrYrwY8i0heZOaBfsHPM9E9t//E0gBfHueVWyemjevAOVH8wBn859pg=="
   "resolved" "https://registry.npmjs.org/react-pro-sidebar/-/react-pro-sidebar-0.5.0.tgz"

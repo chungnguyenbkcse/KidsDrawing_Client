@@ -107,6 +107,7 @@ import DiscoveryParentContest from "../components/Discovery/DiscoveryContest";
 import RequestTeacher1 from "../components/RequestTeacher/RequestTeacher1";
 import DiscoveryStudentContest from "../components/DiscoveryStudent/Discovery1";
 import GradeExamTeacherEle from "../components/Exam/GradeExamTeacherEle";
+import ViewExerciseTeacherStudent from "../components/Exam/ViewExerciseTeacherStudent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -153,6 +154,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>
                                 <Route path={`/exercise/result-grade`}><ResultGradeExamTeacher /></Route>
+                                <Route path={`/exercise/student`}><ViewExerciseTeacherStudent /></Route>
                                 <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
                                 <Route path={`/classes-end/detail`}><ClassTeacherEndDetail /></Route>
                                 <Route path={`/classes/detail`}><ClassTeacherDetail /></Route>

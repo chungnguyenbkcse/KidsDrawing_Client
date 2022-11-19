@@ -14,6 +14,7 @@ const ExamTeacher: React.FC = () => {
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const numberApprovedCount: number = exercise_submissions.exercise_gradeds.length;
     const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
+    const numberGradedCount: number = exercise_submissions.exercise_gradeds.length;
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -138,12 +139,12 @@ const ExamTeacher: React.FC = () => {
 
             {
                 function () {
-                    if (numberNotApprovedNowCount === 0){
+                    if (numberGradedCount > 0) {
                         return (
                             <div className="row justify-content-center mb-4">
                                 <button 
                                     className="btn btn-success btn-green" 
-                                    id="btn-into-class-student"
+                                    id="btn-into-view-score"
                                     onClick={() => {routeChange1()}}
                                 >
                                     Xem điểm
@@ -152,7 +153,12 @@ const ExamTeacher: React.FC = () => {
                             </div>
                         )
                     }
-                    else {
+                }()
+            }
+
+            {
+                function () {
+                    if (numberNotApprovedNowCount > 0) {
                         return (
                             <div className="row justify-content-center mb-4">
                                 <button 

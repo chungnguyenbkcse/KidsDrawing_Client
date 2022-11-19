@@ -13,36 +13,9 @@ import { toast, ToastContainer } from "react-toastify";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
 
-const GradeExamTeacherEle: React.FC = () => {
+const ViewExerciseTeacherStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    let user_grade_exercise_submission = {
-        feedback: "",
-        score: 0
-    }
-
-    const [formState, setFormState] = useState({
-        feedback: { error: "", value: user_grade_exercise_submission.feedback },
-        score: { error: "", value: user_grade_exercise_submission.score },
-    });
-
-    function hasFormValueChanged(model: OnChangeModel): void {
-        setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
-    }
-
-    function saveForm() {
-        const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-            position: toast.POSITION.TOP_CENTER
-        });
-
-        dispatch(postUserGradeExercise({
-            teacher_id: localStorage.getItem('id'),
-            exercise_submission_id: localStorage.getItem('exercise_submission_id'),
-            score: formState.score.value,
-            feedback: formState.feedback.value
-        }, id))
-
-    }
 
     var id_y = localStorage.getItem('exercise_id');
     let exercise_id = 0;
@@ -77,6 +50,48 @@ const GradeExamTeacherEle: React.FC = () => {
 
     if (id_t !== null) {
         student_name = id_t;
+    }
+
+    var id_ta = localStorage.getItem('score_exercise');
+    let score_exercise: number = 0;
+
+    if (id_ta !== null) {
+        score_exercise = parseInt(id_ta);
+    }
+
+    var id_tb = localStorage.getItem('feedback');
+    let feedback = "";
+
+    if (id_tb !== null) {
+        feedback = (id_tb);
+    }
+
+    let user_grade_exercise_submission = {
+        feedback: feedback,
+        score: score_exercise
+    }
+
+    const [formState, setFormState] = useState({
+        feedback: { error: "", value: user_grade_exercise_submission.feedback },
+        score: { error: "", value: user_grade_exercise_submission.score },
+    });
+
+    function hasFormValueChanged(model: OnChangeModel): void {
+        setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+    }
+
+    function saveForm() {
+        const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+
+        dispatch(postUserGradeExercise({
+            teacher_id: localStorage.getItem('id'),
+            exercise_submission_id: localStorage.getItem('exercise_submission_id'),
+            score: formState.score.value,
+            feedback: formState.feedback.value
+        }, id))
+
     }
 
 
@@ -173,4 +188,4 @@ const GradeExamTeacherEle: React.FC = () => {
     );
 };
 
-export default GradeExamTeacherEle;
+export default ViewExerciseTeacherStudent;

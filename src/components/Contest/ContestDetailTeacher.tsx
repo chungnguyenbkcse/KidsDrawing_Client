@@ -183,7 +183,7 @@ const ContestDetailTeacher: React.FC = () => {
                                     </div>
                                     <div className="row no-gutters align-items-center">
                                         <div className="text-xs">
-                                            <p className="birthday ml-4">Thời gian đăng kí: {registration_time}</p>
+                                            <p className="birthday ml-4">Thời gian đăng kí: {registration_time.replaceAll("T", " ")}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -191,12 +191,12 @@ const ContestDetailTeacher: React.FC = () => {
                                 <div className="col-xl-6 col-md-6">
                                     <div className="row no-gutters align-items-center">
                                         <div className="text-xs ">
-                                            <p className="birthday">Thời gian bắt đầu: {start_time}</p>
+                                            <p className="birthday">Thời gian bắt đầu: {start_time.replaceAll("T", " ")}</p>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">
                                         <div className="text-xs">
-                                            <p className="birthday">Thời gian kết thúc: {end_time}</p>
+                                            <p className="birthday">Thời gian kết thúc: {end_time.replaceAll("T", " ")}</p>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">

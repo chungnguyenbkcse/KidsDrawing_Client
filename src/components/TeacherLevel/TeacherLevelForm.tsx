@@ -62,10 +62,15 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
 
     props.isCheck(false);
 
-    var url = await setImageAction();
-
     let saveUserFn: Function = (isCreate) ? addTeacherRegisterQuatificationNotApprovedNow : editTeacherRegisterQuatificationNotApproved;
-    saveForm(formState, saveUserFn, url, id);
+    
+    if (saveUserFn === addTeacherRegisterQuatificationNotApprovedNow) {
+      var url = await setImageAction();
+      saveForm(formState, saveUserFn, url, id);
+    }
+    else {
+      saveForm(formState, saveUserFn, preview, id);
+    }
   }
 
   function saveForm(formState: ITeacherRegisterLevelFormState, saveFn: Function, url: string, idx: any): void {

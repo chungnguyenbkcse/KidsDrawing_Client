@@ -430,10 +430,10 @@ const SectionTeacher: React.FC = () => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
-                                                                                <div className="col-xl-4 col-md-4 mb-4">
-                                                                                    <img className="card-img" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                                                <div className="col-xl-3 col-md-3 avatar-x pt-4 pb-2">
+                                                                                    <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                                                 </div>
-                                                                                <div className="col-xl-8 col-md-8 mb-4">
+                                                                                <div className="col-xl-9 col-md-9 mt-4">
                                                                                     <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>
                                                                                     <h4 className=" mb-2" id="level-teacher">Phần trăm đánh giá: {ele.level_name}</h4>
                                                                                 </div>

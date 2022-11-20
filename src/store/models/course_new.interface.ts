@@ -15,6 +15,7 @@ export interface ICourseNew {
     art_level_name: string;
     art_age_name: string;
     total: number;
+    total_register: number;
     create_time: string;
     update_time: string;
 }

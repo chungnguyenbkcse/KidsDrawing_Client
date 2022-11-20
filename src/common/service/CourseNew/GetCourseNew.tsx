@@ -18,6 +18,7 @@ interface CourseNew {
     art_level_name: string;
     art_age_name: string;
     total: number;
+    total_register: number;
     create_time: string;
     update_time: string;
 }
@@ -60,6 +61,7 @@ export function getCourseNew(dispatch: any, id: any) {
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,
                         price: ele.price,
+                        total_register: ele.total_register,
                         image_url: ele.image_url,
                         is_enabled: ele.is_enabled,
                         creator_id: ele.creator_id,

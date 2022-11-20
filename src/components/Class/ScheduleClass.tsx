@@ -22,6 +22,7 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import ScheduleForClassList from "./ScheduleForClassList";
 
 const ScheduleClass: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -113,23 +114,7 @@ const ScheduleClass: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green">Lịch học chi tiết</h6>
                         </div>
                         <div className="card-body">
-                            <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
-                                dataSource: data, fields: {
-                                    id: 'Id',
-                                    subject: { name: 'Subject' },
-                                    isAllDay: { name: 'IsAllDay' },
-                                    startTime: { name: 'StartTime' },
-                                    endTime: { name: 'EndTime' }
-                                }
-                            }}>
-
-                                <ViewsDirective>
-                                    <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
-                                    <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
-                                    <ViewDirective option='Month' showWeekend={false} />
-                                </ViewsDirective>
-                                <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-                            </ScheduleComponent>;
+                            <ScheduleForClassList />
                         </div>
                     </div>
                 </div>

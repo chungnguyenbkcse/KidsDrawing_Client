@@ -14,6 +14,7 @@ export interface ISemesterClassTeacher {
     art_level_name: string;
     art_age_name: string;
     schedule: string;
+    total_register: number;
     registration_deadline: string;
     status: string;
 }

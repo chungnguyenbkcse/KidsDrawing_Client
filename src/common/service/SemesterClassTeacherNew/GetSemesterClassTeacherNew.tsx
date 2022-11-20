@@ -11,6 +11,7 @@ interface SemesterClassTeacher {
     num_of_section: number;
     price: number;
     semester_name: string;
+    total_register: number;
     semester_id: number;
     status: string;
     image_url: string;
@@ -64,6 +65,7 @@ export function getSemesterClassNewByTeacherCourse(dispatch: any, teacher_id: nu
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,
                         price: ele.price,
+                        total_register: ele.total_register,
                         image_url: ele.image_url,
                         art_type_name: ele.art_type_name,
                         art_age_name: ele.art_age_name,

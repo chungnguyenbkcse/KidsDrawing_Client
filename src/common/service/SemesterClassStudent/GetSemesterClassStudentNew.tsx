@@ -20,6 +20,7 @@ interface SemesterClassStudent {
     art_level_name: string;
     art_age_name: string;
     schedule: string;
+    total_register: number;
     registration_deadline: string;
 }
 export function getSemesterClassStudent(dispatch: any, student_id: number, course_id: number) {
@@ -70,6 +71,7 @@ export function getSemesterClassStudent(dispatch: any, student_id: number, cours
                         max_participant: ele.max_participant,
                         num_of_section: ele.num_of_section,
                         price: ele.price,
+                        total_register: ele.total_register,
                         image_url: ele.image_url,
                         art_type_name: ele.art_type_name,
                         art_age_name: ele.art_age_name,

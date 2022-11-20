@@ -169,9 +169,9 @@ function CourseTeacherList(props: semesterListProps): JSX.Element {
                                         <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span><span className="d-block mb-5">Hiện tại khóa học mở {ele.total} lớp.</span>
                                         <div
                                             className="d-flex justify-content-between stats">
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
+                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
                                             <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">12</span></div>
+                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">{ele.total_registed}</span></div>
                                         </div>
                                     </div>
                                 </div>

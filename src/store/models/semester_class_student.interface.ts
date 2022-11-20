@@ -17,6 +17,7 @@ export interface ISemesterClassStudent {
     art_type_name: string;
     art_level_name: string;
     art_age_name: string;
+    total_register: number;
     schedule: string;
     registration_deadline: string;
 }

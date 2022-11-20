@@ -102,10 +102,10 @@ function SemesterClassNewTeacherList(props: semesterListProps): JSX.Element {
                                         <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_deadline.substring(0, 10) + " " + ele.registration_deadline.substring(11, 19)}</span>
                                         <div
                                             className="d-flex justify-content-between stats">
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
+                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
                                             <div className="d-flex flex-row align-items-center">
                                                 <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
-                                                    
+                                                {ele.total_register} 
                                                 </span></div>
                                         </div>
                                     </div>

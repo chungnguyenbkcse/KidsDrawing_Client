@@ -12,6 +12,7 @@ export interface IUser {
     phone: string,
     address: string,
     parents: number,
+    parent?: string,
     createTime: string
 }
 

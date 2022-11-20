@@ -20,6 +20,10 @@
     background-color: #ffffff;
 }
 
+.notification-x {
+    padding-left: 100px !important;
+}
+
 #btn-create-teacher-level {
     background: #4946F3 !important;
     border-radius: 30px !important;

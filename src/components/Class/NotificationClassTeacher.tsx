@@ -106,7 +106,7 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
                                         onChange={hasFormValueChanged}
                                         required={true}
                                         maxLength={20}
-                                        label="Tên"
+                                        label="Tiêu đề"
                                         placeholder="" />
                                 </div>
                                 <div className="form-group">
@@ -116,7 +116,7 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
                                         onChange={hasFormValueChanged}
                                         required={false}
                                         maxLength={100}
-                                        label="Miêu tả"
+                                        label="Nội dung"
                                         placeholder="" />
                                 </div>
 

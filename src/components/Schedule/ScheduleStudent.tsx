@@ -112,7 +112,7 @@ const ScheduleStudent: React.FC = () => {
                     <div className="col-xl-12 col-lg-12">
                         <div className="card shadow mb-4">
                             <div className="card-body">
-                                <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
+                                <ScheduleComponent height='550px' selectedDate={new Date()} showHeaderBar={false} eventSettings={{
                                     dataSource: data, fields: {
                                         id: 'Id',
                                         subject: { name: 'Subject' },
@@ -123,11 +123,9 @@ const ScheduleStudent: React.FC = () => {
                                 }}>
 
                                     <ViewsDirective>
-                                        <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
-                                        <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
-                                        <ViewDirective option='Month' showWeekend={false} />
+                                        <ViewDirective option='Month'/>
                                     </ViewsDirective>
-                                    <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+                                    <Inject services={[Month]} />
                                 </ScheduleComponent>
 
 

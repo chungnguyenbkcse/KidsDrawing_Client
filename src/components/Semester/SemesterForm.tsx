@@ -11,7 +11,6 @@ import { postSemester } from "../../common/service/semester/PostSemester";
 import { putSemester } from "../../common/service/semester/PutSemester";
 import { toast } from "react-toastify";
 import DateInput from "../../common/components/DateInput";
-import DateInput2 from "../../common/components/DateInput2";
 
 export type semesterListProps = {
   isCheck: (value: boolean) => void;
@@ -165,18 +164,6 @@ function SemesterForm(props: semesterListProps): JSX.Element {
                     required={false}
                     maxLength={time_now}
                     label="Thời gian bắt đầu"
-                    placeholder="" />
-                </div>
-                <div className="form-group col-md-6">
-                  <DateInput2 id="input_end_time"
-                    field="end_time"
-                    value={formState.end_time.value}
-                    onChange={hasFormValueChanged}
-                    active={formState.start_time.value !== null && formState.start_time.value !== "" ? false: true}
-                    type="datetime-local"
-                    required={false}
-                    maxLength={formState.start_time.value}
-                    label="Thời gian kết thúc"
                     placeholder="" />
                 </div>
               </div>

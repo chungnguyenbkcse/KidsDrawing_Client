@@ -95,8 +95,7 @@ function LessonForm(props: lessonListProps): JSX.Element {
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
-              <div className="form-row">
-                <div className="form-group col-md-6">
+              <div className="form-group">
                   <TextInput id="input_start_time"
                     field="start_time"
                     value={formState.start_time.value}
@@ -106,7 +105,6 @@ function LessonForm(props: lessonListProps): JSX.Element {
                     maxLength={100}
                     label="Thời gian bắt đầu"
                     placeholder="" />
-                </div>
               </div>
               <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
               <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>

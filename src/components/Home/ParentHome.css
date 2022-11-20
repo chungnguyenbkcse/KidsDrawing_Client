@@ -15,14 +15,14 @@
 .fullname {
     color: #3A7CFB !important;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 20px;
     line-height: 30px;
 }
 
 .birthday {
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 20px;
     line-height: 30px;
     /* identical to box height */

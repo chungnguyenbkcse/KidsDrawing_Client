@@ -11,7 +11,7 @@ import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
-import ScoreContestListStudent from "./ScoreContestListStudent";
+import "./ResultContest.css"
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -103,7 +103,27 @@ const ResultGradeContestTeacher: React.FC = () => {
                 <div className="row">
                     <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
                     <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
+
+
+                    {
+                        function () {
+                            if (roleUser === "TEACHER_USER") {
+                                return (
+                                    <div className="col-xl-3 col-md-3 notification-x">
+                                        <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() => {
+                                            onRouteChange()
+                                        }}>
+                                            Xem review
+                                            <i className="fas fa fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                )
+                            }
+                        }()
+                    }
+
                 </div>
+
 
                 <div className="row">
 
@@ -111,7 +131,7 @@ const ResultGradeContestTeacher: React.FC = () => {
                         function () {
                             if (roleUser === "TEACHER_USER") {
                                 return (
-                                    <div className="col-xl-8 col-md-8 mb-4">
+                                    <div className="col-xl-12 col-md-12 mb-4">
                                         <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
                                         <div className="col-xl-12 col-md-12 mb-4">
                                             <div className={`card shadow h-100 py-2`} id="topcard-user">
@@ -154,27 +174,6 @@ const ResultGradeContestTeacher: React.FC = () => {
                                 )
                             }
 
-                        }()
-                    }
-
-                    {
-                        function () {
-                            if (roleUser === "TEACHER_USER") {
-                                return (
-                                    <div className="col-xl-4 col-md-4 mb-4">
-                                        <div className="row justify-content-center">
-                                            <button className="btn btn-success btn-green" id="btn-into-class" onClick={() => {
-                                                onRouteChange()
-                                            }}>
-                                                Xem review
-                                                <i className="fas fa fa-arrow-right"></i>
-                                            </button>
-                                        </div>
-                                        {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
-                                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
-                                    </div>
-                                )
-                            }
                         }()
                     }
                 </div>

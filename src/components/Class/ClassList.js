@@ -19,6 +19,7 @@ function ClassList(props) {
     
     const routeChange = (class_id) =>{ 
       let path = '/class/detail'; 
+      localStorage.setItem('class_id', class_id.toString())
       history.push({
         pathname: path,
         state: { class_id: class_id }

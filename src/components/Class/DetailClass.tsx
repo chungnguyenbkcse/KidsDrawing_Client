@@ -2,7 +2,7 @@ import React, { Fragment, Dispatch, useEffect } from "react";
 import TopCard from "../../common/components/TopCard";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IStateType, IRootPageStateType, IUserState, IInformationClassState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, IUserState, IInformationClassState, ISectionState } from "../../store/models/root.interface";
 import {
     clearSelectedProduct, setModificationState,
     changeSelectedProduct
@@ -16,14 +16,17 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
 
 
 const DetailClass: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
+    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const students: IUserState = useSelector((state: IStateType) => state.users);
     const information_class: IInformationClassState = useSelector((state: IStateType) => state.information_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberItemsCount: number = students.students.length;
+    const numberItemsCount1: number = sections.sections.length;
     const { promiseInProgress } = usePromiseTracker();
 
     useEffect(() => {
@@ -62,10 +65,12 @@ const DetailClass: React.FC = () => {
                 }
                 else {
                     trackPromise(getInfoMyClass(dispatch, class_id))
+                    trackPromise(getSectionByClass(dispatch, class_id))
                 }
             }
             else {
                 trackPromise(getInfoMyClass(dispatch, class_id))
+                trackPromise(getSectionByClass(dispatch, class_id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id]);
@@ -92,7 +97,7 @@ const DetailClass: React.FC = () => {
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
                 <TopCard title="SỐ HỌC SINH" text={`${numberItemsCount}`} icon="box" class="primary" />
-                <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${numberItemsCount}`} icon="box" class="primary" />
+                <TopCard title="SỐ BUỔI" text={`${numberItemsCount1}`} icon="box" class="primary" />
             </div>
             <div className="row">
                 <div className="col-xl-12 col-lg-12">

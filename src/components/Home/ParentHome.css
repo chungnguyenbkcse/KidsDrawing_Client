@@ -14,7 +14,6 @@
 
 .fullname {
     color: #3A7CFB !important;
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -22,7 +21,6 @@
 }
 
 .birthday {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -36,7 +34,6 @@
 }
 
 .username {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

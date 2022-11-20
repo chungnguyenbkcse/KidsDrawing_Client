@@ -48,7 +48,7 @@ function LessonList(props) {
   }
 
   function showEndTime(cell, row) {
-    var strDate = row.start_time;
+    var strDate = row.end_time;
     return (
         <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
     )

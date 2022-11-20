@@ -66,7 +66,6 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           description: formState.description.value,
           number: formState.number.value,
           start_time: formState.start_time.value,
-          end_time: formState.end_time.value,
           creator_id: localStorage.getItem('id')
         }, idx));
       }
@@ -77,7 +76,6 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           description: formState.description.value,
           number: formState.number.value,
           start_time: formState.start_time.value,
-          end_time: formState.end_time.value,
           creator_id: localStorage.getItem('id')
         }, idx));
       }

@@ -54,14 +54,12 @@ function LessonForm(props: lessonListProps): JSX.Element {
 
       if (saveFn === addLesson) {
         dispatch(postLesson({
-          start_time: formState.start_time.value,
-          end_time: formState.end_time.value
+          start_time: formState.start_time.value
         }, idx));
       }
       else {
         dispatch(putLesson(lesson.id, {
-          start_time: formState.start_time.value,
-          end_time: formState.end_time.value
+          start_time: formState.start_time.value
         }, idx));
       }
 
@@ -107,17 +105,6 @@ function LessonForm(props: lessonListProps): JSX.Element {
                     required={false}
                     maxLength={100}
                     label="Thời gian bắt đầu"
-                    placeholder="" />
-                </div>
-                <div className="form-group col-md-6">
-                  <TextInput id="input_end_time"
-                    field="end_time"
-                    value={formState.end_time.value}
-                    onChange={hasFormValueChanged}
-                    type="time"
-                    required={false}
-                    maxLength={100}
-                    label="Thời gian kết thúc"
                     placeholder="" />
                 </div>
               </div>

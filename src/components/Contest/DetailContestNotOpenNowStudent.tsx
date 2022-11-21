@@ -3,18 +3,19 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { IContestSubmissionTeacherState, IStateType } from "../../store/models/root.interface";
+import { IContestSubmissionTeacherState, ILessonState, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
 import { GrLinkDown } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
+import Popup from "reactjs-popup";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import { setModificationState } from "../../store/actions/lesson.action";
 
 const DetailContestNotOpenNowStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const contest_submissions: IContestSubmissionTeacherState = useSelector((state: IStateType) => state.contest_submission_teacher);
-    const numberNotGradedCount: number = contest_submissions.contest_submission_not_grade.length;
-    const numberGradedCount: number = contest_submissions.contest_submission_grade.length;
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -94,7 +95,16 @@ const DetailContestNotOpenNowStudent: React.FC = () => {
         setChecked(!checked)
     }
 
+    const [popup, setPopup] = useState(false);
 
+
+    function onLessonRemove() {
+        setPopup(true);
+    }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
+    }
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -192,6 +202,37 @@ const DetailContestNotOpenNowStudent: React.FC = () => {
                     </div>
                 </div>
 
+                {
+                    function () {
+                        if (lessons.modificationState === LessonModificationStatus.Remove) {
+                            return (
+                                <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Are you sure?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (!lessons.selectedLesson) {
+                                                    return;
+                                                }
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                            )
+                        }
+                    }()
+                }
+
                 <div className="row" id="btn-register-course">
                     <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
                         <button className="btn btn-success btn-green" id="btn-create-register-course4" onClick={() => handleClick()}>
@@ -201,7 +242,10 @@ const DetailContestNotOpenNowStudent: React.FC = () => {
                     </div>
 
                     <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
-                        <button className="btn btn-errorx" style={{backgroundColor: "#dc3545"}} onClick={() => handleClick()}>
+                        <button className="btn btn-errorx" style={{backgroundColor: "#dc3545"}} onClick={() =>{
+                            dispatch(setModificationState(LessonModificationStatus.Remove))
+                            setPopup(true)
+                        }}>
                             <AiFillDelete id="btn-payment" color="#000000" />
                             Hủy đăng ký
                         </button>

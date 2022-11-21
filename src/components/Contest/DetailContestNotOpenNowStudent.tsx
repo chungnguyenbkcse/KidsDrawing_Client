@@ -12,6 +12,9 @@ import { AiFillDelete } from "react-icons/ai";
 import Popup from "reactjs-popup";
 import { LessonModificationStatus } from "../../store/models/lesson.interface";
 import { setModificationState } from "../../store/actions/lesson.action";
+import { deleteUserRegisterJoinContestByContestAndStudent } from "../../common/service/UserRegisterJoinSemester/DeleteUserRegisterJoinContestByContestAndStudent";
+import { toast, ToastContainer } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 const DetailContestNotOpenNowStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -106,6 +109,13 @@ const DetailContestNotOpenNowStudent: React.FC = () => {
         setPopup(false);
     }
 
+    const history = useHistory();
+
+    const routeChange = () => {
+        let path = '/contests';
+        history.push(path);
+    }
+
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -150,6 +160,7 @@ const DetailContestNotOpenNowStudent: React.FC = () => {
                     </div>
                 </div>
             </div> : <Fragment>
+            <ToastContainer />
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
                 <div className="row">
@@ -219,10 +230,11 @@ const DetailContestNotOpenNowStudent: React.FC = () => {
                                         <button type="button"
                                             className="btn btn-danger"
                                             onClick={() => {
-                                                if (!lessons.selectedLesson) {
-                                                    return;
-                                                }
                                                 setPopup(false);
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                });
+                                                dispatch(deleteUserRegisterJoinContestByContestAndStudent(contest_id, id, idx, routeChange))
                                             }}>Remove
                                         </button>
                                     </div>

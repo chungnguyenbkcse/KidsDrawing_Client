@@ -2,13 +2,13 @@ import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getStudentLeave } from "./GetStudentLeave";
-export function putStudentLeaveStatus(id: any, data: any, idx: any) {
+export function putStudentLeave(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/student-leave/admin/${id}`, {
+                `${process.env.REACT_APP_API_URL}/student-leave/${id}`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,
@@ -23,7 +23,7 @@ export function putStudentLeaveStatus(id: any, data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putStudentLeaveStatus(id, data, idx))
+                        dispatch(putStudentLeave(id, data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,10 +36,10 @@ export function putStudentLeaveStatus(id: any, data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 getStudentLeave()
-                toast.update(idx, { render: "Yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh yêu cầu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             });
     };
 }

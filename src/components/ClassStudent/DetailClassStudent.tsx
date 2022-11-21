@@ -22,6 +22,7 @@ import { IExerciseStudent } from "../../store/models/exercise_student.interface"
 import { ToastContainer } from "react-toastify";
 import { getExerciseSubmissionByClassAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClassAndStudent";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
+import { IStudentLeave } from "../../store/models/student_leave.interface";
 
 
 const DetailClassStudent: React.FC = () => {
@@ -238,6 +239,24 @@ const DetailClassStudent: React.FC = () => {
         })
     }
 
+    function handleRequestOff(student_leave: IStudentLeave) {
+        localStorage.setItem('section_id', student_leave.section_id.toString())
+        localStorage.setItem('section_number', student_leave.section_number.toString())
+        localStorage.setItem('student_leave_id', student_leave.id.toString())
+        localStorage.setItem('resson', student_leave.description)
+        dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Edit))
+        onAnonymousNotificationRemove()
+    }
+
+    function handleRequestOffEnd(student_leave: IStudentLeave) {
+        localStorage.setItem('section_id', student_leave.section_id.toString())
+        localStorage.setItem('section_number', student_leave.section_number.toString())
+        localStorage.setItem('student_leave_id', student_leave.id.toString())
+        localStorage.setItem('resson', student_leave.description)
+        dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Remove))
+        onAnonymousNotificationRemove()
+    }
+
 
     let data: string[] = []
     let list_link_record: string[] = []
@@ -406,7 +425,7 @@ const DetailClassStudent: React.FC = () => {
                     <>
                         {
                             function () {
-                                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create)) {
+                                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create || anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Edit || anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Remove)) {
                                     return <RequestOffSectionForm isCheck={onRemovePopup1} />
                                 }
                             }()
@@ -896,7 +915,7 @@ const DetailClassStudent: React.FC = () => {
                                                         student_leaves.leaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { }}>
+                                                                    <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { handleRequestOff(ele) }}>
                                                                         <div className="col-xl-3 col-md-3 avatar-x">
                                                                             <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669002056/1497835_nexeoq.png" alt="" />
                                                                         </div>
@@ -942,7 +961,7 @@ const DetailClassStudent: React.FC = () => {
                                                         student_leaves.acceptLeaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { }}>
+                                                                <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => {handleRequestOffEnd(ele)}}>
                                                                 <div className="col-xl-3 col-md-3 avatar-x">
                                                                     <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669002056/1497835_nexeoq.png" alt="" />
                                                                 </div>

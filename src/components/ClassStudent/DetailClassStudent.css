@@ -47,6 +47,7 @@
 .row-section-1 {
     background: #21FC36 !important;
     border-radius: 20px;
+    cursor: pointer;
 }
 
 .section_name {
@@ -141,7 +142,7 @@
 }
 
 .active_now {
-    background: #21FC36 !important;
+    background: #0cbde9 !important;
 }
 
 .not_active_now {
@@ -188,4 +189,44 @@
 
 .table-section {
     min-height: 1000px;
+}
+
+.col-md-5, .col-md-3{
+    color: #7A67C7 !important;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.col-md-7, .col-md-9 {
+    color: #FF7701;
+    cursor: pointer;
+}
+
+.xs-cent {
+    color: #dc3545 !important;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.xs-centx {
+    color: #21FC36 !important;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.xs-centxx {
+    color: #c3f50d !important;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.not-active-xx {
+    color: #000000 !important;
+    cursor: pointer;
+}
+
+.xs-centxxx {
+    color: #000000 !important;
+    font-weight: bold;
+    cursor: pointer;
 }

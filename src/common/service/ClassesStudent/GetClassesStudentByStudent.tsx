@@ -22,6 +22,7 @@ interface ClassesStudent {
     semester_name: string;
     art_type_name: string;
     art_level_name: string;
+    url_image_course: string;
     art_type_id: number;
     art_level_id: number;
     art_age_id: number;
@@ -77,6 +78,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,
+                        url_image_course: ele.url_image_course,
                         total_student: ele.total_student,
                         total_section: ele.total_section,
                         total_section_studied: ele.total_section_studied,
@@ -110,6 +112,7 @@ export function getClassesStudent(dispatch: any, id: any) {
                         course_id: ele.course_id,
                         schedule_section_next: ele.schedule_section_next,
                         semester_name: ele.semester_name,
+                        url_image_course: ele.url_image_course,
                         semester_class_id: ele.semester_class_id,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         security_code: ele.security_code,

@@ -11,10 +11,11 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import ClassDoingList from "./ClassDoingList";
-import ClassDoneList from "./ClassDoneList";
 import ClassDoneList1 from "./ClassDoneList1";
 import ClassDoingList1 from "./ClassDoingList1";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 
 const ClassStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -53,10 +54,16 @@ const ClassStudent: React.FC = () => {
                 }
                 else {
                     trackPromise(getClassesStudent(dispatch, id))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtAge(dispatch))
+                    trackPromise(getArtLevel(dispatch))
                 }
             }
             else {
                 trackPromise(getClassesStudent(dispatch,id))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtAge(dispatch))
+                trackPromise(getArtLevel(dispatch))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);
@@ -87,17 +94,7 @@ const ClassStudent: React.FC = () => {
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-            <div className="row">
-                <TopCard title="KHÓA HỌC ĐANG HỌC" text={`${numberClassDoingCount}`} icon="book" class="primary" />
-                <TopCard title="KHÓA HỌC ĐÃ HỌC" text={`${numberClassDoneCount}`} icon="book" class="primary" />
-                {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(ClassesStudentModificationStatus.Create))}>
-                        <i className="fas fa fa-plus"></i>
-                        Đăng kí trình độ
-                    </button>
-                </div> */}
-            </div>
+            
 
 <div className="row" id="search-box">
 <div className="col-xl-12 col-lg-12">
@@ -160,9 +157,6 @@ const ClassStudent: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3 card-header-new">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách khóa học</h6>
-                                            </div>
                                             <div className="card-body">
                                                 <ClassDoingList1
                                                     onSelect={onClassesStudentSelect} value={searchTerm}
@@ -180,9 +174,6 @@ const ClassStudent: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách khóa học</h6>
-                                            </div>
                                             <div className="card-body">
                                                 <ClassDoneList1
                                                     onSelect={onClassesStudentSelect} value={searchTerm}

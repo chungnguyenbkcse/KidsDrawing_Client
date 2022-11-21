@@ -33,6 +33,34 @@ const DetailClassStudent: React.FC = () => {
     const exercise_student: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const { promiseInProgress } = usePromiseTracker();
 
+    const [totalPage, setTotalPage] = useState(0)
+    const [element, setElement] = useState<ISection[]>([])
+    const [page, setPage] = useState(0)
+    useEffect(() => {
+        let x = (sections.sections.length - sections.sections.length % 6) / 6;
+        if (x === 0) {
+            setElement(sections.sections.sort((a, b) => a.number - b.number))
+        }
+        else {
+            setElement(sections.sections.sort((a, b) => a.number - b.number).slice(0, 6))
+        }
+
+        setTotalPage((x + 1))
+    }, [sections.sections])
+
+    console.log((totalPage))
+
+    function handlePagination(count: number) {
+        console.log(count)
+        setPage(count)
+        if (count === totalPage) {
+            setElement(sections.sections.sort((a, b) => a.number - b.number).slice(count * 6))
+        }
+        else {
+            setElement(sections.sections.sort((a, b) => a.number - b.number).slice(count * 6, count * 6 + 6))
+        }
+    }
+
 
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberSectionCount: number = sections.sections.length;
@@ -126,7 +154,7 @@ const DetailClassStudent: React.FC = () => {
         });
     }
 
-    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseStudent){
+    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseStudent) {
         let path = '/exercise-submission/view';
         localStorage.removeItem('exercise_submission_id');
         localStorage.setItem('exercise_submission_id', exercise_student.exercise_submission_id.toString())
@@ -185,46 +213,46 @@ const DetailClassStudent: React.FC = () => {
     let check_active: string[] = [];
 
     if (time_schedules.timeSchedules.length > 1 && promiseInProgress === false) {
-            if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null){
-                var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
-                var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
-                var hour_start = parseInt(start_time_0[1].substring(0, 2));
-                var minus_tart = parseInt(start_time_0[1].substring(3, 5));
-                var sercon_start = parseInt(start_time_0[1].substring(6, 8));
-                var hour_end = parseInt(end_time_0[1].substring(0, 2));
-                var minus_end = parseInt(end_time_0[1].substring(3, 5));
-                var sercon_end = parseInt(end_time_0[1].substring(6, 8));
-    
-                total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
-                time_schedules.timeSchedules.map((ele, index) => {
-                    var start_date = new Date(ele.start_time);
-                    var end_date = new Date(ele.end_time);
-                    const link = "https://recording-jitsi-chung.s3.ap-southeast-1.amazonaws.com/recording/"
-                    const class_id = 1;
-                    const days = ele.end_time;
-                    let str = link + class_id.toString() + "_" + days.slice(0,10) + ".mp4";
-                    list_link_record.push(str);
-                    // Do your operations
-                    var date_now   = new Date();
+        if (time_schedules.timeSchedules[0] !== undefined && time_schedules.timeSchedules[0] !== null) {
+            var start_time_0 = time_schedules.timeSchedules[0].start_time.split("T");
+            var end_time_0 = time_schedules.timeSchedules[0].end_time.split("T");
+            var hour_start = parseInt(start_time_0[1].substring(0, 2));
+            var minus_tart = parseInt(start_time_0[1].substring(3, 5));
+            var sercon_start = parseInt(start_time_0[1].substring(6, 8));
+            var hour_end = parseInt(end_time_0[1].substring(0, 2));
+            var minus_end = parseInt(end_time_0[1].substring(3, 5));
+            var sercon_end = parseInt(end_time_0[1].substring(6, 8));
 
-                    if (( start_date.getTime() - date_now.getTime()) / 1000 > 86400) {
-                        check_active.push('Chưa diễn ra');
-                    }
-                    else if ((start_date.getTime() - date_now.getTime()) / 1000 < 86400 && (date_now.getTime() - start_date.getTime()) / 1000 < 0) {
-                        check_active.push('Chuẩn bị diễn ra');
-                    }
-                    else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
-                        check_active.push('Đang diễn ra');
-                    }
-                    else {
-                        check_active.push('Đã diễn ra');
-                    }
+            total_time = (hour_end - hour_start).toString() + " giờ " + (minus_end - minus_tart).toString() + " phút " + (sercon_end - sercon_start).toString() + " giây";
+            time_schedules.timeSchedules.map((ele, index) => {
+                var start_date = new Date(ele.start_time);
+                var end_date = new Date(ele.end_time);
+                const link = "https://recording-jitsi-chung.s3.ap-southeast-1.amazonaws.com/recording/"
+                const class_id = 1;
+                const days = ele.end_time;
+                let str = link + class_id.toString() + "_" + days.slice(0, 10) + ".mp4";
+                list_link_record.push(str);
+                // Do your operations
+                var date_now = new Date();
 
-                    var start_time = ele.start_time.split("T");
-                    var end_time = ele.end_time.split("T");
-                    return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
-                })
-            }
+                if ((start_date.getTime() - date_now.getTime()) / 1000 > 86400) {
+                    check_active.push('Chưa diễn ra');
+                }
+                else if ((start_date.getTime() - date_now.getTime()) / 1000 < 86400 && (date_now.getTime() - start_date.getTime()) / 1000 < 0) {
+                    check_active.push('Chuẩn bị diễn ra');
+                }
+                else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
+                    check_active.push('Đang diễn ra');
+                }
+                else {
+                    check_active.push('Đã diễn ra');
+                }
+
+                var start_time = ele.start_time.split("T");
+                var end_time = ele.end_time.split("T");
+                return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
+            })
+        }
     }
 
     function checkActive(index: number) {
@@ -262,7 +290,7 @@ const DetailClassStudent: React.FC = () => {
                     <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}/${numberSectionCount}`} icon="book" class="primary" />
                     <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
                     <TopCard title="NGHỈ HỌC" text={`${student_leaves.leaves.length}`} icon="book" class="danger" />
-                    <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
+                    <div className="col-xl-3 col-md-3 mb-4" id="content-button-create-teacher-level">
                         <button
                             className="btn btn-success btn-green"
                             id="btn-create-teacher-level"
@@ -359,233 +387,283 @@ const DetailClassStudent: React.FC = () => {
                         if (checked1 === true) {
                             return (
                                 <div className="row">
-                                    <div className="col-xl-12 col-md-12 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Buổi học</h3>
-                                        <div className="table-responsive portlet table-section">
-                                            <table className="table">
-                                                <thead className="thead-light">
-                                                    <tr>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        sections.sections.sort((a, b) => a.number - b.number).map((ele, index) => {
-                                                            if (checkActive(index) === "not_active_now"){
-                                                                return (
-                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className={`row row-section mb-4 ml-2 mr-2 ${checkActive(index)}`}>
-                                                                        <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                        </div>
-                                                                        <div className="col-xl-9 col-md-9">
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mt-2 section_number">Buổi {ele.number}: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Lịch học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{data[index]}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Thời gian buổi học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{total_time}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Hình thức học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                    {
+                                        element.sort((a, b) => a.number - b.number).map((ele, index) => {
+                                            if (checkActive(page*6 + index) === "not_active_now") {
+                                                return (
+                                                    <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
+                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), "") }}>
+                                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
+                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                            </div>
+                                                            <div className="col-xl-10 col-md-10">
+                                                                <div className="row mt-2">
+                                                                    <div className="col-md-3">
+                                                                        Buổi {ele.number}
                                                                     </div>
-                                                                </tr>
-                                                                )
-                                                            }
-                                                            else if (checkActive(index) === "pre_active_now") {
-                                                                return (
-                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className={`row row-section mb-4 ml-2 mr-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele, checkActive(index), "") }}>
-                                                                        <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                        </div>
-                                                                        <div className="col-xl-9 col-md-9">
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mt-2 section_number">Buổi {ele.number}: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Lịch học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{data[index]}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Thời gian buổi học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{total_time}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Hình thức học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                    <div className="col-md-9 not-active-xx">
+                                                                        {ele.name}
                                                                     </div>
-                                                                </tr>
-                                                                )
-                                                            }
-                                                            else if (checkActive(index) === "active_now") {
-                                                                return (
-                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className={`row row-section mb-4 ml-2 mr-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele, checkActive(index), "") }}>
-                                                                        <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                        </div>
-                                                                        <div className="col-xl-9 col-md-9">
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mt-2 section_number">Buổi {ele.number}: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Lịch học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{data[index]}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Thời gian buổi học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{total_time}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Hình thức học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Lịch học:
                                                                     </div>
-                                                                </tr>
-                                                                )
-                                                            }
-                                                            return (
-                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className={`row row-section mb-4 ml-2 mr-2 ${checkActive(index)}`} onClick={() => { onChangeRoute(ele, checkActive(index), list_link_record[index]) }}>
-                                                                        <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                                                        </div>
-                                                                        <div className="col-xl-9 col-md-9">
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mt-2 section_number">Buổi {ele.number}: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mt-2 section_number"><span className="section_name"> {ele.name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Lịch học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{data[index]}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Thời lượng: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{total_time}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Hình thức học: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-xl-3 col-md-3">
-                                                                                    <p className=" mb-2 section_number">Giáo viên: </p>
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9">
-                                                                                    <p className=" mb-2 section_number"><span className="section_name">{ele.teacher_name}</span> </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                    <div className="col-md-9 not-active-xx">
+                                                                        {data[index]}
                                                                     </div>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Thời lượng:
+                                                                    </div>
+                                                                    <div className="col-md-9 not-active-xx">
+                                                                        {total_time}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Hình thức:
+                                                                    </div>
+                                                                    <div className="col-md-9 not-active-xx">
+                                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Giáo viên:
+                                                                    </div>
+                                                                    <div className="col-md-9 not-active-xx">
+                                                                        {ele.teacher_name}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-2">
+                                                                    <div className="col-md-3">
+                                                                       
+                                                                    </div>
+                                                                    <div className="col-md-9 xs-centxxx">
+                                                                        Chưa diễn ra
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                )
+                                            }
+                                            else if (checkActive(page*6 + index) === "pre_active_now") {
+                                                return (
+                                                    <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
+                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), "") }}>
+                                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
+                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                            </div>
+                                                            <div className="col-xl-10 col-md-10">
+                                                                <div className="row mt-2">
+                                                                    <div className="col-md-3">
+                                                                        Buổi {ele.number}
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.name}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Lịch học:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {data[index]}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Thời lượng:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {total_time}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Hình thức:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Giáo viên:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.teacher_name}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-2">
+                                                                    <div className="col-md-3">
+                                                                       
+                                                                    </div>
+                                                                    <div className="col-md-9 xs-centxx">
+                                                                        Chuẩn bị diễn ra
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                )
+                                            }
+                                            else if (checkActive(page*6 + index) === "active_now") {
+                                                return (
+                                                    <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
+                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), "") }}>
+                                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
+                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                            </div>
+                                                            <div className="col-xl-10 col-md-10">
+                                                                <div className="row mt-2">
+                                                                    <div className="col-md-3">
+                                                                        Buổi {ele.number}
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.name}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Lịch học:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {data[index]}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Thời lượng:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {total_time}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Hình thức:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Giáo viên:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.teacher_name}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-2">
+                                                                    <div className="col-md-3">
+                                                                       
+                                                                    </div>
+                                                                    <div className="col-md-9 xs-centx">
+                                                                        Đang diễn ra
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                )
+                                            }
+                                            return (
+                                                <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
+                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), list_link_record[index]) }}>
+                                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
+                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                            </div>
+                                                            <div className="col-xl-10 col-md-10">
+                                                                <div className="row mt-2">
+                                                                    <div className="col-md-3">
+                                                                        Buổi {ele.number}
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.name}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Lịch học:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {data[index]}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Thời lượng:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {total_time}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <div className="col-md-3">
+                                                                        Hình thức:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-2">
+                                                                    <div className="col-md-3">
+                                                                        Giáo viên:
+                                                                    </div>
+                                                                    <div className="col-md-9">
+                                                                        {ele.teacher_name}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-2">
+                                                                    <div className="col-md-3">
+                                                                       
+                                                                    </div>
+                                                                    <div className="col-md-9 xs-cent">
+                                                                        Đã kết thúc
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                            )
+                                        })
+                                    }
+
+                                    <div className="d-flex justify-content-end text-right mt-2 ml-4">
+                    <nav>
+                        <ul className="pagination">
+                            <li className="page-item">
+                                <a className="page-link" aria-label="Previous" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {
+                                Array.from(Array((totalPage)).keys()).map((ele, idx) => {
+                                    return (
+                                        <li className="page-item"><a className="page-link" href="javascript:void(0);" onClick={(e) => {
+                                            e.preventDefault()
+                                            handlePagination(ele)
+                                        }}>{ele + 1}</a></li>
+                                    )
+                                })
+                            }
+                            <li className="page-item">
+                                <a className="page-link" aria-label="Next" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
                                 </div>
                             )
                         }
@@ -605,14 +683,36 @@ const DetailClassStudent: React.FC = () => {
                                                         exercise_student.exercise_not_submit.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1(ele) }}>
-                                                                    <div className="col-xl-4 col-md-4 avatar-x">
-                                                                        <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
-                                                                    </div>
-                                                                        <div className="col-xl-8 col-md-8 mb-4">
-                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
-                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
-                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
+                                                                    <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1(ele) }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
+                                                                            <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-9 col-md-9 mt-2">
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Tên:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.name}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Hạn nộp:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.deadline.replaceAll("T", " ").substring(0,16)}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Tỉ lệ đánh giá:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.level_name} %
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -637,16 +737,38 @@ const DetailClassStudent: React.FC = () => {
                                                         exercise_student.exercise_submitted_graded.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2(ele) }}>
-                                                                        <div className="col-xl-4 col-md-4 avatar-x">
+                                                                    <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2(ele) }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
                                                                             <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8 mt-4">
-                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
-                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline}</span> </p>
-                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
+                                                                        <div className="col-xl-9 col-md-9 mt-2">
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Tên:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.name}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Nộp lúc:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.time_submit.replaceAll("T", " ").substring(0,16)}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Tỉ lệ đánh giá:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.level_name} %
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
-    
+
                                                                     </div>
                                                                 </tr>
                                                             )
@@ -657,14 +779,36 @@ const DetailClassStudent: React.FC = () => {
                                                         exercise_student.exercise_submitted_not_grade.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
-                                                                        <div className="col-xl-4 col-md-4 avatar-x">
+                                                                    <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
                                                                             <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8 mt-4">
-                                                                            <p className=" mb-2 section_number">Tên: <span className="section_name pl-2"> {ele.name}</span> </p>
-                                                                            <p className=" mb-2 section_number">Hạn nộp: <span className="section_name pl-2">{ele.deadline.replaceAll("T", " ")}</span> </p>
-                                                                            <p className=" mb-2 section_number">Phần trăm đánh giá: <span className="section_name pl-2">{ele.level_name}</span> </p>
+                                                                        <div className="col-xl-9 col-md-9 mt-2">
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Tên:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.name}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Nộp lúc:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.time_submit.replaceAll("T", " ").substring(0,16)}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Tỉ lệ đánh giá:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.level_name} %
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -694,13 +838,28 @@ const DetailClassStudent: React.FC = () => {
                                                         student_leaves.leaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section mb-4 ml-2 mr-2" onClick={() => { }}>
-                                                                        <div className="col-xl-3 col-md-3">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399584/wazcmdgbmxy2amdmjjdv.png" alt="" />
+                                                                    <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
+                                                                            <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669002056/1497835_nexeoq.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-xl-9 col-md-9">
-                                                                            <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
-                                                                            <p className=" mb-2 section_number">Thời gian gửi: <span className="section_name">{ele.update_time}</span></p>
+                                                                        <div className="col-xl-9 col-md-9 mt-2">
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Buổi nghỉ:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.section_number}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Thời gian gửi:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0,16)}
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -725,15 +884,30 @@ const DetailClassStudent: React.FC = () => {
                                                         student_leaves.acceptLeaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row row-section-1 mb-4 ml-2 mr-2" onClick={() => {  }}>
-                                                                        <div className="col-xl-4 col-md-4">
-                                                                            <img className="card-img image-section-1" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399584/wazcmdgbmxy2amdmjjdv.png" alt="" />
+                                                                <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { }}>
+                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                    <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669002056/1497835_nexeoq.png" alt="" />
+                                                                </div>
+                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                    <div className="row">
+                                                                        <div className="col-md-5">
+                                                                            Buổi nghỉ:
                                                                         </div>
-                                                                        <div className="col-xl-8 col-md-8">
-                                                                            <p className=" mb-2 section_number">Buổi {ele.section_number}</p>
-                                                                            <p className=" mb-2 section_number">Thời gian duyệt: <span className="section_name pl-2">{ele.update_time}</span></p>
+                                                                        <div className="col-md-7">
+                                                                            {ele.section_number}
                                                                         </div>
                                                                     </div>
+                                                                    <div className="row">
+                                                                        <div className="col-md-5">
+                                                                            Thời gian gửi:
+                                                                        </div>
+                                                                        <div className="col-md-7">
+                                                                            {ele.update_time.replaceAll("T", " ")}
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
                                                                 </tr>
                                                             )
                                                         })

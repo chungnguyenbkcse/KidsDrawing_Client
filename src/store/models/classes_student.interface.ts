@@ -7,6 +7,7 @@ export interface IClassesStudent {
     teacher_name: string;
     teacher_id: number;
     course_id: number;
+    url_image_course: string;
     schedule_section_next: string;
     semester_class_id: number;
     semester_class_name: string;

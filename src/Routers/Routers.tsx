@@ -110,6 +110,7 @@ import GradeExamTeacherEle from "../components/Exam/GradeExamTeacherEle";
 import ViewExerciseTeacherStudent from "../components/Exam/ViewExerciseTeacherStudent";
 import ResultGradeContestStudent from "../components/Contest/ResultGradeContestStudent";
 import DetailScoreContestStudent from "../components/Contest/DetailScoreContestStudent";
+import DetailContestNotOpenNowStudent from "../components/Contest/DetailContestNotOpenNowStudent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -232,7 +233,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/notification`}><Notification /></Route>
                                 <Route path={`/exercise-submission/view`}><ViewExerciseSubmission /></Route>
                                 <Route path={`/contests/submit`}><FormSubmitContestStudent /></Route>
-                                <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
+                                <Route path={`/contests/detail-contest`}><DetailContestNotOpenNowStudent /></Route>
                                 <Route path={`/contest/result-grade`}><ResultGradeContestStudent /></Route>
                                 <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>
                                 <Route path={`/semester-class/detail`}><SemesterClassDetailStudent /></Route>

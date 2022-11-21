@@ -10,6 +10,8 @@ import Loading from "../../common/components/Loading";
 import ContestList from "./ContestList";
 import { getContestParentNew } from "../../common/service/ContestParentNew/GetContestParentNew";
 import ContestNewListTest from "./ContestNewListTest";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 
 const DiscoveryParentContest: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -47,10 +49,14 @@ const DiscoveryParentContest: React.FC = () => {
                 }
                 else {
                     trackPromise(getContestParentNew(dispatch, id))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtAge(dispatch))
                 }
             }
             else {
                 trackPromise(getContestParentNew(dispatch, id))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtAge(dispatch))
             }
         }
 

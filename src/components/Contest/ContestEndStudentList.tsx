@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IContestStudentState } from "../../store/models/root.interface";
+import { IStateType, IContestStudentState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
 import { ILesson } from "../../store/models/lesson.interface";
 import { useHistory } from "react-router-dom";
 import { IContestStudent } from "../../store/models/contest_student.interface";
@@ -14,6 +14,9 @@ export type lessonListProps = {
 
 function ContestStudentEndList(props: lessonListProps): JSX.Element {
     const contest_students: IContestStudentState = useSelector((state: IStateType) => state.contest_students);
+    const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
+    const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
+    
     const [totalPage, setTotalPage] = useState(0)
     const [element, setElement] = useState<IContestStudent[]>([])
     
@@ -54,17 +57,72 @@ function ContestStudentEndList(props: lessonListProps): JSX.Element {
         }
     }
 
-    const [filter, setFilter] = useState("0")
+    const [filter, setFilter] = useState(0)
+    const [filter1, setFilter1] = useState(0)
 
 
     function handleChange(e: any) {
         setFilter(e.target.value)
     }
-    
-    function handleFilter() { 
+
+    function handleChange1(e: any) {
+        setFilter1(e.target.value)
     }
 
+
     console.log(element)
+
+    function handleFilter() {
+        if (filter == 0 && filter1 == 0) {
+            let k = contest_students.contest_end;
+
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        
+        else if (filter == 0 && filter1 != 0 ) {
+            let k = contest_students.contest_end.filter((ele, idx) => ele.art_age_id == filter1)
+
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        else if (filter != 0 && filter1 == 0 ) {
+            let k = contest_students.contest_end.filter((ele, idx) => ele.art_type_id == filter)
+
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        else if (filter != 0 && filter1 != 0 ) {
+            let k = contest_students.contest_end.filter((ele, idx) => ele.art_type_id == filter && ele.art_age_id == filter1)
+
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+    }
 
 
     return (
@@ -89,28 +147,31 @@ function ContestStudentEndList(props: lessonListProps): JSX.Element {
                                         value={filter}
                                         onChange={handleChange}
                                     >
-                                        <option value="">--Thể loại--</option>
-                                        <option value="0">Chì màu</option>
-                                        <option value="1">Sơn dầu</option>
+                                        <option value={0}>Choose...</option>
+                                        {
+                                            art_types.artTypes.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele.id}>{ele.name}</option>
+                                                )
+                                            })
+                                        }
                                     </select>   
                                     <select name="cars" id="cars" className="pl-2"
-                                        value={filter}
-                                        onChange={handleChange}
+                                        value={filter1}
+                                        onChange={handleChange1}
                                     >
-                                        <option value="">--Độ tuổi--</option>
-                                        <option value="0">5-8 tuổi</option>
-                                        <option value="1">10-12 tuổi</option>
-                                    </select>  
-                                    <select name="cars" id="cars" className="pl-2"
-                                        value={filter}
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">--Bé--</option>
-                                        <option value="0">Nguyen X</option>
-                                        <option value="1">Nguyen Y</option>
-                                    </select>                                
+                                        <option value={0}>Choose...</option>
+                                        {
+                                            art_ages.artAges.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele.id}>{ele.name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>                              
                                     <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button" onClick={() => {handleFilter()}}>Lọc&nbsp;<i className="fa fa-flask"></i></button></div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

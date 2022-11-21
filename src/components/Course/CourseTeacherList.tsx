@@ -53,8 +53,8 @@ function CourseTeacherList(props: semesterListProps): JSX.Element {
         }
     }
 
-    const [filter, setFilter] = useState(1)
-    const [filter1, setFilter1] = useState(1)
+    const [filter, setFilter] = useState(0)
+    const [filter1, setFilter1] = useState(0)
     const [filter2, setFilter2] = useState(1)
 
 

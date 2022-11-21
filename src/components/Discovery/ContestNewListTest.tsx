@@ -70,8 +70,8 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
         }
     }
 
-    const [filter, setFilter] = useState(1)
-    const [filter1, setFilter1] = useState(1)
+    const [filter, setFilter] = useState(0)
+    const [filter1, setFilter1] = useState(0)
 
 
     function handleChange(e: any) {
@@ -86,20 +86,55 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
     console.log(element)
 
     function handleFilter() {
-        console.log(filter)
-        console.log(filter1)
-        let k = contest_parent_news.contests.filter((ele, idx) => 
-        ele !== undefined && ele.art_type_id == filter && ele.art_age_id == filter1
-        )
+        if (filter == 0 && filter1 == 0) {
+            let k = contest_parent_news.contests;
 
-        let x = (k.length - (k.length) % 10) / 10;
-        if (x === 0) {
-            setElement(k)
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
         }
-        else {
-            setElement(k.slice(0, 10))
+        
+        else if (filter == 0 && filter1 != 0 ) {
+            let k = contest_parent_news.contests.filter((ele, idx) => ele.art_age_id == filter1)
+
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
         }
-        setTotalPage((x + 1))
+        else if (filter != 0 && filter1 == 0 ) {
+            let k = contest_parent_news.contests.filter((ele, idx) => ele.art_type_id == filter)
+
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        else if (filter != 0 && filter1 != 0 ) {
+            let k = contest_parent_news.contests.filter((ele, idx) => ele.art_type_id == filter && ele.art_age_id == filter1)
+
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
     }
 
 
@@ -126,6 +161,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         value={filter}
                                         onChange={handleChange}
                                     >
+                                        <option value={0}>Choose...</option>
                                         {
                                             art_types.artTypes.map((ele, idx) => {
                                                 return (
@@ -138,6 +174,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         value={filter1}
                                         onChange={handleChange1}
                                     >
+                                        <option value={0}>Choose...</option>
                                         {
                                             art_ages.artAges.map((ele, idx) => {
                                                 return (

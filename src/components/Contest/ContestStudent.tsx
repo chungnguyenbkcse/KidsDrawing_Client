@@ -11,6 +11,8 @@ import { getContestStudentByStudent } from "../../common/service/ContestStudent/
 import ContestStudentNotOpenNowList from "./ContestStudentNotOpenNowListList";
 import ContestStudentEndList from "./ContestEndStudentList";
 import ContestStudentDoingList1 from "./ContestStudentDoingList1";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
 
 const ContestStudent: React.FC = () => {
     const [checked1, setChecked1] = useState(true);
@@ -54,10 +56,14 @@ const ContestStudent: React.FC = () => {
                 }
                 else {
                     trackPromise(getContestStudentByStudent(dispatch, id))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtAge(dispatch))
                 }
             }
             else {
                 trackPromise(getContestStudentByStudent(dispatch, id))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtAge(dispatch))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);

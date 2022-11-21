@@ -13,10 +13,10 @@ interface ExerciseSubmission {
     create_time: string;
     update_time: string;
 }
-export function getExerciseSubmissionByClass(dispatch: any, id: any) {
+export function getExerciseSubmissionByClassAndStudent(dispatch: any, classes_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-submission/class/${id}`, {
+                `${process.env.REACT_APP_API_URL}/exercise-submission/classes-student/${classes_id}/${student_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -30,7 +30,7 @@ export function getExerciseSubmissionByClass(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseSubmissionByClass(dispatch, id))
+                        dispatch(getExerciseSubmissionByClassAndStudent(dispatch, classes_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -53,10 +53,10 @@ export function getExerciseSubmissionByClass(dispatch: any, id: any) {
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         exercise_id: ele.exercise_id,
+                        exercise_name: ele.exercise_name,
                         exercise_deadline: ele.exercise_deadline,
                         exercise_description: ele.exercise_description,
                         exercise_level_name: ele.exercise_level_name,
-                        exercise_name: ele.exercise_name,
                         image_url: ele.image_url,
                         create_time: strDate_1,
                         update_time: strDate_2

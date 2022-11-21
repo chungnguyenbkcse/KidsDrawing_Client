@@ -1,4 +1,4 @@
-import { fetchDataSuccess, fetchDataError, removeExerciseGradedAll, removeExerciseNotGradedAll, addExerciseNotGraded } from "../../../store/actions/exercise_submission.action";
+import { fetchDataSuccess, fetchDataError, removeExerciseGradedAll, removeExerciseNotGradedAll, addExerciseGraded, addExerciseNotGraded } from "../../../store/actions/exercise_submission.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ExerciseSubmission {
     id: any;
@@ -7,16 +7,16 @@ interface ExerciseSubmission {
     student_name: string;
     exercise_name: string;
     image_url: string;
-    create_time: string;
     exercise_description: string;
     exercise_level_name: string;
     exercise_deadline: string;
+    create_time: string;
     update_time: string;
 }
-export function getExerciseSubmissionById(dispatch: any, id: any) {
+export function getExerciseSubmissionByExerciseAndStudent(dispatch: any, exercise_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-submission/${id}`, {
+                `${process.env.REACT_APP_API_URL}/exercise-submission/exercise-student/${exercise_id}/${student_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -30,7 +30,7 @@ export function getExerciseSubmissionById(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseSubmissionById(dispatch, id))
+                        dispatch(getExerciseSubmissionByExerciseAndStudent(dispatch, exercise_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -42,26 +42,27 @@ export function getExerciseSubmissionById(dispatch: any, id: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeExerciseGradedAll())
-                dispatch(removeExerciseNotGradedAll())
-                    var strDate_1 = data.create_time;
-                    var strDate_2 = data.update_time;
+                data.body.ExerciseSubmission.map((ele: any, index: any) => {
+                    var strDate_1 = ele.create_time;
+                    var strDate_2 = ele.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: data.id,
-                        student_id: data.student_id,
-                        student_name: data.student_name,
-                        exercise_id: data.exercise_id,
-                        exercise_name: data.exercise_name,
-                        exercise_deadline: data.exercise_deadline,
-                        exercise_description: data.exercise_description,
-                        exercise_level_name: data.exercise_level_name,
-                        image_url: data.image_url,
+                        id: ele.id,
+                        student_id: ele.student_id,
+                        student_name: ele.student_name,
+                        exercise_id: ele.exercise_id,
+                        exercise_name: ele.exercise_name,
+                        exercise_deadline: ele.exercise_deadline,
+                        exercise_description: ele.exercise_description,
+                        exercise_level_name: ele.exercise_level_name,
+                        image_url: ele.image_url,
                         create_time: strDate_1,
                         update_time: strDate_2
                     }
                     localStorage.removeItem('url_exercise_submission')
                     localStorage.setItem('url_exercise_submission', exercise_submission.image_url)
-                    return dispatch(addExerciseNotGraded(exercise_submission));
+                })
+
+                
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

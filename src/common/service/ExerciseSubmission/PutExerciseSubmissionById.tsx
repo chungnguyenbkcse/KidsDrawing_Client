@@ -3,13 +3,13 @@ import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/exerc
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 
-export function postExerciseSubmission(data: any, idx: any, routeHome: any) {
+export function putExerciseSubmission(id: number, data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-submission`, {
-                    method: "POST",
+                `${process.env.REACT_APP_API_URL}/exercise-submission/${id}`, {
+                    method: "PUT",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export function postExerciseSubmission(data: any, idx: any, routeHome: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postExerciseSubmission(data, idx, routeHome))
+                        dispatch(putExerciseSubmission(id, data, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,13 +36,13 @@ export function postExerciseSubmission(data: any, idx: any, routeHome: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(data))
-                toast.update(idx, { render: "Nộp bài vẽ thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Chỉnh bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
                 setTimeout(function () {
                     routeHome();
                 }, 2000); 
             })
             .catch(error => {
-                toast.update(idx, { render: "Nộp bài vẽ không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh bài nộp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

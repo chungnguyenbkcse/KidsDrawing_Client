@@ -9,7 +9,7 @@ import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseStudentState, IRootPageStateType, ISectionState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassStudent.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
@@ -20,17 +20,20 @@ import { getExerciseForClassStudent } from "../../common/service/ExerciseStudent
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { IExerciseStudent } from "../../store/models/exercise_student.interface";
 import { ToastContainer } from "react-toastify";
+import { getExerciseSubmissionByClassAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClassAndStudent";
+import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 
 
 const DetailClassStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+    const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
     const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
     const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
-    const exercise_student: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
+    const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const { promiseInProgress } = usePromiseTracker();
 
     const [totalPage, setTotalPage] = useState(0)
@@ -64,7 +67,7 @@ const DetailClassStudent: React.FC = () => {
 
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberSectionCount: number = sections.sections.length;
-    const numberNotSubmitNowCount: number = exercise_student.exercise_not_submit.length;
+    const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     var id_x = localStorage.getItem('id');
     var id: any = "";
     if (id_x !== null) {
@@ -109,6 +112,7 @@ const DetailClassStudent: React.FC = () => {
                     trackPromise(getInfoMyClass(dispatch, class_id))
                     trackPromise(getSectionByClass(dispatch, class_id))
                     trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
+                    trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, id))
                     trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
                 }
             }
@@ -116,6 +120,7 @@ const DetailClassStudent: React.FC = () => {
                 trackPromise(getInfoMyClass(dispatch, class_id))
                 trackPromise(getSectionByClass(dispatch, class_id))
                 trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
+                trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, id))
                 trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
             }
         }
@@ -137,31 +142,58 @@ const DetailClassStudent: React.FC = () => {
 
     const history = useHistory();
 
-    const routeChange2 = (exercise_student: IExerciseStudent) => {
+    const routeChange2 = (exercise_student: IExerciseSubmission) => {
         let path = '/exercise/detail';
-        localStorage.removeItem('exercise_id');
-        localStorage.setItem('exercise_id', exercise_student.id.toString())
+        localStorage.removeItem('exercise_submission_id');
+        localStorage.setItem('exercise_submission_id', exercise_student.id.toString())
+        localStorage.removeItem('time_submit');
+        localStorage.setItem('time_submit', exercise_student.update_time.toString())
+        localStorage.removeItem('description');
+        localStorage.setItem('exercise_description', exercise_student.exercise_description);
+        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
+        localStorage.setItem('description', exercise_student.exercise_description.toString())
+        localStorage.removeItem('deadline');
+        localStorage.setItem('deadline', exercise_student.exercise_deadline);
+        
+        localStorage.setItem('exercise_name', exercise_student.exercise_name);
+        localStorage.setItem('exercise_id', exercise_student.exercise_id.toString());
         history.push({
             pathname: path
         });
     }
 
-    const routeChange1 = (ele: IExerciseStudent) => {
-        localStorage.setItem('exercise_id', ele.id)
+    const routeChange1 = (exercise_student: IExerciseStudent) => {
+        localStorage.removeItem('exercise_description');
+        localStorage.removeItem('exercise_name');
+        localStorage.removeItem('exercise_level_name');
+        localStorage.removeItem('exercise_id');
+        localStorage.removeItem('deadline');
+        localStorage.setItem('exercise_description', exercise_student.description);
+        localStorage.setItem('exercise_name', exercise_student.name);
+        localStorage.setItem('exercise_level_name', exercise_student.level_name);
+        localStorage.setItem('exercise_id', exercise_student.id.toString());
+        localStorage.setItem('deadline', exercise_student.deadline);
         let path = '/exercise/submit';
         history.push({
             pathname: path
         });
     }
 
-    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseStudent) {
+    function routeChangeVIewExerciseSubmission(exercise_student: IExerciseSubmission) {
         let path = '/exercise-submission/view';
         localStorage.removeItem('exercise_submission_id');
-        localStorage.setItem('exercise_submission_id', exercise_student.exercise_submission_id.toString())
+        localStorage.setItem('exercise_submission_id', exercise_student.id.toString())
         localStorage.removeItem('time_submit');
-        localStorage.setItem('time_submit', exercise_student.time_submit.toString())
+        localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
-        localStorage.setItem('description', exercise_student.description.toString())
+        localStorage.setItem('exercise_description', exercise_student.exercise_description);
+        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
+        localStorage.setItem('description', exercise_student.exercise_description.toString())
+        localStorage.removeItem('deadline');
+        localStorage.setItem('deadline', exercise_student.exercise_deadline);
+        
+        localStorage.setItem('exercise_name', exercise_student.exercise_name);
+        localStorage.setItem('exercise_id', exercise_student.exercise_id.toString());
         history.push({
             pathname: path
         });
@@ -680,7 +712,7 @@ const DetailClassStudent: React.FC = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        exercise_student.exercise_not_submit.map((ele, index) => {
+                                                        exercise_students.exercise_not_submit.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChange1(ele) }}>
@@ -713,6 +745,15 @@ const DetailClassStudent: React.FC = () => {
                                                                                 </div>
                                                                             </div>
 
+                                                                            <div className="row mb-2">
+                                                                                <div className="col-md-5">
+                                                                                    Trạng thái:
+                                                                                </div>
+                                                                                <div className="col-md-7 status-score">
+                                                                                    Chưa nộp
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </tr>
@@ -734,7 +775,7 @@ const DetailClassStudent: React.FC = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        exercise_student.exercise_submitted_graded.map((ele, index) => {
+                                                        exercise_submissions.exercise_gradeds.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2(ele) }}>
@@ -747,7 +788,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Tên:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.name}
+                                                                                    {ele.exercise_name}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -755,7 +796,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Nộp lúc:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.time_submit.replaceAll("T", " ").substring(0,16)}
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0,16)}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -763,10 +804,18 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Tỉ lệ đánh giá:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.level_name} %
+                                                                                    {ele.exercise_level_name} %
                                                                                 </div>
                                                                             </div>
 
+                                                                            <div className="row mb-2">
+                                                                                <div className="col-md-5">
+                                                                                    Trạng thái:
+                                                                                </div>
+                                                                                <div className="col-md-7 status-score">
+                                                                                    Đã có điểm
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
 
                                                                     </div>
@@ -776,7 +825,7 @@ const DetailClassStudent: React.FC = () => {
                                                     }
 
                                                     {
-                                                        exercise_student.exercise_submitted_not_grade.map((ele, index) => {
+                                                        exercise_submissions.exercise_not_gradeds.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                     <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
@@ -789,7 +838,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Tên:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.name}
+                                                                                    {ele.exercise_name}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -797,7 +846,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Nộp lúc:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.time_submit.replaceAll("T", " ").substring(0,16)}
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0,16)}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -805,7 +854,16 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Tỉ lệ đánh giá:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.level_name} %
+                                                                                    {ele.exercise_level_name} %
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div className="row mb-2">
+                                                                                <div className="col-md-5">
+                                                                                    Trạng thái:
+                                                                                </div>
+                                                                                <div className="col-md-7 status-score">
+                                                                                    Chưa có điểm
                                                                                 </div>
                                                                             </div>
 

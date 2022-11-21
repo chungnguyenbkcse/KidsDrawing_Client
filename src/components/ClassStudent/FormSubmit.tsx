@@ -6,6 +6,8 @@ import { editTeacher, setModificationState } from "../../store/actions/users.act
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { postExerciseSubmission } from "../../common/service/ExerciseSubmission/PostExerciseSubmission";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import { useHistory } from "react-router-dom";
 
 function FormSubmit(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
@@ -37,6 +39,18 @@ function FormSubmit(): JSX.Element {
         exercise_id = parseInt(id_z);
     }
 
+    var id_k = localStorage.getItem("exercise_name");
+    let exercise_name = "";
+    if (id_k !== null) {
+        exercise_name = (id_k);
+    }
+
+    var id_h = localStorage.getItem("exercise_level_name");
+    let exercise_level_name = "";
+    if (id_h !== null) {
+        exercise_level_name = (id_h);
+    }
+
 
     async function saveUser(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
@@ -51,18 +65,27 @@ function FormSubmit(): JSX.Element {
         saveForm(saveUserFn, url, idx);
     }
 
+    const history = useHistory();
+    function routeHome() {
+        history.push({
+            pathname: "/classes/detail-student"
+        });
+    }
+
     function saveForm(saveFn: Function, url: string, idx: any): void {
         if (user) {
             dispatch(postExerciseSubmission({
                 student_id: id,
                 exercise_id: exercise_id,
                 image_url: url
-            }, idx))
+            }, idx, routeHome))
         }
     }
 
     function cancelForm(): void {
         dispatch(setModificationState(UserModificationStatus.None));
+        setImage(null)
+        setPreview("")
     }
 
     function getDisabledClass(): string {
@@ -71,7 +94,7 @@ function FormSubmit(): JSX.Element {
     }
 
     function isFormInvalid(): boolean {
-        return (image === null) as boolean;
+        return (preview === null || preview === "") as boolean;
     }
 
     const src = user.profile_image_url;
@@ -112,31 +135,85 @@ function FormSubmit(): JSX.Element {
 
     return (
         <Fragment>
-            <div className="row text-left">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card shadow shadow-xx">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Đề bài</h6>
-                        </div>
-                        <ToastContainer />
-                        <div className="card-body">
-                            <div className="col-xl-12 col-md-12 col-xs-12" dangerouslySetInnerHTML={{ __html: exercise_description }}>
+            <ToastContainer />
+            <div className="row">
+                    <div className="col-xl-6 col-md-6 mb-4">
+                        <div className="row">
+                            <div className="col-xl-12 col-md-12 mb-4">
+                                <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className={`card shadow h-100 py-2`} id="normal-tutorial">
+                                        <div className="card-body">
+                                            <div className="row no-gutters justify-content-left">
+                                                <h4 id="full-name">Thông tin bài tập</h4>
+                                            </div>
+                                            <div className="row no-gutters">
+                                                <p id="phone">Tên: {exercise_name}</p>
+                                            </div>
+                                            <div className="row no-gutters">
+                                                <p id="phone">Nội dung: <span dangerouslySetInnerHTML={{ __html: exercise_description }}></span></p>
+                                            </div>
 
-                            </div>
-                            <form onSubmit={saveUser}>
-                                <div className="form-row">
-                                    <div className="form-group col-md-6">
-                                        <label htmlFor="profile_image">Chọn ảnh:</label>
-                                        <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
-                                    </div>
-                                    <div className="form-group col-md-6">
-                                        <img src={preview} alt="Preview" id="avatar" />
+                                            <div className="row no-gutters">
+                                                <p id="phone">Tỉ lệ đánh giá: {exercise_level_name}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-                                <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
-                            </form>
+                            </div>
                         </div>
+                    </div>
+
+                    <div className="col-xl-6 col-md-6 mb-4">
+                        <div className="row">
+                            <div className="col-xl-12 col-md-12 mb-4">
+                                <div className={`card shadow py-2`} >
+                                    <div className="card-body">
+                                        <div className="row no-gutters justify-content-left exercise-list">
+                                            <h4 id="full-name">Nộp bài</h4>
+                                        </div>
+                                        <div className="row mx-auto">
+                                            <form onSubmit={saveUser}>
+                                                <div className="form-row">
+                                                    <div className="form-group pl-2">
+                                                        <label htmlFor="profile_image">Chọn ảnh:</label>
+                                                        <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
+                                                    </div>
+                                                </div>
+                                                <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                                <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div className="row">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Preview</h6>
+                    </div>
+                    <div className="card-body mx-auto">
+                        {
+                            function () {
+                                if (preview === null || preview === "") {
+                                    return (
+                                        <p>Vui lòng chọn ảnh cần nộp!</p>
+                                    )
+                                }
+                                else {
+                                    return (
+                                    <PhotoProvider>
+                                        <PhotoView src={preview}>
+                                            <img src={preview} alt="" className="center-x" />
+                                        </PhotoView>
+                                    </PhotoProvider>
+                                    )
+                                }
+                            }()
+                        }
                     </div>
                 </div>
             </div>

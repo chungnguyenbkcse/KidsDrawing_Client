@@ -15,6 +15,10 @@
     height: auto;
 }
 
+.CircularProgressbar-path {
+    max-height: 50px !important;
+}
+
 #topcard-user {
     background: #1FFCEF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

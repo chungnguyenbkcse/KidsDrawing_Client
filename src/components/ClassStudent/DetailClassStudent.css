@@ -208,6 +208,12 @@
     cursor: pointer;
 }
 
+.status-score {
+    color: #dc3545 !important;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .xs-centx {
     color: #21FC36 !important;
     font-weight: bold;

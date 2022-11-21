@@ -6,6 +6,12 @@ body {
     cursor: pointer;
   }
 
+  .product-x {
+    background: #1FFCEF !important;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+  }
+
   #cars {
     margin-left: 5px !important;
   }

@@ -82,18 +82,7 @@ const ContestStudent: React.FC = () => {
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-                <div className="row">
-                    <TopCard title="CHƯA DIỄN RA" text={`${numberNotOpenNowCount}`} icon="book" class="primary" />
-                    <TopCard title="ĐANG DIỄN RA" text={`${numberContestOpeningCount}`} icon="book" class="primary" />
-                    <TopCard title="ĐÃ KẾT THÚC" text={`${numberContestEndCount}`} icon="book" class="primary" />
-                    {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(StudentRegisterQuantificationModificationStatus.Create))}>
-                        <i className="fas fa fa-plus"></i>
-                        Đăng kí trình độ
-                    </button>
-                </div> */}
-                </div>
+                
 
 <div className="row" id="search-box">
 <div className="col-xl-12 col-lg-12">
@@ -112,7 +101,7 @@ const ContestStudent: React.FC = () => {
 </div>
 
                 <div className="row">
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <div className="col-xl-4 col-lg-4 mt-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
                             if (checked1 === false) {
                                 setChecked1(true)
@@ -130,7 +119,7 @@ const ContestStudent: React.FC = () => {
                             backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
                         }}></div>
                     </div>
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <div className="col-xl-4 col-lg-4 mt-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                             if (checked2 === false) {
                                 setChecked2(true)
@@ -150,7 +139,7 @@ const ContestStudent: React.FC = () => {
                         }}></div>
                     </div>
 
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <div className="col-xl-4 col-lg-4 mt-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                             if (checked3 === false) {
                                 setChecked3(true)
@@ -178,10 +167,8 @@ const ContestStudent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
-                                                </div>
+                                            <div className="card shadow" id="topcard-user">
+    
                                                 <div className="card-body">
                                                     <ContestStudentDoingList1 value={searchTerm} />
                                                 </div>
@@ -196,10 +183,8 @@ const ContestStudent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
-                                                </div>
+                                            <div className="card shadow " id="topcard-user">
+                                                
                                                 <div className="card-body">
                                                     <ContestStudentNotOpenNowList value={searchTerm} />
                                                 </div>
@@ -216,10 +201,8 @@ const ContestStudent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
-                                                </div>
+                                            <div className="card shadow" id="topcard-user">
+                                                
                                                 <div className="card-body">
                                                     <ContestStudentEndList value={searchTerm}/>
                                                 </div>

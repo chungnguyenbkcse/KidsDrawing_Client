@@ -1,6 +1,14 @@
 .blue-seven-one {
     background-color: #ffffff !important;
   }
+
+  #text-filter-column-student_name {
+    margin-left: 10px;
+  }
+
+  .active-student {
+    background: #CCEBF4 !important;
+  }
   
   .blue-dark-seven-one {
     background-color: #216fce !important;

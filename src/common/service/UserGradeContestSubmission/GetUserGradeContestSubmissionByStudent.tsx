@@ -8,6 +8,11 @@ interface user_grade_contest {
     contest_id: number;
     contest_name: string;
     contest_submission_id: number;
+    url_conest_submission: string;
+    art_type_name: string;
+    art_age_name: string;
+    start_time: string;
+    end_time: string;
     feedback: string;
     score: number;
     time: string;
@@ -53,6 +58,11 @@ export function getUserGradeContestSubmissionByStudent(dispatch: any, id: any) {
                         contest_id: ele.contest_id,
                         contest_name: ele.contest_name,
                         contest_submission_id: ele.contest_submission_id,
+                        url_conest_submission: ele.url_conest_submission,
+                        art_age_name: ele.art_age_name,
+                        art_type_name: ele.art_type_name,
+                        start_time: ele.start_time,
+                        end_time: ele.end_time,
                         feedback: ele.feedback,
                         score: ele.score,
                         time: ele.time

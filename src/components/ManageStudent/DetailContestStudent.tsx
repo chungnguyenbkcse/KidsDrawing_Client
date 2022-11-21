@@ -38,6 +38,11 @@ const DetailContestStudent: React.FC = () => {
         contest_id: 0,
         contest_name: '',
         contest_submission_id: 0,
+        url_conest_submission: "",
+        art_age_name: "",
+        art_type_name: "",
+        start_time:"",
+        end_time: "",
         feedback: "",
         score: 0,
         time: ""

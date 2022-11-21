@@ -6,6 +6,11 @@ export interface IUserGradeContestSubmission {
     contest_id: number;
     contest_name: string;
     contest_submission_id: number;
+    url_conest_submission: string;
+    art_type_name: string;
+    art_age_name: string;
+    start_time: string;
+    end_time: string;
     feedback: string;
     score: number;
     time: string;

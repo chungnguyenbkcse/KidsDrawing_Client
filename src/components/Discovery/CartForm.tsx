@@ -1,8 +1,8 @@
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import "./SemesterClassDetail.css"
 import { toast, ToastContainer } from "react-toastify";
 import { GrLinkNext } from "react-icons/gr";
-import { IRootPageStateType, IStateType, IUserRegisterJoinSemesterState } from "../../store/models/root.interface";
+import { ILessonState, IRootPageStateType, IStateType, IUserRegisterJoinSemesterState } from "../../store/models/root.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { postMomo } from "../../common/service/Payment/PostPayment";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -13,6 +13,9 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getUserRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterByPayer";
 import { deleteUserRegisterJoinSemester1 } from "../../common/service/UserRegisterJoinSemester/DeleteUserRegisterJoinSemester";
 import { getUserRegisterJoinSemesterByStudent } from "../../common/service/UserRegisterJoinSemester/GetUserRegisterJoinSemesterStudent";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import Popup from "reactjs-popup";
+import { setModificationState } from "../../store/actions/lesson.action";
 
 
 const CartForm: React.FC = () => {
@@ -23,6 +26,20 @@ const CartForm: React.FC = () => {
     let id: any = "";
     if (id_x !== null) {
         id = id_x;
+    }
+
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
+
+    const [popup, setPopup] = useState(false);
+    const [cardId, setCardId] = useState(0)
+
+
+    function onLessonRemove() {
+        setPopup(true);
+    }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
     }
 
     var role_privilege = localStorage.getItem('role_privilege')
@@ -142,7 +159,7 @@ const CartForm: React.FC = () => {
                     }
                     <tr>
                         <td colSpan={5}>Tổng tiền</td>
-                        <td>{user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0)} $</td>
+                        <td>{user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0)} VNĐ</td>
                     </tr>
                     <tr>
                         <td colSpan={5}></td>
@@ -196,10 +213,9 @@ const CartForm: React.FC = () => {
                             return(
                                 <tr key={key}>   
                                 <td><i className="badge badge-danger" onClick={()=>{
-                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                                        position: toast.POSITION.TOP_CENTER
-                                      });
-                                    dispatch(deleteUserRegisterJoinSemester1(item.id, idx))
+                                    setCardId(item.id)
+                                    dispatch(setModificationState(LessonModificationStatus.Remove))
+                                    setPopup(true)
                                 }}>X</i></td>
                                 <td>{item.course_name}</td>
                                 <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
@@ -216,12 +232,44 @@ const CartForm: React.FC = () => {
                     }
                     <tr>
                         <td colSpan={5}>Tổng tiền</td>
-                        <td>{user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0)} $</td>
+                        <td>{user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0)} VNĐ</td>
                     </tr>
                     </tbody>
                    
                 </table>
                 </div>
+
+                {
+                    function () {
+                        if (lessons.modificationState === LessonModificationStatus.Remove) {
+                            return (
+                                <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Are you sure?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                setPopup(false);
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                  });
+                                                dispatch(deleteUserRegisterJoinSemester1(cardId, idx))
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                            )
+                        }
+                    }()
+                }
             </div>
     
     

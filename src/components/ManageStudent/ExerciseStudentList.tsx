@@ -13,12 +13,17 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getExerciseForClassStudent } from "../../common/service/ExerciseStudent/GetExerciseForClassStudent";
 import { getExerciseSubmissionByClassAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClassAndStudent";
 import ExerciseStudentNotGradeList from "./ExerciseStudentNotGradeList";
+import ExerciseStudentNotSubmitList from "./ExerciseStudentNotSubmit";
 
 const ExerciseStudentList: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
+    const exercise_submissions = useSelector((state: any) => state.exercise_submissions);
+    const user_grade_exercise_submission = useSelector((state: any) => state.user_grade_exercise_submissions);
     const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
-    const numberSubmittedCount: number = exercise_students.exercise_submitted_graded.length + exercise_students.exercise_submitted_not_grade.length;
+    const numberSubmittedNotGradeCount: number = exercise_submissions.exercise_not_gradeds.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
+    const numberGradeCount: number = user_grade_exercise_submission.user_grade_exercise_submissions.length;
+
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('student_id');
@@ -76,7 +81,9 @@ const ExerciseStudentList: React.FC = () => {
         dispatch(updateCurrentPath("Thống kê", "Bài tập"));
     }, [dispatch, path.area])
 
-    const [checked, setChecked] = useState(true);
+    const [checked1, setChecked1] = useState(true);
+    const [checked2, setChecked2] = useState(false);
+    const [checked3, setChecked3] = useState(false);
 
     return (
         promiseInProgress ?
@@ -93,7 +100,8 @@ const ExerciseStudentList: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="BÀI TẬP ĐÃ NÔP" text={`${numberSubmittedCount}`} icon="book" class="primary" />
+                    <TopCard title="BÀI TẬP ĐÃ CHẤM" text={`${numberGradeCount}`} icon="book" class="primary" />
+                    <TopCard title="BÀI TẬP CHƯA CHẤM" text={`${numberSubmittedNotGradeCount}`} icon="book" class="primary" />
                     <TopCard title="BÀI TẬP CHƯA NỘP" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
                     {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
@@ -105,44 +113,69 @@ const ExerciseStudentList: React.FC = () => {
                 </div>
 
                 <div className="row">
-                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                            if (checked === false) {
-                                setChecked(true)
+                            if (checked1 === false) {
+                                setChecked1(true)
+                                setChecked2(false)
+                                setChecked3(false)
                             }
                         }} style={{
-                            color: checked ? "#F24E1E" : "#2F4F4F"
+                            color: checked1 ? "#F24E1E" : "#2F4F4F"
                         }}>Đã chấm</h6>
+
                         <div style={{
                             height: "5px",
                             textAlign: "center",
                             margin: "auto",
                             width: "30%",
-                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                            backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
                         }}></div>
                     </div>
-                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                            if (checked === true) {
-                                setChecked(false)
+                            if (checked2 === false) {
+                                setChecked2(true)
+                                setChecked1(false)
+                                setChecked3(false)
                             }
                         }}
                             style={{
-                                color: checked ? "#2F4F4F" : "#F24E1E"
+                                color: checked2 ? "#F24E1E" : "#2F4F4F"
                             }}>Chưa chấm</h6>
                         <div style={{
                             height: "5px",
                             textAlign: "center",
                             margin: "auto",
                             width: "30%",
-                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                            backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked3 === false) {
+                                setChecked3(true)
+                                setChecked1(false)
+                                setChecked2(false)
+                            }
+                        }}
+                            style={{
+                                color: checked3 ? "#F24E1E" : "#2F4F4F"
+                            }}>Chưa nộp</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
                         }}></div>
                     </div>
                 </div>
 
                 {
                     function () {
-                        if (checked === true) {
+                        if (checked1 === true) {
                             return (
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
@@ -155,13 +188,26 @@ const ExerciseStudentList: React.FC = () => {
                                 </div>
                             )
                         }
-                        else {
+                        else if (checked2 === true) {
                             return (
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
                                             <div className="card-body">
                                                 <ExerciseStudentNotGradeList />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        else {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-body">
+                                                <ExerciseStudentNotSubmitList />
                                             </div>
                                         </div>
                                     </div>

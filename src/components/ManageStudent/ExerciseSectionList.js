@@ -73,7 +73,7 @@ function ExerciseStudentList(props) {
   };
 
 
-  function editButton(cell, row) {
+  /* function editButton(cell, row) {
     return (
         <button type="button" className="btn btn-warning" onClick={() => {
             if (props.onSelect) props.onSelect(row);
@@ -81,7 +81,7 @@ function ExerciseStudentList(props) {
           }}
           >Chi tiết</button>
     )
-  }
+  } */
 
   function gradeButton(cell, row) {
     return (
@@ -89,7 +89,7 @@ function ExerciseStudentList(props) {
             if (props.onSelect) props.onSelect(row);
             onChangeRoute1(row)
           }}
-          >Chấm điểm</button>
+          >Chỉnh điểm</button>
     )
   }
 
@@ -124,18 +124,13 @@ function ExerciseStudentList(props) {
     {
       dataField: 'score',
       text: 'Điểm',
-      filter: textFilter()
+      sort: true
     },
     {
       dataField: '',
       text: 'Hành động',
-      formatter: editButton
-    },
-    {
-      dataField: '',
-      text: '',
       formatter: gradeButton
-    },
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

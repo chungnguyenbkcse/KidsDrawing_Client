@@ -8,9 +8,9 @@ import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-pa
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
-function ExerciseStudentNotGradeList(props) {
+function ExerciseStudentNotSubmitList(props) {
 
-    const exercise_submissions = useSelector((state) => state.exercise_submissions);
+    const exercise_students = useSelector((state) => state.exercise_students);
     const history = useHistory();
     const dispatch = useDispatch();
   
@@ -46,7 +46,7 @@ function ExerciseStudentNotGradeList(props) {
   }
 
 
-  const datas = exercise_submissions.exercise_not_gradeds;
+  const datas =  exercise_students.exercise_not_submit;
 
   const options = {
     paginationSize: 5,
@@ -74,42 +74,27 @@ function ExerciseStudentNotGradeList(props) {
   };
 
 
-  function gradeButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={() => {
-            if (props.onSelect) props.onSelect(row);
-            onChangeRoute1(row)
-          }}
-          >Chấm điểm</button>
-    )
-  }
-
   function deadlineButton(cell, row) {
     return (
-        <span>{row.exercise_deadline.replaceAll("T", " ").substring(0,16)}</span>
+        <span>{row.deadline.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 
   const columns = [
     {
-      dataField: 'exercise_name',
+      dataField: 'name',
       text: 'Tên',
       filter: textFilter()
     },
     {
-        dataField: 'exercise_level_name',
+        dataField: 'level_name',
         text: 'Tỉ lệ',
         sort: true
       },
     {
-      dataField: 'exercise_deadline',
+      dataField: 'deadline',
       text: 'Thời hạn nộp',
       formatter: deadlineButton
-    },
-    {
-      dataField: '',
-      text: 'Hành động',
-      formatter: gradeButton
     }
   ];
 
@@ -149,4 +134,4 @@ function ExerciseStudentNotGradeList(props) {
   );
 }
 
-export default ExerciseStudentNotGradeList;
+export default ExerciseStudentNotSubmitList;

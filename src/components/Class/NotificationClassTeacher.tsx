@@ -25,6 +25,12 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
         notification = { id: 0, name: "", description: "", time: "" };
     }
 
+    var id_x = localStorage.getItem('class_id');
+    let class_id = 0
+    if (id_x !== null) {
+        class_id = parseInt(id_x)
+    }
+
     const [formState, setFormState] = useState({
         name: { error: "", value: notification.name },
         description: { error: "", value: notification.description },
@@ -57,7 +63,7 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
                     return 
                 }
                 else {
-                    dispatch(postNotificationByClass(props.data.class_id,{
+                    dispatch(postNotificationByClass(class_id,{
                         name: formState.name.value,
                         description: formState.description.value
                     }, id))
@@ -65,7 +71,7 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
                     console.log({
                         name: formState.name.value,
                         description: formState.description.value,
-                        type_send: props.data.class_id
+                        type_send: class_id
                     })
                 }
             }

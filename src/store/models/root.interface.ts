@@ -67,6 +67,7 @@ import { ISemesterClassTeacher, SemesterClassTeacherModificationStatus } from ".
 import { ContestSubmissionTeacherModificationStatus, IContestSubmissionTeacher } from "./contest_submission_teacher.interface";
 import { ChildModificationStatus, IChild } from "./child.interface";
 import { FinalScoreChildModificationStatus, IFinalScoreChild } from "./final_score_child.interface";
+import { ExerciseTeacherModificationStatus, IExerciseTeacher } from "./exercise_teacher.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -147,6 +148,7 @@ export interface IStateType {
     contest_submission_teacher: IContestSubmissionTeacherState;
     childs: IChildState;
     final_score_childs: IFinalScoreChildState;
+    exercise_teachers: IExerciseTeacherState;
 }
 
 export interface IProductState {
@@ -407,6 +409,14 @@ export interface IExerciseStudentState {
     exercise_not_submit: IExerciseStudent[];
     exercise_submitted_not_grade: IExerciseStudent[];
     exercise_submitted_graded: IExerciseStudent[];
+}
+
+export interface IExerciseTeacherState {
+    selectedExerciseTeacher: IExerciseTeacher | null;
+    modificationState: ExerciseTeacherModificationStatus;
+    exercise_no_submissions: IExerciseTeacher[];
+    exercise_scoring: IExerciseTeacher[];
+    exercise_scroring_done: IExerciseTeacher[];
 }
 
 export interface IExerciseSubmissionState {

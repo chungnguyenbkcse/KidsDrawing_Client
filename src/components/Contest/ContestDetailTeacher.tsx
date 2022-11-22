@@ -162,54 +162,54 @@ const ContestDetailTeacher: React.FC = () => {
                     <TopCard title="CHƯA CHẤM" text={`${numberNotGradedCount}`} icon="book" class="danger" />
                 </div>
                 <div className="row">
-                    <div className="col-xl-12 col-lg-12">
-                        <div className="card shadow mb-4">
-                            <div className="row no-gutters align-items-center">
-                                <div className="text-xs font-weight-bold text-green text-uppercase ">
-                                    <p className="fullname ml-4 mt-4">{contest_name}</p>
-                                </div>
+                <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                        <div className="row no-gutters align-items-center">
+                            <div className="text-xs text-green ">
+                                <p className="fullname ml-4 mt-4">{contest_name}</p>
                             </div>
-                            <div className="row">
-                                <div className="col-xl-6 col-md-6">
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="text-xs ">
-                                            <p className="birthday ml-4">Độ tuổi đăng kí: {art_age_contest}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="text-xs">
-                                            <p className="birthday ml-4">Thể loại: {art_type_contest}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="text-xs">
-                                            <p className="birthday ml-4">Thời gian đăng kí: {registration_time.replaceAll("T", " ")}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-xl-6 col-md-6">
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="text-xs ">
-                                            <p className="birthday">Thời gian bắt đầu: {start_time.replaceAll("T", " ")}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="text-xs">
-                                            <p className="birthday">Thời gian kết thúc: {end_time.replaceAll("T", " ")}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="text-xs">
-                                            <p className="birthday">Số người tham gia tối đa: {max_participant}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+                        <div className="row">
+                            <div className="col-xl-6 col-md-6">
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs ">
+                                        <p className="birthday ml-4">Độ tuổi đăng kí: {art_age_contest}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday ml-4">Thể loại: {art_type_contest}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday ml-4">Thời gian đăng kí: {registration_time.replaceAll("T", " ").substring(0,16)}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-xl-6 col-md-6">
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs ">
+                                        <p className="birthday">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0,16)}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday">Thời gian kết thúc: {end_time.replaceAll("T", " ").substring(0,16)}</p>
+                                    </div>
+                                </div>
+                                <div className="row no-gutters align-items-center">
+                                    <div className="text-xs">
+                                        <p className="birthday">Số người tham gia tối đa: {max_participant}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+            </div>
 
                 <div className="row" id="btn-register-course">
                     <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
@@ -251,6 +251,39 @@ const ContestDetailTeacher: React.FC = () => {
                                         <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
                                     </button>
                                 </div>
+                            )
+                        }
+                        else if (numberGradedCount > 0) {
+                            return (
+                                <>
+                                <div className="row justify-content-center mb-4">
+                                    <div className="col-xl-6 col-md-6">
+                                    <div className="row justify-content-center mb-4">
+                                        <button
+                                            className="btn btn-success btn-green"
+                                            onClick={() => { routeChange1() }}
+                                        >
+                                            Xem điểm
+                                            <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                        </button>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-6 col-md-6">
+                                    <div className="row justify-content-center mb-4">
+                                        <button
+                                            className="btn btn-success btn-green"
+                                            id="btn-into-class-student"
+                                            onClick={() => { routeChange() }}
+                                        >
+                                            Chấm bài
+                                            <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+
+                                </>
                             )
                         }
                         else {

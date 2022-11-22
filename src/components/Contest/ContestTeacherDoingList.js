@@ -92,14 +92,14 @@ function ContestTeacherDoingList(props) {
     function showStartTime(cell, row) {
         var strDate = row.start_time;
         return (
-            <span>{strDate.substring(0, 10) + " " + strDate.substring(11, 19)}</span>
+            <span>{strDate.replaceAll("T", " ").substring(0, 16)}</span>
         )
     }
 
     function showEndTime(cell, row) {
         var strDate = row.start_time;
         return (
-            <span>{strDate.substring(0, 10) + " " + strDate.substring(11, 19)}</span>
+            <span>{strDate.replaceAll("T", " ").substring(0, 16)}</span>
         )
     }
 
@@ -133,10 +133,6 @@ function ContestTeacherDoingList(props) {
         {
             dataField: 'total_register_contest',
             text: 'Đã đăng kí',
-        },
-        {
-            dataField: 'total_contest_submission_graded',
-            text: 'Đã nộp',
         },
         {
             dataField: '',

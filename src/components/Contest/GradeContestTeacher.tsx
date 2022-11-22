@@ -15,7 +15,8 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { postUserGradeContestSubmission } from "../../common/service/UserGradeContestSubmission/PostUserGradeContestSubmission";
 import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
-
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import 'react-photo-view/dist/react-photo-view.css';
 
 const GradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -161,21 +162,33 @@ const GradeContestTeacher: React.FC = () => {
                     <div className="card-header py-3">
                         <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Bài làm của bé</h6>
                     </div>
+                    <div className="card-body mx-auto">
                     {
                         function () {
                             if (count > 0)
                                 return (
-                                    <img className="card-img-top" src={image_url} alt="" />
+                                    <PhotoProvider>
+                                        <PhotoView src={image_url}>
+                                            <img src={image_url} alt="" className="center-x" />
+                                        </PhotoView>
+                                    </PhotoProvider>
                                 )
                             else {
                                 if (contest_submissions.contest_submission_not_grade.length > 0) {
                                     return (
-                                        <img className="card-img-top" src={contest_submissions.contest_submission_not_grade[0].image_url} alt="" />
+                                        <PhotoProvider>
+                                            <PhotoView src={contest_submissions.contest_submission_not_grade[0].image_url}>
+                                                <img src={contest_submissions.contest_submission_not_grade[0].image_url} className="center-x" alt="" />
+                                            </PhotoView>
+                                        </PhotoProvider>
+
+
                                     )
                                 }
                             }
                         }()
                     }
+                    </div>
                 </div>
                 <div className="col-xl-6 col-lg-6">
                     <div className="row">
@@ -192,7 +205,7 @@ const GradeContestTeacher: React.FC = () => {
                                                     <p id="username-teacher">Tên học sinh: {student_name}</p>
                                                 </div>
                                                 <div className="row no-gutters justify-content-left">
-                                                    <p id="username-teacher">Thời gian nộp: {time_submit}</p>
+                                                    <p id="username-teacher">Thời gian nộp: {time_submit.replaceAll("T", " ").substring(0,16)}</p>
                                                 </div>
                                             </div>
                                         )
@@ -207,7 +220,7 @@ const GradeContestTeacher: React.FC = () => {
                                                         <p id="username-teacher">Tên học sinh: {contest_submissions.contest_submission_not_grade[0].student_name}</p>
                                                     </div>
                                                     <div className="row no-gutters justify-content-left">
-                                                        <p id="username-teacher">Thời gian nộp: {contest_submissions.contest_submission_not_grade[0].update_time}</p>
+                                                        <p id="username-teacher">Thời gian nộp: {contest_submissions.contest_submission_not_grade[0].update_time.replaceAll("T", " ").substring(0,16)}</p>
                                                     </div>
                                                 </div>
                                             )
@@ -218,7 +231,7 @@ const GradeContestTeacher: React.FC = () => {
                         </div>
                     </div>
                     <div className="row mt-4 ml-4">
-                        <NumberInput 
+                        <NumberInput
                             id="input_score"
                             value={formState.score.value}
                             field="score"
@@ -250,7 +263,7 @@ const GradeContestTeacher: React.FC = () => {
                                     placeholder=""
                                 />
                             </div>
-                            <button className="btn btn-warning" onClick={() => {saveForm()}}>Lưu</button>
+                            <button className="btn btn-warning" onClick={() => { saveForm() }}>Lưu</button>
                             {
                                 function () {
                                     if (count === contest_submissions.contest_submission_not_grade.length - 1) {

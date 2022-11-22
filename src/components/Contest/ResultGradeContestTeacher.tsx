@@ -6,18 +6,20 @@ import TopCard from "../../common/components/TopCardUser";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
+import { IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
 import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 import "./ResultContest.css"
+import { getUserGradeContestSubmissionByContestAndTeacher } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContestAndTeacher";
+import ScoreContestList1 from "./ScoreContestList1";
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 0);
+    const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 100);
 
     var role_privilege = localStorage.getItem('role_privilege')
     var rolePrivilege: string[] = []
@@ -68,16 +70,21 @@ const ResultGradeContestTeacher: React.FC = () => {
                 }
                 else {
                     trackPromise(getStudentByParent(dispatch, id))
-                    trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                    trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
                 }
             }
             else {
                 trackPromise(getStudentByParent(dispatch, id))
-                trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
             }
         }
-        dispatch(updateCurrentPath("Cuoc thi", "Chi tiết"));
     }, [dispatch, access_token, refresh_token, contest_id, id]);
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+
+    useEffect(() => {
+        dispatch(updateCurrentPath("Cuộc thi", "kết quả"));
+    }, [path.area, dispatch])
 
 
     const history = useHistory();
@@ -103,79 +110,27 @@ const ResultGradeContestTeacher: React.FC = () => {
                 <div className="row">
                     <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
                     <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
-
-
-                    {
-                        function () {
-                            if (roleUser === "TEACHER_USER") {
-                                return (
-                                    <div className="col-xl-3 col-md-3 notification-x">
-                                        <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() => {
-                                            onRouteChange()
-                                        }}>
-                                            Xem review
-                                            <i className="fas fa fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                )
-                            }
-                        }()
-                    }
-
+                    <div className="col-xl-3 col-md-3 notification-x">
+                        <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() => {
+                            onRouteChange()
+                        }}>
+                            Biểu đồ
+                            <i className="fas fa fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
 
 
                 <div className="row">
-
-                    {
-                        function () {
-                            if (roleUser === "TEACHER_USER") {
-                                return (
-                                    <div className="col-xl-12 col-md-12 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
-                                        <div className="col-xl-12 col-md-12 mb-4">
-                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                                <div className="card-body">
-                                                    <ScoreContestList />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-
-                            else if (roleUser === "PARENT_USER") {
-                                return (
-                                    <div className="col-xl-12 col-md-12 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Bảng xếp hạng</h3>
-                                        <div className="col-xl-12 col-md-12 mb-4">
-                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                                <div className="card-body">
-                                                    <ScoreContestList />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-
-                            else if (roleUser === "STUDENT_USER") {
-                                return (
-                                    <div className="col-xl-12 col-md-12 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Bảng xếp hạng</h3>
-                                        <div className="col-xl-12 col-md-12 mb-4">
-                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                                <div className="card-body">
-                                                    <ScoreContestList />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-
-                        }()
-                    }
+                    <div className="col-xl-12 col-md-12 mb-4">
+                        <div className="col-xl-12 col-md-12 mb-4">
+                            <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                <div className="card-body">
+                                    <ScoreContestList1 />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </Fragment>

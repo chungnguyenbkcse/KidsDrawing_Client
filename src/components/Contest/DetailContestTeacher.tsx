@@ -150,7 +150,7 @@ const DetailContestTeacher: React.FC = () => {
                     <div className="col-xl-12 col-lg-12">
                         <div className="card shadow mb-4">
                             <div className="row no-gutters align-items-center">
-                                <div className="text-xs font-weight-bold text-green text-uppercase ">
+                                <div className="text-xs text-green ">
                                     <p className="fullname ml-4 mt-4">{contest_name}</p>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@ const DetailContestTeacher: React.FC = () => {
                                     </div>
                                     <div className="row no-gutters align-items-center">
                                         <div className="text-xs">
-                                            <p className="birthday ml-4">Thời gian đăng kí: {registration_time}</p>
+                                            <p className="birthday ml-4">Thời gian đăng kí: {registration_time.replaceAll("T", " ").substring(0,16)}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -176,12 +176,12 @@ const DetailContestTeacher: React.FC = () => {
                                 <div className="col-xl-6 col-md-6">
                                     <div className="row no-gutters align-items-center">
                                         <div className="text-xs ">
-                                            <p className="birthday">Thời gian bắt đầu: {start_time}</p>
+                                            <p className="birthday">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0,16)}</p>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">
                                         <div className="text-xs">
-                                            <p className="birthday">Thời gian kết thúc: {end_time}</p>
+                                            <p className="birthday">Thời gian kết thúc: {end_time.replaceAll("T", " ").substring(0,16)}</p>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">

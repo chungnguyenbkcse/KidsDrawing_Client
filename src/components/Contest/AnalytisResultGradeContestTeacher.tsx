@@ -10,6 +10,8 @@ import { IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from
 import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import ScoreContestList1 from "./ScoreContestList1";
+import { getUserGradeContestSubmissionByContestAndTeacher } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContestAndTeacher";
 
 
 const AnalytisResultGradeContestTeacher: React.FC = () => {
@@ -42,6 +44,12 @@ const AnalytisResultGradeContestTeacher: React.FC = () => {
 
     if (id_y !== null) {
         contest_id = parseInt(id_y);
+    }
+
+    var id_x = localStorage.getItem('id');
+    var id: any = "";
+    if (id_x !== null) {
+        id = id_x;
     }
 
     const labels = student;
@@ -81,17 +89,17 @@ const AnalytisResultGradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
+                    trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
                 }
             }
             else {   
-                trackPromise(getUserGradeContestByContestId(dispatch, contest_id))
+                trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
             }
         }
-    }, [dispatch, contest_id, class_id, access_token, refresh_token]);
+    }, [dispatch, contest_id, id, access_token, refresh_token]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp", "Chi tiết"));
+        dispatch(updateCurrentPath("Cuộc thi", "Biểu đồ"));
     }, [path.area, dispatch])
 
     return (
@@ -115,18 +123,7 @@ const AnalytisResultGradeContestTeacher: React.FC = () => {
 
             <div className="row">
 
-                <div className="col-xl-6 col-md-6 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
-                    <div className="col-xl-12 col-md-12 mb-4">
-                        <div className={`card shadow h-100 py-2`} id="topcard-user">
-                            <div className="card-body">
-                                <ScoreContestList />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-xl-6 col-md-6 mb-4">
+                <div className="col-xl-12 col-md-6 mb-12">
                     <div className="row justify-content-center">
                         <ChartLine data={data} />
                     </div>

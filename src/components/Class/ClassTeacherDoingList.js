@@ -132,7 +132,7 @@ function ClassTeacherDoingList(props) {
         <div>
           <BootstrapTable
             hover
-            keyField="id"
+            keyField="name"
             data={datas}
             columns={columns}
             filter={filterFactory()}

@@ -172,9 +172,6 @@ const ContestTeacher: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
-                                            </div>
                                             <div className="card-body">
                                                 <ContestTeacherNotDoingList />
                                             </div>
@@ -190,9 +187,6 @@ const ContestTeacher: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
-                                            </div>
                                             <div className="card-body">
                                                 <ContestTeacherDoingList />
                                             </div>
@@ -209,9 +203,6 @@ const ContestTeacher: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách cuộc thi</h6>
-                                            </div>
                                             <div className="card-body">
                                                 <ContestTeacherEndList />
                                             </div>

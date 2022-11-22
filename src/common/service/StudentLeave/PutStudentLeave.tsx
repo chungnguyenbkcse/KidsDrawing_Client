@@ -2,9 +2,14 @@ import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getStudentLeave } from "./GetStudentLeave";
+import { getStudentLeaveByTeacher } from "./GetStudentLeaveByTeacher";
 export function putStudentLeaveStatus(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    
+    var id_x = localStorage.getItem('id');
+    var idy: any = "";
+    if (id_x !== null) {
+        idy = id_x;
+    }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -35,7 +40,7 @@ export function putStudentLeaveStatus(id: any, data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                getStudentLeave()
+                getStudentLeaveByTeacher(dispatch, idy)
                 toast.update(idx, { render: "Yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {

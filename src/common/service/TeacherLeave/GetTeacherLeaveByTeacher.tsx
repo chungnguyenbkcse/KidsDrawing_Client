@@ -9,6 +9,8 @@ interface TeacherLeave {
     teacher_id: number;
     teacher_name: string;
     section_number: number;
+    start_time: string;
+    end_time: string;
     reviewer_id: number;
     substitute_teacher_id: number;
     substitute_teacher_name: string;
@@ -57,10 +59,12 @@ export function getTeacherLeaveByTeacher(dispatch: any, id: any) {
                         id: ele.id,
                         description: ele.description,
                         section_id: ele.section_id,
-                        class_id: ele.class_id,
+                        class_id: ele.classes_id,
                         class_name: ele.class_name,
                         section_number: ele.section_number,
                         teacher_id: ele.teacher_id,
+                        start_time: ele.start_time,
+                        end_time: ele.end_time,
                         reviewer_id: ele.reviewer_id,
                         substitute_teacher_id: ele.substitute_teacher_id,
                         substitute_teacher_name: ele.substitute_teacher_name,

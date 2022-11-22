@@ -60,7 +60,7 @@ const ClassStudent: React.FC = () => {
                 }
             }
             else {
-                trackPromise(getClassesStudent(dispatch,id))
+                trackPromise(getClassesStudent(dispatch, id))
                 trackPromise(getArtType(dispatch))
                 trackPromise(getArtAge(dispatch))
                 trackPromise(getArtLevel(dispatch))
@@ -70,7 +70,7 @@ const ClassStudent: React.FC = () => {
 
     useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));
-    }, [path.area, dispatch]) 
+    }, [path.area, dispatch])
 
     function onClassesStudentSelect(classes_student: IClassesStudent): void {
         dispatch(changeSelectedDoinglClass(classes_student));
@@ -82,114 +82,114 @@ const ClassStudent: React.FC = () => {
 
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
-            {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
-            {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
-            
-
-<div className="row" id="search-box">
-<div className="col-xl-12 col-lg-12">
-    <div className="input-group" id="search-content">
-        <div className="form-outline">
-            <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
-                setSearchTerm(event.target.value)
-                console.log(searchTerm)
-            }} />
-        </div>
-        <button type="button" className="btn btn-primary">
-            <i className="fas fa-search"></i>
-        </button>
-    </div>
-</div>
-</div>
-
-            <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked === false) {
-                            setChecked(true)
-                        }
-                    }} style={{
-                        color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Đang học</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
-                    }}></div>
+            <div className="row" id="search-box">
+                <div className="col-xl-12 col-lg-12">
+                    <div className="input-group" id="search-content">
+                        <div className="form-outline">
+                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                        </div>
+                    </div>
                 </div>
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+            </div> : <Fragment>
+                {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
+                {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+
+
+
+                <div className="row" id="search-box">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="input-group" id="search-content">
+                            <div className="form-outline">
+                                <input type="text" id="form1" className="form-control" placeholder="Tìm kiếm" onChange={(event) => {
+                                    setSearchTerm(event.target.value)
+                                    console.log(searchTerm)
+                                }} />
+                            </div>
+                            <button type="button" className="btn btn-primary">
+                                <i className="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                            if (checked === false) {
+                                setChecked(true)
+                            }
+                        }} style={{
+                            color: checked ? "#F24E1E" : "#2F4F4F"
+                        }}>Đang học</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked === true) {
+                                setChecked(false)
+                            }
+                        }}
+                            style={{
+                                color: checked ? "#2F4F4F" : "#F24E1E"
+                            }}>Đã học</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                        }}></div>
+                    </div>
+                </div>
+
+
+                {
+                    function () {
                         if (checked === true) {
-                            setChecked(false)
+                            return (
+                                <Fragment>
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4" id="topcard-user">
+                                                <div className="card-body">
+                                                    <ClassDoingList1
+                                                        onSelect={onClassesStudentSelect} value={searchTerm}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Fragment>
+                            )
                         }
-                    }}
-                        style={{
-                            color: checked ? "#2F4F4F" : "#F24E1E"
-                        }}>Đã học</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
-                    }}></div>
-                </div>
-            </div>
-
-
-            {
-                function () {
-                    if (checked === true) {
-                        return (
-                            <Fragment>
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-body">
-                                                <ClassDoingList1
-                                                    onSelect={onClassesStudentSelect} value={searchTerm}
-                                                />
+                        else {
+                            return (
+                                <Fragment>
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4" id="topcard-user">
+                                                <div className="card-body">
+                                                    <ClassDoneList1
+                                                        onSelect={onClassesStudentSelect} value={searchTerm}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Fragment>
-                        )
-                    }
-                    else {
-                        return (
-                            <Fragment>
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-body">
-                                                <ClassDoneList1
-                                                    onSelect={onClassesStudentSelect} value={searchTerm}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Fragment>
-                        )
-                    }
-                }()
-            }
+                                </Fragment>
+                            )
+                        }
+                    }()
+                }
 
 
-        </Fragment>
+            </Fragment>
     );
 };
 

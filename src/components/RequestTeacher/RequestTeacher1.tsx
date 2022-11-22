@@ -16,6 +16,7 @@ import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
 import { clearSelectedStudentLeaveNotApproved, setModificationState } from "../../store/actions/student_leave.action";
 import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
 import Popup from "reactjs-popup";
+import TeacherLeaveApprovedList from "./TeacherLeaveApproved";
 
 const RequestTeacher1: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -25,7 +26,7 @@ const RequestTeacher1: React.FC = () => {
     console.log(teacher_leaves)
     const { promiseInProgress } = usePromiseTracker();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const numberTeacherRegisterSuccessfullCount: number = student_leaves.leaves.length;
+    const numberTeacherRegisterSuccessfullCount: number = teacher_leaves.acceptLeaves.length;
     const numberTeacherNotRegisterCount: number = teacher_leaves.leaves.length;
     var id_x = localStorage.getItem('id');
     var id: any = "";
@@ -100,6 +101,8 @@ const RequestTeacher1: React.FC = () => {
         }, idx))
     }
 
+    const [checked, setChecked] = useState(true);
+
 
     return (
         promiseInProgress ?
@@ -112,9 +115,58 @@ const RequestTeacher1: React.FC = () => {
                     </div>
                 </div>
             </div> : <Fragment>
+
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
                 <ToastContainer />
+
+                <div className="row">
+                    <TopCard title="SỐ YÊU CẦU DẠY THAY" text={`${numberTeacherNotRegisterCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BUỔI DẠY THAY" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
+                    {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
+                    <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
+                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
+                        <i className="fas fa fa-plus"></i>
+                        Đăng kí trình độ
+                    </button>
+                </div> */}
+                </div>
+
+                <div className="row">
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                            if (checked === false) {
+                                setChecked(true)
+                            }
+                        }} style={{
+                            color: checked ? "#F24E1E" : "#2F4F4F"
+                        }}>Yêu cầu</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked === true) {
+                                setChecked(false)
+                            }
+                        }}
+                            style={{
+                                color: checked ? "#2F4F4F" : "#F24E1E"
+                            }}>Đã duyệt</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                        }}></div>
+                    </div>
+                </div>
 
                 {
                     function () {
@@ -148,29 +200,37 @@ const RequestTeacher1: React.FC = () => {
                         }
                     }()
                 }
-                <div className="row">
-                    <TopCard title="SỐ YÊU CẦU DẠY THAY" text={`${numberTeacherNotRegisterCount}`} icon="book" class="primary" />
-                    {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
-                        <i className="fas fa fa-plus"></i>
-                        Đăng kí trình độ
-                    </button>
-                </div> */}
-                </div>
 
-                <div className="row">
-                    <div className="col-xl-12 col-lg-12">
-                        <div className="card shadow mb-4" id="topcard-user">
-                            <div className="card-header py-3">
-                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách yêu cầu dạy thay</h6>
-                            </div>
-                            <div className="card-body">
-                                <TeacherLeaveList onSelect={onTeacherLeaveSelect}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {
+                    function () {
+                        if (checked === true) {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-body">
+                                                <TeacherLeaveList onSelect={onTeacherLeaveSelect} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        else {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card-body">
+                                                <TeacherLeaveApprovedList onSelect={onTeacherLeaveSelect} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }()
+                }
 
 
             </Fragment>

@@ -8,6 +8,8 @@ export interface ITeacherLeave {
     teacher_name: string;
     section_number: number;
     reviewer_id: number;
+    start_time: string;
+    end_time: string;
     substitute_teacher_id: number;
     substitute_teacher_name: string;
     description: string;

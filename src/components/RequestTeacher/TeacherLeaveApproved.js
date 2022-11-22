@@ -1,48 +1,30 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import { putTeacherLeaveStatus } from "../../common/service/TeacherLeave/PutTeacherLeave";
-import { setModificationState } from "../../store/actions/student_leave.action";
-import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
 
 
-function TeacherLeaveList(props) {
+function TeacherLeaveApprovedList(props) {
 
     const dispatch = useDispatch();
 
     const teacher_leaves = useSelector((state) => state.teacher_leaves);
     const history = useHistory();
 
-    const onChangeRoute = (student_leave) =>{ 
-        localStorage.removeItem("detail_resson")
-        localStorage.setItem('detail_resson', student_leave.description)
-        let path = '/student-leave/detail'; 
-        history.push({
-            pathname: path,
-        });
-    }
+    const onChangeRoute = (section) => {
+      let path = "/classes/section";
+      localStorage.removeItem('section_id')
+      localStorage.setItem('section_id', section.section_id.toString())
+      localStorage.removeItem('class_id')
+      localStorage.setItem('class_id', section.class_id.toString())
+      history.push({
+          pathname: path
+      })
+  }
 
-    var id_x = localStorage.getItem('id');
-    var id = 0;
-    if (id_x !== null) {
-        id = parseInt(id_x);
-    }
-
-    const updateStatusTeacherLeave = (status) => {
-        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-            position: toast.POSITION.TOP_CENTER
-        });
-
-        dispatch(putTeacherLeaveStatus(id, {
-            status: status
-        }, idx))
-    }
-
-  const datas = teacher_leaves.leaves
+  const datas = teacher_leaves.acceptLeaves
 
   const options = {
     paginationSize: 5,
@@ -70,28 +52,40 @@ function TeacherLeaveList(props) {
   };
 
   function viewDetailButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-primary" onClick={() => {
-        onChangeRoute(row)
-      }}>Chi tiết</button>
-    )
-  }
+    var start_date = new Date(row.start_time);
+    var end_date = new Date(row.end_time);
+    var date_now = new Date();
 
-  function acceptLeaveButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-success" onClick={() => {
-        updateStatusTeacherLeave("Teacher approved")
-      }}>Chấp nhận</button>
-    )
-  }
-
-  function removeLeaveButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-danger" onClick={() => {
-        if(props.onSelect) props.onSelect(row.id);
-        dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
-      }}>Xóa </button>
-    )
+    if ((start_date.getTime() - date_now.getTime()) / 1000 > 86400) {
+        localStorage.setItem('is_active', "not_active_now")
+        return (
+          <button type="button" className="btn btn-primary" onClick={() => {
+            onChangeRoute(row)
+          }}>Tham gia</button>
+        )
+    }
+    else if ((start_date.getTime() - date_now.getTime()) / 1000 < 86400 && (date_now.getTime() - start_date.getTime()) / 1000 < 0) {
+      localStorage.setItem('is_active', "pre_active_now")
+      return (
+        <button type="button" className="btn btn-primary" onClick={() => {
+          onChangeRoute(row)
+        }}>Tham gia</button>
+      )
+    }
+    else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
+      localStorage.setItem('is_active', "active_now")
+      return (
+        <button type="button" className="btn btn-primary" onClick={() => {
+          onChangeRoute(row)
+        }}>Tham gia</button>
+      )
+    }
+    else {
+      localStorage.setItem('is_active', "not_active")
+      return (
+        <span></span>
+      )
+    }
   }
 
   function endTimeButton(cell, row) {
@@ -143,16 +137,6 @@ function TeacherLeaveList(props) {
       text: 'Hành động',
       formatter: viewDetailButton
     },
-    {
-      dataField: '',
-      text: '',
-      formatter: acceptLeaveButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: removeLeaveButton
-    },
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
@@ -191,4 +175,4 @@ function TeacherLeaveList(props) {
   );
 }
 
-export default TeacherLeaveList;
+export default TeacherLeaveApprovedList;

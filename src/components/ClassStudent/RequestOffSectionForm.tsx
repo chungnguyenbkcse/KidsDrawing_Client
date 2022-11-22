@@ -78,12 +78,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         return listStudents.push(item)
     })
 
-    const listSections: Option1[] = [];
-    sections.sections.map((ele) => {
-        let item: Option1 = { "name": "Buổi " + ele.number, "value": ele.id }
-        return listSections.push(item)
-    })
-
     var id_y = localStorage.getItem('class_id');
     let class_id = 0;
     if (id_y !== null) {
@@ -95,6 +89,24 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     if (id_x !== null) {
         student_id = parseInt(id_x);
     }
+
+    var id_z = localStorage.getItem('total_section_end');
+    var total_section_end: number = 0;
+    if (id_z !== null) {
+        total_section_end = parseInt(id_z);
+    }
+
+    const listSections: Option1[] = [];
+    sections.sections.map((ele) => {
+        if (ele.number > total_section_end) {
+            let item: Option1 = { "name": "Buổi " + ele.number, "value": ele.id }
+            return listSections.push(item)
+        }
+        else {
+            return null
+        }
+        
+    })
 
 
     const [formState, setFormState] = useState({

@@ -304,6 +304,9 @@ const DetailClassStudent: React.FC = () => {
                 return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
             })
         }
+
+        let total_section_end = check_active.filter(x => x === 'Đã diễn ra').length
+        localStorage.setItem('total_section_end', total_section_end.toString())
     }
 
     function checkActive(index: number) {

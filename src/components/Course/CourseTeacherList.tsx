@@ -55,7 +55,7 @@ function CourseTeacherList(props: semesterListProps): JSX.Element {
 
     const [filter, setFilter] = useState(0)
     const [filter1, setFilter1] = useState(0)
-    const [filter2, setFilter2] = useState(1)
+    const [filter2, setFilter2] = useState(0)
 
 
     function handleChange(e: any) {
@@ -76,18 +76,105 @@ function CourseTeacherList(props: semesterListProps): JSX.Element {
         console.log(filter)
         console.log(filter1)
         console.log(filter2)
-        let k = course_teachers.courses.filter((ele, idx) => 
-        ele !== undefined && ele.art_type_id == filter && ele.art_age_id == filter1 && ele.art_level_id == filter2
-        )
 
-        let x = (k.length - (k.length) % 6) / 6;
-        if (x === 0) {
-            setElement(k)
+        if (filter == 0 && filter1 == 0 && filter2 == 0) {
+            let k = course_teachers.courses;
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        else if (filter == 0 && filter1 == 0 && filter2 != 0) {
+            let k = course_teachers.courses.filter((ele, idx) =>  ele.art_level_id == filter2)
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        else if (filter == 0 && filter1 != 0 && filter2 == 0) {
+            let k = course_teachers.courses.filter((ele, idx) =>  ele.art_age_id == filter1)
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        else if (filter != 0 && filter1 == 0 && filter2 == 0) {
+            let k = course_teachers.courses.filter((ele, idx) =>  ele.art_type_id == filter)
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+        else if (filter != 0 && filter1 != 0 && filter2 == 0) {
+            let k = course_teachers.courses.filter((ele, idx) =>  ele.art_type_id == filter && ele.art_age_id == filter1)
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+
+        else if (filter == 0 && filter1 != 0 && filter2 != 0) {
+            let k = course_teachers.courses.filter((ele, idx) =>  ele.art_level_id == filter2 && ele.art_age_id == filter1)
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
+        }
+
+        else if (filter != 0 && filter1 == 0 && filter2 != 0) {
+            let k = course_teachers.courses.filter((ele, idx) =>  ele.art_level_id == filter2 && ele.art_type_id == filter)
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
         }
         else {
-            setElement(k.slice(0, 6))
+            let k = course_teachers.courses.filter((ele, idx) =>  ele.art_level_id == filter2 && ele.art_type_id == filter && ele.art_age_id  == filter1)
+    
+            let x = (k.length - (k.length) % 6) / 6;
+            if (x === 0) {
+                setElement(k)
+            }
+            else {
+                setElement(k.slice(0, 6))
+            }
+            setTotalPage((x + 1))
         }
-        setTotalPage((x + 1))
     }
 
 
@@ -113,6 +200,7 @@ function CourseTeacherList(props: semesterListProps): JSX.Element {
                                         value={filter}
                                         onChange={handleChange}
                                     >
+                                        <option value={0}>Choose...</option>
                                         {
                                             art_types.artTypes.map((ele, idx) => {
                                                 return (
@@ -125,6 +213,7 @@ function CourseTeacherList(props: semesterListProps): JSX.Element {
                                         value={filter1}
                                         onChange={handleChange1}
                                     >
+                                        <option value={0} selected>Choose</option>
                                         {
                                             art_ages.artAges.map((ele, idx) => {
                                                 return (
@@ -137,6 +226,7 @@ function CourseTeacherList(props: semesterListProps): JSX.Element {
                                         value={filter2}
                                         onChange={handleChange2}
                                     >
+                                        <option value={0} selected>Choose</option>
                                         {
                                             art_levels.artLevels.map((ele, idx) => {
                                                 return (

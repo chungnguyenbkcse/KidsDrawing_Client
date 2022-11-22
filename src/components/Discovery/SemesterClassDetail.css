@@ -25,6 +25,13 @@
     min-width: 200px !important;
 }
 
+#btn-create-register-coursexx {
+    background: #ee2b08 !important;
+    border-radius: 30px;
+    margin-bottom: 30px !important;
+    min-width: 200px !important;
+}
+
 #btn-payment {
     color: #ffffff !important;
 }

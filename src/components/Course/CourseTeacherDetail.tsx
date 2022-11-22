@@ -6,11 +6,12 @@ import { useHistory } from "react-router-dom";
 import "./CourseTeacherDetail.css"
 import { postRegisterTeachSemester } from "../../common/service/UserTeachSemester/PostRegisterTeachSemester";
 import { toast, ToastContainer } from "react-toastify";
-import { GrLinkDown } from "react-icons/gr";
+import { GrLinkDown, GrLinkNext } from "react-icons/gr";
 import Popup from "reactjs-popup";
 import { LessonModificationStatus } from "../../store/models/lesson.interface";
 import { deleteUserRegisterTeachSemesterBySemesterClassAndTeacher } from "../../common/service/UserTeachSemester/DeleteUserRegisterTeachSemesterBySemesterClassAndTeacher";
 import { setModificationState } from "../../store/actions/lesson.action";
+import { BsFillTrashFill } from "react-icons/bs";
 
 const CourseTeacherDetail: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -26,7 +27,7 @@ const CourseTeacherDetail: React.FC = () => {
     function onRemovePopup(value: boolean) {
         setPopup(false);
     }
-    
+
     useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch]);
@@ -117,7 +118,7 @@ const CourseTeacherDetail: React.FC = () => {
             teacher_id: id,
             semester_classes_id: semester_class_id
         })
-        
+
     }
 
     function handleRemove() {
@@ -155,7 +156,7 @@ const CourseTeacherDetail: React.FC = () => {
                                                 });
                                                 dispatch(deleteUserRegisterTeachSemesterBySemesterClassAndTeacher(
                                                     semester_class_id, id
-                                                , idx, routeHome))
+                                                    , idx, routeHome))
                                                 console.log({
                                                     teacher_id: id,
                                                     semester_classes_id: semester_class_id
@@ -171,32 +172,32 @@ const CourseTeacherDetail: React.FC = () => {
                 }()
             }
             <div className="col-xl-12 col-lg-12">
-                <div className="card shadow mb-4 shadow-1">
+                <div className="card shadow mb-4" id="shadow-1">
                     <div className="row no-gutters align-items-center">
-                        <div className="text-xs font-weight-bold text-green text-uppercase ">
-                            <p className="fullname ml-2 mt-4">{semester_class_name}</p>
+                        <div className="text-xs font-weight-bold text-green text-uppercase text-center">
+                            <p className="fullname ml-4 mt-4 text-center">{semester_class_name}</p>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-xl-6 col-md-6">
                             <div className="row no-gutters align-items-center">
                                 <div className="text-xs ">
-                                    <p className="birthday ml-2">Khóa học: {course_name}</p>
+                                    <p className="birthday ml-4">Khóa học: {course_name}</p>
                                 </div>
                             </div>
                             <div className="row no-gutters align-items-center">
                                 <div className="text-xs">
-                                    <p className="birthday ml-2">Thể loại: {art_type_name}</p>
+                                    <p className="birthday ml-4">Thể loại: {art_type_name}</p>
                                 </div>
                             </div>
                             <div className="row no-gutters align-items-center">
                                 <div className="text-xs">
-                                    <p className="birthday ml-2">Độ tuổi: {art_age_name}</p>
+                                    <p className="birthday ml-4">Độ tuổi: {art_age_name}</p>
                                 </div>
                             </div>
                             <div className="row no-gutters align-items-center">
                                 <div className="text-xs">
-                                    <p className="birthday ml-2">Trình độ: {art_level_name}</p>
+                                    <p className="birthday ml-4">Trình độ: {art_level_name}</p>
                                 </div>
                             </div>
                         </div>
@@ -212,28 +213,31 @@ const CourseTeacherDetail: React.FC = () => {
                                     <p className="birthday">Số buổi học: {num_of_section}</p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     {
-                        function() {
+                        function () {
                             if (status === "Not register") {
                                 return (
-                                    <div className="row text-center justify-content-center" id="btn-register-course">
-                                        <button className="btn btn-success btn-green" id="btn-create-register-course" onClick={() => handleRegister()}>
-                                            <i className="fas fa fa-plus"></i>
-                                            Đăng kí ngay
-                                        </button>
+                                    <div className="row" id="btn-register-course">
+                                        <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                                            <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister()}>
+                                                <GrLinkNext id="btn-payment" color="#ffffff" />
+                                                Đăng kí ngay
+                                            </button>
+                                        </div>
                                     </div>
                                 )
                             }
                             else {
                                 return (
-                                    <div className="row text-center justify-content-center" id="btn-register-course">
-                                        <button className="btn btn-danger" onClick={() => handleRemove()}>
-                                            <i className="fas fa fa-trash"></i>
-                                            Hủy kí ngay
-                                        </button>
+                                    <div className="row">
+                                        <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                                            <button className="btn btn-danger" id="btn-create-register-coursexx" onClick={() => handleRemove()}>
+                                                <BsFillTrashFill id="btn-payment" color="#ffffff" />
+                                                Hủy kí ngay
+                                            </button>
+                                        </div>
                                     </div>
                                 )
                             }

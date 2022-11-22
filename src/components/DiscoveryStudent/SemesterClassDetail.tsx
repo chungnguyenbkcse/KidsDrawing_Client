@@ -177,29 +177,29 @@ const SemesterClassDetailStudent: React.FC = () => {
                     <div className="card shadow mb-4" id="shadow-1">
                         <div className="row no-gutters align-items-center">
                             <div className="text-xs font-weight-bold text-green text-uppercase text-center">
-                                <p className="fullname ml-2 mt-4 text-center">{semester_class_name}</p>
+                                <p className="fullname ml-4 mt-4 text-center">{semester_class_name}</p>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-xl-6 col-md-6">
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs ">
-                                        <p className="birthday ml-2">Khóa học: {course_name}</p>
+                                        <p className="birthday ml-4">Khóa học: {course_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Thể loại: {art_type_name}</p>
+                                        <p className="birthday ml-4">Thể loại: {art_type_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Độ tuổi: {art_age_name}</p>
+                                        <p className="birthday ml-4">Độ tuổi: {art_age_name}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-2">Trình độ: {art_level_name}</p>
+                                        <p className="birthday ml-4">Trình độ: {art_level_name}</p>
                                     </div>
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
@@ -7,6 +7,7 @@ import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/Use
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import ResultGradeExamTeacher1 from "./ResultGradeExamTeacher1";
 import ScoreExamList from "./ScoreExamList";
 
 
@@ -89,8 +90,11 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
     }, [dispatch, exercise_id, class_id, access_token, refresh_token]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp", "Chi tiết"));
+        dispatch(updateCurrentPath("Bài tập", "Thống kê"));
     }, [path.area, dispatch])
+
+
+    const [checked, setChecked] = useState(true);
 
     return (
         <Fragment>
@@ -103,24 +107,77 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
             </div>
 
             <div className="row">
-
-                <div className="col-xl-6 col-md-6 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
-                    <div className="col-xl-12 col-md-12 mb-4">
-                        <div className={`card shadow h-100 py-2`} id="topcard-user">
-                            <div className="card-body">
-                                <ScoreExamList />
-                            </div>
-                        </div>
-                    </div>
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                        if (checked === false) {
+                            setChecked(true)
+                        }
+                    }} style={{
+                        color: checked ? "#F24E1E" : "#2F4F4F"
+                    }}>Bảng xếp hạng</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
-
-                <div className="col-xl-6 col-md-6 mb-4">
-                    <div className="row justify-content-center">
-                        <ChartLine data={data} />
-                    </div>
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked === true) {
+                            setChecked(false)
+                        }
+                    }}
+                        style={{
+                            color: checked ? "#2F4F4F" : "#F24E1E"
+                        }}>Biểu đồ</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                    }}></div>
                 </div>
             </div>
+
+            {
+                function () {
+                    if (checked === true) {
+                        return (
+                            <div className="row">
+
+                                <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                            <div className="card-body">
+                                                <ResultGradeExamTeacher1 />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                    else {
+                        return (
+                            <div className="row">
+
+                                <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                            <div className="card-body">
+                                                <ChartLine data={data} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                }()
+            }
 
         </Fragment>
     );

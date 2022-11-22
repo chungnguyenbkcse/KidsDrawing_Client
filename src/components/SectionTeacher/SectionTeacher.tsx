@@ -72,6 +72,12 @@ const SectionTeacher: React.FC = () => {
         class_id = parseInt(id_z);
     }
 
+    var id_k = localStorage.getItem('is_active');
+    var is_active = "";
+    if (id_k !== null) {
+        is_active = (id_k);
+    }
+
     let link_jisti = "";
     if (class_teachers.class_doing.length > 0) {
         class_teachers.class_doing.map((ele, idx) => {
@@ -195,7 +201,7 @@ const SectionTeacher: React.FC = () => {
                             return ""
                         }
                         else {
-                            if (sections.sections[0].recording === "") {
+                            if (is_active === "not_active_now" || is_active === "pre_active_now") {
                                 return <div className="row mb-2">
                                     <div className="col-xl-4 col-md-4 col-xs-4 md-4 ">
                                         <button
@@ -221,35 +227,28 @@ const SectionTeacher: React.FC = () => {
                                             Thêm bài tập
                                         </button>
                                     </div>
-
-                                    <div className="col-xl-4 col-md-4 col-xs-4 md-4">
-                                        <button
-                                            className="btn btn-info ml-3"
-                                            id="btn-add-exercise1"
-                                            onClick={() => {
-                                                dispatch(setModificationState(ExerciseModificationStatus.Create1))
-                                                onRecordRemove()
-                                            }}
-                                        >
-                                            <i className="fas fa fa-plus"></i>
-                                            Nộp record
-                                        </button>
-                                    </div>
                                 </div>;
+                            }
+                            else if (is_active === "active_now") {
+                                return <div className="row mb-2">
+
+                                <div className="col-xl-4 col-md-4 col-xs-4 md-4">
+                                    <button
+                                        className="btn btn-success ml-3"
+                                        id="btn-add-exercise"
+                                        onClick={() => {
+                                            dispatch(setModificationState(ExerciseModificationStatus.Create))
+                                            onExerciseRemove()
+                                        }}
+                                    >
+                                        <i className="fas fa fa-plus"></i>
+                                        Thêm bài tập
+                                    </button>
+                                </div>
+                            </div>;
                             }
                             else {
                                 return <div className="row mb-2">
-                                    <div className="col-xl-6 col-md-6 col-xs-6 md-4 ">
-                                        <button
-                                            className="btn btn-success ml-3"
-                                            id="btn-edit-tutorial"
-                                            onClick={onChangeRoute1}
-                                        >
-                                            <i className="fas fa-edit"></i>
-                                            Chỉnh giáo án
-                                        </button>
-                                    </div>
-
                                     <div className="col-xl-6 col-md-6 col-xs-6 md-4">
                                         <button
                                             className="btn btn-success ml-3"
@@ -340,7 +339,7 @@ const SectionTeacher: React.FC = () => {
                                             </div>
 
                                             <div className="row no-gutters">
-                                                <p id="phone">Hình thức:
+                                                <p id="phone">Hình thức: 
                                                     {
                                                         function () {
                                                             if (sections.sections.length <= 0) {
@@ -348,10 +347,10 @@ const SectionTeacher: React.FC = () => {
                                                             }
                                                             else {
                                                                 if (sections.sections[0].teach_form === true) {
-                                                                    return "Dạy bằng jitsi";
+                                                                    return " Dạy bằng jitsi";
                                                                 }
                                                                 else {
-                                                                    return "Dạy bằng giáo trình";
+                                                                    return " Dạy bằng giáo trình";
                                                                 }
                                                             }
                                                         }()
@@ -366,7 +365,7 @@ const SectionTeacher: React.FC = () => {
                                                                 return ""
                                                             }
                                                             else {
-                                                                if (sections.sections[0].teach_form === true) {
+                                                                if (sections.sections[0].teach_form === true && (is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now")) {
                                                                     return (
                                                                         <button
                                                                             className="btn btn-success ml-2"
@@ -388,7 +387,7 @@ const SectionTeacher: React.FC = () => {
                                                                 return ""
                                                             }
                                                             else {
-                                                                if (sections.sections[0].teach_form === true) {
+                                                                if (sections.sections[0].teach_form === true && (is_active === "pre_active_now" || is_active === "active_now")) {
                                                                     return (
                                                                         <button
                                                                             className="btn btn-success ml-2"
@@ -431,7 +430,7 @@ const SectionTeacher: React.FC = () => {
                                                                 exercises.exercises.map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange3(ele) }}>
+                                                                            <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele) }}>
                                                                             <div className="col-xl-3 col-md-3 avatar-x">
                                                                                 <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                             </div>

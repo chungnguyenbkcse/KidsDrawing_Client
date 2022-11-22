@@ -21,6 +21,7 @@ import Loading from "../../common/components/Loading";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
+import { ToastContainer } from "react-toastify";
 
 
 const DetailClassTeacher: React.FC = () => {
@@ -300,6 +301,7 @@ const DetailClassTeacher: React.FC = () => {
                     </div>
                 </div>
             </div> : <Fragment>
+            <ToastContainer />
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
@@ -391,7 +393,7 @@ const DetailClassTeacher: React.FC = () => {
                     <>
                         {
                             function () {
-                                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create || anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Edit)) {
+                                if ((anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create || anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Edit || anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Remove)) {
                                     return <RequestOffSectionForm isCheck={onRemovePopup1} />
                                 }
                             }()

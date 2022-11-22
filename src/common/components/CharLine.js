@@ -29,7 +29,7 @@ export const options = {
         },
         title: {
             display: true,
-            text: 'Phân tích',
+            text: 'Biểu đồ',
         },
     },
 };

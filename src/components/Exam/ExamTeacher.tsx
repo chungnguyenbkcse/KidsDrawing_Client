@@ -5,9 +5,10 @@ import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
 import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
 import { logout } from "../../store/actions/account.actions";
-import { IExerciseSubmissionState, IStateType } from "../../store/models/root.interface";
+import { IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const ExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -99,6 +100,12 @@ const ExamTeacher: React.FC = () => {
             pathname: path,
         });
     }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    
+    useEffect(() => {
+        dispatch(updateCurrentPath("Bài tập", "Chấm bài"));
+    }, [path.area, dispatch])
     
     return (
         promiseInProgress ?
@@ -132,7 +139,7 @@ const ExamTeacher: React.FC = () => {
                                             <p id="phone">{exercise_name_}</p>
                                         </div>
                                         <div className="row no-gutters" dangerouslySetInnerHTML={{ __html: exercise_description_ }}></div>
-                                        <div className="row">
+                                        <div className="row mt-4">
                                             <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Phần trăm đánh giá:</span> <span className="header-card-course-value-teacher">{exercise_level_name_}%</span></p>
                                         </div>
                                         <div className="row">

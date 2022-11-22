@@ -7,6 +7,7 @@ import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/Use
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import ResultGradeExamTeacher1 from "./ResultGradeExamTeacher1";
 import ScoreExamList from "./ScoreExamList";
 
 const ResultGradeExamTeacher: React.FC = () => {
@@ -63,7 +64,7 @@ const ResultGradeExamTeacher: React.FC = () => {
     }, [dispatch, access_token, refresh_token, class_id_, exercise_id]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp", "Chi tiết"));
+        dispatch(updateCurrentPath("Bài tập", "Kết quả"));
     }, [dispatch, path.area])
 
 
@@ -89,7 +90,7 @@ const ResultGradeExamTeacher: React.FC = () => {
                     <div className="col-xl-12 col-md-12 mb-4">
                         <div className={`card shadow h-100 py-2`} id="topcard-user">
                             <div className="card-body">
-                                <ScoreExamList />
+                                <ResultGradeExamTeacher1 />
                             </div>
                         </div>
                     </div>

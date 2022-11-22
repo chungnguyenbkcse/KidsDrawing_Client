@@ -51,6 +51,12 @@ function FormSubmit(): JSX.Element {
         exercise_level_name = (id_h);
     }
 
+    var id_i = localStorage.getItem("deadline");
+    let deadline = "";
+    if (id_i !== null) {
+        deadline = (id_i);
+    }
+
 
     async function saveUser(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
@@ -155,6 +161,10 @@ function FormSubmit(): JSX.Element {
 
                                             <div className="row no-gutters">
                                                 <p id="phone">Tỉ lệ đánh giá: {exercise_level_name}</p>
+                                            </div>
+
+                                            <div className="row no-gutters">
+                                                <p id="phone">Hạn nộp: {deadline.replaceAll("T", " ").substring(0,16)}</p>
                                             </div>
                                         </div>
                                     </div>

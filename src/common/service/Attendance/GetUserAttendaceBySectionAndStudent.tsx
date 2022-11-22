@@ -1,15 +1,25 @@
-import { toast } from "react-toastify";
-import { fetchDataRequest } from "../../../store/actions/art_type.action";
+import { fetchDataSuccess, fetchDataError, removeAttendanceAll, initialAttendance, addAttendance } from "../../../store/actions/attendance.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-
-export function putAttendanceByUserAndSection( section_id: number, student_id: number,idx: any) {
+interface Attendance {
+    id: any;
+    student_id: number;
+    section_id: number;
+    status: string;
+    email: string;
+    section_number: number;
+    course_name: string;
+    course_id: number;
+    student_name: string;
+    section_name: string;
+    create_time: string;
+    update_time: string;
+}
+export function getAttendanceBySectionAndStudent(dispatch: any, section_id: any, student_id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/user-attendance/section-student/${section_id}/${student_id}`, {
-                    method: "PUT",
+                    method: "GET",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -22,23 +32,23 @@ export function putAttendanceByUserAndSection( section_id: number, student_id: n
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putAttendanceByUserAndSection(section_id,student_id,  idx))
+                        dispatch(getAttendanceBySectionAndStudent(dispatch, section_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
                 else {
-                    return response
+                    return response.json()
                 }
             })
-            .then (xx => {
+            .then (data => {
+                dispatch(fetchDataSuccess(data))
                 localStorage.setItem('is_attendance', "true");
-                toast.update(idx, { render: "Điểm danh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Điểm danh không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                localStorage.setItem('is_attendance', "false");
+                dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

@@ -8,6 +8,8 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { putAttendanceByUserAndSection } from "../../common/service/Attendance/PutAttendanceByUserAndSection";
 import { toast, ToastContainer } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { getAttendanceBySectionAndStudent } from "../../common/service/Attendance/GetUserAttendaceBySectionAndStudent";
 
 const ViewSectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -19,6 +21,12 @@ const ViewSectionStudent: React.FC = () => {
 
     if (id_y !== null) {
         section_id = parseInt(id_y);
+    }
+
+    var id_t = localStorage.getItem('is_active');
+    var is_active = "";
+    if (id_t !== null) {
+        is_active = id_t;
     }
 
     var id_x = localStorage.getItem('id');
@@ -33,15 +41,6 @@ const ViewSectionStudent: React.FC = () => {
 
     const { promiseInProgress } = usePromiseTracker();
 
-    function setChangeCount() {
-        let x = count;
-        let y = x + 1;
-        if (x < TutorialPages.tutorialPages.length){
-            console.log("Count")
-            setCount(y);
-        }
-        console.log(count)
-    }
 
     function setChangeCountBack() {
         let x = count;
@@ -51,11 +50,38 @@ const ViewSectionStudent: React.FC = () => {
         }
     }
 
-    function handleChecked() {
-        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-            position: toast.POSITION.TOP_CENTER
-          });
-        dispatch(putAttendanceByUserAndSection(section_id,id, idx));
+    const history = useHistory();
+    function routeHome(){
+        let path = "/classes/section";
+        history.push({
+            pathname: path
+        });
+    }
+
+    function setChangeCount() {
+        let x = count;
+        let y = x + 1;
+        if (x < TutorialPages.tutorialPages.length){
+            console.log("Count")
+            setCount(y);
+        }
+
+        var id_j = localStorage.getItem('is_attendance');
+        var is_attendance = "";
+        if (id_j !== null) {
+            is_attendance = id_j;
+        }
+
+        if (is_attendance === "false") {
+            if (y === TutorialPages.tutorialPages.length && (is_active === 'pre_active_now' || is_active === 'active_now')) {
+                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                    position: toast.POSITION.TOP_CENTER
+                  });
+                dispatch(putAttendanceByUserAndSection(section_id,id, idx));
+            }
+        }
+
+        console.log(count)
     }
 
     let access_token = localStorage.getItem("access_token");
@@ -82,13 +108,15 @@ const ViewSectionStudent: React.FC = () => {
                 }
                 else {
                     trackPromise(getTutorialPageBySection(dispatch, section_id))
+                    trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
                 }
             }
             else {
                 trackPromise(getTutorialPageBySection(dispatch, section_id))
+                trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
             }
         }
-    }, [dispatch, access_token, refresh_token, section_id]);
+    }, [dispatch, access_token, refresh_token, section_id, id]);
     
     return (
         promiseInProgress ?
@@ -152,16 +180,10 @@ const ViewSectionStudent: React.FC = () => {
                                                 }()
                                             }
                                         </div>
-                                        <div className="row no-gutters justify-content-right">
-                                            {
-                                                function() {
-                                                    if (count === TutorialPages.tutorialPages.length) {
-                                                        return (
-                                                            <button className={`btn btn-success left-margin mt-2`} onClick={() => {handleChecked()}}>Điểm danh</button>
-                                                        )
-                                                    }
-                                                }()
-                                            }
+                                        <div className="row">
+                                            <div className="col-xl-12 col-md-12 mx-auto">
+                                                
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

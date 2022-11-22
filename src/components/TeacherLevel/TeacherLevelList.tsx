@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import TopCardLevel from "../../common/components/TopCardLevel";
+import TopCardLevelApproved from "../../common/components/TopCardLevelApproved";
 import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 
@@ -16,7 +16,7 @@ function TeacherLevelList(props: teacherRegisterQuantificationListProps): JSX.El
         if (!ele) { return null; }
         return (
             <tr className={`table-row`} key={`semester_class_${index}`}>
-            <TopCardLevel 
+            <TopCardLevelApproved 
                 course_name={ele.course_name} 
                 icon="edit" class="warning" 
                 art_age_name={ele.art_age_name}

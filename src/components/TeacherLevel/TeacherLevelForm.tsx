@@ -29,9 +29,16 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
   const listCourse: ICourse[] = courses.courses
   //console.log(listLevel)
   const listCourses: Options[] = [];
+  let list_approved: number []= []
+  teacher_register_not_approved_nows.approveds.map((ele, idx) => {
+    return list_approved.push(ele.course_id)
+  })
   listCourse.map((ele) => {
-      let item: Options = { "name": ele.name, "value": ele.id }
-      return listCourses.push(item)
+      if (!list_approved.includes(ele.id)) {
+        let item: Options = { "name": ele.name, "value": ele.id }
+        return listCourses.push(item)
+      }
+      return null
   })
   console.log(listCourses)
   if (!teacher_register_not_approved || isCreate) {
@@ -112,7 +119,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
 
   function isFormInvalid(): boolean {
     return (formState.course_id.error 
-      || !formState.course_id.value) as boolean;
+      || !formState.course_id.value || preview === null || preview === "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg") as boolean;
   }
 
   const [image, setImage] = useState<any>();

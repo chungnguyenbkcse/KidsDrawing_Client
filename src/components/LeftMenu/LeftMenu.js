@@ -564,7 +564,7 @@ const Header = () => {
                       Khám phá
                   </Link>
                 </MenuItem>
-                <SubMenu active={active4} icon={<SiGoogletagmanager />} title="Quản lý" color="#ffffff" className={active3 ? "link-active" : "not-active"} onClick={() => {
+                <SubMenu active={active4} icon={<SiGoogletagmanager />} title="Quản lý" color="#ffffff" className={active4 ? "link-active" : "not-active"} onClick={() => {
                   if (active4 === false) {
                     setActive1(false);
                     setActive2(false);

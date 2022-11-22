@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
 import { ISemesterClassTeacherState, IStateType } from "../../store/models/root.interface";
 import { ISemesterClassTeacher } from "../../store/models/semester_class_teacher.interface";
-import "./CourseListNew.css"
 
 export type semesterListProps = {
     value?: string;
@@ -67,6 +66,8 @@ function SemesterClassNewTeacherList(props: semesterListProps): JSX.Element {
         localStorage.setItem('semester_class_id', course.id.toString())
         localStorage.removeItem('url_image');
         localStorage.setItem('url_image', course.image_url.toString())
+        localStorage.removeItem('status');
+        localStorage.setItem('status', course.status)
         let path = '/semester-class/detail';
         history.push({
             pathname: path
@@ -100,6 +101,7 @@ function SemesterClassNewTeacherList(props: semesterListProps): JSX.Element {
                                         <span className="d-block schedule-x">Lịch học: {ele.schedule}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
                                         <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_deadline.substring(0, 10) + " " + ele.registration_deadline.substring(11, 19)}</span>
+                                        <span className="full-name d-block">Trạng thái: {ele.status}</span>
                                         <div
                                             className="d-flex justify-content-between stats">
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>

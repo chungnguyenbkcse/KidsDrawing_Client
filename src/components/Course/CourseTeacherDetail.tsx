@@ -1,17 +1,32 @@
 import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IRootPageStateType } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, ILessonState } from "../../store/models/root.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { useHistory } from "react-router-dom";
 import "./CourseTeacherDetail.css"
 import { postRegisterTeachSemester } from "../../common/service/UserTeachSemester/PostRegisterTeachSemester";
 import { toast, ToastContainer } from "react-toastify";
 import { GrLinkDown } from "react-icons/gr";
+import Popup from "reactjs-popup";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import { deleteUserRegisterTeachSemesterBySemesterClassAndTeacher } from "../../common/service/UserTeachSemester/DeleteUserRegisterTeachSemesterBySemesterClassAndTeacher";
+import { setModificationState } from "../../store/actions/lesson.action";
 
 const CourseTeacherDetail: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
 
+    const [popup, setPopup] = useState(false);
+
+    function onLessonRemove() {
+        setPopup(true);
+    }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
+    }
+    
     useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch]);
@@ -105,6 +120,11 @@ const CourseTeacherDetail: React.FC = () => {
         
     }
 
+    function handleRemove() {
+        dispatch(setModificationState(LessonModificationStatus.Remove))
+        setPopup(true)
+    }
+
     function routeHome() {
         let path = '/courses';
         history.push(path)
@@ -113,6 +133,43 @@ const CourseTeacherDetail: React.FC = () => {
     return (
         <Fragment>
             <ToastContainer />
+            {
+                function () {
+                    if ((lessons.modificationState === LessonModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Are you sure?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                });
+                                                dispatch(deleteUserRegisterTeachSemesterBySemesterClassAndTeacher(
+                                                    semester_class_id, id
+                                                , idx, routeHome))
+                                                console.log({
+                                                    teacher_id: id,
+                                                    semester_classes_id: semester_class_id
+                                                })
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4 shadow-1">
                     <div className="row no-gutters align-items-center">
@@ -166,6 +223,16 @@ const CourseTeacherDetail: React.FC = () => {
                                         <button className="btn btn-success btn-green" id="btn-create-register-course" onClick={() => handleRegister()}>
                                             <i className="fas fa fa-plus"></i>
                                             Đăng kí ngay
+                                        </button>
+                                    </div>
+                                )
+                            }
+                            else {
+                                return (
+                                    <div className="row text-center justify-content-center" id="btn-register-course">
+                                        <button className="btn btn-danger" onClick={() => handleRemove()}>
+                                            <i className="fas fa fa-trash"></i>
+                                            Hủy kí ngay
                                         </button>
                                     </div>
                                 )

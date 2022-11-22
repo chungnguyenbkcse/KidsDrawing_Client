@@ -30,6 +30,12 @@ const ExamTeacher: React.FC = () => {
         exercise_name_ = exercise_name;
     }
 
+    var id_y = localStorage.getItem('deadline');
+    var deadline: string = "";
+    if (id_y !== null) {
+        deadline = id_y;
+    }
+
     var exercise_level_name = localStorage.getItem('exercise_level_name');
     var exercise_level_name_: string = "";
     if (exercise_level_name !== null) {
@@ -128,6 +134,9 @@ const ExamTeacher: React.FC = () => {
                                         <div className="row no-gutters" dangerouslySetInnerHTML={{ __html: exercise_description_ }}></div>
                                         <div className="row">
                                             <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Phần trăm đánh giá:</span> <span className="header-card-course-value-teacher">{exercise_level_name_}%</span></p>
+                                        </div>
+                                        <div className="row">
+                                            <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Hạn nộp:</span> <span className="header-card-course-value-teacher">{deadline.replaceAll("T", " ").substring(0,16)}</span></p>
                                         </div>
                                     </div>
                                 </div>

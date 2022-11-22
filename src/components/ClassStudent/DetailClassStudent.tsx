@@ -155,7 +155,7 @@ const DetailClassStudent: React.FC = () => {
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
-        
+
         localStorage.setItem('exercise_name', exercise_student.exercise_name);
         localStorage.setItem('exercise_id', exercise_student.exercise_id.toString());
         history.push({
@@ -192,7 +192,7 @@ const DetailClassStudent: React.FC = () => {
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
-        
+
         localStorage.setItem('exercise_name', exercise_student.exercise_name);
         localStorage.setItem('exercise_id', exercise_student.exercise_id.toString());
         history.push({
@@ -305,7 +305,7 @@ const DetailClassStudent: React.FC = () => {
             })
         }
 
-        let total_section_end = check_active.filter(x => x === 'Đã diễn ra').length
+        let total_section_end = check_active.filter(x => x === 'Đã diễn ra' || x === 'Đang diễn ra').length
         localStorage.setItem('total_section_end', total_section_end.toString())
     }
 
@@ -443,10 +443,10 @@ const DetailClassStudent: React.FC = () => {
                                 <div className="row">
                                     {
                                         element.sort((a, b) => a.number - b.number).map((ele, index) => {
-                                            if (checkActive(page*6 + index) === "not_active_now") {
+                                            if (checkActive(page * 6 + index) === "not_active_now") {
                                                 return (
                                                     <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
-                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), "") }}>
+                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
                                                             <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
                                                                 <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                             </div>
@@ -493,7 +493,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 </div>
                                                                 <div className="row mb-2">
                                                                     <div className="col-md-3">
-                                                                       
+
                                                                     </div>
                                                                     <div className="col-md-9 xs-centxxx">
                                                                         Chưa diễn ra
@@ -505,10 +505,10 @@ const DetailClassStudent: React.FC = () => {
                                                     </div>
                                                 )
                                             }
-                                            else if (checkActive(page*6 + index) === "pre_active_now") {
+                                            else if (checkActive(page * 6 + index) === "pre_active_now") {
                                                 return (
                                                     <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
-                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), "") }}>
+                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
                                                             <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
                                                                 <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                             </div>
@@ -555,7 +555,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 </div>
                                                                 <div className="row mb-2">
                                                                     <div className="col-md-3">
-                                                                       
+
                                                                     </div>
                                                                     <div className="col-md-9 xs-centxx">
                                                                         Chuẩn bị diễn ra
@@ -567,10 +567,10 @@ const DetailClassStudent: React.FC = () => {
                                                     </div>
                                                 )
                                             }
-                                            else if (checkActive(page*6 + index) === "active_now") {
+                                            else if (checkActive(page * 6 + index) === "active_now") {
                                                 return (
                                                     <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
-                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), "") }}>
+                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
                                                             <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
                                                                 <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
                                                             </div>
@@ -617,7 +617,7 @@ const DetailClassStudent: React.FC = () => {
                                                                 </div>
                                                                 <div className="row mb-2">
                                                                     <div className="col-md-3">
-                                                                       
+
                                                                     </div>
                                                                     <div className="col-md-9 xs-centx">
                                                                         Đang diễn ra
@@ -631,93 +631,93 @@ const DetailClassStudent: React.FC = () => {
                                             }
                                             return (
                                                 <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
-                                                        <div className={`row section-ele row-section mb-2 ${checkActive(page*6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page*6 + index), list_link_record[index]) }}>
-                                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
-                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                    <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), list_link_record[index]) }}>
+                                                        <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
+                                                            <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                        </div>
+                                                        <div className="col-xl-10 col-md-10">
+                                                            <div className="row mt-2">
+                                                                <div className="col-md-3">
+                                                                    Buổi {ele.number}
+                                                                </div>
+                                                                <div className="col-md-9">
+                                                                    {ele.name}
+                                                                </div>
                                                             </div>
-                                                            <div className="col-xl-10 col-md-10">
-                                                                <div className="row mt-2">
-                                                                    <div className="col-md-3">
-                                                                        Buổi {ele.number}
-                                                                    </div>
-                                                                    <div className="col-md-9">
-                                                                        {ele.name}
-                                                                    </div>
+                                                            <div className="row">
+                                                                <div className="col-md-3">
+                                                                    Lịch học:
                                                                 </div>
-                                                                <div className="row">
-                                                                    <div className="col-md-3">
-                                                                        Lịch học:
-                                                                    </div>
-                                                                    <div className="col-md-9">
-                                                                        {data[index]}
-                                                                    </div>
+                                                                <div className="col-md-9">
+                                                                    {data[index]}
                                                                 </div>
-                                                                <div className="row">
-                                                                    <div className="col-md-3">
-                                                                        Thời lượng:
-                                                                    </div>
-                                                                    <div className="col-md-9">
-                                                                        {total_time}
-                                                                    </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-md-3">
+                                                                    Thời lượng:
                                                                 </div>
-                                                                <div className="row">
-                                                                    <div className="col-md-3">
-                                                                        Hình thức:
-                                                                    </div>
-                                                                    <div className="col-md-9">
-                                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
-                                                                    </div>
+                                                                <div className="col-md-9">
+                                                                    {total_time}
                                                                 </div>
-                                                                <div className="row mb-2">
-                                                                    <div className="col-md-3">
-                                                                        Giáo viên:
-                                                                    </div>
-                                                                    <div className="col-md-9">
-                                                                        {ele.teacher_name}
-                                                                    </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-md-3">
+                                                                    Hình thức:
                                                                 </div>
-                                                                <div className="row mb-2">
-                                                                    <div className="col-md-3">
-                                                                       
-                                                                    </div>
-                                                                    <div className="col-md-9 xs-cent">
-                                                                        Đã kết thúc
-                                                                    </div>
+                                                                <div className="col-md-9">
+                                                                    {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row mb-2">
+                                                                <div className="col-md-3">
+                                                                    Giáo viên:
+                                                                </div>
+                                                                <div className="col-md-9">
+                                                                    {ele.teacher_name}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row mb-2">
+                                                                <div className="col-md-3">
+
+                                                                </div>
+                                                                <div className="col-md-9 xs-cent">
+                                                                    Đã kết thúc
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
+
+                                                </div>
                                             )
                                         })
                                     }
 
                                     <div className="d-flex justify-content-end text-right mt-2 ml-4">
-                    <nav>
-                        <ul className="pagination">
-                            <li className="page-item">
-                                <a className="page-link" aria-label="Previous" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            {
-                                Array.from(Array((totalPage)).keys()).map((ele, idx) => {
-                                    return (
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);" onClick={(e) => {
-                                            e.preventDefault()
-                                            handlePagination(ele)
-                                        }}>{ele + 1}</a></li>
-                                    )
-                                })
-                            }
-                            <li className="page-item">
-                                <a className="page-link" aria-label="Next" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                                        <nav>
+                                            <ul className="pagination">
+                                                <li className="page-item">
+                                                    <a className="page-link" aria-label="Previous" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                                {
+                                                    Array.from(Array((totalPage)).keys()).map((ele, idx) => {
+                                                        return (
+                                                            <li className="page-item"><a className="page-link" href="javascript:void(0);" onClick={(e) => {
+                                                                e.preventDefault()
+                                                                handlePagination(ele)
+                                                            }}>{ele + 1}</a></li>
+                                                        )
+                                                    })
+                                                }
+                                                <li className="page-item">
+                                                    <a className="page-link" aria-label="Next" href="javascript:void(0);" onClick={(e) => e.preventDefault()}>
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </div>
                             )
                         }
@@ -755,7 +755,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Hạn nộp:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.deadline.replaceAll("T", " ").substring(0,16)}
+                                                                                    {ele.deadline.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -818,7 +818,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Nộp lúc:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.update_time.replaceAll("T", " ").substring(0,16)}
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -868,7 +868,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Nộp lúc:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.update_time.replaceAll("T", " ").substring(0,16)}
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -936,7 +936,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                     Thời gian gửi:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.update_time.replaceAll("T", " ").substring(0,16)}
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
 
@@ -964,30 +964,30 @@ const DetailClassStudent: React.FC = () => {
                                                         student_leaves.acceptLeaves.map((ele, index) => {
                                                             return (
                                                                 <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => {handleRequestOffEnd(ele)}}>
-                                                                <div className="col-xl-3 col-md-3 avatar-x">
-                                                                    <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669002056/1497835_nexeoq.png" alt="" />
-                                                                </div>
-                                                                <div className="col-xl-9 col-md-9 mt-2">
-                                                                    <div className="row">
-                                                                        <div className="col-md-5">
-                                                                            Buổi nghỉ:
+                                                                    <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { handleRequestOffEnd(ele) }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
+                                                                            <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669002056/1497835_nexeoq.png" alt="" />
                                                                         </div>
-                                                                        <div className="col-md-7">
-                                                                            {ele.section_number}
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="row">
-                                                                        <div className="col-md-5">
-                                                                            Thời gian gửi:
-                                                                        </div>
-                                                                        <div className="col-md-7">
-                                                                            {ele.update_time.replaceAll("T", " ")}
-                                                                        </div>
-                                                                    </div>
+                                                                        <div className="col-xl-9 col-md-9 mt-2">
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Buổi nghỉ:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.section_number}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Thời gian gửi:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.update_time.replaceAll("T", " ")}
+                                                                                </div>
+                                                                            </div>
 
-                                                                </div>
-                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </tr>
                                                             )
                                                         })

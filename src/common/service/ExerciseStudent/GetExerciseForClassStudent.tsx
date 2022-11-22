@@ -62,8 +62,8 @@ export function getExerciseForClassStudent(dispatch: any, class_id: number, stud
                         deadline: ele.deadline,
                         level_name: ele.level_name,
                         section_name: ele.section_name,
-                        create_time: strDate_1.substring(0, 5),
-                        update_time: strDate_2.substring(0, 5)
+                        create_time: strDate_1,
+                        update_time: strDate_2
                     }
                     //console.log(strDate.substring(0, 16))
                     return dispatch(addExerciseNotSubmit(exercise))
@@ -84,8 +84,8 @@ export function getExerciseForClassStudent(dispatch: any, class_id: number, stud
                         deadline: ele.deadline,
                         level_name: ele.level_name,
                         section_name: ele.section_name,
-                        create_time: strDate_1.substring(0, 5),
-                        update_time: strDate_2.substring(0, 5)
+                        create_time: strDate_1,
+                        update_time: strDate_2
                     }
                     //console.log(strDate.substring(0, 16))
                     return dispatch(addExerciseSubmitNotGrade(exercise))

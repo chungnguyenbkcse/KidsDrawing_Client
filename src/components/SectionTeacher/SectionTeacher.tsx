@@ -9,7 +9,7 @@ import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExercise
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationState } from "../../store/actions/exercise.action";
-import { ExerciseModificationStatus } from "../../store/models/exercise.interface";
+import { ExerciseModificationStatus, IExercise } from "../../store/models/exercise.interface";
 import { IClassTeacherState, IExerciseState, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
@@ -160,16 +160,18 @@ const SectionTeacher: React.FC = () => {
         })
     }
 
-    const routeChange3 = (description: string, name: string, level_name: string, id: any) => {
+    const routeChange3 = (exercise: IExercise) => {
         let path = '/exercise';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
         localStorage.removeItem('exercise_level_name');
         localStorage.removeItem('exercise_id');
-        localStorage.setItem('exercise_description', description);
-        localStorage.setItem('exercise_name', name);
-        localStorage.setItem('exercise_level_name', level_name);
-        localStorage.setItem('exercise_id', id.toString());
+        localStorage.setItem('exercise_description', exercise.description);
+        localStorage.setItem('exercise_name', exercise.name);
+        localStorage.setItem('exercise_level_name', exercise.level_name);
+        localStorage.setItem('exercise_id', exercise.id.toString());
+        localStorage.removeItem('deadline');
+        localStorage.setItem('deadline', exercise.deadline);
         history.push({
             pathname: path
         });
@@ -429,13 +431,43 @@ const SectionTeacher: React.FC = () => {
                                                                 exercises.exercises.map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row row-section section-ele mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele.description, ele.name, ele.level_name, ele.id) }}>
-                                                                                <div className="col-xl-3 col-md-3 avatar-x pt-4 pb-2">
-                                                                                    <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                                                            <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange3(ele) }}>
+                                                                            <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                            </div>
+                                                                            <div className="col-xl-9 col-md-9 mt-2">
+                                                                                <div className="row">
+                                                                                    <div className="col-md-5">
+                                                                                        Tên:
+                                                                                    </div>
+                                                                                    <div className="col-md-7">
+                                                                                        {ele.name}
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div className="col-xl-9 col-md-9 mt-4">
-                                                                                    <h3 className=" mb-2" id="level-teacher">{ele.name}</h3>
-                                                                                    <h4 className=" mb-2" id="level-teacher">Phần trăm đánh giá: {ele.level_name}</h4>
+                                                                                <div className="row">
+                                                                                    <div className="col-md-5">
+                                                                                        Hạn nộp:
+                                                                                    </div>
+                                                                                    <div className="col-md-7">
+                                                                                        {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="row">
+                                                                                    <div className="col-md-5">
+                                                                                        Tỉ lệ đánh giá:
+                                                                                    </div>
+                                                                                    <div className="col-md-7">
+                                                                                        {ele.level_name} %
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="row mb-2">
+                                                                                    <div className="col-md-5">
+                                                                                        Trạng thái:
+                                                                                    </div>
+                                                                                    <div className="col-md-7 status-score">
+                                                                                        Chưa có bài nộp
+                                                                                    </div>
+                                                                                </div>
                                                                                 </div>
                                                                             </div>
                                                                         </tr>

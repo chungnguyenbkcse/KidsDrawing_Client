@@ -41,8 +41,8 @@ export function getLesson(dispatch: any) {
                     var strDate_2 = ele.end_time;
                     var lesson: lesson = {
                         id: ele.id,
-                        start_time: strDate_1.substring(0, 5),
-                        end_time: strDate_2.substring(0, 5),
+                        start_time: strDate_1,
+                        end_time: strDate_2,
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){

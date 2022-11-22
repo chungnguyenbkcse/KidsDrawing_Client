@@ -68,8 +68,8 @@ export function getContestSubmissionByContest(dispatch: any, id: any) {
                         contest_id: ele.contest_id,
                         contest_name: ele.contest_name,
                         image_url: ele.image_url,
-                        create_time: strDate_1.substring(0, 5),
-                        update_time: strDate_2.substring(0, 5)
+                        create_time: strDate_1,
+                        update_time: strDate_2
                     }
                     return dispatch(addContestGraded(contest_submission));
                 })

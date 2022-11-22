@@ -165,7 +165,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/schedule-teacher`}><ScheduleTeacher /></Route>
                                 <Route path={`/manage-student-end`}><ManageStudentEnd /></Route>
                                 <Route path={`/manage-student`}><ManageStudent /></Route>
-                                <Route path={`/exercise/detail`}><DetailExerciseStudent /></Route>
+                                <Route path={`/exercise/detail`}><DetailExerciseStudent1 /></Route>
                                 <Route path={`/exercise`}><ExamTeacher /></Route>
                                 <Route path="/"><TeacherHome /></Route>
                             </Switch>

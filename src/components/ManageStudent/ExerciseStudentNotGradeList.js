@@ -8,9 +8,9 @@ import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-pa
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
-function ExerciseStudentList(props) {
+function ExerciseStudentNotGradeList(props) {
 
-    const user_grade_exercise_submission = useSelector((state) => state.user_grade_exercise_submissions);
+    const exercise_submissions = useSelector((state) => state.exercise_submissions);
     const history = useHistory();
     const dispatch = useDispatch();
   
@@ -32,20 +32,21 @@ function ExerciseStudentList(props) {
 
   const onChangeRoute1 = (user_grade_exercise_submission) => {
     let path = '/exercise/student'; 
-    localStorage.setItem('feedback', user_grade_exercise_submission.feedback)
-    localStorage.setItem('score_exercise', user_grade_exercise_submission.score.toString())
+    localStorage.setItem('feedback', "")
+    localStorage.setItem('score_exercise', "0")
     localStorage.setItem('student_name', user_grade_exercise_submission.student_name)
     localStorage.setItem('image_url_exercise_submission', user_grade_exercise_submission.image_url)
     localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
-    localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.exercise_submission_id.toString())
-    localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
+    localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.id.toString())
+    localStorage.removeItem('deadline');
+    localStorage.setItem('deadline', user_grade_exercise_submission.exercise_deadline);
     history.push({
         pathname: path,
     });
   }
 
 
-  const datas = user_grade_exercise_submission.user_grade_exercise_submissions;
+  const datas = exercise_submissions.exercise_not_gradeds;
 
   const options = {
     paginationSize: 5,
@@ -73,16 +74,6 @@ function ExerciseStudentList(props) {
   };
 
 
-  function editButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-warning" onClick={() => {
-            if (props.onSelect) props.onSelect(row);
-            onChangeRoute(row)
-          }}
-          >Chi tiết</button>
-    )
-  }
-
   function gradeButton(cell, row) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
@@ -95,13 +86,7 @@ function ExerciseStudentList(props) {
 
   function deadlineButton(cell, row) {
     return (
-        <span>{row.deadline.replaceAll("T", " ").substring(0,16)}</span>
-    )
-  }
-
-  function time_submitButton(cell, row) {
-    return (
-        <span>{row.time_submit.replaceAll("T", " ").substring(0,16)}</span>
+        <span>{row.exercise_deadline.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 
@@ -112,30 +97,20 @@ function ExerciseStudentList(props) {
       filter: textFilter()
     },
     {
-      dataField: 'deadline',
+        dataField: 'exercise_level_name',
+        text: 'Tỉ lệ',
+        filter: textFilter()
+      },
+    {
+      dataField: 'exercise_deadline',
       text: 'Thời hạn nộp',
       formatter: deadlineButton
     },
     {
-      dataField: 'time_submit',
-      text: 'Thời gian nộp',
-      formatter: time_submitButton
-    },
-    {
-      dataField: 'score',
-      text: 'Điểm',
-      filter: textFilter()
-    },
-    {
       dataField: '',
       text: 'Hành động',
-      formatter: editButton
-    },
-    {
-      dataField: '',
-      text: '',
       formatter: gradeButton
-    },
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
@@ -174,4 +149,4 @@ function ExerciseStudentList(props) {
   );
 }
 
-export default ExerciseStudentList;
+export default ExerciseStudentNotGradeList;

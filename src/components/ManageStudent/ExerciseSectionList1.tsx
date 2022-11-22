@@ -40,7 +40,7 @@ function ExerciseSectionList(props: lessonListProps): JSX.Element {
             key={`lesson_${index}`} >
             <th scope="row" className="data-table">{index + 1}</th>
             <td className="data-table">{exercise.exercise_name}</td>
-            <td className="data-table">{exercise.deadline}</td>
+            <td className="data-table">{exercise.deadline.replaceAll("T", " ").substring(0,16)}</td>
             <td className="data-table">{exercise.time_submit}</td>
             <td className="data-table">{exercise.score}</td>
             <td>

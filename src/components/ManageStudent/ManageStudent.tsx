@@ -10,10 +10,11 @@ import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLe
 import { getUserById } from "../../common/service/User/GetUserById";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
-import { IExerciseStudentState, IStateType, IStudentLeaveState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IExerciseStudentState, IRootPageStateType, IStateType, IStudentLeaveState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import "./ManageStudent.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const ManageStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -113,6 +114,12 @@ const ManageStudent: React.FC = () => {
             pathname: path,
         });
     }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+
+    useEffect(() => {
+        dispatch(updateCurrentPath("Thống kê", ""));
+    }, [dispatch, path.area])
     
     return (
         promiseInProgress ?

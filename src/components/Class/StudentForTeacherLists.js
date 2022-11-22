@@ -79,6 +79,15 @@ function StudentForTeacherLists(props) {
         )
     }
 
+    function manageStudent(cell, row, rowIndex) {
+        return (
+            <button type="button" className="btn btn-primary" onClick={() => {
+                if(props.onSelect) props.onSelect(row);
+                routeChange(row.id, row.parents)}}
+              >Thống kê</button>
+        )
+    }
+
 
 
 
@@ -113,6 +122,11 @@ function StudentForTeacherLists(props) {
             text: 'Giới tính',
             filter: textFilter(),
             formatter: viewSex
+        },
+        {
+            dataField: '',
+            text: 'Thống kê',
+            formatter: manageStudent
         },
     ];
 

@@ -29,21 +29,34 @@ const NotificationDetail: React.FC = () => {
   return (
     <Fragment>
 
-      <div className="row">
-        <div className="col-xl-12 col-lg-12">
-          <div className="card shadow mb-4">
-            <div className="card-header py-3">
-              <h6 className="m-0 font-weight-bold text-green">{notification_name}</h6>
-              <div className="header-buttons">
-              </div>
-            </div>
-            <div className="card-body">
-                <p>{notification_desciption}</p>
-                <p>{notification_time}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+            <div className="row">
+                    <div className="col-xl-12 col-md-12 mb-2">
+                        <div className="row">
+                            <div className="col-xl-12 col-md-12 mb-2">
+                                <div className="col-xl-12 col-md-12 mb-2">
+                                    <div className={`card shadow h-100 py-2`} id="normal-tutorial">
+                                        <div className="card-body">
+                                            <div className="row no-gutters justify-content-left">
+                                                <h4 id="full-name">Nội dung thông báo</h4>
+                                            </div>
+                                            <div className="row no-gutters">
+                                                <h5 id="phone">Tiêu đề: {notification_name}</h5>
+                                            </div>
+
+                                            <div className="row no-gutters">
+                                                <p id="phone">Nội dung: {notification_desciption}</p>
+                                            </div>
+
+                                            <div className="row no-gutters">
+                                                <h6 id="phone">Thời gian: {notification_time.replaceAll("T", " ").substring(0,16)}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
     </Fragment >
   );
 };

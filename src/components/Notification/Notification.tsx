@@ -110,7 +110,7 @@ const Notification: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="card-body has-view">
-                                        <p>{ele.notification_time}</p>
+                                        <p>Thời gian: {ele.notification_time.replaceAll("T", " ").substring(0,16)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ const Notification: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="card-body">
-                                        <p>{ele.notification_time}</p>
+                                        <p>Thời gian: {ele.notification_time.replaceAll("T", " ").substring(0,16)}</p>
                                     </div>
                                 </div>
                             </div>

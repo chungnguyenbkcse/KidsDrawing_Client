@@ -70,13 +70,21 @@ function TopMenuNotification(): JSX.Element {
           is_read: ele.is_read
         }
         total ++;
-        return data_not_read.push(item)
+        return data_readed.push(item)
       }
       return notification
     })
   })
 
   const history = useHistory();
+  const routeChange1 = (e: any) =>{ 
+    e.preventDefault();
+    let path = '/notification'; 
+      history.push({
+          pathname: path,
+      });
+      setShow(!isShow);
+  }
   const routeChange = (props: Options) =>{ 
       setShow(!isShow)
       dispatch(putUserReadNotification({
@@ -138,7 +146,7 @@ function TopMenuNotification(): JSX.Element {
                 return (
                   <li>
                     <p className="dropdown-item waves-light"
-                      onClick={() => dispatch(logout())}
+                      onClick={() => {routeChange(ele)}}
                       data-toggle="modal"
                       data-target="#logoutModal">
                       <i className="fas fa-bell fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -150,7 +158,7 @@ function TopMenuNotification(): JSX.Element {
             }
           </ul>
           <div className="view-all-notify text-center">
-            <a href="/notification">Xem toàn bộ</a>
+            <a href="/#" onClick={routeChange1}>Xem toàn bộ</a>
           </div>
       </div>
     </li>

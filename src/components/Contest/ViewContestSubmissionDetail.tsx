@@ -76,7 +76,7 @@ const ViewContestSubmissionDetail: React.FC = () => {
                                                 <h4 id="full-name">Thông tin bài nộp</h4>
                                             </div>
                                             <div className="row no-gutters">
-                                                <p id="phone">Tên: {contest_name}</p>
+                                                <p id="phone">Tên cuộc thi: {contest_name}</p>
                                             </div>
 
                                             <div className="row no-gutters">

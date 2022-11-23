@@ -114,6 +114,7 @@ import DetailContestNotOpenNowStudent from "../components/Contest/DetailContestN
 import ResultGradeContestAdmin from "../components/Contest/ResultGradeContestAdmin";
 import ViewContestSubmissionDetail from "../components/Contest/ViewContestSubmissionDetail";
 import ViewContestSubmissionAdmin from "../components/Contest/ViewContestSubmissionAdmin";
+import ViewDetailTeacherForAdmin from "../components/Teachers/ViewDetailTeacherForAdmin";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -290,6 +291,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/contest/result-grade`}><ResultGradeContestAdmin /></Route>
                                 <Route path={`/contest/contest-submission`}><ViewContestSubmissionDetail /></Route>
                                 <Route path={`/parents`}><Parent /></Route>
+                                <Route path={`/classes-end/detail`}><DetailClass /></Route>
                                 <Route path={`/students/detail`}><DetailStudent /></Route>
                                 <Route path={`/students`}><Student /></Route>
                                 <Route path={`/semesters`}><Semester /></Route>
@@ -316,6 +318,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/teachers/request-level/degree-photo`}><DegreePhoto /></Route>
                                 <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>
                                 <Route path="/teachers/detail"><DetailTeacher /></Route>
+                                <Route path="/teacher/detail"><ViewDetailTeacherForAdmin /></Route>
                                 <Route path={`/teachers`}><Teacher /></Route>
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>

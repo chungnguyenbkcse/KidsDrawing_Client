@@ -126,7 +126,6 @@ const Parent: React.FC = () => {
                                                 }
                                                 dispatch(deleteUser(users.selectedUser.id))
                                                 dispatch(addNotification("Phụ huynh ", `${users.selectedUser.username} đã được xóa!`));
-                                                dispatch(removeParent(users.selectedUser.id));
                                                 dispatch(clearSelectedUser());
                                                 setPopup(false);
                                             }}>Remove

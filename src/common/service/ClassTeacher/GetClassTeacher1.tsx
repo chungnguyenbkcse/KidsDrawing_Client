@@ -18,11 +18,11 @@ interface ClassTeacher {
     art_age_name: string;
     schedule: string;
 }
-export function getClassTeacher(dispatch: any, id: any) {
+export function getClassTeacher1(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/classes/teacher/${id}`, {
+                `${process.env.REACT_APP_API_URL}/classes/teacher-1/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -36,7 +36,7 @@ export function getClassTeacher(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getClassTeacher(dispatch, id))
+                        dispatch(getClassTeacher1(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);

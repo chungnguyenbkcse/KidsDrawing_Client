@@ -17,6 +17,7 @@ import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
+import { getInfoMyClass1 } from "../../common/service/MyClass/GetInfoMyClass1";
 
 
 const DetailClass: React.FC = () => {

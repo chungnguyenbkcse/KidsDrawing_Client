@@ -15,6 +15,15 @@ function TeacherList(props) {
   const users = useSelector((state) => state.users);
   const teacher_register_quantifications = useSelector((state) => state.teacher_register_quantifications);
   const history = useHistory();
+  const routeChange = (teacher) => {
+    let path = '/teacher/detail';
+    localStorage.removeItem("teacher_id");
+    localStorage.setItem("teacher_id", teacher.id.toString())
+    history.push({
+      pathname: path,
+      state: { class_id: teacher.id }
+    });
+  }
 
 
   const datas = users.teachers;
@@ -59,6 +68,14 @@ function TeacherList(props) {
         if(props.onSelect) props.onSelect(row);
         dispatch(setModificationState(UserModificationStatus.Edit))
       }}>Chỉnh sửa</button>
+    )
+  }
+
+  function analytisButton(cell, row) {
+    return (
+      <button type="button" className="btn btn-info" onClick={() => {
+        routeChange(row)
+      }}>Thống kê</button>
     )
   }
 
@@ -118,15 +135,20 @@ function TeacherList(props) {
       formatter: totalQuatification
     },
     {
-      dataField: 'dateOfBirth',
+      dataField: '',
       text: '',
       formatter: editButton
     },
     {
-      dataField: 'address',
+      dataField: '',
+      text: '',
+      formatter: analytisButton
+    },
+    {
+      dataField: '',
       text: '',
       formatter: removeButton
-    },
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

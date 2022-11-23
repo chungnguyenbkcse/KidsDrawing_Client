@@ -2,6 +2,7 @@ export interface IClassTeacher {
     id: any;
     name: string;
     course_id: number;
+    review_star: number;
     link_url: string;
     semester_class_id: number;
     user_register_teach_semester: number;

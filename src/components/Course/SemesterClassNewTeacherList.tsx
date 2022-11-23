@@ -100,7 +100,7 @@ function SemesterClassNewTeacherList(props: semesterListProps): JSX.Element {
                                         <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span>
                                         <span className="d-block schedule-x">Lịch học: {ele.schedule}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                        <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_deadline.substring(0, 10) + " " + ele.registration_deadline.substring(11, 19)}</span>
+                                        <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}</span>
                                         <span className="full-name d-block">Trạng thái: {ele.status}</span>
                                         <div
                                             className="d-flex justify-content-between stats">

@@ -28,7 +28,7 @@ export function deleteUserRegisterContestByContestAndStudent(contest_id: number,
                     }
                 }
                 else {
-                    return response.json()
+                    return response
                 }
             })
             .then (data => {

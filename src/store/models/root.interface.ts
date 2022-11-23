@@ -343,7 +343,9 @@ export interface ICourseTeacherNewState {
 export interface IContestState {
     selectedContest: IContest | null;
     modificationState: ContestModificationStatus;
-    contests: IContest[];
+    contest_opening: IContest[];
+    contest_end: IContest[];
+    contest_not_open_now: IContest[];
 }
 
 export interface ISectionTemplateState {

@@ -2,6 +2,7 @@ export interface IContest {
     id: any;
     name: string;
     description: string;
+    check_gen: boolean;
     max_participant: number;
     total_register_contest: number;
     total_contest_submission: number;

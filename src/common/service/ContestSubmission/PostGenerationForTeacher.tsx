@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getContest } from "../Contest/GetContest";
 
 
 export function postGenerationContestSubmissionGrade(id: number, idx: any) {
@@ -34,6 +35,7 @@ export function postGenerationContestSubmissionGrade(id: number, idx: any) {
             })
             .then (val => {
                 console.log(val)
+                getContest(dispatch)
                 toast.update(idx, { render: "Nộp bài thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
             })
             .catch(error => {

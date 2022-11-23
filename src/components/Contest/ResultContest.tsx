@@ -4,9 +4,6 @@ import "./Contest.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IStateType, IRootPageStateType, IUserGradeContestSubmissionState, IContestSubmissionState, IUserGradeContestState } from "../../store/models/root.interface";
-import {
-    clearSelectedContest
-} from "../../store/actions/contest.action";
 import { getArtType } from "../../common/service/ArtType/GetArtType";
 import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
@@ -78,7 +75,6 @@ const ResultContest: React.FC = () => {
 
     
     useEffect(() => {
-        dispatch(clearSelectedContest());
         dispatch(updateCurrentPath("Cuộc thi", "danh sách"));
     }, [path.area, dispatch]);
 

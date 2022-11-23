@@ -1,13 +1,17 @@
 import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { formatDate } from "../../common/components/ConverDate";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { postGenerationContestSubmissionGrade } from "../../common/service/ContestSubmission/PostGenerationForTeacher";
 
 
 function ContestEndList(props) {
+
+  const dispatch = useDispatch();
 
     const contests = useSelector((state) => state.contests);
     const history = useHistory();
@@ -23,15 +27,7 @@ function ContestEndList(props) {
     const date_now = formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16);
     console.log( formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16))
 
-  const datas = contests.contests.filter((contest, index) => {
-    var strDate2 = contest.end_time;
-    if (!contest || strDate2 > date_now) {
-        return null
-    }
-    else {
-        return contest
-    }
-  })
+  const datas = contests.contest_end
 
   const options = {
     paginationSize: 5,
@@ -58,25 +54,46 @@ function ContestEndList(props) {
     }
   };
 
+  const generationContestSubmission = (id) => {
+    localStorage.setItem('contest_id', id)
+      const idx = toast.info("Xếp thành công", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000
+      });
+      dispatch(postGenerationContestSubmissionGrade(id, idx))
+  }
+
   function viewDetailButton(cell, row) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
         routeChange(row.id)
-      }}>Chi tiết</button>
+      }}>Thống kê</button>
     )
   }
 
   function showStartTime(cell, row) {
     var strDate = row.start_time;
     return (
-        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+        <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 
   function showEndTime(cell, row) {
-    var strDate = row.start_time;
+    var strDate = row.end_time;
     return (
-        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+        <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
+    )
+  }
+
+  function viewGenarationGradeButton(cell, row) {
+    if (row.check_gen !== false) {
+      return <span></span>
+    }
+    return (
+      <button type="button" className="btn btn-info" onClick={() => {
+        if(props.onSelect) props.onSelect(row);
+        generationContestSubmission(row.id)
+      }}>Xếp chấm thi</button>
     )
   }
 
@@ -112,13 +129,18 @@ function ContestEndList(props) {
         text: 'Đã đăng kí',
       },
       {
-        dataField: 'total_contest_submission_graded',
-        text: 'Đã nộp',
+        dataField: 'total_contest_submission',
+        text: 'Số bài nộp',
       },
     {
       dataField: '',
       text: 'Hành động',
       formatter: viewDetailButton
+    },
+    {
+      dataField: '',
+      text: '',
+      formatter: viewGenarationGradeButton
     }
   ];
 

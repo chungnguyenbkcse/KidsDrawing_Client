@@ -1,4 +1,4 @@
-import { fetchDataRequest, fetchDataError, removeContest } from "../../../store/actions/contest.action";
+import { fetchDataRequest, fetchDataError, removeContestNotOpenNow } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteContest(id: any) {
@@ -32,7 +32,7 @@ export function deleteContest(id: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(removeContest(id))
+                dispatch(removeContestNotOpenNow(id))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -23,16 +23,7 @@ function ContestIsOnList(props) {
     const date_now = formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16);
     console.log( formatDate(new Date(date)).substring(0,10) + "Z"+ formatDate(new Date(date)).substring(11,16))
 
-  const datas = contests.contests.filter((contest, index) => {
-    var strDate1 = contest.start_time;
-    var strDate2 = contest.end_time;
-    if (!contest || strDate1 > date_now || date_now > strDate2) {
-        return null
-    }
-    else {
-        return contest
-    }
-  })
+  const datas = contests.contest_opening
 
   const options = {
     paginationSize: 5,
@@ -64,21 +55,21 @@ function ContestIsOnList(props) {
       <button type="button" className="btn btn-primary" onClick={() => {
         if(props.onSelect) props.onSelect(row);
         routeChange(row.id)
-      }}>Chỉnh sửa</button>
+      }}>Thống kê</button>
     )
   }
 
   function showStartTime(cell, row) {
     var strDate = row.start_time;
     return (
-        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+        <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 
   function showEndTime(cell, row) {
-    var strDate = row.start_time;
+    var strDate = row.end_time;
     return (
-        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+        <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 
@@ -114,8 +105,8 @@ function ContestIsOnList(props) {
       text: 'Đã đăng kí',
     },
     {
-      dataField: 'total_contest_submission_graded',
-      text: 'Đã nộp',
+      dataField: 'total_contest_submission',
+      text: 'Số bài nộp',
     },
     {
       dataField: '',

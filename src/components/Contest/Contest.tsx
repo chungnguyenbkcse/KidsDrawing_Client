@@ -6,8 +6,10 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IContestState, IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import Popup from "reactjs-popup";
 import {
-    removeContest, clearSelectedContest, setModificationState,
-    changeSelectedContest
+    removeContestNotOpenNow, clearSelectedContestNotOpenNow, setModificationState,
+    changeSelectedContestNotOpenNow,
+    changeSelectedContestEnd,
+    changeSelectedContestOpening
 } from "../../store/actions/contest.action";
 import { addNotification } from "../../store/actions/notifications.action";
 import { ContestModificationStatus, IContest } from "../../store/models/contest.interface";
@@ -39,32 +41,13 @@ const Contest: React.FC = () => {
     const date = date_0.toUTCString()
     console.log(date)
     const date_now = formatDate(new Date(date)).substring(0, 10) + "Z" + formatDate(new Date(date)).substring(11, 16);
-    let numberContestEndCount: number = contests.contests.filter((contest) => {
-        var strDate2 = contest.end_time;
-        if (!(!contest || strDate2 > date_now)) {
-            return contest
-        }
-        return null
-    }).length
+    let numberContestEndCount: number = contests.contest_end.length
 
-    let numberContestOnCount: number = contests.contests.filter((contest) => {
-        var strDate1 = contest.start_time;
-        var strDate2 = contest.end_time;
-        if (!(!contest || strDate1 > date_now || date_now > strDate2)) {
-            return contest
-        }
-        return null
-    }).length
+    let numberContestOnCount: number = contests.contest_opening.length
 
-    let numberContestNotStartCount: number = contests.contests.filter((contest) => {
-        var strDate1 = contest.start_time;
-        if (!(!contest || strDate1 < date_now)) {
-            return contest
-        }
-        return null
-    }).length
+    let numberContestNotStartCount: number = contests.contest_not_open_now.length
     useEffect(() => {
-        dispatch(clearSelectedContest());
+        dispatch(clearSelectedContestNotOpenNow());
         dispatch(updateCurrentPath("Cuộc thi", "danh sách"));
     }, [path.area, dispatch]);
 
@@ -101,18 +84,18 @@ const Contest: React.FC = () => {
     }, [dispatch, access_token, refresh_token])
 
     function onContestSelectNotOnYetList(contest: IContest): void {
-        dispatch(changeSelectedContest(contest));
+        dispatch(changeSelectedContestNotOpenNow(contest));
         onContestRemove1()
         dispatch(setModificationState(ContestModificationStatus.None));
     }
 
     function onContestSelectOnList(contest: IContest): void {
-        dispatch(changeSelectedContest(contest));
+        dispatch(changeSelectedContestOpening(contest));
         dispatch(setModificationState(ContestModificationStatus.None));
     }
 
     function onContestSelectEndList(contest: IContest): void {
-        dispatch(changeSelectedContest(contest));
+        dispatch(changeSelectedContestEnd(contest));
         dispatch(setModificationState(ContestModificationStatus.None));
     }
 
@@ -148,9 +131,9 @@ const Contest: React.FC = () => {
             <h1 className="h3 mb-2 text-gray-800">Cuộc thi</h1>
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
+                <TopCard title="CHƯA DIỄN RA" text={`${numberContestNotStartCount}`} icon="box" class="primary" />
                 <TopCard title="ĐANG DIỄN RA" text={`${numberContestOnCount}`} icon="box" class="primary" />
                 <TopCard title="ĐÃ KẾT THÚC" text={`${numberContestEndCount}`} icon="box" class="primary" />
-                <TopCard title="CHƯA DIỄN RA" text={`${numberContestNotStartCount}`} icon="box" class="primary" />
             </div>
 
 
@@ -222,9 +205,6 @@ const Contest: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green">Danh sách cuộc thi đang diễn ra</h6>
-                                            </div>
                                             <div className="card-body">
                                                 <ContestIsOnList
                                                     onSelect={onContestSelectOnList}
@@ -243,7 +223,6 @@ const Contest: React.FC = () => {
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4">
                                             <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green">Danh sách cuộc thi chưa diễn ra</h6>
                                                 <div className="header-buttons">
                                                     <button className="btn btn-success btn-green" onClick={() => {
                                                         dispatch(setModificationState(ContestModificationStatus.Create))
@@ -285,8 +264,8 @@ const Contest: React.FC = () => {
                                                                     }
                                                                     dispatch(deleteContest(contests.selectedContest.id))
                                                                     dispatch(addNotification("Khóa học ", `${contests.selectedContest.id} đã được xóa`));
-                                                                    dispatch(removeContest(contests.selectedContest.id));
-                                                                    dispatch(clearSelectedContest());
+                                                                    dispatch(removeContestNotOpenNow(contests.selectedContest.id));
+                                                                    dispatch(clearSelectedContestNotOpenNow());
                                                                     setPopup1(false);
                                                                 }}>Remove
                                                             </button>
@@ -307,9 +286,6 @@ const Contest: React.FC = () => {
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="card shadow mb-4">
-                                            <div className="card-header py-3">
-                                                <h6 className="m-0 font-weight-bold text-green">Danh sách cuộc thi đã kết thúc</h6>
-                                            </div>
                                             <div className="card-body">
                                                 <ContestEndList
                                                     onSelect={onContestSelectEndList}

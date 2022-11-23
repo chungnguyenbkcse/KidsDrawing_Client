@@ -3,7 +3,7 @@ import { IStateType, IContestState, IArtTypeState, IArtAgeState, IUserState, IUs
 import { useSelector, useDispatch } from "react-redux";
 import { ContestModificationStatus, IContest } from "../../store/models/contest.interface";
 import TextInput from "../../common/components/TextInput";
-import { editContest, clearSelectedContest, setModificationState, addContest } from "../../store/actions/contest.action";
+import { editContestNotOpenNow, clearSelectedContestNotOpenNow, setModificationState, addContestNotOpenNow } from "../../store/actions/contest.action";
 import NumberInput from "../../common/components/NumberInput";
 import Checkbox from "../../common/components/Checkbox";
 import { OnChangeModel, IContestFormState } from "../../common/types/Form.types";
@@ -55,7 +55,7 @@ const ContestForm: React.FC = () => {
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
   if (isCreate || contest === null){
-      contest = { id: 0, name: "", total_contest_submission: 0, total_contest_submission_graded: 0, total_register_contest: 0,  description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0, art_age_name: "", art_type_name: "" };
+      contest = { id: 0, check_gen: false, name: "", total_contest_submission: 0, total_contest_submission_graded: 0, total_register_contest: 0,  description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0, art_age_name: "", art_type_name: "" };
   }
   useEffect(() => {
     trackPromise(getArtType(dispatch))
@@ -173,7 +173,7 @@ const ContestForm: React.FC = () => {
 
     var url = await setImageAction();
 
-    let saveUserFn: Function = (isCreate) ? addContest : editContest;
+    let saveUserFn: Function = (isCreate) ? addContestNotOpenNow : editContestNotOpenNow;
     saveForm(formState, saveUserFn, url, idx);
   }
 
@@ -186,7 +186,7 @@ const ContestForm: React.FC = () => {
 
   function saveForm(formState: IContestFormState, saveFn: Function, url: string, idx: any):void {
     if (contest) {
-      if (saveFn === addContest) {
+      if (saveFn === addContestNotOpenNow) {
         dispatch(postContest(valueTeacher,{
           name: formState.name.value,
           description: textHtml,
@@ -202,7 +202,7 @@ const ContestForm: React.FC = () => {
         }, idx, routeHome))
       }
 
-      else if (saveFn === editContest) {
+      else if (saveFn === editContestNotOpenNow) {
         dispatch(putContest(contest.id, {
           name: formState.name.value,
           description: textHtml,
@@ -218,7 +218,7 @@ const ContestForm: React.FC = () => {
         },valueTeacher,  idx, routeHome))
       }
 
-      dispatch(clearSelectedContest());
+      dispatch(clearSelectedContestNotOpenNow());
       dispatch(setModificationState(ContestModificationStatus.None)); 
     }
   }

@@ -330,8 +330,8 @@ const CourseNomalForm: React.FC = () => {
                                         value={formState.num_of_section.value}
                                         field="num_of_section"
                                         onChange={hasFormValueChanged}
-                                        max={1000}
-                                        min={0}
+                                        max={36}
+                                        min={1}
                                         label="Số buổi học" 
                                     />
                                 </div>

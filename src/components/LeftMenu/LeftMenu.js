@@ -370,7 +370,7 @@ const Header = () => {
                       setActive6(false);
                     }
                   }}>
-                    <span> Phân tích</span>
+                    <span> Thống kê</span>
                   </Link>
                 </MenuItem>
                 <SubMenu active={active5} icon={<BiCog />} title="Thiết lâp" color="#ffffff" className={active5 ? "link-active" : "not-active"} onClick={() => {

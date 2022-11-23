@@ -115,6 +115,7 @@ import ResultGradeContestAdmin from "../components/Contest/ResultGradeContestAdm
 import ViewContestSubmissionDetail from "../components/Contest/ViewContestSubmissionDetail";
 import ViewContestSubmissionAdmin from "../components/Contest/ViewContestSubmissionAdmin";
 import ViewDetailTeacherForAdmin from "../components/Teachers/ViewDetailTeacherForAdmin";
+import ViewDetailStudentForAdmin from "../components/Student/ViewDetailStudentForAdmin";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -319,6 +320,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/teachers/request-level`}><RequestConfirmLevel /></Route>
                                 <Route path="/teachers/detail"><DetailTeacher /></Route>
                                 <Route path="/teacher/detail"><ViewDetailTeacherForAdmin /></Route>
+                                <Route path="/student/detail"><ViewDetailStudentForAdmin /></Route>
                                 <Route path={`/teachers`}><Teacher /></Route>
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>

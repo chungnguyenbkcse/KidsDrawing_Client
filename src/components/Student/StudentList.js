@@ -5,6 +5,7 @@ import { UserModificationStatus } from "../../store/models/user.interface";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { useHistory } from "react-router-dom";
 
 
 function StudentList(props) {
@@ -14,6 +15,17 @@ function StudentList(props) {
   const users = useSelector((state) => state.users);
 
   const datas = users.students;
+
+  const history = useHistory();
+  const routeChange = (teacher) => {
+    let path = '/student/detail';
+    localStorage.removeItem("student_id");
+    localStorage.setItem("student_id", teacher.id.toString())
+    history.push({
+      pathname: path,
+      state: { class_id: teacher.id }
+    });
+  }
 
   const options = {
     paginationSize: 5,
@@ -47,6 +59,14 @@ function StudentList(props) {
         dispatch(setModificationState(UserModificationStatus.Remove))
       }}>Xóa</button>
     );
+  }
+
+  function analytisButton(cell, row) {
+    return (
+      <button type="button" className="btn btn-info" onClick={() => {
+        routeChange(row)
+      }}>Thống kê</button>
+    )
   }
 
 
@@ -90,6 +110,11 @@ function StudentList(props) {
       dataField: 'address',
       text: 'Hành động',
       formatter: removeButton
+    },
+    {
+      dataField: '',
+      text: '',
+      formatter: analytisButton
     },
   ];
 

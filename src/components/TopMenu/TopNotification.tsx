@@ -139,23 +139,6 @@ function TopMenuNotification(): JSX.Element {
                 )
               })
             }
-
-
-            {
-              data_readed.map((ele, idx) => {
-                return (
-                  <li>
-                    <p className="dropdown-item waves-light"
-                      onClick={() => {routeChange(ele)}}
-                      data-toggle="modal"
-                      data-target="#logoutModal">
-                      <i className="fas fa-bell fa-sm fa-fw mr-2 text-gray-400"></i>
-                      {ele.notification_name}
-                    </p>
-                  </li>
-                )
-              })
-            }
           </ul>
           <div className="view-all-notify text-center">
             <a href="/#" onClick={routeChange1}>Xem toàn bộ</a>

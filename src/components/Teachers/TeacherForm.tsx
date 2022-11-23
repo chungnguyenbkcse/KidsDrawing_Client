@@ -72,16 +72,7 @@ function TeacherForm(props: teacherListProps): JSX.Element {
       else if (saveFn === editTeacher) {
         dispatch(putTeacher(user.id, {
           username: formState.username.value,
-          email: formState.email.value,
-          password: formState.password.value,
-          firstName: null,
-          lastName: null,
-          dateOfBirth: null,
-          profile_image_url: null,
-          sex: null,
-          phone: null,
-          address: null,
-          roleNames: ["TEACHER_USER"]
+          email: formState.email.value
         }, id));
       }
 
@@ -103,7 +94,7 @@ function TeacherForm(props: teacherListProps): JSX.Element {
 
   function isFormInvalid(): boolean {
     return (formState.username.error || formState.email.error
-      || !formState.email.value || !formState.username.value || !formState.password.value ) as boolean;
+      || !formState.email.value || !formState.username.value ) as boolean;
   }
 
   return (

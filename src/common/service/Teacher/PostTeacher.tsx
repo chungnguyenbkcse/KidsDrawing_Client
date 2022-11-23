@@ -36,11 +36,11 @@ export function postTeacher(data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 getTeacher(dispatch)
             })
             .catch(error => {
-                toast.update(idx, { render: "Lỗi username hoặc email bị trùng!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
+                toast.update(idx, { render: "Lỗi username hoặc email bị trùng!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             });
     };
 }

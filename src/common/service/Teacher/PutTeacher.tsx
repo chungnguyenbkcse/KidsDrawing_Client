@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getUserById } from "../User/GetUserById";
+import { getTeacher } from "./GetTeacher";
 
 export function putTeacher(id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -9,7 +10,7 @@ export function putTeacher(id: any, data: any, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user/${id}`, {
+                `${process.env.REACT_APP_API_URL}/user/teacher/${id}`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,
@@ -38,7 +39,7 @@ export function putTeacher(id: any, data: any, idx: any) {
                 console.log(val)
                 console.log(id)
                 toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                getUserById(dispatch, id)
+                getTeacher(dispatch)
             })
             .catch(error => {
                 toast.update(id, { render: "Chỉnh thông tin tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

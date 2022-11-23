@@ -43,7 +43,7 @@ const Teacher: React.FC = () => {
             let is_check = true;
             for (let index = 0; index < data.length; index++) {
                 const ele = data[index];
-                if (ele.username === null || ele.username === "" || ele.email === null || ele.email === "" || ele.password === null || ele.password === "")   {
+                if (ele.username === null || ele.username === "" || ele.email === null || ele.email === "")   {
                     toast.error(`Lỗi tại dòng ${index + 1}`, {
                         position: toast.POSITION.TOP_CENTER,
                         autoClose: 2000
@@ -74,7 +74,7 @@ const Teacher: React.FC = () => {
             dispatch(postTeacher1({
                 username: datas[0].username,
                 email: datas[0].email,
-                password: datas[0].password,
+                password: null,
                 firstName: null,
                 lastName: null,
                 dateOfBirth: null,
@@ -197,12 +197,12 @@ const Teacher: React.FC = () => {
             <p className="mb-4">Thông tin chung</p>
             <div className="row">
                 <TopCard title="GIÁO VIÊN" text={`${numberItemsCount}`} icon="user" class="primary" />
-                <div className="col-xl-4 col-lg-4">
-
-                </div>
                 <div className="col-xl-2 col-lg-2">
                     <div>
                         <h6 className="m-0 font-weight-bold text-green">Import</h6>
+                    </div>
+                    <div>
+                        <a className="m-0 font-weight-bold" href={`https://recording-jitsi-chung.s3.ap-southeast-1.amazonaws.com/Asset/example.csv`}>File mẫu</a>
                     </div>
                     <div>
                         <CSVReader

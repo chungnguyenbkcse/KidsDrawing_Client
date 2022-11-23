@@ -1,6 +1,6 @@
 import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IRootPageStateType, IUserState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, IUserState, ILessonState } from "../../store/models/root.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import "./SemesterClassDetail.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -13,12 +13,20 @@ import { toast, ToastContainer } from "react-toastify";
 import { postUserRegisterJoinSemester } from "../../common/service/UserRegisterJoinSemester/PostUserRegisterJoinSemester";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { useHistory } from "react-router-dom";
+import { deleteUserRegisterJoinSemesterBySemesterClassAndStudent } from "../../common/service/UserRegisterJoinSemester/DeleteUserRegisterJoinSemesterBySemesterClassAndStudent";
+import { setModificationState } from "../../store/actions/lesson.action";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import Popup from "reactjs-popup";
+import { BsFillTrashFill } from "react-icons/bs";
 
 
 const SemesterClassDetailStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const users: IUserState = useSelector((state: IStateType) => state.users);
+
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
+    
     const [checked, setChecked] = useState(false);
 
     var id_x = localStorage.getItem('id');
@@ -93,6 +101,22 @@ const SemesterClassDetailStudent: React.FC = () => {
         semester_class_id = parseInt(id_n);
     }
 
+    var id_j = localStorage.getItem('status');
+    var status = "";
+    if (id_j !== null) {
+        status = id_j;
+    }
+
+    const [popup, setPopup] = useState(false);
+
+    function onLessonRemove() {
+        setPopup(true);
+    }
+
+    function onRemovePopup(value: boolean) {
+        setPopup(false);
+    }
+
     function handleClick() {
         setChecked(!checked)
     }
@@ -139,7 +163,7 @@ const SemesterClassDetailStudent: React.FC = () => {
 
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp", ""));
+        dispatch(updateCurrentPath("Lớp theo kì", ""));
     }, [path.area, dispatch])
 
     function handleRegister() {
@@ -155,9 +179,14 @@ const SemesterClassDetailStudent: React.FC = () => {
         }, idx, routeHome))
     }
 
+    function handleRemove() {
+        dispatch(setModificationState(LessonModificationStatus.Remove))
+        setPopup(true)
+    }
+
     const history = useHistory();
     function routeHome() {
-        let path = '/discover';
+        let path = '/discover/course';
         history.push(path)
     }
 
@@ -173,6 +202,37 @@ const SemesterClassDetailStudent: React.FC = () => {
                 </div>
             </div> : <Fragment>
                 <ToastContainer />
+                {
+                    function () {
+                        if ((lessons.modificationState === LessonModificationStatus.Remove)) {
+                            return (
+                                <Popup
+                                    open={popup}
+                                    onClose={() => setPopup(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="popup-modal" id="popup-modal">
+                                        <div className="popup-title">
+                                            Are you sure?
+                                        </div>
+                                        <div className="popup-content">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                        position: toast.POSITION.TOP_CENTER
+                                                    });
+                                                    dispatch(deleteUserRegisterJoinSemesterBySemesterClassAndStudent(semester_class_id, id, idx, routeHome))
+                                                    setPopup(false);
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )
+                        }
+                    }()
+                }
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4" id="shadow-1">
                         <div className="row no-gutters align-items-center">
@@ -222,14 +282,34 @@ const SemesterClassDetailStudent: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row" id="btn-register-course">
-                            <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
-                                <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister()}>
-                                    <GrLinkNext id="btn-payment" color="#ffffff" />
-                                    Đăng kí ngay
-                                </button>
-                            </div>
-                        </div>
+                        {
+                            function () {
+                                if (status === "Not register") {
+                                    return (
+                                        <div className="row" id="btn-register-course">
+                                            <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                                                <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister()}>
+                                                    <GrLinkNext id="btn-payment" color="#ffffff" />
+                                                    Đăng kí ngay
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                else if (status === "Unpaid") {
+                                    return (
+                                        <div className="row">
+                                            <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
+                                                <button className="btn btn-danger" id="btn-create-register-coursexx" onClick={() => handleRemove()}>
+                                                    <BsFillTrashFill id="btn-payment" color="#ffffff" />
+                                                    Hủy kí ngay
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            }()
+                        }
                     </div>
                 </div>
                 <div className="row" id="btn-register-course">

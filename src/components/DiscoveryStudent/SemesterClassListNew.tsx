@@ -20,16 +20,16 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
     console.log(semester_class_student.payed)
 
     useEffect(() => {
-        let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
+        let x = (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length - (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length) % 6) / 6;
         if (x === 0) {
-            setElement(semester_class_student.not_payed)
+            setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed))
         }
         else {
-            setElement(semester_class_student.not_payed.slice(0, 6))
+            setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).slice(0, 6))
         }
 
         setTotalPage((x + 1))
-    }, [semester_class_student.not_payed])
+    }, [semester_class_student.not_payed, semester_class_student.not_payed_now, semester_class_student.payed])
 
     console.log((totalPage))
 
@@ -37,18 +37,18 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
         console.log(count)
         if (filter === "0") {
             if (count === totalPage) {
-                setElement(semester_class_student.not_payed.slice(count * 6))
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).slice(count * 6))
             }
             else {
-                setElement(semester_class_student.not_payed.slice(count * 6, count * 6 + 6))
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).slice(count * 6, count * 6 + 6))
             }
         }
         else if (filter === "1") {
             if (count === totalPage) {
-                setElement(semester_class_student.not_payed_now.slice(count * 6))
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).slice(count * 6))
             }
             else {
-                setElement(semester_class_student.not_payed_now.slice(count * 6, count * 6 + 6))
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).slice(count * 6, count * 6 + 6))
             }
         }
         else if (filter === "2") {
@@ -88,6 +88,8 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
         localStorage.setItem('semester_class_id', course.id.toString())
         localStorage.removeItem('url_image');
         localStorage.setItem('url_image', course.image_url.toString())
+        localStorage.removeItem('status');
+        localStorage.setItem('status', course.status.toString())
         let path = '/semester-class/detail';
         history.push({
             pathname: path
@@ -100,18 +102,18 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
 
     function handleFilter() {
         if (filter === "0") {
-            let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
+            let x = (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length - (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length) % 6) / 6;
             if (x === 0) {
-                setElement(semester_class_student.not_payed)
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed))
             }
             else {
-                setElement(semester_class_student.not_payed.slice(0, 6))
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).slice(0, 6))
             }
 
             setTotalPage((x + 1))
         }
         else if (filter === "1") {
-            let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
+            let x = (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length - (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length) % 6) / 6;
             if (x === 0) {
                 setElement(semester_class_student.payed)
             }
@@ -122,12 +124,12 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
             setTotalPage((x + 1))
         }
         else if (filter === "2") {
-            let x = (semester_class_student.not_payed.length - (semester_class_student.not_payed.length) % 6) / 6;
+            let x = (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length - (semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).length) % 6) / 6;
             if (x === 0) {
-                setElement(semester_class_student.not_payed_now)
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed))
             }
             else {
-                setElement(semester_class_student.not_payed_now.slice(0, 6))
+                setElement(semester_class_student.not_payed.concat(semester_class_student.not_payed_now).concat(semester_class_student.payed).slice(0, 6))
             }
 
             setTotalPage((x + 1))

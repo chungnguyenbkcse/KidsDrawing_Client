@@ -20,6 +20,7 @@ interface ContestStudent {
     end_time: string;
     is_enabled: boolean;
     art_type_name: string;
+    status: string;
     art_age_name: string;
     art_type_id: number;
     art_age_id: number;
@@ -77,6 +78,7 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                         art_age_name: ele.art_age_name,
                         image_url: ele.image_url,
                         start_time: ele.start_time,
+                        status: ele.status,
                         end_time: ele.end_time,
                         is_enabled: ele.is_enabled,
                         art_age_id: ele.art_age_id,
@@ -107,6 +109,7 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                         total_register_contest: ele.total_register_contest,
                         registration_time: ele.registration_time,
                         art_type_name: ele.art_type_name,
+                        status: ele.status,
                         art_age_name: ele.art_age_name,
                         image_url: ele.image_url,
                         start_time: ele.start_time,
@@ -147,6 +150,7 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                         end_time: ele.end_time,
                         is_enabled: ele.is_enabled,
                         art_age_id: ele.art_age_id,
+                        status: ele.status,
                         art_type_id: ele.art_type_id,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
@@ -175,6 +179,7 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                         total_register_contest: ele.total_register_contest,
                         registration_time: ele.registration_time,
                         art_type_name: ele.art_type_name,
+                        status: ele.status,
                         art_age_name: ele.art_age_name,
                         image_url: ele.image_url,
                         start_time: ele.start_time,

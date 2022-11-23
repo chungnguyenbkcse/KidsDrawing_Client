@@ -16,6 +16,7 @@ interface ContestStudent {
     total_contest_submission_graded: number;
     registration_time: string;
     image_url: string;
+    status: string;
     start_time: string;
     end_time: string;
     is_enabled: boolean;
@@ -76,6 +77,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         art_type_name: ele.art_type_name,
                         art_age_name: ele.art_age_name,
                         image_url: ele.image_url,
+                        status: ele.status,
                         start_time: ele.start_time,
                         end_time: ele.end_time,
                         is_enabled: ele.is_enabled,
@@ -112,6 +114,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         start_time: ele.start_time,
                         end_time: ele.end_time,
                         is_enabled: ele.is_enabled,
+                        status: ele.status,
                         art_age_id: ele.art_age_id,
                         art_type_id: ele.art_type_id,
                         student_id: ele.student_id,
@@ -143,6 +146,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         art_type_name: ele.art_type_name,
                         art_age_name: ele.art_age_name,
                         image_url: ele.image_url,
+                        status: ele.status,
                         start_time: ele.start_time,
                         end_time: ele.end_time,
                         is_enabled: ele.is_enabled,
@@ -178,6 +182,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         art_age_name: ele.art_age_name,
                         image_url: ele.image_url,
                         start_time: ele.start_time,
+                        status: ele.status,
                         end_time: ele.end_time,
                         is_enabled: ele.is_enabled,
                         art_age_id: ele.art_age_id,

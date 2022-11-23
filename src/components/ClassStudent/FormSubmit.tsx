@@ -28,9 +28,9 @@ function FormSubmit(): JSX.Element {
     }
 
     var id_y = localStorage.getItem("id");
-    let id: any = "";
+    let id: number = 0;
     if (id_y !== null) {
-        id = id_y;
+        id = parseInt(id_y);
     }
 
     var id_z = localStorage.getItem("exercise_id");

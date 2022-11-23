@@ -4,6 +4,7 @@ export interface IContestStudent{
     student_id: number;
     student_name: string;
     description: string;
+    status: string;
     max_participant: number;
     total_register_contest: number;
     total_contest_submission: number;

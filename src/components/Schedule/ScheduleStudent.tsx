@@ -33,9 +33,9 @@ const ScheduleStudent: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
     var id_x = localStorage.getItem('id');
-    var id: any = "";
+    var id: number = 0;
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
 
     console.log(schedule_time_classes.schedule_time_classes)

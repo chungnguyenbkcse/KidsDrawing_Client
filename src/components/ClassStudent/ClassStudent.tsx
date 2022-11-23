@@ -24,9 +24,9 @@ const ClassStudent: React.FC = () => {
     const numberClassDoingCount: number = classes_students.classes_doing.length;
     const numberClassDoneCount: number = classes_students.classes_done.length;
     var id_x = localStorage.getItem('id');
-    var id: any = "";
+    var id: number = 0;
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
     const { promiseInProgress } = usePromiseTracker();
 

@@ -52,9 +52,9 @@ const ExerciseForm: React.FC = () => {
 
 
     var id_x = localStorage.getItem('id');
-    var id: any = "";
+    var id: number = 0;
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
 
     var id_y = localStorage.getItem('section_id');

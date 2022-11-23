@@ -26,9 +26,9 @@ const RequestTeacher: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberTeacherRegisterSuccessfullCount: number = student_leaves.leaves.length;
     var id_x = localStorage.getItem('id');
-    var id: any = "";
+    var id: number = 0;
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
 
     let access_token = localStorage.getItem("access_token");

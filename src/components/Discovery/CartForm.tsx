@@ -23,9 +23,9 @@ const CartForm: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const user_register_join_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
     var id_x = localStorage.getItem('id');
-    let id: any = "";
+    let id: number = 0;
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
 
     const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);

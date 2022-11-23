@@ -39,6 +39,8 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
         localStorage.setItem('end_time', contest.end_time.toString())
         localStorage.removeItem('max_participant');
         localStorage.setItem('max_participant', contest.max_participant.toString())
+        localStorage.removeItem('status');
+        localStorage.setItem('status', contest.status.toString())
         let path = '/contests/register'; 
         history.push({
             pathname: path,
@@ -129,6 +131,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
             let k = contest_student.contest_new.filter((ele, idx) =>  ele.art_type_id == filter && ele.art_age_id == filter1)
     
             let x = (k.length - (k.length) % 6) / 6;
+            console.log('x',x)
             if (x === 0) {
                 setElement(k)
             }
@@ -213,7 +216,8 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ")}</span>
                                         <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ")}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                        <span className="d-block mb-5">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ")}</span>
+                                        <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ")}</span>
+                                        <span className="d-block mb-5">Trạng thái: {ele.status}</span>
                                         <div
                                             className="d-flex justify-content-between stats">
                                             <div className="d-flex flex-row align-items-center">

@@ -8,9 +8,9 @@ function ScoreContestListStudent(): JSX.Element {
 
     const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     var id_x = localStorage.getItem('id');
-    let id: any = "";
+    let id: number = 0;
     if (id_x !== null) {
-        id = id_x;
+        id = parseInt(id_x);
     }
     let childs: IUserGradeContestSubmission[] = [];
     user_grade_contest_submissions.userGradeContestSubmissions.map((element, idx) => {

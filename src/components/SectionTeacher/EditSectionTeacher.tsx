@@ -81,9 +81,9 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     }
 
     var id_k = localStorage.getItem('id');
-    let id: any = "";
+    let id: number = 0;
     if (id_k !== null) {
-        id = id_k
+        id = parseInt(id_k);
     }
 
 

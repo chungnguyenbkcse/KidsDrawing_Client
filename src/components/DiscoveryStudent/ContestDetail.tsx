@@ -46,9 +46,9 @@ const ConestDetail: React.FC = () => {
     }
 
     var id_z = localStorage.getItem('id');
-    let id: any = "";
+    let id: number = 0;
     if (id_z !== null) {
-        id = id_z;
+        id = parseInt(id_z);
     }
 
     var id_a = localStorage.getItem('art_age_name');

@@ -14,8 +14,9 @@ import { getStudentByParent } from "../../common/service/Student/GetStudentByPar
 import "./ResultContest.css"
 import { getUserGradeContestSubmissionByContestAndTeacher } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContestAndTeacher";
 import ScoreContestList1 from "./ScoreContestList1";
+import ScoreContestAdminList from "./ScoreContestAdminList";
 
-const ResultGradeContestTeacher: React.FC = () => {
+const ResultGradeContestAdmin: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
     const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
@@ -69,11 +70,11 @@ const ResultGradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
+                    trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
                 }
             }
             else {
-                trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
+                trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
             }
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);
@@ -124,7 +125,7 @@ const ResultGradeContestTeacher: React.FC = () => {
                         <div className="col-xl-12 col-md-12 mb-4">
                             <div className={`card shadow h-100 py-2`} id="topcard-user">
                                 <div className="card-body">
-                                    <ScoreContestList1 />
+                                    <ScoreContestAdminList />
                                 </div>
                             </div>
                         </div>
@@ -135,4 +136,4 @@ const ResultGradeContestTeacher: React.FC = () => {
     );
 };
 
-export default ResultGradeContestTeacher;
+export default ResultGradeContestAdmin;

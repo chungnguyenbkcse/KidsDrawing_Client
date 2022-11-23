@@ -17,9 +17,19 @@ function ContestEndList(props) {
     const history = useHistory();
 
     const routeChange = (id) => {
-      localStorage.setItem('contest_id', id)
-        let path = '/contests/detail';
-        history.push(path);
+      localStorage.setItem('contest_id', id.toString())
+      let path = '/contest/result-grade';
+        history.push({
+            pathname: path,
+        });
+    }
+
+    const routeChange1 = (id) => {
+      localStorage.setItem('contest_id', id.toString())
+      let path = '/contest-submission';
+        history.push({
+            pathname: path,
+        });
     }
     const date_0 = new Date();
     const date = date_0.toUTCString()
@@ -64,9 +74,16 @@ function ContestEndList(props) {
   }
 
   function viewDetailButton(cell, row) {
+    if (row.check_gen !== false) {
+      return (
+        <button type="button" className="btn btn-primary" onClick={() => {
+          routeChange(row.id)
+        }}>Thống kê</button>
+      )
+    }
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
-        routeChange(row.id)
+        routeChange1(row.id)
       }}>Thống kê</button>
     )
   }

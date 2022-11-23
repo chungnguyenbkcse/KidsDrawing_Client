@@ -13,9 +13,11 @@ function ContestIsOnList(props) {
     const history = useHistory();
 
     const routeChange = (id) => {
-      localStorage.setItem('contest_id', id)
-        let path = '/contests/detail';
-        history.push(path);
+      localStorage.setItem('contest_id', id.toString())
+      let path = '/contest-submission';
+        history.push({
+            pathname: path,
+        });
     }
     const date_0 = new Date();
     const date = date_0.toUTCString()

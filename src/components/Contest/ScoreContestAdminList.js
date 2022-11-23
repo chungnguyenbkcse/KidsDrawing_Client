@@ -5,7 +5,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
-const ScoreContestList1 = () => {
+const ScoreContestAdminList = () => {
     const user_grade_contest_submissions = useSelector((state) => state.user_grade_contest_submissions);
 
     const history = useHistory();
@@ -110,6 +110,11 @@ const ScoreContestList1 = () => {
             formatter: nameButton
         },
         {
+            dataField: 'teacher_name',
+            text: 'Giáo viên chấm',
+            filter: textFilter()
+        },
+        {
             dataField: 'score',
             text: 'Điểm',
             sort: true
@@ -157,4 +162,4 @@ const ScoreContestList1 = () => {
     );
 };
 
-export default ScoreContestList1;
+export default ScoreContestAdminList;

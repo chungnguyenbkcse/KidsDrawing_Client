@@ -6,7 +6,7 @@ import TopCard from "../../common/components/TopCardUser";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
+import { IContestSubmissionState, IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
 import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -14,12 +14,13 @@ import { getStudentByParent } from "../../common/service/Student/GetStudentByPar
 import "./ResultContest.css"
 import { getUserGradeContestSubmissionByContestAndTeacher } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContestAndTeacher";
 import ScoreContestList1 from "./ScoreContestList1";
+import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
+import ContestSubmissionAdminList from "./ContestSubmissionAdminList";
 
-const ResultGradeContestTeacher: React.FC = () => {
+const ViewContestSubmissionAdmin: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
-    const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 100);
+    const contest_submission: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
+    const max = contest_submission.contest_not_gradeds.length;
 
     var role_privilege = localStorage.getItem('role_privilege')
     var rolePrivilege: string[] = []
@@ -69,11 +70,11 @@ const ResultGradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
+                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
                 }
             }
             else {
-                trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
+                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
             }
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);
@@ -106,16 +107,7 @@ const ResultGradeContestTeacher: React.FC = () => {
             </div> : <Fragment>
 
                 <div className="row">
-                    <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
-                    <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
-                    <div className="col-xl-3 col-md-3 notification-x">
-                        <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() => {
-                            onRouteChange()
-                        }}>
-                            Biểu đồ
-                            <i className="fas fa fa-arrow-right"></i>
-                        </button>
-                    </div>
+                    <TopCard title="SỐ BÀI NỘP" text={`${max}`} icon="book" class="primary" />
                 </div>
 
 
@@ -124,7 +116,7 @@ const ResultGradeContestTeacher: React.FC = () => {
                         <div className="col-xl-12 col-md-12 mb-4">
                             <div className={`card shadow h-100 py-2`} id="topcard-user">
                                 <div className="card-body">
-                                    <ScoreContestList1 />
+                                    <ContestSubmissionAdminList />
                                 </div>
                             </div>
                         </div>
@@ -135,4 +127,4 @@ const ResultGradeContestTeacher: React.FC = () => {
     );
 };
 
-export default ResultGradeContestTeacher;
+export default ViewContestSubmissionAdmin;

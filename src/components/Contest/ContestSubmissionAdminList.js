@@ -5,48 +5,30 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
-const ScoreContestList1 = () => {
-    const user_grade_contest_submissions = useSelector((state) => state.user_grade_contest_submissions);
+const ContestSubmissionAdminList = () => {
+    const contest_submission = useSelector((state) => state.contest_submissions);
 
     const history = useHistory();
-    const onRouteChange = () => {
-        let path = '/contest/result-analytis';
-        history.push({
-            pathname: path
-        });
-    }
 
-    function handleViewResult(user_graded_contest_submission) {
-        if (user_grade_contest_submissions !== null && user_grade_contest_submissions !== undefined) {
+    function handleViewContestSubmission(contest_submission) {
+        if (contest_submission !== null && contest_submission !== undefined) {
                 localStorage.removeItem('contest_submission_id');
-                localStorage.setItem('contest_submission_id', user_graded_contest_submission.contest_submission_id.toString())
+                localStorage.setItem('contest_submission_id', contest_submission.id.toString())
                 localStorage.removeItem('time_submit');
-                localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
-                localStorage.removeItem('score')
-                localStorage.removeItem('feedback')
-                if (user_graded_contest_submission.score !== undefined && user_graded_contest_submission.score !== null) {
-                    localStorage.setItem('score', user_graded_contest_submission.score.toString());
-                }
-                if (user_graded_contest_submission.feedback !== undefined && user_graded_contest_submission.feedback !== null) {
-                    localStorage.setItem('feedback', user_graded_contest_submission.feedback.toString());
-                }
-                localStorage.setItem('contest_name', user_graded_contest_submission.contest_name.toString())
+                localStorage.setItem('time_submit', contest_submission.update_time.toString())
+                localStorage.setItem('contest_name', contest_submission.contest_name.toString())
                 localStorage.removeItem('contest_id');
-                localStorage.setItem('contest_id', user_graded_contest_submission.contest_id.toString());
-                localStorage.setItem('teacher_name', user_graded_contest_submission.teacher_name);
-                localStorage.setItem('url_conest_submission', user_graded_contest_submission.url_conest_submission.toString());
-                localStorage.setItem('art_type_name', user_graded_contest_submission.art_type_name);
-                localStorage.setItem('art_age_name', user_graded_contest_submission.art_age_name);
-                localStorage.setItem('start_time', user_graded_contest_submission.start_time);
-                localStorage.setItem('end_time', user_graded_contest_submission.end_time);
-                let path = '/contest/score';
+                localStorage.setItem('contest_id', contest_submission.contest_id.toString());
+                localStorage.setItem('student_name', contest_submission.teacher_name);
+                localStorage.setItem('url_conest_submission', contest_submission.image_url.toString());
+                let path = '/contest/contest-submission';
                 history.push({
                     pathname: path
                 });
         }
     }
 
-    const datas = user_grade_contest_submissions.userGradeContestSubmissions;
+    const datas = contest_submission.contest_not_gradeds;
 
     const options = {
         paginationSize: 5,
@@ -92,10 +74,17 @@ const ScoreContestList1 = () => {
     function viewDetailButton(cell, row) {
         return (
             <button type="button" className="btn btn-primary" onClick={() => {
-                handleViewResult(row)
+                handleViewContestSubmission(row)
             }}>Chi tiết</button>
         )
     }
+
+    function showTime(cell, row) {
+        var strDate = row.update_time;
+        return (
+            <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
+        )
+      }
 
     const columns = [
         {
@@ -110,9 +99,9 @@ const ScoreContestList1 = () => {
             formatter: nameButton
         },
         {
-            dataField: 'score',
-            text: 'Điểm',
-            sort: true
+            dataField: 'update_time',
+            text: 'Thời gian nộp',
+            formatter: showTime
         },
         {
             dataField: '',
@@ -157,4 +146,4 @@ const ScoreContestList1 = () => {
     );
 };
 
-export default ScoreContestList1;
+export default ContestSubmissionAdminList;

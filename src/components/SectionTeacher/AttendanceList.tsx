@@ -89,7 +89,7 @@ function AttendanceList(props: lessonListProps): JSX.Element {
             <td className="data-table">{exercise.course_name}</td>
             <td className="data-table">{exercise.section_number}</td>
             <td>
-                <input type="checkbox" onChange={(e) => {onValueChanged(e, exercise.id)}}/>
+                <input type="checkbox" defaultChecked={exercise.status} onChange={(e) => {onValueChanged(e, exercise.id)}}/>
             </td>
         </tr>);
     });

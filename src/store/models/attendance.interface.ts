@@ -2,7 +2,7 @@ export interface IAttendance {
     id: any;
     student_id: number;
     section_id: number;
-    status: string;
+    status: boolean;
     section_number: number;
     email: string;
     course_name: string;

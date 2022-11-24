@@ -94,7 +94,7 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
                                     <div className="more-info col-md-8 col-lg-8 mx-auto">
                                         <h1>{ele.username}</h1>
                                         <div className="coords pl-2">
-                                            <span>Tham gia ngày: {ele.createTime.substring(0, 10) + " " + ele.createTime.substring(11,19)}</span>
+                                            <span>Tham gia ngày: {ele.createTime.replaceAll("T", " ").substring(0,16)}</span>
                                         </div>
                                         <div className="coords pl-2">
                                             <span>Ngày sinh: {ele.dateOfBirth}</span>

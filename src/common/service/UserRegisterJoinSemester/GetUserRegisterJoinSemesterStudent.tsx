@@ -10,6 +10,7 @@ interface user_register_semester {
     student_name: string;
     link_url: string;
     status: string;
+    semester_name: string;
     semester_class_id: number;
     time: string;
 }
@@ -50,8 +51,9 @@ export function getUserRegisterJoinSemesterByStudent(dispatch: any, id: any) {
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         link_url: ele.link_url,
-                        payer_name: "",
+                        payer_name: ele.payer_name,
                         course_name: ele.course_name,
+                        semester_name: ele.semester_name,
                         status: ele.status,
                         payer_id: ele.payer_id,
                         price: ele.price,

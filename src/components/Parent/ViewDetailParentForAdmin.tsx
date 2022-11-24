@@ -1,81 +1,33 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { ICourseReportState, IRootPageStateType, IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
+import { IChildState, IRootPageStateType, IStateType, IUserRegisterJoinSemesterState } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { getTotalCourseForStudent } from "../../common/service/Course/GetTotalCourseForStudent";
-import { getTotalContestForStudent } from "../../common/service/Contest/GetTotalContestForStudent";
 import History from "./History";
-import { getReportUserRegisterJoinSemesterByStudent } from "../../common/service/UserRegisterJoinSemester/GetReportUserRegisterJoinSemesterByStudent";
+import { getInforChildByParent } from "../../common/service/Childs/GetInforChildByParent";
+import ChildList from "./ChildList";
+import { getReportRegisterJoinSemesterByPayer } from "../../common/service/UserRegisterJoinSemester/GetReportUserRegisterJoinSemesterByPayer";
 
 
-const ViewDetailStudentForAdmin: React.FC = () => {
+const ViewDetailParentForAdmin: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
-    let total_contest_student: number = 0;
-    let total_course_student: number = 0;
-    var id_x = localStorage.getItem('student_id');
+    const childs: IChildState = useSelector((state: IStateType) => state.childs);
+    const user_register_join_semesters: IUserRegisterJoinSemesterState = useSelector((state: IStateType) => state.user_register_join_semesters);
+    const numberChildCount: number = childs.childs.length;
+    const totalMoney: number = user_register_join_semesters.completed.reduce((prev, next) => prev + ((next.price * 1) || 0), 0);
+    
+    var id_x = localStorage.getItem('parent_id');
     var id: number = 0;
     if (id_x !== null) {
         id = parseInt(id_x);
     }
 
-    var id_y = localStorage.getItem('total_contest_student');
-    if (id_y !== null) {
-        total_contest_student = parseInt(id_y)
-    }
-
-    var id_z = localStorage.getItem('total_course_student');
-    if (id_z !== null) {
-        total_course_student = parseInt(id_z)
-    }
-
-    const course_reports: ICourseReportState = useSelector((state: IStateType) => state.course_reports); 
-
-  let data_list: number[] = []
-  let data_name_list: string[] = []
-  if (course_reports.course_reports.length > 0){
-    course_reports.course_reports.map(ele => {
-          data_list.push(ele.total_register)
-          data_name_list.push(ele.name)
-          return ele
-    })
-  }
-
-    const data = {
-        labels: data_name_list,
-        datasets: [
-          {
-            label: '# of Votes',
-            data: data_list,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-    console.log(schedule_time_classes.schedule_time_classes)
-
     const { promiseInProgress } = usePromiseTracker();
+    const [checked, setChecked] = useState(true);
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -100,15 +52,13 @@ const ViewDetailStudentForAdmin: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getTotalContestForStudent(dispatch, id))
-                    trackPromise(getTotalCourseForStudent(dispatch, id))
-                    trackPromise(getReportUserRegisterJoinSemesterByStudent(dispatch, id))
+                    trackPromise(getInforChildByParent(dispatch, id))
+                    trackPromise(getReportRegisterJoinSemesterByPayer(dispatch, id))
                 }
             }
             else {
-                trackPromise(getTotalContestForStudent(dispatch, id))
-                trackPromise(getTotalCourseForStudent(dispatch, id))
-                trackPromise(getReportUserRegisterJoinSemesterByStudent(dispatch, id))
+                trackPromise(getInforChildByParent(dispatch, id))
+                trackPromise(getReportRegisterJoinSemesterByPayer(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, id]);
@@ -134,13 +84,67 @@ const ViewDetailStudentForAdmin: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="KHÓA HỌC ĐÃ ĐƯỢC XẾP LỚP" text={`${total_course_student}`} icon="book" class="primary" />
-                    <TopCard title="CUỘC THI" text={`${total_contest_student}`} icon="book" class="primary" />
+                    <TopCard title="TÀI KHOẢN CON" text={`${numberChildCount}`} icon="user" class="primary" />
+                    <TopCard title="SỐ TIỀN" text={`${totalMoney}`} icon="donate" class="primary" />
                 </div>
 
+<div className="row">
+<div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+        if (checked === false) {
+            setChecked(true)
+        }
+    }} style={{
+        color: checked ? "#F24E1E" : "#2F4F4F"
+    }}>Tài khoản học sinh</h6>
+    <div style={{
+        height: "5px",
+        textAlign: "center",
+        margin: "auto",
+        width: "30%",
+        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+    }}></div>
+</div>
+<div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+        if (checked === true) {
+            setChecked(false)
+        }
+    }}
+        style={{
+            color: checked ? "#2F4F4F" : "#F24E1E"
+        }}>Lịch sử mua</h6>
+    <div style={{
+        height: "5px",
+        textAlign: "center",
+        margin: "auto",
+        width: "30%",
+        backgroundColor: checked ? "#ffffff" : "#F24E1E"
+    }}></div>
+</div>
+</div>
+
+{
+    function () {
+        if (checked === true) {
+            return (
                 <div className="row">
                     <div className="col-xl-12 col-md-12 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Lịch sử mua</h3>
+                        <h3 className=" mb-2" id="level-teacher">Danh sách tài khoản con</h3>
+                        <div className="card shadow mb-4">
+                            <div className="card-body">
+                            <ChildList />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className="row">
+                    <div className="col-xl-12 col-md-12 mb-4">
+                        <h3 className=" mb-2" id="level-teacher">Danh sách lịch sử mua</h3>
                         <div className="card shadow mb-4">
                             <div className="card-body">
                             <History />
@@ -148,6 +152,10 @@ const ViewDetailStudentForAdmin: React.FC = () => {
                         </div>
                     </div>
                 </div>
+            )
+        }
+    }()
+}
 
 
 
@@ -155,4 +163,4 @@ const ViewDetailStudentForAdmin: React.FC = () => {
     );
 };
 
-export default ViewDetailStudentForAdmin;
+export default ViewDetailParentForAdmin;

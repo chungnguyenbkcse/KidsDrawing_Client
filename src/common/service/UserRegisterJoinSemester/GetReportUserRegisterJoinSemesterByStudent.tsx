@@ -14,10 +14,10 @@ interface user_register_semester {
     semester_class_id: number;
     time: string;
 }
-export function getUserRegisterJoinSemesterByPayer(dispatch: any, id: any) {
+export function getReportUserRegisterJoinSemesterByStudent(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/user-register-join-semester/payer/${id}`, {
+                `${process.env.REACT_APP_API_URL}/user-register-join-semester/student-report/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -31,7 +31,7 @@ export function getUserRegisterJoinSemesterByPayer(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getUserRegisterJoinSemesterByPayer(dispatch, id))
+                        dispatch(getReportUserRegisterJoinSemesterByStudent(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -53,20 +53,14 @@ export function getUserRegisterJoinSemesterByPayer(dispatch: any, id: any) {
                         link_url: ele.link_url,
                         payer_name: ele.payer_name,
                         course_name: ele.course_name,
-                        status: ele.status,
                         semester_name: ele.semester_name,
+                        status: ele.status,
                         payer_id: ele.payer_id,
                         price: ele.price,
                         semester_class_id: ele.semester_class_id,
                         time: ele.time
                     }
-                    //console.log(strDate.substring(0, 16))
-                    if (ele.status === "Completed") {
-                        dispatch(addCompleted(user_register_semester))
-                    }
-                    else {
-                        dispatch(addWaiting(user_register_semester))
-                    }
+                    dispatch(addCompleted(user_register_semester))
                     return index
                 })
             })

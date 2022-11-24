@@ -3,14 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
 import { IStateType, IUserRegisterTutorialState } from "../../store/models/root.interface";
-import TutorialEditRequestList from "./TutorialEditRequestList";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/GetUserRegisterTutorial";
 import UserRegisterTutorialEditRequestList from "./UserRegisterTutorialEditRequestList";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
+import { changeSelectedUserRegisterTutorialNotApproved, clearSelectedUserRegisterTutorialNotApproved, setModificationState } from "../../store/actions/user_register_tutorial.action";
+import TutorialEditRequestList from "./TutorialEditRequestList";
+import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
+import Popup from "reactjs-popup";
 
 const TutorialEditRequest: React.FC = () => {
   const user_register_tutorials: IUserRegisterTutorialState = useSelector((state: IStateType) => state.user_register_tutorials);
@@ -54,6 +58,21 @@ const TutorialEditRequest: React.FC = () => {
   }, [dispatch, access_token, refresh_token]);
 
   const [checked, setChecked] = useState(true);
+  const [popup, setPopup] = useState(false);
+
+  function onUserRegisterTutorialSelect(lesson: IUserRegisterTutorial): void {
+    dispatch(changeSelectedUserRegisterTutorialNotApproved(lesson));
+    onUserRegisterTutorialRemove();
+    dispatch(setModificationState(UserRegisterTutorialModificationStatus.None));
+  }
+
+  function onUserRegisterTutorialRemove() {
+    setPopup(true);
+  }
+
+  function onRemovePopup(value: boolean) {
+    setPopup(false);
+  }
 
   return (
     promiseInProgress ?
@@ -66,95 +85,137 @@ const TutorialEditRequest: React.FC = () => {
           </div>
         </div>
       </div> : <Fragment>
-      <ToastContainer />
-      <h1 className="h3 mb-2 text-gray-800">Yêu cầu chỉnh giáo án</h1>
-      {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+        <ToastContainer />
+        <h1 className="h3 mb-2 text-gray-800">Yêu cầu chỉnh giáo án</h1>
+        {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-      <div className="row">
-        <TopCard title="SỐ YÊU CẦU CHƯA DUYỆT" text={`${numberItemsCount}`} icon="box" class="primary" />
-        <TopCard title="SỐ YÊU CẦU ĐÃ DUYỆT" text={`${numberItemsApprovedCount}`} icon="box" class="primary" />
-      </div>
-
-      <div className="row">
-        <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-          <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-            if (checked === false) {
-              setChecked(true)
-            }
-          }} style={{
-            color: checked ? "#F24E1E" : "#2F4F4F"
-          }}>Chưa duyệt</h6>
-          <div style={{
-            height: "5px",
-            textAlign: "center",
-            margin: "auto",
-            width: "30%",
-            backgroundColor: checked ? "#F24E1E" : "#ffffff"
-          }}></div>
+        <div className="row">
+          <TopCard title="SỐ YÊU CẦU CHƯA DUYỆT" text={`${numberItemsCount}`} icon="box" class="primary" />
+          <TopCard title="SỐ YÊU CẦU ĐÃ DUYỆT" text={`${numberItemsApprovedCount}`} icon="box" class="primary" />
         </div>
-        <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-          <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+
+        <div className="row">
+          <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+            <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+              if (checked === false) {
+                setChecked(true)
+              }
+            }} style={{
+              color: checked ? "#F24E1E" : "#2F4F4F"
+            }}>Chưa duyệt</h6>
+            <div style={{
+              height: "5px",
+              textAlign: "center",
+              margin: "auto",
+              width: "30%",
+              backgroundColor: checked ? "#F24E1E" : "#ffffff"
+            }}></div>
+          </div>
+          <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+            <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+              if (checked === true) {
+                setChecked(false)
+              }
+            }}
+              style={{
+                color: checked ? "#2F4F4F" : "#F24E1E"
+              }}>Đã duyệt</h6>
+            <div style={{
+              height: "5px",
+              textAlign: "center",
+              margin: "auto",
+              width: "30%",
+              backgroundColor: checked ? "#ffffff" : "#F24E1E"
+            }}></div>
+          </div>
+        </div>
+
+        {
+          function () {
+            if ((user_register_tutorials.selectedUserRegisterTutorial) && (user_register_tutorials.modificationState === UserRegisterTutorialModificationStatus.Remove)) {
+              return (
+                <Popup
+                  open={popup}
+                  onClose={() => setPopup(false)}
+                  closeOnDocumentClick
+                >
+                  <div className="popup-modal" id="popup-modal">
+                    <div className="popup-title">
+                      Are you sure?
+                    </div>
+                    <div className="popup-content">
+                      <button type="button"
+                        className="btn btn-danger"
+                        onClick={() => {
+                          if (!user_register_tutorials.selectedUserRegisterTutorial) {
+                            return;
+                          }
+                          const id = toast.info("Chấp nhận giáo án giáo viên!", {
+                            position: toast.POSITION.TOP_CENTER,
+                            autoClose: 2000
+                          });
+                          dispatch(putUserRegisterTutorial(user_register_tutorials.selectedUserRegisterTutorial.id, {
+                            status: "Not approved",
+                            section_id: user_register_tutorials.selectedUserRegisterTutorial.section_id,
+                            name: user_register_tutorials.selectedUserRegisterTutorial.name,
+                            creator_id: user_register_tutorials.selectedUserRegisterTutorial.creator_id
+                          }, id))
+                          dispatch(clearSelectedUserRegisterTutorialNotApproved());
+                          setPopup(false);
+                        }}>Remove
+                      </button>
+                    </div>
+                  </div>
+                </Popup>
+              )
+            }
+          }()
+        }
+
+
+        {
+          function () {
             if (checked === true) {
-              setChecked(false)
+              return (
+                <div className="row">
+
+                  <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                      <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
+                      </div>
+                      <div className="card-body">
+                        <TutorialEditRequestList onSelect={onUserRegisterTutorialSelect} />
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              )
             }
-          }}
-            style={{
-              color: checked ? "#2F4F4F" : "#F24E1E"
-            }}>Đã duyệt</h6>
-          <div style={{
-            height: "5px",
-            textAlign: "center",
-            margin: "auto",
-            width: "30%",
-            backgroundColor: checked ? "#ffffff" : "#F24E1E"
-          }}></div>
-        </div>
-      </div>
-
-
-      {
-        function () {
-          if (checked === true) {
-            return (
-              <div className="row">
-
-                <div className="col-xl-12 col-lg-12">
-                  <div className="card shadow mb-4">
-                    <div className="card-header py-3">
-                      <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
+            else {
+              return (
+                <div className="row">
+                  <div className="col-xl-12 col-lg-12">
+                    <div className="card shadow mb-4">
+                      <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-green">Danh sách giáo án đã duyệt</h6>
+                      </div>
+                      <div className="card-body">
+                        <UserRegisterTutorialEditRequestList />
+                      </div>
                     </div>
-                    <div className="card-body">
-                      <TutorialEditRequestList />
-                    </div>
+
                   </div>
 
                 </div>
+              )
+            }
+          }()
+        }
 
-              </div>
-            )
-          }
-          else {
-            return (
-              <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                  <div className="card shadow mb-4">
-                    <div className="card-header py-3">
-                      <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
-                    </div>
-                    <div className="card-body">
-                      <UserRegisterTutorialEditRequestList />
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-            )
-          }
-        }()
-      }
-
-    </Fragment>
+      </Fragment>
   );
 };
 

@@ -3,6 +3,7 @@ export interface IUserRegisterTutorialPage {
     user_register_tutorial_id: number;
     name: string;
     description: string;
+    number: number;
 }
 
 export enum UserRegisterTutorialPageModificationStatus {

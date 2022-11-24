@@ -1,10 +1,13 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { setModificationState } from "../../store/actions/user_register_tutorial.action";
+import { UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
 
 
 function TutorialEditRequestList(props) {
@@ -25,18 +28,17 @@ function TutorialEditRequestList(props) {
         creator_id: ele.creator_id
       }, id))
     }
-  
-    function notApprovedTutorial(ele) {
-      const id = toast.info("Chấp nhận giáo án giáo viên!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000
+
+    const history = useHistory();
+    function handleView(ele) {
+      localStorage.removeItem('user_register_tutorial_id')
+      localStorage.setItem('user_register_tutorial_id', ele.id.toString())
+      localStorage.removeItem('section_id')
+      localStorage.setItem('section_id', ele.section_id.toString())
+      let path = '/tutorial-request/detail';
+      history.push({
+          pathname: path,
       });
-      dispatch(putUserRegisterTutorial(ele.id, {
-        status: "Not approved",
-        section_id: ele.section_id,
-        name: ele.name,
-        creator_id: ele.creator_id
-      }, id))
     }
 
 
@@ -70,7 +72,8 @@ function TutorialEditRequestList(props) {
   function removeButton(cell, row) {
     return (
         <button type="button" className="btn btn-danger" onClick={() => {
-            notApprovedTutorial(row)
+            if(props.onSelect) props.onSelect(row);
+            dispatch(setModificationState(UserRegisterTutorialModificationStatus.Remove))
           }}>Xóa</button>
     );
   }
@@ -78,8 +81,16 @@ function TutorialEditRequestList(props) {
   function editButton(cell, row) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
-            approvedTutorial(row)
+          approvedTutorial(row)
           }}>Chấp nhận</button>
+    )
+  }
+
+  function detailButton(cell, row) {
+    return (
+        <button type="button" className="btn btn-primary" onClick={() => {
+            handleView(row)
+          }}>Chi tiết</button>
     )
   }
 
@@ -123,7 +134,12 @@ function TutorialEditRequestList(props) {
       formatter: editButton
     },
     {
-      dataField: 'address',
+      dataField: '',
+      text: '',
+      formatter: detailButton
+    },
+    {
+      dataField: '',
       text: '',
       formatter: removeButton
     },

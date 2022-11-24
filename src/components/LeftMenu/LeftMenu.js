@@ -28,6 +28,7 @@ import { RiParentFill } from "react-icons/ri";
 import { BsMap } from "react-icons/bs";
 import { AiOutlineBook, AiOutlineFileText } from "react-icons/ai";
 import { FaPaintBrush } from "react-icons/fa";
+import { FaHistory }from "react-icons/fa";
 import { MdSchool } from "react-icons/md";
 import { GiVideoConference } from "react-icons/gi";
 import { BsCashCoin } from "react-icons/bs";
@@ -735,6 +736,7 @@ const Header = () => {
                       setActive4(false);
                       setActive5(false);
                       setActive6(false);
+                      setActive11(false);
                     }
                   }}>
                     Trang chủ
@@ -748,6 +750,7 @@ const Header = () => {
                     setActive4(false);
                     setActive5(false);
                     setActive6(false);
+                    setActive11(false);
                   }
                 }}>
                   <MenuItem icon={<BsMap />}>
@@ -759,6 +762,7 @@ const Header = () => {
                         setActive4(false);
                         setActive5(false);
                         setActive6(false);
+                        setActive11(false);
                       }
                       if (active7 === false) {
                         setActive7(true);
@@ -777,6 +781,7 @@ const Header = () => {
                         setActive4(false);
                         setActive5(false);
                         setActive6(false);
+                        setActive11(false);
                       }
                       if (active8 === false) {
                         setActive7(false);
@@ -795,6 +800,7 @@ const Header = () => {
                     setActive4(true);
                     setActive5(false);
                     setActive6(false);
+                    setActive11(false);
                   }
                 }}>
                   <MenuItem icon={<BsMap />}>
@@ -806,6 +812,7 @@ const Header = () => {
                         setActive4(true);
                         setActive5(false);
                         setActive6(false);
+                        setActive11(false);
                       }
                       if (active9 === false) {
                         setActive9(true);
@@ -824,6 +831,7 @@ const Header = () => {
                         setActive4(true);
                         setActive5(false);
                         setActive6(false);
+                        setActive11(false);
                       }
                       if (active10 === false) {
                         setActive9(false);
@@ -843,9 +851,25 @@ const Header = () => {
                       setActive4(false);
                       setActive5(false);
                       setActive6(true);
+                      setActive11(false);
                     }
                   }}>
                     Thời khóa biểu
+                  </Link>
+                </MenuItem>
+                <MenuItem active={active11} icon={<FaHistory />}>
+                  <Link to={`/history`} className={active11 ? "link-active" : "not-active"} onClick={() => {
+                    if (active11 === false) {
+                      setActive1(false);
+                      setActive2(false);
+                      setActive3(false);
+                      setActive4(false);
+                      setActive5(false);
+                      setActive6(false);
+                      setActive11(true);
+                    }
+                  }}>
+                    Lịch sử mua
                   </Link>
                 </MenuItem>
               </Menu>

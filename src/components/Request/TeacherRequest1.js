@@ -9,7 +9,7 @@ import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-pa
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 
-function TeacherRequestList(props) {
+function TeacherRequestList2(props) {
 
     const teacher_leaves = useSelector((state) => state.teacher_leaves);
     const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function TeacherRequestList(props) {
     }
 
 
-  const datas = teacher_leaves.leaves.filter((ele) => ele.status === "Not approved now");
+  const datas = teacher_leaves.acceptLeaves;
 
   const options = {
     paginationSize: 5,
@@ -61,17 +61,6 @@ function TeacherRequestList(props) {
     }
   };
 
-  function removeButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-danger" onClick={() => {handleTeacherLeave(row, "Not approved")}}>Xóa</button>
-    );
-  }
-
-  function editButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={() => {handleTeacherLeave(row, "Approved")}}>Chấp nhận</button>
-    )
-  }
 
   function viewButton(cell, row) {
     return (
@@ -118,16 +107,6 @@ function TeacherRequestList(props) {
       text: 'Hành động',
       formatter: viewButton
     },
-    {
-      dataField: '',
-      text: '',
-      formatter: editButton
-    },
-    {
-      dataField: 'address',
-      text: '',
-      formatter: removeButton
-    },
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
@@ -165,4 +144,4 @@ function TeacherRequestList(props) {
   );
 }
 
-export default TeacherRequestList;
+export default TeacherRequestList2;

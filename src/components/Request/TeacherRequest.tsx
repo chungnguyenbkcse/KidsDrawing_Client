@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useEffect } from "react";
+import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
@@ -10,6 +10,8 @@ import { getTeacherLeave } from "../../common/service/TeacherLeave/GetTeacherLea
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import TeacherRequestList1 from "./TeacherRequestList1";
+import TeacherRequestList2 from "./TeacherRequest1";
 
 const TeacherRequest: React.FC = () => {
   const teachers: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
@@ -52,6 +54,8 @@ const TeacherRequest: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token]);
 
+    const [checked, setChecked] = useState(true);
+
   return (
     promiseInProgress ?
       <div className="row" id="search-box">
@@ -68,10 +72,52 @@ const TeacherRequest: React.FC = () => {
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
       <div className="row">
-        <TopCard title="SỐ YÊU CẦU" text={`${numberItemsCount}`} icon="box" class="primary" />
+        <TopCard title="CHƯA DUYỆT" text={`${numberItemsCount}`} icon="box" class="primary" />
+        <TopCard title="ĐÃ DUYỆT" text={`${teachers.acceptLeaves.length}`} icon="box" class="primary" />
       </div>
 
-      <div className="row">
+<div className="row">
+<div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+  <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+    if (checked === false) {
+      setChecked(true)
+    }
+  }} style={{
+    color: checked ? "#F24E1E" : "#2F4F4F"
+  }}>Chưa duyệt</h6>
+  <div style={{
+    height: "5px",
+    textAlign: "center",
+    margin: "auto",
+    width: "30%",
+    backgroundColor: checked ? "#F24E1E" : "#ffffff"
+  }}></div>
+</div>
+<div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+  <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+    if (checked === true) {
+      setChecked(false)
+    }
+  }}
+    style={{
+      color: checked ? "#2F4F4F" : "#F24E1E"
+    }}>Đã duyệt</h6>
+  <div style={{
+    height: "5px",
+    textAlign: "center",
+    margin: "auto",
+    width: "30%",
+    backgroundColor: checked ? "#ffffff" : "#F24E1E"
+  }}></div>
+</div>
+</div>
+
+
+{
+  function () {
+    if (checked === true) {
+      return (
+        <div className="row">
 
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
@@ -86,6 +132,29 @@ const TeacherRequest: React.FC = () => {
         </div>
 
       </div>
+      )
+    }
+    else {
+      return (
+        <div className="row">
+
+        <div className="col-xl-12 col-lg-12">
+          <div className="card shadow mb-4">
+            <div className="card-header py-3">
+              <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
+            </div>
+            <div className="card-body">
+              <TeacherRequestList2 />
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      )
+    }
+  }()
+}
 
     </Fragment>
   );

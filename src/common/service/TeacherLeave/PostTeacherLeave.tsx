@@ -36,13 +36,13 @@ export function postTeacherLeave(data: any, idx: any) {
                 }
             })
             .then (val => {
+                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log(val)
                 dispatch(postNotifyDb({
                     name: `Gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`,
                     description: `Bạn đã gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`
                 }, 0))
                 getTeacherLeaveByTeacher(dispatch, data.teacher_id)
-                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

@@ -5,18 +5,6 @@ import { IStateType, IRootPageStateType, ITimeScheduleState } from "../../store/
 import {
     clearSelectedProduct
 } from "../../store/actions/products.action";
-import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
-
-import "@syncfusion/ej2-base/styles/material.css";
-import "@syncfusion/ej2-buttons/styles/material.css";
-import "@syncfusion/ej2-calendars/styles/material.css";
-import "@syncfusion/ej2-dropdowns/styles/material.css";
-import "@syncfusion/ej2-inputs/styles/material.css";
-import "@syncfusion/ej2-lists/styles/material.css";
-import "@syncfusion/ej2-navigations/styles/material.css";
-import "@syncfusion/ej2-popups/styles/material.css";
-import "@syncfusion/ej2-splitbuttons/styles/material.css";
-import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";

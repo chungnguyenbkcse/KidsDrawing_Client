@@ -6,8 +6,8 @@ import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutori
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
-import { changeSelectedUserRegisterTutorialNotApproved, clearSelectedUserRegisterTutorialNotApproved, setModificationState } from "../../store/actions/user_register_tutorial.action";
+import { UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
+import { setModificationState } from "../../store/actions/user_register_tutorial.action";
 
 function TutorialEditRequestList(props) {
 

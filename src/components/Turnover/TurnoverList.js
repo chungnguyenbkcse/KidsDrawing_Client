@@ -1,12 +1,11 @@
 import React, { Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 function TurnoverList() {
 
-    const dispatch = useDispatch();
     const userRegisterJoinSemesters = useSelector((state) => state.user_register_join_semesters);
 
 

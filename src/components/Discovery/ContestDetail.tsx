@@ -6,7 +6,6 @@ import "./ConestDetail.css"
 import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { IUser } from "../../store/models/user.interface";
-import ReactSelect from "../../common/components/ReactSelect";
 import { postUserRegisterContest } from "../../common/service/UserRegisterContest/PostUserRegisterContest";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import jwt_decode from "jwt-decode";
@@ -38,14 +37,6 @@ const ConestDetailStudent: React.FC = () => {
     })
 
     const [popup, setPopup] = useState(false);
-
-    function onLessonRemove() {
-        setPopup(true);
-    }
-
-    function onRemovePopup(value: boolean) {
-        setPopup(false);
-    }
 
     const [checked, setChecked] = useState(false);
 
@@ -181,14 +172,6 @@ const ConestDetailStudent: React.FC = () => {
         setTimeout(function () {
             routeHome();
         }, 2000);
-    }
-
-    const [valueTeacher, setValueTeacher] = useState<any[]>([])
-
-    console.log(valueTeacher)
-
-    function changeValueTeacher(value: any) {
-        setValueTeacher(value)
     }
 
     function handleRemove() {

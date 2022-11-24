@@ -6,12 +6,11 @@ import { IStateType, IUserRegisterTutorialState } from "../../store/models/root.
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/GetUserRegisterTutorial";
-import UserRegisterTutorialEditRequestList from "./UserRegisterTutorialEditRequestList";
 import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
-import { changeSelectedUserRegisterTutorialNotApproved, clearSelectedUserRegisterTutorialNotApproved, setModificationState } from "../../store/actions/user_register_tutorial.action";
+import { UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
+import { clearSelectedUserRegisterTutorialNotApproved, setModificationState } from "../../store/actions/user_register_tutorial.action";
 import TutorialEditRequestList from "./TutorialEditRequestList";
 import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import Popup from "reactjs-popup";
@@ -68,10 +67,6 @@ const TutorialEditRequest: React.FC = () => {
 
   function onUserRegisterTutorialRemove() {
     setPopup(true);
-  }
-
-  function onRemovePopup(value: boolean) {
-    setPopup(false);
   }
 
   return (

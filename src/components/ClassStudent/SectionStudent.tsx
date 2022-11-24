@@ -15,6 +15,7 @@ import { getExerciseForSectionStudent } from "../../common/service/ExerciseStude
 import { IExerciseStudent } from "../../store/models/exercise_student.interface";
 import { getExerciseSubmissionBySectionAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionBySectionAndStudent";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
+import { getAttendanceBySectionAndStudent } from "../../common/service/Attendance/GetUserAttendaceBySectionAndStudent";
 
 const SectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -60,6 +61,12 @@ const SectionStudent: React.FC = () => {
         link_record = id_tt;
     }
 
+    var id_j = localStorage.getItem('is_attendance');
+    var is_attendance = "";
+    if (id_j !== null) {
+        is_attendance = id_j;
+    }
+
     console.log(class_id);
     console.log(class_students.classes_doing)
 
@@ -99,6 +106,7 @@ const SectionStudent: React.FC = () => {
                 }
                 else {
                     trackPromise(getClassesStudent(dispatch, id))
+                    trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
                     trackPromise(getSectionById(dispatch, section_id))
                     trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                     trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
@@ -107,6 +115,7 @@ const SectionStudent: React.FC = () => {
             }
             else {
                 trackPromise(getClassesStudent(dispatch, id))
+                trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getSectionById(dispatch, section_id))
                 trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
@@ -490,7 +499,7 @@ const SectionStudent: React.FC = () => {
                                                 }
                                                 else {
                                                     if (sections.sections[0].teach_form === true) {
-                                                        if (is_active === "not_active") {
+                                                        if (is_active === "not_active" && is_attendance === "true") {
                                                             return (
                                                                 <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                                                             )

@@ -1,8 +1,10 @@
 
 //import useState hook to create menu collapse state
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { putStatusUser } from "../../common/service/User/UpdateStatusUser";
+import { logout } from "../../store/actions/account.actions";
 
 //import react pro sidebar components
 import {
@@ -40,6 +42,7 @@ import "./Header.css";
 
 const Header = () => {
 
+  const dispatch = useDispatch();
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false)
 
@@ -492,7 +495,14 @@ const Header = () => {
             </SidebarContent>
             <SidebarFooter>
               <Menu iconShape="square">
-                <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+                <MenuItem icon={<FiLogOut />} onClick={() => {
+          let id = localStorage.getItem('id');
+          localStorage.clear();
+          dispatch(logout())
+          dispatch(putStatusUser(id, {
+            status: null
+          }))
+        }}>Logout</MenuItem>
               </Menu>
             </SidebarFooter>
           </ProSidebar>
@@ -679,7 +689,14 @@ const Header = () => {
               <MenuItem>
                   <img className="img-logo" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </MenuItem>
-                <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+                <MenuItem icon={<FiLogOut />} onClick={() => {
+          let id = localStorage.getItem('id');
+          localStorage.clear();
+          dispatch(logout())
+          dispatch(putStatusUser(id, {
+            status: null
+          }))
+        }}>Logout</MenuItem>
               </Menu>
             </SidebarFooter>
           </ProSidebar>
@@ -838,7 +855,14 @@ const Header = () => {
               <MenuItem>
                   <img className="img-logo" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </MenuItem>
-                <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+                <MenuItem icon={<FiLogOut /> } onClick={() => {
+          let id = localStorage.getItem('id');
+          localStorage.clear();
+          dispatch(logout())
+          dispatch(putStatusUser(id, {
+            status: null
+          }))
+        }}>Logout</MenuItem>
               </Menu>
             </SidebarFooter>
           </ProSidebar>
@@ -1010,7 +1034,14 @@ const Header = () => {
               <MenuItem>
                   <img className="img-logo" alt="" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1667290306/o0ymcs4lblpy2hfmisyq.png" />
                 </MenuItem>
-              <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+              <MenuItem icon={<FiLogOut />} onClick={() => {
+          let id = localStorage.getItem('id');
+          localStorage.clear();
+          dispatch(logout())
+          dispatch(putStatusUser(id, {
+            status: null
+          }))
+        }}>Logout</MenuItem>
             </Menu>
           </SidebarFooter>
         </ProSidebar>

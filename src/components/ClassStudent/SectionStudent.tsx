@@ -491,7 +491,6 @@ const SectionStudent: React.FC = () => {
                             return (
                                 <div className="row">
                                     <div className="col-md-12 col-lg-12 mb-4">
-                                        <h4 id="full-name">Recording</h4>
                                         {
                                             function () {
                                                 if (sections.sections.length <= 0) {
@@ -501,7 +500,10 @@ const SectionStudent: React.FC = () => {
                                                     if (sections.sections[0].teach_form === true) {
                                                         if (is_active === "not_active" && is_attendance === "true") {
                                                             return (
-                                                                <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                                                <>
+                                                                    <h4 id="full-name">Recording</h4>
+                                                                    <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                                                </>
                                                             )
                                                         }
                                                     }

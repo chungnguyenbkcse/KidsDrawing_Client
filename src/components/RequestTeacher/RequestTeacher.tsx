@@ -130,7 +130,7 @@ const RequestTeacher: React.FC = () => {
                                 >
                                     <div className="popup-modal" id="popup-modal">
                                         <div className="popup-title">
-                                            Are you sure?
+                                            Bạn có chắc chắn muốn xóa?
                                         </div>
                                         <div className="popup-content">
                                             <button type="button"

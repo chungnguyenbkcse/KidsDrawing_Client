@@ -27,6 +27,7 @@ const CartForm: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+    
 
     const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
 
@@ -139,10 +140,12 @@ const CartForm: React.FC = () => {
                             return(
                                 <tr key={key}>   
                                 <td><i className="badge badge-danger" onClick={()=>{
-                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                                        position: toast.POSITION.TOP_CENTER
-                                      });
-                                    dispatch(deleteUserRegisterJoinSemester1(item.id, idx))
+                                    setCardId(item.id)
+                                    localStorage.removeItem('user_register_join_semester_id')
+                                    localStorage.setItem('user_register_join_semester_id', item.id.toString())
+                                    console.log(item.id)
+                                    dispatch(setModificationState(LessonModificationStatus.Remove))
+                                    setPopup(true)
                                 }}>X</i></td>
                                 <td>{item.course_name}</td>
                                 <td><img src={item.link_url} style={{width:'100px',height:'80px'}} alt="" /></td>
@@ -214,6 +217,9 @@ const CartForm: React.FC = () => {
                                 <tr key={key}>   
                                 <td><i className="badge badge-danger" onClick={()=>{
                                     setCardId(item.id)
+                                    console.log(item.id)
+                                    localStorage.removeItem('user_register_join_semester_id')
+                                    localStorage.setItem('user_register_join_semester_id', item.id.toString())
                                     dispatch(setModificationState(LessonModificationStatus.Remove))
                                     setPopup(true)
                                 }}>X</i></td>
@@ -250,17 +256,22 @@ const CartForm: React.FC = () => {
                             >
                                 <div className="popup-modal" id="popup-modal">
                                     <div className="popup-title">
-                                        Are you sure?
+                                        Bạn có chắc chắn muốn xóa?
                                     </div>
                                     <div className="popup-content">
                                         <button type="button"
                                             className="btn btn-danger"
                                             onClick={() => {
-                                                setPopup(false);
                                                 const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                     position: toast.POSITION.TOP_CENTER
                                                   });
-                                                dispatch(deleteUserRegisterJoinSemester1(cardId, idx))
+                                                  var id_xy = localStorage.getItem('user_register_join_semester_id');
+                                                  var user_register_join_semester_id: number = 0;
+                                                  if (id_xy !== null) {
+                                                    user_register_join_semester_id = parseInt(id_xy);
+                                                  }
+                                                dispatch(deleteUserRegisterJoinSemester1(user_register_join_semester_id, idx))
+                                                setPopup(false);
                                             }}>Remove
                                         </button>
                                     </div>

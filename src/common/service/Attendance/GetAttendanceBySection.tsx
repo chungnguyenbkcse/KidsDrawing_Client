@@ -4,7 +4,7 @@ interface Attendance {
     id: any;
     student_id: number;
     section_id: number;
-    status: string;
+    status: boolean;
     email: string;
     section_number: number;
     course_name: string;

@@ -10,6 +10,10 @@ body {
     margin-left: 5px !important;
   }
 
+  .badge-danger {
+    cursor: pointer;
+  }
+
   .schedule-x {
     white-space: pre-line !important;
   }

@@ -27,7 +27,7 @@ function ClassDoingList(props: classTeacherListProps): JSX.Element {
   }
 
   const lessonElements: (JSX.Element | null)[] = class_teachers.class_doing.map((contest, index) => {
-    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    //console.log(strDate.replaceAll("T", " ").substring(0,16))
     if (!contest) { return null; }
     return (<tr className={`table-row `}
       key={`lesson_${contest.id}`} onClick={() => { routeChange(contest) }}>

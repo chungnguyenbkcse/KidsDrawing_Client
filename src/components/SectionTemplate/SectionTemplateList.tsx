@@ -78,7 +78,7 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element {
     }
     return null
   }).sort((a, b) => a.number - b.number).map((section_template, index) => {
-    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    //console.log(strDate.replaceAll("T", " ").substring(0,16))
     if (!section_template) { return null; }
     return (<tr className={`table-row ${(section_templates.selectedSectionTemplate && section_templates.selectedSectionTemplate.id === section_template.id) ? "selected" : ""}`}
       key={`section_template_${section_template.id}`}>

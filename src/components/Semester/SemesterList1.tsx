@@ -28,7 +28,7 @@ function SemesterList(props: semesterListProps): JSX.Element  {
   }).map((semester, index) => {
     var strDate = semester.start_time;
     var strDate_1 = semester.end_time;
-    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    //console.log(strDate.replaceAll("T", " ").substring(0,16))
     if (!semester) { return null; }
     return (<tr className={`table-row ${(semesters.selectedSemester && semesters.selectedSemester.id === semester.id) ? "selected" : ""}`}
       key={`semester_${semester.id}`}>
@@ -36,7 +36,7 @@ function SemesterList(props: semesterListProps): JSX.Element  {
       <td>{semester.name}</td>
       <td>{semester.year}</td>
       <td>{semester.number}</td>
-      <td>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</td>
+      <td>{strDate.replaceAll("T", " ").substring(0,16)}</td>
       <td>{strDate_1.substring(0, 10) + " " + strDate_1.substring(11,19)}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={()=> {

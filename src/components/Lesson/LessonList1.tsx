@@ -17,7 +17,7 @@ function LessonList(props: lessonListProps): JSX.Element  {
 
 
   const lessonElements: (JSX.Element | null)[] = lessons.lessons.map((lesson, index) => {
-    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    //console.log(strDate.replaceAll("T", " ").substring(0,16))
     if (!lesson) { return null; }
     return (<tr className={`table-row ${(lessons.selectedLesson && lessons.selectedLesson.id === lesson.id) ? "selected" : ""}`}
       key={`lesson_${lesson.id}`}>

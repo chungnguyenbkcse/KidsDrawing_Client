@@ -26,7 +26,7 @@ function ArtLevelList(props: artLevelListProps): JSX.Element  {
     }
     return null
     }).map((art_level, index) => {
-    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    //console.log(strDate.replaceAll("T", " ").substring(0,16))
     if (!art_level) { return null; }
     return (<tr className={`table-row ${(art_levels.selectedArtLevel && art_levels.selectedArtLevel.id === art_level.id) ? "selected" : ""}`}
       key={`art_level_${art_level.id}`}>

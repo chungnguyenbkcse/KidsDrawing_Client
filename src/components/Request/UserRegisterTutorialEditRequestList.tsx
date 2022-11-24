@@ -36,7 +36,7 @@ function UserRegisterTutorialEditRequestList(props: studentListProps): JSX.Eleme
       <td>{student.name}</td>
       <td>{student.section_number}</td>
       <td>{student.creator_name}</td>
-      <td>{student.create_time}</td>
+      <td>{student.create_time.replaceAll("T", " ").substring(0,16)}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={() => {
           approvedTutorial(student)

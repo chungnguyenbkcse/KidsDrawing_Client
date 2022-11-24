@@ -27,7 +27,7 @@ function ArtTypeList(props: artTypeListProps): JSX.Element  {
     }
     return null
     }).map((art_type, index) => {
-    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    //console.log(strDate.replaceAll("T", " ").substring(0,16))
     if (!art_type) { return null; }
     return (<tr className={`table-row ${(art_types.selectedArtType && art_types.selectedArtType.id === art_type.id) ? "selected" : ""}`}
       key={`art_type_${art_type.id}`}>

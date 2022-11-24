@@ -9,7 +9,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
 import { changeSelectedUserRegisterTutorialNotApproved, clearSelectedUserRegisterTutorialNotApproved, setModificationState } from "../../store/actions/user_register_tutorial.action";
 
-function TutorialEditRequestList(props) {
+function TutorialEditRequestList1(props) {
 
     const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ function TutorialEditRequestList(props) {
     }
 
 
-  const datas = user_register_tutorials.user_register_tutorial_not_approved_nows;
+  const datas = user_register_tutorials.user_register_tutorial_approveds;
 
   const options = {
     paginationSize: 5,
@@ -68,21 +68,17 @@ function TutorialEditRequestList(props) {
     }
   };
 
-  function removeButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-danger" onClick={() => {  
-            if (props.onSelect) props.onSelect(row)    
-            localStorage.removeItem('user_register_tutorials_id')
-            localStorage.setItem('user_register_tutorials_id', row.id.toString())
-            localStorage.removeItem('section_user_register_tutorials_id')
-            localStorage.setItem('section_user_register_tutorials_id', row.section_id.toString())
-            localStorage.removeItem('name_user_register_tutorials')
-            localStorage.setItem('name_user_register_tutorials', row.name.toString())
-            localStorage.removeItem('creator_user_register_tutorials_id')
-            localStorage.setItem('creator_user_register_tutorials_id', row.creator_id.toString())
-            dispatch(setModificationState(UserRegisterTutorialModificationStatus.Remove))
-          }}>Xóa</button>
-    );
+  function approvedTutorial(ele) {
+    const id = toast.info("Chấp nhận giáo án giáo viên cho giáo án chung!", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000
+    });
+    dispatch(putUserRegisterTutorial(ele.id, {
+      status: "Approved to tutorial template",
+      section_id: ele.section_id,
+      name: ele.name,
+      creator_id: ele.creator_id
+    }, id))
   }
 
   function editButton(cell, row) {
@@ -145,11 +141,6 @@ function TutorialEditRequestList(props) {
       text: '',
       formatter: detailButton
     },
-    {
-      dataField: '',
-      text: '',
-      formatter: removeButton
-    },
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
@@ -187,4 +178,4 @@ function TutorialEditRequestList(props) {
   );
 }
 
-export default TutorialEditRequestList;
+export default TutorialEditRequestList1;

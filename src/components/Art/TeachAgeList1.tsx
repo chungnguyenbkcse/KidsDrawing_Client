@@ -26,7 +26,7 @@ function ArtAgeList(props: artAgeListProps): JSX.Element  {
     }
     return null
     }).map((art_age, index) => {
-    //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+    //console.log(strDate.replaceAll("T", " ").substring(0,16))
     if (!art_age) { return null; }
     return (<tr className={`table-row ${(art_ages.selectedArtAge && art_ages.selectedArtAge.id === art_age.id) ? "selected" : ""}`}
       key={`art_age_${art_age.id}`}>

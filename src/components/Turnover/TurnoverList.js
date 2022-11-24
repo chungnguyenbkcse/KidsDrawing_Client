@@ -40,7 +40,7 @@ function TurnoverList() {
   function showStartTime(cell, row) {
     var strDate = row.time;
     return (
-        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+        <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 

@@ -15,6 +15,7 @@ import { changeSelectedUserRegisterTutorialNotApproved, clearSelectedUserRegiste
 import TutorialEditRequestList from "./TutorialEditRequestList";
 import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import Popup from "reactjs-popup";
+import UserRegisterTutorialEditRequestList1 from "./UserRegisterTutorialEditRequestList1";
 
 const TutorialEditRequest: React.FC = () => {
   const user_register_tutorials: IUserRegisterTutorialState = useSelector((state: IStateType) => state.user_register_tutorials);
@@ -60,8 +61,7 @@ const TutorialEditRequest: React.FC = () => {
   const [checked, setChecked] = useState(true);
   const [popup, setPopup] = useState(false);
 
-  function onUserRegisterTutorialSelect(lesson: IUserRegisterTutorial): void {
-    dispatch(changeSelectedUserRegisterTutorialNotApproved(lesson));
+  function onUserRegisterTutorialSelect(): void {
     onUserRegisterTutorialRemove();
     dispatch(setModificationState(UserRegisterTutorialModificationStatus.None));
   }
@@ -132,7 +132,7 @@ const TutorialEditRequest: React.FC = () => {
 
         {
           function () {
-            if ((user_register_tutorials.selectedUserRegisterTutorial) && (user_register_tutorials.modificationState === UserRegisterTutorialModificationStatus.Remove)) {
+            if ( (user_register_tutorials.modificationState === UserRegisterTutorialModificationStatus.Remove)) {
               return (
                 <Popup
                   open={popup}
@@ -147,19 +147,41 @@ const TutorialEditRequest: React.FC = () => {
                       <button type="button"
                         className="btn btn-danger"
                         onClick={() => {
-                          if (!user_register_tutorials.selectedUserRegisterTutorial) {
-                            return;
-                          }
-                          const id = toast.info("Chấp nhận giáo án giáo viên!", {
+                          const idx = toast.info("Chấp nhận giáo án giáo viên!", {
                             position: toast.POSITION.TOP_CENTER,
                             autoClose: 2000
                           });
-                          dispatch(putUserRegisterTutorial(user_register_tutorials.selectedUserRegisterTutorial.id, {
+
+                          var id_xx = localStorage.getItem('user_register_tutorials_id');
+                          let user_register_tutorials_id = 0;
+                          if (id_xx !== null) {
+                            user_register_tutorials_id = parseInt(id_xx);
+                          }
+
+                          var id_yy = localStorage.getItem('section_user_register_tutorials_id');
+                          let section_user_register_tutorials_id = 0;
+                          if (id_yy !== null) {
+                            section_user_register_tutorials_id = parseInt(id_yy);
+                          }
+
+                          var id_zz = localStorage.getItem('creator_user_register_tutorials_id');
+                          let creator_user_register_tutorials_id = 0;
+                          if (id_zz !== null) {
+                            creator_user_register_tutorials_id = parseInt(id_zz);
+                          }
+
+                          var id_yy = localStorage.getItem('name_user_register_tutorials');
+                          let name_user_register_tutorials = "";
+                          if (id_yy !== null) {
+                            name_user_register_tutorials = (id_yy);
+                          }
+
+                          dispatch(putUserRegisterTutorial(user_register_tutorials_id, {
                             status: "Not approved",
-                            section_id: user_register_tutorials.selectedUserRegisterTutorial.section_id,
-                            name: user_register_tutorials.selectedUserRegisterTutorial.name,
-                            creator_id: user_register_tutorials.selectedUserRegisterTutorial.creator_id
-                          }, id))
+                            section_id: section_user_register_tutorials_id,
+                            name: name_user_register_tutorials,
+                            creator_id: creator_user_register_tutorials_id
+                          }, idx))
                           dispatch(clearSelectedUserRegisterTutorialNotApproved());
                           setPopup(false);
                         }}>Remove
@@ -203,7 +225,7 @@ const TutorialEditRequest: React.FC = () => {
                         <h6 className="m-0 font-weight-bold text-green">Danh sách giáo án đã duyệt</h6>
                       </div>
                       <div className="card-body">
-                        <UserRegisterTutorialEditRequestList />
+                        <UserRegisterTutorialEditRequestList1 />
                       </div>
                     </div>
 

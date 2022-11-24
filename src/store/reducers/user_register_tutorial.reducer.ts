@@ -77,22 +77,22 @@ function userRegisterTutorialReducer(state: IUserRegisterTutorialState = initial
         }
 
         case INITIAL_USER_REGISTER_TUTORIAL_NOT_APPROVED: {
-            return { ...state, user_register_tutorial_approveds : [...state.user_register_tutorial_approveds, action.user_register_tutorial]};
+            return { ...state, user_register_tutorial_not_approveds : [...state.user_register_tutorial_not_approveds, action.user_register_tutorial]};
         }
         case REMOVE_USER_REGISTER_TUTORIAL_NOT_APPROVED_ALL: {
-            return { ...state, user_register_tutorial_approveds: [] };
+            return { ...state, user_register_tutorial_not_approveds: [] };
         }
         case ADD_USER_REGISTER_TUTORIAL_NOT_APPROVED: {
-            return { ...state, user_register_tutorial_approveds: [...state.user_register_tutorial_approveds, action.user_register_tutorial]};
+            return { ...state, user_register_tutorial_not_approveds: [...state.user_register_tutorial_not_approveds, action.user_register_tutorial]};
         }
         case EDIT_USER_REGISTER_TUTORIAL_NOT_APPROVED: {
-            const foundIndex: number = state.user_register_tutorial_approveds.findIndex(pr => pr.id === action.user_register_tutorial.id);
-            let user_register_tutorial_approveds: IUserRegisterTutorial[] = state.user_register_tutorial_approveds;
-            user_register_tutorial_approveds[foundIndex] = action.user_register_tutorials;
-            return { ...state, user_register_tutorial_approveds: user_register_tutorial_approveds };
+            const foundIndex: number = state.user_register_tutorial_not_approveds.findIndex(pr => pr.id === action.user_register_tutorial.id);
+            let user_register_tutorial_not_approveds: IUserRegisterTutorial[] = state.user_register_tutorial_not_approveds;
+            user_register_tutorial_not_approveds[foundIndex] = action.user_register_tutorials;
+            return { ...state, user_register_tutorial_not_approveds: user_register_tutorial_not_approveds };
         }
         case REMOVE_USER_REGISTER_TUTORIAL_NOT_APPROVED: {
-            return { ...state, user_register_tutorial_approveds: state.user_register_tutorial_approveds.filter(x=>x.id !== action.user_register_tutorial.id)};
+            return { ...state, user_register_tutorial_not_approveds: state.user_register_tutorial_not_approveds.filter(x=>x.id !== action.user_register_tutorial.id)};
         }
         
         case CHANGE_USER_REGISTER_TUTORIAL_NOT_APPROVED_NOW_PENDING_EDIT: {

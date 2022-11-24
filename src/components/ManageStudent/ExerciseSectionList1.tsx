@@ -34,7 +34,7 @@ function ExerciseSectionList(props: lessonListProps): JSX.Element {
     }
     
     const lessonElements: (JSX.Element | null)[] = user_grade_exercise_submission.user_grade_exercise_submissions.map((exercise, index) => {
-        //console.log(strDate.substring(0, 10) + " " + strDate.substring(11,19))
+        //console.log(strDate.replaceAll("T", " ").substring(0,16))
         if (!exercise) { return null; }
         return (<tr className={`table-row`}
             key={`lesson_${index}`} >

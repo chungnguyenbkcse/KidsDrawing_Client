@@ -82,7 +82,7 @@ function TeacherRequestList(props) {
   function showStartTime(cell, row) {
     var strDate = row.create_time;
     return (
-        <span>{strDate.substring(0, 10) + " " + strDate.substring(11,19)}</span>
+        <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 

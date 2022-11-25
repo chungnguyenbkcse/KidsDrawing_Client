@@ -204,7 +204,7 @@ function ContestStudentNotOpenNowList(props: lessonListProps): JSX.Element {
                             return (
                                 <div className="col-md-4" onClick={() => { routeChange(ele) }}>
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
-                                        <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" alt="" /></div>
+                                        <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
                                         <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
                                         <span className="d-block">Học sinh: {ele.student_name}</span>
                                         <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ")}</span>

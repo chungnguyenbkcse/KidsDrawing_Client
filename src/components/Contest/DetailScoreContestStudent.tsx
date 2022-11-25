@@ -96,7 +96,7 @@ const DetailScoreContestStudent: React.FC = () => {
                                     <div className={`card shadow h-100 py-2`} id="normal-tutorial">
                                         <div className="card-body">
                                             <div className="row no-gutters justify-content-left">
-                                                <h4 id="full-name">Thông tin cuộc thi</h4>
+                                                <h4 id="full-name">Thông tin chung</h4>
                                             </div>
                                             <div className="row no-gutters">
                                                 <p id="phone">Tên: {contest_name}</p>

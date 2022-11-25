@@ -12,7 +12,7 @@ import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 
-import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewsDirective, ViewDirective, TimelineViews } from "@syncfusion/ej2-react-schedule";
 
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
@@ -107,23 +107,17 @@ const ScheduleParent: React.FC = () => {
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
                         <div className="card-body">
-                        <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
-                  dataSource: data, fields: {
-                    id: 'Id',
-                    subject: { name: 'Subject' },
-                    isAllDay: { name: 'IsAllDay' },
-                    startTime: { name: 'StartTime' },
-                    endTime: { name: 'EndTime' }
-                  }
-                }}>
+                        <ScheduleComponent height='550px' currentView="Month" showQuickInfo={false} selectedDate={new Date()} eventSettings={{
+                          dataSource: data
+                        }}>
 
-                  <ViewsDirective>
-                    <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
-                    <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
-                    <ViewDirective option='Month' showWeekend={false} />
-                  </ViewsDirective>
-                  <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-                </ScheduleComponent>;
+                            <ViewsDirective>
+                                <ViewDirective option='Day'/>
+                                <ViewDirective option='Week'/>
+                                <ViewDirective option='Month'/>
+                            </ViewsDirective>
+                          <Inject services={[Day, Week, Month]}/>
+                        </ScheduleComponent>;
                                 
                         </div>
                     </div>

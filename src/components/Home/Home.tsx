@@ -228,23 +228,17 @@ const Home: React.FC = () => {
                 <h6 className="m-0 font-weight-bold text-green">Lịch học chi tiết</h6>
               </div>
               <div className="card-body">
-                <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
-                  dataSource: data, fields: {
-                    id: 'Id',
-                    subject: { name: 'Subject' },
-                    isAllDay: { name: 'IsAllDay' },
-                    startTime: { name: 'StartTime' },
-                    endTime: { name: 'EndTime' }
-                  }
-                }}>
+              <ScheduleComponent height='550px' currentView="Month" showQuickInfo={false} selectedDate={new Date()} eventSettings={{
+                          dataSource: data
+                        }}>
 
-                  <ViewsDirective>
-                    <ViewDirective option='WorkWeek' startHour='07:00' endHour='22:00' />
-                    <ViewDirective option='Week' startHour='07:00' endHour='22:00' />
-                    <ViewDirective option='Month' showWeekend={false} />
-                  </ViewsDirective>
-                  <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-                </ScheduleComponent>;
+                            <ViewsDirective>
+                                <ViewDirective option='Day'/>
+                                <ViewDirective option='Week'/>
+                                <ViewDirective option='Month'/>
+                            </ViewsDirective>
+                          <Inject services={[Day, Week, Month]}/>
+                        </ScheduleComponent>;
               </div>
             </div>
           </div>

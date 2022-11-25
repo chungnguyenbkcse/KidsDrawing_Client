@@ -14,6 +14,9 @@ import Loading from "../../common/components/Loading";
 import ClassDoingList1 from "./ClassDoingList1";
 import ClassDoneList1 from "./ClassDoneList1";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
+import { getArtType } from "../../common/service/ArtType/GetArtType";
+import { getArtAge } from "../../common/service/ArtAge/GetArtAge";
+import { getArtLevel } from "../../common/service/ArtLevel/GetArtLevel";
 
 const ClassParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -53,11 +56,17 @@ const ClassParent: React.FC = () => {
                 else {
                     trackPromise(getClassesParent(dispatch, id))
                     trackPromise(getStudentByParent(dispatch, id))
+                    trackPromise(getArtType(dispatch))
+                    trackPromise(getArtAge(dispatch))
+                    trackPromise(getArtLevel(dispatch))
                 }
             }
             else {
                 trackPromise(getClassesParent(dispatch, id))
                 trackPromise(getStudentByParent(dispatch, id))
+                trackPromise(getArtType(dispatch))
+                trackPromise(getArtAge(dispatch))
+                trackPromise(getArtLevel(dispatch))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);
@@ -90,8 +99,6 @@ const ClassParent: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="KHÓA HỌC" text={`${numberClassDoingCount}`} icon="book" class="primary" />
-                    <TopCard title="KHÓA HỌC ĐÃ HỌC" text={`${numberClassDoneCount}`} icon="book" class="primary" />
                     {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(ClassesParentModificationStatus.Create))}>
@@ -162,9 +169,6 @@ const ClassParent: React.FC = () => {
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
                                             <div className="card shadow mb-4" id="topcard-user">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
-                                                </div>
                                                 <div className="card-body">
                                                     <ClassDoingList1
                                                         onSelect={onClassesParentSelect} value={searchTerm}
@@ -182,9 +186,7 @@ const ClassParent: React.FC = () => {
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
                                             <div className="card shadow mb-4" id="topcard-user">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Danh sách lớp</h6>
-                                                </div>
+                                                
                                                 <div className="card-body">
                                                     <ClassDoneList1
                                                         onSelect={onClassesParentSelect} value={searchTerm}

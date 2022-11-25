@@ -4,6 +4,7 @@ export interface IClassesParent {
     link_url: string;
     student_id: number;
     student_name: string;
+    url_image_course: string;
     teacher_name: string;
     teacher_id: number;
     course_id: number;

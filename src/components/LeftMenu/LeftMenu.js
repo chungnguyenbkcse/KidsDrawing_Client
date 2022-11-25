@@ -769,7 +769,7 @@ const Header = () => {
                         setActive8(false);
                       }
                     }}>
-                      <span> Lớp của bé</span>
+                      <span> Khóa học của bé</span>
                     </Link>
                   </MenuItem>
                   <MenuItem icon={<AiOutlineBook />}>
@@ -954,7 +954,7 @@ const Header = () => {
                       setActive8(false);
                     }
                   }}>
-                    <span> Lớp của bé</span>
+                    <span> Khóa học của bé</span>
                   </Link>
                 </MenuItem>
                 <MenuItem icon={<AiOutlineBook />}>

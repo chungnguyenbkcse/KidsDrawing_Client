@@ -112,8 +112,14 @@ const ScheduleStudent: React.FC = () => {
                     <div className="col-xl-12 col-lg-12">
                         <div className="card shadow mb-4">
                             <div className="card-body">
-                            <ScheduleComponent height='550px' currentView="Month" showQuickInfo={false} selectedDate={new Date()} eventSettings={{
-                          dataSource: data
+                            <ScheduleComponent height='550px' currentView="Month" selectedDate={new Date()} eventSettings={{
+                          dataSource: data, fields: {
+                            id: 'Id',
+                            subject: { name: 'Subject' },
+                            isAllDay: { name: 'IsAllDay' },
+                            startTime: { name: 'StartTime' },
+                            endTime: { name: 'EndTime' }
+                          }
                         }}>
 
                             <ViewsDirective>

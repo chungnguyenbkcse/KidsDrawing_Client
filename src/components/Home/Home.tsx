@@ -228,8 +228,14 @@ const Home: React.FC = () => {
                 <h6 className="m-0 font-weight-bold text-green">Lịch học chi tiết</h6>
               </div>
               <div className="card-body">
-              <ScheduleComponent height='550px' currentView="Month" showQuickInfo={false} selectedDate={new Date()} eventSettings={{
-                          dataSource: data
+              <ScheduleComponent height='550px' currentView="Month" selectedDate={new Date()} eventSettings={{
+                          dataSource: data, fields: {
+                            id: 'Id',
+                            subject: { name: 'Subject' },
+                            isAllDay: { name: 'IsAllDay' },
+                            startTime: { name: 'StartTime' },
+                            endTime: { name: 'EndTime' }
+                          }
                         }}>
 
                             <ViewsDirective>

@@ -19,7 +19,7 @@ import { useHistory } from "react-router-dom";
 import { putExerciseSubmission } from "../../common/service/ExerciseSubmission/PutExerciseSubmissionById";
 import { getExerciseSubmissionByExerciseAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExerciseAndStudent";
 
-const ViewExerciseSubmission: React.FC = () => {
+const ViewExerciseSubmissionParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
@@ -30,7 +30,7 @@ const ViewExerciseSubmission: React.FC = () => {
         exercise_description = id_x;
     }
 
-    var id_y = localStorage.getItem("id");
+    var id_y = localStorage.getItem("student_id");
     let id: number = 0;
     if (id_y !== null) {
         id = parseInt(id_y);
@@ -151,7 +151,7 @@ const ViewExerciseSubmission: React.FC = () => {
     const history = useHistory();
     function routeHome() {
         history.push({
-            pathname: "/classes/detail-student"
+            pathname: "/student/classes-doing"
         });
     }
 
@@ -313,4 +313,4 @@ const ViewExerciseSubmission: React.FC = () => {
     );
 };
 
-export default ViewExerciseSubmission;
+export default ViewExerciseSubmissionParent;

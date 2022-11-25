@@ -9,7 +9,7 @@ import { postExerciseSubmission } from "../../common/service/ExerciseSubmission/
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { useHistory } from "react-router-dom";
 
-function FormSubmit(): JSX.Element {
+function FormSubmitParent(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
 
     let users: IUserState = useSelector((state: IStateType) => state.users);
@@ -27,7 +27,7 @@ function FormSubmit(): JSX.Element {
         exercise_description = id_x;
     }
 
-    var id_y = localStorage.getItem("id");
+    var id_y = localStorage.getItem("student_id");
     let id: number = 0;
     if (id_y !== null) {
         id = parseInt(id_y);
@@ -231,4 +231,4 @@ function FormSubmit(): JSX.Element {
     );
 };
 
-export default FormSubmit;
+export default FormSubmitParent;

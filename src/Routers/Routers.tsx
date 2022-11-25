@@ -121,6 +121,10 @@ import ViewSectionTeacherRequest from "../components/Request/ViewSectionTeacherR
 import HistoryParent from "../components/Parent/HistoryParent";
 import HistoryForParent from "../components/HistoryParent/HistoryParent";
 import ResultGradeContestParent from "../components/Contest/ContestGradeContestParent";
+import DetailClassParent from "../components/ClassParent/DetailClassParent";
+import DetailExerciseParent from "../components/ManageStudent/DetailExerciseParent";
+import ViewExerciseSubmissionParent from "../components/Exercise/ViewExerciseSubmissionParent";
+import FormSubmitParent from "../components/ClassParent/FormSubmitParent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -205,14 +209,15 @@ const Routers: React.FC = () => {
                                 <Route path={`/contest/result-grade`}><ResultGradeContestParent /></Route>
                                 <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>
                                 <Route path={`/cart`}><CartForm /></Route>
+                                <Route path={`/exercise/submit`}><FormSubmitParent /></Route>
                                 <Route path={`/history`}><HistoryForParent /></Route>
                                 <Route path={`/discover/course`}><DiscoveryParent /></Route>
                                 <Route path={`/discover/contest`}><DiscoveryParentContest /></Route>
-                                <Route path={`/exercise-submission/view`}><ViewExerciseSubmission /></Route>
+                                <Route path={`/exercise-submission/view`}><ViewExerciseSubmissionParent /></Route>
                                 <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
-                                <Route path={`/exercise/detail`}><DetailExerciseStudent /></Route>
+                                <Route path={`/exercise/detail`}><DetailExerciseParent /></Route>
                                 <Route path={`/contest/detail`}><DetailContestStudent /></Route>
-                                <Route path={`/student/classes-doing`}><ManageClassesDoing /></Route>
+                                <Route path={`/student/classes-doing`}><DetailClassParent /></Route>
                                 <Route path={`/students/detail`}><ManageChild /></Route>    
                                 <Route path={`/student/class`}><ManageClassesDone /></Route>                        
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>

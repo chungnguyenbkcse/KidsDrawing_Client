@@ -2,12 +2,9 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import TopCard from "../../common/components/TopCardUser";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
-import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
@@ -15,14 +12,19 @@ import "./ResultGradeContestStudent.css"
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import { IUserGradeContestSubmission } from "../../store/models/user_grade_contest_submission.interface";
 
-const ResultGradeContestStudent = () => {
+const ResultGradeContestParent = () => {
     const dispatch = useDispatch();
     const user_grade_contest_submissions = useSelector((state) => state.user_grade_contest_submissions);
-
+    const users  = useSelector((state) => state.users);
     const top_score = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => b.score - a.score).slice(0, 3)
     const tail_score = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => b.score - a.score).slice(3, user_grade_contest_submissions.userGradeContestSubmissions.length)
+    var list_student_id = [];
+    if (users.students !== undefined) {
+        users.students.map((ele, idx) => {
+            return list_student_id.push(ele.id);
+        })
+    }
     var role_privilege = localStorage.getItem('role_privilege')
     var rolePrivilege = []
     var roleUser = ""
@@ -71,10 +73,12 @@ const ResultGradeContestStudent = () => {
                     dispatch(logout())
                 }
                 else {
+                    trackPromise(getStudentByParent(dispatch, id))
                     trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
                 }
             }
             else {
+                trackPromise(getStudentByParent(dispatch, id))
                 trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
             }
         }
@@ -93,7 +97,7 @@ const ResultGradeContestStudent = () => {
 
     function handleViewResult(user_graded_contest_submission) {
         if (user_grade_contest_submissions !== null && user_grade_contest_submissions !== undefined) {
-            if (user_graded_contest_submission.student_id === id) {
+            if (list_student_id.includes(user_graded_contest_submission.student_id)) {
                 localStorage.removeItem('contest_submission_id');
                 localStorage.setItem('contest_submission_id', user_graded_contest_submission.contest_submission_id.toString())
                 localStorage.removeItem('time_submit');
@@ -101,15 +105,12 @@ const ResultGradeContestStudent = () => {
                 localStorage.removeItem('feedback');
                 localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
                 if (user_graded_contest_submission.feedback !== null) {
-                    localStorage.removeItem('feedback');
                     localStorage.setItem('feedback', user_graded_contest_submission.feedback);
                 }
                 if (user_graded_contest_submission.score !== null) {
-                    localStorage.removeItem('score');
                     localStorage.setItem('score', user_graded_contest_submission.score.toString());
                 }
                 localStorage.setItem('contest_name', user_graded_contest_submission.contest_name.toString())
-                localStorage.removeItem('contest_id');
                 localStorage.removeItem('contest_id');
                 localStorage.removeItem('url_conest_submission');
                 localStorage.removeItem('teacher_name');
@@ -166,10 +167,19 @@ const ResultGradeContestStudent = () => {
     }
 
     function nameButton(cell, row) {
+        if (list_student_id.includes(row.student_id)) {
+            return (
+                <div className="avatar-table row-student-active table-text-size mx-auto top-text-color" onClick={() => {
+                    handleViewResult(row)
+                }}>
+                    <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
+                        alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
+                    {row.student_name}
+                </div>
+            ); 
+        }
         return (
-            <div className="avatar-table table-text-size mx-auto top-text-color" onClick={() => {
-                handleViewResult(row)
-            }}>
+            <div className="avatar-table table-text-size mx-auto top-text-color">
                 <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
                     alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
                 {row.student_name}
@@ -326,4 +336,4 @@ const ResultGradeContestStudent = () => {
     );
 };
 
-export default ResultGradeContestStudent;
+export default ResultGradeContestParent;

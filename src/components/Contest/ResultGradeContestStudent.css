@@ -6,6 +6,10 @@
     margin-left: 10px;
   }
 
+  .row-student-active {
+    background-color: #C3DFF9 !important;
+  }
+
   .active-student {
     background: #CCEBF4 !important;
   }

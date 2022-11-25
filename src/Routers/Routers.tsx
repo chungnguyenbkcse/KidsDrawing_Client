@@ -120,6 +120,7 @@ import ViewDetailParentForAdmin from "../components/Parent/ViewDetailParentForAd
 import ViewSectionTeacherRequest from "../components/Request/ViewSectionTeacherRequest";
 import HistoryParent from "../components/Parent/HistoryParent";
 import HistoryForParent from "../components/HistoryParent/HistoryParent";
+import ResultGradeContestParent from "../components/Contest/ContestGradeContestParent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -197,10 +198,11 @@ const Routers: React.FC = () => {
                                 <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>  
+                                <Route path={`/contest/score`}><DetailScoreContestStudent /></Route>
                                 <Route path={`/courses/semester-classes`}><SemesterClassParentNew /></Route>
                                 <Route path={`/contests/detail`}><ContestDetailTeacher /></Route>
                                 <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
-                                <Route path={`/contest/result-grade`}><ResultGradeContestTeacher /></Route>
+                                <Route path={`/contest/result-grade`}><ResultGradeContestParent /></Route>
                                 <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>
                                 <Route path={`/cart`}><CartForm /></Route>
                                 <Route path={`/history`}><HistoryForParent /></Route>

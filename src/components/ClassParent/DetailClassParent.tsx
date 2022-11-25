@@ -499,7 +499,7 @@ const DetailClassParent: React.FC = () => {
                                                 <div className="col-md-12">
                                                     <div className="right-sort float-right">
                                                         <div className="sort-by mr-3">
-                                                            <span className="mr-1">Học sinh:</span>
+                                                            <span className="ml-1 mr-1">Học sinh:</span>
 
                                                             <select name="cars" id="cars"
                                                                 value={filter}

@@ -223,7 +223,7 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
                             }).length} kết quả</h6>
                             <div className="right-sort">
                                 <div className="sort-by mr-3">
-                                    <span className="mr-1">Thể loại:</span>
+                                    <span className="ml-1 mr-1">Thể loại:</span>
                                     <select name="cars" id="cars"
                                         value={filter}
                                         onChange={handleChange}
@@ -237,7 +237,7 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
                                             })
                                         }
                                     </select>   
-                                    <span className="mr-1">Độ tuổi:</span>
+                                    <span className="ml-1 mr-1">Độ tuổi:</span>
                                     <select name="cars" id="cars" className="pl-2"
                                         value={filter1}
                                         onChange={handleChange1}
@@ -251,7 +251,7 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
                                             })
                                         }
                                     </select>
-                                    <span className="mr-1">Học sinh:</span>
+                                    <span className="ml-1 mr-1">Học sinh:</span>
                                     <select name="cars" id="cars"
                                         value={filter2}
                                         onChange={handleChange2}

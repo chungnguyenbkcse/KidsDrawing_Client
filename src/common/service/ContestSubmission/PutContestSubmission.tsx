@@ -3,13 +3,13 @@ import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/conte
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 
-export function postContestSubmission(data: any, idx: any, routeHome: any) {
+export function putContestSubmission(id: number, data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/contest-submission`, {
-                    method: "POST",
+                `${process.env.REACT_APP_API_URL}/contest-submission/${id}`, {
+                    method: "PUT",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export function postContestSubmission(data: any, idx: any, routeHome: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postContestSubmission(data, idx, routeHome))
+                        dispatch(putContestSubmission(id,data, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);

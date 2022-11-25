@@ -1,10 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
-import {  useSelector } from "react-redux";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import {  useDispatch, useSelector } from "react-redux";
 import { IStateType, IContestStudentState, IArtTypeState, IArtAgeState } from "../../store/models/root.interface";
 import { ILesson } from "../../store/models/lesson.interface";
 import { useHistory } from "react-router-dom";
 import { IContestStudent } from "../../store/models/contest_student.interface";
 import { toNonAccentVietnamese } from "../../common/components/ConvertVietNamese";
+import { getContestSubmissionByContestAndStudent } from "../../common/service/ContestSubmission/GetContestSubmissionByContestAndStudent";
 
 export type lessonListProps = {
     onSelect?: (lesson: ILesson) => void;
@@ -16,9 +17,16 @@ function ContestStudentDoingList1(props: lessonListProps): JSX.Element {
     const contest_students: IContestStudentState = useSelector((state: IStateType) => state.contest_students);
     const art_types: IArtTypeState = useSelector((state: IStateType) => state.art_types);
     const art_ages: IArtAgeState = useSelector((state: IStateType) => state.art_ages);
-    
+    const dispatch: Dispatch<any> = useDispatch();
     const [totalPage, setTotalPage] = useState(0)
     const [element, setElement] = useState<IContestStudent[]>([])
+
+    var id_x = localStorage.getItem('id');
+    let id = 0;
+
+    if (id_x !== null) {
+        id = parseInt(id_x);
+    }
     
     const history = useHistory();
     const routeChange = (contest_student: IContestStudent) =>{ 
@@ -40,7 +48,7 @@ function ContestStudentDoingList1(props: lessonListProps): JSX.Element {
         localStorage.setItem('start_time', contest_student.start_time)
         localStorage.removeItem("end_time")
         localStorage.setItem('end_time', contest_student.end_time)
-        let path = '/contests/detail-contest'; 
+        let path = '/contests/submit'; 
         history.push({
             pathname: path,
         });

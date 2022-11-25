@@ -1,12 +1,12 @@
 import { fetchDataSuccess, fetchDataError, 
-    removeContestStudentEndAll, removeContestStudentNotOpenNowAll, 
-    removeContestStudentNewAll, removeContestStudentOpeningAll,
-    initialContestStudentEnd, initialContestStudentNotOpenNow,
-    initialContestStudentNew, initialContestStudentOpening, 
-    addContestStudentEnd, addContestStudentNotOpenNow,
-    addContestStudentNew, addContestStudentOpening } from "../../../store/actions/contest_student.action";
+    removeContestParentEndAll, removeContestParentNotOpenNowAll, 
+    removeContestParentNewAll, removeContestParentOpeningAll,
+    initialContestParentEnd, initialContestParentNotOpenNow,
+    initialContestParentNew, initialContestParentOpening, 
+    addContestParentEnd, addContestParentNotOpenNow,
+    addContestParentNew, addContestParentOpening } from "../../../store/actions/contest_parent.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-interface ContestStudent {
+interface ContestParent {
     id: any;
     name: string;
     description: string;
@@ -59,13 +59,13 @@ export function getContestStudentByParent(dispatch: any, id: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeContestStudentEndAll())
-                dispatch(removeContestStudentNotOpenNowAll())
-                dispatch(removeContestStudentNewAll())
-                dispatch(removeContestStudentOpeningAll())
+                dispatch(removeContestParentEndAll())
+                dispatch(removeContestParentNotOpenNowAll())
+                dispatch(removeContestParentNewAll())
+                dispatch(removeContestParentOpeningAll())
                 console.log(data)
                 data.body.contest_opening.map((ele: any, index: any) => {
-                    var contest: ContestStudent = {
+                    var contest: ContestParent = {
                         id: ele.id,
                         name: ele.name,
                         description: ele.description,
@@ -90,16 +90,11 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                         update_time: ele.update_time
                     }
                     console.log(contest)
-                    if (index === 0){
-                        return dispatch(initialContestStudentOpening(contest));
-                    }
-                    else{
-                        return dispatch(addContestStudentOpening(contest))
-                    }
+                    return dispatch(addContestParentOpening(contest))
                 })
 
                 data.body.contest_new.map((ele: any, index: any) => {
-                    var contest: ContestStudent = {
+                    var contest: ContestParent = {
                         id: ele.id,
                         name: ele.name,
                         description: ele.description,
@@ -125,16 +120,16 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                     }
                     console.log(contest)
                     if (index === 0){
-                        return dispatch(initialContestStudentNew(contest));
+                        return dispatch(initialContestParentNew(contest));
                     }
                     else{
-                        return dispatch(addContestStudentNew(contest))
+                        return dispatch(addContestParentNew(contest))
                     }
                 })
 
 
                 data.body.contest_end.map((ele: any, index: any) => {
-                    var contest: ContestStudent = {
+                    var contest: ContestParent = {
                         id: ele.id,
                         name: ele.name,
                         description: ele.description,
@@ -160,16 +155,16 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                     }
                     console.log(contest)
                     if (index === 0){
-                        return dispatch(initialContestStudentEnd(contest));
+                        return dispatch(initialContestParentEnd(contest));
                     }
                     else{
-                        return dispatch(addContestStudentEnd(contest))
+                        return dispatch(addContestParentEnd(contest))
                     }
                 })
 
 
                 data.body.contest_not_open_now.map((ele: any, index: any) => {
-                    var contest: ContestStudent = {
+                    var contest: ContestParent = {
                         id: ele.id,
                         name: ele.name,
                         description: ele.description,
@@ -195,10 +190,10 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                     }
                     console.log(contest)
                     if (index === 0){
-                        return dispatch(initialContestStudentNotOpenNow(contest));
+                        return dispatch(initialContestParentNotOpenNow(contest));
                     }
                     else{
-                        return dispatch(addContestStudentNotOpenNow(contest))
+                        return dispatch(addContestParentNotOpenNow(contest))
                     }
                 })
             })

@@ -71,6 +71,7 @@ import contestSubmissionTeachersReducer from "./contest_submission_teacher.reduc
 import childsReducer from "./child.reducer";
 import final_score_childsReducer from "./final_score_child.reducer";
 import exerciseTeacherReducer from "./exercise_teacher.reducer";
+import contestParentsReducer from "./contest_parent.reducer";
 
 
 const initialState: IRootStateType = {
@@ -157,6 +158,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     childs: childsReducer,
     final_score_childs: final_score_childsReducer,
     exercise_teachers: exerciseTeacherReducer,
+    contest_parents: contestParentsReducer,
 });
 
 

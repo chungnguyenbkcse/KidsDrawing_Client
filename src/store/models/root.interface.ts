@@ -68,6 +68,7 @@ import { ContestSubmissionTeacherModificationStatus, IContestSubmissionTeacher }
 import { ChildModificationStatus, IChild } from "./child.interface";
 import { FinalScoreChildModificationStatus, IFinalScoreChild } from "./final_score_child.interface";
 import { ExerciseTeacherModificationStatus, IExerciseTeacher } from "./exercise_teacher.interface";
+import { ContestParentModificationStatus, IContestParent } from "./contest_parent.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -149,6 +150,7 @@ export interface IStateType {
     childs: IChildState;
     final_score_childs: IFinalScoreChildState;
     exercise_teachers: IExerciseTeacherState;
+    contest_parents: IContestParentState;
 }
 
 export interface IProductState {
@@ -595,6 +597,15 @@ export interface IContestStudentState {
     contest_new: IContestStudent[];
     contest_end: IContestStudent[];
     contest_not_open_now: IContestStudent[];
+}
+
+export interface IContestParentState {
+    selectedContestParent: IContestParent | null;
+    modificationState: ContestParentModificationStatus;
+    contest_opening: IContestParent[];
+    contest_new: IContestParent[];
+    contest_end: IContestParent[];
+    contest_not_open_now: IContestParent[];
 }
 
 export interface IAnonymousNotificationState {

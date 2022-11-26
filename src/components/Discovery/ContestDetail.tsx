@@ -196,28 +196,44 @@ const ConestDetailStudent: React.FC = () => {
     }
 
     function handleRegister() {
-        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-            position: toast.POSITION.TOP_CENTER
-        });
-        valueTeacher.map((ele, idx) => {
-            if (idx === valueTeacher.length - 1) {
-                dispatch(postUserRegisterJoinContest1({
-                    student_id: ele.value,
-                    contest_id: contest_id
-                }, idx, routeHome))
-            }
-            else {
-                dispatch(postUserRegisterContest({
-                    student_id: ele.value,
-                    contest_id: contest_id
-                }))
-            }
-        })
+        if (valueTeacher.length === 0) {
+            toast.error("Vui lòng chọn ít nhất một bé!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000
+            });
+        }
+        else {
+            const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
+            });
+            valueTeacher.map((ele, idx) => {
+                if (idx === valueTeacher.length - 1) {
+                    dispatch(postUserRegisterJoinContest1({
+                        student_id: ele.value,
+                        contest_id: contest_id
+                    }, idx, routeHome))
+                }
+                else {
+                    dispatch(postUserRegisterContest({
+                        student_id: ele.value,
+                        contest_id: contest_id
+                    }))
+                }
+            })
+        }
     }
 
     function handleRemove() {
-        dispatch(setModificationState(LessonModificationStatus.Remove))
-        setPopup(true)
+        if (valueTeacher1.length === 0) {
+            toast.error("Vui lòng chọn ít nhất một bé!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000
+            });
+        }
+        else {
+            dispatch(setModificationState(LessonModificationStatus.Remove))
+            setPopup(true)
+        }
     }
 
     return (

@@ -14,7 +14,7 @@ export function postMomo(total_price, ids) {
     console.log("ipnUrl", ipnUrl)
     var redirectUrl = "http://localhost:3000/payment-successfull?ids=" + ids.toString();
     // var ipnUrl = redirectUrl = "https://webhook.site/454e7b77-f177-4ece-8236-ddf1c26ba7f8";
-    var amount = 1000;
+    var amount = total_price;
     var requestType = "captureWallet"
     var extraData = ""; //pass empty value if your merchant does not have stores
 

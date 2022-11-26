@@ -60,33 +60,7 @@ function TopCardSemesterClassParent(props: PropsWithChildren<ICardSemesterClassP
                     <div className="row">
                         <p className="col-12" ><span className="header-card-course-teacher">Trạng thái:</span> <span className="header-card-course-value-teacher">{props.status}</span></p>
                     </div>
-                    {
-                        function () {
-                            if (props.student_registered_id !== undefined && props.student_registered_id !== null) {
-                                if (props.student_registered_id.length > 0) {
-                                    return (
-                                        <div className="row">
-                                            <p className="col-12" >
-                                                <span className="header-card-course-teacher">Đã mua:</span> 
-                                                {
-                                                    props.student_registered_name.map((ele, idx) => {
-                                                        if (idx === props.student_registered_name.length - 1) {
-                                                            return (
-                                                                <span className="header-card-course-value-teacher"> {ele}</span>
-                                                            )
-                                                        }
-                                                        return (
-                                                            <span className="header-card-course-value-teacher">{ele}, </span>
-                                                        )
-                                                    })
-                                                }
-                                            </p>
-                                        </div>
-                                    )
-                                }
-                            }
-                        }()
-                    }
+                    
                         {/* <div className="col-xl-4 col-md-4 col-xs-4">
                             <div className="row justify-content-center">
                                 <img className="image-course-teacher" src={props.url_image} alt="Preview"/>

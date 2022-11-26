@@ -12,6 +12,6 @@ export interface ICardProperties {
     registration_time: string;
     icon: string;
     start_time: string;
-    student_registered_name: string[];
-    student_registered_id: number[];
+    student_name: string;
+    student_id: number;
 }

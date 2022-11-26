@@ -126,6 +126,8 @@ import DetailExerciseParent from "../components/ManageStudent/DetailExercisePare
 import ViewExerciseSubmissionParent from "../components/Exercise/ViewExerciseSubmissionParent";
 import FormSubmitParent from "../components/ClassParent/FormSubmitParent";
 import FormSubmitContestParent from "../components/Contest/FormSubmitContestParent";
+import DetailContestNotOpenNowParent from "../components/Contest/DetailContestNotOpenNowParent";
+import DetailContestNotOpenNowTeacher from "../components/Contest/DetailContestNotOpenNowTeacher";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -156,6 +158,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/semester-class/detail`}><CourseTeacherDetail /></Route>
                                 <Route path={`/courses`}><CourseTeacher /></Route>
                                 <Route path={`/contests/detail`}><ContestDetailTeacher /></Route>
+                                <Route path={`/contests-not-open-now/detail`}><DetailContestNotOpenNowTeacher /></Route>
                                 <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
                                 <Route path={`/contest/result-grade`}><ResultGradeContestTeacher /></Route>
                                 <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>
@@ -207,6 +210,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/contest/score`}><DetailScoreContestStudent /></Route>
                                 <Route path={`/courses/semester-classes`}><SemesterClassParentNew /></Route>
                                 <Route path={`/contests/detail`}><ContestDetailTeacher /></Route>
+                                <Route path={`/contests-not-open-now/detail`}><DetailContestNotOpenNowParent /></Route>
                                 <Route path={`/contests/detail-contest`}><DetailContestTeacher /></Route>
                                 <Route path={`/contest/result-grade`}><ResultGradeContestParent /></Route>
                                 <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>

@@ -24,8 +24,8 @@ function ContestList(): JSX.Element {
               start_time={ele.start_time}
               description={ele.description}
               end_time={ele.end_time}
-              student_registered_id={ele.student_registered_id}
-              student_registered_name={ele.student_registered_name}
+              student_id={ele.student_id}
+              student_name={ele.student_name}
             />
         );
     });

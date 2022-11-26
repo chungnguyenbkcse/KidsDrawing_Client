@@ -18,6 +18,6 @@ export interface ICardSemesterClassParentProperties {
     icon: string;
     course_id: number;
     class: string;
-    student_registered_name: string[];
-    student_registered_id: number[];
+    student_name: string;
+    student_id: number;
 }

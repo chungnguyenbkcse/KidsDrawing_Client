@@ -32,17 +32,8 @@ function TopCardCourseParentNew(props: PropsWithChildren<ICardProperties>): Reac
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Giá:</span> <span className="header-card-course-value-teacher">{props.price} VNĐ</span></p>
                     </div>
                     <div className="row">
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Đã mua:</span> <span className="header-card-course-value-teacher">{props.student_registered_id.length}</span></p>
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Bé đã học:</span> {props.student_registered_name.map((ele, idx) => {
-                            if (idx === props.student_registered_id.length - 1){
-                                return (
-                                <span className="header-card-course-value-teacher">{ele}</span>
-                                )
-                            }
-                            return (
-                                <span className="header-card-course-value-teacher">{ele} ,</span>
-                            )
-                        })}</p>
+                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Đã mua:</span> <span className="header-card-course-value-teacher">{props.student_id}</span></p>
+                        
                     </div>
                 </div>
             </div>

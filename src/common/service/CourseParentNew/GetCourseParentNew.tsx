@@ -19,8 +19,8 @@ interface CourseParentNew {
     art_age_name: string;
     total: number;
     total_register: number;
-    student_registered_name: string[];
-    student_registered_id: number[];
+    student_name: string;
+    student_id: number;
     create_time: string;
     update_time: string;
 }
@@ -74,8 +74,8 @@ export function getCourseParentNew(dispatch: any, id: any) {
                         art_level_name: ele.art_level_name,
                         total: ele.total,
                         total_register: ele.total_register,
-                        student_registered_id: ele.student_registered_id,
-                        student_registered_name: ele.student_registered_name,
+                        student_id: ele.student_id,
+                        student_name: ele.student_name,
                         create_time: ele.create_time,
                         update_time: ele.update_time
 

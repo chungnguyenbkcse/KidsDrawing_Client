@@ -27,8 +27,8 @@ function CourseNewList(): JSX.Element {
                 art_level_name = {ele.art_level_name}
                 art_age_name = {ele.art_age_name}
                 total = {ele.total}
-                student_registered_id = {ele.student_registered_id}
-                student_registered_name = {ele.student_registered_name}
+                student_id = {ele.student_id}
+                student_name = {ele.student_name}
                 create_time = {ele.create_time}
                 update_time = {ele.update_time}
             />

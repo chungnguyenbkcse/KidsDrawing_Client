@@ -21,8 +21,8 @@ interface SemesterClassParent {
     start_date: string;
     registration_expiration_time: string;
     registration_deadline: string;
-    student_registered_name: string[];
-    student_registered_id: number[];
+    student_name: string;
+    student_id: number;
 }
 export function getSemesterClassByParentCourse(dispatch: any, parent_id: number, course_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -80,8 +80,8 @@ export function getSemesterClassByParentCourse(dispatch: any, parent_id: number,
                         semester_id: ele.semester_id,
                         status: ele.status,
                         registration_deadline: ele.registration_time,
-                        student_registered_id: ele.student_registered_id,
-                        student_registered_name: ele.student_registered_name
+                        student_id: ele.student_id,
+                        student_name: ele.student_name
                     }
                     //console.log(strDate.substring(0, 16))
                     if (ele.status === "Payed") {

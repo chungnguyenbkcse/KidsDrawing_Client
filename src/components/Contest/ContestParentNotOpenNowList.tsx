@@ -66,7 +66,7 @@ function ContestParentNotOpenNowList(props: lessonListProps): JSX.Element {
         localStorage.setItem('start_time', contest_parent.start_time)
         localStorage.removeItem("end_time")
         localStorage.setItem('end_time', contest_parent.end_time)
-        let path = '/contests/detail-contest'; 
+        let path = '/contests-not-open-now/detail'; 
         history.push({
             pathname: path,
         });

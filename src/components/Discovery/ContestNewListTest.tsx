@@ -9,7 +9,29 @@ import "./CourseNewTest.css"
 export type semesterListProps = {
     value?: string;
     children?: React.ReactNode;
-  };
+};
+
+export type IContestParentNewX = {
+    id: any;
+    name: string;
+    description: string;
+    max_participant: number;
+    total_register_contest: number;
+    registration_time: string;
+    image_url: string;
+    start_time: string;
+    end_time: string;
+    is_enabled: boolean;
+    creator_id: number;
+    art_type_id: number;
+    art_age_id: number;
+    art_type_name: string;
+    art_age_name: string;
+    create_time: string;
+    update_time: string;
+    student_names: string[];
+    student_ids: number[];
+}
 
 function ContestNewListTest(props: semesterListProps): JSX.Element {
     const contest_parent_news: IContestParentNewState = useSelector((state: IStateType) => state.contest_parent_new);
@@ -20,7 +42,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
     const [element, setElement] = useState<IContestParentNew[]>([])
 
     const history = useHistory();
-    const routeChange = (contest: IContestParentNew) =>{ 
+    const routeChange = (contest: IContestParentNewX) =>{ 
         localStorage.removeItem('description_contest');
         localStorage.setItem('description_contest', contest.description);
         localStorage.removeItem('contest_id');
@@ -39,12 +61,19 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
         localStorage.setItem('end_time', contest.end_time.toString())
         localStorage.removeItem('max_participant');
         localStorage.setItem('max_participant', contest.max_participant.toString())
+        localStorage.removeItem('student_names');
+        localStorage.setItem('student_names', JSON.stringify(contest.student_names))
+        localStorage.removeItem('student_ids');
+        console.log(contest.student_ids)
+        localStorage.setItem('student_ids', JSON.stringify(contest.student_ids))
         let path = '/contests/register'; 
         history.push({
             pathname: path,
             state: { description: contest.description, id: contest.id}
         });
     }
+
+    console.log(element)
 
     useEffect(() => {
         let x = (contest_parent_news.contests.length - contest_parent_news.contests.length % 10) /10;
@@ -189,61 +218,121 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                     </div>
                 </div>
                 <div className="row mt-1">
-                    {
-                        element.filter((val) => {
-                            if (props.value === "") {
-                                return val;
-                            }
-                            else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))) {
-                                return val;
-                            }
-                            return null
-                        }).map((ele, index) => {
-                            if (ele === undefined) {
+                {
+                        function () {
+                            var resArr: IContestParentNewX[] = [];
+                            element.filter(function (item) {
+                                var i = resArr.findIndex(x => (x.id == item.id));
+                                if (i <= -1) {
+                                    if (item.student_id !== null && item.student_name !== null) {
+                                        let numbers: number[] = [];
+                                        numbers.push(item.student_id);
+                                        let item_x: IContestParentNewX = {
+                                            id: item.id,
+                                            name: item.name,
+                                            description: item.description,
+                                            max_participant: item.max_participant,
+                                            total_register_contest: item.total_register_contest,
+                                            registration_time: item.registration_time,
+                                            image_url: item.image_url,
+                                            start_time: item.start_time,
+                                            end_time: item.end_time,
+                                            is_enabled: item.is_enabled,
+                                            art_type_name: item.art_type_name,
+                                            art_age_name: item.art_age_name,
+                                            art_type_id: item.art_type_id,
+                                            art_age_id: item.art_age_id,
+                                            student_ids: numbers,
+                                            student_names: new Array(item.student_name),
+                                            creator_id: item.creator_id,
+                                            create_time: item.create_time,
+                                            update_time: item.update_time
+                                        }
+                                        return resArr.push(item_x);
+                                    }
+                                    else {
+                                        let item_x: IContestParentNewX = {
+                                            id: item.id,
+                                            name: item.name,
+                                            description: item.description,
+                                            max_participant: item.max_participant,
+                                            total_register_contest: item.total_register_contest,
+                                            registration_time: item.registration_time,
+                                            image_url: item.image_url,
+                                            start_time: item.start_time,
+                                            end_time: item.end_time,
+                                            is_enabled: item.is_enabled,
+                                            art_type_name: item.art_type_name,
+                                            art_age_name: item.art_age_name,
+                                            art_type_id: item.art_type_id,
+                                            art_age_id: item.art_age_id,
+                                            student_ids: [],
+                                            student_names: [],
+                                            creator_id: item.creator_id,
+                                            create_time: item.create_time,
+                                            update_time: item.update_time
+                                        }
+                                        return resArr.push(item_x);
+                                    }
+                                }
+                                else {
+                                    let x = resArr[i];
+                                    if (x !== undefined) {
+                                        if (item.student_id !== null && item.student_name !== null) {
+                                            let xy: number[] = x.student_ids;     
+                                            xy.push(item.student_id);  
+                                            let yz: string[] = x.student_names;     
+                                            yz.push(item.student_name); 
+                                            x.student_ids = xy;
+                                            x.student_names = yz; 
+                                        }                        
+                                    }
+                                    return resArr
+                                }
+                            });
+                            console.log(resArr.length)
+                            return resArr.filter((val) => {
+                                if (props.value === "") {
+                                    return val;
+                                }
+                                else if (typeof props.value !== 'undefined' && (toNonAccentVietnamese(val.name).toLowerCase().includes(props.value.toLowerCase()) || val.name.toLowerCase().includes(props.value.toLowerCase()))) {
+                                    return val;
+                                }
                                 return null
-                            }
-                            return (
-                                <div className="col-md-4" onClick={() => { routeChange(ele) }}>
-                                    <div className="p-card bg-white p-2 rounded px-3 product-x">
-                                        <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
-                                        <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
-                                        <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ")}</span>
-                                        <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ")}</span>
-                                        <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                        <span className="d-block mb-5">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ")}</span>
-                                        <div
-                                            className="d-flex justify-content-between stats">
-                                            <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div>{ele.total_register_contest}<span className="ml-3">
-                                                    {
-                                                        function () {
-                                                            if (filter == 2) {
-                                                                if (ele.student_registered_id !== undefined && ele.student_registered_id !== null) {
-                                                                    let xx = ""
-                                                                    ele.student_registered_name.map((elex, idxx) => {
-                                                                        if (idxx < ele.student_registered_id.length - 1) {
-                                                                            xx  +=  elex + ","
-                                                                        }
-                                                                        else {
-                                                                            xx += ele
-                                                                        }
-                                                                        return null
-                                                                    })
-                                                                    return xx
-                                                                }
-                                                                else {
-                                                                    return 0
-                                                                }
-                                                            }
-                                                        }()
+                            }).map((ele, index) => {
+                                return (
+                                    <div className="col-md-4" onClick={() => { routeChange(ele) }}>
+                                        <div className="p-card bg-white p-2 rounded px-3 product-x">
+                                            <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
+                                            <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
+                                            {
+                                                ele.student_ids.length > 0 ? <span className="d-block">Học sinh đã đăng kí:  {ele.student_names.map((elex, idxx) => {
+                                                    if (idxx === ele.student_names.length - 1) {
+                                                        return elex
                                                     }
-                                                </span></div>
+                                                    return " " + elex + ","
+                                                })}</span> : ""
+                                            }
+                                            
+                                            <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ")}</span>
+                                            <span className="d-block">Ngày kết thúc: {ele.end_time.replaceAll("T", " ")}</span>
+                                            <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
+                                            <span className="d-block mb-5">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ")}</span>
+                                            <div
+                                                className="d-flex justify-content-between stats">
+                                                    <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
+                                                <div className="d-flex flex-row align-items-center">
+                                                    <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
+                                                        {ele.total_register_contest}
+                                                    </span></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        })
+                                )
+                            })
+                        }()
                     }
+                    
                 </div>
                 <div className="d-flex justify-content-end text-right mt-2">
                     <nav>

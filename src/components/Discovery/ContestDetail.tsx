@@ -18,6 +18,10 @@ import { setModificationState } from "../../store/actions/lesson.action";
 import { LessonModificationStatus } from "../../store/models/lesson.interface";
 import Popup from "reactjs-popup";
 import { deleteUserRegisterContestByContestAndStudent } from "../../common/service/UserRegisterContest/DeleteUserRegisterJoinContestByContestAndStudent";
+import ReactSelect from "../../common/components/ReactSelect";
+import { deleteUserRegisterContestByContestAndStudent1 } from "../../common/service/UserRegisterContest/DeleteUserRegisterJoinContestByContestAndStudent1";
+import { postUserRegisterJoinContest1 } from "../../common/service/UserRegisterContest/PostUserRegisterJoinContest1";
+
 type Option1 = {
     label: string;
     value: string;
@@ -27,14 +31,21 @@ const ConestDetailStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
-    
+
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listTeacher: IUser[] = users.students
-    const listTeachers: Option1[] = [];
-    listTeacher.map((ele) => {
-        let item: Option1 = { "label": ele.username, "value": ele.id }
-        return listTeachers.push(item)
-    })
+
+    const [valueTeacher, setValueTeacher] = useState<any[]>([])
+
+    function changeValueTeacher(value: any) {
+        setValueTeacher(value)
+    }
+
+    const [valueTeacher1, setValueTeacher1] = useState<any[]>([])
+
+    function changeValueTeacher1(value: any) {
+        setValueTeacher1(value)
+    }
 
     const [popup, setPopup] = useState(false);
 
@@ -112,6 +123,31 @@ const ConestDetailStudent: React.FC = () => {
         status = id_i;
     }
 
+    var id_ix = localStorage.getItem('student_ids');
+    let student_ids: number[] = [];
+    if (id_ix !== null) {
+        student_ids = JSON.parse(id_ix);
+    }
+
+    var id_iy = localStorage.getItem('student_names');
+    let student_names: string[] = [];
+    if (id_iy !== null) {
+        student_names = JSON.parse(id_iy);
+    }
+
+    var listTeachers1: Option1[] = [];
+    var listTeachers2: Option1[] = [];
+    listTeacher.map((ele) => {
+        if (student_ids.includes(ele.id)) {
+            let item: Option1 = { "label": ele.username, "value": ele.id }
+            return listTeachers2.push(item)
+        }
+        else {
+            let item: Option1 = { "label": ele.username, "value": ele.id }
+            return listTeachers1.push(item)
+        }
+    })
+
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -163,15 +199,20 @@ const ConestDetailStudent: React.FC = () => {
         const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
-        dispatch(postUserRegisterContest({
-            student_id: id,
-            contest_id: contest_id
-        }))
-
-        toast.update(idx, { render: "Đăng kí cuộc thi cho bé thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-        setTimeout(function () {
-            routeHome();
-        }, 2000);
+        valueTeacher.map((ele, idx) => {
+            if (idx === valueTeacher.length - 1) {
+                dispatch(postUserRegisterJoinContest1({
+                    student_id: ele.value,
+                    contest_id: contest_id
+                }, idx, routeHome))
+            }
+            else {
+                dispatch(postUserRegisterContest({
+                    student_id: ele.value,
+                    contest_id: contest_id
+                }))
+            }
+        })
     }
 
     function handleRemove() {
@@ -208,13 +249,18 @@ const ConestDetailStudent: React.FC = () => {
                                             <button type="button"
                                                 className="btn btn-danger"
                                                 onClick={() => {
+                                                    setPopup(false);
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteUserRegisterContestByContestAndStudent(
-                                                        contest_id, id
-                                                        , idx, routeHome))
-                                                    setPopup(false);
+                                                    valueTeacher1.map((ele, idx) => {
+                                                        if (idx === valueTeacher1.length - 1) {
+                                                            dispatch(deleteUserRegisterContestByContestAndStudent(contest_id, ele.value, idx, routeHome))
+                                                        }
+                                                        else {
+                                                            dispatch(deleteUserRegisterContestByContestAndStudent1(contest_id, ele.value));
+                                                        }
+                                                    })
                                                 }}>Remove
                                             </button>
                                         </div>
@@ -233,6 +279,23 @@ const ConestDetailStudent: React.FC = () => {
                         </div>
                         <div className="row">
                             <div className="col-xl-6 col-md-6">
+                                {
+                                    student_names.length > 0 ? <div className="row no-gutters align-items-center">
+                                        <div className="text-xs ">
+                                            <p className="birthday ml-4">Học sinh đã đăng kí: {
+                                                student_names.map((ele, idx) => {
+                                                    if (idx === student_names.length - 1) {
+                                                        return ele
+                                                    }
+                                                    else {
+                                                        return " " + ele + ","
+                                                    }
+                                                })
+                                            }</p>
+                                        </div>
+                                    </div>
+                                        : ""
+                                }
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs ">
                                         <p className="birthday ml-4">Độ tuổi đăng kí: {art_age_name}</p>
@@ -245,7 +308,7 @@ const ConestDetailStudent: React.FC = () => {
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday ml-4">Thời gian đăng kí: {registration_time.replaceAll("T", " ").substring(0,16)}</p>
+                                        <p className="birthday ml-4">Thời gian đăng kí: {registration_time.replaceAll("T", " ").substring(0, 16)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -253,12 +316,12 @@ const ConestDetailStudent: React.FC = () => {
                             <div className="col-xl-6 col-md-6">
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs ">
-                                        <p className="birthday">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0,16)}</p>
+                                        <p className="birthday">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0, 16)}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs">
-                                        <p className="birthday">Thời gian kết thúc: {end_time.replaceAll("T", " ").substring(0,16)}</p>
+                                        <p className="birthday">Thời gian kết thúc: {end_time.replaceAll("T", " ").substring(0, 16)}</p>
                                     </div>
                                 </div>
                                 <div className="row no-gutters align-items-center">
@@ -268,35 +331,52 @@ const ConestDetailStudent: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-
+                        <div className="row">
                         {
-                        function () {
-                            if (status === "Not register") {
-                                return (
-                                    <div className="row" id="btn-register-course">
-                                        <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
-                                            <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister()}>
-                                                <GrLinkNext id="btn-payment" color="#ffffff" />
-                                                Đăng kí ngay
-                                            </button>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                            else {
-                                return (
-                                    <div className="row">
-                                        <div className="col-lg-12 col-md-12 col-xs-12 text-center justify-content-center">
-                                            <button className="btn btn-danger" id="btn-create-register-coursexx" onClick={() => handleRemove()}>
-                                                <BsFillTrashFill id="btn-payment" color="#ffffff" />
-                                                Hủy kí ngay
-                                            </button>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                        }()
-                    }
+                            function () {
+                                if (student_ids.length < users.students.length) {
+                                    return (
+                                        <>
+                                            <div className="col-lg-6 col-md-6 col-xs-6 pl-4">
+                                                <div className="form-group ">
+                                                    <label>Chọn học sinh</label>
+                                                    <ReactSelect setValue={listTeachers1} value={[]} changeValue={changeValueTeacher} />
+                                                </div>
+                                                <div className="text-center justify-content-center">
+                                                    <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister()}>
+                                                        <GrLinkNext id="btn-payment" color="#ffffff" />
+                                                        Đăng kí ngay
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            }()
+                        }
+                        {
+                            function () {
+                                if (student_ids.length > 0) {
+                                    return (
+                                        <>
+                                            <div className="col-lg-6 col-md-6 col-xs-6 pl-4">
+                                                <div className="form-group">
+                                                    <label>Chọn học sinh</label>
+                                                    <ReactSelect setValue={listTeachers2} value={[]} changeValue={changeValueTeacher1} />
+                                                </div>
+                                                <div className="text-center justify-content-center">
+                                                    <button className="btn btn-danger" id="btn-create-register-coursexx" onClick={() => handleRemove()}>
+                                                        <BsFillTrashFill id="btn-payment" color="#ffffff" />
+                                                        Hủy kí ngay
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            }()
+                        }
+                        </div>
                     </div>
                 </div>
 

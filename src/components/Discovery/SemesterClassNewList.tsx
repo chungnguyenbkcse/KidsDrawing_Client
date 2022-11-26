@@ -195,28 +195,7 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
                                             <div className="d-flex flex-row align-items-center">
                                                 <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
-                                                    {
-                                                        function () {
-                                                            if (filter === "2") {
-                                                                if (ele.student_registered_id !== undefined && ele.student_registered_id !== null) {
-                                                                    let xx = ""
-                                                                    ele.student_registered_name.map((elex, idxx) => {
-                                                                        if (idxx < ele.student_registered_id.length - 1) {
-                                                                            xx  +=  elex + ","
-                                                                        }
-                                                                        else {
-                                                                            xx += ele
-                                                                        }
-                                                                        return null
-                                                                    })
-                                                                    return xx
-                                                                }
-                                                                else {
-                                                                    return 0
-                                                                }
-                                                            }
-                                                        }()
-                                                    }
+                                                    
                                                 </span></div>
                                         </div>
                                     </div>

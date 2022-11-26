@@ -30,8 +30,8 @@ function SemesterClassList(): JSX.Element {
         schedule={ele.schedule}
         price={ele.price}
         registration_deadline={ele.registration_deadline}
-        student_registered_name={ele.student_registered_name}
-        student_registered_id={ele.student_registered_id}
+        student_name={ele.student_name}
+        student_id={ele.student_id}
       />
     );
   });
@@ -59,8 +59,8 @@ function SemesterClassList(): JSX.Element {
         schedule={ele.schedule}
         price={ele.price}
         registration_deadline={ele.registration_deadline}
-        student_registered_name={ele.student_registered_name}
-        student_registered_id={ele.student_registered_id}
+        student_name={ele.student_name}
+        student_id={ele.student_id}
       />
     );
   });
@@ -88,8 +88,8 @@ function SemesterClassList(): JSX.Element {
         schedule={ele.schedule}
         price={ele.price}
         registration_deadline={ele.registration_deadline}
-        student_registered_name={ele.student_registered_name}
-        student_registered_id={ele.student_registered_id}
+        student_name={ele.student_name}
+        student_id={ele.student_id}
       />
     );
   });

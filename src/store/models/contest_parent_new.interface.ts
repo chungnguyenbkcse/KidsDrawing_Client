@@ -16,8 +16,8 @@ export interface IContestParentNew{
     art_age_name: string;
     create_time: string;
     update_time: string;
-    student_registered_name: string[];
-    student_registered_id: number[];
+    student_name: string;
+    student_id: number;
 }
 
 export enum ContestParentNewModificationStatus {

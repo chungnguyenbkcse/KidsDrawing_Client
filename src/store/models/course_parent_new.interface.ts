@@ -16,8 +16,8 @@ export interface ICourseParentNew {
     art_age_name: string;
     total: number;
     total_register: number;
-    student_registered_name: string[];
-    student_registered_id: number[];
+    student_name: string;
+    student_id: number;
     create_time: string;
     update_time: string;
 }

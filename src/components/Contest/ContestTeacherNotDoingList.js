@@ -31,7 +31,7 @@ function ContestTeacherNotDoingList(props) {
         localStorage.setItem('start_time', contest_teacher.start_time)
         localStorage.removeItem("end_time")
         localStorage.setItem('end_time', contest_teacher.end_time)
-        let path = '/contests/detail-contest'; 
+        let path = '/contests-not-open-now/detail'; 
         history.push({
             pathname: path,
         });

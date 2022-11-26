@@ -61,7 +61,6 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeContestParentEndAll())
                 dispatch(removeContestParentNotOpenNowAll())
-                dispatch(removeContestParentNewAll())
                 dispatch(removeContestParentOpeningAll())
                 console.log(data)
                 data.body.contest_opening.map((ele: any, index: any) => {
@@ -93,40 +92,6 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                     return dispatch(addContestParentOpening(contest))
                 })
 
-                data.body.contest_new.map((ele: any, index: any) => {
-                    var contest: ContestParent = {
-                        id: ele.id,
-                        name: ele.name,
-                        description: ele.description,
-                        max_participant: ele.max_participant,
-                        total_contest_submission_graded: ele.total_contest_submission_graded,
-                        total_contest_submission: ele.total_contest_submission,
-                        total_register_contest: ele.total_register_contest,
-                        registration_time: ele.registration_time,
-                        art_type_name: ele.art_type_name,
-                        status: ele.status,
-                        art_age_name: ele.art_age_name,
-                        image_url: ele.image_url,
-                        start_time: ele.start_time,
-                        end_time: ele.end_time,
-                        is_enabled: ele.is_enabled,
-                        art_age_id: ele.art_age_id,
-                        art_type_id: ele.art_type_id,
-                        student_id: ele.student_id,
-                        student_name: ele.student_name,
-                        creator_id: ele.creator_id,
-                        create_time: ele.create_time,
-                        update_time: ele.update_time
-                    }
-                    console.log(contest)
-                    if (index === 0){
-                        return dispatch(initialContestParentNew(contest));
-                    }
-                    else{
-                        return dispatch(addContestParentNew(contest))
-                    }
-                })
-
 
                 data.body.contest_end.map((ele: any, index: any) => {
                     var contest: ContestParent = {
@@ -154,12 +119,7 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                         update_time: ele.update_time
                     }
                     console.log(contest)
-                    if (index === 0){
-                        return dispatch(initialContestParentEnd(contest));
-                    }
-                    else{
-                        return dispatch(addContestParentEnd(contest))
-                    }
+                    return dispatch(addContestParentEnd(contest))
                 })
 
 
@@ -188,13 +148,7 @@ export function getContestStudentByParent(dispatch: any, id: any) {
                         create_time: ele.create_time,
                         update_time: ele.update_time
                     }
-                    console.log(contest)
-                    if (index === 0){
-                        return dispatch(initialContestParentNotOpenNow(contest));
-                    }
-                    else{
-                        return dispatch(addContestParentNotOpenNow(contest))
-                    }
+                    return dispatch(addContestParentNotOpenNow(contest))
                 })
             })
             .catch(error => {

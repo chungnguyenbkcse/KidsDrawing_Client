@@ -136,10 +136,12 @@ function LessonList(props: productListProps): JSX.Element  {
             <td>{product.teacher_name}</td>
             <td>Đã diễn ra</td>
             <td>
-            <button type="button" className="btn btn-primary" onClick={() => {
-              localStorage.setItem('link_recording', list_link_record[index])
-              routeChange(product)
-              }} >Recording</button>
+              {
+                product.teach_form == true ? <button type="button" className="btn btn-primary" onClick={() => {
+                  localStorage.setItem('link_recording', list_link_record[index])
+                  routeChange(product)
+                  }} >Recording</button> : ""
+              }
             </td>
           </tr>
         );

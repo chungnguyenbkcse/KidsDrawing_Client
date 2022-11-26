@@ -32,7 +32,7 @@ const DetailClass: React.FC = () => {
 
     useEffect(() => {
         dispatch(clearSelectedProduct());
-        dispatch(updateCurrentPath("Lớp", "Lớp CM-1"));
+        dispatch(updateCurrentPath("Lớp", ""));
     }, [path.area, dispatch]);
 
     var id_x = localStorage.getItem('class_id')

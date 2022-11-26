@@ -67,14 +67,6 @@ function ClassList(props) {
     }
   };
 
-  function editButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={()=> {
-            if(props.onSelect) props.onSelect(row);
-            dispatch(setModificationState(row))
-          }}>Chỉnh sửa</button>
-    );
-  }
 
   function removeButton(cell, row) {
     return (
@@ -121,11 +113,6 @@ function ClassList(props) {
         text: 'Thống kê',
         formatter: detailClassButton
       },
-    {
-      dataField: '',
-      text: 'Hành động',
-      formatter: editButton
-    },
     {
       dataField: '',
       text: '',

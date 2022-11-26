@@ -44,11 +44,6 @@ const DetailLesson: React.FC = () => {
 
     return (
         <Fragment>
-            <h1 className="h3 mb-2 text-gray-800">Buổi 1</h1>
-            <p className="mb-4">Thông tin chung</p>
-            <div className="row">
-                <TopCard title="SỐ HỌC SINH THAM GIA" text={`${numberItemsCount}`} icon="box" class="primary" />
-            </div>
             <div className="row">
                     
                             <button className={`btn btn-success ml-4 mb-4 mt-4`} onClick={routeChange2}>Xem giáo trình</button>

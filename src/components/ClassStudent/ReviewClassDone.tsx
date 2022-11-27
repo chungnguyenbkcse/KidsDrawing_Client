@@ -114,7 +114,9 @@ const ReivewClassDone: React.FC = () => {
 
     const history = useHistory();
     const routeChange = () => {
-        let path = '/classes/exercise-student';
+        let path = '/class/exercise-student';
+        localStorage.removeItem('student_id');
+        localStorage.setItem('student_id', student_id.toString())
         history.push({
             pathname: path,
         });

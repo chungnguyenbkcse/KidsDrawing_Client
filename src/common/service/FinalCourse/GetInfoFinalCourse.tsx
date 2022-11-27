@@ -8,6 +8,7 @@ interface user_grade_contest {
     deadline: string;
     description: string;
     image_url: string;
+    exercise_id: number;
     exercise_submission_id: number;
     feedback: string;
     score: number;
@@ -55,6 +56,7 @@ export function getInfoFinalCourse(dispatch: any, student_id: number, classes_id
                         deadline: ele.deadline,
                         description: ele.description,
                         image_url: ele.image_url,
+                        exercise_id: ele.exercise_id,
                         exercise_submission_id: ele.exercise_submission_id,
                         student_name: ele.student_name,
                         feedback: ele.feedback,

@@ -2,6 +2,7 @@ export interface IUserGradeExerciseSubmission {
     student_id: number;
     student_name: string;
     exercise_name: string;
+    exercise_id: number;
     time_submit: string;
     deadline: string;
     image_url: string;

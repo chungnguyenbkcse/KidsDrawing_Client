@@ -206,6 +206,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>  
+                                <Route path={`/classes/review`}><ReivewClassDone /></Route>
                                 <Route path={`/contests/submit`}><FormSubmitContestParent /></Route>
                                 <Route path={`/contest/score`}><DetailScoreContestStudent /></Route>
                                 <Route path={`/courses/semester-classes`}><SemesterClassParentNew /></Route>
@@ -262,11 +263,12 @@ const Routers: React.FC = () => {
                                 <Route path={`/contest/result-analytis`}><AnalytisResultGradeContestTeacher /></Route>
                                 <Route path={`/semester-class/detail`}><SemesterClassDetailStudent /></Route>
                                 <Route path={`/classes/section`}><SectionStudent /></Route>
+                                <Route path={`/class/exercise-student`}><ExerciseStudentList /></Route>
                                 <Route path={`/section/view`}><ViewSectionStudent /></Route>
                                 <Route path={`/cart`}><CartForm /></Route>
                                 <Route path={`/courses/semester-classes`}><SemesterClassStudentNew /></Route>
                                 <Route path={`/courses`}><CourseStudent /></Route>
-                                <Route path={`/exercise/detail`}><DetailExerciseStudent1 /></Route>
+                                <Route path={`/exercise/detail`}><DetailExerciseParent /></Route>
                                 <Route path={`/contest/score`}><DetailScoreContestStudent /></Route>
                                 <Route path={`/exercise/score`}><DetailExerciseStudent /></Route>
                                 <Route path={`/classes/form-review`}><ReviewStart /></Route>

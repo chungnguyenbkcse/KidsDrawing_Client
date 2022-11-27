@@ -24,6 +24,14 @@ const ExerciseStudentList: React.FC = () => {
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberGradeCount: number = user_grade_exercise_submission.user_grade_exercise_submissions.length;
 
+    var role_privilege = localStorage.getItem('role_privilege')
+    var rolePrivilege: string[] = []
+    var roleUser: string = ""
+    if (role_privilege !== null) {
+        rolePrivilege = role_privilege.split(',')
+        roleUser = rolePrivilege[0]
+    }
+
     const { promiseInProgress } = usePromiseTracker();
 
     var id_y = localStorage.getItem('student_id');
@@ -85,140 +93,178 @@ const ExerciseStudentList: React.FC = () => {
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
 
-    return (
-        promiseInProgress ?
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+    if (roleUser === "TEACHER_USER") {
+        return (
+            promiseInProgress ?
+                <div className="row" id="search-box">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="input-group" id="search-content">
+                            <div className="form-outline">
+                                <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div> : <Fragment>
-                {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
-                {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+                </div> : <Fragment>
+                    {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
+                    {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
-                <div className="row">
-                    <TopCard title="BÀI TẬP ĐÃ CHẤM" text={`${numberGradeCount}`} icon="book" class="primary" />
-                    <TopCard title="BÀI TẬP CHƯA CHẤM" text={`${numberSubmittedNotGradeCount}`} icon="book" class="primary" />
-                    <TopCard title="BÀI TẬP CHƯA NỘP" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
-                    {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
-                    <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
-                    dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
-                        <i className="fas fa fa-plus"></i>
-                        Đăng kí trình độ
-                    </button>
-                </div> */}
-                </div>
-
-                <div className="row">
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
-                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                            if (checked1 === false) {
-                                setChecked1(true)
-                                setChecked2(false)
-                                setChecked3(false)
-                            }
-                        }} style={{
-                            color: checked1 ? "#F24E1E" : "#2F4F4F"
-                        }}>Đã chấm</h6>
-
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "30%",
-                            backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
-                        }}></div>
-                    </div>
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
-                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                            if (checked2 === false) {
-                                setChecked2(true)
-                                setChecked1(false)
-                                setChecked3(false)
-                            }
-                        }}
-                            style={{
-                                color: checked2 ? "#F24E1E" : "#2F4F4F"
-                            }}>Chưa chấm</h6>
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "30%",
-                            backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
-                        }}></div>
+                    <div className="row">
+                        <TopCard title="BÀI TẬP ĐÃ CHẤM" text={`${numberGradeCount}`} icon="book" class="primary" />
+                        <TopCard title="BÀI TẬP CHƯA CHẤM" text={`${numberSubmittedNotGradeCount}`} icon="book" class="primary" />
+                        <TopCard title="BÀI TẬP CHƯA NỘP" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
+                        {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
+                        <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
+                        dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>
+                            <i className="fas fa fa-plus"></i>
+                            Đăng kí trình độ
+                        </button>
+                    </div> */}
                     </div>
 
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
-                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                            if (checked3 === false) {
-                                setChecked3(true)
-                                setChecked1(false)
-                                setChecked2(false)
-                            }
-                        }}
-                            style={{
-                                color: checked3 ? "#F24E1E" : "#2F4F4F"
-                            }}>Chưa nộp</h6>
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "30%",
-                            backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
-                        }}></div>
-                    </div>
-                </div>
+                    <div className="row">
+                        <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                            <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                                if (checked1 === false) {
+                                    setChecked1(true)
+                                    setChecked2(false)
+                                    setChecked3(false)
+                                }
+                            }} style={{
+                                color: checked1 ? "#F24E1E" : "#2F4F4F"
+                            }}>Đã chấm</h6>
 
-                {
-                    function () {
-                        if (checked1 === true) {
-                            return (
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-body">
-                                                <ExerciseSectionList />
+                            <div style={{
+                                height: "5px",
+                                textAlign: "center",
+                                margin: "auto",
+                                width: "30%",
+                                backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+                            }}></div>
+                        </div>
+                        <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                            <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                                if (checked2 === false) {
+                                    setChecked2(true)
+                                    setChecked1(false)
+                                    setChecked3(false)
+                                }
+                            }}
+                                style={{
+                                    color: checked2 ? "#F24E1E" : "#2F4F4F"
+                                }}>Chưa chấm</h6>
+                            <div style={{
+                                height: "5px",
+                                textAlign: "center",
+                                margin: "auto",
+                                width: "30%",
+                                backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                            }}></div>
+                        </div>
+
+                        <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                            <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                                if (checked3 === false) {
+                                    setChecked3(true)
+                                    setChecked1(false)
+                                    setChecked2(false)
+                                }
+                            }}
+                                style={{
+                                    color: checked3 ? "#F24E1E" : "#2F4F4F"
+                                }}>Chưa nộp</h6>
+                            <div style={{
+                                height: "5px",
+                                textAlign: "center",
+                                margin: "auto",
+                                width: "30%",
+                                backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                            }}></div>
+                        </div>
+                    </div>
+
+                    {
+                        function () {
+                            if (checked1 === true) {
+                                return (
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4" id="topcard-user">
+                                                <div className="card-body">
+                                                    <ExerciseSectionList />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        }
-                        else if (checked2 === true) {
-                            return (
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-body">
-                                                <ExerciseStudentNotGradeList />
+                                )
+                            }
+                            else if (checked2 === true) {
+                                return (
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4" id="topcard-user">
+                                                <div className="card-body">
+                                                    <ExerciseStudentNotGradeList />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        }
-                        else {
-                            return (
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="card shadow mb-4" id="topcard-user">
-                                            <div className="card-body">
-                                                <ExerciseStudentNotSubmitList />
+                                )
+                            }
+                            else {
+                                return (
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4" id="topcard-user">
+                                                <div className="card-body">
+                                                    <ExerciseStudentNotSubmitList />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        }
-                    }()
-                }
+                                )
+                            }
+                        }()
+                    }
 
-            </Fragment>
-    );
+                </Fragment>
+        );
+    }
+
+    else {
+        return (
+            promiseInProgress ?
+                <div className="row" id="search-box">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="input-group" id="search-content">
+                            <div className="form-outline">
+                                <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
+                            </div>
+                        </div>
+                    </div>
+                </div> : <Fragment>
+                    {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
+                    {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
+
+                    <div className="row">
+                        <TopCard title="BÀI TẬP ĐÃ CHẤM" text={`${numberGradeCount}`} icon="book" class="primary" />
+                    </div>
+                    <div className="row">
+                        <div className="col-xl-12 col-lg-12">
+                            <div className="card shadow mb-4" id="topcard-user">
+                                <div className="card-body">
+                                    <ExerciseSectionList />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </Fragment>
+        );
+    }
+
+
 };
 
 export default ExerciseStudentList;

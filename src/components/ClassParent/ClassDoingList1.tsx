@@ -79,8 +79,10 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
         let path = '/student/classes-doing';
         localStorage.removeItem('teacher_id');
         localStorage.setItem('teacher_id', classes_parent.teacher_id.toString())
+        localStorage.removeItem('student_names');
+        localStorage.setItem('student_names', JSON.stringify(classes_parent.student_names))
         localStorage.removeItem('student_ids');
-        localStorage.setItem('student_ids', classes_parent.student_ids.toString())
+        localStorage.setItem('student_ids', JSON.stringify(classes_parent.student_ids))
         localStorage.removeItem('class_id');
         localStorage.setItem('class_id', classes_parent.id.toString());
         history.push({
@@ -405,12 +407,14 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
                             var resArr: IClassesParentX[] = [];
                             element.filter(function (item) {
                                 var i = resArr.findIndex(x => (x.course_id == item.course_id));
+                                let numbers: number[] = [];
+                                        numbers.push(item.student_id);
                                 if (i <= -1) {
                                     let item_x: IClassesParentX = {
                                         id: item.id,
                                         name: item.name,
                                         link_url: item.link_url,
-                                        student_ids: new Array(item.student_id),
+                                        student_ids: numbers,
                                         student_names: new Array(item.student_name),
                                         url_image_course: item.url_image_course,
                                         teacher_name: item.teacher_name,

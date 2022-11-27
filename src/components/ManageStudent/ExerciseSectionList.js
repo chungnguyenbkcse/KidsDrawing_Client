@@ -13,6 +13,14 @@ function ExerciseStudentList(props) {
     const user_grade_exercise_submission = useSelector((state) => state.user_grade_exercise_submissions);
     const history = useHistory();
     const dispatch = useDispatch();
+
+    var role_privilege = localStorage.getItem('role_privilege')
+    var rolePrivilege = []
+    var roleUser = ""
+    if (role_privilege !== null) {
+        rolePrivilege = role_privilege.split(',')
+        roleUser = rolePrivilege[0]
+    }
   
   
   
@@ -22,6 +30,7 @@ function ExerciseStudentList(props) {
       localStorage.setItem('student_name', user_grade_exercise_submission.student_name)
       localStorage.setItem('image_url_exercise_submission', user_grade_exercise_submission.image_url)
       localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
+      localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
       localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.exercise_submission_id.toString())
       localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
       let path = '/exercise/detail'; 
@@ -84,13 +93,25 @@ function ExerciseStudentList(props) {
   } */
 
   function gradeButton(cell, row) {
-    return (
+    if (roleUser === "TEACHER_USER") {
+      return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if (props.onSelect) props.onSelect(row);
             onChangeRoute1(row)
           }}
           >Chỉnh điểm</button>
-    )
+      )
+    }
+    else if (roleUser === "PARENT_USER" || roleUser === "STUDENT_USER") {
+      return (
+        <button type="button" className="btn btn-primary" onClick={() => {
+            if (props.onSelect) props.onSelect(row);
+            onChangeRoute(row)
+          }}
+          >Chi tiết</button>
+      )
+    }
+    
   }
 
   function deadlineButton(cell, row) {

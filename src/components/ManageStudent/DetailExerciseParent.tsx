@@ -36,10 +36,12 @@ const DetailExerciseParent: React.FC = () => {
         id = parseInt(id_y);
     }
 
-    var id_y = localStorage.getItem('exercise_submission_id');
+    console.log(id)
+
+    var id_yx = localStorage.getItem('exercise_submission_id');
     var exercise_submission_id: number = 0;
-    if (id_y !== null) {
-        exercise_submission_id = parseInt(id_y);
+    if (id_yx !== null) {
+        exercise_submission_id = parseInt(id_yx);
     }
 
     var id_z = localStorage.getItem("exercise_id");
@@ -47,6 +49,8 @@ const DetailExerciseParent: React.FC = () => {
     if (id_z !== null) {
         exercise_id = parseInt(id_z);
     }
+
+    console.log(exercise_id)
 
     var id_k = localStorage.getItem("exercise_name");
     let exercise_name = "";

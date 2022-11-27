@@ -6,6 +6,7 @@ interface user_grade_contest {
     exercise_name: string;
     time_submit: string;
     image_url: string;
+    exercise_id: number;
     description: string;
     deadline: string;
     exercise_submission_id: number;
@@ -55,6 +56,7 @@ export function getUserGradeExerciseByExerciseAndClass(exercise_id: number, clas
                         deadline: ele.deadline,
                         description: ele.description,
                         image_url: ele.image_url,
+                        exercise_id: ele.exercise_id,
                         exercise_submission_id: ele.exercise_submission_id,
                         student_name: ele.student_name,
                         feedback: ele.feedback,

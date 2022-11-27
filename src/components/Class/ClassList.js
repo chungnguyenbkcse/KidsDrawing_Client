@@ -17,9 +17,12 @@ function ClassList(props) {
     const history = useHistory();
   
     
-    const routeChange = (class_id) =>{ 
+    const routeChange = (class_id, class_name) =>{ 
       let path = '/class/detail'; 
+      localStorage.removeItem('class_id')
       localStorage.setItem('class_id', class_id.toString())
+      localStorage.removeItem('class_name')
+      localStorage.setItem('class_name', class_name)
       history.push({
         pathname: path,
         state: { class_id: class_id }
@@ -90,7 +93,7 @@ function ClassList(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
-            routeChange(row.id)}}
+            routeChange(row.id, row.name)}}
           >Chi tiết</button>
     )
   }
@@ -104,13 +107,8 @@ function ClassList(props) {
       filter: textFilter()
     },
     {
-      dataField: '',
-      text: 'Lịch học',
-      formatter: viewScheduleButton
-    },
-    {
         dataField: '',
-        text: 'Thống kê',
+        text: 'Hành động',
         formatter: detailClassButton
       },
     {

@@ -6,6 +6,12 @@
     color: #FFBF08 !important;
 }
 
+.col-md-7 {
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    white-space: nowrap;
+}
+
 #topcard-teacher {
     background-color: #FFF8E5 !important;
 }

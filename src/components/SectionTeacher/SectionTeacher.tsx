@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
 import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
@@ -10,7 +10,7 @@ import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { setModificationState } from "../../store/actions/exercise.action";
 import { ExerciseModificationStatus, IExercise } from "../../store/models/exercise.interface";
-import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserState } from "../../store/models/root.interface";
+import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ILessonState, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserRegisterTutorialState, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -20,9 +20,16 @@ import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetT
 import { getTutorialBySection } from "../../common/service/Tutorial/GetTutorialBySection";
 import SubmitRecordForm from "./SubmitRecordForm";
 import { getExerciseTeacherBySection } from "../../common/service/Exercise/GetExerciseTeacherBySection";
+import { IUserRegisterTutorial } from "../../store/models/user_register_tutorial.interface";
+import { getUserRegisterTutorialBySection } from "../../common/service/UserRegisterTutorial/GetUserRegisterTutorialBySection";
+import { BsFillTrashFill } from "react-icons/bs";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import { deleteUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/DeleteUserRegisterTutorial";
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
+    const user_register_tutorials: IUserRegisterTutorialState = useSelector((state: IStateType) => state.user_register_tutorials);
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const exercises: IExerciseState = useSelector((state: IStateType) => state.exercises);
     const exercise_teachers: IExerciseTeacherState = useSelector((state: IStateType) => state.exercise_teachers);
@@ -34,6 +41,8 @@ const SectionTeacher: React.FC = () => {
 
     const [popup, setPopup] = useState(false);
     const [popup1, setPopup1] = useState(false);
+    const [popup2, setPopup2] = useState(false);
+    const [requestId, setRequestId] = useState(0);
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -51,6 +60,10 @@ const SectionTeacher: React.FC = () => {
 
     function onRemovePopup1(value: boolean) {
         setPopup1(false);
+    }
+
+    function onRemovePopup2(value: boolean) {
+        setPopup2(false);
     }
 
     var id_y = localStorage.getItem('section_id');
@@ -116,6 +129,7 @@ const SectionTeacher: React.FC = () => {
                     trackPromise(getClassTeacher(dispatch, id))
                     trackPromise(getSectionById(dispatch, section_id))
                     trackPromise(getExerciseTeacherBySection(dispatch, section_id))
+                    trackPromise(getUserRegisterTutorialBySection(dispatch, section_id))
                     trackPromise(getExerciseLevel(dispatch))
                     trackPromise(getTutorialPageBySection(dispatch, section_id))
                     trackPromise(getTutorialBySection(dispatch, section_id))
@@ -124,6 +138,7 @@ const SectionTeacher: React.FC = () => {
             else {
                 trackPromise(getClassTeacher(dispatch, id))
                 trackPromise(getSectionById(dispatch, section_id))
+                trackPromise(getUserRegisterTutorialBySection(dispatch, section_id))
                 trackPromise(getExerciseTeacherBySection(dispatch, section_id))
                 trackPromise(getExerciseLevel(dispatch))
                 trackPromise(getTutorialPageBySection(dispatch, section_id))
@@ -185,6 +200,17 @@ const SectionTeacher: React.FC = () => {
         });
     }
 
+    function handleView(ele: IUserRegisterTutorial) {
+        localStorage.removeItem('user_register_tutorial_id')
+        localStorage.setItem('user_register_tutorial_id', ele.id.toString())
+        localStorage.removeItem('section_id')
+        localStorage.setItem('section_id', ele.section_id.toString())
+        let path = '/tutorial-request/detail';
+        history.push({
+            pathname: path,
+        });
+      }
+
     return (
         promiseInProgress ?
             <div className="row" id="search-box">
@@ -234,20 +260,20 @@ const SectionTeacher: React.FC = () => {
                             else if (is_active === "active_now") {
                                 return <div className="row mb-2">
 
-                                <div className="col-xl-4 col-md-4 col-xs-4 md-4">
-                                    <button
-                                        className="btn btn-success ml-3"
-                                        id="btn-add-exercise"
-                                        onClick={() => {
-                                            dispatch(setModificationState(ExerciseModificationStatus.Create))
-                                            onExerciseRemove()
-                                        }}
-                                    >
-                                        <i className="fas fa fa-plus"></i>
-                                        Thêm bài tập
-                                    </button>
-                                </div>
-                            </div>;
+                                    <div className="col-xl-4 col-md-4 col-xs-4 md-4">
+                                        <button
+                                            className="btn btn-success ml-3"
+                                            id="btn-add-exercise"
+                                            onClick={() => {
+                                                dispatch(setModificationState(ExerciseModificationStatus.Create))
+                                                onExerciseRemove()
+                                            }}
+                                        >
+                                            <i className="fas fa fa-plus"></i>
+                                            Thêm bài tập
+                                        </button>
+                                    </div>
+                                </div>;
                             }
                             else {
                                 return <div className="row mb-2">
@@ -287,6 +313,41 @@ const SectionTeacher: React.FC = () => {
                     </>
                 </Popup>
 
+                {
+                    function () {
+                        if (requestId !== 0) {
+                            return (
+                                <Popup
+                                    open={popup2}
+                                    onClose={() => setPopup2(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="popup-modal" id="popup-modal">
+                                        <div className="popup-title">
+                                            Bạn có chắc chắn muốn xóa?
+                                        </div>
+                                        <div className="popup-content">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    if (requestId === 0) {
+                                                        return;
+                                                    }
+                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                        position: toast.POSITION.TOP_CENTER
+                                                    });
+                                                    dispatch(deleteUserRegisterTutorial(requestId, idx))
+                                                    setPopup2(false);
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )
+                        }
+                    }()
+                }
+
                 <Popup
                     open={popup1}
                     onClose={() => setPopup1(false)}
@@ -311,7 +372,7 @@ const SectionTeacher: React.FC = () => {
                                     <div className={`card shadow h-100 py-2`} id="normal-tutorial">
                                         <div className="card-body">
                                             <div className="row no-gutters justify-content-left">
-                                                <h4 id="full-name">Giáo án chung</h4>
+                                                <h4 id="full-name">Thông tin chung</h4>
                                             </div>
                                             <div className="row no-gutters">
                                                 <p id="phone">Tên: {
@@ -341,7 +402,7 @@ const SectionTeacher: React.FC = () => {
                                             </div>
 
                                             <div className="row no-gutters">
-                                                <p id="phone">Hình thức: 
+                                                <p id="phone">Hình thức:
                                                     {
                                                         function () {
                                                             if (sections.sections.length <= 0) {
@@ -433,42 +494,42 @@ const SectionTeacher: React.FC = () => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele) }}>
-                                                                            <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
-                                                                            </div>
-                                                                            <div className="col-xl-9 col-md-9 mt-2">
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tên:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.name}
-                                                                                    </div>
+                                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                    <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Hạn nộp:
+                                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Tên:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.name}
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Hạn nộp:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Tỉ lệ đánh giá:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.level_name} %
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.level_name} %
+                                                                                    <div className="row mb-2">
+                                                                                        <div className="col-md-5">
+                                                                                            Trạng thái:
+                                                                                        </div>
+                                                                                        <div className="col-md-7 status-score">
+                                                                                            Chưa có bài nộp
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div className="row mb-2">
-                                                                                    <div className="col-md-5">
-                                                                                        Trạng thái:
-                                                                                    </div>
-                                                                                    <div className="col-md-7 status-score">
-                                                                                        Chưa có bài nộp
-                                                                                    </div>
-                                                                                </div>
                                                                                 </div>
                                                                             </div>
                                                                         </tr>
@@ -476,47 +537,47 @@ const SectionTeacher: React.FC = () => {
                                                                 })
                                                             }
 
-{
+                                                            {
                                                                 exercise_teachers.exercise_scoring.map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row section-ele row-section-2 mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele) }}>
-                                                                            <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
-                                                                            </div>
-                                                                            <div className="col-xl-9 col-md-9 mt-2">
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tên:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.name}
-                                                                                    </div>
+                                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                    <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Hạn nộp:
+                                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Tên:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.name}
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Hạn nộp:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Tỉ lệ đánh giá:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.level_name} %
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.level_name} %
+                                                                                    <div className="row mb-2">
+                                                                                        <div className="col-md-5">
+                                                                                            Trạng thái:
+                                                                                        </div>
+                                                                                        <div className="col-md-7 status-score">
+                                                                                            Đang chấm
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div className="row mb-2">
-                                                                                    <div className="col-md-5">
-                                                                                        Trạng thái:
-                                                                                    </div>
-                                                                                    <div className="col-md-7 status-score">
-                                                                                        Đang chấm
-                                                                                    </div>
-                                                                                </div>
                                                                                 </div>
                                                                             </div>
                                                                         </tr>
@@ -525,47 +586,47 @@ const SectionTeacher: React.FC = () => {
                                                             }
 
 
-{
+                                                            {
                                                                 exercise_teachers.exercise_scroring_done.map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                             <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele) }}>
-                                                                            <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
-                                                                            </div>
-                                                                            <div className="col-xl-9 col-md-9 mt-2">
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tên:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.name}
-                                                                                    </div>
+                                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                    <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Hạn nộp:
+                                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Tên:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.name}
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Hạn nộp:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Tỉ lệ đánh giá:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.level_name} %
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.level_name} %
+                                                                                    <div className="row mb-2">
+                                                                                        <div className="col-md-5">
+                                                                                            Trạng thái:
+                                                                                        </div>
+                                                                                        <div className="col-md-7 status-score">
+                                                                                            Đã chấm xong
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div className="row mb-2">
-                                                                                    <div className="col-md-5">
-                                                                                        Trạng thái:
-                                                                                    </div>
-                                                                                    <div className="col-md-7 status-score">
-                                                                                        Đã chấm xong
-                                                                                    </div>
-                                                                                </div>
                                                                                 </div>
                                                                             </div>
                                                                         </tr>
@@ -576,6 +637,77 @@ const SectionTeacher: React.FC = () => {
                                                     </table>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-xl-6 col-md-6 mb-4">
+                        <div className="col-xl-12 col-md-12 mb-4">
+                            <div className={`card shadow h-100 py-2`} >
+                                <div className="card-body">
+                                    <div className="row no-gutters justify-content-left">
+                                        <h4 id="full-name">Danh sách yêu cầu giáo án</h4>
+                                        <div className="table-responsive portlet">
+                                            <table className="table">
+                                                <thead className="thead-light">
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        user_register_tutorials.user_register_tutorial_not_approved_nows.map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                            <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { handleView(ele) }}>
+                                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                    <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
+                                                                                </div>
+                                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-3">
+                                                                                            Tên:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.name}
+                                                                                        </div>
+                                                                                        <div className="col-md-2">
+                                                                                            <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                e.stopPropagation(); 
+                                                                                                setRequestId(ele.id);
+                                                                                                setPopup2(true)
+                                                                                            }}/>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-3">
+                                                                                            Gửi lúc:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.update_time.replaceAll("T", " ").substring(0, 16)}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div className="row mb-2">
+                                                                                        <div className="col-md-3">
+                                                                                            
+                                                                                        </div>
+                                                                                        <div className="col-md-7 status-score">
+                                                                                            Chưa được duyệt
+                                                                                        </div>
+                
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

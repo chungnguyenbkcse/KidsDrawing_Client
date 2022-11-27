@@ -6,11 +6,14 @@ import { IStateType, IUserRegisterTutorialPageState } from "../../store/models/r
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getUserRegisterTutorialPage } from "../../common/service/UserRegisterTutorialPage/GetUserRegisterTutorialPageByUserRegisterTutorialId";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const ViewSectionTeacherRequest: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const user_register_tutorial_pages: IUserRegisterTutorialPageState = useSelector((state: IStateType) => state.user_register_tutorial_pages);
 
+    dispatch(updateCurrentPath("Giáo án", "Nội dung"));
+    
     var id_y = localStorage.getItem('section_id');
     
     let section_id = 0;

@@ -3,29 +3,35 @@ import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/user_
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postNotifyDb } from "../NotifyDb/PostNotifyDb";
 import { getUserRegisterTutorial } from "./GetUserRegisterTutorial";
+import { getUserRegisterTutorialBySection } from "./GetUserRegisterTutorialBySection";
 
-export function putUserRegisterTutorial(id: any, tutorial: any, idx: any) {
+export function deleteUserRegisterTutorial(id: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    
+    var id_y = localStorage.getItem('section_id');
+
+    let section_id = 0;
+
+    if (id_y !== null) {
+        section_id = parseInt(id_y);
+    }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
                 `${process.env.REACT_APP_API_URL}/user-register-tutorial/${id}`, {
-                    method: "PUT",
+                    method: "DELETE",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': `${process.env.REACT_APP_API_LOCAL}`,
                         'Access-Control-Allow-Credentials': 'true'
-                    },
-                    body: JSON.stringify(tutorial)
+                    }
                 }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putUserRegisterTutorial(id, tutorial, idx))
+                        dispatch(deleteUserRegisterTutorial(id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,17 +42,12 @@ export function putUserRegisterTutorial(id: any, tutorial: any, idx: any) {
                 }
             })
             .then (data => {
-                dispatch(postNotifyDb({
-                    name: 'Chấp nhận giáo án giáo viên!',
-                    description: `Quản trị viên đã chấp nhận yêu cầu chỉnh giáo án ${tutorial.name} của giáo viên!`
-                }, tutorial.creator_id))
-                toast.update(idx, { render: "Bạn đã xác nhận giáo án cho giáo viên thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(fetchDataSuccess(tutorial))
-                getUserRegisterTutorial(dispatch)
+                toast.update(idx, { render: "Xóa yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                getUserRegisterTutorialBySection(dispatch, section_id)
                 console.log(data)
             })
             .catch(error => {
-                toast.update(idx, { render: "Bạn đã xác nhận giáo án cho giáo viên không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa yêu cầu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log("error")
             });
     };

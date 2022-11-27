@@ -93,6 +93,10 @@ function ClassTeacherEndList(props) {
         text: 'Số buổi học',
         filter: textFilter()
       },
+      {
+        dataField: 'review_star',
+        text: 'Điểm đánh giá (Thang điểm 100)',
+      },
     {
       dataField: '',
       text: 'Hành động',

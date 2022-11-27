@@ -19,6 +19,7 @@ import { AnonymousNotificationModificationStatus } from "../../store/models/anon
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import ReviewStudent from "./ReviewStudent";
 import { ToastContainer } from "react-toastify";
+import { getInforClassHasRegisterJoinSemester } from "../../common/service/ClassHasRegisterJoinSemester/GetInfoClassHasRegisterJoinSemester";
 
 const ManageStudentEnd: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -74,6 +75,7 @@ const ManageStudentEnd: React.FC = () => {
                 else {
                     trackPromise(getUserById(dispatch, student_id))
                     trackPromise(getParentById(dispatch, parent_id))
+                    trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, student_id))
                     trackPromise(getExerciseForClassStudent(dispatch, class_id, student_id))
                     trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, student_id))
                     trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id, student_id))
@@ -82,6 +84,7 @@ const ManageStudentEnd: React.FC = () => {
             else {
                 trackPromise(getUserById(dispatch, student_id))
                 trackPromise(getParentById(dispatch, parent_id))
+                trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, student_id))
                 trackPromise(getExerciseForClassStudent(dispatch, class_id, student_id))
                 trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, student_id))
                 trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id, student_id))

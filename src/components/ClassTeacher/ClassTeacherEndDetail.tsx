@@ -16,6 +16,7 @@ import Loading from "../../common/components/Loading";
 import NotificationClassTeacher from "../Class/NotificationClassTeacher";
 import StudentList from "../Class/StudentForTeacherList";
 import { getInfoMyClassTeacher } from "../../common/service/MyClass/GetInforMyClassTeacher";
+import StudentListEnd from "./StudentListEnd";
 
 const ClassTeacherEndDetail: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -146,7 +147,7 @@ const ClassTeacherEndDetail: React.FC = () => {
                     <div className="col-xl-12 col-md-12 mb-4">
                         <div className={`card shadow h-100 py-2`} id="topcard-user">
                             <div className="card-body">
-                                <StudentList />
+                                <StudentListEnd />
                             </div>
                         </div>
                     </div>

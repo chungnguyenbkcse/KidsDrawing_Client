@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, IAnonymousNotificationState } from "../../store/models/root.interface";
+import { IStateType, IAnonymousNotificationState, IClassHasRegisterJoinSemesterState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { IAnonymousNotification, AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import { editAnonymousNotification, clearSelectedAnonymousNotification, setModificationStateAnonymousNotification, addAnonymousNotification } from "../../store/actions/anonymous_notification.action";
@@ -17,9 +17,10 @@ export type artAgeListProps = {
 
 function ReviewStudent(props: artAgeListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
+    const class_has_register_join_semester: IClassHasRegisterJoinSemesterState = useSelector((state: IStateType) => state.class_has_register_join_semesters);
     const notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     let notification: IAnonymousNotification | null = notifications.selectedAnonymousNotification;
-    const isCreate: boolean = (notifications.modificationState === AnonymousNotificationModificationStatus.Create);
+    const isCreate: boolean = (class_has_register_join_semester.class_has_register_join_semesters.length === 0);
 
     if (!notification || isCreate) {
         notification = { id: 0, name: "", description: "", time: "" };
@@ -27,7 +28,7 @@ function ReviewStudent(props: artAgeListProps): JSX.Element {
 
     let formState = {
         name: { error: "", value: notification.name },
-        description: { error: "", value: notification.description },
+        description: { error: "", value: class_has_register_join_semester.class_has_register_join_semesters.length > 0 ? class_has_register_join_semester.class_has_register_join_semesters[0].teacher_feedback : "" },
         type_send: { error: "", value: "Chon gửi tới" },
     };
 

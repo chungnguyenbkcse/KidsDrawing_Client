@@ -3,7 +3,7 @@ import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { IRootPageStateType, IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
+import { IRootPageStateType, IScheduleTimeClassState, IStateType, IUserState } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import "./ParentHome.css"
@@ -22,10 +22,12 @@ import "@syncfusion/ej2-react-schedule/styles/material.css";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getTotalCourseForStudent } from "../../common/service/Course/GetTotalCourseForStudent";
 import { getTotalContestForStudent } from "../../common/service/Contest/GetTotalContestForStudent";
+import { getUserById } from "../../common/service/User/GetUserById";
 
 
 const StudentHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
+    const users: IUserState = useSelector((state: IStateType) => state.users);
     const schedule_time_classes: IScheduleTimeClassState = useSelector((state: IStateType) => state.schedule_time_classes);
     let total_contest_student: number = 0;
     let total_course_student: number = 0;
@@ -72,11 +74,13 @@ const StudentHome: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
+                    trackPromise(getUserById(dispatch, id))
                     trackPromise(getTotalContestForStudent(dispatch, id))
                     trackPromise(getTotalCourseForStudent(dispatch, id))
                 }
             }
             else {
+                trackPromise(getUserById(dispatch, id))
                 trackPromise(getTotalContestForStudent(dispatch, id))
                 trackPromise(getTotalCourseForStudent(dispatch, id))
             }
@@ -123,30 +127,31 @@ const StudentHome: React.FC = () => {
                     <TopCard title="CUỘC THI" text={`${total_contest_student}`} icon="book" class="primary" />
                 </div>
 
-                <div className="row">
+                <div className="row mx-auto">
+                    <div className="col-xl-6 col-md-6 mb-4">
+                    <h3 className=" mb-2" id="level-teacher">Thông tin cá nhân</h3>
                     <div className="col-xl-12 col-md-12 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
-                        <div className="card shadow mb-4">
+                        <div className={`card shadow h-100 py-2`} id="topcard-user">
                             <div className="card-body">
-                                <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={{
-                                    dataSource: data, fields: {
-                                        id: 'Id',
-                                        subject: { name: 'Subject' },
-                                        isAllDay: { name: 'IsAllDay' },
-                                        startTime: { name: 'StartTime' },
-                                        endTime: { name: 'EndTime' }
-                                    }
-                                }}>
+                                <div className="row text-center text-center justify-content-center">
+                                    <i className={`fas fa-user fa-10x`} id="icon-user"></i>
+                                </div>
+                                <div className="row no-gutters justify-content-center">
+                                    <h4 id="full-name">{users.teachers.length === 0 ? "" : (users.teachers[0].firstName + " "+ users.teachers[0].lastName)}</h4>
+                                </div>
+                                <div className="row no-gutters justify-content-center">
+                                    <p id="username-teacher">{users.teachers.length === 0 ? "" : users.teachers[0].username}</p>
+                                </div>
+                                <div className="row no-gutters">
+                                    <p id="phone pl-2">Giới tính: {users.teachers.length === 0 ? "" : users.teachers[0].sex}</p>
+                                </div>
 
-                                    <ViewsDirective>
-                                        <ViewDirective option='Day' startHour='00:00' endHour='23:59' />
-                                    </ViewsDirective>
-                                    <Inject services={[Day]} />
-                                </ScheduleComponent>
-
-
+                                <div className="row no-gutters mt-2">
+                                    <p id="phone pl-2">Ngày sinh: {users.teachers.length === 0 || users.teachers[0].dateOfBirth == undefined || users.teachers[0].dateOfBirth == null ? "" : users.teachers[0].dateOfBirth.replaceAll("T", " ").substring(0,16)}</p>
+                                </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 

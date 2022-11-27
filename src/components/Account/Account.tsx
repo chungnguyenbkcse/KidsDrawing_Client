@@ -13,6 +13,7 @@ import SelectInput from "../../common/components/Select";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { putUser } from "../../common/service/User/PutUser";
 
 export type teacherListProps = {
     isCheck: (value: boolean) => void;
@@ -64,9 +65,16 @@ const Account: React.FC = () => {
         const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
-        var url = await setImageAction();
-        let saveUserFn: Function =editTeacher;
-        saveForm(formState, saveUserFn, url, id);
+        if (preview === "") {
+            let url = user.profile_image_url;
+            let saveUserFn: Function =editTeacher;
+            saveForm(formState, saveUserFn, url, id);
+        }
+        else {
+            let url = await setImageAction();
+            let saveUserFn: Function =editTeacher;
+            saveForm(formState, saveUserFn, url, id);
+        }
     }
 
     function saveForm(formState: IUser1FormState, saveFn: Function, url: string, id: any): void {
@@ -100,7 +108,7 @@ const Account: React.FC = () => {
             }
 
             else if (saveFn === editTeacher) {
-                dispatch(putTeacher(user.id, {
+                dispatch(putUser(user.id, {
                     username: username,
                     email: email,
                     password: "",

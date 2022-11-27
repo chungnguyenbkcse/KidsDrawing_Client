@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SelectInput from "../../common/components/Select";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { putUser } from "../../common/service/User/PutUser";
 
 export type teacherListProps = {
     value:IUser;
@@ -54,16 +55,18 @@ function AccountForm(props: teacherListProps): JSX.Element {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
 
-    function saveUser(e: FormEvent<HTMLFormElement>): void {
+    async function saveUser(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
         if (isFormInvalid()) {
             return;
         }
         let saveUserFn: Function =editTeacher;
-        saveForm(formState, saveUserFn);
+        if (image == null || image == "") {}
+        var url = await setImageAction();
+        saveForm(formState, saveUserFn, url);
     }
 
-    function saveForm(formState: IUser1FormState, saveFn: Function): void {
+    function saveForm(formState: IUser1FormState, saveFn: Function, url: string): void {
         if (user) {
             const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
@@ -77,7 +80,7 @@ function AccountForm(props: teacherListProps): JSX.Element {
                     firstName: formState.firstName.value,
                     lastName: formState.lastName.value,
                     dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: preview,
+                    profile_image_url: url,
                     sex: formState.sex.value,
                     phone: formState.phone.value,
                     address: formState.address.value,
@@ -87,14 +90,14 @@ function AccountForm(props: teacherListProps): JSX.Element {
             }
 
             else if (saveFn === editTeacher) {
-                dispatch(putTeacher(user.id, {
+                dispatch(putUser(user.id, {
                     username: formState.username.value,
                     email: formState.email.value,
                     password: "",
                     firstName: formState.firstName.value,
                     lastName: formState.lastName.value,
                     dateOfBirth: formState.dateOfBirth.value,
-                    profile_image_url: preview,
+                    profile_image_url: url,
                     sex: formState.sex.value,
                     phone: formState.phone.value,
                     address: formState.address.value,

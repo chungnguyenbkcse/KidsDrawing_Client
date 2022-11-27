@@ -6,7 +6,7 @@ import { postUserRegisterTutorialPage } from "../UserRegisterTutorialPage/PostUs
 import { postUserRegisterTutorialPageToast } from "../UserRegisterTutorialPage/PostUserRegisterTutorialPageToast";
 
 
-export function postUserRegisterTutorial(tutorial: ITutorialPage[], data: any, idx: any, routeHome: any) {
+export function postUserRegisterTutorial(tutorial: any[], data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -40,7 +40,7 @@ export function postUserRegisterTutorial(tutorial: ITutorialPage[], data: any, i
                 console.log(data)
                 var total = tutorial.length;
                 console.log(total)
-                tutorial.map((value, index) => {
+                tutorial.map((value: any, index: any) => {
                     if (index === total - 1){
                         routeHome()
                         return dispatch(postUserRegisterTutorialPageToast({

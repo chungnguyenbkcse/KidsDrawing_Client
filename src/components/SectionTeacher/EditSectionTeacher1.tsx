@@ -16,6 +16,8 @@ import { addUserRegisterTutorialPage, editUserRegisterTutorialPage, removeUserRe
 import { getUserRegisterTutorialPage } from "../../common/service/UserRegisterTutorialPage/GetUserRegisterTutorialPageByUserRegisterTutorialId";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { deleteUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/DeleteUserRegisterTutorial";
+import { deleteUserRegisterTutorial1 } from "../../common/service/UserRegisterTutorial/DeleteUserRegisterTutorial1";
 
 
 export type SectionListProps = {
@@ -122,11 +124,16 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
         history.push(path);
     }
 
-    let [textHtml, setTextHtml] = useState(user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).length > 0 ? user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number)[0].description : "");
+    const [currentPage, setCurrentPage] = useState<number>(1)
+
+    const [textHtml, setTextHtml] = useState("");
 
     useEffect(() => {
-        setTextHtml(user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).length > 0 ? user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number)[0].description : "")
+        if (user_register_tutorial_pages.user_register_tutorial_pages.length > 0) {
+            setTextHtml(user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number)[currentPage-1].description)
+        }
     }, [user_register_tutorial_pages])
+
     if (!section) {
         section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
     }
@@ -157,7 +164,6 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
     useEffect(() => {
         setTotalPage(user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).length > 0 ? user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).length : 0)
     }, [user_register_tutorial_pages])
-    const [currentPage, setCurrentPage] = useState<number>(1)
     const [currentPageOld, setCurrentPageOld] = useState<number>(1)
 
     const [checkCreateNew, setCheckCreateNew] = useState(false);
@@ -190,6 +196,15 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     page: currentPage,
                     content: value
                 }*/
+                if (user_register_tutorial_pages !== null) {
+                    dispatch(deleteUserRegisterTutorial1(user_register_tutorial_id, idx))
+                    dispatch(postUserRegisterTutorial(user_register_tutorial_pages.user_register_tutorial_pages, {
+                        section_id: section_id,
+                        creator_id: id,
+                        name: formState.name.value,
+                        status: "Not approved now"
+                    }, idx, routeHome))
+                }
             }
         }
     }

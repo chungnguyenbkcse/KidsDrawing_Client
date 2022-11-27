@@ -8,6 +8,7 @@ interface semester {
     creator_id: number;
     description: string;
     start_time: string;
+    checked_genaration: boolean;
     end_time: string;
     create_time: string;
     update_time: string;
@@ -50,6 +51,7 @@ export function getSemester(dispatch: any) {
                         id: ele.id,
                         number: ele.number,
                         year: ele.year,
+                        checked_genaration: ele.checked_genaration,
                         name: ele.name,
                         creator_id: ele.creator_id,
                         description: ele.description,

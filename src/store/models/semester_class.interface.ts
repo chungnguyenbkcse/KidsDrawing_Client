@@ -15,5 +15,6 @@ export enum SemesterClassModificationStatus {
     Create = 1,
     Edit = 2,
     Remove = 3,
+    Create1 = 5,
     ClosePopup = 4
 }

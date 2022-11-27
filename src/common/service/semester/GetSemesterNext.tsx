@@ -7,6 +7,7 @@ interface semester {
     name: string;
     creator_id: number;
     description: string;
+    checked_genaration: boolean;
     start_time: string;
     end_time: string;
     create_time: string;
@@ -50,6 +51,7 @@ export function getSemesterNext(dispatch: any) {
                         id: ele.id,
                         number: ele.number,
                         year: ele.year,
+                        checked_genaration: ele.checked_genaration,
                         name: ele.name,
                         creator_id: ele.creator_id,
                         description: ele.description,
@@ -59,10 +61,7 @@ export function getSemesterNext(dispatch: any) {
                         update_time: ele.update_time,
                     }
                     //console.log(strDate.substring(0, 16))
-                    if (index === 0){
-                        return dispatch(initialSemester(semester));
-                    }
-                    else{
+                    if (ele.checked_genaration === false){
                         return dispatch(addSemester(semester))
                     }
                 })

@@ -4,7 +4,7 @@ import TopCard from "../../common/components/TopCard";
 import "./Class.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IMyClassState, IStateType, IRootPageStateType, ISemesterState, ISemesterClassState } from "../../store/models/root.interface";
+import { IMyClassState, IStateType, IRootPageStateType, ISemesterState, ISemesterClassState, ILessonState } from "../../store/models/root.interface";
 import {
     clearSelectedMyClass,
     changeSelectedMyClass,
@@ -49,6 +49,7 @@ const format = "YYYY-MM-DD";
 
 const Class: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     const myclasss: IMyClassState = useSelector((state: IStateType) => state.myclasses);
     const semester_classes: ISemesterClassState = useSelector((state: IStateType) => state.semester_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -59,12 +60,12 @@ const Class: React.FC = () => {
         new DateObject().set({ day: 25, format }),
         new DateObject().set({ day: 20, format })
     ]);
-    const [checked1, setChecked1] = useState(true);
-    const [checked2, setChecked2] = useState(false);
-    const [checked3, setChecked3] = useState(false);
+    const [checked, setChecked] = useState(true);
+
     const [semesterId, setSemesterId] = useState(0);
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);
+    const [popup3, setPopup3] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const { promiseInProgress } = usePromiseTracker();
 
@@ -142,6 +143,7 @@ const Class: React.FC = () => {
     console.log(semesterId)
 
     async function handleScheduleClass() {
+        setPopup3(false)
         let time: String[] = [];
         value.map((ele: any, index: any) => {
             return time.push(ele.toString())
@@ -161,6 +163,20 @@ const Class: React.FC = () => {
     function onRemovePopup1(value: boolean) {
         setPopup1(false);
     }
+
+    function cancelForm(): void {
+        setPopup3(false);
+        dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.None));
+    }
+    
+    function getDisabledClass(): string {
+      let isError: boolean = isFormInvalid();
+      return isError ? "disabled" : "";
+    }
+
+    function isFormInvalid(): boolean {
+        return (semesterId == 0) as boolean;
+      }
 
     return (
 
@@ -198,62 +214,38 @@ const Class: React.FC = () => {
             </div>
 
             <div className="row">
-                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked1 === false) {
-                            setChecked1(true)
-                            setChecked2(false)
-                            setChecked3(false)
+                        if (checked === false) {
+                            setChecked(true)
                         }
                     }} style={{
-                        color: checked1 ? "#F24E1E" : "#2F4F4F"
-                    }}>Xếp lớp</h6>
+                        color: checked ? "#F24E1E" : "#2F4F4F"
+                    }}>Lớp đang mở</h6>
 
                     <div style={{
                         height: "5px",
                         textAlign: "center",
                         margin: "auto",
                         width: "30%",
-                        backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
                     }}></div>
                 </div>
-                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
                     <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked2 === false) {
-                            setChecked2(true)
-                            setChecked1(false)
-                            setChecked3(false)
+                        if (checked === true) {
+                            setChecked(false)
                         }
                     }}
                         style={{
-                            color: checked2 ? "#F24E1E" : "#2F4F4F"
-                        }}>Lớp theo kì</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
-                    }}></div>
-                </div>
-
-                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked3 === false) {
-                            setChecked3(true)
-                            setChecked1(false)
-                            setChecked2(false)
-                        }
-                    }}
-                        style={{
-                            color: checked3 ? "#F24E1E" : "#2F4F4F"
+                            color: checked ? "#2F4F4F" : "#F24E1E"
                         }}>Lớp học</h6>
                     <div style={{
                         height: "5px",
                         textAlign: "center",
                         margin: "auto",
                         width: "30%",
-                        backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
                     }}></div>
                 </div>
             </div>
@@ -261,50 +253,7 @@ const Class: React.FC = () => {
 
             {
                 function () {
-                    if (checked1 === true) {
-                        return (
-                            <Fragment>
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12">
-                                        <div className="mb-4">
-                                            <div className="py-3">
-                                                <h6 className="m-0 font-weight-bold text-green">Xếp lớp</h6>
-                                            </div>
-                                            <form>
-                                                <div className="form-row">
-                                                    <div className="form-group col-md-6">
-                                                        <SelectKeyValueNotField
-                                                            value={semesterId}
-                                                            id="input_total_page"
-                                                            onChange={hasFormValueChangedNotFiled}
-                                                            required={true}
-                                                            label="Học kì: "
-                                                            options={listSemesters}
-                                                        />
-                                                    </div>
-                                                    <div className="form-group col-md-6">
-                                                        <label>Ngày nghỉ: </label>
-                                                        <DatePicker
-                                                            multiple
-                                                            id="date-picker-class"
-                                                            value={value}
-                                                            onChange={setValue}
-                                                            format={format}
-                                                            plugins={[
-                                                                <DatePanel />
-                                                            ]}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <button className={`btn btn-success left-margin`} onClick={() => {handleScheduleClass()}}>Xếp lớp</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Fragment>
-                        )
-                    }
-                    else if (checked2 === true) {
+                    if (checked === true) {
                         return (
                             <Fragment>
                                 <div className="row">
@@ -313,11 +262,19 @@ const Class: React.FC = () => {
                                             <div className="card-header py-3">
                                                 <h6 className="m-0 font-weight-bold text-green">Danh sách lớp mở theo kì</h6>
                                                 <div className="header-buttons">
-                                                    <button className="btn btn-success btn-green" onClick={() => {
+                                                    <button className="btn btn-primary mr-4" onClick={() => {
+                                                        dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Create1))
+                                                        setPopup3(true)
+                                                    }}>
+                                                        <i className="fas fa fa-random pr-2"></i>
+                                                        Xếp lớp
+                                                    </button>
+
+                                                    <button className="btn btn-success" onClick={() => {
                                                         dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Create))
                                                         onSemesterClassRemove()
                                                     }}>
-                                                        <i className="fas fa fa-plus"></i>
+                                                        <i className="fas fa fa-plus pr-2"></i>
                                                         Mở lớp
                                                     </button>
                                                 </div>
@@ -330,6 +287,61 @@ const Class: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                <Popup
+                                    open={popup3}
+                                    onClose={() => setPopup3(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <>
+                                        {
+                                            function () {
+                                                if ((semester_classes.modificationState === SemesterClassModificationStatus.Create1)) {
+                                                    return (
+                                                        <div className="row">
+                                                            <div className="col-xl-12 col-lg-12">
+                                                                <div className="mb-4">
+                                                                    <div className="py-3">
+                                                                        <h6 className="m-0 font-weight-bold text-green">Xếp lớp</h6>
+                                                                    </div>
+                                                                    <form>
+                                                                        <div className="form-row">
+                                                                            <div className="form-group col-md-6">
+                                                                                <SelectKeyValueNotField
+                                                                                    value={semesterId}
+                                                                                    id="input_total_page"
+                                                                                    onChange={hasFormValueChangedNotFiled}
+                                                                                    required={true}
+                                                                                    label="Học kì: "
+                                                                                    options={listSemesters}
+                                                                                />
+                                                                            </div>
+                                                                            <div className="form-group col-md-6">
+                                                                                <label>Ngày nghỉ: </label>
+                                                                                <DatePicker
+                                                                                    multiple
+                                                                                    id="date-picker-class"
+                                                                                    value={value}
+                                                                                    onChange={setValue}
+                                                                                    format={format}
+                                                                                    plugins={[
+                                                                                        <DatePanel />
+                                                                                    ]}
+                                                                                />
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                    <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                                                    <button className={`btn btn-success left-margin ${getDisabledClass()}`} onClick={() => { handleScheduleClass() }}>Xếp lớp</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+                                            }()
+                                        }
+                                    </>
+                                </Popup>
 
 
                                 <Popup
@@ -385,7 +397,7 @@ const Class: React.FC = () => {
                         )
                     }
 
-                    else if (checked3 === true) {
+                    else {
                         return (
                             <Fragment>
                                 <div className="row">

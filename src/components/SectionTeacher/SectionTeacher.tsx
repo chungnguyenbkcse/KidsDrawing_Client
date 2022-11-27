@@ -205,9 +205,13 @@ const SectionTeacher: React.FC = () => {
         localStorage.setItem('user_register_tutorial_id', ele.id.toString())
         localStorage.removeItem('section_id')
         localStorage.setItem('section_id', ele.section_id.toString())
-        let path = '/tutorial-request/detail';
+        localStorage.removeItem('section_number')
+        localStorage.setItem('section_number', ele.section_number.toString())
+        localStorage.removeItem('user_register_tutorial_name')
+        localStorage.setItem('user_register_tutorial_name', ele.name.toString())
+        let path = "/user-register-tutorial/edit";
         history.push({
-            pathname: path,
+            pathname: path
         });
       }
 

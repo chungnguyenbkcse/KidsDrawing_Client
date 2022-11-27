@@ -128,6 +128,7 @@ import FormSubmitParent from "../components/ClassParent/FormSubmitParent";
 import FormSubmitContestParent from "../components/Contest/FormSubmitContestParent";
 import DetailContestNotOpenNowParent from "../components/Contest/DetailContestNotOpenNowParent";
 import DetailContestNotOpenNowTeacher from "../components/Contest/DetailContestNotOpenNowTeacher";
+import EditSectionTeacher1 from "../components/SectionTeacher/EditSectionTeacher1";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -171,6 +172,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/exercise/result-analytis`}><AnalytisResultGradeExamTeacher /></Route>
                                 <Route path={`/classes/section`}><SectionTeacher /></Route>
                                 <Route path={`/section/edit`}><EditSectionTeacher /></Route>
+                                <Route path={`/user-register-tutorial/edit`}><EditSectionTeacher1 /></Route>
                                 <Route path={`/section/view`}><ViewSectionTeacher /></Route>
                                 <Route path={`/request/student`}><RequestTeacher /></Route>
                                 <Route path={`/request/teacher`}><RequestTeacher1 /></Route>

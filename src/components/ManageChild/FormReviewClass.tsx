@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import TextInput from "../../common/components/TextInput";
 import { clearSelectedAnonymousNotification, setModificationStateAnonymousNotification, addAnonymousNotification } from "../../store/actions/anonymous_notification.action";
@@ -7,6 +7,8 @@ import { OnChangeModel } from "../../common/types/Form.types";
 import { toast } from "react-toastify";
 import { Rating } from "react-simple-star-rating";
 import { putReviewClassByStudent } from "../../common/service/ClassHasRegisterJoinSemester/PutReviewClassByStudent";
+import { IClassHasRegisterJoinSemester } from "../../store/models/class_has_register_join_semester.interface";
+import { IClassHasRegisterJoinSemesterState, IStateType } from "../../store/models/root.interface";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -16,10 +18,11 @@ export type artAgeListProps = {
 
 function FormReviewClass(props: artAgeListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
+    const class_has_register_join_semester: IClassHasRegisterJoinSemesterState = useSelector((state: IStateType) => state.class_has_register_join_semesters);
 
     const [formState, setFormState] = useState({
         review_start: { error: "", value: 0 },
-        review: { error: "", value: "" }
+        review: { error: "", value: class_has_register_join_semester.class_has_register_join_semesters.length > 0 ? class_has_register_join_semester.class_has_register_join_semesters[0].student_feedback : "" }
     });
 
     function hasFormValueChanged(model: OnChangeModel): void {
@@ -42,10 +45,10 @@ function FormReviewClass(props: artAgeListProps): JSX.Element {
         class_id = parseInt(id_x)
     }
 
-    var id_y = localStorage.getItem('student_id');
-    let student_id = 0;
+    var id_y = localStorage.getItem('id');
+    let id = 0;
     if (id_y !== null) {
-        student_id = parseInt(id_y)
+        id = parseInt(id_y)
     }
 
     function saveForm(saveFn: Function): void {
@@ -57,10 +60,12 @@ function FormReviewClass(props: artAgeListProps): JSX.Element {
                 console.log(idx)
                 let x = {
                     classes_id: class_id,
-                    student_id: student_id,
+                    parent_id: id,
                     student_feedback: formState.review.value,
                     review_star: rating
                 }
+
+                console.log(x)
 
                 dispatch(putReviewClassByStudent(x, idx))
             }
@@ -84,7 +89,7 @@ function FormReviewClass(props: artAgeListProps): JSX.Element {
             || formState.review.error || !formState.review.value ) as boolean;
     }
 
-    const [rating, setRating] = useState(0) // initial rating value
+    const [rating, setRating] = useState(class_has_register_join_semester.class_has_register_join_semesters.length > 0 ? class_has_register_join_semester.class_has_register_join_semesters[0].review_star : 0) // initial rating value
 
     // Catch Rating value
     const handleRating = (rate: number) => {

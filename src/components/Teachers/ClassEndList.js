@@ -95,7 +95,7 @@ function ClassEndList(props) {
       },
       {
         dataField: 'review_star',
-        text: 'Điểm phụ huynh đánh giá',
+        text: 'Điểm phụ huynh đánh giá (Thang điểm 100)',
         filter: textFilter()
       },
     {

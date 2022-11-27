@@ -7,7 +7,7 @@ import { IRootPageStateType, IScheduleTimeClassState, IStateType, IUserState } f
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import "./ParentHome.css"
-import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective, Week, Month } from "@syncfusion/ej2-react-schedule";
 
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
@@ -23,6 +23,7 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getTotalCourseForStudent } from "../../common/service/Course/GetTotalCourseForStudent";
 import { getTotalContestForStudent } from "../../common/service/Contest/GetTotalContestForStudent";
 import { getUserById } from "../../common/service/User/GetUserById";
+import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/GetScheduleTimeByStudent";
 
 
 const StudentHome: React.FC = () => {
@@ -77,12 +78,14 @@ const StudentHome: React.FC = () => {
                     trackPromise(getUserById(dispatch, id))
                     trackPromise(getTotalContestForStudent(dispatch, id))
                     trackPromise(getTotalCourseForStudent(dispatch, id))
+                    trackPromise(getScheduleTimeByChild(dispatch, id))
                 }
             }
             else {
                 trackPromise(getUserById(dispatch, id))
                 trackPromise(getTotalContestForStudent(dispatch, id))
                 trackPromise(getTotalCourseForStudent(dispatch, id))
+                trackPromise(getScheduleTimeByChild(dispatch, id))
             }
         }
     }, [dispatch, access_token, refresh_token, id]);
@@ -149,6 +152,33 @@ const StudentHome: React.FC = () => {
                                 <div className="row no-gutters mt-2">
                                     <p id="phone pl-2">Ngày sinh: {users.teachers.length === 0 || users.teachers[0].dateOfBirth == undefined || users.teachers[0].dateOfBirth == null ? "" : users.teachers[0].dateOfBirth.replaceAll("T", " ").substring(0,16)}</p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div className="col-xl-6 col-md-6 mb-4">
+                    <h3 className=" mb-2" id="level-teacher">Lịch trong ngày</h3>
+                    <div className="col-xl-12 col-md-12 mb-4">
+                        <div className={`card shadow h-100 py-2`} id="topcard-user">
+                            <div className="card-body">
+                            <ScheduleComponent height='550px' currentView="Day" selectedDate={new Date()} eventSettings={{
+                          dataSource: data, fields: {
+                            id: 'Id',
+                            subject: { name: 'Subject' },
+                            isAllDay: { name: 'IsAllDay' },
+                            startTime: { name: 'StartTime' },
+                            endTime: { name: 'EndTime' }
+                          }
+                        }}>
+
+                            <ViewsDirective>
+                                <ViewDirective option='Day'/>
+                                <ViewDirective option='Week'/>
+                                <ViewDirective option='Month'/>
+                            </ViewsDirective>
+                          <Inject services={[Day, Week, Month]}/>
+                        </ScheduleComponent>;
                             </div>
                         </div>
                     </div>

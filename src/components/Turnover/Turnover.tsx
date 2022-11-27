@@ -15,6 +15,7 @@ import { getCourseReport } from "../../common/service/CourseReport/GetCourseRepo
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import TurnoverList from "./TurnoverList";
+import "./Turnover.css"
 
 const Turnover: React.FC = () => {
   const turnovers: ITurnoverState = useSelector((state: IStateType) => state.turnovers);
@@ -118,14 +119,8 @@ const Turnover: React.FC = () => {
           </div>
         </div>
       </div> : <Fragment>
-      <h1 className="h3 mb-2 text-gray-800">Phân tích</h1>
+      <h1 className="h3 mb-2 text-gray-800">Thống kê</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
-      <div className="row">
-        <TopCard title="DOANH THU" text={`$${totalPrice}`} icon="dollar-sign" class="success" />
-        <TopCard title="KHÓA HỌC" text={`${totalCourse}`} icon="warehouse" class="success" />
-        <TopCard title="NGƯỜI DÙNG MỚI" text={`${totalUserNew}`} icon="user" class="success" />
-      </div>
 
       <div className="row">
         <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
@@ -193,10 +188,18 @@ const Turnover: React.FC = () => {
           if (checked1 === true) {
             return (
               <Fragment>
-                <div className="row">
+              <div className="row">
+
                   <div className="col-xl-12 col-lg-12">
-                    <ChartBar data={data} />
+                    <div className="card shadow mb-2">
+                      <div className="card-body turnover-course">
+                      <ChartBar data={data} height="200px"
+                      width="200px" options={{ maintainAspectRatio: false }}/>
+                      </div>
+                    </div>
+
                   </div>
+
                 </div>
 
                 <div className="row">
@@ -224,10 +227,7 @@ const Turnover: React.FC = () => {
 
                   <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
-                      <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-green">Phân tích khóa học</h6>
-                      </div>
-                      <div className="card-body">
+                      <div className="card-body turnover-course" style={{height:"60vh",position:"relative", marginBottom:"1%", padding:"1%"}}>
                         <CourseAnalytis />
                       </div>
                     </div>

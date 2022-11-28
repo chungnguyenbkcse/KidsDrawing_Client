@@ -129,6 +129,7 @@ import FormSubmitContestParent from "../components/Contest/FormSubmitContestPare
 import DetailContestNotOpenNowParent from "../components/Contest/DetailContestNotOpenNowParent";
 import DetailContestNotOpenNowTeacher from "../components/Contest/DetailContestNotOpenNowTeacher";
 import EditSectionTeacher1 from "../components/SectionTeacher/EditSectionTeacher1";
+import ClassDetail from "../components/Class/ClassDetail";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -149,6 +150,7 @@ const Routers: React.FC = () => {
                             <Switch>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>
+                                <Route path={`/class/detail`}><ClassDetail /></Route>
                                 <Route path={`/tutorial-request/detail`}><ViewSectionTeacherRequest /></Route>
                                 <Route path={`/class/schedule`}><ScheduleClass /></Route>
                                 <Route path={`/contest/score`}><DetailScoreContestStudent /></Route>

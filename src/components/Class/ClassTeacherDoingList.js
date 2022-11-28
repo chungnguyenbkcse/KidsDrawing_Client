@@ -18,7 +18,7 @@ function ClassTeacherDoingList(props) {
   
     
     const routeChange = (class_teacher) => {
-        let path = '/classes/detail';
+        let path = '/classes/detail-student';
         localStorage.removeItem("class_id");
         localStorage.setItem("class_id", class_teacher.id.toString())
         localStorage.removeItem('class_end');
@@ -35,7 +35,9 @@ function ClassTeacherDoingList(props) {
     localStorage.setItem('class_id', class_id.toString())
     localStorage.removeItem('class_name')
     localStorage.setItem('class_name', class_name)
-    let path = '/class/schedule'; 
+    localStorage.removeItem('class_end');
+    localStorage.setItem('class_end', 'false');
+    let path = '/class/detail'; 
     history.push({
       pathname: path,
       state: { class_id: class_id }
@@ -115,12 +117,12 @@ function ClassTeacherDoingList(props) {
       },
     {
       dataField: '',
-      text: 'Lịch học',
+      text: 'Hành động',
       formatter: viewScheduleButton
     },
     {
       dataField: '',
-      text: 'Hành động',
+      text: '',
       formatter: detailClassButton
     },
   ];

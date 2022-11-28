@@ -12,6 +12,7 @@ import "./TeacherHome.css"
 import TeacherRegisterQuantificationList from "./TeacherLevelList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const TeacherHome: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -65,6 +66,8 @@ const TeacherHome: React.FC = () => {
         dispatch(changeSelectedTeacherRegisterQuatificationApproved(teacherRegisterQuantification));
         dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
     }
+
+    dispatch(updateCurrentPath("Trang chủ", ""));
 
     return (
         promiseInProgress ?

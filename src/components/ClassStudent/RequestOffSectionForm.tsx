@@ -108,6 +108,11 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         
     })
 
+    let section_ele: Option1 = {
+        name: "Buổi " + student_leave.section_number,
+        value: student_leave.section_id
+    }
+
 
     const [formState, setFormState] = useState({
         section_id: { error: "", value: student_leave.section_id },
@@ -177,6 +182,61 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         return (formState.description.error || !formState.description.value) as boolean;
     }
 
+    if (listSections.includes(section_ele)) {
+        return (
+            <Fragment>
+                <div className="row text-left">
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="card" id="topcard-user">
+                            <div className="card-header py-3">
+                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Gửi yêu cầu nghỉ học</h6>
+                            </div>
+                            <div className="card-body">
+                                <form onSubmit={saveUser}>
+                                    <div className="form-group">
+                                        <SelectKeyValue
+                                            id="input_section_id"
+                                            field="section_id"
+                                            label="Buổi học"
+                                            options={listSections}
+                                            required={true}
+                                            onChange={hasFormValueChanged}
+                                            value={formState.section_id.value}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <TextInput id="input_description"
+                                            field="description"
+                                            value={formState.description.value}
+                                            onChange={hasFormValueChanged}
+                                            required={false}
+                                            type="textarea"
+                                            maxLength={100}
+                                            label="Lý do"
+                                            placeholder="" />
+                                    </div>
+    
+                                    {
+                                        function () {
+                                            if (isView === false) {
+                                                return (
+                                                    <>
+                                                        <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                                        <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                                    </>
+                                                )
+                                            }
+                                        }()
+                                    }
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        );
+    }
+
     return (
         <Fragment>
             <div className="row text-left">
@@ -188,15 +248,15 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                         <div className="card-body">
                             <form onSubmit={saveUser}>
                                 <div className="form-group">
-                                    <SelectKeyValue
-                                        id="input_section_id"
+                                    <TextInput id="input_section_id"
                                         field="section_id"
                                         label="Buổi học"
-                                        options={listSections}
-                                        required={true}
+                                        value={section_ele.name}
                                         onChange={hasFormValueChanged}
-                                        value={formState.section_id.value}
-                                    />
+                                        required={false}
+                                        type="textarea"
+                                        maxLength={100}
+                                        placeholder="" />
                                 </div>
                                 <div className="form-group">
                                     <TextInput id="input_description"
@@ -209,19 +269,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                                         label="Lý do"
                                         placeholder="" />
                                 </div>
-
-                                {
-                                    function () {
-                                        if (isView === false) {
-                                            return (
-                                                <>
-                                                    <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-                                                    <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
-                                                </>
-                                            )
-                                        }
-                                    }()
-                                }
                             </form>
                         </div>
                     </div>

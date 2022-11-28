@@ -36,8 +36,8 @@ const TopMenu: React.FC = () => {
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">
-          <li className="breadcrumb-item teacher-breadcrumb-item"><h1 className="h3 mb-2 text-gray-800" id="home-teacher">{page ? page.area : null}</h1></li>
-          <li className="breadcrumb-item teacher-breadcrumb-item"><h1 className="h3 mb-2 text-gray-800" id="home-teacher">{page ? page.subArea : null}</h1></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.area : null}</p></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.subArea : null}</p></li>
         </ol>
   
         <ul className="navbar-nav ml-auto">
@@ -53,8 +53,8 @@ const TopMenu: React.FC = () => {
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">
-          <li className="breadcrumb-item teacher-breadcrumb-item"><h1 className="h3 mb-2 text-gray-800" id="home-teacher">{page ? page.area : null}</h1></li>
-          <li className="breadcrumb-item teacher-breadcrumb-item"><h1 className="h3 mb-2 text-gray-800" id="home-teacher">{page ? page.subArea : null}</h1></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.area : null}</p></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.subArea : null}</p></li>
         </ol>
   
         <ul className="navbar-nav ml-auto">

@@ -1,4 +1,4 @@
-import { fetchDataSuccess, fetchDataError, removeSectionTeacherAll, addSectionTeacher } from "../../../store/actions/section_teacher.action";
+import { fetchDataSuccess, fetchDataError, removeSectionAll, initialSection, addSection } from "../../../store/actions/section.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface Section {
     id: any;
@@ -6,18 +6,17 @@ interface Section {
     name: string;
     description: string;
     number: number;
+    total_exercise_not_submit: number;
     teacher_name: string;
     teach_form: boolean;
     recording: string;
     message: string;
-    total_exercise_submission: number;
-    total_user_grade_exercise_submission: number;
 }
-export function getSectionByClass(dispatch: any, id: any) {
+export function getSectionByClassAndStudent(dispatch: any, class_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/section/class-teacher/${id}`, {
+                `${process.env.REACT_APP_API_URL}/section/class-student/${class_id}/${student_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -31,7 +30,7 @@ export function getSectionByClass(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getSectionByClass(dispatch, id))
+                        dispatch(getSectionByClassAndStudent(dispatch, class_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -44,24 +43,28 @@ export function getSectionByClass(dispatch: any, id: any) {
             .then (data => {
                 console.log(data)
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeSectionTeacherAll())
+                dispatch(removeSectionAll())
                 console.log(data.body.Section)
                 data.body.Section.map((ele: any, index: any) => {
                     var section: Section = {
                         id: ele.id,
                         class_id: ele.class_id,
                         name: ele.name,
-                        total_exercise_submission: ele.total_exercise_submission,
-                        total_user_grade_exercise_submission: ele.total_user_grade_exercise_submission,
                         teacher_name: ele.teacher_name,
                         description: ele.description,
                         number: ele.number,
+                        total_exercise_not_submit: ele.total_exercise_not_submit,
                         teach_form: ele.teach_form,
                         recording: ele.recording,
                         message: ele.message
                     }
                     //console.log(strDate.substring(0, 16))
-                    return dispatch(addSectionTeacher(section))
+                    if (index === 0){
+                        return dispatch(initialSection(section));
+                    }
+                    else{
+                        return dispatch(addSection(section))
+                    }
                 })
             })
             .catch(error => {

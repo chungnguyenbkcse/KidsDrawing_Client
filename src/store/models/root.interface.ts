@@ -71,6 +71,7 @@ import { ExerciseTeacherModificationStatus, IExerciseTeacher } from "./exercise_
 import { ContestParentModificationStatus, IContestParent } from "./contest_parent.interface";
 import { ExerciseParentModificationStatus, IExerciseParent } from "./exercise_parent.interface";
 import { ChildsClassModificationStatus, IChildsClass } from "./childs_class.interface";
+import { ISectionTeacher, SectionTeacherModificationStatus } from "./section_teacher.interface";
 
 export interface IRootPageStateType {
     area: string;
@@ -155,6 +156,7 @@ export interface IStateType {
     contest_parents: IContestParentState;
     exercise_parents: IExerciseParentState;
     childs_classes: IChildsClassState;
+    section_teachers: ISectionTeacherState;
 }
 
 export interface IProductState {
@@ -636,6 +638,12 @@ export interface ISectionState {
     selectedSection: ISection | null;
     modificationState: SectionModificationStatus;
     sections: ISection[];
+}
+
+export interface ISectionTeacherState {
+    selectedSectionTeacher: ISectionTeacher | null;
+    modificationState: SectionTeacherModificationStatus;
+    sections: ISectionTeacher[];
 }
 
 export interface ICartState {

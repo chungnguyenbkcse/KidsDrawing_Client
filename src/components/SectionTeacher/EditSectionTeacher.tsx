@@ -128,12 +128,12 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section) {
-        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: 0, total_exercise_not_submit: 0,  name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
     console.log(tutorial_pages.tutorialPages)
     if (tutorial_pages.tutorialPages.length === 0) {
-        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: 0, total_exercise_not_submit: 0,  name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
 

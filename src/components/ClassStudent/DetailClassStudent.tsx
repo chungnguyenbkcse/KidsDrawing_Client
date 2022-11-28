@@ -23,6 +23,7 @@ import { ToastContainer } from "react-toastify";
 import { getExerciseSubmissionByClassAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClassAndStudent";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { IStudentLeave } from "../../store/models/student_leave.interface";
+import { getSectionByClassAndStudent } from "../../common/service/Section/GetSectionByClassAndStudent";
 
 
 const DetailClassStudent: React.FC = () => {
@@ -111,7 +112,7 @@ const DetailClassStudent: React.FC = () => {
                 }
                 else {
                     trackPromise(getInfoMyClass(dispatch, class_id))
-                    trackPromise(getSectionByClass(dispatch, class_id))
+                    trackPromise(getSectionByClassAndStudent(dispatch, class_id, id))
                     trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
                     trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, id))
                     trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
@@ -119,7 +120,7 @@ const DetailClassStudent: React.FC = () => {
             }
             else {
                 trackPromise(getInfoMyClass(dispatch, class_id))
-                trackPromise(getSectionByClass(dispatch, class_id))
+                trackPromise(getSectionByClassAndStudent(dispatch, class_id, id))
                 trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
                 trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, id))
                 trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
@@ -653,11 +654,11 @@ const DetailClassStudent: React.FC = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="row">
-                                                                <div className="col-md-3">
-                                                                    Thời lượng:
+                                                                <div className="col-sm-4" style={{color: "#7A67C7",fontWeight: "bold"}}>
+                                                                    Bài chưa nộp:
                                                                 </div>
-                                                                <div className="col-md-9">
-                                                                    {total_time}
+                                                                <div className="col-sm-8 xs-cent" style={{paddingRight: "200px"}}>
+                                                                    {ele.total_exercise_not_submit}
                                                                 </div>
                                                             </div>
                                                             <div className="row">

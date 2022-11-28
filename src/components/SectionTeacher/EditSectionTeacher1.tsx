@@ -135,12 +135,12 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
     }, [user_register_tutorial_pages])
 
     if (!section) {
-        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: 0, total_exercise_not_submit: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
     console.log(user_register_tutorial_pages.user_register_tutorial_pages)
     if (user_register_tutorial_pages.user_register_tutorial_pages.length === 0) {
-        section = { id: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
+        section = { id: 0, total_exercise_not_submit: 0, name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
     }
 
 

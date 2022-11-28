@@ -12,7 +12,7 @@ import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, ITeacherLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IExerciseSubmissionState, IRootPageStateType, ISectionState, ISectionTeacherState, IStateType, ITeacherLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState } from "../../store/models/root.interface";
 import "./DetailClassTeacher.css"
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
@@ -22,12 +22,13 @@ import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
 import { ToastContainer } from "react-toastify";
+import { ISectionTeacher } from "../../store/models/section_teacher.interface";
 
 
 const DetailClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
-    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+    const sections: ISectionTeacherState = useSelector((state: IStateType) => state.section_teachers);
     const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
     const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
@@ -38,7 +39,7 @@ const DetailClassTeacher: React.FC = () => {
     const { promiseInProgress } = usePromiseTracker();
 
     const [totalPage, setTotalPage] = useState(0)
-    const [element, setElement] = useState<ISection[]>([])
+    const [element, setElement] = useState<ISectionTeacher[]>([])
     const [page, setPage] = useState(0)
     useEffect(() => {
         let x = (sections.sections.length - sections.sections.length % 6) / 6;
@@ -155,7 +156,7 @@ const DetailClassTeacher: React.FC = () => {
         });
     }
 
-    const onChangeRoute = (section: ISection, is_active: string, link_record: string) => {
+    const onChangeRoute = (section: ISectionTeacher, is_active: string, link_record: string) => {
         let path = "/classes/section";
         localStorage.removeItem('section_id')
         localStorage.setItem('section_id', section.id.toString())
@@ -618,11 +619,11 @@ const DetailClassTeacher: React.FC = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="row">
-                                                                <div className="col-md-3">
-                                                                    Thời lượng:
+                                                                <div className="col-md-3" style={{color: "#7A67C7",fontWeight: "bold"}}>
+                                                                    Đã chấm:
                                                                 </div>
-                                                                <div className="col-md-9">
-                                                                    {total_time}
+                                                                <div className="col-md-9 xs-cent">
+                                                                    {ele.total_user_grade_exercise_submission}/{ele.total_exercise_submission} bài nộp
                                                                 </div>
                                                             </div>
                                                             <div className="row">

@@ -74,6 +74,7 @@ import exerciseTeacherReducer from "./exercise_teacher.reducer";
 import contestParentsReducer from "./contest_parent.reducer";
 import exerciseParentReducer from "./exercise_parent.reducer";
 import childs_classReducer from "./childs_class.reducer";
+import section_teachersReducer from "./section_teacher.reducer";
 
 
 const initialState: IRootStateType = {
@@ -163,6 +164,7 @@ const rootReducers: Reducer<IStateType> = combineReducers({root: rootReducer,
     contest_parents: contestParentsReducer,
     exercise_parents: exerciseParentReducer,
     childs_classes: childs_classReducer,
+    section_teachers: section_teachersReducer,
 });
 
 

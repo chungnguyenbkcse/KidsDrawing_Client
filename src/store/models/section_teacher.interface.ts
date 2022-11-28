@@ -1,4 +1,4 @@
-export interface ISection {
+export interface ISectionTeacher {
     id: any;
     class_id: number;
     name: string;
@@ -7,10 +7,11 @@ export interface ISection {
     teach_form: boolean;
     recording: string;
     message: string;
-    total_exercise_not_submit: number;
+    total_exercise_submission: number;
+    total_user_grade_exercise_submission: number;
 }
 
-export enum SectionModificationStatus {
+export enum SectionTeacherModificationStatus {
     None = 0,
     Create = 1,
     Edit = 2,

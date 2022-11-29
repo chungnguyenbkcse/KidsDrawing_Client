@@ -350,10 +350,10 @@ function ContestParentNotOpenNowList(props: lessonListProps): JSX.Element {
                                                 }
                                                 return " " + elex + ","
                                             })}</span>
-                                            <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ")}</span>
-                                            <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ")}</span>
+                                            <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ").substring(0,16)}</span>
+                                            <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
                                             <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                            <span className="d-block mb-5">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ")}</span>
+                                            <span className="d-block mb-5">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ").substring(0,16)}</span>
                                             <div
                                                 className="d-flex justify-content-between stats">
                                                     <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>

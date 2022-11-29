@@ -955,7 +955,7 @@ const DetailClassParent: React.FC = () => {
                                                                                     Thời gian gửi:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.update_time.replaceAll("T", " ")}
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0,16)}
                                                                                 </div>
                                                                             </div>
 

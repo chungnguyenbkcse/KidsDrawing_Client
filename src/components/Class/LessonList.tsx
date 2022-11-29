@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IProductState, ITimeScheduleState, ISectionState } from "../../store/models/root.interface";
+import { IStateType, IProductState, ITimeScheduleState, ISectionState, ISectionTeacherState } from "../../store/models/root.interface";
 import { IProduct } from "../../store/models/product.interface";
 import { useHistory } from "react-router-dom";
 import { ISection } from "../../store/models/section.interface";
+import { ISectionTeacher } from "../../store/models/section_teacher.interface";
 
 export type productListProps = {
   onSelect?: (product: IProduct) => void;
@@ -14,10 +15,10 @@ export type productListProps = {
 function LessonList(props: productListProps): JSX.Element  {
 
   const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
-  const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+  const sections: ISectionTeacherState = useSelector((state: IStateType) => state.section_teachers);
   const history = useHistory();
   
-  const routeChange = (section: ISection) =>{ 
+  const routeChange = (section: ISectionTeacher) =>{ 
     let path = '/class/lesson'; 
     localStorage.setItem('section_id', section.id.toString())
     history.push(path);

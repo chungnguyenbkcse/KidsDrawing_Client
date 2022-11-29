@@ -2,7 +2,7 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import TopCard from "../../common/components/TopCard";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IStateType, IRootPageStateType, IUserState, IInformationClassState, ISectionState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, IUserState, IInformationClassState, ISectionState, ISectionTeacherState } from "../../store/models/root.interface";
 import {
     clearSelectedProduct, setModificationState,
     changeSelectedProduct
@@ -23,7 +23,7 @@ import ScheduleClass from "./ScheduleClass";
 
 const DetailClass: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+    const sections: ISectionTeacherState = useSelector((state: IStateType) => state.section_teachers);
     const students: IUserState = useSelector((state: IStateType) => state.users);
     const information_class: IInformationClassState = useSelector((state: IStateType) => state.information_classes);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);

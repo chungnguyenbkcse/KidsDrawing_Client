@@ -1,8 +1,8 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
@@ -17,6 +17,9 @@ import { getExerciseSubmissionBySectionAndStudent } from "../../common/service/E
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { getAttendanceBySectionAndStudent } from "../../common/service/Attendance/GetUserAttendaceBySectionAndStudent";
 import { getStudentLeaveBySectionAndStudent } from "../../common/service/StudentLeave/GetStudentLeaveBySectionAndStudent";
+import { BsFillTrashFill } from "react-icons/bs";
+import Popup from "reactjs-popup";
+import { deleteExerciseSubmission } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionById";
 
 const SectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -73,6 +76,9 @@ const SectionStudent: React.FC = () => {
     if (id_jx !== null) {
         student_leave = id_jx;
     }
+
+    const [popup2, setPopup2] = useState(false);
+    const [requestId, setRequestId] = useState(0);
 
     console.log(class_id);
     console.log(class_students.classes_doing)
@@ -233,6 +239,40 @@ const SectionStudent: React.FC = () => {
                 </div>
             </div> : <Fragment>
                 <ToastContainer />
+                {
+                    function () {
+                        if (requestId !== 0) {
+                            return (
+                                <Popup
+                                    open={popup2}
+                                    onClose={() => setPopup2(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="popup-modal" id="popup-modal">
+                                        <div className="popup-title">
+                                            Bạn có chắc chắn muốn xóa?
+                                        </div>
+                                        <div className="popup-content">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    if (requestId === 0) {
+                                                        return;
+                                                    }
+                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                        position: toast.POSITION.TOP_CENTER
+                                                    });
+                                                    dispatch(deleteExerciseSubmission(requestId, idx))
+                                                    setPopup2(false);
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )
+                        }
+                    }()
+                }
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-2">
                         <div className="row">
@@ -449,7 +489,18 @@ const SectionStudent: React.FC = () => {
                                                                                         Tên:
                                                                                     </div>
                                                                                     <div className="col-md-7">
-                                                                                        {ele.exercise_name}
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-9">
+                                                                                            {ele.exercise_name}
+                                                                                        </div>
+                                                                                        <div className="col-md-3">
+                                                                                            <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                e.stopPropagation(); 
+                                                                                                setRequestId(ele.id);
+                                                                                                setPopup2(true)
+                                                                                            }}/>
+                                                                                        </div>
+                                                                                    </div> 
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="row">

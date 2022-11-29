@@ -203,7 +203,7 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="d-flex flex-row justify-content-between align-items-center filters">
+                        <div className="d-flex flex-row justify-content-between align-items-center filters mt-2">
                             <h6 className="ml-3">Có {element.filter((val) => {
                                 if (props.value === "") {
                                     return val;

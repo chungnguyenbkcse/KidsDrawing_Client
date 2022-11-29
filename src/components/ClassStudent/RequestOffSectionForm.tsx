@@ -31,7 +31,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     const isCreate: boolean = (anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Create);
     const isView: boolean = (anonymous_notifications.modificationState === AnonymousNotificationModificationStatus.Remove);
-    
+
     var id_z = localStorage.getItem('section_id');
     var section_id: number = 0;
     if (id_z !== null) {
@@ -62,7 +62,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         student_leave_id = parseInt(id_k);
     }
 
-    if (isCreate){
+    if (isCreate) {
         student_leave = { id: 0, section_id: 0, class_id: 0, section_number: 0, student_id: 0, description: "", section_name: "", class_name: "", student_name: "", reviewer_id: 0, status: "", create_time: "", update_time: "" }
     }
     else {
@@ -97,21 +97,24 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     }
 
     const listSections: Option1[] = [];
+    const listSectionNumbers: number[] = []
     sections.sections.map((ele) => {
         if (ele.number > total_section_end) {
             let item: Option1 = { "name": "Buổi " + ele.number, "value": ele.id }
+            listSectionNumbers.push(ele.number)
             return listSections.push(item)
         }
         else {
             return null
         }
-        
+
     })
 
     let section_ele: Option1 = {
         name: "Buổi " + student_leave.section_number,
         value: student_leave.section_id
     }
+    let section_numberx = student_leave.section_number;
 
 
     const [formState, setFormState] = useState({
@@ -131,7 +134,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
             return;
         }
         props.isCheck(false);
-        let saveUserFn: Function = isCreate ?  addStudentLeaveNotApprovedNow :  editStudentLeaveNotApproved;
+        let saveUserFn: Function = isCreate ? addStudentLeaveNotApprovedNow : editStudentLeaveNotApproved;
         saveForm(formState, saveUserFn);
     }
 
@@ -182,8 +185,65 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         return (formState.description.error || !formState.description.value) as boolean;
     }
 
-    if (listSections.includes(section_ele)) {
-        return (
+    console.log(section_ele)
+    console.log(listSections)
+    if ((isCreate === false)) {
+        if (listSectionNumbers.includes(section_numberx)) {
+            return (
+                <Fragment>
+                    <div className="row text-left">
+                        <div className="col-xl-12 col-lg-12">
+                            <div className="card" id="topcard-user">
+                                <div className="card-header py-3">
+                                    <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Gửi yêu cầu nghỉ học</h6>
+                                </div>
+                                <div className="card-body">
+                                    <form onSubmit={saveUser}>
+                                        <div className="form-group">
+                                            <SelectKeyValue
+                                                id="input_section_id"
+                                                field="section_id"
+                                                label="Buổi học"
+                                                options={listSections}
+                                                required={true}
+                                                onChange={hasFormValueChanged}
+                                                value={formState.section_id.value}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <TextInput id="input_description"
+                                                field="description"
+                                                value={formState.description.value}
+                                                onChange={hasFormValueChanged}
+                                                required={false}
+                                                type="textarea"
+                                                maxLength={100}
+                                                label="Lý do"
+                                                placeholder="" />
+                                        </div>
+
+                                        {
+                                            function () {
+                                                if (isView === false) {
+                                                    return (
+                                                        <>
+                                                            <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                                            <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                                        </>
+                                                    )
+                                                }
+                                            }()
+                                        }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Fragment>
+            );
+        }
+        else {
+            return (
             <Fragment>
                 <div className="row text-left">
                     <div className="col-xl-12 col-lg-12">
@@ -194,15 +254,15 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                             <div className="card-body">
                                 <form onSubmit={saveUser}>
                                     <div className="form-group">
-                                        <SelectKeyValue
-                                            id="input_section_id"
+                                        <TextInput id="input_section_id"
                                             field="section_id"
                                             label="Buổi học"
-                                            options={listSections}
-                                            required={true}
+                                            value={section_ele.name}
                                             onChange={hasFormValueChanged}
-                                            value={formState.section_id.value}
-                                        />
+                                            required={false}
+                                            type="textarea"
+                                            maxLength={100}
+                                            placeholder="" />
                                     </div>
                                     <div className="form-group">
                                         <TextInput id="input_description"
@@ -215,66 +275,66 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                                             label="Lý do"
                                             placeholder="" />
                                     </div>
-    
-                                    {
-                                        function () {
-                                            if (isView === false) {
-                                                return (
-                                                    <>
-                                                        <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-                                                        <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
-                                                    </>
-                                                )
-                                            }
-                                        }()
-                                    }
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </Fragment>
-        );
+            );
+        }
     }
 
-    return (
-        <Fragment>
-            <div className="row text-left">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="card" id="topcard-user">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Gửi yêu cầu nghỉ học</h6>
-                        </div>
-                        <div className="card-body">
-                            <form onSubmit={saveUser}>
-                                <div className="form-group">
-                                    <TextInput id="input_section_id"
-                                        field="section_id"
-                                        label="Buổi học"
-                                        value={section_ele.name}
-                                        onChange={hasFormValueChanged}
-                                        required={false}
-                                        type="textarea"
-                                        maxLength={100}
-                                        placeholder="" />
-                                </div>
-                                <div className="form-group">
-                                    <TextInput id="input_description"
-                                        field="description"
-                                        value={formState.description.value}
-                                        onChange={hasFormValueChanged}
-                                        required={false}
-                                        type="textarea"
-                                        maxLength={100}
-                                        label="Lý do"
-                                        placeholder="" />
-                                </div>
-                            </form>
-                        </div>
+    return (<Fragment>
+        <div className="row text-left">
+            <div className="col-xl-12 col-lg-12">
+                <div className="card" id="topcard-user">
+                    <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Gửi yêu cầu nghỉ học</h6>
+                    </div>
+                    <div className="card-body">
+                        <form onSubmit={saveUser}>
+                            <div className="form-group">
+                                <SelectKeyValue
+                                    id="input_section_id"
+                                    field="section_id"
+                                    label="Buổi học"
+                                    options={listSections}
+                                    required={true}
+                                    onChange={hasFormValueChanged}
+                                    value={formState.section_id.value}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <TextInput id="input_description"
+                                    field="description"
+                                    value={formState.description.value}
+                                    onChange={hasFormValueChanged}
+                                    required={false}
+                                    type="textarea"
+                                    maxLength={100}
+                                    label="Lý do"
+                                    placeholder="" />
+                            </div>
+
+                            {
+                                function () {
+                                    if (isView === false) {
+                                        return (
+                                            <>
+                                                <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                                <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                            </>
+                                        )
+                                    }
+                                }()
+                            }
+                        </form>
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </div>
+    </Fragment>
     );
 };
 

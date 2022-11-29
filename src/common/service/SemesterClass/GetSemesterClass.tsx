@@ -4,6 +4,7 @@ interface SemesterClass {
     id: any;
     name: string;
     semester_id: number;
+    is_new: boolean;
     registration_time: string;
     registration_expiration_time: string;
     semester_name: string;
@@ -15,7 +16,7 @@ export function getSemesterClass(dispatch: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return fetch(
-                `${process.env.REACT_APP_API_URL}/semester-class`, {
+                `${process.env.REACT_APP_API_URL}/semester-class/v2`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -47,6 +48,7 @@ export function getSemesterClass(dispatch: any) {
                     var class_ele: SemesterClass = {
                         id: ele.id,
                         name: ele.name,
+                        is_new: ele.is_new,
                         semester_id: ele.semester_id,
                         registration_time: ele.registration_time,
                         registration_expiration_time: ele.registration_expiration_time,

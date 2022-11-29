@@ -63,7 +63,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
   const isCreate: boolean = (semester_classes.modificationState === SemesterClassModificationStatus.Create);
   let semester_class_id: number = 0;
   if (!semester_classe || isCreate) {
-    semester_classe = { id: 0, max_participant: 0,registration_expiration_time: "", semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "", registration_time: "" };
+    semester_classe = { id: 0, is_new: false, max_participant: 0,registration_expiration_time: "", semester_name: "", course_id: 0, course_name: "", semester_id: 0, name: "", registration_time: "" };
   }
   else {
     semester_class_id = semester_classe.id;

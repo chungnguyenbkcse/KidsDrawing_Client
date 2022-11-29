@@ -3,6 +3,7 @@ export interface ISemesterClass {
     name: string;
     semester_id: number;
     semester_name: string;
+    is_new: boolean;
     registration_time: string;
     registration_expiration_time: string;
     course_id: number;

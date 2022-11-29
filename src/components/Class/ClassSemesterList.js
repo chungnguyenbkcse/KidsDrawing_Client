@@ -60,12 +60,15 @@ function ClassSemesterList(props) {
   };
 
   function editButton(cell, row) {
-    return (
+    if (row.is_new == true) {
+      return (
         <button type="button" className="btn btn-primary" onClick={()=> {
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Edit))
           }}>Chỉnh sửa</button>
     );
+    }
+    return ""
   }
 
   function removeButton(cell, row) {

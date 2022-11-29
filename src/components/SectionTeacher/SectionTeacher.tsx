@@ -25,6 +25,7 @@ import { getUserRegisterTutorialBySection } from "../../common/service/UserRegis
 import { BsFillTrashFill } from "react-icons/bs";
 import { LessonModificationStatus } from "../../store/models/lesson.interface";
 import { deleteUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/DeleteUserRegisterTutorial";
+import { deleteExercise } from "../../common/service/Exercise/DeleteExercise";
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -43,6 +44,8 @@ const SectionTeacher: React.FC = () => {
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);
     const [requestId, setRequestId] = useState(0);
+    const [popup3, setPopup3] = useState(false);
+    const [requestId1, setRequestId1] = useState(0);
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -317,6 +320,41 @@ const SectionTeacher: React.FC = () => {
                     </>
                 </Popup>
 
+{
+    function () {
+        if (requestId1 !== 0) {
+            return (
+                <Popup
+                    open={popup3}
+                    onClose={() => setPopup3(false)}
+                    closeOnDocumentClick
+                >
+                    <div className="popup-modal" id="popup-modal">
+                        <div className="popup-title">
+                            Bạn có chắc chắn muốn xóa?
+                        </div>
+                        <div className="popup-content">
+                            <button type="button"
+                                className="btn btn-danger"
+                                onClick={() => {
+                                    if (requestId1 === 0) {
+                                        return;
+                                    }
+                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                        position: toast.POSITION.TOP_CENTER
+                                    });
+                                    dispatch(deleteExercise(requestId1, idx))
+                                    setPopup3(false);
+                                }}>Remove
+                            </button>
+                        </div>
+                    </div>
+                </Popup>
+            )
+        }
+    }()
+}
+
                 {
                     function () {
                         if (requestId !== 0) {
@@ -507,7 +545,18 @@ const SectionTeacher: React.FC = () => {
                                                                                             Tên:
                                                                                         </div>
                                                                                         <div className="col-md-7">
-                                                                                            {ele.name}
+                                                                                            <div className="row">
+                                                                                                <div className="col-md-9">
+                                                                                                    {ele.name}
+                                                                                                </div>
+                                                                                                <div className="col-md-3">
+                                                                                                    <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                        e.stopPropagation(); 
+                                                                                                        setRequestId1(ele.id);
+                                                                                                        setPopup3(true)
+                                                                                                    }}/>
+                                                                                                </div>
+                                                                                            </div> 
                                                                                         </div>
                                                                                     </div>
                                                                                     <div className="row">

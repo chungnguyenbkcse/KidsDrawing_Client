@@ -16,6 +16,7 @@ import { IExerciseStudent } from "../../store/models/exercise_student.interface"
 import { getExerciseSubmissionBySectionAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionBySectionAndStudent";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { getAttendanceBySectionAndStudent } from "../../common/service/Attendance/GetUserAttendaceBySectionAndStudent";
+import { getStudentLeaveBySectionAndStudent } from "../../common/service/StudentLeave/GetStudentLeaveBySectionAndStudent";
 
 const SectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -67,6 +68,12 @@ const SectionStudent: React.FC = () => {
         is_attendance = id_j;
     }
 
+    var id_jx = localStorage.getItem('student_leave');
+    var student_leave = "";
+    if (id_jx !== null) {
+        student_leave = id_jx;
+    }
+
     console.log(class_id);
     console.log(class_students.classes_doing)
 
@@ -107,6 +114,7 @@ const SectionStudent: React.FC = () => {
                 else {
                     trackPromise(getClassesStudent(dispatch, id))
                     trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
+                    trackPromise(getStudentLeaveBySectionAndStudent(dispatch, section_id, id))
                     trackPromise(getSectionById(dispatch, section_id))
                     trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                     trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
@@ -117,6 +125,7 @@ const SectionStudent: React.FC = () => {
                 trackPromise(getClassesStudent(dispatch, id))
                 trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getSectionById(dispatch, section_id))
+                trackPromise(getStudentLeaveBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                 trackPromise(getExerciseLevel(dispatch))
@@ -498,7 +507,7 @@ const SectionStudent: React.FC = () => {
                                                 }
                                                 else {
                                                     if (sections.sections[0].teach_form === true) {
-                                                        if (is_active === "not_active" && is_attendance === "true") {
+                                                        if ((is_active === "not_active" && is_attendance === "true") || (is_attendance === "false" && student_leave === "true")) {
                                                             return (
                                                                 <>
                                                                     <h4 id="full-name">Recording</h4>

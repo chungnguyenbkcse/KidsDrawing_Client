@@ -109,11 +109,13 @@ const ViewSectionStudent: React.FC = () => {
                 else {
                     trackPromise(getTutorialPageBySection(dispatch, section_id))
                     trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
+                    
                 }
             }
             else {
                 trackPromise(getTutorialPageBySection(dispatch, section_id))
                 trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
+                
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);

@@ -1,12 +1,18 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/teacher_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postNotifyDb } from "../NotifyDb/PostNotifyDb";
-import { getTeacherLeaveByTeacher } from "./GetTeacherLeaveByTeacher";
+import { getTeacherLeaveByClass } from "./GetTeacherLeaveByClass";
 
 export function postTeacherLeave(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
+    var id_y = localStorage.getItem('class_id');
+
+    let class_id = 0;
+
+    if (id_y !== null) {
+        class_id = parseInt(id_y);
+    }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
@@ -38,11 +44,7 @@ export function postTeacherLeave(data: any, idx: any) {
             .then (val => {
                 toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log(val)
-                dispatch(postNotifyDb({
-                    name: `Gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`,
-                    description: `Bạn đã gửi yêu cầu nghỉ dạy buổi học ${val.section_number} lớp ${val.class_name}!`
-                }, 0))
-                getTeacherLeaveByTeacher(dispatch, data.teacher_id)
+                getTeacherLeaveByClass(dispatch, class_id)
             })
             .catch(error => {
                 toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

@@ -9,13 +9,13 @@ import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IChildsClassState, IExerciseParentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IChildsClassState, IExerciseParentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, ISectionTeacherState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { IExerciseParent } from "../../store/models/exercise_parent.interface";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { IStudentLeave } from "../../store/models/student_leave.interface";
 import { ChartLine } from "../../common/components/CharLine";
@@ -27,11 +27,14 @@ import { getUserGradeExerciseByClassAndParent } from "../../common/service/UserG
 import { getChildsClassByClassAndParent } from "../../common/service/ChildsClass/GetChildsInClassByClassAndParent";
 import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
+import { BsFillTrashFill } from "react-icons/bs";
+import { deleteStudentLeaveByParent } from "../../common/service/StudentLeave/DeleteStudentLeaveByParent";
+import { deleteExerciseSubmissionParent } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionByParent";
 
 
 const DetailClassParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const sections: ISectionState = useSelector((state: IStateType) => state.sections);
+    const sections: ISectionTeacherState = useSelector((state: IStateType) => state.section_teachers);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
     const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
@@ -95,6 +98,12 @@ const DetailClassParent: React.FC = () => {
     const [checked1, setChecked1] = useState(true);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
+
+    const [popup3, setPopup3] = useState(false);
+    const [requestId1, setRequestId1] = useState(0);
+
+    const [popup2, setPopup2] = useState(false);
+    const [requestId, setRequestId] = useState(0);
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -277,6 +286,8 @@ const DetailClassParent: React.FC = () => {
         localStorage.setItem('section_number', student_leave.section_number.toString())
         localStorage.setItem('student_leave_id', student_leave.id.toString())
         localStorage.setItem('resson', student_leave.description)
+        localStorage.setItem('student_id', student_leave.student_id.toString())
+        localStorage.setItem('student_name', student_leave.student_name)
         dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Edit))
         onAnonymousNotificationRemove()
     }
@@ -286,6 +297,8 @@ const DetailClassParent: React.FC = () => {
         localStorage.setItem('section_number', student_leave.section_number.toString())
         localStorage.setItem('student_leave_id', student_leave.id.toString())
         localStorage.setItem('resson', student_leave.description)
+        localStorage.setItem('student_id', student_leave.student_id.toString())
+        localStorage.setItem('student_name', student_leave.student_name)
         dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Remove))
         onAnonymousNotificationRemove()
     }
@@ -362,8 +375,78 @@ const DetailClassParent: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
                 <ToastContainer />
 
+                {
+                    function () {
+                        if (requestId1 !== 0) {
+                            return (
+                                <Popup
+                                    open={popup3}
+                                    onClose={() => setPopup3(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="popup-modal" id="popup-modal">
+                                        <div className="popup-title">
+                                            Bạn có chắc chắn muốn xóa?
+                                        </div>
+                                        <div className="popup-content">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    if (requestId1 === 0) {
+                                                        return;
+                                                    }
+                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                        position: toast.POSITION.TOP_CENTER
+                                                    });
+                                                    dispatch(deleteStudentLeaveByParent(requestId1, idx))
+                                                    setPopup3(false);
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )
+                        }
+                    }()
+                }
+
+                {
+                    function () {
+                        if (requestId !== 0) {
+                            return (
+                                <Popup
+                                    open={popup2}
+                                    onClose={() => setPopup2(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="popup-modal" id="popup-modal">
+                                        <div className="popup-title">
+                                            Bạn có chắc chắn muốn xóa?
+                                        </div>
+                                        <div className="popup-content">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    if (requestId === 0) {
+                                                        return;
+                                                    }
+                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                        position: toast.POSITION.TOP_CENTER
+                                                    });
+                                                    dispatch(deleteExerciseSubmissionParent(requestId, idx))
+                                                    setPopup2(false);
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )
+                        }
+                    }()
+                }
+                
                 <div className="row">
-                    <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}/${numberSectionCount}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}/${sections.sections.length}`} icon="book" class="primary" />
                     <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
                     <TopCard title="NGHỈ HỌC" text={`${student_leaves.leaves.length}`} icon="book" class="danger" />
                     <div className="col-xl-3 col-md-3 mb-4" id="content-button-create-teacher-level">
@@ -703,7 +786,18 @@ const DetailClassParent: React.FC = () => {
                                                                                     Tên:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.exercise_name}
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-9">
+                                                                                            {ele.exercise_name}
+                                                                                        </div>
+                                                                                        <div className="col-md-3">
+                                                                                            <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                e.stopPropagation(); 
+                                                                                                setRequestId(ele.id);
+                                                                                                setPopup2(true)
+                                                                                            }}/>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">
@@ -780,7 +874,18 @@ const DetailClassParent: React.FC = () => {
                                                                                     Buổi nghỉ:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.section_number}
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-9">
+                                                                                            {ele.section_number}
+                                                                                        </div>
+                                                                                        <div className="col-md-3">
+                                                                                            <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                e.stopPropagation(); 
+                                                                                                setRequestId1(ele.id);
+                                                                                                setPopup3(true)
+                                                                                            }}/>
+                                                                                        </div>
+                                                                                    </div> 
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">

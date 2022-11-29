@@ -21,8 +21,11 @@ import Loading from "../../common/components/Loading";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { ISectionTeacher } from "../../store/models/section_teacher.interface";
+import { BsFillTrashFill } from "react-icons/bs";
+import { deleteTeacherLeave } from "../../common/service/TeacherLeave/DeleteTeacherLeave";
+import { getTeacherLeaveByClass } from "../../common/service/TeacherLeave/GetTeacherLeaveByClass";
 
 
 const DetailClassTeacher: React.FC = () => {
@@ -65,6 +68,9 @@ const DetailClassTeacher: React.FC = () => {
             setElement(sections.sections.sort((a, b) => a.number - b.number).slice(count * 6, count * 6 + 6))
         }
     }
+
+    const [popup3, setPopup3] = useState(false);
+    const [requestId1, setRequestId1] = useState(0);
 
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberNotApprovedNowCount: number = exercise_submissions.exercise_not_gradeds.length;
@@ -113,7 +119,7 @@ const DetailClassTeacher: React.FC = () => {
                     trackPromise(getSectionByClass(dispatch, class_id))
                     trackPromise(getTeacher(dispatch))
                     trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
-                    trackPromise(getTeacherLeaveByTeacher(dispatch, id))
+                    trackPromise(getTeacherLeaveByClass(dispatch, class_id))
                 }
             }
             else {
@@ -121,7 +127,7 @@ const DetailClassTeacher: React.FC = () => {
                 trackPromise(getSectionByClass(dispatch, class_id))
                 trackPromise(getTeacher(dispatch))
                 trackPromise(getExerciseSubmissionByClass(dispatch, class_id))
-                trackPromise(getTeacherLeaveByTeacher(dispatch, id))
+                trackPromise(getTeacherLeaveByClass(dispatch, class_id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
@@ -303,11 +309,45 @@ const DetailClassTeacher: React.FC = () => {
                 </div>
             </div> : <Fragment>
             <ToastContainer />
+            {
+                function () {
+                    if (requestId1 !== 0) {
+                        return (
+                            <Popup
+                                open={popup3}
+                                onClose={() => setPopup3(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (requestId1 === 0) {
+                                                    return;
+                                                }
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                });
+                                                dispatch(deleteTeacherLeave(requestId1, idx))
+                                                setPopup3(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
                 <div className="row">
-                    <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length} / ${total_section}`} icon="book" class="primary" />
+                    <TopCard title="SỐ BUỔI ĐÃ DẠY" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}/${total_section}`} icon="book" class="primary" />
                     <TopCard title="SỐ BÀI KIỂM TRA CHƯA CHẤM" text={`${numberNotApprovedNowCount}`} icon="book" class="danger" />
                     <TopCard title="SỐ BUỔI NGHỈ" text={`${teacher_leaves.acceptLeaves.length}`} icon="book" class="danger" />
                     <div className="col-xl-3 col-md-3 mb-2" id="content-button-create-teacher-level">
@@ -759,7 +799,18 @@ const DetailClassTeacher: React.FC = () => {
                                                                                     Buổi nghỉ:
                                                                                 </div>
                                                                                 <div className="col-md-7">
-                                                                                    {ele.section_number}
+                                                                                <div className="row">
+                                                                                    <div className="col-md-9">
+                                                                                        {ele.section_number}
+                                                                                    </div>
+                                                                                    <div className="col-md-3">
+                                                                                        <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                            e.stopPropagation(); 
+                                                                                            setRequestId1(ele.id);
+                                                                                            setPopup3(true)
+                                                                                        }}/>
+                                                                                    </div>
+                                                                                </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div className="row">

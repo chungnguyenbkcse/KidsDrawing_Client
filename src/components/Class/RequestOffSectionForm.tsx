@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment } from "react";
-import { IStateType, ITeacherLeaveState, IUserState, ISectionState, IAnonymousNotificationState } from "../../store/models/root.interface";
+import { IStateType, ITeacherLeaveState, IUserState, ISectionState, IAnonymousNotificationState, ISectionTeacherState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import TextInput from "../../common/components/TextInput";
 import { addLeaves, editAcceptTeacherLeave } from "../../store/actions/teacher_leave.action";
@@ -79,26 +79,35 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     if (id_z !== null) {
         total_section_end = parseInt(id_z);
     }
+
+    var id_hx = localStorage.getItem('substitute_teacher_name');
+    var substitute_teacher_name: string = "";
+    if (id_hx !== null) {
+        substitute_teacher_name = (id_hx);
+    }
     
     if (isCreate){
         teacher_leave = { id: 0, start_time: "", end_time: "", section_id: 0, class_id: 0, section_number: 0, teacher_id: 0, substitute_teacher_id: 0, description: "", section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
     }else {
-        teacher_leave = { id: teacher_leave_id,start_time: "", end_time: "", section_id: section_id, class_id: class_id, section_number: section_number, teacher_id: teacher_id, substitute_teacher_id: substitute_teacher_id, description: description, section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: "", create_time: "", update_time: "" }
+        teacher_leave = { id: teacher_leave_id,start_time: "", end_time: "", section_id: section_id, class_id: class_id, section_number: section_number, teacher_id: teacher_id, substitute_teacher_id: substitute_teacher_id, description: description, section_name: "", class_name: "", teacher_name: "", reviewer_id: 0, status: "", substitute_teacher_name: substitute_teacher_name, create_time: "", update_time: "" }
     }
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listTeacher: IUser[] = users.teachers
     const listTeachers: Option1[] = [];
-    const sections: ISectionState | null = useSelector((state: IStateType) => state.sections);
+    const sections: ISectionTeacherState | null = useSelector((state: IStateType) => state.section_teachers);
 
     listTeacher.map((ele) => {
         let item: Option1 = { "name": ele.username, "value": ele.id }
         return listTeachers.push(item)
     })
 
+
     const listSections: Option1[] = [];
+    const listSectionNumbers: number[] = []
     sections.sections.map((ele) => {
         if (ele.number > total_section_end) {
             let item: Option1 = { "name": "Buổi " + ele.number, "value": ele.id }
+            listSectionNumbers.push(ele.number)
             return listSections.push(item)
         }
         else {
@@ -112,6 +121,8 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         value: teacher_leave.section_id
     }
 
+    let section_numberx = teacher_leave.section_number;
+
 
     const [formState, setFormState] = useState({
         section_id: { error: "", value: teacher_leave.section_id },
@@ -121,6 +132,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
     function hasFormValueChanged(model: OnChangeModel): void {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+        console.log(formState)
     }
 
 
@@ -137,9 +149,8 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
     function saveForm(formState: ITeacherLeaveFormState, saveFn: Function): void {
         if (teacher_leave) {
-            const id = toast.loading("Đang gửi yêu cầu. Vui lòng đợi trong giây lát...", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+            const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                position: toast.POSITION.TOP_CENTER
             });
 
             if (saveFn === editAcceptTeacherLeave) {
@@ -147,7 +158,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                     section_id: formState.section_id.value,
                     substitute_teacher_id: formState.substitute_teacher_id.value,
                     description: formState.description.value
-                }, id))
+                }, idx))
             }
             else {
                 dispatch(postTeacherLeave({
@@ -156,7 +167,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                     teacher_id: teacher_id,
                     classes_id: class_id,
                     description: formState.description.value
-                }, id))
+                }, idx))
             }
 
             console.log({
@@ -182,76 +193,144 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         return (formState.description.error || !formState.description.value) as boolean;
     }
 
-    if (listSections.includes(section_ele)) {
-        return (
-            <Fragment>
-                <ToastContainer />
-                <div className="row text-left">
-                    <div className="col-xl-12 col-lg-12">
-                        <div className="card shadow shadow-xx">
-                            <div className="card-header py-3">
-                                <h6 className="m-0 font-weight-bold text-green">Gửi yêu cầu nghỉ dạy</h6>
-                            </div>
-                            <div className="card-body">
-                                <form onSubmit={saveUser}>
-                                    <div className="form-group">
-                                        <SelectKeyValue
-                                            id="input_section_id"
-                                            field="section_id"
-                                            label="Buổi học"
-                                            options={listSections}
-                                            required={true}
-                                            onChange={hasFormValueChanged}
-                                            value={formState.section_id.value}
-                                        />
-                                    </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
+    if ((isCreate === false)) {
+        if (listSectionNumbers.includes(section_numberx) && isView === false) {
+            return (
+                <Fragment>
+                    <div className="row text-left">
+                        <div className="col-xl-12 col-lg-12">
+                            <div className="card shadow shadow-xx">
+                                <div className="card-header py-3">
+                                    <h6 className="m-0 font-weight-bold text-green">Gửi yêu cầu nghỉ dạy</h6>
+                                </div>
+                                <div className="card-body">
+                                    <form onSubmit={saveUser}>
+                                        <div className="form-group">
                                             <SelectKeyValue
-                                                id="input_substitute_teacher_id"
-                                                field="substitute_teacher_id"
-                                                label="Giáo viên dạy thay"
-                                                options={listTeachers}
+                                                id="input_section_id"
+                                                field="section_id"
+                                                label="Buổi học"
+                                                options={listSections}
                                                 required={true}
                                                 onChange={hasFormValueChanged}
-                                                value={formState.substitute_teacher_id.value}
+                                                value={formState.section_id.value}
                                             />
                                         </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <TextInput id="input_description"
-                                            field="description"
-                                            value={formState.description.value}
-                                            onChange={hasFormValueChanged}
-                                            required={false}
-                                            maxLength={100}
-                                            label="Lý do"
-                                            placeholder="" />
-                                    </div>
-    
-                                    {
-                                        function () {
-                                            if (isView === false) {
-                                                return (
-                                                    <>
-                                                        <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-                                                        <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
-                                                    </>
-                                                )
-                                            }
-                                        }()
-                                    }
-                                </form>
+                                        <div className="form-row">
+                                            <div className="form-group col-md-6">
+                                                <SelectKeyValue
+                                                    id="input_substitute_teacher_id"
+                                                    field="substitute_teacher_id"
+                                                    label="Giáo viên dạy thay"
+                                                    options={listTeachers}
+                                                    required={true}
+                                                    onChange={hasFormValueChanged}
+                                                    value={formState.substitute_teacher_id.value}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <TextInput id="input_description"
+                                                field="description"
+                                                value={formState.description.value}
+                                                onChange={hasFormValueChanged}
+                                                required={false}
+                                                maxLength={100}
+                                                label="Lý do"
+                                                placeholder="" />
+                                        </div>
+        
+                                        {
+                                            function () {
+                                                if (isView === false) {
+                                                    return (
+                                                        <>
+                                                            <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                                            <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                                        </>
+                                                    )
+                                                }
+                                            }()
+                                        }
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </Fragment>
-        );
+                </Fragment>
+            );
+        }
+        else {
+            return (
+                <Fragment>
+                    <div className="row text-left">
+                        <div className="col-xl-12 col-lg-12">
+                            <div className="card shadow shadow-xx">
+                                <div className="card-header py-3">
+                                    <h6 className="m-0 font-weight-bold text-green">Gửi yêu cầu nghỉ dạy</h6>
+                                </div>
+                                <div className="card-body">
+                                    <form onSubmit={saveUser}>
+                                        <div className="form-group">
+                                            <TextInput
+                                                    id="input_section_id"
+                                                     field="section_id"
+                                                     value={"Buổi " + teacher_leave.section_number}
+                                                     onChange={hasFormValueChanged}
+                                                     required={false}
+                                                     maxLength={100}
+                                                     label="Buổi học"
+                                                     placeholder=""
+                                                />
+                                        </div>
+                                        <div className="form-row">
+                                            <div className="form-group col-md-6">
+                                                <TextInput
+                                                    id="input_substitute_teacher_id"
+                                                     field="substitute_teacher_id"
+                                                     value={teacher_leave.substitute_teacher_name}
+                                                     onChange={hasFormValueChanged}
+                                                     required={false}
+                                                     maxLength={100}
+                                                     label="Giáo viên dạy thay"
+                                                     placeholder=""
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <TextInput id="input_description"
+                                                field="description"
+                                                value={formState.description.value}
+                                                onChange={hasFormValueChanged}
+                                                required={false}
+                                                maxLength={100}
+                                                label="Lý do"
+                                                placeholder="" />
+                                        </div>
+        
+                                        {
+                                            function () {
+                                                if (isView === false) {
+                                                    return (
+                                                        <>
+                                                            <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                                            <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                                        </>
+                                                    )
+                                                }
+                                            }()
+                                        }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Fragment>
+            );
+        }
     }
     return (
         <Fragment>
-            <ToastContainer />
             <div className="row text-left">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow shadow-xx">
@@ -261,14 +340,15 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                         <div className="card-body">
                             <form onSubmit={saveUser}>
                                 <div className="form-group">
-                                    <TextInput id="input_section_id"
+                                    <SelectKeyValue
+                                        id="input_section_id"
                                         field="section_id"
                                         label="Buổi học"
-                                        value={section_ele.name}
+                                        options={listSections}
+                                        required={true}
                                         onChange={hasFormValueChanged}
-                                        required={false}
-                                        maxLength={100}
-                                        placeholder="" />
+                                        value={formState.section_id.value}
+                                    />
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-6">

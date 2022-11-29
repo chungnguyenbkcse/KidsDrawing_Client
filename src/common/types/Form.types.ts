@@ -51,6 +51,12 @@ export interface IStudentLeaveFormState {
     description: IFormStateField<string>;
 }
 
+export interface IStudentLeaveForParentFormState {
+    section_id: IFormStateField<number>;
+    student_id: IFormStateField<number>;
+    description: IFormStateField<string>;
+}
+
 export interface ISubmitRecordFormState {
     link_url: IFormStateField<string>;
 }

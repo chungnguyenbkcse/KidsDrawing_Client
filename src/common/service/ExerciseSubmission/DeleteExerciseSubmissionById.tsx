@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/exercise.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getExerciseForClassStudent } from "../ExerciseStudent/GetExerciseForClassStudent";
 import { getExerciseSubmissionByClassAndStudent } from "./GetExerciseSubmissionByClassAndStudent";
 
 
@@ -50,6 +51,7 @@ export function deleteExerciseSubmission(id: number, idx: any) {
                 console.log(val)
                 toast.update(idx, { render: "Chỉnh bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
                 getExerciseSubmissionByClassAndStudent(dispatch, class_id, idxx)
+                getExerciseForClassStudent(dispatch, class_id, idxx)
             })
             .catch(error => {
                 toast.update(idx, { render: "Chỉnh bài nộp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

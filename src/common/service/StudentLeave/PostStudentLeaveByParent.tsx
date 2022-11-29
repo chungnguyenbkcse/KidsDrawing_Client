@@ -1,11 +1,16 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest } from "../../../store/actions/teacher_leave.action";
+import { fetchDataRequest } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postNotifyDb } from "../NotifyDb/PostNotifyDb";
-import { getTeacherLeaveByClass } from "./GetTeacherLeaveByClass";
+import { getStudentLeaveByClassAndParent } from "./GetStudentLeaveByClassAndParent";
 
-export function putTeacherLeave(id: any, data: any, idx: any) {
+export function postStudentLeaveByParent(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    var id_x = localStorage.getItem('id');
+    var idxx: number = 0;
+    if (id_x !== null) {
+        idxx = parseInt(id_x);
+    }
+
     var id_y = localStorage.getItem('class_id');
 
     let class_id = 0;
@@ -16,8 +21,8 @@ export function putTeacherLeave(id: any, data: any, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/teacher-leave/${id}`, {
-                    method: "PUT",
+                `${process.env.REACT_APP_API_URL}/student-leave`, {
+                    method: "POST",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -31,7 +36,7 @@ export function putTeacherLeave(id: any, data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putTeacherLeave(id, data, idx))
+                        dispatch(postStudentLeaveByParent(data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -43,11 +48,11 @@ export function putTeacherLeave(id: any, data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                getTeacherLeaveByClass(dispatch, class_id)
-                toast.update(idx, { render: "Yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                getStudentLeaveByClassAndParent(dispatch, class_id, idxx)
+                toast.update(idx, { render: "Yêu cầu nghỉ học đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu nghỉ học đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             });
     };
 }

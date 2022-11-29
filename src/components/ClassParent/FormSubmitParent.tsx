@@ -74,7 +74,7 @@ function FormSubmitParent(): JSX.Element {
     const history = useHistory();
     function routeHome() {
         history.push({
-            pathname: "/classes/detail-student"
+            pathname: "/student/classes-doing"
         });
     }
 

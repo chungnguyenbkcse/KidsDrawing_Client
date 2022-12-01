@@ -27,7 +27,7 @@ type Option1 = {
     value: string;
 }
 
-const ConestDetailStudent: React.FC = () => {
+const ConestDetailParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
@@ -427,4 +427,4 @@ const ConestDetailStudent: React.FC = () => {
     );
 };
 
-export default ConestDetailStudent;
+export default ConestDetailParent;

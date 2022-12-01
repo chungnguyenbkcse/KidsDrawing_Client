@@ -75,15 +75,12 @@ import StudentHome from "../components/Home/StudentHome";
 import ManageChild from "../components/ManageChild/ManageChild";
 import ManageClassesDone from "../components/ManageChild/ManageClassesDone";
 import ClassParent from "../components/ClassParent/ClassParent";
-import ManageClassesDoing from "../components/ManageChild/ManageClassesDoing";
 import SemesterClassDetail from "../components/Discovery/SemesterClassDetail";
-import ConestDetail from "../components/Discovery/ContestDetail";
 import CartForm from "../components/Discovery/CartForm";
 import DetailContestStudent from "../components/ManageStudent/DetailContestStudent";
 import Attendance from "../components/SectionTeacher/Attendance";
 import ClassStudent from "../components/ClassStudent/ClassStudent";
 import DiscoveryStudent from "../components/DiscoveryStudent/Discovery";
-import ConestDetailStudent from "../components/Discovery/ContestDetail";
 import SemesterClassDetailStudent from "../components/DiscoveryStudent/SemesterClassDetail";
 import DetailClassStudent from "../components/ClassStudent/DetailClassStudent";
 import SectionStudent from "../components/ClassStudent/SectionStudent";
@@ -130,6 +127,8 @@ import DetailContestNotOpenNowParent from "../components/Contest/DetailContestNo
 import DetailContestNotOpenNowTeacher from "../components/Contest/DetailContestNotOpenNowTeacher";
 import EditSectionTeacher1 from "../components/SectionTeacher/EditSectionTeacher1";
 import ClassDetail from "../components/Class/ClassDetail";
+import ConestDetailParent from "../components/Discovery/ContestDetail";
+import ConestDetailStudent from "../components/DiscoveryStudent/ContestDetail";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -237,7 +236,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/semester-class/detail`}><SemesterClassDetail /></Route>
                                 <Route path={`/courses`}><CourseParent /></Route>
                                 <Route path={`/classes`}><ClassParent /></Route>
-                                <Route path={`/contests/register`}><ConestDetail /></Route>
+                                <Route path={`/contests/register`}><ConestDetailParent /></Route>
                                 <Route path={`/contests`}><ContestParent /></Route>
                                 <Route path={`/schedules`}><ScheduleParent /></Route>
                                 <Route path="/"><ParentHome /></Route>

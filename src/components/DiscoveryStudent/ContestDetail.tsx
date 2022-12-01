@@ -1,6 +1,6 @@
 import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IStateType, IRootPageStateType, IUserState } from "../../store/models/root.interface";
+import { IStateType, IRootPageStateType, IUserState, ILessonState } from "../../store/models/root.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import "./ConestDetail.css"
 import { toast, ToastContainer } from "react-toastify";
@@ -13,16 +13,21 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 import Loading from "../../common/components/Loading";
-import { GrLinkDown } from "react-icons/gr";
+import { GrLinkDown, GrLinkNext } from "react-icons/gr";
+import { setModificationState } from "../../store/actions/lesson.action";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import Popup from "reactjs-popup";
+import { deleteUserRegisterContestByContestAndStudent } from "../../common/service/UserRegisterContest/DeleteUserRegisterJoinContestByContestAndStudent";
+import { BsFillTrashFill } from "react-icons/bs";
 type Option1 = {
     label: string;
     value: string;
 }
 
-const ConestDetail: React.FC = () => {
+const ConestDetailStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listTeacher: IUser[] = users.students
     const listTeachers: Option1[] = [];
@@ -36,6 +41,8 @@ const ConestDetail: React.FC = () => {
     if (id_x !== null) {
         contest_id = parseInt(id_x);
     }
+
+    const [popup, setPopup] = useState(false);
 
     console.log(contest_id)
 
@@ -93,6 +100,12 @@ const ConestDetail: React.FC = () => {
         max_participant = id_h;
     }
 
+    var id_k = localStorage.getItem('status');
+    let status: string = "";
+    if (id_k !== null) {
+        status = id_k;
+    }
+
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -136,7 +149,7 @@ const ConestDetail: React.FC = () => {
 
     const history = useHistory();
     function routeHome() {
-        let path = `/contests`;
+        let path = `/discover/contest`;
         history.push(path);
     }
 
@@ -155,6 +168,11 @@ const ConestDetail: React.FC = () => {
         setTimeout(function () {
             routeHome();
         }, 2000);
+    }
+
+    function handleRemove() {
+        dispatch(setModificationState(LessonModificationStatus.Remove))
+        setPopup(true)
     }
 
     const [valueTeacher, setValueTeacher] = useState<any[]>([])
@@ -183,6 +201,37 @@ const ConestDetail: React.FC = () => {
                 </div>
             </div> : <Fragment>
                 <ToastContainer />
+                {
+                    function () {
+                        if ((lessons.modificationState === LessonModificationStatus.Remove)) {
+                            return (
+                                <Popup
+                                    open={popup}
+                                    onClose={() => setPopup(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="popup-modal" id="popup-modal">
+                                        <div className="popup-title">
+                                            Bạn có chắc chắn muốn xóa?
+                                        </div>
+                                        <div className="popup-content">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    setPopup(false);
+                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                        position: toast.POSITION.TOP_CENTER
+                                                    });
+                                                    dispatch(deleteUserRegisterContestByContestAndStudent(contest_id, id, idx, routeHome))
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )
+                        }
+                    }()
+                }
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
                         <div className="row no-gutters align-items-center">
@@ -227,11 +276,44 @@ const ConestDetail: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row text-center justify-content-center" id="btn-register-course">
-                            <button className="btn btn-success btn-green" id="btn-create-register-course" onClick={() => handleRegister()}>
-                                <i className="fas fa fa-plus"></i>
-                                Đăng kí ngay
-                            </button>
+                        <div className="row">
+                        {
+                            function () {
+                                if (status != "Registed") {
+                                    return (
+                                        <>
+                                            <div className="col-lg-12 col-md-12 col-xs-12 pl-4">
+                                                
+                                                <div className="text-center justify-content-center">
+                                                    <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleRegister()}>
+                                                        <GrLinkNext id="btn-payment" color="#ffffff" />
+                                                        Đăng kí ngay
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            }()
+                        }
+                        {
+                            function () {
+                                if (status == "Registed") {
+                                    return (
+                                        <>
+                                            <div className="col-lg-12 col-md-12 col-xs-12 pl-4">
+                                                <div className="text-center justify-content-center">
+                                                    <button className="btn btn-danger" id="btn-create-register-coursexx" onClick={() => handleRemove()}>
+                                                        <BsFillTrashFill id="btn-payment" color="#ffffff" />
+                                                        Hủy kí ngay
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            }()
+                        }
                         </div>
                     </div>
                 </div>
@@ -266,4 +348,4 @@ const ConestDetail: React.FC = () => {
     );
 };
 
-export default ConestDetail;
+export default ConestDetailStudent;

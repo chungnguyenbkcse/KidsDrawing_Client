@@ -44,7 +44,7 @@ export function deleteUserChild(id: any, idx: any) {
                 toast.update(idx, { render: "Xóa tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
             })
             .catch(error => {
-                toast.update(idx, { render: "Xóa tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

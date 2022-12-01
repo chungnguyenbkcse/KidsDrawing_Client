@@ -41,7 +41,7 @@ export function putSemesterClass(id: any, data: any, idx: any) {
                 getSemesterClass(dispatch)
             })
             .catch(error => {
-                toast.update(idx, { render: "Chỉnh lớp theo kì không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh lớp theo kì không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

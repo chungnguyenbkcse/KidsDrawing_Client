@@ -54,7 +54,7 @@ export function deleteExerciseSubmission(id: number, idx: any) {
                 getExerciseForClassStudent(dispatch, class_id, idxx)
             })
             .catch(error => {
-                toast.update(idx, { render: "Chỉnh bài nộp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh bài nộp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

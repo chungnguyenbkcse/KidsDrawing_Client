@@ -25,7 +25,7 @@ export function postRegisterStudent(data: any, id: any) {
                 toast.update(id, { render: "Đăng ký thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });           
             })
             .catch(error => {
-                toast.update(id, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(id, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
     };
 }

@@ -46,7 +46,7 @@ export function putUserRegisterTutorial(id: any, tutorial: any, idx: any) {
                 console.log(data)
             })
             .catch(error => {
-                toast.update(idx, { render: "Bạn đã xác nhận giáo án cho giáo viên không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Bạn đã xác nhận giáo án cho giáo viên không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

@@ -40,7 +40,7 @@ export function postUserRegisterJoinContest1(data: any, idx: any, routeHome: any
                 }, 2000)
             })
             .catch(error => {
-                toast.update(idx, { render: "Đăng kí không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 }); 
+                toast.update(idx, { render: "Đăng kí không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true }); 
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

@@ -53,7 +53,7 @@ export function putContest(id: any,data: any, valueTeacher: any[], idx: any, rou
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
-                toast.update(idx, { render: "Chỉnh cuộc thi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh cuộc thi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

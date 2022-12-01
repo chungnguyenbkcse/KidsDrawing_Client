@@ -47,7 +47,7 @@ export function postTeacherLeave(data: any, idx: any) {
                 getTeacherLeaveByClass(dispatch, class_id)
             })
             .catch(error => {
-                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
     };
 }

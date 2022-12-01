@@ -28,7 +28,7 @@ export function postRegister(data: any, changeRouteHome: any, id: any) {
                 }, 2000);            
             })
             .catch(error => {
-                toast.update(id, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(id, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
     };
 }

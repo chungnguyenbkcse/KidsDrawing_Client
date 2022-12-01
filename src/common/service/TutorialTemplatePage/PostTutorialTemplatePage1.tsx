@@ -39,7 +39,7 @@ export function postTutorialTemplatePage1(tutorialtemplatepage: any, idx: any) {
                 toast.update(idx, { render: "Thêm bước cho giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Thêm bước cho giáo án không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm bước cho giáo án không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

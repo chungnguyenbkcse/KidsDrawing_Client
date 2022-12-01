@@ -62,7 +62,7 @@ export function deleteUserRegisterJoinSemesterBySemesterClassAndStudent(semester
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
-                toast.update(idx, { render: "Hủy đăng kí không thành công!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Hủy đăng kí không thành công!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

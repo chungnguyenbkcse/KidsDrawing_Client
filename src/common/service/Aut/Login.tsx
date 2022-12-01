@@ -78,7 +78,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 };            
             })
             .catch(error => {
-                toast.update(id, { render: "Đăng nhập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(id, { render: "Đăng nhập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
     };
 }

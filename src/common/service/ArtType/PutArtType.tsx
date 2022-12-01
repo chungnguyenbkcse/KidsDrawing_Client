@@ -41,7 +41,7 @@ export function putArtType(id: any, data: any, idx: any) {
                 getArtType(dispatch)
             })
             .catch(error => {
-                toast.update(idx, { render: "Chỉnh thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh thể loại không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

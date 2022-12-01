@@ -168,7 +168,7 @@ function FormSubmitContestStudent(): JSX.Element {
             dispatch(setModificationState(UserModificationStatus.None));
             setImage(null)
             setPreview("")
-            toast.update(idx, { render: "Vui lòng chọn học sinh trước khi nộp!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+            toast.update(idx, { render: "Vui lòng chọn học sinh trước khi nộp!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
         }
         else {
             var url = await setImageAction();

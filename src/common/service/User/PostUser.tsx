@@ -41,7 +41,7 @@ export function postUser(data: any, idx: any) {
                 dispatch(fetchDataSuccess(data))
             })
             .catch(error => {
-                toast.update(idx, { render: "Thêm tài khoản con không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm tài khoản con không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

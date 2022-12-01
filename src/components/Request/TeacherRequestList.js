@@ -34,7 +34,7 @@ function TeacherRequestList(props) {
     }
 
 
-  const datas = teacher_leaves.leaves.filter((ele) => ele.status === "Not approved now");
+  const datas = teacher_leaves.leaves.filter((ele) => ele.status === "Not approve now");
 
   const options = {
     paginationSize: 5,

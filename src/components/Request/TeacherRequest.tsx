@@ -72,7 +72,7 @@ const TeacherRequest: React.FC = () => {
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
       <div className="row">
-        <TopCard title="CHƯA DUYỆT" text={`${numberItemsCount}`} icon="box" class="primary" />
+        <TopCard title="CHƯA DUYỆT" text={`${teachers.leaves.filter((ele) => ele.status === "Not approve now").length}`} icon="box" class="primary" />
         <TopCard title="ĐÃ DUYỆT" text={`${teachers.acceptLeaves.length}`} icon="box" class="primary" />
       </div>
 

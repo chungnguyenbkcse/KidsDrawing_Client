@@ -72,7 +72,7 @@ export function getUserRegisterTutorialBySection(dispatch: any, section_id: numb
                             return dispatch(addUserRegisterTutorialApproved(UserRegisterTutorial))
                         }
                     }
-                    else if (ele.status === "Not approved now"){
+                    else if (ele.status === "Not approve now"){
                         if (index === 0){
                             return dispatch(initialUserRegisterTutorialNotApprovedNow(UserRegisterTutorial));
                         }

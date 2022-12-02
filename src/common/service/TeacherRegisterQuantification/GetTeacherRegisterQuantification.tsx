@@ -70,7 +70,7 @@ export function getTeacherRegisterQuantification(dispatch: any) {
                             return dispatch(addTeacherRegisterQuatificationApproved(TeacherRegisterQuantification))
                         }
                     }
-                    else if (ele.status === "Not approved now"){
+                    else if (ele.status === "Not approve now"){
                         if (index === 0){
                             return dispatch(initialTeacherRegisterQuatificationNotApprovedNow(TeacherRegisterQuantification));
                         }

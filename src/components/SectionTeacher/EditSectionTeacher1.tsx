@@ -202,7 +202,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                         section_id: section_id,
                         creator_id: id,
                         name: formState.name.value,
-                        status: "Not approved now"
+                        status: "Not approve now"
                     }, idx, routeHome))
                 }
             }

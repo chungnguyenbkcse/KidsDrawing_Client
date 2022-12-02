@@ -7,6 +7,10 @@ const Header: React.FC = () => {
     function handlerStart() {
         history.push('/auth')
     }
+
+    function handleRegister() {
+        history.push('/register')
+    }
     return (
         <div className="header">
             <nav className="navbar navbar-expand-lg navbar-light">
@@ -28,7 +32,7 @@ const Header: React.FC = () => {
                                 border: '1px solid #F2F2F2',
                                 color: "#ffffff",
                                 fontWeight: "bold",
-                            }}>Đăng kí</button>
+                            }} onClick={() => {handleRegister()}}>Đăng kí</button>
                         </li>
                         <li className="nav-item" style={{
                             marginRight: "10px"

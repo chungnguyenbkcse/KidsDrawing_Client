@@ -6,9 +6,13 @@ import React from "react";
 import "../../assets/css/LandingPage.css"
 import Header from "../../common/components/Header";
 import Footer from "../../common/components/Footer";
+import { useHistory } from "react-router-dom";
 
 const LandingPage: React.FC = () => {
-
+    let history = useHistory()
+    function handleRegister() {
+        history.push('/register')
+    }
     return (
 
         <div className="container-fluid full-height" id="login-page">
@@ -28,7 +32,7 @@ const LandingPage: React.FC = () => {
                                 color: '#ffffff',
                                 fontSize: '40px'
                             }}>Ươm mầm ước mơ của bé</h2>
-                            <button className="btn btn-primary btn-sigup-landingpage my-2 my-sm-0" >Đăng kí ngay</button>
+                            <button className="btn btn-primary btn-sigup-landingpage my-2 my-sm-0" onClick={() => {handleRegister()}}>Đăng kí ngay</button>
                         </div>
                     </div>
                     <div className="col-lg-6 col-sm-6 text-center">

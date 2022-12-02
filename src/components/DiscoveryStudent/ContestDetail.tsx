@@ -19,6 +19,7 @@ import { LessonModificationStatus } from "../../store/models/lesson.interface";
 import Popup from "reactjs-popup";
 import { deleteUserRegisterContestByContestAndStudent } from "../../common/service/UserRegisterContest/DeleteUserRegisterJoinContestByContestAndStudent";
 import { BsFillTrashFill } from "react-icons/bs";
+import { postUserRegisterJoinContest1 } from "../../common/service/UserRegisterContest/PostUserRegisterJoinContest1";
 type Option1 = {
     label: string;
     value: string;
@@ -154,20 +155,15 @@ const ConestDetailStudent: React.FC = () => {
     }
 
     function handleRegister() {
-        const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
-        valueTeacher.map((ele, idx) => {
-            return dispatch(postUserRegisterContest({
-                student_id: ele.value,
-                contest_id: contest_id
-            }))
-        })
 
-        toast.update(id, { render: "Đăng kí cuộc thi cho bé thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-        setTimeout(function () {
-            routeHome();
-        }, 2000);
+        return dispatch(postUserRegisterJoinContest1({
+            student_id: id,
+            contest_id: contest_id
+        }, idx, routeHome))
+
     }
 
     function handleRemove() {

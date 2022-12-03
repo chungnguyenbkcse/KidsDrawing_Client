@@ -206,7 +206,7 @@ const ConestDetailParent: React.FC = () => {
             const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
             });
-            valueTeacher.map((ele, idx) => {
+            valueTeacher.map((ele, index) => {
                 if (idx === valueTeacher.length - 1) {
                     dispatch(postUserRegisterJoinContest1({
                         student_id: ele.value,

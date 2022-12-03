@@ -217,7 +217,7 @@ const ConestDetailParent: React.FC = () => {
                     dispatch(postUserRegisterContest({
                         student_id: ele.value,
                         contest_id: contest_id
-                    }))
+                    }, idx))
                 }
             })
         }

@@ -1,7 +1,8 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/contest.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postUserRegisterContest(data: any) {
+export function postUserRegisterContest(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -21,7 +22,7 @@ export function postUserRegisterContest(data: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postUserRegisterContest(data))
+                        dispatch(postUserRegisterContest(data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,6 +37,7 @@ export function postUserRegisterContest(data: any) {
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
+                toast.update(idx, { render: "Đăng kí không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true }); 
                 console.log("error")
             });
     };

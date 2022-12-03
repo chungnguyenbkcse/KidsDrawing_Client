@@ -2,6 +2,7 @@ import React, { ChangeEvent, Dispatch, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { putAttendance } from "../../common/service/Attendance/PutAttendance";
+import { putAttendance1 } from "../../common/service/Attendance/PutAttendance1";
 import { ILesson } from "../../store/models/lesson.interface";
 import { IAttendanceState, IStateType } from "../../store/models/root.interface";
 
@@ -95,18 +96,25 @@ function AttendanceList(props: lessonListProps): JSX.Element {
     });
 
     function handlePutAttendance() {
-        lst.map((ele, idx) => {
-            return dispatch(putAttendance({
-                student_id: ele.student_id,
-                section_id: ele.section_id,
-                status: ele.status
-            }, ele.id))
-        })
-
-        toast.success("Điểm danh thành công!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000
+        const idxx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
         });
+        lst.map((ele, idx) => {
+            if (idx === lst.length - 1) {
+                return putAttendance1(dispatch, {
+                    student_id: ele.student_id,
+                    section_id: ele.section_id,
+                    status: ele.status
+                }, ele.id, idxx)
+            }
+            else {
+                return dispatch(putAttendance({
+                    student_id: ele.student_id,
+                    section_id: ele.section_id,
+                    status: ele.status
+                }, ele.id))
+            }
+        })
     }
 
 

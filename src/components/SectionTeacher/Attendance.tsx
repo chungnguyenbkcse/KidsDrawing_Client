@@ -6,16 +6,18 @@ import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import AttendanceList from "./AttendanceList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getAttendanceBySection } from "../../common/service/Attendance/GetAttendanceBySection";
+import { IAttendanceState, IStateType } from "../../store/models/root.interface";
 
 const Attendance: React.FC = () => {
   const { promiseInProgress } = usePromiseTracker();
 
   const dispatch: Dispatch<any> = useDispatch();
+  const attendances: IAttendanceState = useSelector((state: IStateType) => state.attendances);
 
   var id_x = localStorage.getItem('section_id');
   var section_id: number = 0;
@@ -71,8 +73,8 @@ const Attendance: React.FC = () => {
         {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
         <ToastContainer />
         <div className="row">
-          <TopCard title="HỌC SINH" text={``} icon="book" class="primary" />
-          <TopCard title="HỌC SINH THAM GIA" text={``} icon="book" class="primary" />
+          <TopCard title="HỌC SINH" text={`${attendances.attendances.length}`} icon="book" class="primary" />
+          <TopCard title="HỌC SINH THAM GIA" text={`${attendances.attendances.filter((ele) => ele.status === true).length}`} icon="book" class="primary" />
           {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>

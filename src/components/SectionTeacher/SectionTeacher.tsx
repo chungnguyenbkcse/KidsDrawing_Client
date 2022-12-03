@@ -47,6 +47,8 @@ const SectionTeacher: React.FC = () => {
     const [popup3, setPopup3] = useState(false);
     const [requestId1, setRequestId1] = useState(0);
 
+    const [checked, setChecked] = useState(true);
+
     const { promiseInProgress } = usePromiseTracker();
 
     function onExerciseRemove() {
@@ -81,6 +83,12 @@ const SectionTeacher: React.FC = () => {
     var id: number = 0;
     if (id_x !== null) {
         id = parseInt(id_x);
+    }
+
+    var id_tt = localStorage.getItem('link_record');
+    var link_record = "";
+    if (id_tt !== null) {
+        link_record = id_tt;
     }
 
 
@@ -216,7 +224,7 @@ const SectionTeacher: React.FC = () => {
         history.push({
             pathname: path
         });
-      }
+    }
 
     return (
         promiseInProgress ?
@@ -320,40 +328,40 @@ const SectionTeacher: React.FC = () => {
                     </>
                 </Popup>
 
-{
-    function () {
-        if (requestId1 !== 0) {
-            return (
-                <Popup
-                    open={popup3}
-                    onClose={() => setPopup3(false)}
-                    closeOnDocumentClick
-                >
-                    <div className="popup-modal" id="popup-modal">
-                        <div className="popup-title">
-                            Bạn có chắc chắn muốn xóa?
-                        </div>
-                        <div className="popup-content">
-                            <button type="button"
-                                className="btn btn-danger"
-                                onClick={() => {
-                                    if (requestId1 === 0) {
-                                        return;
-                                    }
-                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                                        position: toast.POSITION.TOP_CENTER
-                                    });
-                                    dispatch(deleteExercise(requestId1, idx))
-                                    setPopup3(false);
-                                }}>Remove
-                            </button>
-                        </div>
-                    </div>
-                </Popup>
-            )
-        }
-    }()
-}
+                {
+                    function () {
+                        if (requestId1 !== 0) {
+                            return (
+                                <Popup
+                                    open={popup3}
+                                    onClose={() => setPopup3(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <div className="popup-modal" id="popup-modal">
+                                        <div className="popup-title">
+                                            Bạn có chắc chắn muốn xóa?
+                                        </div>
+                                        <div className="popup-content">
+                                            <button type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => {
+                                                    if (requestId1 === 0) {
+                                                        return;
+                                                    }
+                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                        position: toast.POSITION.TOP_CENTER
+                                                    });
+                                                    dispatch(deleteExercise(requestId1, idx))
+                                                    setPopup3(false);
+                                                }}>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )
+                        }
+                    }()
+                }
 
                 {
                     function () {
@@ -551,12 +559,12 @@ const SectionTeacher: React.FC = () => {
                                                                                                 </div>
                                                                                                 <div className="col-md-3">
                                                                                                     <BsFillTrashFill color="#dc3545" onClick={(e) => {
-                                                                                                        e.stopPropagation(); 
+                                                                                                        e.stopPropagation();
                                                                                                         setRequestId1(ele.id);
                                                                                                         setPopup3(true)
-                                                                                                    }}/>
+                                                                                                    }} />
                                                                                                 </div>
-                                                                                            </div> 
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div className="row">
@@ -698,76 +706,98 @@ const SectionTeacher: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-xl-6 col-md-6 mb-4">
-                        <div className="col-xl-12 col-md-12 mb-4">
-                            <div className={`card shadow h-100 py-2`} >
-                                <div className="card-body">
-                                    <div className="row no-gutters justify-content-left">
-                                        <h4 id="full-name">Danh sách yêu cầu giáo án</h4>
-                                        <div className="table-responsive portlet">
-                                            <table className="table">
-                                                <thead className="thead-light">
-                                                    <tr>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        user_register_tutorials.user_register_tutorial_not_approved_nows.map((ele, index) => {
-                                                            return (
-                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { handleView(ele) }}>
-                                                                                <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                    <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
-                                                                                </div>
-                                                                                <div className="col-xl-9 col-md-9 mt-2">
-                                                                                    <div className="row">
-                                                                                        <div className="col-md-3">
-                                                                                            Tên:
-                                                                                        </div>
-                                                                                        <div className="col-md-7">
-                                                                                            {ele.name}
-                                                                                        </div>
-                                                                                        <div className="col-md-2">
-                                                                                            <BsFillTrashFill color="#dc3545" onClick={(e) => {
-                                                                                                e.stopPropagation(); 
-                                                                                                setRequestId(ele.id);
-                                                                                                setPopup2(true)
-                                                                                            }}/>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className="row">
-                                                                                        <div className="col-md-3">
-                                                                                            Gửi lúc:
-                                                                                        </div>
-                                                                                        <div className="col-md-7">
-                                                                                            {ele.update_time.replaceAll("T", " ").substring(0, 16)}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className="row mb-2">
-                                                                                        <div className="col-md-3">
-                                                                                            
-                                                                                        </div>
-                                                                                        <div className="col-md-7 status-score">
-                                                                                            Chưa được duyệt
-                                                                                        </div>
-                
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                {
+                    function () {
+                        if (sections.sections.length <= 0) {
+                            return ""
+                        }
+                        else {
+                            if (is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now") {
+                                return (
+                                    <div className="row">
+                                        <div className="col-xl-6 col-md-6 mb-4">
+                                            <div className="col-xl-12 col-md-12 mb-4">
+                                                <div className={`card shadow h-100 py-2`} >
+                                                    <div className="card-body">
+                                                        <div className="row no-gutters justify-content-left">
+                                                            <h4 id="full-name">Danh sách yêu cầu giáo án</h4>
+                                                            <div className="table-responsive portlet">
+                                                                <table className="table">
+                                                                    <thead className="thead-light">
+                                                                        <tr>
                                                                         </tr>
-                                                            )
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {
+                                                                            user_register_tutorials.user_register_tutorial_not_approved_nows.map((ele, index) => {
+                                                                                return (
+                                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                                        <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { handleView(ele) }}>
+                                                                                            <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                                <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
+                                                                                            </div>
+                                                                                            <div className="col-xl-9 col-md-9 mt-2">
+                                                                                                <div className="row">
+                                                                                                    <div className="col-md-3">
+                                                                                                        Tên:
+                                                                                                    </div>
+                                                                                                    <div className="col-md-7">
+                                                                                                        {ele.name}
+                                                                                                    </div>
+                                                                                                    <div className="col-md-2">
+                                                                                                        <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                            e.stopPropagation();
+                                                                                                            setRequestId(ele.id);
+                                                                                                            setPopup2(true)
+                                                                                                        }} />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div className="row">
+                                                                                                    <div className="col-md-3">
+                                                                                                        Gửi lúc:
+                                                                                                    </div>
+                                                                                                    <div className="col-md-7">
+                                                                                                        {ele.update_time.replaceAll("T", " ").substring(0, 16)}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div className="row mb-2">
+                                                                                                    <div className="col-md-3">
+
+                                                                                                    </div>
+                                                                                                    <div className="col-md-7 status-score">
+                                                                                                        Chưa được duyệt
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </tr>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                )
+                            }
+                            else {
+                                return (
+                                    <>
+                                        <h4 id="full-name">Recording</h4>
+                                        <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                    </>
+                                )
+                            }
+                        }
+                    }()
+                }
+
 
             </Fragment>
     );

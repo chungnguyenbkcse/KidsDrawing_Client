@@ -146,7 +146,6 @@ const DetailClassParent: React.FC = () => {
                 trackPromise(getStudentLeaveByClassAndParent(dispatch, class_id, id))
                 trackPromise(getExerciseSubmissionByClassAndParent(dispatch, class_id, id))
                 trackPromise(getExerciseForClassAndParent(dispatch, class_id, id))
-                trackPromise(getUserGradeExerciseByClassAndParent(dispatch, class_id,id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
@@ -162,6 +161,7 @@ const DetailClassParent: React.FC = () => {
 
     function handleChange(e: any) {
         setFilter(e.target.value)
+        trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,filter))
     }
 
     function onAnonymousNotificationRemove() {
@@ -277,7 +277,7 @@ const DetailClassParent: React.FC = () => {
     const routeChange = () =>{ 
         let path = '/class/exercise-student'; 
         localStorage.removeItem('student_id');
-        localStorage.setItem('student_id', id.toString());
+        localStorage.setItem('student_id', filter.toString());
         localStorage.removeItem('class_id');
         localStorage.setItem('class_id', class_id.toString());
         history.push({

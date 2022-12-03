@@ -10,6 +10,7 @@ import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { postExercise } from "../../common/service/Exercise/PostExercise";
 import { toast } from "react-toastify";
 import DateInput from "../../common/components/DateInput";
+import { putExercise } from "../../common/service/Exercise/PutExercise";
 
 export type exerciseListProps = {
     isCheck: (value: boolean) => void;
@@ -75,7 +76,7 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
 
     function saveForm(formState: IExerciseFormState, saveFn: Function): void {
         if (exercise) {
-            const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
             });
             if (saveFn === addExercise) {
@@ -85,7 +86,16 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
                     name: formState.name.value,
                     description: formState.description.value ,
                     deadline: formState.deadline.value
-                }, id))
+                }, idx))
+            }
+            else {
+                dispatch(putExercise(exercise.id, {
+                    section_id: section_id,
+                    level_id: formState.level_id.value ,
+                    name: formState.name.value,
+                    description: formState.description.value ,
+                    deadline: formState.deadline.value
+                }, idx))
             }
 
             dispatch(clearSelectedExercise());

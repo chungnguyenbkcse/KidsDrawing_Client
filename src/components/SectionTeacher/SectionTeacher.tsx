@@ -8,7 +8,7 @@ import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseB
 import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
-import { setModificationState } from "../../store/actions/exercise.action";
+import { changeSelectedExercise, setModificationState } from "../../store/actions/exercise.action";
 import { ExerciseModificationStatus, IExercise } from "../../store/models/exercise.interface";
 import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ILessonState, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserRegisterTutorialState, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
@@ -194,6 +194,12 @@ const SectionTeacher: React.FC = () => {
         })
     }
 
+    function onExerciseSelect(lesson: IExercise): void {
+        dispatch(changeSelectedExercise(lesson));
+        onExerciseRemove();
+        dispatch(setModificationState(ExerciseModificationStatus.Edit));
+    }
+    
     const routeChange3 = (exercise: IExercise) => {
         let path = '/exercise';
         localStorage.removeItem('exercise_description');
@@ -398,22 +404,6 @@ const SectionTeacher: React.FC = () => {
                     }()
                 }
 
-                <Popup
-                    open={popup1}
-                    onClose={() => setPopup1(false)}
-                    closeOnDocumentClick
-                >
-                    <>
-                        {
-                            function () {
-                                if ((exercises.modificationState === ExerciseModificationStatus.Create1)) {
-                                    return <SubmitRecordForm isCheck={onRemovePopup1} />
-                                }
-                            }()
-                        }
-                    </>
-                </Popup>
-
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-4">
                         <div className="row">
@@ -543,7 +533,7 @@ const SectionTeacher: React.FC = () => {
                                                                 exercise_teachers.exercise_no_submissions.map((ele, index) => {
                                                                     return (
                                                                         <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                            <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChange3(ele) }}>
+                                                                            <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { onExerciseSelect(ele) }}>
                                                                                 <div className="col-xl-3 col-md-3 avatar-x">
                                                                                     <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                                 </div>

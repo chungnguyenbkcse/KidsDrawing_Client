@@ -4,7 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { getExerciseTeacherBySection } from "./GetExerciseTeacherBySection";
 
 
-export function postExercise(data: any, idx: any) {
+export function putExercise(id: number, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('section_id');
     let section_id: number = 0;
@@ -14,8 +14,8 @@ export function postExercise(data: any, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/exercises`, {
-                    method: "POST",
+                `${process.env.REACT_APP_API_URL}/exercises/${id}`, {
+                    method: "PUT",
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export function postExercise(data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postExercise(data, idx))
+                        dispatch(putExercise(id, data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -41,11 +41,11 @@ export function postExercise(data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Thêm bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Chỉnh bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
                 getExerciseTeacherBySection(dispatch, section_id);
             })
             .catch(error => {
-                toast.update(idx, { render: "Thêm bài tập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+                toast.update(idx, { render: "Chỉnh bài tập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

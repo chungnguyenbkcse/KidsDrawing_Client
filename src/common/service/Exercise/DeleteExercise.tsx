@@ -14,7 +14,7 @@ export function deleteExercise(id: number, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/exercises`, {
+                `${process.env.REACT_APP_API_URL}/exercises/${id}`, {
                     method: "DELETE",
                     headers: {
                         'Authorization': bearer,

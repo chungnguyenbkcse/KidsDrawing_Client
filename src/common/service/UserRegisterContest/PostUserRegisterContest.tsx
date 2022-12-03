@@ -29,7 +29,7 @@ export function postUserRegisterContest(data: any, idx: any) {
                     }
                 }
                 else {
-                    return response.json()
+                    return response
                 }
             })
             .then (data => {

@@ -207,7 +207,7 @@ const ConestDetailParent: React.FC = () => {
                 position: toast.POSITION.TOP_CENTER
             });
             valueTeacher.map((ele, index) => {
-                if (idx === valueTeacher.length - 1) {
+                if (index === valueTeacher.length - 1) {
                     dispatch(postUserRegisterJoinContest1({
                         student_id: ele.value,
                         contest_id: contest_id

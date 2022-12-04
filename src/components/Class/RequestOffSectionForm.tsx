@@ -104,7 +104,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
     const listSections: Option1[] = [];
     const listSectionNumbers: number[] = []
-    sections.sections.map((ele) => {
+    sections.sections.filter((e) => e.teach_form === true).map((ele) => {
         if (ele.number > total_section_end) {
             let item: Option1 = { "name": "Buổi " + ele.number, "value": ele.id }
             listSectionNumbers.push(ele.number)
@@ -156,14 +156,16 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
             if (saveFn === editAcceptTeacherLeave) {
                 (putTeacherLeave(dispatch, teacher_leave_id, {
                     section_id: formState.section_id.value,
-                    substitute_teacher_id: formState.substitute_teacher_id.value,
+                    substitute_teacher_id: parseInt(formState.substitute_teacher_id.value.toString()),
+                    teacher_id: teacher_id,
+                    classes_id: class_id,
                     description: formState.description.value
                 }, idx))
             }
             else {
                 (postTeacherLeave(dispatch, {
                     section_id: formState.section_id.value,
-                    substitute_teacher_id: formState.substitute_teacher_id.value,
+                    substitute_teacher_id: parseInt(formState.substitute_teacher_id.value.toString()),
                     teacher_id: teacher_id,
                     classes_id: class_id,
                     description: formState.description.value

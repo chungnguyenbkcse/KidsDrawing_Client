@@ -168,6 +168,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
 
     const [checkCreateNew, setCheckCreateNew] = useState(false);
     const [checkAfterCreate, setCheckAfterCreate] = useState(false);
+    const [checkEndCreate, setCheckEndCreate] = useState(false);
 
     function hasFormValueChanged(model: OnChangeModel): void {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
@@ -184,7 +185,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
 
@@ -215,7 +216,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else {
@@ -246,13 +247,13 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else {
@@ -273,13 +274,13 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else {
@@ -327,29 +328,36 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
 
 
     function handleNewPage() {
-        if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+        if (totalPage === totalPage && checkEndCreate === false) {
             toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
+                closeButton: true,
             });
-        }
-        else if (checkCreateNew === true  && currentPage !== totalPage) {
-            toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-            });
-        }
-        else {
-            let x = currentPage + 1;
-            setCurrentPageOld(x-1)
-            setCurrentPage(x)
-            setCheckCreateNew(true)
-            let y = totalPage + 1;
-            setTotalPage(y)
-            console.log(currentPage - 1)
-            setChecked(false)
-            setTextHtml("")
-            setValue("")
+        }else {
+            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeButton: true,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeButton: true,
+                });
+            }
+            else {
+                let x = currentPage + 1;
+                setCurrentPageOld(x-1)
+                setCurrentPage(x)
+                setCheckCreateNew(true)
+                let y = totalPage + 1;
+                setTotalPage(y)
+                console.log(currentPage - 1)
+                setChecked(false)
+                setTextHtml("")
+                setValue("")
+            }
         }
     }
 
@@ -362,6 +370,9 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
     }
 
     function handleSave(){
+        if (currentPage === totalPage) {
+            setCheckEndCreate(true)
+        }
         if (user_register_tutorial_pages !== null){
             const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                 position: toast.POSITION.TOP_CENTER
@@ -548,7 +559,8 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                                         return (
                                             <div className="row">
                                                 <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    <button type="button" className="btn btn-info right-margin" onClick={handleSave}>Lưu tạm</button>
+                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                    <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
                                                     <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
                                                 </div>
                                                 <div className="col-xl-6 col-md-6 col-xs-6">

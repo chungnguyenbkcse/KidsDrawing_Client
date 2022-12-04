@@ -399,7 +399,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
 
     function handleNewPage() {
-        if (totalPage === totalPage && checkEndCreate === false) {
+        if (currentPage === totalPage && checkEndCreate === false) {
             toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                 position: toast.POSITION.TOP_CENTER,
                 closeButton: true,

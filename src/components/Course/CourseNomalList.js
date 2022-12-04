@@ -37,6 +37,7 @@ function CourseNomalList(props) {
       }
 
 
+
   const datas = courses.courses;
 
   const options = {
@@ -64,7 +65,7 @@ function CourseNomalList(props) {
     }
   };
 
-  function removeButton(cell, row) {
+  function editButton(cell, row) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
@@ -73,7 +74,17 @@ function CourseNomalList(props) {
     );
   }
 
-  function editButton(cell, row) {
+  function removeButton(cell, row) {
+    return (
+        <button type="button" className="btn btn-danger" onClick={() => {
+            if(props.onSelect) props.onSelect(row);
+            dispatch(setModificationState(CourseModificationStatus.Remove));
+           }}
+          >Xóa</button>
+    );
+  }
+
+  function editTutorialButton(cell, row) {
     return (
         <button type="button" className="btn btn-warning" onClick={() => {
             if (props.onSelect) props.onSelect(row);
@@ -108,6 +119,11 @@ function CourseNomalList(props) {
       dataField: '',
       text: 'Hành động',
       formatter: editButton
+    },
+    {
+      dataField: '',
+      text: '',
+      formatter: editTutorialButton
     },
     {
       dataField: '',

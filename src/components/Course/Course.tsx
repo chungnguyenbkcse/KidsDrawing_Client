@@ -18,7 +18,7 @@ import { addNotification } from "../../store/actions/notifications.action";
 import { deleteCourse } from "../../common/service/Course/DeleteCourse";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 
@@ -160,7 +160,11 @@ const Course: React.FC = () => {
                                                 if (!courses.selectedCourse) {
                                                     return;
                                                 }
-                                                dispatch(deleteCourse(courses.selectedCourse.id))
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                });
+                                                
+                                                deleteCourse(dispatch, courses.selectedCourse.id, idx)
                                                 dispatch(addNotification("Khóa học ", `${courses.selectedCourse.id} đã được xóa`));
                                                 dispatch(removeCourse(courses.selectedCourse.id));
                                                 dispatch(clearSelectedCourse());

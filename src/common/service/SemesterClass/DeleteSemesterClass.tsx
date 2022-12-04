@@ -1,7 +1,8 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function deleteSemesterClass(id: any) {
+export function deleteSemesterClass(id: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
@@ -21,7 +22,7 @@ export function deleteSemesterClass(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteSemesterClass(id))
+                        dispatch(deleteSemesterClass(id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -33,8 +34,10 @@ export function deleteSemesterClass(id: any) {
             })
             .then (data => {
                 console.log(data)
+                toast.update(idx, { render: "Xóa lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
+                toast.update(idx, { render: "Xóa lớp theo kì không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

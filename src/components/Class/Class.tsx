@@ -379,7 +379,11 @@ const Class: React.FC = () => {
                                                                     if (!semester_classes.selectedSemesterClass) {
                                                                         return;
                                                                     }
-                                                                    dispatch(deleteSemesterClass(semester_classes.selectedSemesterClass.id))
+                                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                                        position: toast.POSITION.TOP_CENTER
+                                                                    });
+
+                                                                    dispatch(deleteSemesterClass(semester_classes.selectedSemesterClass.id, idx))
                                                                     dispatch(addNotification("Độ tuổi ", `${semester_classes.selectedSemesterClass.name} đã được xóa`));
                                                                     dispatch(removeSemesterClass(semester_classes.selectedSemesterClass.id));
                                                                     dispatch(clearSelectedSemesterClass());

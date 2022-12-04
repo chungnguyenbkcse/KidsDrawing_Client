@@ -324,7 +324,7 @@ const SectionStudent: React.FC = () => {
                                                             }
                                                             else {
                                                                 if (sections.sections[0].teach_form === true) {
-                                                                    if (is_active === "not_active_now" || is_active === "active_now") {
+                                                                    if (is_active === "active_now" || is_active === "pre_active_now") {
                                                                         return (
                                                                             <button
                                                                                 className="btn btn-success ml-2"
@@ -339,15 +339,18 @@ const SectionStudent: React.FC = () => {
 
                                                                 }
                                                                 else {
-                                                                    return (
-                                                                        <button
-                                                                            className="btn btn-success ml-2"
-                                                                            id="btn-view-tutorial"
-                                                                            onClick={routeChange2}
-                                                                        >
-                                                                            Xem nội dung
-                                                                        </button>
-                                                                    )
+                                                                    if (is_active === "not_active" || is_active === "active_now" || is_active === "pre_active_now") {
+                                                                        return (
+                                                                            <button
+                                                                                className="btn btn-success ml-2"
+                                                                                id="btn-view-tutorial"
+                                                                                onClick={routeChange2}
+                                                                            >
+                                                                                Xem nội dung
+                                                                            </button>
+                                                                        )
+                                                                    }
+                                
                                                                 }
                                                             }
                                                         }()

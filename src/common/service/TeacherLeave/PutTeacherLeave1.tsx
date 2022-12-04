@@ -4,7 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { postNotifyDb } from "../NotifyDb/PostNotifyDb";
 import { getTeacherLeaveByClass } from "./GetTeacherLeaveByClass";
 
-export function putTeacherLeave(id: any, data: any, idx: any) {
+export function putTeacherLeave(dispatch: any, id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_y = localStorage.getItem('class_id');
 
@@ -13,9 +13,7 @@ export function putTeacherLeave(id: any, data: any, idx: any) {
     if (id_y !== null) {
         class_id = parseInt(id_y);
     }
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/teacher-leave/${id}`, {
                     method: "PUT",
                     headers: {
@@ -31,7 +29,7 @@ export function putTeacherLeave(id: any, data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putTeacherLeave(id, data, idx))
+                        dispatch(putTeacherLeave(dispatch, id, data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -49,5 +47,4 @@ export function putTeacherLeave(id: any, data: any, idx: any) {
             .catch(error => {
                 toast.update(idx, { render: "Không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
-    };
 }

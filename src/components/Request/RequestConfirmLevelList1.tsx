@@ -32,7 +32,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
-    dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
+    (putTeacherRegisterLevelAdmin(dispatch, ele.id, ele.teacher_id, {
       status: "Approved"
     }, id))
   }
@@ -42,7 +42,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
-    dispatch(putTeacherRegisterLevelAdmin(ele.id, ele.teacher_id, {
+    (putTeacherRegisterLevelAdmin(dispatch, ele.id, ele.teacher_id, {
       status: "Not approved"
     }, id))
     dispatch(addNotification("Trình độ ", `${ele.course_name} - Đã được chấp nhận bởi bạn`));

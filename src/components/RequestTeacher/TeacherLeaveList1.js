@@ -32,17 +32,17 @@ function TeacherLeaveList(props) {
         id = parseInt(id_x);
     }
 
-    const updateStatusTeacherLeave = (status) => {
+    const updateStatusTeacherLeave = (row, status) => {
         const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
 
-        dispatch(putTeacherLeaveStatus(id, {
+        (putTeacherLeaveStatus(dispatch, row.id, {
             status: status
         }, idx))
     }
 
-  const datas = teacher_leaves.leaves
+  const datas = teacher_leaves.leaves.filter((e) => e.status == "Not approve now" || e.status === "Admin approved")
 
   const options = {
     paginationSize: 5,
@@ -80,7 +80,7 @@ function TeacherLeaveList(props) {
   function acceptLeaveButton(cell, row) {
     return (
       <button type="button" className="btn btn-success" onClick={() => {
-        updateStatusTeacherLeave("Teacher approved")
+        updateStatusTeacherLeave(row, "Teacher approved")
       }}>Chấp nhận</button>
     )
   }
@@ -89,6 +89,7 @@ function TeacherLeaveList(props) {
     return (
       <button type="button" className="btn btn-danger" onClick={() => {
         if(props.onSelect) props.onSelect(row.id);
+        localStorage.setItem('teacher_leave_id', row.id)
         dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
       }}>Xóa </button>
     )

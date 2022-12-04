@@ -39,7 +39,7 @@ function TeacherLeaveList(props: lessonListProps): JSX.Element {
             position: toast.POSITION.TOP_CENTER
         });
 
-        dispatch(putTeacherLeaveStatus(id, {
+        (putTeacherLeaveStatus(dispatch, id, {
             status: status
         }, idx))
     }

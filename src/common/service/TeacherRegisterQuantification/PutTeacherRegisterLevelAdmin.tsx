@@ -3,12 +3,10 @@ import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/teach
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacherRegisterQuantificationByTeacherId } from "./GetTeacherRegisterQuantificationByTeacherId";
 
-export function putTeacherRegisterLevelAdmin(id: any, teacher_id: number, teacher_level: any, idx: any) {
+export function putTeacherRegisterLevelAdmin(dispatch: any, id: any, teacher_id: number, teacher_level: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/teacher-register-level/admin/${id}`, {
                     method: "PUT",
                     headers: {
@@ -24,7 +22,7 @@ export function putTeacherRegisterLevelAdmin(id: any, teacher_id: number, teache
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putTeacherRegisterLevelAdmin(teacher_level,teacher_id, id, idx))
+                        dispatch(putTeacherRegisterLevelAdmin(dispatch, teacher_level,teacher_id, id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -44,5 +42,4 @@ export function putTeacherRegisterLevelAdmin(id: any, teacher_id: number, teache
                 toast.update(idx, { render: "Bạn đã xác nhận trình độ cho giáo viên không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
-    };
 }

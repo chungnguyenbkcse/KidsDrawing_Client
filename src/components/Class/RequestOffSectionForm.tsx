@@ -154,14 +154,14 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
             });
 
             if (saveFn === editAcceptTeacherLeave) {
-                dispatch(putTeacherLeave(teacher_leave_id, {
+                (putTeacherLeave(dispatch, teacher_leave_id, {
                     section_id: formState.section_id.value,
                     substitute_teacher_id: formState.substitute_teacher_id.value,
                     description: formState.description.value
                 }, idx))
             }
             else {
-                dispatch(postTeacherLeave({
+                (postTeacherLeave(dispatch, {
                     section_id: formState.section_id.value,
                     substitute_teacher_id: formState.substitute_teacher_id.value,
                     teacher_id: teacher_id,

@@ -2,14 +2,21 @@ import { toast } from "react-toastify";
 import { fetchDataRequest } from "../../../store/actions/teacher_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postNotifyDb } from "../NotifyDb/PostNotifyDb";
+import { getTeacherLeave } from "./GetTeacherLeave";
 import { getTeacherLeaveByTeacher } from "./GetTeacherLeaveByTeacher";
 
-export function putTeacherLeaveStatus(id: any, data: any, idx: any) {
+export function putTeacherLeaveStatus(dispatch: any, id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    var role_privilege = localStorage.getItem('role_privilege')
+  var rolePrivilege: string[] = []
+  var roleUser: string = ""
+  if (role_privilege !== null) {
+      rolePrivilege = role_privilege.split(',')
+      roleUser = rolePrivilege[0]
+  }
+
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/teacher-leave/admin/${id}`, {
                     method: "PUT",
                     headers: {
@@ -25,7 +32,7 @@ export function putTeacherLeaveStatus(id: any, data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putTeacherLeaveStatus(id, data, idx))
+                        dispatch(putTeacherLeaveStatus(dispatch, id, data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -50,12 +57,16 @@ export function putTeacherLeaveStatus(id: any, data: any, idx: any) {
                     }, data.teacher_id))
                 }
 
-                getTeacherLeaveByTeacher(dispatch, localStorage.getItem('id'))
+                if (roleUser === "ADMIN_USER") {
+                    getTeacherLeave(dispatch)
+                }
+                else {
+                    getTeacherLeaveByTeacher(dispatch, localStorage.getItem('id'))
+                }
                 
                 toast.update(idx, { render: "Yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
-    };
 }

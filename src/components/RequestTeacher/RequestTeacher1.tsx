@@ -27,7 +27,7 @@ const RequestTeacher1: React.FC = () => {
     const { promiseInProgress } = usePromiseTracker();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const numberTeacherRegisterSuccessfullCount: number = teacher_leaves.acceptLeaves.length;
-    const numberTeacherNotRegisterCount: number = teacher_leaves.leaves.length;
+    const numberTeacherNotRegisterCount: number = teacher_leaves.leaves.filter((e) => e.status == "Not approve now" || e.status === "Admin approved").length;
     var id_x = localStorage.getItem('id');
     var id: number = 0;
     if (id_x !== null) {
@@ -95,8 +95,7 @@ const RequestTeacher1: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
 
-        dispatch(putTeacherLeaveStatus(teacherLeave, {
-            reviewer_id: localStorage.getItem('id'),
+        (putTeacherLeaveStatus(dispatch, teacherLeave, {
             status: status
         }, idx))
     }

@@ -3,7 +3,7 @@ import { fetchDataRequest } from "../../../store/actions/teacher_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacherLeaveByClass } from "./GetTeacherLeaveByClass";
 
-export function postTeacherLeave(data: any, idx: any) {
+export function postTeacherLeave(dispatch: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     var id_y = localStorage.getItem('class_id');
@@ -13,9 +13,7 @@ export function postTeacherLeave(data: any, idx: any) {
     if (id_y !== null) {
         class_id = parseInt(id_y);
     }
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/teacher-leave`, {
                     method: "POST",
                     headers: {
@@ -31,7 +29,7 @@ export function postTeacherLeave(data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postTeacherLeave(data, idx))
+                        dispatch(postTeacherLeave(dispatch, data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -49,5 +47,4 @@ export function postTeacherLeave(data: any, idx: any) {
             .catch(error => {
                 toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
-    };
 }

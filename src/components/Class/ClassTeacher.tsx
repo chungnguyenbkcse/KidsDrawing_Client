@@ -19,6 +19,7 @@ import Loading from "../../common/components/Loading";
 import ClassDoingList1 from "./ClassTeachingTeacherList1";
 import ClassTeacherDoingList from "./ClassTeacherDoingList";
 import ClassTeacherEndList from "./ClassTeacherEndList";
+import { ToastContainer } from "react-toastify";
 
 const ClassTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -72,7 +73,7 @@ const ClassTeacher: React.FC = () => {
     }, [dispatch, id, access_token, refresh_token]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Khóa học", ""));
+        dispatch(updateCurrentPath("Lớp", ""));
     }, [dispatch, path.area])
 
     function onClassTeacherSelect(class_teacher: IClassTeacher): void {
@@ -94,7 +95,7 @@ const ClassTeacher: React.FC = () => {
       </div> : <Fragment>
             {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
             {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
-
+        <ToastContainer />
             <div className="row">
                 <TopCard title="SỐ LỚP ĐANG DẠY" text={`${numberClassDoingCount}`} icon="book" class="primary" />
                 <TopCard title="SỐ LỚP ĐÃ DẠY" text={`${numberClassDoneCount}`} icon="book" class="primary" />

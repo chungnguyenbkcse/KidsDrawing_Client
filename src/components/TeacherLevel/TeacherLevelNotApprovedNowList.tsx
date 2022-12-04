@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import TopCardLevel from "../../common/components/TopCardLevel";
+import TopCardLevelNotApproveNow from "../../common/components/TeaherLevelNotApprovedNow";
 import { IStateType, ITeacherRegisterQuantificationState } from "../../store/models/root.interface";
 import { ITeacherRegisterQuantification } from "../../store/models/teacher_register_quantification.interface";
 
@@ -15,7 +15,7 @@ function TeacherLevelNotApprovedNowList(props: teacherRegisterQuantificationList
     const teacherRegisterQuantificationElements: (JSX.Element | null)[] = teacherRegisterQuantifications.not_approved_now.map((ele, index) => {
         if (!ele) { return null; }
         return (
-            <TopCardLevel 
+            <TopCardLevelNotApproveNow 
                 course_name={ele.course_name} 
                 icon="edit" class="warning" 
                 art_age_name={ele.art_age_name}

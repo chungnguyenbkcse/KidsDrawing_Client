@@ -156,6 +156,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     const [checkCreateNew, setCheckCreateNew] = useState(false);
     const [checkAfterCreate, setCheckAfterCreate] = useState(false);
+    const [checkEndCreate, setCheckEndCreate] = useState(false);
 
     function hasFormValueChanged(model: OnChangeModel): void {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
@@ -165,7 +166,9 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function saveUser(e: FormEvent<HTMLFormElement>): void {
         e.preventDefault();
-
+        if (currentPage === totalPage) {
+            setCheckEndCreate(true)
+        }
         handleSave()
     }
 
@@ -174,13 +177,13 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else {
@@ -334,7 +337,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else {
@@ -373,13 +376,13 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    closeButton: true,
                 });
             }
             else {
@@ -396,28 +399,36 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
 
     function handleNewPage() {
-        if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+        if (totalPage === totalPage && checkEndCreate === false) {
             toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
+                closeButton: true,
             });
-        }
-        else if (checkCreateNew === true  && currentPage !== totalPage) {
-            toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-            });
-        }
-        else {
-            let x = currentPage + 1;
-            setCurrentPage(x)
-            setCheckCreateNew(true)
-            let y = totalPage + 1;
-            setTotalPage(y)
-            console.log(currentPage - 1)
-            setChecked(false)
-            setTextHtml("")
-            setValue("")
+        }else {
+            setCheckEndCreate(false)
+            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeButton: true,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeButton: true,
+                });
+            }
+            else {
+                let x = currentPage + 1;
+                setCurrentPage(x)
+                setCheckCreateNew(true)
+                let y = totalPage + 1;
+                setTotalPage(y)
+                console.log(currentPage - 1)
+                setChecked(false)
+                setTextHtml("")
+                setValue("")
+            }
         }
     }
     const listTeachingForm: Options[] = [

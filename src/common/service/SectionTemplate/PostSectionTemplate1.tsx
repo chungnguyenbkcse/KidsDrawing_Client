@@ -48,7 +48,7 @@ export function postSectionTemplate1(data: any, num_of_section: number) {
                         course_id: data.course_id,
                         name: "",
                         number: data.number + 1,
-                        teaching_form: ""
+                        teaching_form: true
                     }, num_of_section))
                 }
             })

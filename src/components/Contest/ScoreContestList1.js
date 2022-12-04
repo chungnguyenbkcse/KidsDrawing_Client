@@ -39,7 +39,40 @@ const ScoreContestList1 = () => {
                 localStorage.setItem('art_age_name', user_graded_contest_submission.art_age_name);
                 localStorage.setItem('start_time', user_graded_contest_submission.start_time);
                 localStorage.setItem('end_time', user_graded_contest_submission.end_time);
+                localStorage.setItem('student_name', user_graded_contest_submission.student_name);
                 let path = '/contest/score';
+                history.push({
+                    pathname: path
+                });
+        }
+    }
+
+
+    function handleEditScoreResult(user_graded_contest_submission) {
+        if (user_grade_contest_submissions !== null && user_grade_contest_submissions !== undefined) {
+                localStorage.removeItem('contest_submission_id');
+                localStorage.setItem('contest_submission_id', user_graded_contest_submission.contest_submission_id.toString())
+                localStorage.removeItem('time_submit');
+                localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
+                localStorage.removeItem('score')
+                localStorage.removeItem('feedback')
+                if (user_graded_contest_submission.score !== undefined && user_graded_contest_submission.score !== null) {
+                    localStorage.setItem('score', user_graded_contest_submission.score.toString());
+                }
+                if (user_graded_contest_submission.feedback !== undefined && user_graded_contest_submission.feedback !== null) {
+                    localStorage.setItem('feedback', user_graded_contest_submission.feedback.toString());
+                }
+                localStorage.setItem('contest_name', user_graded_contest_submission.contest_name.toString())
+                localStorage.removeItem('contest_id');
+                localStorage.setItem('contest_id', user_graded_contest_submission.contest_id.toString());
+                localStorage.setItem('teacher_name', user_graded_contest_submission.teacher_name);
+                localStorage.setItem('url_conest_submission', user_graded_contest_submission.url_conest_submission.toString());
+                localStorage.setItem('art_type_name', user_graded_contest_submission.art_type_name);
+                localStorage.setItem('art_age_name', user_graded_contest_submission.art_age_name);
+                localStorage.setItem('start_time', user_graded_contest_submission.start_time);
+                localStorage.setItem('end_time', user_graded_contest_submission.end_time);
+                localStorage.setItem('student_name', user_graded_contest_submission.student_name);
+                let path = '/contest/edit-score';
                 history.push({
                     pathname: path
                 });
@@ -97,6 +130,14 @@ const ScoreContestList1 = () => {
         )
     }
 
+    function editScoreButton(cell, row) {
+        return (
+            <button type="button" className="btn btn-primary" onClick={() => {
+                handleEditScoreResult(row)
+            }}>Chỉnh điểm</button>
+        )
+    }
+
     const columns = [
         {
             dataField: '',
@@ -117,6 +158,11 @@ const ScoreContestList1 = () => {
         {
             dataField: '',
             text: 'Hành động',
+            formatter: editScoreButton
+        },
+        {
+            dataField: '',
+            text: '',
             formatter: viewDetailButton
         },
     ];

@@ -129,6 +129,7 @@ import EditSectionTeacher1 from "../components/SectionTeacher/EditSectionTeacher
 import ClassDetail from "../components/Class/ClassDetail";
 import ConestDetailParent from "../components/Discovery/ContestDetail";
 import ConestDetailStudent from "../components/DiscoveryStudent/ContestDetail";
+import EditScoreContestStudent from "../components/Contest/EditScoreContestStudent";
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')
@@ -153,6 +154,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/tutorial-request/detail`}><ViewSectionTeacherRequest /></Route>
                                 <Route path={`/class/schedule`}><ScheduleClass /></Route>
                                 <Route path={`/contest/score`}><DetailScoreContestStudent /></Route>
+                                <Route path={`/contest/edit-score`}><EditScoreContestStudent /></Route>
                                 <Route path={`/attendance`}><Attendance /></Route>
                                 <Route path={`/student-leave/detail`}><StudentLeaveDetail /></Route>
                                 <Route path={`/teacher-level/detail`}><TeacherLevelDetail /></Route>                              

@@ -131,7 +131,7 @@ function TutorialEditRequestList1(props) {
       
     {
       dataField: '',
-      text: 'Hành động',
+      text: 'Đặt giáo án chung',
       formatter: editButton
     },
     {

@@ -1,11 +1,11 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeSemester } from "../../../store/actions/semester.actions";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getSemester } from "./GetSemester";
 
-export function deleteSemester(id: any) {
+export function deleteSemester(dispatch: any, id: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
             `${process.env.REACT_APP_API_URL}/semester/${id}`, {
                 method: "DELETE",
                 headers: {
@@ -20,7 +20,7 @@ export function deleteSemester(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteSemester(id))
+                        dispatch(deleteSemester(dispatch, id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -32,12 +32,14 @@ export function deleteSemester(id: any) {
             })
             .then (data => {
                 console.log(data)
+                toast.update(idx, { render: "Xóa học kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeSemester(id))
+                getSemester(dispatch)
             })
             .catch(error => {
+                toast.update(idx, { render: "Xóa khóa học không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

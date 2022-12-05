@@ -18,7 +18,7 @@ import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import SemesterList from "./SemesterlList";
 
 
@@ -178,9 +178,10 @@ const Semester: React.FC = () => {
                                                 if (!semesters.selectedSemester) {
                                                     return;
                                                 }
-                                                dispatch(deleteSemester(semesters.selectedSemester.id))
-                                                dispatch(addNotification("Semester removed", `Semester ${semesters.selectedSemester.name} was removed`));
-                                                dispatch(removeSemester(semesters.selectedSemester.id));
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                  });
+                                                deleteSemester(dispatch, semesters.selectedSemester.id, idx)
                                                 dispatch(clearSelectedSemester());
                                                 setPopup(false);
                                             }}>Remove

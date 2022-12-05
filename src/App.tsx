@@ -1,15 +1,16 @@
-import React from "react";
+import React, { lazy } from "react";
 import "./App.css";
 import "./styles/sb-admin-2.min.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./components/Account/Login";
 import { PrivateRoute } from "./common/components/PrivateRoute";
-import Routers from "./Routers/Routers";
-import LandingPage from "./components/LandingPage/LandingPage";
-import ForgotPassword from "./components/Account/ForgotPassword";
-import UpdatePassword from "./components/Account/UpdatePassword";
-import RegisterForm from "./components/Account/RegisterForm";
-import PaymentSuccessfull from "./components/Discovery/PaymentSuccessfull";
+
+const Routers = lazy(()=> import("./Routers/Routers"));
+const LandingPage = lazy(()=> import("./components/LandingPage/LandingPage"));
+const ForgotPassword = lazy(()=> import("./components/Account/ForgotPassword"));
+const UpdatePassword = lazy(()=> import("./components/Account/UpdatePassword"));
+const RegisterForm = lazy(()=> import("./components/Account/RegisterForm"));
+const PaymentSuccessfull = lazy(()=> import("./components/Discovery/PaymentSuccessfull"));
+const Login = lazy(()=> import("./components/Account/Login"));
 
 
 const App: React.FC = () => {

@@ -80,12 +80,13 @@ function ClassList(props) {
     )
   }
 
-  function viewScheduleButton(cell, row) {
+  function editButton(cell, row) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
-            if(props.onSelect) props.onSelect(row);
-            routeViewSchedule(row.id, row.name)}}
-          >Chi tiết</button>
+           if(props.onSelect) props.onSelect(row);
+            dispatch(setModificationState(MyClassModificationStatus.Edit))
+        }}
+          >Chỉnh sửa</button>
     )
   }
 
@@ -110,6 +111,11 @@ function ClassList(props) {
         dataField: '',
         text: 'Hành động',
         formatter: detailClassButton
+      },
+      {
+        dataField: '',
+        text: '',
+        formatter: editButton
       },
     {
       dataField: '',

@@ -36,6 +36,7 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getSemesterNext } from "../../common/service/semester/GetSemesterNext";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
+import ClassForm from "./ClassForm";
 
 type Options = {
     name: string;
@@ -66,6 +67,7 @@ const Class: React.FC = () => {
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);
     const [popup3, setPopup3] = useState(false);
+    const [popup4, setPopup4] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const { promiseInProgress } = usePromiseTracker();
 
@@ -126,7 +128,9 @@ const Class: React.FC = () => {
     })
 
     function onMyClassSelect(myclass: IMyClass): void {
+        console.log('hello')
         dispatch(changeSelectedMyClass(myclass));
+        onMyClassRemove()
         dispatch(setModificationState(MyClassModificationStatus.None));
     }
 
@@ -160,8 +164,16 @@ const Class: React.FC = () => {
         setPopup1(true);
     }
 
+    function onMyClassRemove() {
+        setPopup4(true);
+    }
+
     function onRemovePopup1(value: boolean) {
         setPopup1(false);
+    }
+
+    function onRemovePopup4(value: boolean) {
+        setPopup4(false);
     }
 
     function cancelForm(): void {
@@ -359,6 +371,8 @@ const Class: React.FC = () => {
                                         }
                                     </>
                                 </Popup>
+
+
                                 {
                                     function () {
                                         if ((semester_classes.selectedSemesterClass) && (semester_classes.modificationState === SemesterClassModificationStatus.Remove)) {
@@ -418,6 +432,22 @@ const Class: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                <Popup
+                                    open={popup4}
+                                    onClose={() => setPopup4(false)}
+                                    closeOnDocumentClick
+                                >
+                                    <>
+                                        {
+                                            function () {
+                                                if (((myclasss.selectedMyClass) && myclasss.modificationState === MyClassModificationStatus.Edit)) {
+                                                    return <ClassForm isCheck={onRemovePopup4} />
+                                                }
+                                            }()
+                                        }
+                                    </>
+                                </Popup>
 
                                 {
                                     function () {

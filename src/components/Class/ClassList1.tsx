@@ -89,15 +89,6 @@ const routeViewSchedule = (class_id: number, class_name: string) =>{
         </tbody>
       </table>
     </div>
-    <Popup
-                open={popup}
-                onClose={() => setPopup(false)}
-                closeOnDocumentClick
-            >
-                <div className="row text-left">
-                    <ClassForm />
-                </div>
-            </Popup>
     </Fragment>
 
   );

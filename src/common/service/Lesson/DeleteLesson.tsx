@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { fetchDataError } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getLesson } from "./GetLesson";
@@ -30,10 +31,12 @@ export function deleteLesson(dispatch: any, id: any, idx: any) {
                 }
             })
             .then (data => {
+                toast.update(idx, { render: "Xóa tiết học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 console.log(data)
                 getLesson(dispatch)
             })
             .catch(error => {
+                toast.update(idx, { render: "Xóa tiết học thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

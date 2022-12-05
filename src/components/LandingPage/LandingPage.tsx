@@ -1,11 +1,11 @@
-import React from "react";
+import React, { lazy } from "react";
 //import { OnChangeModel } from "../../common/types/Form.types";
 //import { useDispatch } from "react-redux";
 //import { login } from "../../store/actions/account.actions";
 //import TextInput from "../../common/components/TextInput";
 import "../../assets/css/LandingPage.css"
-import Header from "../../common/components/Header";
-import Footer from "../../common/components/Footer";
+const Footer = lazy(()=> import("../../common/components/Footer"));
+const Header = lazy(()=> import("../../common/components/Header"));
 import { useHistory } from "react-router-dom";
 
 const LandingPage: React.FC = () => {

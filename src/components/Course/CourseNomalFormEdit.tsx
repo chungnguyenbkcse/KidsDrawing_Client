@@ -83,6 +83,8 @@ const CourseNomalFormEdit: React.FC = () => {
 
     const src = course.image_url;
 
+    const [preview, setPreview] = useState(src)
+
     const [formState, setFormState] = useState({
         name: { error: "", value: course.name },
         description: { error: "", value: course.description },
@@ -115,10 +117,25 @@ const CourseNomalFormEdit: React.FC = () => {
         if (isFormInvalid()) {
             return;
         }
-        var url = await setImageAction();
+
+        
 
         let saveUserFn: Function = (isCreate) ? addCourse : editCourse;
-        saveForm(formState, saveUserFn, url);
+        if (saveUserFn === editCourse) {
+            if (image !== null) {
+                var url = await setImageAction();
+                saveForm(formState, saveUserFn, url);
+            }
+            else {
+                saveForm(formState, saveUserFn, src);
+            }
+            
+        }
+        else {
+            var url = await setImageAction();
+            saveForm(formState, saveUserFn, url);
+        }
+        
     }
 
     function saveForm(formState: ICourseNomalFormState, saveFn: Function, url: string): void {
@@ -196,6 +213,8 @@ const CourseNomalFormEdit: React.FC = () => {
             /* this contains the file we want to send */
             pictureAsFile : e.target.files[0]
         })
+
+        setPreview(URL.createObjectURL(e.target.files[0]))
     };
 
     async function setImageAction(){
@@ -247,7 +266,7 @@ const CourseNomalFormEdit: React.FC = () => {
                                     <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture}/>
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <img src={src} alt="Preview" id="avatar"/>
+                                    <img src={preview} alt="Preview" id="avatar"/>
                                 </div>
                             </div>
 

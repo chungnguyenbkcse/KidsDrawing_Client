@@ -171,10 +171,25 @@ const ContestForm: React.FC = () => {
       position: toast.POSITION.TOP_CENTER
     });
 
-    var url = await setImageAction();
+    
+    
 
     let saveUserFn: Function = (isCreate) ? addContestNotOpenNow : editContestNotOpenNow;
-    saveForm(formState, saveUserFn, url, idx);
+
+    if (saveUserFn === editContestNotOpenNow) {
+      if (image !== null) {
+        var url = await setImageAction();
+        saveForm(formState, saveUserFn, url, idx);
+      }
+      else {
+        saveForm(formState, saveUserFn, preview, idx);
+      }
+    }
+    else {
+      var url = await setImageAction();
+      saveForm(formState, saveUserFn, url, idx);
+    }
+    
   }
 
   const history = useHistory();
@@ -246,7 +261,7 @@ const ContestForm: React.FC = () => {
   }
 
 
-  const [image, setImage] = useState<any>();
+  const [image, setImage] = useState<any>(null);
 
   const uploadPicture = (e: any) => {
     setImage({

@@ -119,15 +119,7 @@ const DetailExerciseStudent1: React.FC = () => {
 
     return (
         promiseInProgress ?
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-                        </div>
-                    </div>
-                </div>
-            </div> : <Fragment>
+            <div className="loader"></div> : <Fragment>
 
                 <div className="row">
                     <div className="col-xl-6 col-md-6 mb-2">

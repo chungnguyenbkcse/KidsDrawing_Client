@@ -84,15 +84,7 @@ const SectionTemplate: React.FC = () => {
 
     return (
         promiseInProgress ?
-      <div className="row" id="search-box">
-        <div className="col-xl-12 col-lg-12">
-          <div className="input-group" id="search-content">
-            <div className="form-outline">
-              <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-            </div>
-          </div>
-        </div>
-      </div> : <Fragment>
+      <div className="loader"></div> : <Fragment>
             <ToastContainer />
             <h1 className="h3 mb-2 text-gray-800">Buổi học</h1>
             <p className="mb-4">Thông tin chung</p>

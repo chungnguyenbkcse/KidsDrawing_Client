@@ -14,16 +14,7 @@ import Loading from "react-loading";
 ReactDOM.render(
     <Provider store={store}>
         <Suspense fallback={
-            <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                  <div className="input-group" id="search-content" style={{marginTop: "200px"}}>
-                    <div className="form-outline">
-                      <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-                      Đang tải
-                    </div>
-                  </div>
-                </div>
-          </div>
+            <div className="loader1"></div>
         }>
             <App />
         </Suspense>

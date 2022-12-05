@@ -486,15 +486,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
 
     
     return (
-        promiseInProgress ? <div className="row" id="search-box">
-                <div className="col-xl-12 col-lg-12">
-                    <div className="input-group" id="search-content">
-                        <div className="form-outline">
-                            <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-                        </div>
-                    </div>
-                </div>
-            </div> : <Fragment>
+        promiseInProgress ? <div className="loader"></div> : <Fragment>
             <ToastContainer />
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">

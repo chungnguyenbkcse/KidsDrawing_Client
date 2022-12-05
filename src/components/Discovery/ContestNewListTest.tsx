@@ -174,7 +174,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="d-flex flex-row justify-content-between align-items-center filters mt-2">
-                            <h6 className="ml-3">Có {element.filter((val) => {
+                            <h6 className="ml-3">{/* Có {element.filter((val) => {
                                 if (props.value === "") {
                                     return val;
                                 }
@@ -182,7 +182,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                     return val;
                                 }
                                 return null
-                            }).length} kết quả</h6>
+                            }).length} kết quả */}</h6>
                             <div className="right-sort">
                                 <div className="sort-by mr-3">
                                     <span className="mr-1">Lọc theo:</span>

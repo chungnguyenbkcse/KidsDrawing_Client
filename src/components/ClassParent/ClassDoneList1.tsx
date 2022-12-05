@@ -330,7 +330,7 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="d-flex flex-row justify-content-between align-items-center filters mt-2">
-                            <h6 className="ml-3">Có {element.filter((val) => {
+                            <h6 className="ml-3">{/* Có {element.filter((val) => {
                                 if (props.value === "") {
                                     return val;
                                 }
@@ -338,7 +338,7 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
                                     return val;
                                 }
                                 return null
-                            }).length} kết quả</h6>
+                            }).length} kết quả */}</h6>
                             <div className="right-sort">
                                 <div className="sort-by mr-3">
                                     <span className="ml-1 mr-1">Thể loại:</span>

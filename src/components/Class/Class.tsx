@@ -37,6 +37,7 @@ import Loading from "../../common/components/Loading";
 import { getSemesterNext } from "../../common/service/semester/GetSemesterNext";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
 import ClassForm from "./ClassForm";
+import { deleteMyClass } from "../../common/service/MyClass/DeleteMyClass";
 
 type Options = {
     name: string;
@@ -406,7 +407,6 @@ const Class: React.FC = () => {
 
                                                                     dispatch(deleteSemesterClass(semester_classes.selectedSemesterClass.id, idx))
                                                                     dispatch(addNotification("Độ tuổi ", `${semester_classes.selectedSemesterClass.name} đã được xóa`));
-                                                                    dispatch(removeSemesterClass(semester_classes.selectedSemesterClass.id));
                                                                     dispatch(clearSelectedSemesterClass());
                                                                     setPopup1(false);
                                                                 }}>Remove
@@ -476,8 +476,11 @@ const Class: React.FC = () => {
                                                                     if (!myclasss.selectedMyClass) {
                                                                         return;
                                                                     }
+                                                                    const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                                        position: toast.POSITION.TOP_CENTER
+                                                                    });
                                                                     dispatch(addNotification("Trình độ ", `${myclasss.selectedMyClass.name} đã được xóa`));
-                                                                    dispatch(removeMyClass(myclasss.selectedMyClass.id));
+                                                                    deleteMyClass(dispatch, myclasss.selectedMyClass.id, idx);
                                                                     dispatch(clearSelectedMyClass());
                                                                     setPopup2(false);
                                                                 }}>Remove

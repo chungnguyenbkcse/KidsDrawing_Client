@@ -67,7 +67,7 @@ function SemesterList(props) {
   }
 
   function showEndTime(cell, row) {
-    var strDate = row.start_time;
+    var strDate = row.end_time;
     return (
         <span>{strDate.replaceAll("T", " ").substring(0,16)}</span>
     )

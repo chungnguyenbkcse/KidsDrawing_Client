@@ -50,6 +50,8 @@ const ContestForm: React.FC = () => {
     contest_id = parseInt(id_x)
   }
 
+  const [checkChange, setCheckChange] = useState(false)
+
   const { promiseInProgress } = usePromiseTracker();
 
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
@@ -218,19 +220,36 @@ const ContestForm: React.FC = () => {
       }
 
       else if (saveFn === editContestNotOpenNow) {
-        dispatch(putContest(contest.id, {
-          name: formState.name.value,
-          description: textHtml,
-          registration_time: formState.registration_time.value,
-          image_url: url,
-          is_enabled: formState.is_enabled.value,
-          creator_id: localStorage.getItem('id'),
-          max_participant: formState.max_participant.value,
-          start_time: formState.start_time.value,
-          end_time: formState.end_time.value,
-          art_age_id: formState.art_age_id.value,
-          art_type_id: formState.art_type_id.value
-        },valueTeacher,  idx, routeHome))
+        if (valueTeacher.length === 0 && checkChange === false) {      
+          dispatch(putContest(contest.id, {
+            name: formState.name.value,
+            description: textHtml,
+            registration_time: formState.registration_time.value,
+            image_url: url,
+            is_enabled: formState.is_enabled.value,
+            creator_id: localStorage.getItem('id'),
+            max_participant: formState.max_participant.value,
+            start_time: formState.start_time.value,
+            end_time: formState.end_time.value,
+            art_age_id: formState.art_age_id.value,
+            art_type_id: formState.art_type_id.value
+          },listTeacherGradeContests,  idx, routeHome))
+        }
+        else {
+          dispatch(putContest(contest.id, {
+            name: formState.name.value,
+            description: textHtml,
+            registration_time: formState.registration_time.value,
+            image_url: url,
+            is_enabled: formState.is_enabled.value,
+            creator_id: localStorage.getItem('id'),
+            max_participant: formState.max_participant.value,
+            start_time: formState.start_time.value,
+            end_time: formState.end_time.value,
+            art_age_id: formState.art_age_id.value,
+            art_type_id: formState.art_type_id.value
+          },valueTeacher,  idx, routeHome))
+        }
       }
 
       dispatch(clearSelectedContestNotOpenNow());
@@ -297,6 +316,7 @@ const ContestForm: React.FC = () => {
 
   function changeValueTeacher(value: any){
     setValueTeacher(value)
+    setCheckChange(true)
   }
 
   var now = new Date();

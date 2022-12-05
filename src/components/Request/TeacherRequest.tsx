@@ -2,22 +2,31 @@ import React, { Fragment, Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import TopCard from "../../common/components/TopCard";
-import { ITeacherLeaveState, IStateType } from "../../store/models/root.interface";
+import { ITeacherLeaveState, IStateType, IStudentLeaveState } from "../../store/models/root.interface";
 import TeacherRequestList from "./TeacherRequestList";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getTeacherLeave } from "../../common/service/TeacherLeave/GetTeacherLeave";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import TeacherRequestList1 from "./TeacherRequestList1";
 import TeacherRequestList2 from "./TeacherRequest1";
+import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
+import Popup from "reactjs-popup";
+import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
+import { putTeacherLeaveStatus } from "../../common/service/TeacherLeave/PutTeacherLeave";
 
 const TeacherRequest: React.FC = () => {
   const teachers: ITeacherLeaveState = useSelector((state: IStateType) => state.teacher_leaves);
-  const numberItemsCount: number = teachers.leaves.length;
+  const numberItemsCount: number = teachers.leaves.filter((ele) => ele.status === "Teacher approved" || ele.status === "Not approve now").length;
   const { promiseInProgress } = usePromiseTracker();
+  const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
+  const [popup, setPopup] = useState(false);
 
+  function onRemoveTeacherLeave() {
+    setPopup(true)
+  }
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Yêu cầu nghỉ dạy", ""));
@@ -56,6 +65,15 @@ const TeacherRequest: React.FC = () => {
 
     const [checked, setChecked] = useState(true);
 
+    const handleTeacherLeave = (teacher_leave_id: number, status: string) => {
+      const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      (putTeacherLeaveStatus(dispatch, teacher_leave_id, {
+        status: status
+      }, id))
+    }
+
   return (
     promiseInProgress ?
       <div className="row" id="search-box">
@@ -68,6 +86,47 @@ const TeacherRequest: React.FC = () => {
         </div>
       </div> : <Fragment>
       <ToastContainer />
+
+      {
+        function () {
+            if ((student_leaves.modificationState === StudentLeaveModificationStatus.Remove)) {
+                return (
+                    <Popup
+                        open={popup}
+                        onClose={() => setPopup(false)}
+                        closeOnDocumentClick
+                    >
+                        <div className="popup-modal" id="popup-modal">
+                            <div className="popup-title">
+                                Bạn có chắc chắn muốn xóa?
+                            </div>
+                            <div className="popup-content">
+                                <button type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => {
+                                      
+                                        var id_xxx = localStorage.getItem('teacher_leave_id');
+                                        let teacher_leave_id = 0;
+                                        if (id_xxx !== null) {
+                                          teacher_leave_id = parseInt(id_xxx)
+                                        }
+
+                                        if (teacher_leave_id === 0) {
+                                          return;
+                                        }
+                                        handleTeacherLeave(teacher_leave_id, "Not approved")
+                                        
+                                        setPopup(false);
+                                    }}>Remove
+                                </button>
+                            </div>
+                        </div>
+                    </Popup>
+                )
+            }
+        }()
+    }
+
       <h1 className="h3 mb-2 text-gray-800">Yêu cầu nghỉ dạy</h1>
       {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
@@ -125,7 +184,7 @@ const TeacherRequest: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
             </div>
             <div className="card-body">
-              <TeacherRequestList />
+              <TeacherRequestList onSelect={onRemoveTeacherLeave}/>
             </div>
           </div>
 

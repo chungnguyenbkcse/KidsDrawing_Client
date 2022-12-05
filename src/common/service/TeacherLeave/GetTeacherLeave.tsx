@@ -78,7 +78,7 @@ export function getTeacherLeave(dispatch: any) {
                     if (teacher_leave.status === "Approved"){
                         return dispatch(addAcceptTeacherLeave(teacher_leave));
                     }
-                    else if (teacher_leave.status === "Not Approved") {
+                    else if (teacher_leave.status === "Not approved") {
                         return dispatch(addRemoveTeacherLeave(teacher_leave));
                     }
                     else {

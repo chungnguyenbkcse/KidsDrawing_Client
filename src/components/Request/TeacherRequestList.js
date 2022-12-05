@@ -7,6 +7,8 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { setModificationState } from "../../store/actions/student_leave.action";
+import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
 
 
 function TeacherRequestList(props) {
@@ -63,13 +65,17 @@ function TeacherRequestList(props) {
 
   function removeButton(cell, row) {
     return (
-        <button type="button" className="btn btn-danger" onClick={() => {handleTeacherLeave(row, "Not approved")}}>Xóa</button>
+        <button type="button" className="btn btn-danger" onClick={() => {
+          if(props.onSelect) props.onSelect();
+          localStorage.setItem('teacher_leave_id', row.id)
+          dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
+        }}>Xóa</button>
     );
   }
 
   function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={() => {handleTeacherLeave(row, "Approved")}}>Chấp nhận</button>
+        <button type="button" className="btn btn-primary" onClick={() => {handleTeacherLeave(row, "Admin approved")}}>Chấp nhận</button>
     )
   }
 

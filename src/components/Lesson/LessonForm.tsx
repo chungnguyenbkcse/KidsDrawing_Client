@@ -81,8 +81,8 @@ function LessonForm(props: lessonListProps): JSX.Element {
   }
 
   function isFormInvalid(): boolean {
-    return (formState.start_time.error || formState.end_time.error
-      || !formState.start_time.value || !formState.end_time.value) as boolean;
+    return (formState.start_time.error
+      || !formState.start_time.value) as boolean;
   }
 
   return (

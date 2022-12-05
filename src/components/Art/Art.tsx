@@ -319,8 +319,6 @@ const Art: React.FC = () => {
                                                                         position: toast.POSITION.TOP_CENTER
                                                                     });
                                                                     dispatch(deleteArtType(art_types.selectedArtType.id, idx))
-                                                                    dispatch(addNotification("Thể loại ", `${art_types.selectedArtType.name} đã được xóa`));
-                                                                    dispatch(removeArtType(art_types.selectedArtType.id));
                                                                     dispatch(clearSelectedArtType());
                                                                     setPopup1(false);
                                                                 }}>Remove
@@ -402,8 +400,6 @@ const Art: React.FC = () => {
                                                                         position: toast.POSITION.TOP_CENTER
                                                                     });
                                                                     dispatch(deleteArtAge(art_ages.selectedArtAge.id, idx))
-                                                                    dispatch(addNotification("Độ tuổi ", `${art_ages.selectedArtAge.name} đã được xóa`));
-                                                                    dispatch(removeArtAge(art_ages.selectedArtAge.id));
                                                                     dispatch(clearSelectedArtAge());
                                                                     setPopup2(false);
                                                                 }}>Remove
@@ -486,8 +482,6 @@ const Art: React.FC = () => {
                                                                         position: toast.POSITION.TOP_CENTER
                                                                     });
                                                                     dispatch(deleteArtLevel(art_levels.selectedArtLevel.id, idx))
-                                                                    dispatch(addNotification("Trình độ ", `${art_levels.selectedArtLevel.name} đã được xóa`));
-                                                                    dispatch(removeArtLevel(art_levels.selectedArtLevel.id));
                                                                     dispatch(clearSelectedArtLevel());
                                                                     setPopup3(false);
                                                                 }}>Remove

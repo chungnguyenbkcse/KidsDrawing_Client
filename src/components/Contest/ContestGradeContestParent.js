@@ -276,11 +276,11 @@ const ResultGradeContestParent = () => {
                                     </div>
 
                                     <h4 className="text-center green-seven-one-text mt-2">
-                                        <p className="text-top"> {top_score.length > 0 ? top_score[1].student_name : ""}</p>
+                                        <p className="text-top"> {top_score.length > 1 ? top_score[1].student_name : ""}</p>
                                     </h4>
 
                                     <p className="text-muted mt-2 text-center">
-                                        {top_score.length > 0 ? top_score[1].score : ""}
+                                        {top_score.length > 1 ? top_score[1].score : ""}
                                     </p>
                                 </div>
                             </div>
@@ -298,11 +298,11 @@ const ResultGradeContestParent = () => {
                                     </div>
 
                                     <h4 className="text-center green-seven-one-text mt-2">
-                                        <p className="text-top">{top_score.length > 0 ? top_score[2].student_name : ""}</p>
+                                        <p className="text-top">{top_score.length > 2 ? top_score[2].student_name : ""}</p>
                                     </h4>
 
                                     <p className="text-muted mt-2 text-center">
-                                        {top_score.length > 0 ? top_score[2].score : ""}
+                                        {top_score.length > 2 ? top_score[2].score : ""}
                                     </p>
                                 </div>
                             </div>

@@ -72,7 +72,7 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
     let list_name_final: string[] = [];
     final_score_childs.final_score_childs.map((ele, idx) => {
         if (ele !== undefined && ele !== null ){
-            list_score_final.push(ele.final_score * 10)
+            list_score_final.push(ele.final_score)
             list_name_final.push(ele.course_name)
             return ele
         }

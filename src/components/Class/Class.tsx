@@ -134,6 +134,13 @@ const Class: React.FC = () => {
         dispatch(setModificationState(MyClassModificationStatus.None));
     }
 
+    function onMyClassSelect2(myclass: IMyClass): void {
+        console.log('hello')
+        dispatch(changeSelectedMyClass(myclass));
+        setPopup2(true)
+        dispatch(setModificationState(MyClassModificationStatus.None));
+    }
+
     function onSemesterClassSelect(course: ISemesterClass): void {
         dispatch(changeSelectedSemesterClass(course));
         onSemesterClassRemove()
@@ -426,7 +433,7 @@ const Class: React.FC = () => {
                                             </div>
                                             <div className="card-body">
                                                 <ClassList
-                                                    onSelect={onMyClassSelect} value={searchTerm}
+                                                    onSelect={onMyClassSelect} onSelect2 = {onMyClassSelect2} value={searchTerm}
                                                 />
                                             </div>
                                         </div>

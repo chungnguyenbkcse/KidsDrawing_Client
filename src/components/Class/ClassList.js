@@ -74,7 +74,7 @@ function ClassList(props) {
   function removeButton(cell, row) {
     return (
         <button type="button" className="btn btn-danger" onClick={() =>{
-            if(props.onSelect) props.onSelect(row);
+            if(props.onSelect2) props.onSelect2(row);
             dispatch(setModificationState(MyClassModificationStatus.Remove))
           }}>Xóa</button>
     )

@@ -80,7 +80,7 @@ function  ClassForm (props: semesterClassListProps): JSX.Element {
           </div>
           <div className="card-body">
             <form onSubmit={saveUser}>
-              <div className="form-group">
+              <div className="form-group col-md-12">
                   <TextInput id="input_name"
                     field = "name"
                     value={formState.name.value}

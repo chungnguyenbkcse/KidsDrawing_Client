@@ -110,16 +110,44 @@ const CartForm: React.FC = () => {
     if (roleUser === "PARENT_USER") {
         return (
             promiseInProgress ?
-          <div className="row" id="search-box">
-            <div className="col-xl-12 col-lg-12">
-              <div className="input-group" id="search-content">
-                <div className="form-outline">
-                  <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-                </div>
-              </div>
-            </div>
-          </div> : <Fragment>
+          <div className="loader"></div> : <Fragment>
                 <ToastContainer />
+                {
+                    function () {
+                        if (lessons.modificationState === LessonModificationStatus.Remove) {
+                            return (
+                                <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                  });
+                                                  var id_xy = localStorage.getItem('user_register_join_semester_id');
+                                                  var user_register_join_semester_id: number = 0;
+                                                  if (id_xy !== null) {
+                                                    user_register_join_semester_id = parseInt(id_xy);
+                                                  }
+                                                dispatch(deleteUserRegisterJoinSemester1(user_register_join_semester_id, idx))
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                            )
+                        }
+                    }()
+                }
                 <div className="row">
                 <div className="col-md-12">
                 <table className="table">
@@ -186,16 +214,44 @@ const CartForm: React.FC = () => {
     else {
         return (
             promiseInProgress ?
-          <div className="row" id="search-box">
-            <div className="col-xl-12 col-lg-12">
-              <div className="input-group" id="search-content">
-                <div className="form-outline">
-                  <Loading type={"spin"} color={"rgb(53, 126, 221)"} />
-                </div>
-              </div>
-            </div>
-          </div> : <Fragment>
+          <div className="loader"></div> : <Fragment>
                 <ToastContainer />
+                {
+                    function () {
+                        if (lessons.modificationState === LessonModificationStatus.Remove) {
+                            return (
+                                <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                  });
+                                                  var id_xy = localStorage.getItem('user_register_join_semester_id');
+                                                  var user_register_join_semester_id: number = 0;
+                                                  if (id_xy !== null) {
+                                                    user_register_join_semester_id = parseInt(id_xy);
+                                                  }
+                                                dispatch(deleteUserRegisterJoinSemester1(user_register_join_semester_id, idx))
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                            )
+                        }
+                    }()
+                }
                 <div className="row">
                 <div className="col-md-12">
                 <table className="table">
@@ -244,43 +300,6 @@ const CartForm: React.FC = () => {
                    
                 </table>
                 </div>
-
-                {
-                    function () {
-                        if (lessons.modificationState === LessonModificationStatus.Remove) {
-                            return (
-                                <Popup
-                                open={popup}
-                                onClose={() => setPopup(false)}
-                                closeOnDocumentClick
-                            >
-                                <div className="popup-modal" id="popup-modal">
-                                    <div className="popup-title">
-                                        Bạn có chắc chắn muốn xóa?
-                                    </div>
-                                    <div className="popup-content">
-                                        <button type="button"
-                                            className="btn btn-danger"
-                                            onClick={() => {
-                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                                                    position: toast.POSITION.TOP_CENTER
-                                                  });
-                                                  var id_xy = localStorage.getItem('user_register_join_semester_id');
-                                                  var user_register_join_semester_id: number = 0;
-                                                  if (id_xy !== null) {
-                                                    user_register_join_semester_id = parseInt(id_xy);
-                                                  }
-                                                dispatch(deleteUserRegisterJoinSemester1(user_register_join_semester_id, idx))
-                                                setPopup(false);
-                                            }}>Remove
-                                        </button>
-                                    </div>
-                                </div>
-                            </Popup>
-                            )
-                        }
-                    }()
-                }
             </div>
     
     

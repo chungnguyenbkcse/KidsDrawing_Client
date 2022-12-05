@@ -265,12 +265,18 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
                                             <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
                                             <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
                                             {
-                                                ele.student_ids.length > 0 ? <span className="d-block">Học sinh đã đăng kí:  {ele.student_names.map((elex, idxx) => {
-                                                    if (idxx === ele.student_names.length - 1) {
-                                                        return elex
-                                                    }
-                                                    return " " + elex + ","
-                                                })}</span> : ""
+                                                ele.student_ids.length > 0 ? 
+                                                <>
+                                                    <span className="d-block">Học sinh đã đăng kí:  </span>
+                                                    {ele.student_names.map((elex, idxx) => {
+                                                        return(
+                                                            <div className="d-block ml-2">
+                                                                {elex}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </>
+                                                 : ""
                                             }
                                         <span className="d-block schedule-x">Lịch học: {ele.schedule}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>

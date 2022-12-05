@@ -467,12 +467,14 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
                                         <div className="p-card bg-white p-2 rounded px-3 product-x">
                                             <div className="d-flex align-items-center credits"><img src={ele.url_image_course} width="100%" alt="" /></div>
                                             <h5 className="mt-2">{ele.course_name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span>
-                                            <span className="d-block">Học sinh:  {ele.student_names.map((elex, idxx) => {
-                                                if (idxx === ele.student_names.length - 1) {
-                                                    return elex
-                                                }
-                                                return " " + elex + ","
-                                            })}</span>
+                                            <span className="d-block">Học sinh:  </span>
+                                            {ele.student_names.map((elex, idxx) => {
+                                                    return(
+                                                        <div className="d-block ml-2">
+                                                            {elex}
+                                                        </div>
+                                                    )
+                                            })}
                                             <span className="d-block mb-2">Đã học {ele.total_section_studied}/{ele.total_section} buổi.</span>
                                             <div
                                                 className="d-flex justify-content-between stats">

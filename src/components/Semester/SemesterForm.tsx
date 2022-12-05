@@ -99,8 +99,8 @@ function SemesterForm(props: semesterListProps): JSX.Element {
 
   function isFormInvalid(): boolean {
     return (formState.number.error || formState.description.error
-      || formState.name.error || formState.year.error || formState.start_time.error || formState.end_time.error
-      || !formState.name.value || !formState.start_time.value || !formState.end_time.value) as boolean;
+      || formState.name.error || formState.year.error || formState.start_time.error
+      || !formState.name.value || !formState.start_time.value) as boolean;
   }
 
   var now = new Date();

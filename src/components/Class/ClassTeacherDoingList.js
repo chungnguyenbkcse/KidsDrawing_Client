@@ -30,17 +30,17 @@ function ClassTeacherDoingList(props) {
       }
 
 
-  const routeViewSchedule = (class_id, class_name) =>{ 
+  const routeViewSchedule = (classes) =>{ 
     localStorage.removeItem('class_id')
-    localStorage.setItem('class_id', class_id.toString())
+    localStorage.setItem('class_id', classes.id.toString())
     localStorage.removeItem('class_name')
-    localStorage.setItem('class_name', class_name)
+    localStorage.setItem('class_name', classes.name)
     localStorage.removeItem('class_end');
     localStorage.setItem('class_end', 'false');
     let path = '/class/detail'; 
     history.push({
       pathname: path,
-      state: { class_id: class_id }
+      state: { class_id: classes.id }
     });
   }
 
@@ -78,7 +78,7 @@ function ClassTeacherDoingList(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
-            routeViewSchedule(row.id, row.name)}}
+            routeViewSchedule(row)}}
           >Chi tiết</button>
     )
   }

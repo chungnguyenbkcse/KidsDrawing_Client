@@ -1,11 +1,10 @@
-import { fetchDataRequest, fetchDataError, removeLesson } from "../../../store/actions/lesson.action";
+import { fetchDataError } from "../../../store/actions/lesson.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getLesson } from "./GetLesson";
 
-export function deleteLesson(id: any) {
+export function deleteLesson(dispatch: any, id: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
             `${process.env.REACT_APP_API_URL}/lesson-time/${id}`, {
                 method: "DELETE",
                 headers: {
@@ -20,7 +19,7 @@ export function deleteLesson(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteLesson(id))
+                        dispatch(deleteLesson(dispatch, id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -32,11 +31,10 @@ export function deleteLesson(id: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(removeLesson(id))
+                getLesson(dispatch)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

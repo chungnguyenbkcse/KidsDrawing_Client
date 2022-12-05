@@ -16,7 +16,7 @@ import { getLesson } from "../../common/service/Lesson/GetLesson";
 import { deleteLesson } from "../../common/service/Lesson/DeleteLesson";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import LessonList from "./LessonList";
@@ -178,9 +178,11 @@ const Lesson: React.FC = () => {
                                                 if (!lessons.selectedLesson) {
                                                     return;
                                                 }
-                                                dispatch(deleteLesson(lessons.selectedLesson.id))
-                                                dispatch(addNotification("Tiết học ", `${lessons.selectedLesson.start_time} đã được xóa`));
-                                                dispatch(removeLesson(lessons.selectedLesson.id));
+                                                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                  });
+                                                deleteLesson(dispatch, lessons.selectedLesson.id, idx)
+            
                                                 dispatch(clearSelectedLesson());
                                                 setPopup(false);
                                             }}>Remove

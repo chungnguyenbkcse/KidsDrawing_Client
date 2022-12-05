@@ -1,12 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, lazy } from "react";
 import { Switch, Route } from "react-router";
 import "./Routers.css"
-import LeftMenu from "../components/LeftMenu/LeftMenu";
-import TopMenu from "../components/TopMenu/TopMenu";
-import Home from "../components/Home/Home";
-import Teacher from "../components/Teachers/Teacher";
-import DetailTeacher from "../components/Teachers/DetailTeacher";
-import Student from "../components/Student/Student";
+
 import DetailStudent from "../components/Student/DetailStudent";
 import Parent from "../components/Parent/Parent";
 import DetailParent from "../components/Parent/DetailParent";
@@ -130,6 +125,19 @@ import ClassDetail from "../components/Class/ClassDetail";
 import ConestDetailParent from "../components/Discovery/ContestDetail";
 import ConestDetailStudent from "../components/DiscoveryStudent/ContestDetail";
 import EditScoreContestStudent from "../components/Contest/EditScoreContestStudent";
+
+//import LeftMenu from "../components/LeftMenu/LeftMenu";
+const LeftMenu = lazy(()=> import("../components/LeftMenu/LeftMenu"));
+//import TopMenu from "../components/TopMenu/TopMenu";
+const TopMenu = lazy(()=> import("../components/TopMenu/TopMenu"));
+//import Home from "../components/Home/Home";
+const Home = lazy(()=> import("../components/Home/Home"));
+//import Teacher from "../components/Teachers/Teacher";
+const Teacher = lazy(()=> import("../components/Teachers/Teacher"));
+//import DetailTeacher from "../components/Teachers/DetailTeacher";
+const DetailTeacher = lazy(()=> import("../components/Teachers/DetailTeacher"));
+//import Student from "../components/Student/Student";
+const Student = lazy(()=> import("../components/Student/Student"));
 
 const Routers: React.FC = () => {
     var role_privilege = localStorage.getItem('role_privilege')

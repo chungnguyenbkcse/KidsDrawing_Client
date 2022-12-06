@@ -106,7 +106,6 @@ export interface ILessonFormState {
 
 export interface IExerciseFormState {
     section_id: IFormStateField<number>;
-    level_id: IFormStateField<number>;
     name: IFormStateField<string>;
     description: IFormStateField<string>;
     deadline: IFormStateField<string>;

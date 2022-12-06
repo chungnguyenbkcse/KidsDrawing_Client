@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
-import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedExercise, setModificationState } from "../../store/actions/exercise.action";
@@ -141,7 +140,7 @@ const SectionTeacher: React.FC = () => {
                     trackPromise(getSectionById(dispatch, section_id))
                     trackPromise(getExerciseTeacherBySection(dispatch, section_id))
                     trackPromise(getUserRegisterTutorialBySection(dispatch, section_id))
-                    trackPromise(getExerciseLevel(dispatch))
+                   
                     trackPromise(getTutorialPageBySection(dispatch, section_id))
                     trackPromise(getTutorialBySection(dispatch, section_id))
                 }
@@ -151,7 +150,7 @@ const SectionTeacher: React.FC = () => {
                 trackPromise(getSectionById(dispatch, section_id))
                 trackPromise(getUserRegisterTutorialBySection(dispatch, section_id))
                 trackPromise(getExerciseTeacherBySection(dispatch, section_id))
-                trackPromise(getExerciseLevel(dispatch))
+                
                 trackPromise(getTutorialPageBySection(dispatch, section_id))
                 trackPromise(getTutorialBySection(dispatch, section_id))
             }
@@ -208,7 +207,6 @@ const SectionTeacher: React.FC = () => {
         localStorage.removeItem('exercise_id');
         localStorage.setItem('exercise_description', exercise.description);
         localStorage.setItem('exercise_name', exercise.name);
-        localStorage.setItem('exercise_level_name', exercise.level_name);
         localStorage.setItem('exercise_id', exercise.id.toString());
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise.deadline);
@@ -557,14 +555,7 @@ const SectionTeacher: React.FC = () => {
                                                                                             {ele.deadline.replaceAll("T", " ").substring(0, 16)}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className="row">
-                                                                                        <div className="col-md-5">
-                                                                                            Tỉ lệ đánh giá:
-                                                                                        </div>
-                                                                                        <div className="col-md-7">
-                                                                                            {ele.level_name} %
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    
                                                                                     <div className="row mb-2">
                                                                                         <div className="col-md-5">
                                                                                             Trạng thái:
@@ -605,14 +596,7 @@ const SectionTeacher: React.FC = () => {
                                                                                             {ele.deadline.replaceAll("T", " ").substring(0, 16)}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className="row">
-                                                                                        <div className="col-md-5">
-                                                                                            Tỉ lệ đánh giá:
-                                                                                        </div>
-                                                                                        <div className="col-md-7">
-                                                                                            {ele.level_name} %
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    
                                                                                     <div className="row mb-2">
                                                                                         <div className="col-md-5">
                                                                                             Trạng thái:
@@ -654,14 +638,7 @@ const SectionTeacher: React.FC = () => {
                                                                                             {ele.deadline.replaceAll("T", " ").substring(0, 16)}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className="row">
-                                                                                        <div className="col-md-5">
-                                                                                            Tỉ lệ đánh giá:
-                                                                                        </div>
-                                                                                        <div className="col-md-7">
-                                                                                            {ele.level_name} %
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    
                                                                                     <div className="row mb-2">
                                                                                         <div className="col-md-5">
                                                                                             Trạng thái:

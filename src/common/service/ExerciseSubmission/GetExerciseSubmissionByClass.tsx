@@ -8,7 +8,6 @@ interface ExerciseSubmission {
     exercise_name: string;
     image_url: string;
     exercise_description: string;
-    exercise_level_name: string;
     exercise_deadline: string;
     create_time: string;
     update_time: string;
@@ -55,7 +54,6 @@ export function getExerciseSubmissionByClass(dispatch: any, id: any) {
                         exercise_id: ele.exercise_id,
                         exercise_deadline: ele.exercise_deadline,
                         exercise_description: ele.exercise_description,
-                        exercise_level_name: ele.exercise_level_name,
                         exercise_name: ele.exercise_name,
                         image_url: ele.image_url,
                         create_time: strDate_1,
@@ -74,7 +72,6 @@ export function getExerciseSubmissionByClass(dispatch: any, id: any) {
                         exercise_id: ele.exercise_id,
                         exercise_deadline: ele.exercise_deadline,
                         exercise_description: ele.exercise_description,
-                        exercise_level_name: ele.exercise_level_name,
                         exercise_name: ele.exercise_name,
                         image_url: ele.image_url,
                         create_time: strDate_1,

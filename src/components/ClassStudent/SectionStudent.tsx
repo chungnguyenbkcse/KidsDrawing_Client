@@ -3,7 +3,6 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { IClassesStudentState, IExerciseStudentState, IExerciseSubmissionState, ISectionState, IStateType } from "../../store/models/root.interface";
@@ -124,7 +123,6 @@ const SectionStudent: React.FC = () => {
                     trackPromise(getSectionById(dispatch, section_id))
                     trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                     trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
-                    trackPromise(getExerciseLevel(dispatch))
                 }
             }
             else {
@@ -134,7 +132,6 @@ const SectionStudent: React.FC = () => {
                 trackPromise(getStudentLeaveBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
-                trackPromise(getExerciseLevel(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
@@ -163,7 +160,6 @@ const SectionStudent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
@@ -183,7 +179,6 @@ const SectionStudent: React.FC = () => {
         localStorage.removeItem('deadline');
         localStorage.setItem('exercise_description', exercise_student.description);
         localStorage.setItem('exercise_name', exercise_student.name);
-        localStorage.setItem('exercise_level_name', exercise_student.level_name);
         localStorage.setItem('exercise_id', exercise_student.id.toString());
         localStorage.setItem('deadline', exercise_student.deadline);
         let path = '/exercise/submit';
@@ -200,7 +195,6 @@ const SectionStudent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
@@ -212,7 +206,7 @@ const SectionStudent: React.FC = () => {
         });
     }
 
-    const routeChange5 = (description: string, name: string, level_name: string, id: any) => {
+    const routeChange5 = (description: string, name: string, id: any) => {
         let path = '/exercise/submit';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
@@ -220,7 +214,6 @@ const SectionStudent: React.FC = () => {
         localStorage.removeItem('exercise_id');
         localStorage.setItem('exercise_description', description);
         localStorage.setItem('exercise_name', name);
-        localStorage.setItem('exercise_level_name', level_name);
         localStorage.setItem('exercise_id', id.toString());
         history.push({
             pathname: path
@@ -374,7 +367,7 @@ const SectionStudent: React.FC = () => {
                                                             exercise_student.exercise_not_submit.map((ele, index) => {
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                        <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange5(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                        <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange5(ele.description, ele.name, ele.id) }}>
                                                                             <div className="col-xl-3 col-md-3 avatar-x">
                                                                                 <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                             </div>
@@ -395,14 +388,7 @@ const SectionStudent: React.FC = () => {
                                                                                         {ele.deadline.replaceAll("T", " ").substring(0, 16)}
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.level_name} %
-                                                                                    </div>
-                                                                                </div>
+                                                                                
                                                                                 <div className="row mb-2">
                                                                                     <div className="col-md-5">
                                                                                         Trạng thái:
@@ -445,14 +431,7 @@ const SectionStudent: React.FC = () => {
                                                                                         {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.exercise_level_name} %
-                                                                                    </div>
-                                                                                </div>
+                                                                                
 
                                                                                 <div className="row mb-2">
                                                                                     <div className="col-md-5">
@@ -506,14 +485,7 @@ const SectionStudent: React.FC = () => {
                                                                                         {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.exercise_level_name} %
-                                                                                    </div>
-                                                                                </div>
+                                                                                
 
                                                                                 <div className="row mb-2">
                                                                                     <div className="col-md-5">

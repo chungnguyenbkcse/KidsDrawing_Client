@@ -4,8 +4,6 @@ export interface IExerciseTeacher {
     status: string;
     description: string;
     section_id: number;
-    level_id: number;
-    level_name: string;
     deadline: string;
     teacher_name: string;
     section_name: string;

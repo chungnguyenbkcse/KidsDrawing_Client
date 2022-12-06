@@ -1,19 +1,22 @@
-import { fetchDataSuccess, fetchDataError, removeExerciseAll, initialExercise, addExercise } from "../../../store/actions/exercise.action";
+import { fetchDataSuccess, fetchDataError, removeSectionAll, initialSection, addSection } from "../../../store/actions/section.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-interface exercise {
+interface Section {
     id: any;
+    class_id: number;
     name: string;
     description: string;
-    section_id: number;
-    deadline: string;
-    section_name: string;
-    create_time: string;
-    update_time: string;
+    number: number;
+    total_exercise_not_submit: number;
+    teacher_name: string;
+    teach_form: boolean;
+    recording: string;
+    message: string;
 }
-export function getExerciseBySection(dispatch: any, id: any) {
+export function getSectionByClassAndParent(dispatch: any, class_id: number, parent_id: number, total: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+    
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/exercises/section/${id}`, {
+                `${process.env.REACT_APP_API_URL}/section/class-parent/${class_id}/${parent_id}/${total}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -27,7 +30,7 @@ export function getExerciseBySection(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseBySection(dispatch,id))
+                        dispatch(getSectionByClassAndParent(dispatch, class_id, parent_id, total))
                     }
                     else {
                         throw Error(response.statusText);
@@ -38,28 +41,29 @@ export function getExerciseBySection(dispatch: any, id: any) {
                 }
             })
             .then (data => {
+                console.log(data)
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeExerciseAll())
-                //console.log(data.body.exercises)
-                data.body.Exercise.map((ele: any, index: any) => {
-                    var strDate_1 = ele.create_time;
-                    var strDate_2 = ele.update_time;
-                    var exercise: exercise = {
+                dispatch(removeSectionAll())
+                console.log(data.body.Section)
+                data.body.Section.map((ele: any, index: any) => {
+                    var section: Section = {
                         id: ele.id,
+                        class_id: ele.class_id,
                         name: ele.name,
+                        teacher_name: ele.teacher_name,
                         description: ele.description,
-                        section_id: ele.section_id,
-                        deadline: ele.deadline,
-                        section_name: ele.section_name,
-                        create_time: strDate_1,
-                        update_time: strDate_2
+                        number: ele.number,
+                        total_exercise_not_submit: ele.total_exercise_not_submit,
+                        teach_form: ele.teach_form,
+                        recording: ele.recording,
+                        message: ele.message
                     }
                     //console.log(strDate.substring(0, 16))
                     if (index === 0){
-                        return dispatch(initialExercise(exercise));
+                        return dispatch(initialSection(section));
                     }
                     else{
-                        return dispatch(addExercise(exercise))
+                        return dispatch(addSection(section))
                     }
                 })
             })

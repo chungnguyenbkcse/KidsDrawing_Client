@@ -11,8 +11,6 @@ interface exercise {
     deadline: string;
     student_id: number;
     student_name: string;
-    level_id: number;
-    level_name: string;
     section_name: string;
     create_time: string;
     update_time: string;
@@ -57,14 +55,12 @@ export function getExerciseForClassAndParent(dispatch: any, class_id: number, pa
                         name: ele.name,
                         description: ele.description,
                         section_id: ele.section_id,
-                        level_id: ele.level_id,
                         exercise_submission_id: ele.exercise_submission_id,
                         teacher_name: ele.teacher_name,
                         time_submit: ele.time_submit,
                         deadline: ele.deadline,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
-                        level_name: ele.level_name,
                         section_name: ele.section_name,
                         create_time: strDate_1,
                         update_time: strDate_2
@@ -81,14 +77,12 @@ export function getExerciseForClassAndParent(dispatch: any, class_id: number, pa
                         name: ele.name,
                         description: ele.description,
                         section_id: ele.section_id,
-                        level_id: ele.level_id,
                         exercise_submission_id: ele.exercise_submission_id,
                         teacher_name: ele.teacher_name,
                         time_submit: ele.time_submit,
                         deadline: ele.deadline,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
-                        level_name: ele.level_name,
                         section_name: ele.section_name,
                         create_time: strDate_1,
                         update_time: strDate_2

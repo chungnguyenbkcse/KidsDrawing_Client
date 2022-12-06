@@ -6,8 +6,6 @@ export interface IExerciseParent {
     student_name: string;
     description: string;
     section_id: number;
-    level_id: number;
-    level_name: string;
     deadline: string;
     time_submit:  string;
     teacher_name: string;

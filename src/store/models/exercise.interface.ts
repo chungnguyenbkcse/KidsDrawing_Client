@@ -4,8 +4,6 @@ export interface IExercise {
     description: string;
     deadline: string;
     section_id: number;
-    level_id: number;
-    level_name: string;
     section_name: string;
     create_time: string;
     update_time: string;

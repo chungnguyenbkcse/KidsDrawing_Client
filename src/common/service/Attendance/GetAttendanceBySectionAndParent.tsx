@@ -1,15 +1,11 @@
-import { fetchDataSuccess, fetchDataError, removeExerciseLevelAll, addExerciseLevel } from "../../../store/actions/exercise_level.action";
+import { fetchDataSuccess, fetchDataError } from "../../../store/actions/attendance.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-interface ExerciseLevel {
-    id: any;
-    name: string;
-    description: string;
-    weight: number;
-}
-export function getExerciseLevel(dispatch: any) {
+
+export function getAttendanceBySectionAndParent(dispatch: any, section_id: any, parent_id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
+
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-level`, {
+                `${process.env.REACT_APP_API_URL}/user-attendance/section-parent/${section_id}/${parent_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -23,7 +19,7 @@ export function getExerciseLevel(dispatch: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseLevel(dispatch))
+                        dispatch(getAttendanceBySectionAndParent(dispatch, section_id, parent_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -35,20 +31,10 @@ export function getExerciseLevel(dispatch: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                dispatch(removeExerciseLevelAll())
-                //console.log(data.body.exercise_levels)
-                data.body.ExerciseLevel.map((ele: any, index: any) => {
-                    var exercise_level: ExerciseLevel = {
-                        id: ele.id,
-                        name: ele.name,
-                        description: ele.description,
-                        weight: ele.weight
-                    }
-                    //console.log(strDate.substring(0, 16))
-                    return dispatch(addExerciseLevel(exercise_level))
-                })
+                localStorage.setItem('is_attendance_parent', "true");
             })
             .catch(error => {
+                localStorage.setItem('is_attendance_parent', "false");
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

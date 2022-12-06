@@ -465,14 +465,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                         {data[index]}
                                                                     </div>
                                                                 </div>
-                                                                <div className="row">
-                                                                    <div className="col-md-3">
-                                                                        Thời lượng:
-                                                                    </div>
-                                                                    <div className="col-md-9 not-active-xx">
-                                                                        {total_time}
-                                                                    </div>
-                                                                </div>
+                                                                
                                                                 <div className="row">
                                                                     <div className="col-md-3">
                                                                         Hình thức:
@@ -527,14 +520,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                         {data[index]}
                                                                     </div>
                                                                 </div>
-                                                                <div className="row">
-                                                                    <div className="col-md-3">
-                                                                        Thời lượng:
-                                                                    </div>
-                                                                    <div className="col-md-9">
-                                                                        {total_time}
-                                                                    </div>
-                                                                </div>
+                                                                
                                                                 <div className="row">
                                                                     <div className="col-md-3">
                                                                         Hình thức:
@@ -589,14 +575,7 @@ const DetailClassTeacher: React.FC = () => {
                                                                         {data[index]}
                                                                     </div>
                                                                 </div>
-                                                                <div className="row">
-                                                                    <div className="col-md-3">
-                                                                        Thời lượng:
-                                                                    </div>
-                                                                    <div className="col-md-9">
-                                                                        {total_time}
-                                                                    </div>
-                                                                </div>
+                                                                
                                                                 <div className="row">
                                                                     <div className="col-md-3">
                                                                         Hình thức:

@@ -57,15 +57,15 @@ const ClassTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserById(dispatch, id))
                     trackPromise(getClassTeacher(dispatch, id))
+                    trackPromise(getUserById(dispatch, id))
                     trackPromise(getCourse(dispatch))
                     trackPromise(getSemester(dispatch))
                 }
             }
             else {
+                trackPromise(getClassTeacher(dispatch, id))
                 trackPromise(getUserById(dispatch, id))
-                trackPromise(getClassTeacher(dispatch,id))
                 trackPromise(getCourse(dispatch))
                 trackPromise(getSemester(dispatch))
             }

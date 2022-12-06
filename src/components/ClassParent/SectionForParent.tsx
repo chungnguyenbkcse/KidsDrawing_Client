@@ -26,6 +26,7 @@ import { getSectionByClassAndStudent } from "../../common/service/Section/GetSec
 import { BsFillTrashFill } from "react-icons/bs";
 import { deleteExerciseSubmission } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionById";
 import { deleteStudentLeave } from "../../common/service/StudentLeave/DeleteStudentLeaveById";
+import { getSectionByClassAndParent } from "../../common/service/Section/GetSectionByClassAndParent";
 
 
 const SectionForParent: React.FC = () => {
@@ -66,6 +67,12 @@ const SectionForParent: React.FC = () => {
         else {
             setElement(sections.sections.sort((a, b) => a.number - b.number).slice(count * 6, count * 6 + 6))
         }
+    }
+
+    var id_zz = localStorage.getItem('student_ids');
+    let total: number[] = [];
+    if (id_zz !== null) {
+        total = JSON.parse(id_zz)
     }
 
 
@@ -114,21 +121,15 @@ const SectionForParent: React.FC = () => {
                 }
                 else {
                     trackPromise(getInfoMyClass(dispatch, class_id))
-                    trackPromise(getSectionByClassAndStudent(dispatch, class_id, id))
-                    trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
-                    trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, id))
-                    trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
+                    trackPromise(getSectionByClassAndParent(dispatch, class_id, id, total.length))
                 }
             }
             else {
                 trackPromise(getInfoMyClass(dispatch, class_id))
-                trackPromise(getSectionByClassAndStudent(dispatch, class_id, id))
-                trackPromise(getExerciseForClassStudent(dispatch, class_id, id))
-                trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, id))
-                trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, id))
+                trackPromise(getSectionByClassAndParent(dispatch, class_id, id, total.length))
             }
         }
-    }, [dispatch, access_token, refresh_token, class_id, id]);
+    }, [dispatch, access_token, refresh_token, class_id, id, total.length]);
 
     useEffect(() => {
         dispatch(updateCurrentPath("Lớp học", "Buổi học"));
@@ -158,7 +159,6 @@ const SectionForParent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
@@ -178,7 +178,6 @@ const SectionForParent: React.FC = () => {
         localStorage.removeItem('deadline');
         localStorage.setItem('exercise_description', exercise_student.description);
         localStorage.setItem('exercise_name', exercise_student.name);
-        localStorage.setItem('exercise_level_name', exercise_student.level_name);
         localStorage.setItem('exercise_id', exercise_student.id.toString());
         localStorage.setItem('deadline', exercise_student.deadline);
         let path = '/exercise/submit';
@@ -195,7 +194,6 @@ const SectionForParent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
@@ -409,14 +407,7 @@ const SectionForParent: React.FC = () => {
                                                         {data[index]}
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Thời lượng:
-                                                    </div>
-                                                    <div className="col-md-9 not-active-xx">
-                                                        {total_time}
-                                                    </div>
-                                                </div>
+                    
                                                 <div className="row">
                                                     <div className="col-md-3">
                                                         Hình thức:
@@ -471,14 +462,7 @@ const SectionForParent: React.FC = () => {
                                                         {data[index]}
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Thời lượng:
-                                                    </div>
-                                                    <div className="col-md-9">
-                                                        {total_time}
-                                                    </div>
-                                                </div>
+                                                
                                                 <div className="row">
                                                     <div className="col-md-3">
                                                         Hình thức:
@@ -533,14 +517,7 @@ const SectionForParent: React.FC = () => {
                                                         {data[index]}
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Thời lượng:
-                                                    </div>
-                                                    <div className="col-md-9">
-                                                        {total_time}
-                                                    </div>
-                                                </div>
+                                                
                                                 <div className="row">
                                                     <div className="col-md-3">
                                                         Hình thức:

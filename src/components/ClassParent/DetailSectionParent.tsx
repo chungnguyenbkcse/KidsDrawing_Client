@@ -3,22 +3,19 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { getExerciseLevel } from "../../common/service/ExerciseLevel/GetExerciseLevel";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { IClassesStudentState, IExerciseStudentState, IExerciseSubmissionState, ISectionState, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
-import { getClassesStudent } from "../../common/service/ClassesStudent/GetClassesStudentByStudent";
 import { getExerciseForSectionStudent } from "../../common/service/ExerciseStudent/GetExerciseBySectionStudent";
 import { IExerciseStudent } from "../../store/models/exercise_student.interface";
 import { getExerciseSubmissionBySectionAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionBySectionAndStudent";
 import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 import { getAttendanceBySectionAndStudent } from "../../common/service/Attendance/GetUserAttendaceBySectionAndStudent";
-import { getStudentLeaveBySectionAndStudent } from "../../common/service/StudentLeave/GetStudentLeaveBySectionAndStudent";
 import { BsFillTrashFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
 import { deleteExerciseSubmission } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionById";
+import { getAttendanceBySectionAndParent } from "../../common/service/Attendance/GetAttendanceBySectionAndParent";
 
 const DetailSectionParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -64,10 +61,10 @@ const DetailSectionParent: React.FC = () => {
         link_record = id_tt;
     }
 
-    var id_j = localStorage.getItem('is_attendance');
-    var is_attendance = "";
+    var id_j = localStorage.getItem('is_attendance_parent');
+    var is_attendance_parent = "";
     if (id_j !== null) {
-        is_attendance = id_j;
+        is_attendance_parent = id_j;
     }
 
     var id_jx = localStorage.getItem('student_leave');
@@ -79,20 +76,7 @@ const DetailSectionParent: React.FC = () => {
     const [popup2, setPopup2] = useState(false);
     const [requestId, setRequestId] = useState(0);
 
-    console.log(class_id);
-    console.log(class_students.classes_doing)
 
-    let link_jisti = "";
-    if (class_students.classes_doing.length > 0) {
-        class_students.classes_doing.map((ele, idx) => {
-            if (ele.id === class_id) {
-                link_jisti = ele.link_url;
-            }
-            return ele
-        })
-    }
-
-    console.log(link_jisti)
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -117,23 +101,17 @@ const DetailSectionParent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getClassesStudent(dispatch, id))
-                    trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
-                    trackPromise(getStudentLeaveBySectionAndStudent(dispatch, section_id, id))
+                    trackPromise(getAttendanceBySectionAndParent(dispatch, section_id, id))
                     trackPromise(getSectionById(dispatch, section_id))
-                    trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                     trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
-                    trackPromise(getExerciseLevel(dispatch))
+                    trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                 }
             }
             else {
-                trackPromise(getClassesStudent(dispatch, id))
-                trackPromise(getAttendanceBySectionAndStudent(dispatch, section_id, id))
+                trackPromise(getAttendanceBySectionAndParent(dispatch, section_id, id))
                 trackPromise(getSectionById(dispatch, section_id))
-                trackPromise(getStudentLeaveBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
                 trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
-                trackPromise(getExerciseLevel(dispatch))
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
@@ -147,12 +125,6 @@ const DetailSectionParent: React.FC = () => {
         });
     }
 
-    const routeChange4 = () => {
-        if (link_jisti !== null) {
-            window.open(link_jisti, '_blank');
-        }
-    }
-
 
     const routeChange2x = (exercise_student: IExerciseSubmission) => {
         let path = '/exercise/detail';
@@ -162,7 +134,6 @@ const DetailSectionParent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
@@ -182,7 +153,6 @@ const DetailSectionParent: React.FC = () => {
         localStorage.removeItem('deadline');
         localStorage.setItem('exercise_description', exercise_student.description);
         localStorage.setItem('exercise_name', exercise_student.name);
-        localStorage.setItem('exercise_level_name', exercise_student.level_name);
         localStorage.setItem('exercise_id', exercise_student.id.toString());
         localStorage.setItem('deadline', exercise_student.deadline);
         let path = '/exercise/submit';
@@ -199,11 +169,9 @@ const DetailSectionParent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
-
         localStorage.setItem('exercise_name', exercise_student.exercise_name);
         localStorage.setItem('exercise_id', exercise_student.exercise_id.toString());
         history.push({
@@ -211,7 +179,7 @@ const DetailSectionParent: React.FC = () => {
         });
     }
 
-    const routeChange5 = (description: string, name: string, level_name: string, id: any) => {
+    const routeChange5 = (description: string, name: string, id: any) => {
         let path = '/exercise/submit';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
@@ -219,7 +187,6 @@ const DetailSectionParent: React.FC = () => {
         localStorage.removeItem('exercise_id');
         localStorage.setItem('exercise_description', description);
         localStorage.setItem('exercise_name', name);
-        localStorage.setItem('exercise_level_name', level_name);
         localStorage.setItem('exercise_id', id.toString());
         history.push({
             pathname: path
@@ -314,22 +281,7 @@ const DetailSectionParent: React.FC = () => {
                                                                 return ""
                                                             }
                                                             else {
-                                                                if (sections.sections[0].teach_form === true) {
-                                                                    if (is_active === "active_now" || is_active === "pre_active_now") {
-                                                                        return (
-                                                                            <button
-                                                                                className="btn btn-success ml-2"
-                                                                                id="btn-into-room"
-                                                                                onClick={routeChange4}
-                                                                            >
-                                                                                Vào metting room
-                                                                            </button>
-                                                                        )
-                                                                    }
-
-
-                                                                }
-                                                                else {
+                                                                if (sections.sections[0].teach_form === false) {
                                                                     if (is_active === "not_active" || is_active === "active_now" || is_active === "pre_active_now") {
                                                                         return (
                                                                             <button
@@ -373,7 +325,7 @@ const DetailSectionParent: React.FC = () => {
                                                             exercise_student.exercise_not_submit.map((ele, index) => {
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                        <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange5(ele.description, ele.name, ele.level_name, ele.id) }}>
+                                                                        <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange5(ele.description, ele.name, ele.id) }}>
                                                                             <div className="col-xl-3 col-md-3 avatar-x">
                                                                                 <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                             </div>
@@ -394,14 +346,7 @@ const DetailSectionParent: React.FC = () => {
                                                                                         {ele.deadline.replaceAll("T", " ").substring(0, 16)}
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.level_name} %
-                                                                                    </div>
-                                                                                </div>
+                                                                                
                                                                                 <div className="row mb-2">
                                                                                     <div className="col-md-5">
                                                                                         Trạng thái:
@@ -444,14 +389,7 @@ const DetailSectionParent: React.FC = () => {
                                                                                         {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.exercise_level_name} %
-                                                                                    </div>
-                                                                                </div>
+                                                                                
 
                                                                                 <div className="row mb-2">
                                                                                     <div className="col-md-5">
@@ -505,14 +443,7 @@ const DetailSectionParent: React.FC = () => {
                                                                                         {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tỉ lệ đánh giá:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.exercise_level_name} %
-                                                                                    </div>
-                                                                                </div>
+                                                                                
 
                                                                                 <div className="row mb-2">
                                                                                     <div className="col-md-5">
@@ -552,7 +483,7 @@ const DetailSectionParent: React.FC = () => {
                                                 }
                                                 else {
                                                     if (sections.sections[0].teach_form === true) {
-                                                        if ((is_active === "not_active" && is_attendance === "true") || (is_attendance === "false" && student_leave === "true")) {
+                                                        if ((is_active === "not_active" && is_attendance_parent === "true") || (is_attendance_parent === "false" && student_leave === "true")) {
                                                             return (
                                                                 <>
                                                                     <h4 id="full-name">Recording</h4>

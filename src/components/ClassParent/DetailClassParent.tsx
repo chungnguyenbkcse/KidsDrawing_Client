@@ -181,7 +181,6 @@ const DetailClassParent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
@@ -204,7 +203,6 @@ const DetailClassParent: React.FC = () => {
         localStorage.setItem('student_name', exercise_student.student_name.toString());
         localStorage.setItem('exercise_description', exercise_student.description);
         localStorage.setItem('exercise_name', exercise_student.name);
-        localStorage.setItem('exercise_level_name', exercise_student.level_name);
         localStorage.setItem('exercise_id', exercise_student.id.toString());
         localStorage.setItem('deadline', exercise_student.deadline);
         let path = '/exercise/submit';
@@ -221,7 +219,6 @@ const DetailClassParent: React.FC = () => {
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
-        localStorage.setItem('exercise_level_name', exercise_student.exercise_level_name);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
@@ -680,14 +677,7 @@ const DetailClassParent: React.FC = () => {
                                                                                     {ele.deadline.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="row">
-                                                                                <div className="col-md-5">
-                                                                                    Tỉ lệ đánh giá:
-                                                                                </div>
-                                                                                <div className="col-md-7">
-                                                                                    {ele.level_name} %
-                                                                                </div>
-                                                                            </div>
+                                                                            
 
                                                                             <div className="row">
                                                                                 <div className="col-md-5">
@@ -752,14 +742,7 @@ const DetailClassParent: React.FC = () => {
                                                                                     {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="row">
-                                                                                <div className="col-md-5">
-                                                                                    Tỉ lệ đánh giá:
-                                                                                </div>
-                                                                                <div className="col-md-7">
-                                                                                    {ele.exercise_level_name} %
-                                                                                </div>
-                                                                            </div>
+                                                                            
 
                                                                             <div className="row">
                                                                                 <div className="col-md-5">
@@ -822,14 +805,7 @@ const DetailClassParent: React.FC = () => {
                                                                                     {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="row">
-                                                                                <div className="col-md-5">
-                                                                                    Tỉ lệ đánh giá:
-                                                                                </div>
-                                                                                <div className="col-md-7">
-                                                                                    {ele.exercise_level_name} %
-                                                                                </div>
-                                                                            </div>
+                                                                            
 
                                                                             <div className="row">
                                                                                 <div className="col-md-5">

@@ -32,7 +32,7 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
     const isCreate: boolean = (exercises.modificationState === ExerciseModificationStatus.Create);
 
     if (!exercise || isCreate) {
-        exercise = { id: 0, name: "", deadline: "", description: "", section_id: 0, section_name: "", level_id: 0, level_name: "", create_time: "", update_time: "" };
+        exercise = { id: 0, name: "", deadline: "", description: "", section_id: 0, section_name: "", create_time: "", update_time: "" };
     }
 
     var id_y = localStorage.getItem('section_id');
@@ -52,7 +52,6 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
 
     const [formState, setFormState] = useState({
         section_id: { error: "", value: exercise.section_id },
-        level_id: { error: "", value: exercise.level_id },
         name: { error: "", value: exercise.name },
         description: { error: "", value: exercise.description },
         deadline: { error: "", value: exercise.deadline },
@@ -82,7 +81,6 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
             if (saveFn === addExercise) {
                 dispatch(postExercise({
                     section_id: section_id,
-                    level_id: formState.level_id.value ,
                     name: formState.name.value,
                     description: formState.description.value ,
                     deadline: formState.deadline.value
@@ -91,7 +89,6 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
             else {
                 dispatch(putExercise(exercise.id, {
                     section_id: section_id,
-                    level_id: formState.level_id.value ,
                     name: formState.name.value,
                     description: formState.description.value ,
                     deadline: formState.deadline.value
@@ -150,18 +147,6 @@ function ExerciseForm(props: exerciseListProps): JSX.Element {
                                         maxLength={100}
                                         label="Miêu tả"
                                         placeholder="" />
-                                </div>
-
-                                <div className="form-group">
-                                    <SelectKeyValue
-                                        id="input_level_id"
-                                        field="level_id"
-                                        label="Mức độ"
-                                        options={listExerciseLevels}
-                                        required={true}
-                                        onChange={hasFormValueChanged}
-                                        value={formState.level_id.value}
-                                    />
                                 </div>
 
                                 <div className="form-group">

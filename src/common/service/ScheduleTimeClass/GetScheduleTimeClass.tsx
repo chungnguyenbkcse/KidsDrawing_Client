@@ -38,11 +38,11 @@ export function getScheduleTimeClass(dispatch: any) {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeScheduleTimeClassAll())
                 //console.log(data.body.schedule_time)
-                data.body.schedules.map((ele: any, index: any) => {
+                data.body.schedule.map((ele: any, index: any) => {
                     let x = Object.values(ele)
                     let y = Object.keys(ele)
                     return x.map((ele_1: any, idx: any) => {
-                        //console.log(ele_1)
+                        console.log(ele_1)
                         return Object.values(ele_1).map((ele_2: any) => {
                             //console.log(ele_2)
                             let x_1 = Object.values(ele_2)

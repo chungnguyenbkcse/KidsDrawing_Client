@@ -281,9 +281,10 @@ const Teacher: React.FC = () => {
                                                 if (!users.selectedUser) {
                                                     return;
                                                 }
-                                                dispatch(deleteUser(users.selectedUser.id))
-                                                dispatch(addNotification("Giáo viên", `${users.selectedUser.username} đã được xóa!`));
-                                                dispatch(removeTeacher(users.selectedUser.id));
+                                                const idx = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
+                                                    position: toast.POSITION.TOP_CENTER
+                                                });
+                                                deleteUser(dispatch, users.selectedUser.id, idx)
                                                 dispatch(clearSelectedUser());
                                                 setPopup(false);
                                             }}>Remove

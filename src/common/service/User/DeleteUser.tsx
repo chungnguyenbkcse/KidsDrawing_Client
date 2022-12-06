@@ -1,12 +1,12 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getTeacher } from "../Teacher/GetTeacher";
 
-export function deleteUser(id: any) {
+export function deleteUser(dispatch: any, id: number, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
             `${process.env.REACT_APP_API_URL}/user/${id}`, {
                 method: "DELETE",
                 headers: {
@@ -21,7 +21,7 @@ export function deleteUser(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteUser(id))
+                        dispatch(deleteUser(dispatch, id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -33,10 +33,12 @@ export function deleteUser(id: any) {
             })
             .then (data => {
                 console.log(data)
+                getTeacher(dispatch)
+                toast.update(idx, { render: "Xóa tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
+                toast.update(idx, { render: "Xóa tài khoản không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

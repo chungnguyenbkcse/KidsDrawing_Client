@@ -120,6 +120,8 @@ const Parent: React.FC = () => {
                                                 const idx = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
                                                     position: toast.POSITION.TOP_CENTER
                                                 });
+
+                                                console.log(users.selectedUser.id)
                                                 deleteUser(dispatch, users.selectedUser.id,idx)
                                                 dispatch(addNotification("Phụ huynh ", `${users.selectedUser.username} đã được xóa!`));
                                                 dispatch(clearSelectedUser());

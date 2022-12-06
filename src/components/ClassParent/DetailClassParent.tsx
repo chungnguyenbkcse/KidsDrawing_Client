@@ -161,7 +161,6 @@ const DetailClassParent: React.FC = () => {
 
     function handleChange(e: any) {
         setFilter(e.target.value)
-        trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,filter))
     }
 
     function onAnonymousNotificationRemove() {
@@ -361,6 +360,15 @@ const DetailClassParent: React.FC = () => {
 
     function handleFilter() {
         trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,filter))
+    }
+
+    function handleChangeToSection() {
+        let path = '/classes/section'; 
+        localStorage.removeItem('class_id');
+        localStorage.setItem('class_id', class_id.toString());
+        history.push({
+            pathname: path,
+        });
     }
 
 
@@ -570,6 +578,16 @@ const DetailClassParent: React.FC = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div className="row justify-content-center">
+                                                <button
+                                                    className="btn btn-success btn-green"
+                                                    id="btn-into-class-student"
+                                                    onClick={() => { handleChangeToSection() }}
+                                                >
+                                                    Buổi học
+                                                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                                </button>
                                             </div>
                                         </div>
 

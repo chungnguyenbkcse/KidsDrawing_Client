@@ -159,7 +159,7 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
                                                 <span>Giới tính: {ele.sex}</span>
                                             </div>
                                             <div className="coords pl-2">
-                                                <span>Trạng thái: {ele.status}</span>
+                                                <span style={{color: "red"}}>Trạng thái: {ele.status !== null ? "Đang hoạt động" : "Không hoạt động"}</span>
                                             </div>
                                             <div className="stats">
                                                 <div>
@@ -177,11 +177,7 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="general">
-                                    <h1>{ele.username}</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a volutpat mauris, at molestie lacus. Nam vestibulum sodales odio ut pulvinar.</p>
-                                    <span className="more">Mouse over the card-cc for more info</span>
-                                </div>
+                                
                             </div>
 
                         </div>

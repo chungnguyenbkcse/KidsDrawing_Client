@@ -12,11 +12,11 @@ export function deleteUserRegisterJoinSemesterBySemesterClassAndStudent(semester
         id = parseInt(id_x);
     }
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
     var roleUser: string = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
     return (dispatch: any) => {
@@ -49,7 +49,7 @@ export function deleteUserRegisterJoinSemesterBySemesterClassAndStudent(semester
             .then (data => {
                 console.log(data)
                 toast.update(idx, { render: "Hủy đăng kí thành công!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                if (roleUser === "PARENT_USER") {
+                if (roleUser === "PARENT") {
                     getUserRegisterJoinSemesterByPayer(dispatch, id)
                 }
                 else if (roleUser === "STUDENT_USER") {

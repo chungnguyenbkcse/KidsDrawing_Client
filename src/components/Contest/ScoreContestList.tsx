@@ -19,11 +19,11 @@ function ScoreContestList(): JSX.Element {
     })
     const history = useHistory();
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
     var roleUser: string = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -178,7 +178,7 @@ function ScoreContestList(): JSX.Element {
                             if (roleUser === "STUDENT_USER") {
                                 return studentElements
                             }
-                            else if (roleUser === "PARENT_USER") {
+                            else if (roleUser === "PARENT") {
                                 return parentElements
                             }
                             else {

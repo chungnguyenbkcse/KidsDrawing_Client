@@ -118,11 +118,11 @@ const LeftMenu = () => {
     const ToggleSidebar = () => {
         isOpen === true ? setIsopen(false) : setIsopen(true);
     }
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege = []
     var roleUser = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -142,7 +142,7 @@ const LeftMenu = () => {
                 </nav>
                 {
                     function () {
-                        if (roleUser === "TEACHER_USER") {
+                        if (roleUser === "TEACHER") {
                             return (
                                 <div id="content-wrapper" className="d-flex flex-column content-wrapper-teacher">
                                     <div id="content" className="teacher-content">
@@ -188,7 +188,7 @@ const LeftMenu = () => {
                                 </div>
                             )
                         }
-                        else if (roleUser === "PARENT_USER") {
+                        else if (roleUser === "PARENT") {
                             return (
                                 <div id="content-wrapper" className="d-flex flex-column">
                                     <div id="content">
@@ -327,7 +327,7 @@ const LeftMenu = () => {
                         <ul>
                             {
                                 function () {
-                                    if (roleUser === 'ADMIN_USER') {
+                                    if (roleUser === 'ADMIN') {
                                         return (
                                             <>
                                                 <hr className="sidebar-divider my-0" />

@@ -34,7 +34,7 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 const token: string = data.accessToken;
                 const decoded: any = jwt_decode(token);
                 console.log(decoded)
-                localStorage.setItem('role_privilege', decoded.role_privilege)
+                localStorage.setItem('role', decoded.role)
                 localStorage.setItem('id', decoded.id)
                 localStorage.setItem('link_profile', decoded.profile_image_url)
                 dispatch(login(username));

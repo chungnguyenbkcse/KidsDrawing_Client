@@ -25,11 +25,11 @@ const ResultGradeContestParent = () => {
             return list_student_id.push(ele.id);
         })
     }
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege = []
     var roleUser = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -66,7 +66,7 @@ const ResultGradeContestParent = () => {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('role')
                     localStorage.removeItem('id')
                     localStorage.removeItem('contest_id')
                     localStorage.removeItem('schedule_id')

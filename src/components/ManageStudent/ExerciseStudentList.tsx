@@ -24,11 +24,11 @@ const ExerciseStudentList: React.FC = () => {
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberGradeCount: number = user_grade_exercise_submission.user_grade_exercise_submissions.length;
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
     var roleUser: string = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -62,7 +62,7 @@ const ExerciseStudentList: React.FC = () => {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('role')
                     localStorage.removeItem('id')
                     localStorage.removeItem('contest_id')
                     localStorage.removeItem('schedule_id')
@@ -93,7 +93,7 @@ const ExerciseStudentList: React.FC = () => {
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
 
-    if (roleUser === "TEACHER_USER") {
+    if (roleUser === "TEACHER") {
         return (
             promiseInProgress ?
                 <div className="row" id="search-box">

@@ -27,11 +27,11 @@ const Account: React.FC = () => {
     useEffect(() => {
         trackPromise(getUserById(dispatch, id))
     }, [dispatch, id])
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     let rolePrivilege: any = []
     let userRole: any = ""
-    if (role_privilege !== null) {
-        rolePrivilege = (role_privilege.split(','))
+    if (role !== null) {
+        rolePrivilege = (role.split(','))
         userRole = (rolePrivilege[0])
     }
     let users: IUserState = useSelector((state: IStateType) => state.users);

@@ -7,11 +7,11 @@ import { getTeacher } from "../Teacher/GetTeacher";
 
 export function deleteUser(dispatch: any, id: number, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege:string[] =[]
     var roleUser :string =""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -42,10 +42,10 @@ export function deleteUser(dispatch: any, id: number, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                if (roleUser === "TEACHER_USER") {
+                if (roleUser === "TEACHER") {
                     getTeacher(dispatch)
                 }
-                else if (roleUser === "PARENT_USER") {
+                else if (roleUser === "PARENT") {
                     getParent(dispatch)
                 }
                 else {

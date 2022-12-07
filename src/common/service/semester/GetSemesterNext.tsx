@@ -5,7 +5,6 @@ interface semester {
     number: number;
     year: number;
     name: string;
-    creator_id: number;
     description: string;
     checked_genaration: boolean;
     start_time: string;
@@ -53,7 +52,6 @@ export function getSemesterNext(dispatch: any) {
                         year: ele.year,
                         checked_genaration: ele.checked_genaration,
                         name: ele.name,
-                        creator_id: ele.creator_id,
                         description: ele.description,
                         start_time: strDate_1.substring(0, 16),
                         end_time: strDate_2.substring(0, 16),

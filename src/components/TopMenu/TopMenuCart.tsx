@@ -34,11 +34,11 @@ function TopMenuCart(): JSX.Element {
     user_id = parseInt(id_x)
   }
 
-  var role_privilege = localStorage.getItem('role_privilege')
+  var role = localStorage.getItem('role')
   var rolePrivilege: string[] = []
   var roleUser: string = ""
-  if (role_privilege !== null) {
-      rolePrivilege = role_privilege.split(',')
+  if (role !== null) {
+      rolePrivilege = role.split(',')
       roleUser = rolePrivilege[0]
   }
 
@@ -48,7 +48,7 @@ function TopMenuCart(): JSX.Element {
   }, [dispatch, user_id])
 
   useEffect(() => {
-    if (roleUser === "PARENT_USER") {
+    if (roleUser === "PARENT") {
       trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, user_id))
     }
     else if (roleUser === "STUDENT_USER") {
@@ -129,7 +129,7 @@ function TopMenuCart(): JSX.Element {
     });
   }
 
-  if (roleUser === "PARENT_USER" || roleUser === "STUDENT_USER") {
+  if (roleUser === "PARENT" || roleUser === "STUDENT_USER") {
     return (
 
       <li className="nav-item dropdown no-arrow">

@@ -22,11 +22,11 @@ const ViewContestSubmissionAdmin: React.FC = () => {
     const contest_submission: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
     const max = contest_submission.contest_not_gradeds.length;
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
     var roleUser: string = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -63,7 +63,7 @@ const ViewContestSubmissionAdmin: React.FC = () => {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('role')
                     localStorage.removeItem('id')
                     localStorage.removeItem('contest_id')
                     localStorage.removeItem('schedule_id')

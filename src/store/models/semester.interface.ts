@@ -4,7 +4,6 @@ export interface ISemester {
     year: number;
     name: string;
     checked_genaration: boolean;
-    creator_id: number;
     description: string;
     start_time: string;
     end_time: string;

@@ -43,11 +43,11 @@ const CartForm: React.FC = () => {
         setPopup(false);
     }
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
     var roleUser: string = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -69,14 +69,14 @@ const CartForm: React.FC = () => {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('role')
                     localStorage.removeItem('id')
                     localStorage.removeItem('contest_id')
                     localStorage.removeItem('schedule_id')
                     dispatch(logout())
                 }
                 else {
-                    if (roleUser === "PARENT_USER") {
+                    if (roleUser === "PARENT") {
                         trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
                     }else {
                         trackPromise(getUserRegisterJoinSemesterByStudent(dispatch, id))
@@ -84,7 +84,7 @@ const CartForm: React.FC = () => {
                 }
             }
             else {
-                if (roleUser === "PARENT_USER") {
+                if (roleUser === "PARENT") {
                     trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, id))
                 }else {
                     trackPromise(getUserRegisterJoinSemesterByStudent(dispatch, id))
@@ -107,7 +107,7 @@ const CartForm: React.FC = () => {
         postMomo(user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0), ids);
     }
 
-    if (roleUser === "PARENT_USER") {
+    if (roleUser === "PARENT") {
         return (
             promiseInProgress ?
           <div className="loader"></div> : <Fragment>

@@ -14,11 +14,11 @@ function ExerciseStudentList(props) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege = []
     var roleUser = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
   
@@ -93,7 +93,7 @@ function ExerciseStudentList(props) {
   } */
 
   function gradeButton(cell, row) {
-    if (roleUser === "TEACHER_USER") {
+    if (roleUser === "TEACHER") {
       return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if (props.onSelect) props.onSelect(row);
@@ -102,7 +102,7 @@ function ExerciseStudentList(props) {
           >Chỉnh điểm</button>
       )
     }
-    else if (roleUser === "PARENT_USER" || roleUser === "STUDENT_USER") {
+    else if (roleUser === "PARENT" || roleUser === "STUDENT_USER") {
       return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if (props.onSelect) props.onSelect(row);

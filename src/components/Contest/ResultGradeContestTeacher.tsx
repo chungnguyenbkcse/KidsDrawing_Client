@@ -21,11 +21,11 @@ const ResultGradeContestTeacher: React.FC = () => {
     const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
     const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 100);
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
     var roleUser: string = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -62,7 +62,7 @@ const ResultGradeContestTeacher: React.FC = () => {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('role')
                     localStorage.removeItem('id')
                     localStorage.removeItem('contest_id')
                     localStorage.removeItem('schedule_id')

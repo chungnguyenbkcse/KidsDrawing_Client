@@ -142,14 +142,14 @@ const DetailTeacher = lazy(()=> import("../components/Teachers/DetailTeacher"));
 const Student = lazy(()=> import("../components/Student/Student"));
 
 const Routers: React.FC = () => {
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege:string[] =[]
     var roleUser :string =""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
-    if (roleUser === "TEACHER_USER"){
+    if (roleUser === "TEACHER"){
         return (
             <Fragment>
                 <LeftMenu />
@@ -210,7 +210,7 @@ const Routers: React.FC = () => {
             </Fragment>
         )
     }
-    else if (roleUser === "PARENT_USER") {
+    else if (roleUser === "PARENT") {
         return (
             <Fragment>
                 <LeftMenu />

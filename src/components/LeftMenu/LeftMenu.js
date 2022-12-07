@@ -47,11 +47,11 @@ const Header = () => {
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false)
 
-  var role_privilege = localStorage.getItem('role_privilege')
+  var role = localStorage.getItem('role')
   var rolePrivilege = []
   var roleUser = ""
-  if (role_privilege !== null) {
-      rolePrivilege = role_privilege.split(',')
+  if (role !== null) {
+      rolePrivilege = role.split(',')
       roleUser = rolePrivilege[0]
   }
 
@@ -79,7 +79,7 @@ const Header = () => {
   const [active16, setActive16] = useState(false);
   const [active17, setActive17] = useState(false);
 
-  if (roleUser === 'ADMIN_USER') {
+  if (roleUser === 'ADMIN') {
     return (
       <>
         <div id="collapseMenu" className="navbar-nav admin-navbar-nav bg-gradient-primary-green sidebar-dark accordion">
@@ -511,7 +511,7 @@ const Header = () => {
       </>
     );
   }
-  else if (roleUser === 'TEACHER_USER') {
+  else if (roleUser === 'TEACHER') {
     return (
       <>
         <div id="collapseMenu" className="navbar-nav teacher-navbar-nav bg-gradient-primary-green sidebar-dark accordion">
@@ -705,7 +705,7 @@ const Header = () => {
       </>
     );
   }
-  else if (roleUser === 'PARENT_USER') {
+  else if (roleUser === 'PARENT') {
     return (
       <>
         <div id="collapseMenu" className="navbar-nav teacher-navbar-nav bg-gradient-primary-green sidebar-dark accordion">

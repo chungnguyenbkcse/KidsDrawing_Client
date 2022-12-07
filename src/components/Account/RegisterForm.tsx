@@ -58,7 +58,7 @@ const RegisterForm: React.FC = () => {
         sex: null,
         phone: null,
         address: null,
-        roleNames: ["PARENT_USER"]
+        roleNames: ["PARENT"]
     }, changeRouteHome, id))
   }
 

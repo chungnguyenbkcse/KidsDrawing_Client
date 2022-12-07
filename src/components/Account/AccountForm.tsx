@@ -22,11 +22,11 @@ export type teacherListProps = {
 function AccountForm(props: teacherListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const id = localStorage.getItem('id')
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege:string[] =[]
     var roleUser :string =""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
     let users: IUserState = useSelector((state: IStateType) => state.users);

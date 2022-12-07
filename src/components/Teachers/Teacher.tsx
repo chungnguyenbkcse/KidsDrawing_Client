@@ -82,7 +82,7 @@ const Teacher: React.FC = () => {
                 sex: null,
                 phone: null,
                 address: null,
-                roleNames: ["TEACHER_USER"]
+                roleNames: ["TEACHER"]
               }, datas.slice(1, datas.length), id));
             /* datas.map((ele: any, idx: any) => {
                 if (idx === datas.length - 1) {
@@ -97,7 +97,7 @@ const Teacher: React.FC = () => {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleNames: ["TEACHER_USER"]
+                        roleNames: ["TEACHER"]
                       }, id));
                 }
                 else {
@@ -112,7 +112,7 @@ const Teacher: React.FC = () => {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleNames: ["TEACHER_USER"]
+                        roleNames: ["TEACHER"]
                       }));
                 }
             }) */
@@ -143,7 +143,7 @@ const Teacher: React.FC = () => {
                     localStorage.removeItem('access_token') // Authorization
                     localStorage.removeItem('refresh_token')
                     localStorage.removeItem('username')
-                    localStorage.removeItem('role_privilege')
+                    localStorage.removeItem('role')
                     localStorage.removeItem('id')
                     localStorage.removeItem('contest_id')
                     localStorage.removeItem('schedule_id')

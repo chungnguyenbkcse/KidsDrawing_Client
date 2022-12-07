@@ -8,15 +8,15 @@ import TopMenuCart from "./TopMenuCart";
 
 const TopMenu: React.FC = () => {
   const page: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-  var role_privilege = localStorage.getItem('role_privilege')
+  var role = localStorage.getItem('role')
   var rolePrivilege:string[] =[]
   var roleUser :string =""
-  if (role_privilege !== null) {
-      rolePrivilege = role_privilege.split(',')
+  if (role !== null) {
+      rolePrivilege = role.split(',')
       roleUser = rolePrivilege[0]
   }
 
-  if (roleUser === "ADMIN_USER"){
+  if (roleUser === "ADMIN"){
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top shadow">
         <ol className="breadcrumb dark-breadcrumb">
@@ -32,7 +32,7 @@ const TopMenu: React.FC = () => {
       </nav>
     );
   }
-  else if (roleUser === "TEACHER_USER"){
+  else if (roleUser === "TEACHER"){
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">
@@ -49,7 +49,7 @@ const TopMenu: React.FC = () => {
     );
   }
 
-  else if (roleUser === "PARENT_USER" || roleUser === "STUDENT_USER") {
+  else if (roleUser === "PARENT" || roleUser === "STUDENT_USER") {
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">

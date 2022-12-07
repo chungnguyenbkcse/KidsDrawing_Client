@@ -8,11 +8,11 @@ import { getTeacherLeaveByTeacher } from "./GetTeacherLeaveByTeacher";
 export function putTeacherLeaveStatus(dispatch: any, id: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
   var rolePrivilege: string[] = []
   var roleUser: string = ""
-  if (role_privilege !== null) {
-      rolePrivilege = role_privilege.split(',')
+  if (role !== null) {
+      rolePrivilege = role.split(',')
       roleUser = rolePrivilege[0]
   }
 
@@ -57,7 +57,7 @@ export function putTeacherLeaveStatus(dispatch: any, id: any, data: any, idx: an
                     }, data.teacher_id))
                 }
 
-                if (roleUser === "ADMIN_USER") {
+                if (roleUser === "ADMIN") {
                     getTeacherLeave(dispatch)
                 }
                 else {

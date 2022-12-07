@@ -24,7 +24,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
   const isCreate: boolean = (semesters.modificationState === SemesterModificationStatus.Create);
 
   if (!semester || isCreate) {
-    semester = { id: 0, checked_genaration: false, name: "", description: "", number: 0, year: 0, start_time: "", end_time: "", create_time: "", update_time: "", creator_id: 0 };
+    semester = { id: 0, checked_genaration: false, name: "", description: "", number: 0, year: 0, start_time: "", end_time: "", create_time: "", update_time: "" };
   }
 
   const [formState, setFormState] = useState({
@@ -64,8 +64,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           year: formState.year.value,
           description: formState.description.value,
           number: formState.number.value,
-          start_time: formState.start_time.value,
-          creator_id: localStorage.getItem('id')
+          start_time: formState.start_time.value
         }, idx));
       }
       else {
@@ -74,8 +73,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
           year: formState.year.value,
           description: formState.description.value,
           number: formState.number.value,
-          start_time: formState.start_time.value,
-          creator_id: localStorage.getItem('id')
+          start_time: formState.start_time.value
         }, idx));
       }
 

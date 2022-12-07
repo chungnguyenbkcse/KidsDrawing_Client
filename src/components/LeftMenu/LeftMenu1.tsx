@@ -16,11 +16,11 @@ const LeftMenu: React.FC = () => {
 
     let [leftMenuVisibility, setLeftMenuVisibility] = useState(false);
 
-    var role_privilege = localStorage.getItem('role_privilege')
+    var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
     var roleUser: string = ""
-    if (role_privilege !== null) {
-        rolePrivilege = role_privilege.split(',')
+    if (role !== null) {
+        rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
 
@@ -32,7 +32,7 @@ const LeftMenu: React.FC = () => {
         return (leftMenuVisibility) ? "" : "collapsed";
     }
 
-    if (roleUser === 'ADMIN_USER') {
+    if (roleUser === 'ADMIN') {
         return (
             <Fragment>
                 <ul className={`navbar-nav bg-gradient-primary-green sidebar sidebar-dark accordion ${getCollapseClass()}`}
@@ -183,7 +183,7 @@ const LeftMenu: React.FC = () => {
         );
     }
 
-    else if (roleUser === 'TEACHER_USER') {
+    else if (roleUser === 'TEACHER') {
         return (
             <Fragment>
                 <div className="toggle-area">
@@ -261,7 +261,7 @@ const LeftMenu: React.FC = () => {
         );
     }
 
-    else if (roleUser === 'PARENT_USER') {
+    else if (roleUser === 'PARENT') {
         return (
             <Fragment>
                 <div className="toggle-area">

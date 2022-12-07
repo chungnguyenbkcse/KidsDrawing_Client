@@ -12,7 +12,7 @@ interface ContestParentNew {
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: number;
+    
     art_type_id: number;
     art_age_id: number;
     art_type_name: string;
@@ -65,7 +65,7 @@ export function getContestParentNew(dispatch: any, id: any) {
                         max_participant: ele.max_participant,
                         image_url: ele.image_url,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         art_type_id: ele.art_type_id,
                         art_age_id: ele.art_age_id,
                         art_age_name: ele.art_age_name,

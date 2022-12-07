@@ -1,7 +1,7 @@
 export interface ITutorial {
     id: any;
     section_id: number;
-    creator_id: number;
+    
     creator_name: string;
     class_name: string;
     class_id: number;

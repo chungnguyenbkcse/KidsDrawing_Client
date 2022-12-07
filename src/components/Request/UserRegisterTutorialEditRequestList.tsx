@@ -1,7 +1,6 @@
 import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import { IStateType, IUserRegisterTutorialState } from "../../store/models/root.interface";
 import { IUserRegisterTutorial } from "../../store/models/user_register_tutorial.interface";
 
@@ -20,12 +19,11 @@ function UserRegisterTutorialEditRequestList(props: studentListProps): JSX.Eleme
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
-    dispatch(putUserRegisterTutorial(ele.id, {
+    /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Approved to tutorial template",
       section_id: ele.section_id,
-      name: ele.name,
-      creator_id: ele.creator_id
-    }, id))
+      name: ele.name
+    }, id)) */
   }
 
   const studentElements: (JSX.Element | null)[] = user_register_tutorials.user_register_tutorial_approveds.map((student, index) => {

@@ -7,7 +7,7 @@ export interface ICourse {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: number;
+    
     art_type_id: number;
     art_level_id: number;
     art_age_id: number;

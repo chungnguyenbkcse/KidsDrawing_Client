@@ -10,14 +10,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getTutorialPageByTutorialId } from "../../common/service/TutorialPage/GetTutorialPageByTutorialId";
-import { postUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PostUserRegisterTutorial";
 import { addUserRegisterTutorialPage, editUserRegisterTutorialPage, removeUserRegisterTutorialPage } from "../../store/actions/user_register_tutorial_page.action";
-import { getUserRegisterTutorialPage } from "../../common/service/UserRegisterTutorialPage/GetUserRegisterTutorialPageByUserRegisterTutorialId";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
-import { deleteUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/DeleteUserRegisterTutorial";
-import { deleteUserRegisterTutorial1 } from "../../common/service/UserRegisterTutorial/DeleteUserRegisterTutorial1";
 
 
 export type SectionListProps = {
@@ -36,7 +30,7 @@ type PageContent = {
 
 type TutorialPage = {
     id: any;
-    user_register_tutorial_id: number;
+    user_register_section_id: number;
     name: string;
     number: number;
     description: string;
@@ -66,10 +60,10 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
 
 
 
-    var id_t = localStorage.getItem('user_register_tutorial_id');
-    let user_register_tutorial_id: number = 0;
+    var id_t = localStorage.getItem('user_register_section_id');
+    let user_register_section_id: number = 0;
     if (id_t !== null) {
-        user_register_tutorial_id = parseInt(id_t)
+        user_register_section_id = parseInt(id_t)
     }
 
     var id_h = localStorage.getItem('user_register_tutorial_name');
@@ -109,14 +103,14 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserRegisterTutorialPage(dispatch, user_register_tutorial_id))      
+                    
                 }
             }
             else {
-                trackPromise(getUserRegisterTutorialPage(dispatch, user_register_tutorial_id)) 
+                 
             }
         }
-    }, [dispatch, access_token, refresh_token, user_register_tutorial_id])
+    }, [dispatch, access_token, refresh_token, user_register_section_id])
 
     const history = useHistory();
     function routeHome() {
@@ -198,13 +192,12 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     content: value
                 }*/
                 if (user_register_tutorial_pages !== null) {
-                    dispatch(deleteUserRegisterTutorial1(user_register_tutorial_id, idx))
+                    /* dispatch(deleteUserRegisterTutorial1(user_register_section_id, idx))
                     dispatch(postUserRegisterTutorial(user_register_tutorial_pages.user_register_tutorial_pages, {
                         section_id: section_id,
-                        creator_id: id,
                         name: formState.name.value,
                         status: "Not approve now"
-                    }, idx, routeHome))
+                    }, idx, routeHome)) */
                 }
             }
         }
@@ -309,7 +302,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                                 id: ele.id,
                                 description: ele.description,
                                 name: ele.name,
-                                user_register_tutorial_id: user_register_tutorial_id,
+                                user_register_section_id: user_register_section_id,
                                 number: ele.number - 1
                             }))
                         }
@@ -385,7 +378,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     dispatch(addUserRegisterTutorialPage({
                         description: value,
                         name: formState.name.value,
-                        user_register_tutorial_id: user_register_tutorial_id,
+                        user_register_section_id: user_register_section_id,
                         number: user_register_tutorial_pages.user_register_tutorial_pages.length,
                         id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                     }))
@@ -398,14 +391,14 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                             dispatch(editUserRegisterTutorialPage({
                                 description: ele.description,
                                 name: ele.name,
-                                user_register_tutorial_id: user_register_tutorial_id,
+                                user_register_section_id: user_register_section_id,
                                 number: ele.number + 1,
                                 id: ele.id
                             }))
                             dispatch(addUserRegisterTutorialPage({
                                 description: value,
                                 name: formState.name.value,
-                                user_register_tutorial_id: user_register_tutorial_id,
+                                user_register_section_id: user_register_section_id,
                                 number: ele.number,
                                 id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                             }))
@@ -416,7 +409,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                                 dispatch(editUserRegisterTutorialPage({
                                     description: ele.description,
                                     name: ele.name,
-                                    user_register_tutorial_id: user_register_tutorial_id,
+                                    user_register_section_id: user_register_section_id,
                                     number: ele.number + 1,
                                     id: ele.id
                                 }))
@@ -425,7 +418,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                                 dispatch(editUserRegisterTutorialPage({
                                     description: ele.description,
                                     name: ele.name,
-                                    user_register_tutorial_id: user_register_tutorial_id,
+                                    user_register_section_id: user_register_section_id,
                                     number: ele.number + 1,
                                     id: ele.id
                                 }))
@@ -437,7 +430,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     /* dispatch(addUserRegisterTutorialPage({
                         description: value,
                         name: formState.name.value,
-                        user_register_tutorial_id: user_register_tutorial_id,
+                        user_register_section_id: user_register_section_id,
                         number: k - 1,
                         id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                     })) */
@@ -449,14 +442,14 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     dispatch(editUserRegisterTutorialPage({
                         description: value,
                         name: user_register_tutorial_name,
-                        user_register_tutorial_id: user_register_tutorial_id,
+                        user_register_section_id: user_register_section_id,
                         number: k-1,
                         id: user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number)[k-1].id
                     }))
                    console.log({
                         description: value,
                         name: user_register_tutorial_name,
-                        user_register_tutorial_id: user_register_tutorial_id,
+                        user_register_section_id: user_register_section_id,
                         number: k-1
                    })
                 }
@@ -464,7 +457,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     dispatch(addUserRegisterTutorialPage({
                         description: value,
                         name: formState.name.value,
-                        user_register_tutorial_id: user_register_tutorial_id,
+                        user_register_section_id: user_register_section_id,
                         number: user_register_tutorial_pages.user_register_tutorial_pages.length,
                         id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                     }))
@@ -472,7 +465,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     console.log({
                         description: value,
                         name: user_register_tutorial_name,
-                        user_register_tutorial_id: user_register_tutorial_id,
+                        user_register_section_id: user_register_section_id,
                         number: user_register_tutorial_pages.user_register_tutorial_pages.length
                    })
                 }

@@ -9,11 +9,6 @@ interface schedule {
 }
 export function getScheduleBySemesterClass(id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    var id_x = localStorage.getItem("id");
-    var creator_id: number = 0;
-    if (id_x !== null) {
-        creator_id = parseInt(id_x)
-    }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(

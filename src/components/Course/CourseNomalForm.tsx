@@ -21,7 +21,6 @@ import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
 import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
 
 type Options = {
     name: string;
@@ -56,7 +55,7 @@ const CourseNomalForm: React.FC = () => {
     }, [dispatch])
 
     if (!course || isCreate) {
-        course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "", checked_tutoral: false };
+        course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "", checked_tutoral: false };
     }
 
     const levels: IArtLevelState = useSelector((state: IStateType) => state.art_levels);
@@ -106,7 +105,6 @@ const CourseNomalForm: React.FC = () => {
         price: { error: "", value: course.price },
         image_url: { error: "", value: course.image_url },
         is_enabled: { error: "", value: course.is_enabled },
-        creator_id: { error: "", value: course.creator_id },
         create_time: { error: "", value: course.create_time },
         update_time: { error: "", value: course.update_time }
     });
@@ -143,8 +141,7 @@ const CourseNomalForm: React.FC = () => {
                     is_enabled: formState.is_enabled.value,
                     art_type_id: formState.art_type_id.value,
                     art_age_id: formState.art_age_id.value,
-                    art_level_id: formState.art_level_id.value,
-                    creator_id: localStorage.getItem('id')
+                    art_level_id: formState.art_level_id.value
                 }, idx))
             }
 
@@ -158,8 +155,7 @@ const CourseNomalForm: React.FC = () => {
                     is_enabled: formState.is_enabled.value,
                     art_type_id: formState.art_type_id.value,
                     art_age_id: formState.art_age_id.value,
-                    art_level_id: formState.art_level_id.value,
-                    creator_id: localStorage.getItem('id')
+                    art_level_id: formState.art_level_id.value
                 }, idx))
             }
 

@@ -10,10 +10,12 @@ import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getTutorialPageByTutorialId } from "../../common/service/TutorialPage/GetTutorialPageByTutorialId";
-import { postUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PostUserRegisterTutorial";
 import { addTutorialPage, editTutorialPage, removeTutorialPage } from "../../store/actions/tutorial_page.action";
-
+import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
+import { postTutorialPageToast } from "../../common/service/TutorialPage/PostTutorialPageToast";
+import { postTutorialPage } from "../../common/service/TutorialPage/PostTutorialPage";
 
 export type SectionListProps = {
     children?: React.ReactNode;
@@ -31,7 +33,7 @@ type PageContent = {
 
 type TutorialPage = {
     id: any;
-    tutorial_id: number;
+    section_id: number;
     name: string;
     number: number;
     description: string;
@@ -67,13 +69,6 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         initial_text = list_description.length !== 0 ? list_description[0].description: "";
     }
 
-
-    var id_t = localStorage.getItem('tutorial_id');
-    let tutorial_id: number = 0;
-    if (id_t !== null) {
-        tutorial_id = parseInt(id_t)
-    }
-
     var id_h = localStorage.getItem('tutorial_name');
     let tutorial_name: string = "";
     if (id_h !== null) {
@@ -85,6 +80,8 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     if (id_k !== null) {
         id = parseInt(id_k);
     }
+
+    const { promiseInProgress } = usePromiseTracker();
 
 
     let access_token = localStorage.getItem("access_token");
@@ -110,14 +107,14 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTutorialPageByTutorialId(tutorial_id))      
+                    trackPromise(getTutorialPageBySection(dispatch, section_id))      
                 }
             }
             else {
-                dispatch(getTutorialPageByTutorialId(tutorial_id)) 
+                trackPromise(getTutorialPageBySection(dispatch, section_id))  
             }
         }
-    }, [dispatch, access_token, refresh_token, tutorial_id])
+    }, [dispatch, access_token, refresh_token, section_id])
 
     const history = useHistory();
     function routeHome() {
@@ -189,12 +186,24 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     
                 if (tutorial_pages !== null) {
                     if (tutorial_pages.tutorialPages.length > 0) {
-                        dispatch(postUserRegisterTutorial(tutorial_pages.tutorialPages, {
-                            section_id: section_id,
-                            creator_id: id,
-                            name: formState.name.value,
-                            status: "Not approve now"
-                        }, idx, routeHome)) 
+                        let total = tutorial_pages.tutorialPages.length;
+                        tutorial_pages.tutorialPages.map((value, index) => {
+                            if (index === total - 1){
+                                setTimeout(function () {
+                                    routeHome();
+                                }, 2000); 
+                                return dispatch(postTutorialPageToast({
+                                    section_id: section_id,
+                                    description: value.description,
+                                    number: value.number
+                                }, idx))
+                            }
+                            return dispatch(postTutorialPage({
+                                section_id: section_id,
+                                description: value.description,
+                                number: value.number
+                            }))
+                        }) 
                     }
                 }
             }
@@ -299,8 +308,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                             dispatch(editTutorialPage({
                                 id: ele.id,
                                 description: ele.description,
-                                name: ele.name,
-                                tutorial_id: tutorial_id,
+                                section_id: section_id,
                                 number: ele.number - 1
                             }))
                         }
@@ -375,8 +383,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                     console.log('yyy')
                     dispatch(addTutorialPage({
                         description: value,
-                        name: formState.name.value,
-                        tutorial_id: tutorial_id,
+                        section_id: section_id,
                         number: tutorial_pages.tutorialPages.length,
                         id: (tutorial_pages.tutorialPages.length + 1).toString()
                     }))
@@ -388,15 +395,13 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                             console.log('1')
                             dispatch(editTutorialPage({
                                 description: ele.description,
-                                name: ele.name,
-                                tutorial_id: tutorial_id,
+                                section_id: section_id,
                                 number: ele.number + 1,
                                 id: ele.id
                             }))
                             dispatch(addTutorialPage({
                                 description: value,
-                                name: formState.name.value,
-                                tutorial_id: tutorial_id,
+                                section_id: section_id,
                                 number: ele.number,
                                 id: (tutorial_pages.tutorialPages.length + 1).toString()
                             }))
@@ -406,8 +411,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                             if (ele.number < tutorial_pages.tutorialPages.length - 1) {
                                 dispatch(editTutorialPage({
                                     description: ele.description,
-                                    name: ele.name,
-                                    tutorial_id: tutorial_id,
+                                    section_id: section_id,
                                     number: ele.number + 1,
                                     id: ele.id
                                 }))
@@ -415,8 +419,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                             else {
                                 dispatch(editTutorialPage({
                                     description: ele.description,
-                                    name: ele.name,
-                                    tutorial_id: tutorial_id,
+                                    section_id: section_id,
                                     number: ele.number + 1,
                                     id: ele.id
                                 }))
@@ -428,7 +431,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                     /* dispatch(addTutorialPage({
                         description: value,
                         name: formState.name.value,
-                        tutorial_id: tutorial_id,
+                        section_id: section_id,
                         number: k - 1,
                         id: (tutorial_pages.tutorialPages.length + 1).toString()
                     })) */
@@ -439,23 +442,21 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                 if (k < tutorial_pages.tutorialPages.length + 1) {
                     dispatch(editTutorialPage({
                         description: value,
-                        name: tutorial_name,
-                        tutorial_id: tutorial_id,
+                        section_id: section_id,
                         number: k-1,
                         id: tutorial_pages.tutorialPages.sort((a, b) => a.number - b.number)[k-1].id
                     }))
                    console.log({
                         description: value,
                         name: tutorial_name,
-                        tutorial_id: tutorial_id,
+                        section_id: section_id,
                         number: k-1
                    })
                 }
                 else {
                     dispatch(addTutorialPage({
                         description: value,
-                        name: formState.name.value,
-                        tutorial_id: tutorial_id,
+                        section_id: section_id,
                         number: tutorial_pages.tutorialPages.length,
                         id: (tutorial_pages.tutorialPages.length + 1).toString()
                     }))
@@ -463,7 +464,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                     console.log({
                         description: value,
                         name: tutorial_name,
-                        tutorial_id: tutorial_id,
+                        section_id: section_id,
                         number: tutorial_pages.tutorialPages.length
                    })
                 }
@@ -477,7 +478,8 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
     
     return (
-        <Fragment>
+        promiseInProgress ?
+      <div className="loader"></div> :<Fragment>
             <ToastContainer />
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">

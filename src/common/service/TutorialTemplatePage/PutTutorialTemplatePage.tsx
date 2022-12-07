@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getTutorialTemplatePageByTutorialTemplateId } from "./GetTutorialTemplatePageByTutorialTemplateId";
+import { getTutorialTemplatePageBySectionTemplate } from "./GetTutorialTemplatePageBySectionTemplate";
 
 export function putTutorialTemplatePage(id: any, tutorialtemplatepage: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -35,7 +35,7 @@ export function putTutorialTemplatePage(id: any, tutorialtemplatepage: any, idx:
             })
             .then (data => {
                 console.log(data)
-                dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorialtemplatepage.tutorial_template_id))
+                dispatch(getTutorialTemplatePageBySectionTemplate(tutorialtemplatepage.section_template_id))
                 toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {

@@ -22,7 +22,7 @@ export type IContestParentNewX = {
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: number;
+    
     art_type_id: number;
     art_age_id: number;
     art_type_name: string;
@@ -244,7 +244,6 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                             art_age_id: item.art_age_id,
                                             student_ids: numbers,
                                             student_names: new Array(item.student_name),
-                                            creator_id: item.creator_id,
                                             create_time: item.create_time,
                                             update_time: item.update_time
                                         }
@@ -268,7 +267,6 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                             art_age_id: item.art_age_id,
                                             student_ids: [],
                                             student_names: [],
-                                            creator_id: item.creator_id,
                                             create_time: item.create_time,
                                             update_time: item.update_time
                                         }

@@ -3,7 +3,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface Tutorial {
     id: any;
     section_id: number;
-    creator_id: number;
+    
     creator_name: string;
     class_name: string;
     class_id: number;
@@ -48,7 +48,7 @@ export function getTutorial(dispatch: any) {
                         id: ele.id,
                         section_id: ele.section_id,
                         name: ele.name,
-                        creator_id: ele.creator_id,
+                        
                         creator_name: ele.creator_name,
                         class_id: ele.class_id,
                         class_name: ele.class_name,

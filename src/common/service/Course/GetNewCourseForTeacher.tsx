@@ -10,7 +10,7 @@ interface Course {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: number;
+    
     art_type_id: number;
     art_level_id: number;
     art_age_id: number;
@@ -62,7 +62,7 @@ export function getCourseNewForTeacher(dispatch: any, id: any) {
                         price: ele.price,
                         image_url: ele.image_url,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         art_type_id: 0,
                         art_level_id: 0,
                         art_age_id: 0,

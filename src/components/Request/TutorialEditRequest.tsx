@@ -5,14 +5,11 @@ import TopCard from "../../common/components/TopCard";
 import { IStateType, IUserRegisterTutorialState } from "../../store/models/root.interface";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/GetUserRegisterTutorial";
 import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
 import { UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
 import { clearSelectedUserRegisterTutorialNotApproved, setModificationState } from "../../store/actions/user_register_tutorial.action";
 import TutorialEditRequestList from "./TutorialEditRequestList";
-import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import Popup from "reactjs-popup";
 import UserRegisterTutorialEditRequestList1 from "./UserRegisterTutorialEditRequestList1";
 
@@ -48,11 +45,11 @@ const TutorialEditRequest: React.FC = () => {
           dispatch(logout())
         }
         else {
-          trackPromise(getUserRegisterTutorial(dispatch))
+
         }
       }
       else {
-        trackPromise(getUserRegisterTutorial(dispatch))
+ 
       }
     }
   }, [dispatch, access_token, refresh_token]);
@@ -163,12 +160,12 @@ const TutorialEditRequest: React.FC = () => {
                             name_user_register_tutorials = (id_yy);
                           }
 
-                          dispatch(putUserRegisterTutorial(user_register_tutorials_id, {
+                          /* dispatch(putUserRegisterTutorial(user_register_tutorials_id, {
                             status: "Not approved",
                             section_id: section_user_register_tutorials_id,
                             name: name_user_register_tutorials,
                             creator_id: creator_user_register_tutorials_id
-                          }, idx))
+                          }, idx)) */
                           dispatch(clearSelectedUserRegisterTutorialNotApproved());
                           setPopup(false);
                         }}>Remove

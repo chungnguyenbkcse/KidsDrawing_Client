@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
 import { IStateType, IUserRegisterTutorialPageState } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
-import { getUserRegisterTutorialPage } from "../../common/service/UserRegisterTutorialPage/GetUserRegisterTutorialPageByUserRegisterTutorialId";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const ViewSectionTeacherRequest: React.FC = () => {
@@ -22,12 +20,12 @@ const ViewSectionTeacherRequest: React.FC = () => {
         section_id = parseInt(id_y);
     }
 
-    var id_z = localStorage.getItem('user_register_tutorial_id');
+    var id_z = localStorage.getItem('user_register_section_id');
     
-    let user_register_tutorial_id = 0;
+    let user_register_section_id = 0;
 
     if (id_z !== null) {
-        user_register_tutorial_id = parseInt(id_z);
+        user_register_section_id = parseInt(id_z);
     }
 
     const [count, setCount] = useState(1);
@@ -75,14 +73,14 @@ const ViewSectionTeacherRequest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserRegisterTutorialPage(dispatch, user_register_tutorial_id))
+                    
                 }
             }
             else {
-                trackPromise(getUserRegisterTutorialPage(dispatch, user_register_tutorial_id))
+                
             }
         }
-    }, [dispatch, access_token, refresh_token, user_register_tutorial_id]);
+    }, [dispatch, access_token, refresh_token, user_register_section_id]);
     
     return (
         promiseInProgress ?

@@ -40,15 +40,15 @@ const LessonPlan: React.FC = () => {
 
 
   if (!course) {
-    course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false, creator_id: 0, art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "", checked_tutoral: false };
+    course = { id: 0, name: "", description: "", max_participant: 0, num_of_section: 0, price: 0, image_url: "", is_enabled: false,art_age_id: 0, art_level_id: 0, art_type_id: 0, create_time: "", update_time: "", art_age_name: "", art_level_name: "", art_type_name: "", checked_tutoral: false };
   }
 
   var course_id = localStorage.getItem('course_id');
 
-  var id_t = localStorage.getItem('tutorial_template_id');
-  let tutorial_template_id: number = 0;
+  var id_t = localStorage.getItem('section_template_id');
+  let section_template_id: number = 0;
   if (id_t !== null) {
-      tutorial_template_id = parseInt(id_t)
+      section_template_id = parseInt(id_t)
   }
 
   var id_y = localStorage.getItem('num_of_section');
@@ -102,7 +102,7 @@ const LessonPlan: React.FC = () => {
       dispatch(postTutorialTemplatePage1({
         description: value,
         name: value1,
-        tutorial_template_id: tutorial_template_id,
+        section_template_id: section_template_id,
         number: currentPage
       }, idx))
 
@@ -114,7 +114,7 @@ const LessonPlan: React.FC = () => {
       dispatch(postTutorialTemplatePage1({
         description: value,
         name: value1,
-        tutorial_template_id: tutorial_template_id,
+        section_template_id: section_template_id,
         number: currentPage
       }, idx))
     }

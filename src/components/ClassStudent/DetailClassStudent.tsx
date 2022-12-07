@@ -212,21 +212,20 @@ const DetailClassStudent: React.FC = () => {
         localStorage.setItem('section_number', section.number.toString())
         let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
-        localStorage.removeItem('tutorial_id')
+        localStorage.removeItem('section_id')
         localStorage.setItem('is_active', is_active)
         localStorage.removeItem('link_record')
         localStorage.setItem('link_record', link_record)
         tutorials.tutorials.map(ele => {
             if (ele.section_id === section.id) {
-                localStorage.setItem('tutorial_id', ele.id.toString())
+                localStorage.setItem('section_id', ele.id.toString())
                 localStorage.setItem('tutorial_name', ele.name.toString())
                 tutorial_pages.tutorialPages.map(element => {
-                    if (element.tutorial_id === ele.id) {
+                    if (element.section_id === ele.id) {
                         tutorial_page_list.push({
                             description: element.description,
                             id: element.id,
-                            name: element.name,
-                            tutorial_id: element.tutorial_id,
+                            section_id: element.section_id,
                             number: element.number
                         })
                     }

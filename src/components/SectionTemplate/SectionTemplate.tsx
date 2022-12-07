@@ -13,11 +13,9 @@ import { SectionTemplateModificationStatus, ISectionTemplate } from "../../store
 import { getSectionTemplateByCourseId } from "../../common/service/SectionTemplate/GetSectionTemplateByCourseId";
 import { logout } from "../../store/actions/account.actions";
 import jwt_decode from "jwt-decode";
-import { getTutorialTemplate } from "../../common/service/TutorialTemplate/GetTutorialTemplate";
 import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
 
 const SectionTemplate: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -59,12 +57,10 @@ const SectionTemplate: React.FC = () => {
                 else {
                     trackPromise(getSectionTemplateByCourseId(dispatch, course_id)) 
                     trackPromise(getTutorialTemplatePage(dispatch))
-                    trackPromise(getTutorialTemplate(dispatch))
                 }
             }
             else {
                 trackPromise(getSectionTemplateByCourseId(dispatch, course_id)) 
-                trackPromise(getTutorialTemplate(dispatch))
                 trackPromise(getTutorialTemplatePage(dispatch))
             }
         }

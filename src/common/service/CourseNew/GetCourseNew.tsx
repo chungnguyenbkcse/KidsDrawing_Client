@@ -10,7 +10,7 @@ interface CourseNew {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: number;
+    
     art_type_id: number;
     art_level_id: number;
     art_age_id: number;
@@ -64,7 +64,7 @@ export function getCourseNew(dispatch: any, id: any) {
                         total_register: ele.total_register,
                         image_url: ele.image_url,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         art_type_id: ele.art_type_id,
                         art_level_id: ele.art_level_id,
                         art_age_id: ele.art_age_id,

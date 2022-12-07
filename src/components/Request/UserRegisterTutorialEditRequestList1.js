@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
@@ -18,18 +17,18 @@ function TutorialEditRequestList1(props) {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000
       });
-      dispatch(putUserRegisterTutorial(ele.id, {
+      /* dispatch(putUserRegisterTutorial(ele.id, {
         status: "Approved",
         section_id: ele.section_id,
         name: ele.name,
         creator_id: ele.creator_id
-      }, id))
+      }, id)) */
     }
 
     const history = useHistory();
     function handleView(ele) {
-      localStorage.removeItem('user_register_tutorial_id')
-      localStorage.setItem('user_register_tutorial_id', ele.id.toString())
+      localStorage.removeItem('user_register_section_id')
+      localStorage.setItem('user_register_section_id', ele.id.toString())
       localStorage.removeItem('section_id')
       localStorage.setItem('section_id', ele.section_id.toString())
       let path = '/tutorial-request/detail';
@@ -71,12 +70,12 @@ function TutorialEditRequestList1(props) {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
-    dispatch(putUserRegisterTutorial(ele.id, {
+    /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Approved to tutorial template",
       section_id: ele.section_id,
       name: ele.name,
       creator_id: ele.creator_id
-    }, id))
+    }, id)) */
   }
 
   function editButton(cell, row) {

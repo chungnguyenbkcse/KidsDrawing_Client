@@ -4,7 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { postTutorialPage } from "../TutorialPage/PostTutorialPage";
 import { postTutorialPageToast } from "../TutorialPage/PostTutorialPageToast";
 
-export function postTutorial(tutorial: any[], data: any, idx: any) {
+export function postTutorial(tutorial: any[], data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -24,7 +24,7 @@ export function postTutorial(tutorial: any[], data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postTutorial(tutorial, data, idx))
+                        dispatch(postTutorial(tutorial, data, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -40,15 +40,18 @@ export function postTutorial(tutorial: any[], data: any, idx: any) {
                 console.log(total)
                 tutorial.map((value, index) => {
                     if (index === total - 1){
+                        setTimeout(function () {
+                            routeHome();
+                        }, 2000); 
                         return dispatch(postTutorialPageToast({
-                            tutorial_id: data.id,
+                            section_id: data.id,
                             name: data.name,
                             description: value.content,
                             number: value.page
                         }, idx))
                     }
                     return dispatch(postTutorialPage({
-                        tutorial_id: data.id,
+                        section_id: data.id,
                         name: data.name,
                         description: value.content,
                         number: value.page

@@ -2,7 +2,7 @@ import { fetchDataSuccess, fetchDataError, removeSectionTemplateAll, initialSect
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface SectionTemplate {
     id: any;
-    creator_id: number;
+    
     course_id: number;
     name: string;
     description: string;
@@ -46,7 +46,7 @@ export function getSectionTemplate(dispatch:  any) {
                 data.body.SectionTemplate.map((ele: any, index: any) => {
                     var section_template: SectionTemplate = {
                         id: ele.id,
-                        creator_id: ele.creator_id,
+                        
                         course_id: ele.course_id,
                         name: ele.name,
                         description: ele.description,

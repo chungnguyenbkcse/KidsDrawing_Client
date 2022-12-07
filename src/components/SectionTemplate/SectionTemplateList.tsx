@@ -32,21 +32,13 @@ function SectionTemplateList(props: section_templateListProps): JSX.Element {
     localStorage.removeItem('teaching_form')
     localStorage.setItem('teaching_form', section_template.teaching_form.toString())
     let tutorial_template_page_list: any[] = []
-    tutorial_templates.tutorialTemplates.map(ele => {
-      if (ele.section_template_id === section_template.id){
-        localStorage.removeItem('tutorial_template_id')
-        localStorage.setItem('tutorial_template_id', ele.id.toString())
-        tutorial_template_pages.tutorialTemplatePages.map(element => {
-          if (element.tutorial_template_id === ele.id){
-            tutorial_template_page_list.push({
-              description: element.description,
-              id: element.id,
-              name: element.name,
-              tutorial_template_id: element.tutorial_template_id,
-              number: element.number
-            })
-          }
-          return null
+    tutorial_template_pages.tutorialTemplatePages.map(element => {
+      if (element.section_template_id === section_template.id){
+        tutorial_template_page_list.push({
+          description: element.description,
+          id: element.id,
+          section_template_id: element.section_template_id,
+          number: element.number
         })
       }
       return null

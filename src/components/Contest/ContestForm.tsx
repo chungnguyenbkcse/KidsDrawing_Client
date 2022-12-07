@@ -57,7 +57,7 @@ const ContestForm: React.FC = () => {
   const isCreate: boolean = (contests.modificationState === ContestModificationStatus.Create);
 
   if (isCreate || contest === null){
-      contest = { id: 0, check_gen: false, name: "", total_contest_submission: 0, total_contest_submission_graded: 0, total_register_contest: 0,  description: "", max_participant: 0, creator_id: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0, art_age_name: "", art_type_name: "" };
+      contest = { id: 0, check_gen: false, name: "", total_contest_submission: 0, total_contest_submission_graded: 0, total_register_contest: 0,  description: "", max_participant: 0, is_enabled: false, registration_time: "", start_time: "", end_time: "", create_time: "", update_time: "", image_url: "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg", art_age_id: 0, art_type_id: 0, art_age_name: "", art_type_name: "" };
   }
   useEffect(() => {
     trackPromise(getArtType(dispatch))
@@ -152,7 +152,6 @@ const ContestForm: React.FC = () => {
     image_url: { error: "", value: contest.image_url },
     start_time: { error: "", value: contest.start_time },
     end_time: { error: "", value: contest.end_time },
-    creator_id: { error: "", value: contest.creator_id },
     create_time: { error: "", value: contest.create_time },
     update_time: { error: "", value: contest.update_time },
     art_age_id: { error: "", value: contest.art_age_id },
@@ -210,7 +209,6 @@ const ContestForm: React.FC = () => {
           registration_time: formState.registration_time.value,
           image_url: url,
           is_enabled: formState.is_enabled.value,
-          creator_id: localStorage.getItem('id'),
           max_participant: formState.max_participant.value,
           start_time: formState.start_time.value,
           end_time: formState.end_time.value,
@@ -227,7 +225,6 @@ const ContestForm: React.FC = () => {
             registration_time: formState.registration_time.value,
             image_url: url,
             is_enabled: formState.is_enabled.value,
-            creator_id: localStorage.getItem('id'),
             max_participant: formState.max_participant.value,
             start_time: formState.start_time.value,
             end_time: formState.end_time.value,
@@ -242,7 +239,6 @@ const ContestForm: React.FC = () => {
             registration_time: formState.registration_time.value,
             image_url: url,
             is_enabled: formState.is_enabled.value,
-            creator_id: localStorage.getItem('id'),
             max_participant: formState.max_participant.value,
             start_time: formState.start_time.value,
             end_time: formState.end_time.value,

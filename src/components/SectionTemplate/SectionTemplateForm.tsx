@@ -14,10 +14,10 @@ import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplat
 import "./SectionTemplate.css"
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
-import { getTutorialTemplatePageByTutorialTemplateId } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePageByTutorialTemplateId";
 import { postTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PostTutorialTemplatePage1";
 import { putTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PutTutorialTemplatePage1";
 import { putSectionTemplate } from "../../common/service/SectionTemplate/PutSectionTemplate";
+import { getTutorialTemplatePageBySectionTemplate } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePageBySectionTemplate";
 
 
 export type SectionTemplateListProps = {
@@ -36,7 +36,7 @@ type PageContent = {
 
 type TutorialPageTemplate = {
     id: any;
-    tutorial_template_id: number;
+    section_template_id: number;
     name: string;
     number: number;
     description: string;
@@ -51,12 +51,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     let section_template: ISectionTemplate | null = section_templates.selectedSectionTemplate;
 
     const [checked, setChecked] = useState(false);
-
-    var id_x = localStorage.getItem('section_template_id');
-    let section_template_id: number = 0;
-    if (id_x !== null) {
-        section_template_id = parseInt(id_x)
-    }
 
     var id_y = localStorage.getItem('section_number');
     let section_number: number = 0;
@@ -73,10 +67,10 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     }
 
 
-    var id_t = localStorage.getItem('tutorial_template_id');
-    let tutorial_template_id: number = 0;
+    var id_t = localStorage.getItem('section_template_id');
+    let section_template_id: number = 0;
     if (id_t !== null) {
-        tutorial_template_id = parseInt(id_t)
+        section_template_id = parseInt(id_t)
     }
 
     var id_h = localStorage.getItem('tutorial_name');
@@ -115,24 +109,24 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorial_template_id))
+                    dispatch(getTutorialTemplatePageBySectionTemplate(section_template_id))
                 }
             }
             else {
-                dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorial_template_id))
+                dispatch(getTutorialTemplatePageBySectionTemplate(section_template_id))
             }
         }
-    }, [dispatch, access_token, refresh_token, tutorial_template_id])
+    }, [dispatch, access_token, refresh_token, section_template_id])
 
     let [textHtml, setTextHtml] = useState(initial_text);
 
     if (!section_template) {
-        section_template = { id: 0, name: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: 0, name: "", course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
     console.log(tutorial_template_pages.tutorialTemplatePages)
     if (tutorial_template_pages.tutorialTemplatePages.length === 0) {
-        section_template = { id: 0, name: "", creator_id: 0, course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
+        section_template = { id: 0, name: "", course_id: 0, number: 0, teaching_form: false, create_time: "", update_time: "" };
     }
 
 
@@ -146,7 +140,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         number: { error: "", value: section_template.number },
         teaching_form: { error: "", value: section_template.teaching_form },
         course_id: { error: "", value: section_template.course_id },
-        creator_id: { error: "", value: section_template.creator_id },
         create_time: { error: "", value: section_template.create_time },
         update_time: { error: "", value: section_template.update_time }
     });
@@ -208,8 +201,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                         else if (ele.number > k - 1) {
                             dispatch(putTutorialTemplatePage1(ele.id, {
                                 description: ele.description,
-                                name: ele.name,
-                                tutorial_template_id: tutorial_template_id,
+                                section_template_id: section_template_id,
                                 number: ele.number - 1
                             }))
                         }
@@ -233,7 +225,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 name: formState.name.value,
                 teaching_form: value2 === "true" ? true : false,
                 number: section_number,
-                creator_id: localStorage.getItem('id'),
                 course_id: localStorage.getItem('course_id')
             }))
 
@@ -242,7 +233,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     dispatch(postTutorialTemplatePage1({
                         description: value,
                         name: formState.name.value,
-                        tutorial_template_id: tutorial_template_id,
+                        section_template_id: section_template_id,
                         number: tutorial_template_pages.tutorialTemplatePages.length
                     }, idx))
                 }
@@ -252,14 +243,13 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                             console.log('1')
                             dispatch(putTutorialTemplatePage1(ele.id, {
                                 description: ele.description,
-                                name: ele.name,
-                                tutorial_template_id: tutorial_template_id,
+                                section_template_id: section_template_id,
                                 number: ele.number + 1
                             }))
                             dispatch(postTutorialTemplatePage1({
                                 description: value,
                                 name: formState.name.value,
-                                tutorial_template_id: tutorial_template_id,
+                                section_template_id: section_template_id,
                                 number: ele.number
                             }, idx))
                         }
@@ -268,16 +258,14 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                 console.log('2')
                                 dispatch(putTutorialTemplatePage1(ele.id, {
                                     description: ele.description,
-                                    name: ele.name,
-                                    tutorial_template_id: tutorial_template_id,
+                                    section_template_id: section_template_id,
                                     number: ele.number + 1
                                 }))
                             }
                             else {
                                 dispatch(putTutorialTemplatePage(ele.id, {
                                     description: ele.description,
-                                    name: ele.name,
-                                    tutorial_template_id: tutorial_template_id,
+                                    section_template_id: section_template_id,
                                     number: ele.number + 1
                                 }, idx))
                             }
@@ -288,7 +276,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     /* dispatch(postTutorialTemplatePage({
                         description: value,
                         name: formState.name.value,
-                        tutorial_template_id: tutorial_template_id,
+                        section_template_id: section_template_id,
                         number: k - 1
                     })) */
                 }
@@ -299,13 +287,13 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     dispatch(putTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number)[k - 1].id, {
                         description: value,
                         name: tutorial_name,
-                        tutorial_template_id: tutorial_template_id,
+                        section_template_id: section_template_id,
                         number: k - 1
                     }, idx))
                     console.log({
                         description: value,
                         name: tutorial_name,
-                        tutorial_template_id: tutorial_template_id,
+                        section_template_id: section_template_id,
                         number: k - 1
                     })
                 }
@@ -313,14 +301,14 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     dispatch(postTutorialTemplatePage1({
                         description: value,
                         name: formState.name.value,
-                        tutorial_template_id: tutorial_template_id,
+                        section_template_id: section_template_id,
                         number: tutorial_template_pages.tutorialTemplatePages.length
                     }, idx))
 
                     console.log({
                         description: value,
                         name: tutorial_name,
-                        tutorial_template_id: tutorial_template_id,
+                        section_template_id: section_template_id,
                         number: tutorial_template_pages.tutorialTemplatePages.length
                     })
                 }
@@ -372,8 +360,17 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     console.log(checkCreateNew)
     console.log(checkAfterCreate)
     function handleBackPage() {
+        console.log(checkCreateNew)
+        console.log(currentPage)
+        console.log(checkAfterCreate)
         if (tutorial_template_pages !== null) {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeButton: true,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === true) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,

@@ -1,7 +1,6 @@
 export interface ITutorialTemplatePage {
     id: any;
-    tutorial_template_id: number;
-    name: string;
+    section_template_id: number;
     description: string;
     number: number;
 }

@@ -138,7 +138,7 @@ export interface ICourseNomalFormState {
     price: IFormStateField<number>;
     image_url: IFormStateField<string>;
     is_enabled: IFormStateField<boolean>;
-    creator_id: IFormStateField<number>;
+    
     art_type_id: IFormStateField<number>;
     art_level_id: IFormStateField<number>;
     art_age_id: IFormStateField<number>;
@@ -163,7 +163,7 @@ export interface IAnonymousNotificationFormState {
 }
 
 export interface IScheduleFormState {
-    creator_id: IFormStateField<number>;
+    
     name: IFormStateField<string>;
     total_date_of_week: IFormStateField<number>;
     list_schedule_item: IFormStateField<ScheduleItem[]>;
@@ -184,7 +184,7 @@ export interface IContestFormState {
     start_time: IFormStateField<string>;
     end_time: IFormStateField<string>;
     is_enabled: IFormStateField<boolean>;
-    creator_id: IFormStateField<number>;
+    
     art_type_id: IFormStateField<number>;
     art_age_id: IFormStateField<number>;
     create_time: IFormStateField<string>;
@@ -192,7 +192,7 @@ export interface IContestFormState {
 }
 
 export interface ISectionTemplateFormState {
-    creator_id: IFormStateField<number>;
+    
     course_id: IFormStateField<number>;
     name: IFormStateField<string>;
     teaching_form: IFormStateField<any>;

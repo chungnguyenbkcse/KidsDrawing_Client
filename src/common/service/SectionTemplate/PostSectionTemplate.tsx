@@ -1,6 +1,7 @@
+import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postTutorialTemplate } from "../TutorialTemplate/PostTutorialTemplate";
+import { postTutorialTemplatePage } from "../TutorialTemplatePage/PostTutorialTemplatePage";
 import { getSectionTemplate } from "./GetSectionTemplate";
 
 export function postSectionTemplate(tutorial: any[], data: any, idx: any) {
@@ -37,14 +38,21 @@ export function postSectionTemplate(tutorial: any[], data: any, idx: any) {
             .then (xx => {
                 console.log(xx)
                 getSectionTemplate(dispatch)
-                dispatch(postTutorialTemplate(tutorial,{
+                tutorial.map((value) => {
+                    return dispatch(postTutorialTemplatePage({
                         section_template_id: xx.id,
-                        name: data.name,
-                        creator_id: localStorage.getItem('id')
-                }, idx))
+                        name: xx.name,
+                        description: value.content,
+                        number: value.page
+                    }))
+                })
+
+                toast.update(idx, { render: "Thêm giáo án thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
+                console.log("error")
+                toast.update(idx, { render: "Thêm giáo án không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER });
                 console.log("error")
             });
     };

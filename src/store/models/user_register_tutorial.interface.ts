@@ -1,7 +1,7 @@
 export interface IUserRegisterTutorial {
     id: any;
     section_id: number;
-    creator_id: number;
+    
     creator_name: string;
     section_name: string;
     section_number: number;

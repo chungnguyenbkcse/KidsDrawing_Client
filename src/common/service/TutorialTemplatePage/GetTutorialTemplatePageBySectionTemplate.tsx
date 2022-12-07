@@ -2,7 +2,7 @@ import { fetchDataRequest, fetchDataSuccess, fetchDataError, removeTutorialTempl
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialTemplatePage {
     id: any;
-    tutorial_template_id: number;
+    section_template_id: number;
     name: string;
     description: string;
     number: number;
@@ -44,7 +44,7 @@ export function getTutorialTemplatePageBySectionTemplate(id: any) {
                 data.body.TutorialTemplatePage.map((ele: any, index: any) => {
                     var tutorial_template_page: TutorialTemplatePage = {
                         id: ele.id,
-                        tutorial_template_id: ele.tutorial_template_id,
+                        section_template_id: ele.section_template_id,
                         name: ele.name,
                         description: ele.description,
                         number: ele.number

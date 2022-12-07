@@ -9,7 +9,7 @@ interface CourseParent {
     price: number;
     image_url: string;
     is_enabled: boolean;
-    creator_id: number;
+    
     art_type_id: number;
     art_type_name: string;
     art_level_id: number;
@@ -57,7 +57,7 @@ export function getCourseParent(dispatch: any, id: any) {
                     var classes_parent: CourseParent = {
                         id: ele.id,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,
@@ -81,7 +81,7 @@ export function getCourseParent(dispatch: any, id: any) {
                     var classes_parent: CourseParent = {
                         id: ele.id,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         name: ele.name,
                         description: ele.description,
                         max_participant: ele.max_participant,

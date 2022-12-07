@@ -1,7 +1,6 @@
 export interface ITutorialPage {
     id: any;
-    tutorial_id: number;
-    name: string;
+    section_id: number;
     description: string;
     number: number;
 }

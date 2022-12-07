@@ -13,7 +13,7 @@ interface Contest {
     start_time: string;
     end_time: string;
     is_enabled: boolean;
-    creator_id: number;
+    
     check_gen: boolean;
     art_type_id: number;
     art_age_id: number;
@@ -73,7 +73,7 @@ export function getContest(dispatch: any) {
                         end_time: strDate2,
                         check_gen: ele.check_gen,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         art_type_id: ele.art_type_id,
                         art_age_id: ele.art_age_id,
                         art_age_name: ele.art_age_name,
@@ -103,7 +103,7 @@ export function getContest(dispatch: any) {
                         end_time: strDate2,
                         check_gen: ele.check_gen,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         art_type_id: ele.art_type_id,
                         art_age_id: ele.art_age_id,
                         art_age_name: ele.art_age_name,
@@ -133,7 +133,7 @@ export function getContest(dispatch: any) {
                         end_time: strDate2,
                         check_gen: ele.check_gen,
                         is_enabled: ele.is_enabled,
-                        creator_id: ele.creator_id,
+                        
                         art_type_id: ele.art_type_id,
                         art_age_id: ele.art_age_id,
                         art_age_name: ele.art_age_name,

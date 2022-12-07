@@ -26,7 +26,7 @@ interface ContestStudent {
     art_age_id: number;
     student_id: number;
     student_name: string;
-    creator_id: number;
+    
     create_time: string;
     update_time: string;
 }
@@ -85,7 +85,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         art_type_id: ele.art_type_id,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
-                        creator_id: ele.creator_id,
+                        
                         create_time: ele.create_time,
                         update_time: ele.update_time
                     }
@@ -119,7 +119,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         art_type_id: ele.art_type_id,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
-                        creator_id: ele.creator_id,
+                        
                         create_time: ele.create_time,
                         update_time: ele.update_time
                     }
@@ -154,7 +154,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         art_type_id: ele.art_type_id,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
-                        creator_id: ele.creator_id,
+                        
                         create_time: ele.create_time,
                         update_time: ele.update_time
                     }
@@ -189,7 +189,7 @@ export function getContestStudentByStudent(dispatch: any, id: any) {
                         art_type_id: ele.art_type_id,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
-                        creator_id: ele.creator_id,
+                        
                         create_time: ele.create_time,
                         update_time: ele.update_time
                     }

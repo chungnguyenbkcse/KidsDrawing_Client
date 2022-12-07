@@ -2,7 +2,7 @@ import { fetchDataSuccess, fetchDataError, removeTutorialPageAll, initialTutoria
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface TutorialPage {
     id: any;
-    tutorial_id: number;
+    section_id: number;
     name: string;
     description: string;
     number: number;
@@ -42,7 +42,7 @@ export function getTutorialPageBySection(dispatch: any, id: any) {
                 data.body.TutorialPage.map((ele: any, index: any) => {
                     var tutorial_page: TutorialPage = {
                         id: ele.id,
-                        tutorial_id: ele.tutorial_id,
+                        section_id: ele.section_id,
                         name: ele.name,
                         description: ele.description,
                         number: ele.number

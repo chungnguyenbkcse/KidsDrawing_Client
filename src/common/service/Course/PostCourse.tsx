@@ -39,7 +39,6 @@ export function postCourse(course: any, idx: any) {
                 toast.update(idx, { render: "Thêm khóa học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
                 getCourse(dispatch)
                 dispatch(postSectionTemplate1({
-                    creator_id: localStorage.getItem('id'),
                     course_id: data.id,
                     name: "",
                     number: 1,

@@ -1,6 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getTutorialTemplatePageByTutorialTemplateId } from "./GetTutorialTemplatePageByTutorialTemplateId";
+import { getTutorialTemplatePageBySectionTemplate } from "./GetTutorialTemplatePageBySectionTemplate";
 
 export function postTutorialTemplatePage(tutorialtemplatepage: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -34,7 +34,7 @@ export function postTutorialTemplatePage(tutorialtemplatepage: any) {
             })
             .then (data => {
                 console.log(data)
-                dispatch(getTutorialTemplatePageByTutorialTemplateId(tutorialtemplatepage.tutorial_template_id))
+                dispatch(getTutorialTemplatePageBySectionTemplate(tutorialtemplatepage.section_template_id))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

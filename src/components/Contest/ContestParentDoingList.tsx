@@ -32,7 +32,7 @@ export type IContestParentX = {
     art_age_id: number;
     student_ids: number[];
     student_names: string[];
-    creator_id: number;
+    
     create_time: string;
     update_time: string;
 }
@@ -310,7 +310,6 @@ function ContestParentDoingList(props: lessonListProps): JSX.Element {
                                         art_age_id: item.art_age_id,
                                         student_ids: new Array(item.student_id),
                                         student_names: new Array(item.student_name),
-                                        creator_id: item.creator_id,
                                         create_time: item.create_time,
                                         update_time: item.update_time
                                     }

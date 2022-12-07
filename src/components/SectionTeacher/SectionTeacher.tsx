@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
-import { getExerciseBySection } from "../../common/service/Exercise/GetExerciseBySection";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedExercise, setModificationState } from "../../store/actions/exercise.action";
@@ -13,17 +12,12 @@ import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ILessonState
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
 import { getClassTeacher } from "../../common/service/ClassTeacher/GetClassTeacher";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { getTutorialBySection } from "../../common/service/Tutorial/GetTutorialBySection";
-import SubmitRecordForm from "./SubmitRecordForm";
 import { getExerciseTeacherBySection } from "../../common/service/Exercise/GetExerciseTeacherBySection";
 import { IUserRegisterTutorial } from "../../store/models/user_register_tutorial.interface";
-import { getUserRegisterTutorialBySection } from "../../common/service/UserRegisterTutorial/GetUserRegisterTutorialBySection";
 import { BsFillTrashFill } from "react-icons/bs";
-import { LessonModificationStatus } from "../../store/models/lesson.interface";
-import { deleteUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/DeleteUserRegisterTutorial";
 import { deleteExercise } from "../../common/service/Exercise/DeleteExercise";
 
 const SectionTeacher: React.FC = () => {
@@ -139,7 +133,6 @@ const SectionTeacher: React.FC = () => {
                     trackPromise(getClassTeacher(dispatch, id))
                     trackPromise(getSectionById(dispatch, section_id))
                     trackPromise(getExerciseTeacherBySection(dispatch, section_id))
-                    trackPromise(getUserRegisterTutorialBySection(dispatch, section_id))
                    
                     trackPromise(getTutorialPageBySection(dispatch, section_id))
                     trackPromise(getTutorialBySection(dispatch, section_id))
@@ -148,9 +141,7 @@ const SectionTeacher: React.FC = () => {
             else {
                 trackPromise(getClassTeacher(dispatch, id))
                 trackPromise(getSectionById(dispatch, section_id))
-                trackPromise(getUserRegisterTutorialBySection(dispatch, section_id))
-                trackPromise(getExerciseTeacherBySection(dispatch, section_id))
-                
+                trackPromise(getExerciseTeacherBySection(dispatch, section_id))           
                 trackPromise(getTutorialPageBySection(dispatch, section_id))
                 trackPromise(getTutorialBySection(dispatch, section_id))
             }
@@ -185,7 +176,7 @@ const SectionTeacher: React.FC = () => {
         let path = "/section/edit";
         if (tutorials !== null && tutorials.tutorials.length > 0) {
             localStorage.setItem('tutorial_name', tutorials.tutorials[0].name);
-            localStorage.setItem('tutorial_id', tutorials.tutorials[0].id.toString())
+            localStorage.setItem('section_id', tutorials.tutorials[0].id.toString())
         }
         history.push({
             pathname: path,
@@ -216,8 +207,8 @@ const SectionTeacher: React.FC = () => {
     }
 
     function handleView(ele: IUserRegisterTutorial) {
-        localStorage.removeItem('user_register_tutorial_id')
-        localStorage.setItem('user_register_tutorial_id', ele.id.toString())
+        localStorage.removeItem('user_register_section_id')
+        localStorage.setItem('user_register_section_id', ele.id.toString())
         localStorage.removeItem('section_id')
         localStorage.setItem('section_id', ele.section_id.toString())
         localStorage.removeItem('section_number')
@@ -382,7 +373,7 @@ const SectionTeacher: React.FC = () => {
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteUserRegisterTutorial(requestId, idx))
+                                                    
                                                     setPopup2(false);
                                                 }}>Remove
                                             </button>

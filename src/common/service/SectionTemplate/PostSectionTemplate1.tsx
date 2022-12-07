@@ -1,6 +1,6 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/section_template.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { postTutorialTemplate1 } from "../TutorialTemplate/PostTutorialTemplate1";
+import { postTutorialTemplatePage } from "../TutorialTemplatePage/PostTutorialTemplatePage";
 import { getSectionTemplate } from "./GetSectionTemplate";
 
 export function postSectionTemplate1(data: any, num_of_section: number) {
@@ -37,14 +37,14 @@ export function postSectionTemplate1(data: any, num_of_section: number) {
             .then (xx => {
                 console.log(xx)
                 getSectionTemplate(dispatch)
-                dispatch(postTutorialTemplate1({
-                        section_template_id: xx.id,
-                        name: data.name,
-                        creator_id: localStorage.getItem('id')
+                dispatch(postTutorialTemplatePage({
+                    section_template_id: xx.id,
+                    name: "",
+                    description: "",
+                    number: 1
                 }))
                 if (data.number+1 <= num_of_section) {
                     dispatch(postSectionTemplate1({
-                        creator_id: localStorage.getItem('id'),
                         course_id: data.course_id,
                         name: "",
                         number: data.number + 1,

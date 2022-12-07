@@ -83,9 +83,7 @@ const ViewSectionTeacher: React.FC = () => {
                             <div className="col-xl-12 col-md-12 mb-4">
                                 <div className={`card shadow h-100 py-2`}>
                                     <div className="card-body">
-                                        <div className="row no-gutters justify-content-left">
-                                            <h4 id="full-name">{TutorialPages.tutorialPages.length !== 0 ? TutorialPages.tutorialPages[0].name : ""}</h4>
-                                        </div>
+                                        
                                         <div className="row no-gutters">
                                             {
                                                 function () {

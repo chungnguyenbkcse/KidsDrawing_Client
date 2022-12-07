@@ -1,7 +1,6 @@
 import React, { Dispatch } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { putUserRegisterTutorial } from "../../common/service/UserRegisterTutorial/PutUserRegisterTutorial";
 import { setModificationState } from "../../store/actions/user_register_tutorial.action";
 import { IStateType, IUserRegisterTutorialState } from "../../store/models/root.interface";
 import { ITutorial } from "../../store/models/tutorial.interface";
@@ -22,12 +21,12 @@ function TutorialEditRequestList1(props: studentListProps): JSX.Element {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
-    dispatch(putUserRegisterTutorial(ele.id, {
+    /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Approved",
       section_id: ele.section_id,
       name: ele.name,
       creator_id: ele.creator_id
-    }, id))
+    }, id)) */
   }
 
   function notApprovedTutorial(ele: IUserRegisterTutorial) {
@@ -35,12 +34,12 @@ function TutorialEditRequestList1(props: studentListProps): JSX.Element {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
-    dispatch(putUserRegisterTutorial(ele.id, {
+    /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Not approved",
       section_id: ele.section_id,
       name: ele.name,
       creator_id: ele.creator_id
-    }, id))
+    }, id)) */
   }
 
   const studentElements: (JSX.Element | null)[] = user_register_tutorials.user_register_tutorial_not_approved_nows.map((student, index) => {

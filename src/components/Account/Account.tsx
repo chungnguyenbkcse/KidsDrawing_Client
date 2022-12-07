@@ -103,7 +103,7 @@ const Account: React.FC = () => {
                     phone: phone,
                     address: address,
                     parent_ids: user.parents,
-                    roleNames: [userRole]
+                    roleName: [userRole]
                 }, id));
             }
 
@@ -120,7 +120,7 @@ const Account: React.FC = () => {
                     phone: phone,
                     address: address,
                     parent_ids: user.parents,
-                    roleNames: [userRole]
+                    roleName: [userRole]
                 }, id));
             }
 

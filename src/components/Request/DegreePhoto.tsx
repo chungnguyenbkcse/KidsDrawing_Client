@@ -8,10 +8,10 @@ const DegreePhoto: React.FC = () => {
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Bằng cấp", ""));
 
-  const { state } = useLocation<any>();
+  var id_x = localStorage.getItem("degree_photo_url")
   let x = "";
-  if (typeof state !== undefined){
-    x= state.degree_photo
+  if (id_x !== null){
+    x= id_x
   }
   console.log(x)
 
@@ -27,7 +27,7 @@ const DegreePhoto: React.FC = () => {
             <div className="card-header py-3">
               <h6 className="m-0 font-weight-bold text-green">Hình ảnh</h6>
             </div>
-            <div className="card-body">
+            <div className="card-body mx-auto">
             <img src={x} alt=""/>
             </div>
           </div>

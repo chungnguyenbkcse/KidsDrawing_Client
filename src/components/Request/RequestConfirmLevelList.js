@@ -14,11 +14,13 @@ function RequestConfirmLevelList(props) {
   const dispatch = useDispatch();
   const teacher_register_quantifications = useSelector((state) => state.teacher_register_quantifications);
   const history = useHistory();
-  const routeChange = (degree_photo) => {
+  const routeChange = (degree_photo_url) => {
     let path = '/teachers/request-level/degree-photo';
+    localStorage.removeItem("degree_photo_url")
+    localStorage.setItem("degree_photo_url", degree_photo_url)
     history.push({
       pathname: path,
-      state: { degree_photo: degree_photo }
+      state: { degree_photo_url: degree_photo_url }
     });
   }
 
@@ -90,7 +92,7 @@ function RequestConfirmLevelList(props) {
   function detailButton(cell, row) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
-        routeChange(row.degree_photo)
+        routeChange(row.degree_photo_url)
       }}>Chi tiết</button>
     )
   }

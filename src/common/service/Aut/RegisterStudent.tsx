@@ -1,7 +1,12 @@
 import { toast } from 'react-toastify';
+import { getInforChildByParent } from '../Childs/GetInforChildByParent';
 
-export function postRegisterStudent(data: any, id: any) {
-    
+export function postRegisterStudent(dispatch: any, data: any, idx: any) {
+    var id_x = localStorage.getItem('id');
+    var id: number = 0;
+    if (id_x !== null) {
+        id = parseInt(id_x);
+    }
     return (dispatch: any) => {
         fetch(
             `${process.env.REACT_APP_API_URL}/registration`, {
@@ -21,11 +26,11 @@ export function postRegisterStudent(data: any, id: any) {
                 return response
             })
             .then(data => {
-
-                toast.update(id, { render: "Đăng ký thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });           
+                getInforChildByParent(dispatch, id)
+                toast.update(idx, { render: "Đăng ký thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });           
             })
             .catch(error => {
-                toast.update(id, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+                toast.update(idx, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
     };
 }

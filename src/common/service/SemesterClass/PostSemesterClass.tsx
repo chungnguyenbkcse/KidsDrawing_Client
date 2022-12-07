@@ -4,12 +4,10 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { postSchedule } from "../Schedule/PostSchedule";
 import { getSemesterClass } from "./GetSemesterClass";
 
-export function postSemesterClass(data: any, schedule_element: any, idx: any) {
+export function postSemesterClass(dispatch: any, data: any, schedule_element: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return fetch(
                 `${process.env.REACT_APP_API_URL}/semester-class`, {
                     method: "POST",
                     headers: {
@@ -25,7 +23,7 @@ export function postSemesterClass(data: any, schedule_element: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSemesterClass(data, schedule_element, idx))
+                        dispatch(postSemesterClass(dispatch, data, schedule_element, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -52,5 +50,4 @@ export function postSemesterClass(data: any, schedule_element: any, idx: any) {
                 dispatch(fetchDataError(error));
                 console.log("error")
             });
-    };
 }

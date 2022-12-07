@@ -37,7 +37,7 @@ function AccountChildForm(props: artAgeListProps): JSX.Element {
         phone: { error: "", value: "" },
         address: { error: "", value: "" },
         parent_id: { error: "", value: "" },
-        roleNames: { error: "", value: "" },
+        roleName: { error: "", value: "" },
     });
 
     function hasFormValueChanged(model: OnChangeModel): void {
@@ -61,7 +61,7 @@ function AccountChildForm(props: artAgeListProps): JSX.Element {
             });
             
             if (saveFn === addAnonymousNotification) {
-                dispatch(postRegisterStudent({
+                (postRegisterStudent(dispatch, {
                     username: formState.username.value,
                     password: formState.password.value,
                     email: formState.email.value,
@@ -73,7 +73,7 @@ function AccountChildForm(props: artAgeListProps): JSX.Element {
                     phone: formState.phone.value,
                     address: formState.address.value,
                     parent_id: localStorage.getItem('id'),
-                    roleNames: ["STUDENT_USER"]
+                    roleName: "STUDENT"
                 }, idx))
             }
 

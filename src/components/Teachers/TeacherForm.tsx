@@ -65,7 +65,7 @@ function TeacherForm(props: teacherListProps): JSX.Element {
           sex: null,
           phone: null,
           address: null,
-          roleNames: ["TEACHER"]
+          roleName: ["TEACHER"]
         }, id));
       }
 

@@ -210,7 +210,7 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
 
       console.log(schedule_element)
       if (saveFn === addSemesterClass) {
-        dispatch(postSemesterClass({
+        (postSemesterClass(dispatch, {
           semester_id: formState.semester_id.value,
           name: formState.name.value,
           registration_time: formState.registration_time.value,

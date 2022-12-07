@@ -82,7 +82,7 @@ const Teacher: React.FC = () => {
                 sex: null,
                 phone: null,
                 address: null,
-                roleNames: ["TEACHER"]
+                roleName: ["TEACHER"]
               }, datas.slice(1, datas.length), id));
             /* datas.map((ele: any, idx: any) => {
                 if (idx === datas.length - 1) {
@@ -97,7 +97,7 @@ const Teacher: React.FC = () => {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleNames: ["TEACHER"]
+                        roleName: ["TEACHER"]
                       }, id));
                 }
                 else {
@@ -112,7 +112,7 @@ const Teacher: React.FC = () => {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleNames: ["TEACHER"]
+                        roleName: ["TEACHER"]
                       }));
                 }
             }) */

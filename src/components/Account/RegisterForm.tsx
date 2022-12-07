@@ -24,7 +24,7 @@ const RegisterForm: React.FC = () => {
     phone: { error: "", value: "" },
     address: { error: "", value: "" },
     parent_id: { error: "", value: "" },
-    roleNames: { error: "", value: "" },
+    roleName: { error: "", value: "" },
   });
 
   function changeRouteHome(value: boolean) {
@@ -58,7 +58,7 @@ const RegisterForm: React.FC = () => {
         sex: null,
         phone: null,
         address: null,
-        roleNames: ["PARENT"]
+        roleName: "PARENT"
     }, changeRouteHome, id))
   }
 

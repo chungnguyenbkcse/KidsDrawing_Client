@@ -85,7 +85,7 @@ function AccountForm(props: teacherListProps): JSX.Element {
                     phone: formState.phone.value,
                     address: formState.address.value,
                     parent_ids: user.parents,
-                    roleNames: [roleUser]
+                    roleName: [roleUser]
                 }, id));
             }
 
@@ -102,7 +102,7 @@ function AccountForm(props: teacherListProps): JSX.Element {
                     phone: formState.phone.value,
                     address: formState.address.value,
                     parent_ids: user.parents,
-                    roleNames: [roleUser]
+                    roleName: [roleUser]
                 }, id));
             }
             dispatch(clearSelectedUser());

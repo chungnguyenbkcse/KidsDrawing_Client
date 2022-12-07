@@ -48,7 +48,7 @@ export function postTeacher1(data: any, lst: any[], idx: any) {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleNames: ["TEACHER"]
+                        roleName: ["TEACHER"]
                       }, lst.slice(1, lst.length), idx));
                 }
                 else if (lst.length === 1) {
@@ -63,7 +63,7 @@ export function postTeacher1(data: any, lst: any[], idx: any) {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleNames: ["TEACHER"]
+                        roleName: ["TEACHER"]
                       }, idx));
                 }
             })

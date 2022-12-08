@@ -5,7 +5,7 @@ import { getExerciseForClassAndParent } from "../ExerciseParent/GetExerciseByCla
 import { getExerciseSubmissionByClassAndParent } from "./GetExerciseSubmissionByClassAndParent";
 
 
-export function deleteExerciseSubmissionParent(id: number, idx: any) {
+export function deleteExerciseSubmissionParent(exercise_id: number, student_id: number, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('id');
     var idxx: number = 0;
@@ -23,7 +23,7 @@ export function deleteExerciseSubmissionParent(id: number, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-submission/${id}`, {
+                `${process.env.REACT_APP_API_URL}/exercise-submission/${exercise_id}/${student_id}`, {
                     method: "DELETE",
                     headers: {
                         'Authorization': bearer,
@@ -37,7 +37,7 @@ export function deleteExerciseSubmissionParent(id: number, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteExerciseSubmissionParent(id, idx))
+                        dispatch(deleteExerciseSubmissionParent(exercise_id, student_id, idx))
                     }
                     else {
                         throw Error(response.statusText);

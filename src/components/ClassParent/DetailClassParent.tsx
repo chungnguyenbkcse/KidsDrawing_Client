@@ -100,9 +100,10 @@ const DetailClassParent: React.FC = () => {
 
     const [popup3, setPopup3] = useState(false);
     const [requestId1, setRequestId1] = useState(0);
+    const [requestId, setRequestId] = useState(0);
+    const [studenId, setStudentId] = useState(0);
 
     const [popup2, setPopup2] = useState(false);
-    const [requestId, setRequestId] = useState(0);
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -276,7 +277,6 @@ const DetailClassParent: React.FC = () => {
     function handleRequestOff(student_leave: IStudentLeave) {
         localStorage.setItem('section_id', student_leave.section_id.toString())
         localStorage.setItem('section_number', student_leave.section_number.toString())
-        localStorage.setItem('student_leave_id', student_leave.id.toString())
         localStorage.setItem('resson', student_leave.description)
         localStorage.setItem('student_id', student_leave.student_id.toString())
         localStorage.setItem('student_name', student_leave.student_name)
@@ -287,7 +287,6 @@ const DetailClassParent: React.FC = () => {
     function handleRequestOffEnd(student_leave: IStudentLeave) {
         localStorage.setItem('section_id', student_leave.section_id.toString())
         localStorage.setItem('section_number', student_leave.section_number.toString())
-        localStorage.setItem('student_leave_id', student_leave.id.toString())
         localStorage.setItem('resson', student_leave.description)
         localStorage.setItem('student_id', student_leave.student_id.toString())
         localStorage.setItem('student_name', student_leave.student_name)
@@ -391,7 +390,7 @@ const DetailClassParent: React.FC = () => {
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteStudentLeaveByParent(requestId1, idx))
+                                                    dispatch(deleteStudentLeaveByParent(requestId1,studenId, idx))
                                                     setPopup3(false);
                                                 }}>Remove
                                             </button>
@@ -426,7 +425,7 @@ const DetailClassParent: React.FC = () => {
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteExerciseSubmissionParent(requestId, idx))
+                                                    dispatch(deleteExerciseSubmissionParent(requestId, studenId, idx))
                                                     setPopup2(false);
                                                 }}>Remove
                                             </button>
@@ -782,7 +781,8 @@ const DetailClassParent: React.FC = () => {
                                                                                         <div className="col-md-3">
                                                                                             <BsFillTrashFill color="#dc3545" onClick={(e) => {
                                                                                                 e.stopPropagation(); 
-                                                                                                setRequestId(ele.id);
+                                                                                                setRequestId(ele.exercise_id);
+                                                                                                setStudentId(ele.student_id)
                                                                                                 setPopup2(true)
                                                                                             }}/>
                                                                                         </div>
@@ -863,7 +863,8 @@ const DetailClassParent: React.FC = () => {
                                                                                         <div className="col-md-3">
                                                                                             <BsFillTrashFill color="#dc3545" onClick={(e) => {
                                                                                                 e.stopPropagation(); 
-                                                                                                setRequestId1(ele.id);
+                                                                                                setRequestId1(ele.section_id);
+                                                                                                setStudentId(ele.student_id)
                                                                                                 setPopup3(true)
                                                                                             }}/>
                                                                                         </div>

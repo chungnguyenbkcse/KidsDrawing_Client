@@ -3,7 +3,7 @@ import { fetchDataRequest } from "../../../store/actions/student_leave.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getStudentLeaveByClassAndParent } from "./GetStudentLeaveByClassAndParent";
 
-export function deleteStudentLeaveByParent(id: any, idx: any) {
+export function deleteStudentLeaveByParent(section_id: number, student_id: number, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('id');
     var idxx: number = 0;
@@ -21,7 +21,7 @@ export function deleteStudentLeaveByParent(id: any, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/student-leave/${id}`, {
+                `${process.env.REACT_APP_API_URL}/student-leave/${student_id}/${section_id}`, {
                     method: "DELETE",
                     headers: {
                         'Authorization': bearer,
@@ -35,7 +35,7 @@ export function deleteStudentLeaveByParent(id: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteStudentLeaveByParent(id, idx))
+                        dispatch(deleteStudentLeaveByParent(student_id, section_id, idx))
                     }
                     else {
                         throw Error(response.statusText);

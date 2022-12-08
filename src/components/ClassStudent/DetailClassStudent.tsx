@@ -242,7 +242,6 @@ const DetailClassStudent: React.FC = () => {
     function handleRequestOff(student_leave: IStudentLeave) {
         localStorage.setItem('section_id', student_leave.section_id.toString())
         localStorage.setItem('section_number', student_leave.section_number.toString())
-        localStorage.setItem('student_leave_id', student_leave.id.toString())
         localStorage.setItem('resson', student_leave.description)
         dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Edit))
         onAnonymousNotificationRemove()
@@ -251,7 +250,6 @@ const DetailClassStudent: React.FC = () => {
     function handleRequestOffEnd(student_leave: IStudentLeave) {
         localStorage.setItem('section_id', student_leave.section_id.toString())
         localStorage.setItem('section_number', student_leave.section_number.toString())
-        localStorage.setItem('student_leave_id', student_leave.id.toString())
         localStorage.setItem('resson', student_leave.description)
         dispatch(setModificationStateAnonymousNotification(AnonymousNotificationModificationStatus.Remove))
         onAnonymousNotificationRemove()
@@ -355,7 +353,7 @@ const DetailClassStudent: React.FC = () => {
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteExerciseSubmission(requestId, idx))
+                                                    dispatch(deleteExerciseSubmission(requestId, id, idx))
                                                     setPopup2(false);
                                                 }}>Remove
                                             </button>
@@ -390,7 +388,7 @@ const DetailClassStudent: React.FC = () => {
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteStudentLeave(requestId1, idx))
+                                                    dispatch(deleteStudentLeave(requestId1, id, idx))
                                                     setPopup3(false);
                                                 }}>Remove
                                             </button>
@@ -894,7 +892,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                         <div className="col-md-3">
                                                                                             <BsFillTrashFill color="#dc3545" onClick={(e) => {
                                                                                                 e.stopPropagation(); 
-                                                                                                setRequestId(ele.id);
+                                                                                                setRequestId(ele.exercise_id);
                                                                                                 setPopup2(true)
                                                                                             }}/>
                                                                                         </div>
@@ -968,7 +966,7 @@ const DetailClassStudent: React.FC = () => {
                                                                                         <div className="col-md-3">
                                                                                             <BsFillTrashFill color="#dc3545" onClick={(e) => {
                                                                                                 e.stopPropagation(); 
-                                                                                                setRequestId1(ele.id);
+                                                                                                setRequestId1(ele.section_id);
                                                                                                 setPopup3(true)
                                                                                             }}/>
                                                                                         </div>

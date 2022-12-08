@@ -11,6 +11,8 @@ import { IStudentLeave, StudentLeaveModificationStatus } from "../../store/model
 import { postStudentLeave } from "../../common/service/StudentLeave/PostStudentLeave";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import { putStudentLeave } from "../../common/service/StudentLeave/PutStudentLeaveStudent";
+import { deleteStudentLeave } from "../../common/service/StudentLeave/DeleteStudentLeaveById";
+import { deleteStudentLeave1 } from "../../common/service/StudentLeave/DeleteStudentLeave1";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -54,12 +56,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     var classes_id: number = 0;
     if (id_i !== null) {
         classes_id = parseInt(id_i);
-    }
-
-    var id_k = localStorage.getItem('student_leave_id');
-    var student_leave_id: number = 0;
-    if (id_k !== null) {
-        student_leave_id = parseInt(id_k);
     }
 
     if (isCreate) {
@@ -147,10 +143,9 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
 
             if (saveFn === editStudentLeaveNotApproved) {
-                dispatch(putStudentLeave(student_leave_id, {
+                dispatch(deleteStudentLeave1(student_leave.section_id, student_id,{
                     section_id: formState.section_id.value,
                     student_id: student_id,
-                    classes_id: class_id,
                     description: formState.description.value
                 }, id))
             }
@@ -158,7 +153,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                 dispatch(postStudentLeave({
                     section_id: formState.section_id.value,
                     student_id: student_id,
-                    classes_id: class_id,
                     description: formState.description.value
                 }, id))
             }

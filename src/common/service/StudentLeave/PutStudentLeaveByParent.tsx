@@ -4,7 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { getStudentLeaveByClassAndParent } from "./GetStudentLeaveByClassAndParent";
 
 
-export function putStudentLeaveParent(id: any, data: any, idx: any) {
+export function putStudentLeaveParent(section_id: number, student_id: number, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('id');
     var idxx: number = 0;
@@ -22,7 +22,7 @@ export function putStudentLeaveParent(id: any, data: any, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/student-leave/${id}`, {
+                `${process.env.REACT_APP_API_URL}/student-leave/admin/${section_id}/${student_id}`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,
@@ -37,7 +37,7 @@ export function putStudentLeaveParent(id: any, data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putStudentLeaveParent(id, data, idx))
+                        dispatch(putStudentLeaveParent(section_id, student_id, data, idx))
                     }
                     else {
                         throw Error(response.statusText);

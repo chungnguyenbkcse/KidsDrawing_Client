@@ -78,6 +78,7 @@ const SectionStudent: React.FC = () => {
 
     const [popup2, setPopup2] = useState(false);
     const [requestId, setRequestId] = useState(0);
+    const [studentId, setStudentId] = useState(0);
 
     console.log(class_id);
     console.log(class_students.classes_doing)
@@ -245,7 +246,7 @@ const SectionStudent: React.FC = () => {
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteExerciseSubmission(requestId, idx))
+                                                    dispatch(deleteExerciseSubmission(requestId, studentId, idx))
                                                     setPopup2(false);
                                                 }}>Remove
                                             </button>
@@ -468,7 +469,8 @@ const SectionStudent: React.FC = () => {
                                                                                         <div className="col-md-3">
                                                                                             <BsFillTrashFill color="#dc3545" onClick={(e) => {
                                                                                                 e.stopPropagation(); 
-                                                                                                setRequestId(ele.id);
+                                                                                                setRequestId(ele.exercise_id);
+                                                                                                setStudentId(ele.student_id)
                                                                                                 setPopup2(true)
                                                                                             }}/>
                                                                                         </div>

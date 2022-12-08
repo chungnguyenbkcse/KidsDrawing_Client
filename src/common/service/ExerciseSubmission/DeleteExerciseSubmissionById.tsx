@@ -5,7 +5,7 @@ import { getExerciseForClassStudent } from "../ExerciseStudent/GetExerciseForCla
 import { getExerciseSubmissionByClassAndStudent } from "./GetExerciseSubmissionByClassAndStudent";
 
 
-export function deleteExerciseSubmission(id: number, idx: any) {
+export function deleteExerciseSubmission(exercise_id: number, student_id: number, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('id');
     var idxx: number = 0;
@@ -23,7 +23,7 @@ export function deleteExerciseSubmission(id: number, idx: any) {
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-submission/${id}`, {
+                `${process.env.REACT_APP_API_URL}/exercise-submission/${exercise_id}/${student_id}`, {
                     method: "DELETE",
                     headers: {
                         'Authorization': bearer,
@@ -37,7 +37,7 @@ export function deleteExerciseSubmission(id: number, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteExerciseSubmission(id, idx))
+                        dispatch(deleteExerciseSubmission(exercise_id, student_id, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -49,12 +49,12 @@ export function deleteExerciseSubmission(id: number, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Chỉnh bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Xóa bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
                 getExerciseSubmissionByClassAndStudent(dispatch, class_id, idxx)
                 getExerciseForClassStudent(dispatch, class_id, idxx)
             })
             .catch(error => {
-                toast.update(idx, { render: "Chỉnh bài nộp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+                toast.update(idx, { render: "Xóa bài nộp không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

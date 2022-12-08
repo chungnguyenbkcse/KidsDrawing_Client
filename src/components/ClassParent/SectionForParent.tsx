@@ -357,7 +357,7 @@ const SectionForParent: React.FC = () => {
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    dispatch(deleteExerciseSubmission(requestId, idx))
+                                                    
                                                     setPopup2(false);
                                                 }}>Remove
                                             </button>

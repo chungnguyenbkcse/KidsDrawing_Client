@@ -57,13 +57,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     var classes_id: number = 0;
     if (id_i !== null) {
         classes_id = parseInt(id_i);
-    }
-
-    var id_k = localStorage.getItem('student_leave_id');
-    var student_leave_id: number = 0;
-    if (id_k !== null) {
-        student_leave_id = parseInt(id_k);
-    }
+    }    
 
     var id_h = localStorage.getItem('student_id');
     var student_id: number = 0;
@@ -165,10 +159,9 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
 
             if (saveFn === editStudentLeaveNotApproved) {
-                dispatch(putStudentLeaveParent(student_leave_id, {
+                dispatch(putStudentLeaveParent(student_leave.section_id, student_leave.student_id, {
                     section_id: formState.section_id.value,
                     student_id: formState.student_id.value,
-                    classes_id: class_id,
                     description: formState.description.value
                 }, id))
             }
@@ -176,7 +169,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
                 dispatch(postStudentLeaveByParent({
                     section_id: formState.section_id.value,
                     student_id: formState.student_id.value,
-                    classes_id: class_id,
                     description: formState.description.value
                 }, id))
             }
@@ -184,7 +176,6 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
             console.log({
                 section_id: formState.section_id.value,
                 student_id: formState.student_id.value,
-                classes_id: class_id,
                 description: formState.description.value
             })
         }

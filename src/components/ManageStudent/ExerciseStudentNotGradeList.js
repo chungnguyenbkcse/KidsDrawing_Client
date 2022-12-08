@@ -89,7 +89,7 @@ function ExerciseStudentNotGradeList(props) {
           >Chấm điểm</button>
     )
     }
-    else if (roleUser === "STUDENT_USER" || roleUser === "PARENT") {
+    else if (roleUser === "STUDENT" || roleUser === "PARENT") {
       return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if (props.onSelect) props.onSelect(row);

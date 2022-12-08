@@ -11,6 +11,9 @@ interface ExerciseSubmission {
     exercise_deadline: string;
     create_time: string;
     update_time: string;
+    score: number;
+    time: string;
+    feedback: string;
 }
 export function getExerciseSubmissionByExercise(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -48,7 +51,7 @@ export function getExerciseSubmissionByExercise(dispatch: any, id: any) {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: ele.id,
+                        id: 0,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         exercise_id: ele.exercise_id,
@@ -57,7 +60,10 @@ export function getExerciseSubmissionByExercise(dispatch: any, id: any) {
                         exercise_description: ele.exercise_description,
                         image_url: ele.image_url,
                         create_time: strDate_1,
-                        update_time: strDate_2
+                        update_time: strDate_2,
+                        score: ele.score,
+                        time: ele.time,
+                        feedback: ele.feedback
                     }
                     return dispatch(addExerciseNotGraded(exercise_submission));
                 })
@@ -66,7 +72,7 @@ export function getExerciseSubmissionByExercise(dispatch: any, id: any) {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: ele.id,
+                        id:0,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         exercise_id: ele.exercise_id,
@@ -75,7 +81,10 @@ export function getExerciseSubmissionByExercise(dispatch: any, id: any) {
                         exercise_description: ele.exercise_description,
                         image_url: ele.image_url,
                         create_time: strDate_1,
-                        update_time: strDate_2
+                        update_time: strDate_2,
+                        score: ele.score,
+                        time: ele.time,
+                        feedback: ele.feedback
                     }
                     return dispatch(addExerciseGraded(exercise_submission));
                 })

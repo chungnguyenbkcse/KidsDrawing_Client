@@ -8,9 +8,8 @@ import { getExerciseForClassStudent } from "../../common/service/ExerciseStudent
 import { getParentById } from "../../common/service/Parent/GetParentById";
 import { getStudentLeaveByClassAndStudent } from "../../common/service/StudentLeave/GetStudentLeaveByClassStudent";
 import { getUserById } from "../../common/service/User/GetUserById";
-import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
-import { IExerciseStudentState, ILessonState, IRootPageStateType, IStateType, IStudentLeaveState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IExerciseStudentState, IExerciseSubmissionState, ILessonState, IRootPageStateType, IStateType, IStudentLeaveState, IUserState } from "../../store/models/root.interface";
 import "./ManageClasses.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -24,13 +23,14 @@ import { getInfoFinalCourse } from "../../common/service/FinalCourse/GetInfoFina
 import { getInforClassHasRegisterJoinSemester } from "../../common/service/ClassHasRegisterJoinSemester/GetInfoClassHasRegisterJoinSemester";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { getExerciseSubmissionByClassAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClassAndStudent";
 
 const ManageClassesDone: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const student_leave: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
-    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const exercise_submission: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const numberSubmittedCount: number = exercise_students.exercise_submitted_not_grade.length + exercise_students.exercise_submitted_graded.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
     const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
@@ -106,7 +106,7 @@ const ManageClassesDone: React.FC = () => {
                         trackPromise(getUserById(dispatch, student_ids[0]))
                         trackPromise(getExerciseForClassStudent(dispatch, class_id, student_ids[0]))
                         trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, student_ids[0]))
-                        trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id, student_ids[0]))
+                        trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, student_ids[0]))
                         trackPromise(getInfoFinalCourse(dispatch, student_ids[0], class_id))
                         trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, student_ids[0]))
                     }
@@ -118,7 +118,7 @@ const ManageClassesDone: React.FC = () => {
                     trackPromise(getUserById(dispatch, student_ids[0]))
                     trackPromise(getExerciseForClassStudent(dispatch, class_id, student_ids[0]))
                     trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, student_ids[0]))
-                    trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id, student_ids[0]))
+                    trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, student_ids[0]))
                     trackPromise(getInfoFinalCourse(dispatch, student_ids[0], class_id))
                     trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, student_ids[0]))
                 }
@@ -129,7 +129,7 @@ const ManageClassesDone: React.FC = () => {
 
     let list_score_user_grade_exercise: number[] = [];
     let list_name_user_grade_exercise: string[] = [];
-    user_grade_exercise_submission.user_grade_exercise_submissions.map((ele, idx) => {
+    exercise_submission.exercise_gradeds.map((ele, idx) => {
         list_score_user_grade_exercise.push(ele.score)
         list_name_user_grade_exercise.push(ele.exercise_name)
         return ele
@@ -198,7 +198,7 @@ const ManageClassesDone: React.FC = () => {
         trackPromise(getUserById(dispatch, filter))
         trackPromise(getExerciseForClassStudent(dispatch, class_id, filter))
         trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, filter))
-        trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id, filter))
+        trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, filter))
         trackPromise(getInfoFinalCourse(dispatch, filter, class_id))
         trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, filter))
     }

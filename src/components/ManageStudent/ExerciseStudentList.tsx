@@ -2,9 +2,8 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
-import { IExerciseStudentState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
+import { IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import "./ManageStudent.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -17,12 +16,11 @@ import ExerciseStudentNotSubmitList from "./ExerciseStudentNotSubmit";
 
 const ExerciseStudentList: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const exercise_submissions = useSelector((state: any) => state.exercise_submissions);
-    const user_grade_exercise_submission = useSelector((state: any) => state.user_grade_exercise_submissions);
+    const exercise_submissions: IExerciseSubmissionState = useSelector((state: any) => state.exercise_submissions);
     const exercise_students: IExerciseStudentState = useSelector((state: IStateType) => state.exercise_students);
     const numberSubmittedNotGradeCount: number = exercise_submissions.exercise_not_gradeds.length;
     const numberNotSubmitNowCount: number = exercise_students.exercise_not_submit.length;
-    const numberGradeCount: number = user_grade_exercise_submission.user_grade_exercise_submissions.length;
+    const numberGradeCount: number = exercise_submissions.exercise_gradeds.length;
 
     var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
@@ -72,13 +70,13 @@ const ExerciseStudentList: React.FC = () => {
                     dispatch(logout())
                     trackPromise(getExerciseForClassStudent(dispatch, class_id, student_id))
                     trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, student_id))
-                    trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id, student_id))
+                    
                 }
             }
             else {
                 trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, student_id))
                 trackPromise(getExerciseForClassStudent(dispatch, class_id, student_id))
-                trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id, student_id))
+                
             }
         }
     }, [dispatch, access_token, refresh_token, student_id, class_id]);

@@ -2,7 +2,6 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
-import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
 import { IExerciseStudentState, IStateType, IStudentLeaveState } from "../../store/models/root.interface";
 import ExerciseSectionList from "./ExerciseSectionList";
@@ -55,11 +54,11 @@ const ExerciseStudentList: React.FC = () => {
                 }
                 else {
                     dispatch(logout())
-                    trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
+                   
                 }
             }
             else {
-                trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
+                
             }
         }
     }, [dispatch, access_token, refresh_token, student_id, class_id]);

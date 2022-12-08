@@ -152,7 +152,6 @@ const DetailClassTeacher: React.FC = () => {
         let path = '/exercise-grade';
         localStorage.setItem('student_name', exercise_submission.student_name);
         localStorage.setItem('student_id', exercise_submission.student_id.toString())
-        localStorage.setItem('exercise_submission_id', exercise_submission.id.toString())
         localStorage.setItem('exercise_name', exercise_submission.exercise_name)
         localStorage.setItem('exercise_id', exercise_submission.exercise_id.toString())
         localStorage.setItem('image_url_exercise_submission', exercise_submission.image_url)
@@ -163,6 +162,7 @@ const DetailClassTeacher: React.FC = () => {
     }
 
     const onChangeRoute = (section: ISectionTeacher, is_active: string, link_record: string) => {
+        console.log(section.id)
         let path = "/classes/section";
         localStorage.removeItem('section_id')
         localStorage.setItem('section_id', section.id.toString())
@@ -170,13 +170,11 @@ const DetailClassTeacher: React.FC = () => {
         localStorage.setItem('section_number', section.number.toString())
         let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
-        localStorage.removeItem('section_id')
         localStorage.setItem('is_active', is_active)
         localStorage.removeItem('link_record')
         localStorage.setItem('link_record', link_record)
         tutorials.tutorials.map(ele => {
             if (ele.section_id === section.id) {
-                localStorage.setItem('section_id', ele.id.toString())
                 localStorage.setItem('tutorial_name', ele.name.toString())
                 tutorial_pages.tutorialPages.map(element => {
                     if (element.section_id === ele.id) {

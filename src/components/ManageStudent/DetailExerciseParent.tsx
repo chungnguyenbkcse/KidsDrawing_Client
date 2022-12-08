@@ -3,21 +3,20 @@ import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IExerciseSubmissionState, IRootPageStateType, IStateType, ITeacherRegisterQuantificationState, IUserState } from "../../store/models/root.interface";
 import "./ManageStudent.css"
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
-import Loading from "../../common/components/Loading";
-import { getUserGradeExerciseByExerciseAndStudent } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExerciseStudent";
+import { getExerciseSubmissionByExerciseAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExerciseAndStudent";
 
 const DetailExerciseParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const teacherRegisterQuantifications: ITeacherRegisterQuantificationState = useSelector((state: IStateType) => state.teacher_register_quantifications);
     const users: IUserState = useSelector((state: IStateType) => state.users);
-    const user_grade_exercise_submissions: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     console.log(users.teachers)
     console.log(teacherRegisterQuantifications)
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -84,7 +83,7 @@ const DetailExerciseParent: React.FC = () => {
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
-    let percentage = user_grade_exercise_submissions.user_grade_exercise_submissions.length > 0 ? user_grade_exercise_submissions.user_grade_exercise_submissions[0].score : 0;
+    let percentage = exercise_submissions.exercise_gradeds.length > 0 ? exercise_submissions.exercise_gradeds[0].score : 0;
     useEffect(() => {
         if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined) {
             let access_token_decode: any = jwt_decode(access_token)
@@ -106,11 +105,11 @@ const DetailExerciseParent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserGradeExerciseByExerciseAndStudent(dispatch, exercise_id, id))
+                    trackPromise(getExerciseSubmissionByExerciseAndStudent(dispatch, exercise_id, id))
                 }
             }
             else {
-                trackPromise(getUserGradeExerciseByExerciseAndStudent(dispatch, exercise_id, id))
+                trackPromise(getExerciseSubmissionByExerciseAndStudent(dispatch, exercise_id, id))
             }
         }
     }, [dispatch, access_token, refresh_token, exercise_id, id]);
@@ -170,8 +169,8 @@ const DetailExerciseParent: React.FC = () => {
                                         </div>
                                         <div className="row mx-auto">
                                         <PhotoProvider>
-                                            <PhotoView src={user_grade_exercise_submissions.user_grade_exercise_submissions.length > 0 ? user_grade_exercise_submissions.user_grade_exercise_submissions[0].image_url : ""}>
-                                                <img src={user_grade_exercise_submissions.user_grade_exercise_submissions.length > 0 ? user_grade_exercise_submissions.user_grade_exercise_submissions[0].image_url : ""} alt="" className="center-x" />
+                                            <PhotoView src={exercise_submissions.exercise_gradeds.length > 0 ? exercise_submissions.exercise_gradeds[0].image_url : ""}>
+                                                <img src={exercise_submissions.exercise_gradeds.length > 0 ? exercise_submissions.exercise_gradeds[0].image_url : ""} alt="" className="center-x" />
                                             </PhotoView>
                                         </PhotoProvider>
                                         </div>
@@ -210,7 +209,7 @@ const DetailExerciseParent: React.FC = () => {
                                             <h4 id="full-name">Nhận xét</h4>
                                         </div>
                                         <div className="row mx-auto">
-                                            {user_grade_exercise_submissions.user_grade_exercise_submissions.length > 0 ? user_grade_exercise_submissions.user_grade_exercise_submissions[0].feedback : ""}
+                                            {exercise_submissions.exercise_gradeds.length > 0 ? exercise_submissions.exercise_gradeds[0].feedback : ""}
                                         </div>
                                     </div>
                                 </div>

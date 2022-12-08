@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
 import { logout } from "../../store/actions/account.actions";
-import { IClassHasRegisterJoinSemesterState, IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import { IClassHasRegisterJoinSemesterState, IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getInfoFinalCourse } from "../../common/service/FinalCourse/GetInfoFinalCourse";
@@ -14,7 +14,7 @@ import { getInforClassHasRegisterJoinSemester } from "../../common/service/Class
 
 const ReivewClassDone: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const exercise_submission: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const class_has_register_join_semester: IClassHasRegisterJoinSemesterState = useSelector((state: IStateType) => state.class_has_register_join_semesters);
     const { promiseInProgress } = usePromiseTracker();
 
@@ -85,7 +85,7 @@ const ReivewClassDone: React.FC = () => {
 
     let list_score_user_grade_exercise: number[] = [];
     let list_name_user_grade_exercise: string[] = [];
-    user_grade_exercise_submission.user_grade_exercise_submissions.map((ele, idx) => {
+    exercise_submission.exercise_gradeds.map((ele, idx) => {
         list_score_user_grade_exercise.push(ele.score)
         list_name_user_grade_exercise.push(ele.exercise_name)
         return ele

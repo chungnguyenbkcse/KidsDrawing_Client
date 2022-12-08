@@ -53,7 +53,7 @@ export function deleteUserRegisterJoinSemester1(user_register_join_semester_id: 
                 if (roleUser === "PARENT") {
                     getUserRegisterJoinSemesterByPayer(dispatch, id)
                 }
-                else if (roleUser === "STUDENT_USER") {
+                else if (roleUser === "STUDENT") {
                     getUserRegisterJoinSemesterByStudent(dispatch, id)
                 }
             })

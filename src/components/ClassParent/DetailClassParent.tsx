@@ -9,7 +9,7 @@ import { logout } from "../../store/actions/account.actions";
 import { setModificationStateAnonymousNotification } from "../../store/actions/anonymous_notification.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
-import { IAnonymousNotificationState, IChildsClassState, IExerciseParentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, ISectionTeacherState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IAnonymousNotificationState, IChildsClassState, IExerciseParentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, ISectionTeacherState, IStateType, IStudentLeaveState, ITimeScheduleState, ITutorialPageState, ITutorialState, IUserState } from "../../store/models/root.interface";
 import RequestOffSectionForm from "./RequestOffSectionForm";
 import { ISection } from "../../store/models/section.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -23,13 +23,12 @@ import { getStudentLeaveByClassAndParent } from "../../common/service/StudentLea
 import { getExerciseSubmissionByClassAndParent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClassAndParent";
 import { getExerciseForClassAndParent } from "../../common/service/ExerciseParent/GetExerciseByClassAndParent";
 import { getParentById } from "../../common/service/Parent/GetParentById";
-import { getUserGradeExerciseByClassAndParent } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassParent";
 import { getChildsClassByClassAndParent } from "../../common/service/ChildsClass/GetChildsInClassByClassAndParent";
-import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { getInfoMyClass } from "../../common/service/MyClass/GetInfoMyClass";
 import { BsFillTrashFill } from "react-icons/bs";
 import { deleteStudentLeaveByParent } from "../../common/service/StudentLeave/DeleteStudentLeaveByParent";
 import { deleteExerciseSubmissionParent } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionByParent";
+import { getExerciseSubmissionByClassAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClassAndStudent";
 
 
 const DetailClassParent: React.FC = () => {
@@ -44,14 +43,14 @@ const DetailClassParent: React.FC = () => {
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const exercise_students: IExerciseParentState = useSelector((state: IStateType) => state.exercise_parents);
     const student_leave: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
-    const user_grade_exercise_submission: IUserGradeExerciseSubmissionState = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const exercise_submission: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const numberSubmittedCount: number = exercise_students.exercise_submitted_graded.length + exercise_students.exercise_submitted_not_grade.length;
     const numberStudentLeaveCount: number = student_leave.acceptLeaves.length;
     const { promiseInProgress } = usePromiseTracker();
     const childs_classes: IChildsClassState = useSelector((state: IStateType) => state.childs_classes);
     let list_score_user_grade_exercise : number[] = [];
     let list_name_user_grade_exercise : string[] = [];
-    user_grade_exercise_submission.user_grade_exercise_submissions.map((ele, idx) => {
+    exercise_submission.exercise_gradeds.map((ele, idx) => {
         list_score_user_grade_exercise.push(ele.score)
         list_name_user_grade_exercise.push(ele.exercise_name)
         return ele
@@ -135,7 +134,6 @@ const DetailClassParent: React.FC = () => {
                     trackPromise(getStudentLeaveByClassAndParent(dispatch, class_id, id))
                     trackPromise(getExerciseSubmissionByClassAndParent(dispatch, class_id, id))
                     trackPromise(getExerciseForClassAndParent(dispatch, class_id, id))
-                    trackPromise(getUserGradeExerciseByClassAndParent(dispatch, class_id,id))
                 }
             }
             else {
@@ -175,8 +173,6 @@ const DetailClassParent: React.FC = () => {
 
     const routeChange2 = (exercise_student: IExerciseSubmission) => {
         let path = '/exercise/detail';
-        localStorage.removeItem('exercise_submission_id');
-        localStorage.setItem('exercise_submission_id', exercise_student.id.toString())
         localStorage.removeItem('time_submit');
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
@@ -213,8 +209,6 @@ const DetailClassParent: React.FC = () => {
 
     function routeChangeVIewExerciseSubmission(exercise_student: IExerciseSubmission) {
         let path = '/exercise-submission/view';
-        localStorage.removeItem('exercise_submission_id');
-        localStorage.setItem('exercise_submission_id', exercise_student.id.toString())
         localStorage.removeItem('time_submit');
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
@@ -355,7 +349,7 @@ const DetailClassParent: React.FC = () => {
     }
 
     function handleFilter() {
-        trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,filter))
+        trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id,filter))
     }
 
     function handleChangeToSection() {

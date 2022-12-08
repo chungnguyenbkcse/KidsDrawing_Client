@@ -102,7 +102,7 @@ function ExerciseStudentList(props) {
           >Chỉnh điểm</button>
       )
     }
-    else if (roleUser === "PARENT" || roleUser === "STUDENT_USER") {
+    else if (roleUser === "PARENT" || roleUser === "STUDENT") {
       return (
         <button type="button" className="btn btn-primary" onClick={() => {
             if (props.onSelect) props.onSelect(row);

@@ -261,7 +261,7 @@ const Routers: React.FC = () => {
             </Fragment>
         )
     }
-    else if (roleUser === "STUDENT_USER"){
+    else if (roleUser === "STUDENT"){
         return (
             <Fragment>
                 <LeftMenu />

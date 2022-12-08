@@ -9,7 +9,9 @@ interface ExerciseSubmission {
     image_url: string;
     create_time: string;
     exercise_description: string;
-    
+    score: number;
+    time: string;
+    feedback: string;
     exercise_deadline: string;
     update_time: string;
 }
@@ -56,7 +58,10 @@ export function getExerciseSubmissionById(dispatch: any, id: any) {
                         exercise_description: data.exercise_description,
                         image_url: data.image_url,
                         create_time: strDate_1,
-                        update_time: strDate_2
+                        update_time: strDate_2,
+                        score: data.score,
+                        time: data.time,
+                        feedback: data.feedback,
                     }
                     localStorage.removeItem('url_exercise_submission')
                     localStorage.setItem('url_exercise_submission', exercise_submission.image_url)

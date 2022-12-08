@@ -51,7 +51,7 @@ function TopMenuCart(): JSX.Element {
     if (roleUser === "PARENT") {
       trackPromise(getUserRegisterJoinSemesterByPayer(dispatch, user_id))
     }
-    else if (roleUser === "STUDENT_USER") {
+    else if (roleUser === "STUDENT") {
       trackPromise(getUserRegisterJoinSemesterByStudent(dispatch, user_id))
     }
   }, [dispatch, user_id, roleUser])
@@ -129,7 +129,7 @@ function TopMenuCart(): JSX.Element {
     });
   }
 
-  if (roleUser === "PARENT" || roleUser === "STUDENT_USER") {
+  if (roleUser === "PARENT" || roleUser === "STUDENT") {
     return (
 
       <li className="nav-item dropdown no-arrow">

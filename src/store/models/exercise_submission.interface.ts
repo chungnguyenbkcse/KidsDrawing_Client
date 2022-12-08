@@ -7,6 +7,9 @@ export interface IExerciseSubmission {
     exercise_description: string;
     exercise_deadline: string;
     image_url: string;
+    feedback: string;
+    score: number;
+    time: string;
     create_time: string;
     update_time: string;
 }

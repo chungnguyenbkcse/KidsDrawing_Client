@@ -5,12 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
 import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotField";
-import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { IClassesStudent } from "../../store/models/classes_student.interface";
-import { IContestStudent } from "../../store/models/contest_student.interface";
 import { IContestTeacher } from "../../store/models/contest_teacher.interface";
-import { IClassesStudentState, IContestTeacherState, IFinalScoreChildState, IStateType, IUserGradeContestSubmissionState, IUserGradeExerciseSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IClassesStudentState, IContestTeacherState, IFinalScoreChildState, IStateType, IUserGradeContestSubmissionState, IUserState } from "../../store/models/root.interface";
 
 export type classTeacherListProps = {
     onSelect?: (classTeacher: IClassesStudent) => void;

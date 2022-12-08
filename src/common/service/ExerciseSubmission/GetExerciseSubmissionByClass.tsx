@@ -11,6 +11,9 @@ interface ExerciseSubmission {
     exercise_deadline: string;
     create_time: string;
     update_time: string;
+    score: number;
+    time: string;
+    feedback: string;
 }
 export function getExerciseSubmissionByClass(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
@@ -48,10 +51,13 @@ export function getExerciseSubmissionByClass(dispatch: any, id: any) {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: ele.id,
+                        id:0,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         exercise_id: ele.exercise_id,
+                        score: ele.score,
+                        time: ele.time,
+                        feedback: ele.feedback,
                         exercise_deadline: ele.exercise_deadline,
                         exercise_description: ele.exercise_description,
                         exercise_name: ele.exercise_name,
@@ -66,10 +72,13 @@ export function getExerciseSubmissionByClass(dispatch: any, id: any) {
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: ele.id,
+                        id:0,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         exercise_id: ele.exercise_id,
+                        score: ele.score,
+                        time: ele.time,
+                        feedback: ele.feedback,
                         exercise_deadline: ele.exercise_deadline,
                         exercise_description: ele.exercise_description,
                         exercise_name: ele.exercise_name,

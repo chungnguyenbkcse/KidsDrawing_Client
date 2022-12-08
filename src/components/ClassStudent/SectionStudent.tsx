@@ -154,8 +154,7 @@ const SectionStudent: React.FC = () => {
 
     const routeChange2x = (exercise_student: IExerciseSubmission) => {
         let path = '/exercise/detail';
-        localStorage.removeItem('exercise_submission_id');
-        localStorage.setItem('exercise_submission_id', exercise_student.id.toString())
+        
         localStorage.removeItem('time_submit');
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');
@@ -189,8 +188,7 @@ const SectionStudent: React.FC = () => {
 
     function routeChangeVIewExerciseSubmission(exercise_student: IExerciseSubmission) {
         let path = '/exercise-submission/view';
-        localStorage.removeItem('exercise_submission_id');
-        localStorage.setItem('exercise_submission_id', exercise_student.id.toString())
+        
         localStorage.removeItem('time_submit');
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
         localStorage.removeItem('description');

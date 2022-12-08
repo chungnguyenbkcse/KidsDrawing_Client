@@ -14,7 +14,6 @@ import "./SectionTeacher.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { getClassTeacher } from "../../common/service/ClassTeacher/GetClassTeacher";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
-import { getTutorialBySection } from "../../common/service/Tutorial/GetTutorialBySection";
 import { getExerciseTeacherBySection } from "../../common/service/Exercise/GetExerciseTeacherBySection";
 import { IUserRegisterTutorial } from "../../store/models/user_register_tutorial.interface";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -29,7 +28,6 @@ const SectionTeacher: React.FC = () => {
     const exercise_teachers: IExerciseTeacherState = useSelector((state: IStateType) => state.exercise_teachers);
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const tutorial_pages: ITutorialPageState | null = useSelector((state: IStateType) => state.tutorial_pages);
-    const tutorials: ITutorialState | null = useSelector((state: IStateType) => state.tutorials);
     const class_teachers: IClassTeacherState = useSelector((state: IStateType) => state.class_teachers);
     console.log(users.teachers)
 
@@ -135,7 +133,6 @@ const SectionTeacher: React.FC = () => {
                     trackPromise(getExerciseTeacherBySection(dispatch, section_id))
                    
                     trackPromise(getTutorialPageBySection(dispatch, section_id))
-                    trackPromise(getTutorialBySection(dispatch, section_id))
                 }
             }
             else {
@@ -143,7 +140,6 @@ const SectionTeacher: React.FC = () => {
                 trackPromise(getSectionById(dispatch, section_id))
                 trackPromise(getExerciseTeacherBySection(dispatch, section_id))           
                 trackPromise(getTutorialPageBySection(dispatch, section_id))
-                trackPromise(getTutorialBySection(dispatch, section_id))
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
@@ -174,10 +170,6 @@ const SectionTeacher: React.FC = () => {
         localStorage.removeItem('description_tutorial_page_list')
         localStorage.setItem('description_tutorial_page_list', JSON.stringify(tutorial_pages.tutorialPages.sort((a, b) => a.number - b.number)))
         let path = "/section/edit";
-        if (tutorials !== null && tutorials.tutorials.length > 0) {
-            localStorage.setItem('tutorial_name', tutorials.tutorials[0].name);
-            localStorage.setItem('section_id', tutorials.tutorials[0].id.toString())
-        }
         history.push({
             pathname: path,
             state: { section_id: section_id }

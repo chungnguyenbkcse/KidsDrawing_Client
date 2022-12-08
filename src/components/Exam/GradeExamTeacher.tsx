@@ -43,18 +43,17 @@ const GradeExamTeacher: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
 
-        if (student_id === 0 && exercise_submission_id === 0) {
+        if (student_id === 0 ) {
             let y = exercise_submissions.exercise_not_gradeds[0].id;
             console.log({
-                teacher_id: localStorage.getItem('id'),
-                exercise_submission_id: y,
+                teacher_id: localStorage.getItem('id'),        
                 score: formState.score.value,
                 feedback: formState.feedback.value
             })
 
             dispatch(postUserGradeExercise({
                 teacher_id: localStorage.getItem('id'),
-                exercise_submission_id: y,
+                
                 score: formState.score.value,
                 feedback: formState.feedback.value
             }, id))
@@ -62,7 +61,6 @@ const GradeExamTeacher: React.FC = () => {
         else {
             dispatch(postUserGradeExercise({
                 teacher_id: localStorage.getItem('id'),
-                exercise_submission_id: exercise_submission_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             }, id))

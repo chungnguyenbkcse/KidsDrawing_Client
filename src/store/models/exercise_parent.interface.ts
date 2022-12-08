@@ -1,7 +1,7 @@
 export interface IExerciseParent {
     id: any;
     name: string;
-    exercise_submission_id: number;
+    
     student_id: number;
     student_name: string;
     description: string;

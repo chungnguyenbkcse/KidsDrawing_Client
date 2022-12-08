@@ -3,19 +3,19 @@ import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
-import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExeerciseAndClass";
+import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import { IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import ResultGradeExamTeacher1 from "./ResultGradeExamTeacher1";
 import ScoreExamList from "./ScoreExamList";
 
 const ResultGradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    const user_grade_exercise_submissions: IUserGradeExerciseSubmissionState  = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
-    const max = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.min(a, b.score), 0);
+    const exercise_submissions: IExerciseSubmissionState  = useSelector((state: IStateType) => state.exercise_submissions);
+    const max = exercise_submissions.exercise_gradeds.reduce((a, b) => Math.max(a, b.score), -Infinity);
+    const min = exercise_submissions.exercise_gradeds.reduce((a, b) => Math.min(a, b.score), 0);
     var class_id = localStorage.getItem('class_id');
     var class_id_: number = 0;
     if (class_id !== null) {
@@ -54,11 +54,11 @@ const ResultGradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {    
-                    dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id_))
+                    
                 }
             }
             else {     
-                dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id_))
+                
             }
         }
     }, [dispatch, access_token, refresh_token, class_id_, exercise_id]);

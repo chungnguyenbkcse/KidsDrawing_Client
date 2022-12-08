@@ -227,7 +227,7 @@ const LeftMenu = () => {
                                 </div>
                             )
                         }
-                        else if (roleUser === "STUDENT_USER") {
+                        else if (roleUser === "STUDENT") {
                             return (
                                 <div id="content-wrapper" className="d-flex flex-column">
                                     <div id="content">

@@ -1,7 +1,6 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getUserGradeExerciseByStudentAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByClassStudent";
 import { logout } from "../../store/actions/account.actions";
 import ExerciseSectionList1 from "./ExerciseSectionList1";
 import "./ManageStudent.css"
@@ -48,11 +47,11 @@ const ExerciseStudentList1: React.FC = () => {
                 }
                 else {
                     dispatch(logout())
-                    trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
+                    
                 }
             }
             else {
-                trackPromise(getUserGradeExerciseByStudentAndClass(dispatch, class_id,student_id))
+                
             }
         }
     }, [dispatch, access_token, refresh_token, student_id, class_id]);

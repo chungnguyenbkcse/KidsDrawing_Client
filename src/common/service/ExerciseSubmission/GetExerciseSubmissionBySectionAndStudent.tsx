@@ -8,7 +8,9 @@ interface ExerciseSubmission {
     exercise_name: string;
     image_url: string;
     exercise_description: string;
-    
+    score: number;
+    time: string;
+    feedback: string;
     exercise_deadline: string;
     create_time: string;
     update_time: string;
@@ -50,14 +52,16 @@ export function getExerciseSubmissionBySectionAndStudent(dispatch: any, section_
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: ele.id,
+                        id:0,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         exercise_id: ele.exercise_id,
                         exercise_name: ele.exercise_name,
                         exercise_deadline: ele.exercise_deadline,
                         exercise_description: ele.exercise_description,
-                        
+                        score: ele.score,
+                        time: ele.time,
+                        feedback: ele.feedback,
                         image_url: ele.image_url,
                         create_time: strDate_1,
                         update_time: strDate_2
@@ -69,13 +73,15 @@ export function getExerciseSubmissionBySectionAndStudent(dispatch: any, section_
                     var strDate_1 = ele.create_time;
                     var strDate_2 = ele.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: ele.id,
+                        id:0,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         exercise_id: ele.exercise_id,
                         exercise_deadline: ele.exercise_deadline,
                         exercise_description: ele.exercise_description,
-                        
+                        score: ele.score,
+                        time: ele.time,
+                        feedback: ele.feedback,
                         exercise_name: ele.exercise_name,
                         image_url: ele.image_url,
                         create_time: strDate_1,

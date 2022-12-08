@@ -175,7 +175,7 @@ function ScoreContestList(): JSX.Element {
                 <tbody>
                     {
                         function () {
-                            if (roleUser === "STUDENT_USER") {
+                            if (roleUser === "STUDENT") {
                                 return studentElements
                             }
                             else if (roleUser === "PARENT") {

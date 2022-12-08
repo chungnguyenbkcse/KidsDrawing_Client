@@ -1,31 +1,31 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import { IStateType, IExerciseSubmissionState } from "../../store/models/root.interface";
 import { useHistory } from "react-router-dom";
-import { IUserGradeExerciseSubmission } from "../../store/models/user_grade_exercise_submission.interface";
+import { IExerciseSubmission } from "../../store/models/exercise_submission.interface";
 
 function ScoreExamList(): JSX.Element {
 
-    const user_grade_exercise_submissions: IUserGradeExerciseSubmissionState  = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
+    const exercise_submissions: IExerciseSubmissionState  = useSelector((state: IStateType) => state.exercise_submissions);
     const history = useHistory();
 
 
-    const routeChange = (user_grade_exercise_submission: IUserGradeExerciseSubmission) => {
+    const routeChange = (user_grade_exercise_submission: IExerciseSubmission) => {
         let path = '/exercise/student';
         localStorage.setItem('feedback', user_grade_exercise_submission.feedback)
         localStorage.setItem('score_exercise', user_grade_exercise_submission.score.toString())
         localStorage.setItem('student_name', user_grade_exercise_submission.student_name)
         localStorage.setItem('image_url_exercise_submission', user_grade_exercise_submission.image_url)
         localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
-        localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.exercise_submission_id.toString())
-        localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
+        localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
+        localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
+        localStorage.setItem('time_submit', user_grade_exercise_submission.update_time)
         history.push(path);
     }
 
-    console.log(user_grade_exercise_submissions.user_grade_exercise_submissions)
 
 
-    const studentElements: (JSX.Element | null)[] = user_grade_exercise_submissions.user_grade_exercise_submissions.map((student, idx) => {
+    const studentElements: (JSX.Element | null)[] = exercise_submissions.exercise_gradeds.map((student, idx) => {
         if (!student) { return null; }
         return (<tr className={`table-row`}
             key={`student_${idx}`} onClick={() => routeChange(student)}>

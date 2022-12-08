@@ -219,7 +219,7 @@ const SemesterClassDetail: React.FC = () => {
                     dispatch(postUserRegisterJoinSemester1({
                         "student_id": ele.value,
                         "semester_classes_id": semester_class_id,
-                        "register_by_type": "ADMIN",
+                        "register_by_type": "PARENT",
                         "price": price,
                         "status": "Waiting"
                     }, idxx))
@@ -228,7 +228,7 @@ const SemesterClassDetail: React.FC = () => {
                     dispatch(postUserRegisterJoinSemester({
                         "student_id": ele.value,
                         "semester_classes_id": semester_class_id,
-                        "payer_id": id,
+                        "register_by_type": "PARENT",
                         "price": price,
                         "status": "Waiting"
                     }, idxx, routeHome))
@@ -277,7 +277,7 @@ const SemesterClassDetail: React.FC = () => {
                     dispatch(postUserRegisterJoinSemester1({
                         "student_id": ele.value,
                         "semester_classes_id": semester_class_id,
-                        "payer_id": id,
+                        "register_by_type": "PARENT",
                         "price": price,
                         "status": "Waiting"
                     }, idxx))
@@ -286,7 +286,7 @@ const SemesterClassDetail: React.FC = () => {
                     dispatch(postUserRegisterJoinSemester({
                         "student_id": ele.value,
                         "semester_classes_id": semester_class_id,
-                        "payer_id": id,
+                        "register_by_type": "PARENT",
                         "price": price,
                         "status": "Waiting"
                     }, idxx, routeHome))

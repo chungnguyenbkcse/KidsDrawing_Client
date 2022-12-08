@@ -3,10 +3,9 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
-import { getUserGradeExerciseByExerciseAndClass } from "../../common/service/UserGradeExerciseSubmission/GetUserGradeExerciseSubmissionByExeerciseAndClass";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserGradeExerciseSubmissionState } from "../../store/models/root.interface";
+import { IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import ResultGradeExamTeacher1 from "./ResultGradeExamTeacher1";
 import ScoreExamList from "./ScoreExamList";
 
@@ -14,15 +13,15 @@ import ScoreExamList from "./ScoreExamList";
 
 const AnalytisResultGradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const user_grade_exercise_submissions: IUserGradeExerciseSubmissionState  = useSelector((state: IStateType) => state.user_grade_exercise_submissions);
-    const max = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = user_grade_exercise_submissions.user_grade_exercise_submissions.reduce((a, b) => Math.min(a, b.score), 0);
+    const exercise_submissions: IExerciseSubmissionState  = useSelector((state: IStateType) => state.exercise_submissions);
+    const max = exercise_submissions.exercise_gradeds.reduce((a, b) => Math.max(a, b.score), -Infinity);
+    const min = exercise_submissions.exercise_gradeds.reduce((a, b) => Math.min(a, b.score), 0);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
     let student: string[] = []
     let scores: number[] = []
-    if (user_grade_exercise_submissions.user_grade_exercise_submissions.length > 0){
-        user_grade_exercise_submissions.user_grade_exercise_submissions.map(ele => {
+    if (exercise_submissions.exercise_gradeds.length > 0){
+        exercise_submissions.exercise_gradeds.map(ele => {
             student.push(ele.student_name)
             scores.push(ele.score)
             return ele
@@ -79,11 +78,11 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id))
+                    
                 }
             }
             else {   
-                dispatch(getUserGradeExerciseByExerciseAndClass(exercise_id, class_id)) 
+                 
             }
         }
         

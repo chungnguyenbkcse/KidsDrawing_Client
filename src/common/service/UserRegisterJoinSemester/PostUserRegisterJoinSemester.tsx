@@ -54,7 +54,7 @@ export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any
                 if (roleUser === "PARENT") {
                     getUserRegisterJoinSemesterByPayer(dispatch, id)
                 }
-                else if (roleUser === "STUDENT_USER") {
+                else if (roleUser === "STUDENT") {
                     getUserRegisterJoinSemesterByStudent(dispatch, id)
                 }
                 

@@ -104,14 +104,14 @@ const ViewExerciseSubmission: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getExerciseSubmissionById(dispatch, exercise_submission_id))
+                    trackPromise(getExerciseSubmissionById(dispatch, exercise_id, id))
                 }
             }
             else {
-                trackPromise(getExerciseSubmissionById(dispatch, exercise_submission_id))
+                trackPromise(getExerciseSubmissionById(dispatch,  exercise_id, id))
             }
         }
-    }, [dispatch, access_token, refresh_token, exercise_submission_id]);
+    }, [dispatch, access_token, refresh_token,  exercise_id, id]);
 
 
     useEffect(() => {
@@ -142,8 +142,10 @@ const ViewExerciseSubmission: React.FC = () => {
 
     function saveForm(saveFn: Function, url: string, idx: any): void {
         if (user) {
-            dispatch(putExerciseSubmission(exercise_submission_id, {
-                image_url: url
+            dispatch(putExerciseSubmission({
+                image_url: url,
+                student_id: id,
+                exercise_id: exercise_id
             }, idx, routeHome))
         }
     }

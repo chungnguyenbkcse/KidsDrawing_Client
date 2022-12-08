@@ -3,12 +3,12 @@ import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/exerc
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 
-export function putExerciseSubmission(id: number, data: any, idx: any, routeHome: any) {
+export function putExerciseSubmission(data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-submission/${id}`, {
+                `${process.env.REACT_APP_API_URL}/exercise-submission/student`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,
@@ -23,7 +23,7 @@ export function putExerciseSubmission(id: number, data: any, idx: any, routeHome
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putExerciseSubmission(id, data, idx, routeHome))
+                        dispatch(putExerciseSubmission(data, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);

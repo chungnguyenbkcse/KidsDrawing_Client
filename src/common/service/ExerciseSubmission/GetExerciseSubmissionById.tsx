@@ -15,10 +15,10 @@ interface ExerciseSubmission {
     exercise_deadline: string;
     update_time: string;
 }
-export function getExerciseSubmissionById(dispatch: any, id: any) {
+export function getExerciseSubmissionById(dispatch: any, exercise_id: number, student_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/exercise-submission/${id}`, {
+                `${process.env.REACT_APP_API_URL}/exercise-submission/exercise-student/${exercise_id}/${student_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -32,7 +32,7 @@ export function getExerciseSubmissionById(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseSubmissionById(dispatch, id))
+                        dispatch(getExerciseSubmissionById(dispatch, exercise_id, student_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -49,7 +49,7 @@ export function getExerciseSubmissionById(dispatch: any, id: any) {
                     var strDate_1 = data.create_time;
                     var strDate_2 = data.update_time;
                     var exercise_submission: ExerciseSubmission = {
-                        id: data.id,
+                        id: 0,
                         student_id: data.student_id,
                         student_name: data.student_name,
                         exercise_id: data.exercise_id,

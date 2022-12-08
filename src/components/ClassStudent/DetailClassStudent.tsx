@@ -210,7 +210,6 @@ const DetailClassStudent: React.FC = () => {
         localStorage.setItem('section_number', section.number.toString())
         let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
-        localStorage.removeItem('section_id')
         localStorage.setItem('is_active', is_active)
         localStorage.removeItem('link_record')
         localStorage.setItem('link_record', link_record)

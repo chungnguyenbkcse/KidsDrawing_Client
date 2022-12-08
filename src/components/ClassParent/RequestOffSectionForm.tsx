@@ -13,6 +13,7 @@ import { AnonymousNotificationModificationStatus } from "../../store/models/anon
 import { putStudentLeave } from "../../common/service/StudentLeave/PutStudentLeaveStudent";
 import { putStudentLeaveParent } from "../../common/service/StudentLeave/PutStudentLeaveByParent";
 import { postStudentLeaveByParent } from "../../common/service/StudentLeave/PostStudentLeaveByParent";
+import { deleteStudentLeave1 } from "../../common/service/StudentLeave/DeleteStudentLeave1";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -159,7 +160,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
 
 
             if (saveFn === editStudentLeaveNotApproved) {
-                dispatch(putStudentLeaveParent(student_leave.section_id, student_leave.student_id, {
+                dispatch(deleteStudentLeave1(student_leave.section_id, student_id,{
                     section_id: formState.section_id.value,
                     student_id: formState.student_id.value,
                     description: formState.description.value

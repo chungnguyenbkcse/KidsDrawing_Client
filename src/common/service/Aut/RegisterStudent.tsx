@@ -7,8 +7,7 @@ export function postRegisterStudent(dispatch: any, data: any, idx: any) {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
-    return (dispatch: any) => {
-        fetch(
+    return  fetch(
             `${process.env.REACT_APP_API_URL}/registration`, {
             method: "POST",
             headers: {
@@ -32,5 +31,4 @@ export function postRegisterStudent(dispatch: any, data: any, idx: any) {
             .catch(error => {
                 toast.update(idx, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
             });
-    };
 }

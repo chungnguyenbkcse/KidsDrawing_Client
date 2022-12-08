@@ -1,20 +1,15 @@
 import { toast } from "react-toastify";
-import { fetchDataRequest, fetchDataSuccess, fetchDataError } from "../../../store/actions/users.action";
+import { fetchDataRequest, fetchDataError } from "../../../store/actions/schedule.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
-import { getInforChildByParent } from "../Childs/GetInforChildByParent";
-import { getStudentByParent } from "../Student/GetStudentByParent";
+import { getSemesterClass } from "../SemesterClass/GetSemesterClass";
+import { getSchedule } from "./GetSchedule";
 
-export function postUser(data: any, idx: any) {
+export function postSchedule1(data: any, foo: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
-    var id_x = localStorage.getItem('id');
-    var id: number = 0;
-    if (id_x !== null) {
-        id = parseInt(id_x);
-    }
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/registration`, {
+                `${process.env.REACT_APP_API_URL}/schedule`, {
                     method: "POST",
                     headers: {
                         'Authorization': bearer,
@@ -29,24 +24,23 @@ export function postUser(data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postUser(data, idx))
+                        dispatch(postSchedule1(data, foo))
                     }
                     else {
                         throw Error(response.statusText);
                     }
                 }
                 else {
-                    return response
+                    return response.json()
                 }
             })
-            .then (val => {
-                console.log(val)
-                getInforChildByParent(dispatch, id)
-                toast.update(idx, { render: "Thêm tài khoản con thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                dispatch(fetchDataSuccess(data))
+            .then (data => {
+                console.log(data)
+                getSchedule(dispatch)
+                getSemesterClass(dispatch)
+                toast.update(foo, { render: "Thêm lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {
-                toast.update(idx, { render: "Thêm tài khoản con không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

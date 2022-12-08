@@ -121,6 +121,7 @@ const ParentHome: React.FC = () => {
         return 1
     })
 
+
     return (
         promiseInProgress ?
             <div className="loader"></div> : <Fragment>

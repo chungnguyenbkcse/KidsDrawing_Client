@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/semester_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { postSchedule } from "../Schedule/PostSchedule";
+import { postSchedule1 } from "../Schedule/PostSchedule1";
 import { getSemesterClass } from "./GetSemesterClass";
 
 export function postSemesterClass(dispatch: any, data: any, schedule_element: any, idx: any) {
@@ -34,16 +35,27 @@ export function postSemesterClass(dispatch: any, data: any, schedule_element: an
                 }
             })
             .then (data_1 => {
-                console.log(data_1)
-                toast.update(idx, { render: "Thêm lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
-                schedule_element.map((ele: any) => {
+                schedule_element.map((ele: any, idxxx:any) => {
+                    if (idxxx === schedule_element.length - 1) {
+                        dispatch(postSchedule1({
+                            lesson_time: ele.lesson_time,
+                            date_of_week: ele.date_of_week,
+                            semester_classes_id: data_1.id
+                        }, idx))
+                    }
+                    else {
+                        dispatch(postSchedule({
+                            lesson_time: ele.lesson_time,
+                            date_of_week: ele.date_of_week,
+                            semester_classes_id: data_1.id
+                        }))
+                    }
                     return dispatch(postSchedule({
                         lesson_time: ele.lesson_time,
                         date_of_week: ele.date_of_week,
                         semester_classes_id: data_1.id
                     }))
                 })
-                getSemesterClass(dispatch)
             })
             .catch(error => {
                 toast.update(idx, { render: "Thêm lớp theo kì không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

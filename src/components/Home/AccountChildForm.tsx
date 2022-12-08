@@ -11,6 +11,7 @@ import { postRegisterStudent } from "../../common/service/Aut/RegisterStudent";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
+    foo: () => void;
     children?: React.ReactNode;
 };
 

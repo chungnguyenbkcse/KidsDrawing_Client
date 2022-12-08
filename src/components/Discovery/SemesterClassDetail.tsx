@@ -219,7 +219,7 @@ const SemesterClassDetail: React.FC = () => {
                     dispatch(postUserRegisterJoinSemester1({
                         "student_id": ele.value,
                         "semester_classes_id": semester_class_id,
-                        "payer_id": id,
+                        "register_by_type": "ADMIN",
                         "price": price,
                         "status": "Waiting"
                     }, idxx))

@@ -555,9 +555,6 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                                 </div>
                                             )
                                         }
-                                        else {
-
-                                        }
                                         return (
                                             <div className="row">
                                                 <div className="col-xl-6 col-md-6 col-xs-6">

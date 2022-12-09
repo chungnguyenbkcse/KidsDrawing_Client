@@ -5,6 +5,9 @@ export interface IContestSubmissionTeacher {
     student_name: string;
     contest_name: string;
     image_url: string;
+    score: number;
+    feedback: string;
+    time: string;
     create_time: string;
     update_time: string;
 }

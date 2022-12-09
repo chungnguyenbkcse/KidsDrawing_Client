@@ -7,6 +7,9 @@ interface ContestSubmission {
     student_name: string;
     contest_name: string;
     image_url: string;
+    score: number;
+    feedback: string;
+    time: string;
     create_time: string;
     update_time: string;
 }
@@ -43,33 +46,35 @@ export function getContestSubmissionByContest(dispatch: any, id: any) {
                 dispatch(removeContestNotGradedAll())
                 console.log(data.body.contest_not_graded)
                 data.body.contest_not_graded.map((ele: any, index: any) => {
-                    var strDate_1 = ele.create_time;
-                    var strDate_2 = ele.update_time;
                     var contest_submission: ContestSubmission = {
-                        id: ele.id,
+                        id: 0,
                         student_id: ele.student_id,
-                        student_name: ele.student_name,
                         contest_id: ele.contest_id,
+                        student_name: ele.student_name,
                         contest_name: ele.contest_name,
                         image_url: ele.image_url,
-                        create_time: strDate_1,
-                        update_time: strDate_2
+                        score: ele.score,
+                        feedback: ele.feedback,
+                        time: ele.time,
+                        create_time: ele.create_time,
+                        update_time: ele.update_time
                     }
                     return dispatch(addContestNotGraded(contest_submission));
                 })
 
                 data.body.contest_graded.map((ele: any, index: any) => {
-                    var strDate_1 = ele.create_time;
-                    var strDate_2 = ele.update_time;
                     var contest_submission: ContestSubmission = {
-                        id: ele.id,
+                        id: 0,
                         student_id: ele.student_id,
-                        student_name: ele.student_name,
                         contest_id: ele.contest_id,
+                        student_name: ele.student_name,
                         contest_name: ele.contest_name,
                         image_url: ele.image_url,
-                        create_time: strDate_1,
-                        update_time: strDate_2
+                        score: ele.score,
+                        feedback: ele.feedback,
+                        time: ele.time,
+                        create_time: ele.create_time,
+                        update_time: ele.update_time
                     }
                     return dispatch(addContestGraded(contest_submission));
                 })

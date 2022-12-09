@@ -18,6 +18,7 @@ import { getContestSubmissionByContestAndTeacher } from "../../common/service/Co
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
 import { putUserGradeContestSubmission } from "../../common/service/UserGradeContestSubmission/PutUserGradeContestSubmission";
+import { putContestSubmissionByTeacher } from "../../common/service/ContestSubmission/PutContestSubmissionByTeacher";
 
 const EditScoreContestStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -46,10 +47,10 @@ const EditScoreContestStudent: React.FC = () => {
         feedback = id_x;
     }
 
-    var id_y = localStorage.getItem('contest_submission_id');
-    var contest_submission_id: number = 0;
+    var id_y = localStorage.getItem('student_id');
+    var student_id: number = 0;
     if (id_y !== null) {
-        contest_submission_id = parseInt(id_y);
+        student_id = parseInt(id_y);
     }
 
     var id_t = localStorage.getItem("time_submit");
@@ -70,34 +71,10 @@ const EditScoreContestStudent: React.FC = () => {
         url_conest_submission = (id_a);
     }
 
-    var id_b = localStorage.getItem("art_type_name");
-    let art_type_name = "";
-    if (id_b !== null) {
-        art_type_name = (id_b);
-    }
-
-    var id_c = localStorage.getItem("art_age_name");
-    let art_age_name = "";
-    if (id_c !== null) {
-        art_age_name = (id_c);
-    }
-
-    var id_d = localStorage.getItem("start_time");
-    let start_time = "";
-    if (id_d !== null) {
-        start_time = (id_d);
-    }
-
-    var id_e = localStorage.getItem("end_time");
-    let end_time = "";
-    if (id_e !== null) {
-        end_time = (id_e);
-    }
-
-    var id_f = localStorage.getItem("contest_name");
-    let contest_name = "";
-    if (id_f !== null) {
-        contest_name = (id_f);
+    var id_y = localStorage.getItem('contest_id');
+    let contest_id = 0;
+    if (id_y !== null) {
+        contest_id = parseInt(id_y);
     }
 
     var id_fg = localStorage.getItem("student_name");
@@ -117,22 +94,16 @@ const EditScoreContestStudent: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
         
-        if (contest_submission_id !== 0){
-            dispatch(putUserGradeContestSubmission(id, contest_submission_id, {
-                teacher_id: id,
-                contest_submission_id: contest_submission_id,
+        if (student_id !== 0){
+            dispatch(putContestSubmissionByTeacher({
+                contest_id: contest_id,
+                student_id: student_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             }, idx))
         }
     }
     
-    var id_y = localStorage.getItem('contest_id');
-    let contest_id = 0;
-
-    if (id_y !== null) {
-        contest_id = parseInt(id_y);
-    }
     
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");

@@ -40,7 +40,8 @@ export function postContest(lst: any[], contest: any, idx: any, routeHome: any) 
                 lst.map((value, index) =>  {
                     return dispatch(postUserGradeContest({
                         contest_id: data.id,
-                        teacher_id: value.value
+                        teacher_id: value.value,
+                        number: index + 1
                     }))
                 })
                 toast.update(idx, { render: "Thêm cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

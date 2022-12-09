@@ -1,25 +1,23 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
-import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
-import ScoreContestList from "./ScoreContestList";
+import { IContestSubmissionTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
-import { getStudentByParent } from "../../common/service/Student/GetStudentByParent";
 import "./ResultContest.css"
-import { getUserGradeContestSubmissionByContestAndTeacher } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContestAndTeacher";
 import ScoreContestList1 from "./ScoreContestList1";
+import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
+import { ChartLine } from "../../common/components/CharLine";
 
 const ResultGradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
-    const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 100);
+    const contest_submissions: IContestSubmissionTeacherState = useSelector((state: IStateType) => state.contest_submission_teacher);
+    
+    const max = contest_submissions.contest_submission_grade.reduce((a, b) => Math.max(a, b.score), -Infinity);
+    const min = contest_submissions.contest_submission_grade.reduce((a, b) => Math.min(a, b.score), 100);
 
     var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
@@ -28,6 +26,29 @@ const ResultGradeContestTeacher: React.FC = () => {
         rolePrivilege = role.split(',')
         roleUser = rolePrivilege[0]
     }
+
+    let student: string[] = []
+    let scores: number[] = []
+    if (contest_submissions.contest_submission_grade.length > 0){
+        contest_submissions.contest_submission_grade.map(ele => {
+            student.push(ele.student_name)
+            scores.push(ele.score)
+            return ele
+        })
+    }
+
+    const labels = student;
+    let data = {
+        labels,
+        datasets: [
+            {
+                label: 'Điêm',
+                data: scores,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ],
+    };
 
     const { promiseInProgress } = usePromiseTracker();
 
@@ -69,11 +90,11 @@ const ResultGradeContestTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
+                    trackPromise(getContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
                 }
             }
             else {
-                trackPromise(getUserGradeContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
+                trackPromise(getContestSubmissionByContestAndTeacher(dispatch, contest_id, id))
             }
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);
@@ -93,6 +114,8 @@ const ResultGradeContestTeacher: React.FC = () => {
         });
     }
 
+    const [checked, setChecked] = useState(true);
+
     return (
         promiseInProgress ?
             <div className="loader"></div> : <Fragment>
@@ -100,28 +123,74 @@ const ResultGradeContestTeacher: React.FC = () => {
                 <div className="row">
                     <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
                     <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
-                    <div className="col-xl-3 col-md-3 notification-x">
-                        <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() => {
-                            onRouteChange()
-                        }}>
-                            Biểu đồ
-                            <i className="fas fa fa-arrow-right"></i>
-                        </button>
-                    </div>
                 </div>
-
 
                 <div className="row">
-                    <div className="col-xl-12 col-md-12 mb-4">
-                        <div className="col-xl-12 col-md-12 mb-4">
-                            <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                <div className="card-body">
-                                    <ScoreContestList1 />
-                                </div>
-                            </div>
-                        </div>
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                            if (checked === false) {
+                                setChecked(true)
+                            }
+                        }} style={{
+                            color: checked ? "#F24E1E" : "#2F4F4F"
+                        }}>Bảng điểm</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked === true) {
+                                setChecked(false)
+                            }
+                        }}
+                            style={{
+                                color: checked ? "#2F4F4F" : "#F24E1E"
+                            }}>Biểu đồ</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "30%",
+                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                        }}></div>
                     </div>
                 </div>
+
+                {
+                    function () {
+                        if (checked === true) {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                                <div className="card-body">
+                                                    <ScoreContestList1 />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        else {
+                            return (
+                                <div className="row">
+                                    <div className="col-xl-12 col-md-6 mb-12">
+                                        <div className="row justify-content-center">
+                                            <ChartLine data={data} />
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }()
+                }
 
             </Fragment>
     );

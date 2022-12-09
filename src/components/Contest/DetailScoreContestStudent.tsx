@@ -101,21 +101,6 @@ const DetailScoreContestStudent: React.FC = () => {
                                             <div className="row no-gutters">
                                                 <p id="phone">Tên: {contest_name}</p>
                                             </div>
-                                            <div className="row no-gutters">
-                                                <p id="phone">Thể loại: {art_type_name}</p>
-                                            </div>
-
-                                            <div className="row no-gutters">
-                                                <p id="phone">Độ tuổi: {art_age_name}</p>
-                                            </div>
-
-                                            <div className="row no-gutters">
-                                                <p id="phone">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0, 16)}</p>
-                                            </div>
-
-                                            <div className="row no-gutters">
-                                                <p id="phone">Thời gian kết thúc: {end_time.replaceAll("T", " ").substring(0, 16)}</p>
-                                            </div>
 
                                             <div className="row no-gutters">
                                                 <p id="phone">Thời gian nộp: {time_submit.replaceAll("T", " ").substring(0, 16)}</p>

@@ -6,7 +6,7 @@ import TopCard from "../../common/components/TopCardUser";
 import { getUserGradeContestSubmissionByContestId } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContest";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
-import { IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
+import { IContestSubmissionState, IRootPageStateType, IStateType, IUserGradeContestSubmissionState } from "../../store/models/root.interface";
 import ScoreContestList from "./ScoreContestList";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -15,12 +15,17 @@ import "./ResultContest.css"
 import { getUserGradeContestSubmissionByContestAndTeacher } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByContestAndTeacher";
 import ScoreContestList1 from "./ScoreContestList1";
 import ScoreContestAdminList from "./ScoreContestAdminList";
+import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
+import { IContestSubmission } from "../../store/models/contest_submission.interface";
 
 const ResultGradeContestAdmin: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
-    const user_grade_contest_submissions: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
-    const max = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = user_grade_contest_submissions.userGradeContestSubmissions.reduce((a, b) => Math.min(a, b.score), 100);
+    const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
+    let x: IContestSubmission[] = []
+    x.push(...contest_submissions.contest_gradeds)
+    x.push(...contest_submissions.contest_not_gradeds)
+    const max = x.reduce((a, b) => Math.max(a, b.score), -Infinity);
+    const min = x.reduce((a, b) => Math.min(a, b.score), 100);
 
     var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []
@@ -70,11 +75,11 @@ const ResultGradeContestAdmin: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
                 }
             }
             else {
-                trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
             }
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);

@@ -42,7 +42,8 @@ export function putContest(id: any,data: any, valueTeacher: any[], idx: any, rou
                 valueTeacher.map((value, index) =>  {
                     return dispatch(postUserGradeContest({
                         contest_id: id,
-                        teacher_id: value.value
+                        teacher_id: value.value,
+                        number: index + 1
                     }))
                 })
                 toast.update(idx, { render: "Chỉnh cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });

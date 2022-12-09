@@ -12,13 +12,16 @@ import "./ResultGradeContestStudent.css"
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
 
 const ResultGradeContestParent = () => {
     const dispatch = useDispatch();
-    const user_grade_contest_submissions = useSelector((state) => state.user_grade_contest_submissions);
+    const contest_submissions = useSelector((state) => state.contest_submissions);
+
+    const top_score = contest_submissions.contest_gradeds.sort((a, b) => b.score - a.score).slice(0, 3)
+    const tail_score = contest_submissions.contest_gradeds.sort((a, b) => b.score - a.score).slice(3, contest_submissions.contest_gradeds.length)
     const users  = useSelector((state) => state.users);
-    const top_score = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => b.score - a.score).slice(0, 3)
-    const tail_score = user_grade_contest_submissions.userGradeContestSubmissions.sort((a, b) => b.score - a.score).slice(3, user_grade_contest_submissions.userGradeContestSubmissions.length)
+    
     var list_student_id = [];
     if (users.students !== undefined) {
         users.students.map((ele, idx) => {
@@ -74,12 +77,12 @@ const ResultGradeContestParent = () => {
                 }
                 else {
                     trackPromise(getStudentByParent(dispatch, id))
-                    trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                    trackPromise(getContestSubmissionByContest(dispatch, contest_id))
                 }
             }
             else {
                 trackPromise(getStudentByParent(dispatch, id))
-                trackPromise(getUserGradeContestSubmissionByContestId(dispatch, contest_id))
+                trackPromise(getContestSubmissionByContest(dispatch, contest_id))
             }
         }
         dispatch(updateCurrentPath("Cuoc thi", "Bảng xếp hạng"));
@@ -96,35 +99,27 @@ const ResultGradeContestParent = () => {
     }
 
     function handleViewResult(user_graded_contest_submission) {
-        if (user_grade_contest_submissions !== null && user_grade_contest_submissions !== undefined) {
+        if (contest_submissions !== null && contest_submissions !== undefined) {
             if (list_student_id.includes(user_graded_contest_submission.student_id)) {
                 localStorage.removeItem('contest_submission_id');
-                localStorage.setItem('contest_submission_id', user_graded_contest_submission.contest_submission_id.toString())
+                
                 localStorage.removeItem('time_submit');
-                localStorage.removeItem('score');
-                localStorage.removeItem('feedback');
                 localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
-                if (user_graded_contest_submission.feedback !== null) {
-                    localStorage.setItem('feedback', user_graded_contest_submission.feedback);
-                }
-                if (user_graded_contest_submission.score !== null) {
+                localStorage.removeItem('score')
+                localStorage.removeItem('feedback')
+                if (user_graded_contest_submission.score !== undefined && user_graded_contest_submission.score !== null) {
                     localStorage.setItem('score', user_graded_contest_submission.score.toString());
                 }
-                localStorage.setItem('contest_name', user_graded_contest_submission.contest_name.toString())
+                if (user_graded_contest_submission.feedback !== undefined && user_graded_contest_submission.feedback !== null) {
+                    localStorage.setItem('feedback', user_graded_contest_submission.feedback.toString());
+                }
+                localStorage.setItem('student_id', user_graded_contest_submission.student_id.toString());
                 localStorage.removeItem('contest_id');
-                localStorage.removeItem('url_conest_submission');
-                localStorage.removeItem('teacher_name');
-                localStorage.removeItem('art_type_name');
-                localStorage.removeItem('art_age_name');
-                localStorage.removeItem('start_time');
-                localStorage.removeItem('end_time');
                 localStorage.setItem('contest_id', user_graded_contest_submission.contest_id.toString());
-                localStorage.setItem('teacher_name', user_graded_contest_submission.teacher_name);
-                localStorage.setItem('url_conest_submission', user_graded_contest_submission.url_conest_submission.toString());
-                localStorage.setItem('art_type_name', user_graded_contest_submission.art_type_name);
-                localStorage.setItem('art_age_name', user_graded_contest_submission.art_age_name);
+                localStorage.setItem('url_conest_submission', user_graded_contest_submission.image_url.toString());
                 localStorage.setItem('start_time', user_graded_contest_submission.start_time);
                 localStorage.setItem('end_time', user_graded_contest_submission.end_time);
+                localStorage.setItem('student_name', user_graded_contest_submission.student_name);
                 let path = '/contest/score';
                 history.push({
                     pathname: path

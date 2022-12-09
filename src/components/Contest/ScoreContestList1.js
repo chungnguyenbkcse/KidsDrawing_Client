@@ -6,7 +6,7 @@ import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-pa
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 const ScoreContestList1 = () => {
-    const user_grade_contest_submissions = useSelector((state) => state.user_grade_contest_submissions);
+    const contest_submissions = useSelector((state) => state.contest_submission_teacher);
 
     const history = useHistory();
     const onRouteChange = () => {
@@ -17,9 +17,9 @@ const ScoreContestList1 = () => {
     }
 
     function handleViewResult(user_graded_contest_submission) {
-        if (user_grade_contest_submissions !== null && user_grade_contest_submissions !== undefined) {
+        if (contest_submissions !== null && contest_submissions !== undefined) {
                 localStorage.removeItem('contest_submission_id');
-                localStorage.setItem('contest_submission_id', user_graded_contest_submission.contest_submission_id.toString())
+                
                 localStorage.removeItem('time_submit');
                 localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
                 localStorage.removeItem('score')
@@ -30,13 +30,10 @@ const ScoreContestList1 = () => {
                 if (user_graded_contest_submission.feedback !== undefined && user_graded_contest_submission.feedback !== null) {
                     localStorage.setItem('feedback', user_graded_contest_submission.feedback.toString());
                 }
-                localStorage.setItem('contest_name', user_graded_contest_submission.contest_name.toString())
+                localStorage.setItem('student_id', user_graded_contest_submission.student_id.toString());
                 localStorage.removeItem('contest_id');
                 localStorage.setItem('contest_id', user_graded_contest_submission.contest_id.toString());
-                localStorage.setItem('teacher_name', user_graded_contest_submission.teacher_name);
-                localStorage.setItem('url_conest_submission', user_graded_contest_submission.url_conest_submission.toString());
-                localStorage.setItem('art_type_name', user_graded_contest_submission.art_type_name);
-                localStorage.setItem('art_age_name', user_graded_contest_submission.art_age_name);
+                localStorage.setItem('url_conest_submission', user_graded_contest_submission.image_url.toString());
                 localStorage.setItem('start_time', user_graded_contest_submission.start_time);
                 localStorage.setItem('end_time', user_graded_contest_submission.end_time);
                 localStorage.setItem('student_name', user_graded_contest_submission.student_name);
@@ -49,29 +46,27 @@ const ScoreContestList1 = () => {
 
 
     function handleEditScoreResult(user_graded_contest_submission) {
-        if (user_grade_contest_submissions !== null && user_grade_contest_submissions !== undefined) {
-                localStorage.removeItem('contest_submission_id');
-                localStorage.setItem('contest_submission_id', user_graded_contest_submission.contest_submission_id.toString())
-                localStorage.removeItem('time_submit');
-                localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
-                localStorage.removeItem('score')
-                localStorage.removeItem('feedback')
-                if (user_graded_contest_submission.score !== undefined && user_graded_contest_submission.score !== null) {
-                    localStorage.setItem('score', user_graded_contest_submission.score.toString());
-                }
-                if (user_graded_contest_submission.feedback !== undefined && user_graded_contest_submission.feedback !== null) {
-                    localStorage.setItem('feedback', user_graded_contest_submission.feedback.toString());
-                }
-                localStorage.setItem('contest_name', user_graded_contest_submission.contest_name.toString())
-                localStorage.removeItem('contest_id');
-                localStorage.setItem('contest_id', user_graded_contest_submission.contest_id.toString());
-                localStorage.setItem('teacher_name', user_graded_contest_submission.teacher_name);
-                localStorage.setItem('url_conest_submission', user_graded_contest_submission.url_conest_submission.toString());
-                localStorage.setItem('art_type_name', user_graded_contest_submission.art_type_name);
-                localStorage.setItem('art_age_name', user_graded_contest_submission.art_age_name);
-                localStorage.setItem('start_time', user_graded_contest_submission.start_time);
-                localStorage.setItem('end_time', user_graded_contest_submission.end_time);
-                localStorage.setItem('student_name', user_graded_contest_submission.student_name);
+        if (contest_submissions !== null && contest_submissions !== undefined) {
+            localStorage.removeItem('contest_submission_id');
+                
+            localStorage.removeItem('time_submit');
+            localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
+            localStorage.removeItem('score')
+            localStorage.removeItem('feedback')
+            if (user_graded_contest_submission.score !== undefined && user_graded_contest_submission.score !== null) {
+                localStorage.setItem('score', user_graded_contest_submission.score.toString());
+            }
+            if (user_graded_contest_submission.feedback !== undefined && user_graded_contest_submission.feedback !== null) {
+                localStorage.setItem('feedback', user_graded_contest_submission.feedback.toString());
+            }
+            
+            localStorage.removeItem('contest_id');
+            localStorage.setItem('student_id', user_graded_contest_submission.student_id.toString());
+            localStorage.setItem('contest_id', user_graded_contest_submission.contest_id.toString());
+            localStorage.setItem('url_conest_submission', user_graded_contest_submission.image_url.toString());
+            localStorage.setItem('start_time', user_graded_contest_submission.start_time);
+            localStorage.setItem('end_time', user_graded_contest_submission.end_time);
+            localStorage.setItem('student_name', user_graded_contest_submission.student_name);
                 let path = '/contest/edit-score';
                 history.push({
                     pathname: path
@@ -79,7 +74,7 @@ const ScoreContestList1 = () => {
         }
     }
 
-    const datas = user_grade_contest_submissions.userGradeContestSubmissions;
+    const datas = contest_submissions.contest_submission_grade;
 
     const options = {
         paginationSize: 5,

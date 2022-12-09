@@ -17,6 +17,7 @@ import { postUserGradeContestSubmission } from "../../common/service/UserGradeCo
 import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
+import { putContestSubmissionByTeacher } from "../../common/service/ContestSubmission/PutContestSubmissionByTeacher";
 
 const GradeContestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -48,26 +49,26 @@ const GradeContestTeacher: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
         
-        if (contest_submission_id === ""){
-            let y = contest_submissions.contest_submission_not_grade[0].id;
+        if (student_id === 0){
+            let y = contest_submissions.contest_submission_not_grade[0].student_id;
             console.log({
                 teacher_id: id,
-                contest_submission_id: y,
+                student_id: y,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             })
 
-            dispatch(postUserGradeContestSubmission({
-                teacher_id: id,
-                contest_submission_id: y,
+            dispatch(putContestSubmissionByTeacher({
+                contest_id: contest_id,
+                student_id: y,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             }, idx))
         }
         else {
-            dispatch(postUserGradeContestSubmission({
+            dispatch(putContestSubmissionByTeacher({
                 teacher_id: id,
-                contest_submission_id: contest_submission_id,
+                student_id: student_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             }, idx))
@@ -125,11 +126,11 @@ const GradeContestTeacher: React.FC = () => {
             let image_url_ = contest_submissions.contest_submission_not_grade[x].image_url;
             let student_name_ = contest_submissions.contest_submission_not_grade[x].student_name;
             let time_submit_ = contest_submissions.contest_submission_not_grade[x].update_time;
-            let contest_submission_id_ = contest_submissions.contest_submission_not_grade[x].id;
+            let student_id_ = contest_submissions.contest_submission_not_grade[x].student_id;
             setImageUrl(image_url_);
             setStudentName(student_name_);
             setTimeSubmit(time_submit_);
-            setContestSubmissionTeacherId(contest_submission_id_);
+            setStudentId(student_id_);
         }
     }
 
@@ -143,7 +144,7 @@ const GradeContestTeacher: React.FC = () => {
     const [count, setCount] = useState(0);
     const [image_url, setImageUrl] = useState("");
     const [student_name, setStudentName] = useState("");
-    const [contest_submission_id, setContestSubmissionTeacherId] = useState("");
+    const [student_id, setStudentId] = useState(0);
     const [time_submit, setTimeSubmit] = useState("");
     return (
         promiseInProgress ?

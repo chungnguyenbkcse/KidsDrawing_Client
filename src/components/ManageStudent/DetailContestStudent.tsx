@@ -64,7 +64,10 @@ const DetailContestStudent: React.FC = () => {
         contest_name: "",
         image_url: '',
         create_time: "",
-        update_time: ""
+        update_time: "",
+        score: 0,
+        feedback: "",
+        time: ""
     };
     contest_submissions.contest_gradeds.map((element, idx) => {
         if (element.student_id === child_id) {

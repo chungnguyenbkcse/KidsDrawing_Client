@@ -85,7 +85,7 @@ function TutorialEditRequestList1(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
           approvedTutorial(row)
-          }}>Chấp nhận</button>
+          }}><i class="fa fa-check" aria-hidden="true"></i></button>
     )
   }
 
@@ -93,7 +93,7 @@ function TutorialEditRequestList1(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
             handleView(row)
-          }}>Chi tiết</button>
+          }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 

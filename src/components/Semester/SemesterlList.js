@@ -5,6 +5,8 @@ import { setModificationState } from "../../store/actions/semester.actions";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 
 function SemesterList(props) {
@@ -46,7 +48,7 @@ function SemesterList(props) {
         <button type="button" className="btn btn-danger" onClick={() =>{
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationState(SemesterModificationStatus.Remove))
-          }}>Xóa</button>
+          }}><IoIosRemove className="icon-remove"/></button>
     );
   }
 
@@ -55,7 +57,7 @@ function SemesterList(props) {
         <button type="button" className="btn btn-primary" onClick={()=> {
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationState(SemesterModificationStatus.Edit))
-          }}>Chỉnh sửa</button>
+          }}><FaEdit className="icon-edit"/></button>
     )
   }
 

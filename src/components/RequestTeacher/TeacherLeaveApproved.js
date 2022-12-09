@@ -69,7 +69,7 @@ function TeacherLeaveApprovedList(props) {
       return (
         <button type="button" className="btn btn-primary" onClick={() => {
           onChangeRoute(row)
-        }}>Tham gia</button>
+        }}><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
       )
     }
     else if ((date_now.getTime() - start_date.getTime()) / 1000 > 0 && (end_date.getTime() - date_now.getTime()) / 1000 > 0) {
@@ -77,7 +77,7 @@ function TeacherLeaveApprovedList(props) {
       return (
         <button type="button" className="btn btn-primary" onClick={() => {
           onChangeRoute(row)
-        }}>Tham gia</button>
+        }}><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
       )
     }
     else {

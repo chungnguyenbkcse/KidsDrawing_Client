@@ -79,7 +79,7 @@ function ClassTeacherDoingList(props) {
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
             routeViewSchedule(row)}}
-          >Chi tiết</button>
+          ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 
@@ -88,7 +88,7 @@ function ClassTeacherDoingList(props) {
         <button type="button" className="btn btn-info" onClick={() => {
             if(props.onSelect) props.onSelect(row);
             routeChange(row)}}
-          >Vào lớp</button>
+          ><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
     )
   }
 

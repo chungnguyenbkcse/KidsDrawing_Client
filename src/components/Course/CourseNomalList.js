@@ -6,7 +6,10 @@ import { setModificationState } from "../../store/actions/course.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
+import {MdAnalytics} from 'react-icons/md'
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
+import { AiOutlineFileAdd } from 'react-icons/ai'
 
 function CourseNomalList(props) {
 
@@ -70,7 +73,7 @@ function CourseNomalList(props) {
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
             routeEdit(row)}}
-          >Chỉnh thông tin</button>
+          ><FaEdit className="icon-edit"/></button>
     );
   }
 
@@ -80,7 +83,7 @@ function CourseNomalList(props) {
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationState(CourseModificationStatus.Remove));
            }}
-          >Xóa</button>
+          ><IoIosRemove className="icon-remove"/></button>
     );
   }
 
@@ -90,7 +93,7 @@ function CourseNomalList(props) {
             if (props.onSelect) props.onSelect(row);
             routeChange(row)
           }}
-          >Chỉnh giáo án</button>
+          ><AiOutlineFileAdd   className="icon-remove"/></button>
     )
   }
 

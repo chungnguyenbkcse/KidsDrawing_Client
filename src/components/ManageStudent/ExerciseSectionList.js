@@ -100,7 +100,7 @@ function ExerciseStudentList(props) {
             if (props.onSelect) props.onSelect(row);
             onChangeRoute1(row)
           }}
-          >Chỉnh điểm</button>
+          ><i class="fas fa-edit"></i></button>
       )
     }
     else if (roleUser === "PARENT" || roleUser === "STUDENT") {
@@ -109,7 +109,7 @@ function ExerciseStudentList(props) {
             if (props.onSelect) props.onSelect(row);
             onChangeRoute(row)
           }}
-          >Chi tiết</button>
+          ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
       )
     }
     

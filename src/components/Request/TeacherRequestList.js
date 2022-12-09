@@ -9,6 +9,7 @@ import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-pa
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { setModificationState } from "../../store/actions/student_leave.action";
 import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
+import { IoIosRemove } from 'react-icons/io'
 
 
 function TeacherRequestList(props) {
@@ -69,19 +70,19 @@ function TeacherRequestList(props) {
           if(props.onSelect) props.onSelect();
           localStorage.setItem('teacher_leave_id', row.id)
           dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
-        }}>Xóa</button>
+        }}><IoIosRemove className="icon-remove"/></button>
     );
   }
 
   function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={() => {handleTeacherLeave(row, "Admin approved")}}>Chấp nhận</button>
+        <button type="button" className="btn btn-primary" onClick={() => {handleTeacherLeave(row, "Admin approved")}}><i class="fa fa-check" aria-hidden="true"></i></button>
     )
   }
 
   function viewButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}>Xem chi tiết</button>
+        <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 

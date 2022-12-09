@@ -8,6 +8,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
 import { setModificationState } from "../../store/actions/user_register_tutorial.action";
 import { putSectionByAdmin } from "../../common/service/Section/PutSectionAdmin";
+import { IoIosRemove } from 'react-icons/io'
 
 function TutorialEditRequestList(props) {
 
@@ -76,7 +77,7 @@ function TutorialEditRequestList(props) {
             localStorage.removeItem('creator_user_register_tutorials_id')
             localStorage.setItem('creator_user_register_tutorials_id', row.creator_id.toString())
             dispatch(setModificationState(UserRegisterTutorialModificationStatus.Remove))
-          }}>Xóa</button>
+          }}><IoIosRemove className="icon-remove" /></button>
     );
   }
 
@@ -84,7 +85,7 @@ function TutorialEditRequestList(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
           approvedTutorial(row)
-          }}>Chấp nhận</button>
+          }}><i class="fa fa-check" aria-hidden="true"></i></button>
     )
   }
 
@@ -92,7 +93,7 @@ function TutorialEditRequestList(props) {
     return (
         <button type="button" className="btn btn-primary" onClick={() => {
             handleView(row)
-          }}>Chi tiết</button>
+          }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 

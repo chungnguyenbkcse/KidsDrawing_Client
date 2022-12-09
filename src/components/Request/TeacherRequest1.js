@@ -64,7 +64,7 @@ function TeacherRequestList2(props) {
 
   function viewButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}>Xem chi tiết</button>
+        <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 

@@ -6,7 +6,8 @@ import { setModificationState } from "../../store/actions/my_class.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
+import { TbListDetails } from 'react-icons/tb'
+import {MdAnalytics} from 'react-icons/md'
 
 function ClassDoingList(props) {
 
@@ -87,7 +88,7 @@ function ClassDoingList(props) {
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
             routeViewSchedule(row.id, row.name)}}
-          >Chi tiết</button>
+          ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 
@@ -96,7 +97,7 @@ function ClassDoingList(props) {
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
             routeChange1(row.id)}}
-          >Thống kê</button>
+          ><MdAnalytics className="icon-remove" /></button>
     )
   }
 

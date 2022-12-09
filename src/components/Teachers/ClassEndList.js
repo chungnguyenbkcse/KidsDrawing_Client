@@ -6,6 +6,7 @@ import { setModificationState } from "../../store/actions/my_class.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import {MdAnalytics} from 'react-icons/md'
 
 
 function ClassEndList(props) {
@@ -66,7 +67,7 @@ function ClassEndList(props) {
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
             routeChange(row)}}
-          >Thống kê</button>
+          ><MdAnalytics className="icon-remove" /></button>
     )
   }
 

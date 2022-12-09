@@ -5,6 +5,8 @@ import { setModificationState } from "../../store/actions/lesson.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory from 'react-bootstrap-table2-filter';
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 
 function LessonList(props) {
@@ -59,7 +61,7 @@ function LessonList(props) {
         <button type="button" className="btn btn-danger" onClick={() =>{
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationState(LessonModificationStatus.Remove))
-          }}>Xóa</button>
+          }}><IoIosRemove className="icon-remove"/></button>
     );
   }
 
@@ -68,7 +70,7 @@ function LessonList(props) {
         <button type="button" className="btn btn-primary" onClick={()=> {
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationState(LessonModificationStatus.Edit))
-          }}>Chỉnh sửa</button>
+          }}><FaEdit className="icon-edit"/></button>
     )
   }
 

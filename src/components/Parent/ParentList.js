@@ -6,6 +6,9 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { useHistory } from "react-router-dom";
+import {MdAnalytics} from 'react-icons/md'
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 
 function ParentList(props) {
@@ -57,7 +60,7 @@ function ParentList(props) {
       <button type="button" className="btn btn-danger" onClick={() => {
         if (props.onSelect) props.onSelect(row);
         dispatch(setModificationState(UserModificationStatus.Remove))
-      }}>Xóa</button>
+      }}><IoIosRemove className="icon-remove"/></button>
     );
   }
 
@@ -65,7 +68,7 @@ function ParentList(props) {
     return (
       <button type="button" className="btn btn-info" onClick={() => {
         routeChange(row)
-      }}>Thống kê</button>
+      }}><MdAnalytics className="icon-remove"/></button>
     )
   }
 

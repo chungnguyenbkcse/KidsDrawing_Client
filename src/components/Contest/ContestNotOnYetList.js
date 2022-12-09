@@ -5,7 +5,9 @@ import { formatDate } from "../../common/components/ConverDate";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
+import {MdAnalytics} from 'react-icons/md'
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 function ContestNotOnYetList(props) {
 
@@ -55,8 +57,16 @@ function ContestNotOnYetList(props) {
       <button type="button" className="btn btn-primary" onClick={() => {
         if(props.onSelect) props.onSelect(row);
         routeChange(row.id)
-      }}>Chỉnh sửa</button>
+      }}><FaEdit className="icon-edit"/></button>
     )
+  }
+
+  function removeButton(cell, row) {
+    return (
+      <button type="button" className="btn btn-danger" onClick={() => {
+        if (props.onSelect) props.onSelect(row);
+      }}><IoIosRemove className="icon-remove"/></button>
+    );
   }
 
   function showStartTime(cell, row) {
@@ -108,6 +118,11 @@ function ContestNotOnYetList(props) {
       dataField: '',
       text: 'Hành động',
       formatter: viewDetailButton
+    },
+    {
+      dataField: '',
+      text: '',
+      formatter: removeButton
     }
   ];
 

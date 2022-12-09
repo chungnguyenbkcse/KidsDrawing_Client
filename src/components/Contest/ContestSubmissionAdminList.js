@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { TbListDetails } from 'react-icons/tb'
 
 const ContestSubmissionAdminList = () => {
     const contest_submission = useSelector((state) => state.contest_submissions);
@@ -75,7 +76,7 @@ const ContestSubmissionAdminList = () => {
         return (
             <button type="button" className="btn btn-primary" onClick={() => {
                 handleViewContestSubmission(row)
-            }}>Chi tiết</button>
+            }}><TbListDetails className="icon-edit"/></button>
         )
     }
 

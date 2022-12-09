@@ -5,6 +5,8 @@ import { setModificationStateArtAge } from "../../store/actions/art_age.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 
 function TeachAgeList(props) {
@@ -46,16 +48,16 @@ function TeachAgeList(props) {
         <button type="button" className="btn btn-danger" onClick={() =>{
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationStateArtAge(ArtAgeModificationStatus.Remove))
-          }}>Xóa</button>
+          }}><IoIosRemove className="icon-remove"/></button>
     );
   }
 
   function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={()=> {
+        <button type="button" className="btn btn-primary mx-auto" onClick={()=> {
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationStateArtAge(ArtAgeModificationStatus.Edit))
-          }}>Chỉnh sửa</button>
+          }}><FaEdit className="icon-edit"/></button>
     )
   }
 
@@ -64,6 +66,10 @@ function TeachAgeList(props) {
       dataField: 'name',
       text: 'Tên',
       filter: textFilter()
+    },
+    {
+      dataField: 'description',
+      text: 'Miêu tả'
     },
     {
       dataField: '',

@@ -10,6 +10,14 @@
 
 }
 
+.icon-edit {
+    margin-bottom: 4px;
+}
+
+.icon-remove {
+    margin-bottom: 4px;
+}
+
 hr #hr-x {
     border: 1px solid red !important;
 }

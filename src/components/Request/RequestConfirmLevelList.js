@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { IoIosRemove } from 'react-icons/io'
 
 
 function RequestConfirmLevelList(props) {
@@ -77,7 +78,7 @@ function RequestConfirmLevelList(props) {
     return (
       <button type="button" className="btn btn-danger" onClick={() => {
         notApprovedTeacherLevel(row)
-      }}>Xóa</button>
+      }}><IoIosRemove className="icon-remove"/></button>
     );
   }
 
@@ -85,7 +86,7 @@ function RequestConfirmLevelList(props) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
         approvedTeacherLevel(row)
-      }}>Chấp nhận</button>
+      }}><i class="fa fa-check" aria-hidden="true"></i></button>
     )
   }
 
@@ -93,7 +94,7 @@ function RequestConfirmLevelList(props) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
         routeChange(row.degree_photo_url)
-      }}>Chi tiết</button>
+      }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 

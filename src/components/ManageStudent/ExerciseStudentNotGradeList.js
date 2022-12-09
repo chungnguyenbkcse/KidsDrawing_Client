@@ -88,7 +88,7 @@ function ExerciseStudentNotGradeList(props) {
             if (props.onSelect) props.onSelect(row);
             onChangeRoute1(row)
           }}
-          >Chấm điểm</button>
+          ><i class="fas fa-edit"></i></button>
     )
     }
     else if (roleUser === "STUDENT" || roleUser === "PARENT") {
@@ -97,7 +97,7 @@ function ExerciseStudentNotGradeList(props) {
             if (props.onSelect) props.onSelect(row);
             onChangeRoute(row)
           }}
-          >Chi tiết</button>
+          ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
       )
     }
     

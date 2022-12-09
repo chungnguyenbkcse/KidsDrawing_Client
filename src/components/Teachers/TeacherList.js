@@ -6,6 +6,9 @@ import { UserModificationStatus } from "../../store/models/user.interface";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import {MdAnalytics} from 'react-icons/md'
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 
 function TeacherList(props) {
@@ -58,7 +61,7 @@ function TeacherList(props) {
       <button type="button" className="btn btn-danger" onClick={() => {
         if (props.onSelect) props.onSelect(row);
         dispatch(setModificationState(UserModificationStatus.Remove))
-      }}>Xóa</button>
+      }}><IoIosRemove className="icon-remove"/></button>
     );
   }
 
@@ -67,7 +70,7 @@ function TeacherList(props) {
       <button type="button" className="btn btn-primary" onClick={() => {
         if(props.onSelect) props.onSelect(row);
         dispatch(setModificationState(UserModificationStatus.Edit))
-      }}>Chỉnh sửa</button>
+      }}><FaEdit className="icon-edit"/></button>
     )
   }
 
@@ -75,7 +78,7 @@ function TeacherList(props) {
     return (
       <button type="button" className="btn btn-info" onClick={() => {
         routeChange(row)
-      }}>Thống kê</button>
+      }}><MdAnalytics className="icon-remove" /></button>
     )
   }
 

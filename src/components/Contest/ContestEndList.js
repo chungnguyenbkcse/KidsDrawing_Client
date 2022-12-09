@@ -7,7 +7,9 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { postGenerationContestSubmissionGrade } from "../../common/service/ContestSubmission/PostGenerationForTeacher";
-
+import {MdAnalytics} from 'react-icons/md'
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 function ContestEndList(props) {
 
@@ -78,13 +80,13 @@ function ContestEndList(props) {
       return (
         <button type="button" className="btn btn-primary" onClick={() => {
           routeChange(row.id)
-        }}>Thống kê</button>
+        }}><MdAnalytics className="icon-remove" /></button>
       )
     }
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
         routeChange1(row.id)
-      }}>Thống kê</button>
+      }}><MdAnalytics className="icon-remove" /></button>
     )
   }
 

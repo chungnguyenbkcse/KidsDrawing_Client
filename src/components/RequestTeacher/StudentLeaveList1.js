@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import { putStudentLeaveStatus } from "../../common/service/StudentLeave/PutStudentLeave";
+import { IoIosRemove } from 'react-icons/io'
 import { setModificationState } from "../../store/actions/student_leave.action";
 import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
 import { putStudentLeaveParent } from "../../common/service/StudentLeave/PutStudentLeaveByParent";
@@ -66,7 +66,7 @@ function StudentLeaveList(props) {
     return (
       <button type="button" className="btn btn-primary" onClick={() => {
         onChangeRoute(row)
-      }}>Chi tiết</button>
+      }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 
@@ -74,7 +74,7 @@ function StudentLeaveList(props) {
     return (
       <button type="button" className="btn btn-success" onClick={() => {
         handleStudentLeave(row, "Approved")
-      }}>Chấp nhận</button>
+      }}><i class="fa fa-check" aria-hidden="true"></i></button>
     )
   }
 
@@ -85,7 +85,7 @@ function StudentLeaveList(props) {
         localStorage.setItem('student_leave_student_id', row.student_id.toString())
         if(props.onSelect) props.onSelect(row);
         dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
-      }}>Xóa </button>
+      }}><IoIosRemove className="icon-remove"/></button>
     )
   }
 

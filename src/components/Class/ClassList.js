@@ -6,7 +6,9 @@ import { setModificationState } from "../../store/actions/my_class.action";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
+import {MdAnalytics} from 'react-icons/md'
+import { FaEdit } from 'react-icons/fa'
+import { IoIosRemove } from 'react-icons/io'
 
 function ClassList(props) {
 
@@ -76,7 +78,7 @@ function ClassList(props) {
         <button type="button" className="btn btn-danger" onClick={() =>{
             if(props.onSelect2) props.onSelect2(row);
             dispatch(setModificationState(MyClassModificationStatus.Remove))
-          }}>Xóa</button>
+          }}><IoIosRemove className="icon-remove"/></button>
     )
   }
 
@@ -86,7 +88,7 @@ function ClassList(props) {
            if(props.onSelect) props.onSelect(row);
             dispatch(setModificationState(MyClassModificationStatus.Edit))
         }}
-          >Chỉnh sửa</button>
+          ><FaEdit className="icon-edit"/></button>
     )
   }
 
@@ -95,7 +97,7 @@ function ClassList(props) {
         <button type="button" className="btn btn-primary" onClick={() => {
             if(props.onSelect) props.onSelect(row);
             routeChange(row.id, row.name)}}
-          >Chi tiết</button>
+          ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   }
 

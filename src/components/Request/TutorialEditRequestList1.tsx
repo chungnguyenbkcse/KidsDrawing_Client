@@ -7,7 +7,7 @@ import { ITutorial } from "../../store/models/tutorial.interface";
 import { IUserRegisterTutorial, UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
 
 export type studentListProps = {
-  onSelect?: (student: ITutorial) => void;
+  onSelect?: (student: IUserRegisterTutorial) => void;
   children?: React.ReactNode;
 };
 
@@ -49,8 +49,8 @@ function TutorialEditRequestList1(props: studentListProps): JSX.Element {
       <th scope="row">{index + 1}</th>
       <td>{student.name}</td>
       <td>{student.class_name}</td>
-      <td>{student.section_number}</td>
-      <td>{student.creator_name}</td>
+      <td>{student.number}</td>
+      <td>{student.teacher_name}</td>
       <td>{student.create_time}</td>
       <td>
         <button type="button" className="btn btn-primary" onClick={() => {

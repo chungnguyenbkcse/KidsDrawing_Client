@@ -7,6 +7,7 @@ import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-pa
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
 import { setModificationState } from "../../store/actions/user_register_tutorial.action";
+import { putSectionByAdmin } from "../../common/service/Section/PutSectionAdmin";
 
 function TutorialEditRequestList(props) {
 
@@ -19,20 +20,15 @@ function TutorialEditRequestList(props) {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000
       });
-      /* dispatch(putUserRegisterTutorial(ele.id, {
-        status: "Approved",
-        section_id: ele.section_id,
-        name: ele.name,
-        creator_id: ele.creator_id
-      }, id)) */
+      (putSectionByAdmin(dispatch, ele.id, {
+        status: "Approved"
+      }, id)) 
     }
 
     const history = useHistory();
     function handleView(ele) {
-      localStorage.removeItem('user_register_section_id')
-      localStorage.setItem('user_register_section_id', ele.id.toString())
       localStorage.removeItem('section_id')
-      localStorage.setItem('section_id', ele.section_id.toString())
+      localStorage.setItem('section_id', ele.id.toString())
       let path = '/tutorial-request/detail';
       history.push({
           pathname: path,
@@ -70,7 +66,7 @@ function TutorialEditRequestList(props) {
   function removeButton(cell, row) {
     return (
         <button type="button" className="btn btn-danger" onClick={() => {  
-            if (props.onSelect) props.onSelect(row)    
+            if (props.onSelect) props.onSelect(row.id)    
             localStorage.removeItem('user_register_tutorials_id')
             localStorage.setItem('user_register_tutorials_id', row.id.toString())
             localStorage.removeItem('section_user_register_tutorials_id')
@@ -119,12 +115,12 @@ function TutorialEditRequestList(props) {
       filter: textFilter()
     },
     {
-        dataField: 'section_number',
+        dataField: 'number',
         text: 'Buổi',
         filter: textFilter()
       },
       {
-        dataField: 'creator_name',
+        dataField: 'teacher_name',
         text: 'Giáo viên',
         filter: textFilter()
       },

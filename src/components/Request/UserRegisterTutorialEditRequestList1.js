@@ -5,6 +5,9 @@ import { useHistory } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
+import { deleteTutorialPageBySection1 } from "../../common/service/TutorialPage/DeleteTutorialPageBySection1";
+import { deleteTutorialTemplatePageBySectionX } from "../../common/service/Section/DeleteTutorialTemplatePageBySection";
 
 function TutorialEditRequestList1(props) {
 
@@ -13,10 +16,11 @@ function TutorialEditRequestList1(props) {
     const user_register_tutorials = useSelector((state) => state.user_register_tutorials);
   
     function approvedTutorial(ele) {
-      const id = toast.info("Chấp nhận giáo án giáo viên!", {
+      const id = toast.info("Chấp nhận giáo án giáo viên làm giáo chung hệ thống!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000
       });
+      dispatch(deleteTutorialTemplatePageBySectionX(ele.id, id));
       /* dispatch(putUserRegisterTutorial(ele.id, {
         status: "Approved",
         section_id: ele.section_id,
@@ -27,10 +31,8 @@ function TutorialEditRequestList1(props) {
 
     const history = useHistory();
     function handleView(ele) {
-      localStorage.removeItem('user_register_section_id')
-      localStorage.setItem('user_register_section_id', ele.id.toString())
       localStorage.removeItem('section_id')
-      localStorage.setItem('section_id', ele.section_id.toString())
+      localStorage.setItem('section_id', ele.id.toString())
       let path = '/tutorial-request/detail';
       history.push({
           pathname: path,
@@ -70,6 +72,7 @@ function TutorialEditRequestList1(props) {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000
     });
+    dispatch(deleteTutorialTemplatePageBySectionX(ele.id, id));
     /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Approved to tutorial template",
       section_id: ele.section_id,
@@ -113,12 +116,12 @@ function TutorialEditRequestList1(props) {
       filter: textFilter()
     },
     {
-        dataField: 'section_number',
+        dataField: 'number',
         text: 'Buổi',
         filter: textFilter()
       },
       {
-        dataField: 'creator_name',
+        dataField: 'teacher_name',
         text: 'Giáo viên',
         filter: textFilter()
       },

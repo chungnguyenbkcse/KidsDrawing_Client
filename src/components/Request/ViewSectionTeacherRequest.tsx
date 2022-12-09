@@ -5,6 +5,8 @@ import { logout } from "../../store/actions/account.actions";
 import { IStateType, IUserRegisterTutorialPageState } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import { getTutorialPageNotApproveBySection } from "../../common/service/TutorialPage/GetTutorialPageNotApproveBySection";
+import { getTutorialPagex } from "../../common/service/TutorialPage/GetTutorialPagex";
 
 const ViewSectionTeacherRequest: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -18,14 +20,6 @@ const ViewSectionTeacherRequest: React.FC = () => {
 
     if (id_y !== null) {
         section_id = parseInt(id_y);
-    }
-
-    var id_z = localStorage.getItem('user_register_section_id');
-    
-    let user_register_section_id = 0;
-
-    if (id_z !== null) {
-        user_register_section_id = parseInt(id_z);
     }
 
     const [count, setCount] = useState(1);
@@ -73,14 +67,14 @@ const ViewSectionTeacherRequest: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    
+                    trackPromise(getTutorialPagex(dispatch, section_id))
                 }
             }
             else {
-                
+                trackPromise(getTutorialPagex(dispatch, section_id))
             }
         }
-    }, [dispatch, access_token, refresh_token, user_register_section_id]);
+    }, [dispatch, access_token, refresh_token, section_id]);
     
     return (
         promiseInProgress ?

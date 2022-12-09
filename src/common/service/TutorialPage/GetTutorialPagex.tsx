@@ -8,11 +8,11 @@ interface TutorialPage {
     description: string;
     number: number;
 }
-export function getTutorialPageNotApproveBySection(dispatch: any, id: any) {
+export function getTutorialPagex(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/tutorial-page/section-not-approve/${id}`, {
+                `${process.env.REACT_APP_API_URL}/tutorial-page/section/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -26,7 +26,7 @@ export function getTutorialPageNotApproveBySection(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTutorialPageNotApproveBySection(dispatch, id))
+                        dispatch(getTutorialPagex(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);

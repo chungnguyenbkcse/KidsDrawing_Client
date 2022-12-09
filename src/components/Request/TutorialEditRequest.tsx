@@ -12,6 +12,8 @@ import { clearSelectedUserRegisterTutorialNotApproved, setModificationState } fr
 import TutorialEditRequestList from "./TutorialEditRequestList";
 import Popup from "reactjs-popup";
 import UserRegisterTutorialEditRequestList1 from "./UserRegisterTutorialEditRequestList1";
+import { getSectionByAdmin } from "../../common/service/Section/GetSectionByAdmin";
+import { putSectionByAdmin } from "../../common/service/Section/PutSectionAdmin";
 
 const TutorialEditRequest: React.FC = () => {
   const user_register_tutorials: IUserRegisterTutorialState = useSelector((state: IStateType) => state.user_register_tutorials);
@@ -45,19 +47,21 @@ const TutorialEditRequest: React.FC = () => {
           dispatch(logout())
         }
         else {
-
+          trackPromise(getSectionByAdmin(dispatch))
         }
       }
       else {
- 
+        trackPromise(getSectionByAdmin(dispatch))
       }
     }
   }, [dispatch, access_token, refresh_token]);
 
   const [checked, setChecked] = useState(true);
   const [popup, setPopup] = useState(false);
+  const [sectionId, setSectionId] = useState(0);
 
-  function onUserRegisterTutorialSelect(): void {
+  function onUserRegisterTutorialSelect(id: number){
+    setSectionId(id)
     onUserRegisterTutorialRemove();
     dispatch(setModificationState(UserRegisterTutorialModificationStatus.None));
   }
@@ -136,36 +140,13 @@ const TutorialEditRequest: React.FC = () => {
                             autoClose: 2000
                           });
 
-                          var id_xx = localStorage.getItem('user_register_tutorials_id');
-                          let user_register_tutorials_id = 0;
-                          if (id_xx !== null) {
-                            user_register_tutorials_id = parseInt(id_xx);
-                          }
-
-                          var id_yy = localStorage.getItem('section_user_register_tutorials_id');
-                          let section_user_register_tutorials_id = 0;
-                          if (id_yy !== null) {
-                            section_user_register_tutorials_id = parseInt(id_yy);
-                          }
-
-                          var id_zz = localStorage.getItem('creator_user_register_tutorials_id');
-                          let creator_user_register_tutorials_id = 0;
-                          if (id_zz !== null) {
-                            creator_user_register_tutorials_id = parseInt(id_zz);
-                          }
-
-                          var id_yy = localStorage.getItem('name_user_register_tutorials');
-                          let name_user_register_tutorials = "";
-                          if (id_yy !== null) {
-                            name_user_register_tutorials = (id_yy);
-                          }
-
                           /* dispatch(putUserRegisterTutorial(user_register_tutorials_id, {
                             status: "Not approved",
                             section_id: section_user_register_tutorials_id,
                             name: name_user_register_tutorials,
                             creator_id: creator_user_register_tutorials_id
                           }, idx)) */
+                          (putSectionByAdmin(dispatch, sectionId, {status: "Not approved"}, idx));
                           dispatch(clearSelectedUserRegisterTutorialNotApproved());
                           setPopup(false);
                         }}>Remove

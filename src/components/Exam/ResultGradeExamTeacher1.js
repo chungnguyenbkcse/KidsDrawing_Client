@@ -7,7 +7,7 @@ import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-pa
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 const ResultGradeExamTeacher1 = () => {
-    const user_grade_exercise_submissions  = useSelector((state) => state.user_grade_exercise_submissions);
+    const user_grade_exercise_submissions  = useSelector((state) => state.exercise_submissions);
 
 
     const history = useHistory();
@@ -16,14 +16,15 @@ const ResultGradeExamTeacher1 = () => {
         localStorage.setItem('feedback', user_grade_exercise_submission.feedback)
         localStorage.setItem('score_exercise', user_grade_exercise_submission.score.toString())
         localStorage.setItem('student_name', user_grade_exercise_submission.student_name)
+        localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
         localStorage.setItem('image_url_exercise_submission', user_grade_exercise_submission.image_url)
         localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
-        localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.exercise_submission_id.toString())
-        localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
+        localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
+        localStorage.setItem('time_submit', user_grade_exercise_submission.time)
         history.push(path);
     }
 
-    const datas = user_grade_exercise_submissions.user_grade_exercise_submissions;
+    const datas = user_grade_exercise_submissions.exercise_gradeds;
 
     const options = {
         paginationSize: 5,

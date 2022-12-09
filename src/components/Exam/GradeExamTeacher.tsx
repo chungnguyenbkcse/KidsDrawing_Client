@@ -10,13 +10,12 @@ import TextInput from "../../common/components/TextInput";
 import { useHistory } from "react-router-dom";
 import { OnChangeModel } from "../../common/types/Form.types";
 import NumberInput from "../../common/components/NumberInput";
-import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
 import { toast, ToastContainer } from "react-toastify";
 import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import Loading from "../../common/components/Loading";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
+import { putExerciseSubmissionByTeacher } from "../../common/service/ExerciseSubmission/PutExerciseSubmissionByTeacher";
 
 const GradeExamTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -25,6 +24,12 @@ const GradeExamTeacher: React.FC = () => {
     let user_grade_exercise_submission = {
         feedback: "",
         score: 0
+    }
+    var id_y = localStorage.getItem('exercise_id');
+    let exercise_id = 0;
+
+    if (id_y !== null) {
+        exercise_id = parseInt(id_y);
     }
 
     const { promiseInProgress } = usePromiseTracker();
@@ -44,35 +49,15 @@ const GradeExamTeacher: React.FC = () => {
         });
 
         if (student_id === 0 ) {
-            let y = exercise_submissions.exercise_not_gradeds[0].id;
-            console.log({
-                teacher_id: localStorage.getItem('id'),        
-                score: formState.score.value,
-                feedback: formState.feedback.value
-            })
-
-            dispatch(postUserGradeExercise({
-                teacher_id: localStorage.getItem('id'),
-                
-                score: formState.score.value,
-                feedback: formState.feedback.value
-            }, id))
-        }
-        else {
-            dispatch(postUserGradeExercise({
-                teacher_id: localStorage.getItem('id'),
+            dispatch(putExerciseSubmissionByTeacher({
+                student_id: student_id,
+                exercise_id: exercise_id,
                 score: formState.score.value,
                 feedback: formState.feedback.value
             }, id))
         }
     }
 
-    var id_y = localStorage.getItem('exercise_id');
-    let exercise_id = 0;
-
-    if (id_y !== null) {
-        exercise_id = parseInt(id_y);
-    }
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");

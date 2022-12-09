@@ -5,7 +5,7 @@ export function getAttendanceBySectionAndParent(dispatch: any, section_id: any, 
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/user-attendance/section-parent/${section_id}/${parent_id}`, {
+                `${process.env.REACT_APP_API_URL}/user-attendance/section-parent-check/${section_id}/${parent_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -31,7 +31,13 @@ export function getAttendanceBySectionAndParent(dispatch: any, section_id: any, 
             })
             .then (data => {
                 dispatch(fetchDataSuccess(data))
-                localStorage.setItem('is_attendance_parent', "true");
+                if (data.status == true) {
+                    localStorage.setItem('is_attendance_parent', "true");
+                }
+                else {
+                    localStorage.setItem('is_attendance_parent', "false");
+                }
+                
             })
             .catch(error => {
                 localStorage.setItem('is_attendance_parent', "false");

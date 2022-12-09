@@ -105,15 +105,11 @@ const DetailSectionParent: React.FC = () => {
                 else {
                     trackPromise(getAttendanceBySectionAndParent(dispatch, section_id, id))
                     trackPromise(getSectionById(dispatch, section_id))
-                    trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
-                    trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
                 }
             }
             else {
                 trackPromise(getAttendanceBySectionAndParent(dispatch, section_id, id))
                 trackPromise(getSectionById(dispatch, section_id))
-                trackPromise(getExerciseSubmissionBySectionAndStudent(dispatch, section_id, id))
-                trackPromise(getExerciseForSectionStudent(dispatch, section_id, id))
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
@@ -282,7 +278,18 @@ const DetailSectionParent: React.FC = () => {
                                                             }
                                                             else {
                                                                 if (sections.sections[0].teach_form === false) {
-                                                                    if (is_active === "not_active" || is_active === "active_now" || is_active === "pre_active_now") {
+                                                                    if ((is_active === "not_active" && is_attendance_parent === "true") || (is_attendance_parent === "false" && student_leave === "true"))  {
+                                                                        return (
+                                                                            <button
+                                                                                className="btn btn-success ml-2"
+                                                                                id="btn-view-tutorial"
+                                                                                onClick={routeChange2}
+                                                                            >
+                                                                                Xem nội dung
+                                                                            </button>
+                                                                        )
+                                                                    }
+                                                                    else if (is_active === "active_now" || is_active === "pre_active_now") {
                                                                         return (
                                                                             <button
                                                                                 className="btn btn-success ml-2"
@@ -307,7 +314,7 @@ const DetailSectionParent: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="col-xl-6 col-md-6 mb-2">
+                    {/* <div className="col-xl-6 col-md-6 mb-2">
                         <div className="row">
                             <div className="col-xl-12 col-md-12 mb-2">
                                 <div className={`card shadow py-2`} >
@@ -469,8 +476,8 @@ const DetailSectionParent: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>*/}
+                </div> 
                 {
                     function () {
                         if (is_active === 'not_active') {

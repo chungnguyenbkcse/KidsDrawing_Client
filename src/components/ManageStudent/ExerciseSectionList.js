@@ -10,7 +10,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 function ExerciseStudentList(props) {
 
-    const user_grade_exercise_submission = useSelector((state) => state.user_grade_exercise_submissions);
+    const exercise_submissions = useSelector((state) => state.exercise_submissions);
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ function ExerciseStudentList(props) {
       localStorage.setItem('image_url_exercise_submission', user_grade_exercise_submission.image_url)
       localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
       localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
-      localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.exercise_submission_id.toString())
+      localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
       localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
       let path = '/exercise/detail'; 
       history.push({
@@ -46,7 +46,7 @@ function ExerciseStudentList(props) {
     localStorage.setItem('student_name', user_grade_exercise_submission.student_name)
     localStorage.setItem('image_url_exercise_submission', user_grade_exercise_submission.image_url)
     localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
-    localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.exercise_submission_id.toString())
+    localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
     localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
     history.push({
         pathname: path,
@@ -54,7 +54,7 @@ function ExerciseStudentList(props) {
   }
 
 
-  const datas = user_grade_exercise_submission.user_grade_exercise_submissions;
+  const datas = exercise_submissions.exercise_gradeds;
 
   const options = {
     paginationSize: 5,
@@ -116,13 +116,13 @@ function ExerciseStudentList(props) {
 
   function deadlineButton(cell, row) {
     return (
-        <span>{row.deadline.replaceAll("T", " ").substring(0,16)}</span>
+        <span>{row.exercise_deadline.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 
   function time_submitButton(cell, row) {
     return (
-        <span>{row.time_submit.replaceAll("T", " ").substring(0,16)}</span>
+        <span>{row.time.replaceAll("T", " ").substring(0,16)}</span>
     )
   }
 
@@ -133,12 +133,12 @@ function ExerciseStudentList(props) {
       filter: textFilter()
     },
     {
-      dataField: 'deadline',
+      dataField: 'exercise_deadline',
       text: 'Thời hạn nộp',
       formatter: deadlineButton
     },
     {
-      dataField: 'time_submit',
+      dataField: 'time',
       text: 'Thời gian nộp',
       formatter: time_submitButton
     },

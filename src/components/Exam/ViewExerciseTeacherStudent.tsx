@@ -8,10 +8,10 @@ import TextInput from "../../common/components/TextInput";
 import { useHistory } from "react-router-dom";
 import { OnChangeModel } from "../../common/types/Form.types";
 import NumberInput from "../../common/components/NumberInput";
-import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
 import { toast, ToastContainer } from "react-toastify";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
+import { putExerciseSubmissionByTeacher } from "../../common/service/ExerciseSubmission/PutExerciseSubmissionByTeacher";
 
 const ViewExerciseTeacherStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -52,6 +52,13 @@ const ViewExerciseTeacherStudent: React.FC = () => {
         student_name = id_t;
     }
 
+    var id_tt = localStorage.getItem('student_id');
+    let student_id = 0;
+
+    if (id_tt !== null) {
+        student_id = parseInt(id_tt);
+    }
+
     var id_ta = localStorage.getItem('score_exercise');
     let score_exercise: number = 0;
 
@@ -85,9 +92,9 @@ const ViewExerciseTeacherStudent: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
 
-        dispatch(postUserGradeExercise({
-            teacher_id: localStorage.getItem('id'),
-            exercise_submission_id: localStorage.getItem('exercise_submission_id'),
+        dispatch(putExerciseSubmissionByTeacher({
+            student_id: student_id,
+            exercise_id: exercise_id,
             score: formState.score.value,
             feedback: formState.feedback.value
         }, id))

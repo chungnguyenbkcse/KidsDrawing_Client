@@ -8,41 +8,14 @@ import TextInput from "../../common/components/TextInput";
 import { useHistory } from "react-router-dom";
 import { OnChangeModel } from "../../common/types/Form.types";
 import NumberInput from "../../common/components/NumberInput";
-import { postUserGradeExercise } from "../../common/service/UserGradeExercise/PostUserGradeExercise";
 import { toast, ToastContainer } from "react-toastify";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
+import { putExerciseSubmissionByTeacher } from "../../common/service/ExerciseSubmission/PutExerciseSubmissionByTeacher";
 
 const GradeExamTeacherEle: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
-    let user_grade_exercise_submission = {
-        feedback: "",
-        score: 0
-    }
-
-    const [formState, setFormState] = useState({
-        feedback: { error: "", value: user_grade_exercise_submission.feedback },
-        score: { error: "", value: user_grade_exercise_submission.score },
-    });
-
-    function hasFormValueChanged(model: OnChangeModel): void {
-        setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
-    }
-
-    function saveForm() {
-        const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-            position: toast.POSITION.TOP_CENTER
-        });
-
-        dispatch(postUserGradeExercise({
-            teacher_id: localStorage.getItem('id'),
-            exercise_submission_id: localStorage.getItem('exercise_submission_id'),
-            score: formState.score.value,
-            feedback: formState.feedback.value
-        }, id))
-
-    }
 
     var id_y = localStorage.getItem('exercise_id');
     let exercise_id = 0;
@@ -78,6 +51,42 @@ const GradeExamTeacherEle: React.FC = () => {
     if (id_t !== null) {
         student_name = id_t;
     }
+
+    var id_z = localStorage.getItem('student_id');
+    let student_id = 0;
+
+    if (id_z !== null) {
+        student_id = parseInt(id_z);
+    }
+
+    let user_grade_exercise_submission = {
+        feedback: "",
+        score: 0
+    }
+
+    const [formState, setFormState] = useState({
+        feedback: { error: "", value: user_grade_exercise_submission.feedback },
+        score: { error: "", value: user_grade_exercise_submission.score },
+    });
+
+    function hasFormValueChanged(model: OnChangeModel): void {
+        setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
+    }
+
+    function saveForm() {
+        const id = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+
+        dispatch(putExerciseSubmissionByTeacher({
+            student_id: student_id,
+            exercise_id: exercise_id,
+            score: formState.score.value,
+            feedback: formState.feedback.value
+        }, id))
+
+    }
+
 
 
 

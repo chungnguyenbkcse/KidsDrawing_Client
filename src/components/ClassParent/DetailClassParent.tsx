@@ -239,7 +239,6 @@ const DetailClassParent: React.FC = () => {
         localStorage.setItem('link_record', link_record)
         tutorials.tutorials.map(ele => {
             if (ele.section_id === section.id) {
-                localStorage.setItem('section_id', ele.id.toString())
                 localStorage.setItem('tutorial_name', ele.name.toString())
                 tutorial_pages.tutorialPages.map(element => {
                     if (element.section_id === ele.id) {

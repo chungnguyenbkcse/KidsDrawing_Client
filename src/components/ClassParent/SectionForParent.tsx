@@ -33,7 +33,6 @@ const SectionForParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
-    const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
     const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
     const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
@@ -211,24 +210,16 @@ const SectionForParent: React.FC = () => {
         localStorage.setItem('section_number', section.number.toString())
         let tutorial_page_list: any[] = []
         localStorage.removeItem('tutorial_name')
-        localStorage.removeItem('section_id')
         localStorage.setItem('is_active', is_active)
         localStorage.removeItem('link_record')
         localStorage.setItem('link_record', link_record)
-        tutorials.tutorials.map(ele => {
-            if (ele.section_id === section.id) {
-                localStorage.setItem('section_id', ele.id.toString())
-                localStorage.setItem('tutorial_name', ele.name.toString())
-                tutorial_pages.tutorialPages.map(element => {
-                    if (element.section_id === ele.id) {
-                        tutorial_page_list.push({
-                            description: element.description,
-                            id: element.id,
-                            section_id: element.section_id,
-                            number: element.number
-                        })
-                    }
-                    return null
+        tutorial_pages.tutorialPages.map(element => {
+            if (element.section_id === section.id) {
+                tutorial_page_list.push({
+                    description: element.description,
+                    id: element.id,
+                    section_id: element.section_id,
+                    number: element.number
                 })
             }
             return null
@@ -371,7 +362,7 @@ const SectionForParent: React.FC = () => {
 
                 <div className="row">
                     <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}/${numberSectionCount}`} icon="book" class="primary" />
-                    <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
+                    
                 </div>
 
 

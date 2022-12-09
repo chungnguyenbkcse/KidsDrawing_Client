@@ -106,14 +106,7 @@ const ResultGradeContestAdmin: React.FC = () => {
                 <div className="row">
                     <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />
                     <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
-                    <div className="col-xl-3 col-md-3 notification-x">
-                        <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() => {
-                            onRouteChange()
-                        }}>
-                            Biểu đồ
-                            <i className="fas fa fa-arrow-right"></i>
-                        </button>
-                    </div>
+                    
                 </div>
 
 

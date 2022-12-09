@@ -47,7 +47,7 @@ export function getUserRegisterJoinSemester(dispatch: any) {
                 console.log(data.body.user_register_semester)
                 data.body.user_register_semester.map((ele: any, index: any) => {
                     var user_register_semester: user_register_semester = {
-                        id: ele.id,
+                        id: 0,
                         student_id: ele.student_id,
                         student_name: ele.student_name,
                         link_url: ele.link_url,

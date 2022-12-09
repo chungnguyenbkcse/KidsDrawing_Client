@@ -6,20 +6,12 @@ import { getStudentLeave } from "./GetStudentLeave";
 import { getStudentLeaveByClassAndParent } from "./GetStudentLeaveByClassAndParent";
 import { getStudentLeaveByClassAndStudent } from "./GetStudentLeaveByClassStudent";
 
-export function postStudentLeave(data: any, idx: any) {
+export function postStudentLeaveParent(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('id');
     var idxx: number = 0;
     if (id_x !== null) {
         idxx = parseInt(id_x);
-    }
-
-    var role = localStorage.getItem('role')
-    let rolePrivilege: any = []
-    let userRole: any = ""
-    if (role !== null) {
-        rolePrivilege = (role.split(','))
-        userRole = (rolePrivilege[0])
     }
 
     var id_y = localStorage.getItem('class_id');
@@ -47,7 +39,7 @@ export function postStudentLeave(data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postStudentLeave(data, idx))
+                        dispatch(postStudentLeaveParent(data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -59,13 +51,7 @@ export function postStudentLeave(data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                if (userRole == "STUDENT") {
-                    getStudentLeaveByClassAndStudent(dispatch, class_id, idxx)
-                }
-                else if (userRole == "PARENT") {
-                    getStudentLeaveByClassAndParent(dispatch, class_id, idxx)
-                }
-                
+                getStudentLeaveByClassAndParent(dispatch, class_id, idxx)
                 toast.update(idx, { render: "Yêu cầu nghỉ học đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
             })
             .catch(error => {

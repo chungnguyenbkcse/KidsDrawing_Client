@@ -217,7 +217,18 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
                                         
-                                        <span className="d-block mb-5">Trạng thái: {ele.status}</span>
+                                        <span className="d-block mb-5 status-register">Trạng thái: 
+                                        {
+                                                function() {
+                                                    if (ele.status == "Registed") {
+                                                        return " Đã đăng kí";
+                                                    }
+                                                    else {
+                                                        return " Chưa đăng kí";
+                                                    }
+                                                }()
+                                            }
+                                        </span>
                                         <div
                                             className="d-flex justify-content-between stats">
                                             <div className="d-flex flex-row align-items-center">

@@ -202,7 +202,7 @@ const DetailClassTeacher: React.FC = () => {
         localStorage.setItem('section_name', teacher_leave.section_name);
         localStorage.setItem('section_number', teacher_leave.section_number.toString());
         localStorage.setItem('section_id', teacher_leave.section_id.toString());
-        localStorage.setItem('teacher_name', teacher_leave.teacher_name.toString());
+        
         localStorage.setItem('substitute_teacher_id', teacher_leave.substitute_teacher_id.toString());
         localStorage.setItem('substitute_teacher_name', teacher_leave.substitute_teacher_name.toString());
         localStorage.setItem('description', teacher_leave.description.toString());
@@ -217,7 +217,7 @@ const DetailClassTeacher: React.FC = () => {
         localStorage.setItem('section_name', teacher_leave.section_name);
         localStorage.setItem('section_number', teacher_leave.section_number.toString());
         localStorage.setItem('section_id', teacher_leave.section_id.toString());
-        localStorage.setItem('teacher_name', teacher_leave.teacher_name.toString());
+        
         localStorage.setItem('substitute_teacher_id', teacher_leave.substitute_teacher_id.toString());
         localStorage.setItem('substitute_teacher_name', teacher_leave.substitute_teacher_name.toString());
         localStorage.setItem('description', teacher_leave.description.toString());

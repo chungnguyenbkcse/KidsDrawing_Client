@@ -15,6 +15,7 @@ import { IStudentLeave, StudentLeaveModificationStatus } from "../../store/model
 import Popup from "reactjs-popup";
 import { putStudentLeaveStatus } from "../../common/service/StudentLeave/PutStudentLeave";
 import { changeSelectedStudentLeaveNotApproved, changeSelectedStudentLeaveNotApprovedNow, clearSelectedStudentLeaveNotApproved, setModificationState } from "../../store/actions/student_leave.action";
+import { putStudentLeaveParent } from "../../common/service/StudentLeave/PutStudentLeaveByParent";
 
 const RequestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -82,7 +83,17 @@ const RequestTeacher: React.FC = () => {
         const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
-        dispatch(putStudentLeaveStatus(student_leave.id, {
+        var idy = localStorage.getItem("student_leave_section_id");
+        var idz = localStorage.getItem("student_leave_student_id");
+        let student_leave_section_id = 0;
+        let student_leave_student_id = 0;
+        if (idy !== null) {
+            student_leave_section_id = parseInt(idy)
+        }
+        if (idz !== null) {
+            student_leave_student_id = parseInt(idz)
+        }
+        dispatch(putStudentLeaveParent(student_leave_section_id, student_leave_student_id, {
             status: status
         }, id))
 

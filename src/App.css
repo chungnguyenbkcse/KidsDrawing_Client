@@ -14,6 +14,11 @@ body {
     border-top: 20px !important;
 }
 
+.status-register {
+    color: red;
+    font-weight: bold;
+}
+
 .card {
     border-top: 20px !important;
 }

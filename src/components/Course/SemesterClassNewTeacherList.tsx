@@ -101,7 +101,18 @@ function SemesterClassNewTeacherList(props: semesterListProps): JSX.Element {
                                         <span className="d-block schedule-x">Lịch học: {ele.schedule}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
                                         <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}</span>
-                                        <span className="full-name d-block">Trạng thái: {ele.status}</span>
+                                        <span className="full-name d-block">Trạng thái: 
+                                            {
+                                                function() {
+                                                    if (ele.status == "Registed") {
+                                                        return " Đã đăng kí";
+                                                    }
+                                                    else {
+                                                        return " Chưa đăng kí";
+                                                    }
+                                                }()
+                                            }
+                                        </span>
                                         <div
                                             className="d-flex justify-content-between stats">
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>

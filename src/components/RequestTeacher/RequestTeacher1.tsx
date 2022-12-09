@@ -13,10 +13,11 @@ import Loading from "../../common/components/Loading";
 import TeacherLeaveList from "./TeacherLeaveList1";
 import { putTeacherLeaveStatus } from "../../common/service/TeacherLeave/PutTeacherLeave";
 import { ITeacherLeave } from "../../store/models/teacher_leave.interface";
-import { clearSelectedStudentLeaveNotApproved, setModificationState } from "../../store/actions/student_leave.action";
-import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
+import { changeSelectedStudentLeaveApproved, clearSelectedStudentLeaveNotApproved, setModificationState } from "../../store/actions/student_leave.action";
+import { IStudentLeave, StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
 import Popup from "reactjs-popup";
 import TeacherLeaveApprovedList from "./TeacherLeaveApproved";
+import { putStudentLeaveParent } from "../../common/service/StudentLeave/PutStudentLeaveByParent";
 
 const RequestTeacher1: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -33,6 +34,10 @@ const RequestTeacher1: React.FC = () => {
     if (id_x !== null) {
         id = parseInt(id_x);
     }
+
+    
+
+    let student_leave: IStudentLeave | null = student_leaves.selectedStudentLeave;
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -84,20 +89,28 @@ const RequestTeacher1: React.FC = () => {
 
     const [teacherLeave, setTeacherLeave] = useState(0)
 
-    function onTeacherLeaveSelect(idxx: number): void {
-        setTeacherLeave(idxx)
+    function onTeacherLeaveSelect(idxx: IStudentLeave): void {
+        dispatch(changeSelectedStudentLeaveApproved(idxx));
         setPopup(true)
         dispatch(setModificationState(StudentLeaveModificationStatus.None));
     }
 
     const updateStatusTeacherLeave = (status: string) => {
-        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+        const idx = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
 
-        (putTeacherLeaveStatus(dispatch, teacherLeave, {
+        var id_y = localStorage.getItem('teacher_leave_id');
+        var teacher_leave_id: number = 0;
+        if (id_y !== null) {
+            teacher_leave_id = parseInt(id_y);
+        }
+
+
+        (putTeacherLeaveStatus(dispatch, teacher_leave_id, {
             status: status
         }, idx))
+        
     }
 
     const [checked, setChecked] = useState(true);
@@ -161,7 +174,7 @@ const RequestTeacher1: React.FC = () => {
 
                 {
                     function () {
-                        if ((student_leaves.modificationState === StudentLeaveModificationStatus.Remove)) {
+                        if ( student_leaves.selectedStudentLeave && (student_leaves.modificationState === StudentLeaveModificationStatus.Remove)) {
                             return (
                                 <Popup
                                     open={popup}
@@ -176,7 +189,7 @@ const RequestTeacher1: React.FC = () => {
                                             <button type="button"
                                                 className="btn btn-danger"
                                                 onClick={() => {
-                                                    if (teacherLeave === 0) {
+                                                    if (!student_leaves.selectedStudentLeave) {
                                                         return;
                                                     }
                                                     updateStatusTeacherLeave("Not approved")

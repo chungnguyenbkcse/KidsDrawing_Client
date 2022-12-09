@@ -159,9 +159,7 @@ function FormSubmitParent(): JSX.Element {
                                                 <p id="phone">Nội dung: <span dangerouslySetInnerHTML={{ __html: exercise_description }}></span></p>
                                             </div>
 
-                                            <div className="row no-gutters">
-                                                <p id="phone">Tỉ lệ đánh giá: {exercise_level_name}</p>
-                                            </div>
+                                        
 
                                             <div className="row no-gutters">
                                                 <p id="phone">Hạn nộp: {deadline.replaceAll("T", " ").substring(0,16)}</p>

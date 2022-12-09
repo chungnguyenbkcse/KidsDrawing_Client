@@ -193,7 +193,18 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
                                         <span className="d-block">Ngày bắt đầu đăng kí: {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}</span>
                                         <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_expiration_time.replaceAll("T", " ").substring(0,16)}</span>
-                                        <span className="d-block mb-5">Trạng thái: {ele.status}</span>
+                                        <span className="d-block mb-5">Trạng thái: 
+                                            {
+                                                function() {
+                                                    if (ele.status == "Registed") {
+                                                        return "Đã đăng kí";
+                                                    }
+                                                    else {
+                                                        return "Chưa đăng kí";
+                                                    }
+                                                }()
+                                            }
+                                        </span>
                                         <div
                                             className="d-flex justify-content-between stats">
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>

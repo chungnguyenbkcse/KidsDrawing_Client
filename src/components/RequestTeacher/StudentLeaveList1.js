@@ -81,6 +81,8 @@ function StudentLeaveList(props) {
   function removeLeaveButton(cell, row) {
     return (
       <button type="button" className="btn btn-danger" onClick={() =>{
+        localStorage.setItem('student_leave_section_id', row.section_id.toString())
+        localStorage.setItem('student_leave_student_id', row.student_id.toString())
         if(props.onSelect) props.onSelect(row);
         dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
       }}>Xóa </button>

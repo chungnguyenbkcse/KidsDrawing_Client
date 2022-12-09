@@ -34,7 +34,7 @@ import { GiVideoConference } from "react-icons/gi";
 import { BsCashCoin } from "react-icons/bs";
 import { SiGoogletagmanager } from "react-icons/si"
 import { RiCompassDiscoverFill } from "react-icons/ri"
-import { GrGamepad } from "react-icons/gr"
+import { MdGames } from "react-icons/md"
 
 
 //import sidebar css from react-pro-sidebar module and our custom css 
@@ -1038,7 +1038,7 @@ const Header = () => {
                   Thời khóa biểu
                 </Link>
               </MenuItem>
-              <MenuItem active={active5} icon={<GrGamepad />} color="#ffffff">
+              <MenuItem active={active5} icon={<MdGames />} color="#ffffff">
                 <Link to={`/game/guess-color`} className={active5 ? "link-active" : "not-active"} onClick={() => {
                   if (active5 === false) {
                     setActive1(false);

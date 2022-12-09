@@ -70,7 +70,7 @@ export function getStudentLeaveByClassAndStudent(dispatch: any, class_id: number
                     if (student_leave.status === "Approved"){
                         return dispatch(addStudentLeaveApproved(student_leave));
                     }
-                    else if (student_leave.status === "Not Approved"){
+                    else if (student_leave.status === "Not approved"){
                         return dispatch(addStudentLeaveNotApproved(student_leave));
                     }
                     else {

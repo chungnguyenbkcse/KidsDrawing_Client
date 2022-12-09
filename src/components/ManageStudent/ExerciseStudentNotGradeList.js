@@ -44,6 +44,8 @@ function ExerciseStudentNotGradeList(props) {
     localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
     localStorage.setItem('exercise_submission_id', user_grade_exercise_submission.id.toString())
     localStorage.removeItem('deadline');
+    localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
+    localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
     localStorage.setItem('deadline', user_grade_exercise_submission.exercise_deadline);
     history.push({
         pathname: path,

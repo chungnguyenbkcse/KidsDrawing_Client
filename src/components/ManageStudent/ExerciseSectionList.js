@@ -48,6 +48,7 @@ function ExerciseStudentList(props) {
     localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
     localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
     localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
+    localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
     history.push({
         pathname: path,
     });

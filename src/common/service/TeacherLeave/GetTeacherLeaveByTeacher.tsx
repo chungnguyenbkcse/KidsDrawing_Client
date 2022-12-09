@@ -22,7 +22,7 @@ interface TeacherLeave {
 export function getTeacherLeaveByTeacher(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/teacher-leave/teacher/${id}`, {
+                `${process.env.REACT_APP_API_URL}/teacher-leave/substitute-teacher/${id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,

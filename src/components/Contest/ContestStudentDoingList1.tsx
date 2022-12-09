@@ -216,8 +216,8 @@ function ContestStudentDoingList1(props: lessonListProps): JSX.Element {
                                         <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
                                         <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ").substring(0,16)}</span>
                                         <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
-                                        <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                        <span className="d-block mb-2">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ").substring(0,16)}</span>
+                                        <span className="d-block mb-2">Số đăng kí tối đa: {ele.max_participant}</span>
+                                        
                                         <div
                                             className="d-flex justify-content-between stats">
                                                 <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>

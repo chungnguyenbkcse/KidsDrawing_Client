@@ -239,11 +239,7 @@ const ConestDetailStudent: React.FC = () => {
                                         <p className="birthday ml-2">Thể loại: {art_type_name}</p>
                                     </div>
                                 </div>
-                                <div className="row no-gutters align-items-center">
-                                    <div className="text-xs">
-                                        <p className="birthday ml-2">Thời gian đăng kí: {registration_time}</p>
-                                    </div>
-                                </div>
+                                
                             </div>
 
                             <div className="col-xl-6 col-md-6">

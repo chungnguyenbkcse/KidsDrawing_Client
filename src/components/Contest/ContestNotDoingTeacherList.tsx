@@ -50,7 +50,6 @@ function ContestTeacherNotDoingList(props: lessonListProps): JSX.Element {
             <td className="data-table">{contest.art_age_name}</td>
             <td className="data-table">{contest.art_type_name}</td>
             <td className="data-table">{contest.max_participant}</td>
-            <td className="data-table">{contest.registration_time}</td>
             <td className="data-table">{contest.end_time}</td>
         </tr>);
     });

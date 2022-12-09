@@ -13,7 +13,7 @@ const ContestSubmissionAdminList = () => {
     function handleViewContestSubmission(contest_submission) {
         if (contest_submission !== null && contest_submission !== undefined) {
                 localStorage.removeItem('contest_submission_id');
-                localStorage.setItem('contest_submission_id', contest_submission.id.toString())
+                
                 localStorage.removeItem('time_submit');
                 localStorage.setItem('time_submit', contest_submission.update_time.toString())
                 localStorage.setItem('contest_name', contest_submission.contest_name.toString())
@@ -102,6 +102,10 @@ const ContestSubmissionAdminList = () => {
             dataField: 'update_time',
             text: 'Thời gian nộp',
             formatter: showTime
+        },
+        {
+            dataField: 'score',
+            text: 'Điểm',
         },
         {
             dataField: '',

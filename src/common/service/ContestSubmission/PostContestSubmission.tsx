@@ -3,7 +3,7 @@ import { fetchDataRequest, fetchDataSuccess } from "../../../store/actions/conte
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 
-export function postContestSubmission(data: any, idx: any, routeHome: any) {
+export function postContestSubmission(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -23,7 +23,7 @@ export function postContestSubmission(data: any, idx: any, routeHome: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postContestSubmission(data, idx, routeHome))
+                        dispatch(postContestSubmission(data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -37,9 +37,7 @@ export function postContestSubmission(data: any, idx: any, routeHome: any) {
                 console.log(val)
                 dispatch(fetchDataSuccess(data))
                 toast.update(idx, { render: "Nộp bài thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
-                setTimeout(function () {
-                    routeHome();
-                }, 2000); 
+                
             })
             .catch(error => {
                 toast.update(idx, { render: "Nộp bài thi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

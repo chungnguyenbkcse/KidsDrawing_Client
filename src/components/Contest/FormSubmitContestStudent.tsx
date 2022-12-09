@@ -16,6 +16,7 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { getContestSubmissionByContestAndStudent } from "../../common/service/ContestSubmission/GetContestSubmissionByContestAndStudent";
 import jwt_decode from "jwt-decode";
 import Loading from "../../common/components/Loading";
+import { deleteContestSubmission } from "../../common/service/ContestSubmission/DeleteContestSubmission";
 
 function FormSubmitContestStudent(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
@@ -181,14 +182,14 @@ function FormSubmitContestStudent(): JSX.Element {
                     student_id: id,
                     contest_id: contest_id,
                     image_url: url
-                }, idx, routeHome))
+                }, idx))
             }
             else {
-                dispatch(putContestSubmission(contest_submission_id, {
+                dispatch(deleteContestSubmission(contest_id, id, {
                     student_id: id,
                     contest_id: contest_id,
                     image_url: url
-                }, idx, routeHome))
+                }, idx))
             }
            
         }
@@ -277,10 +278,7 @@ function FormSubmitContestStudent(): JSX.Element {
                                             <p id="phone">Thể loại: {art_type_contest}</p>
                                         </div>
 
-                                        <div className="row no-gutters">
-                                            <p id="phone">Thời gian đăng kí: {registration_time.replaceAll("T", " ").substring(0, 16)}</p>
-                                        </div>
-
+                                    
                                         <div className="row no-gutters">
                                             <p id="phone">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0, 16)}</p>
                                         </div>

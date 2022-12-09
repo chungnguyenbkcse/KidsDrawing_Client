@@ -102,18 +102,6 @@ function ContestEndList(props) {
     )
   }
 
-  function viewGenarationGradeButton(cell, row) {
-    if (row.check_gen !== false) {
-      return <span></span>
-    }
-    return (
-      <button type="button" className="btn btn-info" onClick={() => {
-        if(props.onSelect) props.onSelect(row);
-        generationContestSubmission(row.id)
-      }}>Xếp chấm thi</button>
-    )
-  }
-
 
   const columns = [
     {
@@ -153,11 +141,6 @@ function ContestEndList(props) {
       dataField: '',
       text: 'Hành động',
       formatter: viewDetailButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: viewGenarationGradeButton
     }
   ];
 

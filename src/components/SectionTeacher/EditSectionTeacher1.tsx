@@ -30,7 +30,7 @@ type PageContent = {
 
 type TutorialPage = {
     id: any;
-    user_register_section_id: number;
+    section_id: number;
     name: string;
     number: number;
     description: string;
@@ -46,11 +46,6 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
 
     const [checked, setChecked] = useState(false);
 
-    var id_x = localStorage.getItem('section_id');
-    let section_id: number = 0;
-    if (id_x !== null) {
-        section_id = parseInt(id_x)
-    }
 
     var id_y = localStorage.getItem('section_number');
     let section_number: number = 0;
@@ -60,10 +55,10 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
 
 
 
-    var id_t = localStorage.getItem('user_register_section_id');
-    let user_register_section_id: number = 0;
+    var id_t = localStorage.getItem('section_id');
+    let section_id: number = 0;
     if (id_t !== null) {
-        user_register_section_id = parseInt(id_t)
+        section_id = parseInt(id_t)
     }
 
     var id_h = localStorage.getItem('user_register_tutorial_name');
@@ -110,7 +105,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                  
             }
         }
-    }, [dispatch, access_token, refresh_token, user_register_section_id])
+    }, [dispatch, access_token, refresh_token, section_id])
 
     const history = useHistory();
     function routeHome() {
@@ -192,7 +187,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     content: value
                 }*/
                 if (user_register_tutorial_pages !== null) {
-                    /* dispatch(deleteUserRegisterTutorial1(user_register_section_id, idx))
+                    /* dispatch(deleteUserRegisterTutorial1(section_id, idx))
                     dispatch(postUserRegisterTutorial(user_register_tutorial_pages.user_register_tutorial_pages, {
                         section_id: section_id,
                         name: formState.name.value,
@@ -301,8 +296,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                             dispatch(editUserRegisterTutorialPage({
                                 id: ele.id,
                                 description: ele.description,
-                                name: ele.name,
-                                user_register_section_id: user_register_section_id,
+                                section_id: section_id,
                                 number: ele.number - 1
                             }))
                         }
@@ -377,8 +371,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     console.log('yyy')
                     dispatch(addUserRegisterTutorialPage({
                         description: value,
-                        name: formState.name.value,
-                        user_register_section_id: user_register_section_id,
+                        section_id: section_id,
                         number: user_register_tutorial_pages.user_register_tutorial_pages.length,
                         id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                     }))
@@ -390,15 +383,13 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                             console.log('1')
                             dispatch(editUserRegisterTutorialPage({
                                 description: ele.description,
-                                name: ele.name,
-                                user_register_section_id: user_register_section_id,
+                                section_id: section_id,
                                 number: ele.number + 1,
                                 id: ele.id
                             }))
                             dispatch(addUserRegisterTutorialPage({
                                 description: value,
-                                name: formState.name.value,
-                                user_register_section_id: user_register_section_id,
+                                section_id: section_id,
                                 number: ele.number,
                                 id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                             }))
@@ -408,8 +399,8 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                             if (ele.number < user_register_tutorial_pages.user_register_tutorial_pages.length - 1) {
                                 dispatch(editUserRegisterTutorialPage({
                                     description: ele.description,
-                                    name: ele.name,
-                                    user_register_section_id: user_register_section_id,
+                                    
+                                    section_id: section_id,
                                     number: ele.number + 1,
                                     id: ele.id
                                 }))
@@ -417,8 +408,8 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                             else {
                                 dispatch(editUserRegisterTutorialPage({
                                     description: ele.description,
-                                    name: ele.name,
-                                    user_register_section_id: user_register_section_id,
+                                    
+                                    section_id: section_id,
                                     number: ele.number + 1,
                                     id: ele.id
                                 }))
@@ -430,7 +421,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     /* dispatch(addUserRegisterTutorialPage({
                         description: value,
                         name: formState.name.value,
-                        user_register_section_id: user_register_section_id,
+                        section_id: section_id,
                         number: k - 1,
                         id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                     })) */
@@ -441,31 +432,30 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                 if (k < user_register_tutorial_pages.user_register_tutorial_pages.length + 1) {
                     dispatch(editUserRegisterTutorialPage({
                         description: value,
-                        name: user_register_tutorial_name,
-                        user_register_section_id: user_register_section_id,
+                        
+                        section_id: section_id,
                         number: k-1,
                         id: user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number)[k-1].id
                     }))
                    console.log({
                         description: value,
-                        name: user_register_tutorial_name,
-                        user_register_section_id: user_register_section_id,
+                        
+                        section_id: section_id,
                         number: k-1
                    })
                 }
                 else {
                     dispatch(addUserRegisterTutorialPage({
                         description: value,
-                        name: formState.name.value,
-                        user_register_section_id: user_register_section_id,
+                        section_id: section_id,
                         number: user_register_tutorial_pages.user_register_tutorial_pages.length,
                         id: (user_register_tutorial_pages.user_register_tutorial_pages.length + 1).toString()
                     }))
     
                     console.log({
                         description: value,
-                        name: user_register_tutorial_name,
-                        user_register_section_id: user_register_section_id,
+                        
+                        section_id: section_id,
                         number: user_register_tutorial_pages.user_register_tutorial_pages.length
                    })
                 }

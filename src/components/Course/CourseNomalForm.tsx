@@ -301,16 +301,7 @@ const CourseNomalForm: React.FC = () => {
                                         value={formState.art_age_id.value}
                                     />
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <Checkbox
-                                        id="input_is_enabled"
-                                        field="is_enabled"
-                                        value={formState.is_enabled.value}
-                                        onChange={hasFormValueChanged}
-                                        required={false}
-                                        label="Mở"
-                                    />
-                                </div>
+                               
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">

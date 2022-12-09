@@ -89,7 +89,8 @@ const ResultGradeExamTeacher1 = () => {
         },
         {
             dataField: 'score',
-            text: 'Điểm'
+            text: 'Điểm',
+            sort: true,
         },
         {
             dataField: '',

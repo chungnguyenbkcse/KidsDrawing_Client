@@ -17,6 +17,7 @@ import { getContestSubmissionByContestAndStudent } from "../../common/service/Co
 import jwt_decode from "jwt-decode";
 import Loading from "../../common/components/Loading";
 import { getChildsByContestAndParent } from "../../common/service/UserRegisterContest/GetUserRegisterJoinContestByContestAndParent";
+import { deleteContestSubmission } from "../../common/service/ContestSubmission/DeleteContestSubmission";
 
 function FormSubmitContestStudent(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
@@ -191,14 +192,14 @@ function FormSubmitContestStudent(): JSX.Element {
                         student_id: filter,
                         contest_id: contest_id,
                         image_url: url
-                    }, idx, routeHome))
+                    }, idx))
                 }
                 else {
-                    dispatch(putContestSubmission(contest_submission_id, {
+                    dispatch(deleteContestSubmission(contest_id,filter, {
                         student_id: filter,
                         contest_id: contest_id,
                         image_url: url
-                    }, idx, routeHome))
+                    }, idx))
                 }
 
             }
@@ -271,6 +272,10 @@ function FormSubmitContestStudent(): JSX.Element {
         setFilter(e.target.value)
         let index = e.nativeEvent.target.selectedIndex;
         setText(e.nativeEvent.target[index].text)
+        localStorage.removeItem('contest_submission_id')
+        localStorage.removeItem('url_contest_submission')
+        setPreview("")
+        trackPromise(getContestSubmissionByContestAndStudent(dispatch, contest_id, e.target.value))
     }
 
     function handleFilter() {
@@ -309,9 +314,7 @@ function FormSubmitContestStudent(): JSX.Element {
                                                 <p id="phone">Thể loại: {art_type_contest}</p>
                                             </div>
 
-                                            <div className="row no-gutters">
-                                                <p id="phone">Thời gian đăng kí: {registration_time.replaceAll("T", " ").substring(0, 16)}</p>
-                                            </div>
+                                            
 
                                             <div className="row no-gutters">
                                                 <p id="phone">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0, 16)}</p>
@@ -361,7 +364,7 @@ function FormSubmitContestStudent(): JSX.Element {
                                                 })
                                             }
                                         </select>
-                                        <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button" onClick={() => handleFilter()}>Lọc&nbsp;<i className="fa fa-flask"></i></button>
+                                        
                                     </div>
                                 </div>
                             </div>

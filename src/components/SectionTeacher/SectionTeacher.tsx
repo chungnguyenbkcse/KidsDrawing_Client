@@ -8,7 +8,7 @@ import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedExercise, setModificationState } from "../../store/actions/exercise.action";
 import { ExerciseModificationStatus, IExercise } from "../../store/models/exercise.interface";
-import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ILessonState, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserRegisterTutorialState, IUserState } from "../../store/models/root.interface";
+import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ILessonState, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserRegisterTutorialPageState, IUserRegisterTutorialState, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -18,11 +18,15 @@ import { getExerciseTeacherBySection } from "../../common/service/Exercise/GetEx
 import { IUserRegisterTutorial } from "../../store/models/user_register_tutorial.interface";
 import { BsFillTrashFill } from "react-icons/bs";
 import { deleteExercise } from "../../common/service/Exercise/DeleteExercise";
+import { checkTutorialPageBySection } from "../../common/service/TutorialPage/GetCheckTutorialPage";
+import { getTutorialPageNotApproveBySection } from "../../common/service/TutorialPage/GetTutorialPageNotApproveBySection";
+import { deleteTutorialPageBySection1 } from "../../common/service/TutorialPage/DeleteTutorialPageBySection1";
+import { removeTutorialPageAll } from "../../store/actions/tutorial_page.action";
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
-    const user_register_tutorials: IUserRegisterTutorialState = useSelector((state: IStateType) => state.user_register_tutorials);
+    const user_register_tutorial_pages: IUserRegisterTutorialPageState = useSelector((state: IStateType) => state.user_register_tutorial_pages);
     const sections: ISectionState = useSelector((state: IStateType) => state.sections);
     const exercises: IExerciseState = useSelector((state: IStateType) => state.exercises);
     const exercise_teachers: IExerciseTeacherState = useSelector((state: IStateType) => state.exercise_teachers);
@@ -95,6 +99,18 @@ const SectionTeacher: React.FC = () => {
         is_active = (id_k);
     }
 
+    var id_h = localStorage.getItem('section_name');
+    let section_name: string = "";
+    if (id_h !== null) {
+        section_name = id_h
+    }
+
+    var id_kk = localStorage.getItem('is_tutorial_page');
+    let is_tutorial_page = "";
+    if (id_kk !== null) {
+        is_tutorial_page = (id_kk);
+    }
+
     let link_jisti = "";
     if (class_teachers.class_doing.length > 0) {
         class_teachers.class_doing.map((ele, idx) => {
@@ -128,18 +144,19 @@ const SectionTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getClassTeacher(dispatch, id))
                     trackPromise(getSectionById(dispatch, section_id))
                     trackPromise(getExerciseTeacherBySection(dispatch, section_id))
-                   
+                    trackPromise(checkTutorialPageBySection(dispatch, section_id))
                     trackPromise(getTutorialPageBySection(dispatch, section_id))
+                    trackPromise(getTutorialPageNotApproveBySection(dispatch, section_id))
                 }
             }
             else {
-                trackPromise(getClassTeacher(dispatch, id))
                 trackPromise(getSectionById(dispatch, section_id))
+                trackPromise(checkTutorialPageBySection(dispatch, section_id))
                 trackPromise(getExerciseTeacherBySection(dispatch, section_id))           
                 trackPromise(getTutorialPageBySection(dispatch, section_id))
+                trackPromise(getTutorialPageNotApproveBySection(dispatch, section_id))
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
@@ -167,6 +184,11 @@ const SectionTeacher: React.FC = () => {
     }
 
     const onChangeRoute1 = () => {
+
+        if (sections.sections.length > 0) {
+            localStorage.setItem('section_name', sections.sections[0].name)
+        }
+        
         localStorage.removeItem('description_tutorial_page_list')
         localStorage.setItem('description_tutorial_page_list', JSON.stringify(tutorial_pages.tutorialPages.sort((a, b) => a.number - b.number)))
         let path = "/section/edit";
@@ -198,19 +220,24 @@ const SectionTeacher: React.FC = () => {
         });
     }
 
-    function handleView(ele: IUserRegisterTutorial) {
-        localStorage.removeItem('user_register_section_id')
-        localStorage.setItem('user_register_section_id', ele.id.toString())
-        localStorage.removeItem('section_id')
-        localStorage.setItem('section_id', ele.section_id.toString())
-        localStorage.removeItem('section_number')
-        localStorage.setItem('section_number', ele.section_number.toString())
-        localStorage.removeItem('user_register_tutorial_name')
-        localStorage.setItem('user_register_tutorial_name', ele.name.toString())
-        let path = "/user-register-tutorial/edit";
-        history.push({
-            pathname: path
-        });
+    function handleView() {
+        dispatch(removeTutorialPageAll())
+        if (sections.sections.length > 0) {
+            localStorage.setItem('section_name', sections.sections[0].name)
+        }
+        
+            localStorage.removeItem('description_tutorial_page_list')
+            localStorage.setItem('description_tutorial_page_list', JSON.stringify(user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number)))
+            let path = "/section/edit-not-approve";
+            history.push({
+                pathname: path
+            })
+        
+        
+    }
+
+    function foo() {
+        trackPromise(checkTutorialPageBySection(dispatch, section_id))
     }
 
     return (
@@ -344,7 +371,6 @@ const SectionTeacher: React.FC = () => {
 
                 {
                     function () {
-                        if (requestId !== 0) {
                             return (
                                 <Popup
                                     open={popup2}
@@ -359,13 +385,11 @@ const SectionTeacher: React.FC = () => {
                                             <button type="button"
                                                 className="btn btn-danger"
                                                 onClick={() => {
-                                                    if (requestId === 0) {
-                                                        return;
-                                                    }
+                                                    
                                                     const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                                                         position: toast.POSITION.TOP_CENTER
                                                     });
-                                                    
+                                                    deleteTutorialPageBySection1(dispatch, section_id, idx, foo)
                                                     setPopup2(false);
                                                 }}>Remove
                                             </button>
@@ -373,7 +397,6 @@ const SectionTeacher: React.FC = () => {
                                     </div>
                                 </Popup>
                             )
-                        }
                     }()
                 }
 
@@ -654,79 +677,135 @@ const SectionTeacher: React.FC = () => {
                             return ""
                         }
                         else {
-                            if (is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now") {
-                                return (
-                                    <div className="row">
-                                        <div className="col-xl-6 col-md-6 mb-4">
-                                            <div className="col-xl-12 col-md-12 mb-4">
-                                                <div className={`card shadow h-100 py-2`} >
-                                                    <div className="card-body">
-                                                        <div className="row no-gutters justify-content-left">
-                                                            <h4 id="full-name">Danh sách yêu cầu giáo án</h4>
-                                                            <div className="table-responsive portlet">
-                                                                <table className="table">
-                                                                    <thead className="thead-light">
-                                                                        <tr>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {
-                                                                            user_register_tutorials.user_register_tutorial_not_approved_nows.map((ele, index) => {
-                                                                                return (
-                                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                                        <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { handleView(ele) }}>
-                                                                                            <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                                <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
-                                                                                            </div>
-                                                                                            <div className="col-xl-9 col-md-9 mt-2">
-                                                                                                <div className="row">
-                                                                                                    <div className="col-md-3">
-                                                                                                        Tên:
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7">
-                                                                                                        {ele.name}
-                                                                                                    </div>
-                                                                                                    <div className="col-md-2">
-                                                                                                        <BsFillTrashFill color="#dc3545" onClick={(e) => {
-                                                                                                            e.stopPropagation();
-                                                                                                            setRequestId(ele.id);
-                                                                                                            setPopup2(true)
-                                                                                                        }} />
-                                                                                                    </div>
+                            if ((is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now")) {
+                                if (is_tutorial_page == "Not approved") {
+                                    return (
+                                        <div className="row">
+                                            <div className="col-xl-6 col-md-6 mb-4">
+                                                <div className="col-xl-12 col-md-12 mb-4">
+                                                    <div className={`card shadow h-100 py-2`} >
+                                                        <div className="card-body">
+                                                            <div className="row no-gutters justify-content-left">
+                                                                <h4 id="full-name">Yêu cầu giáo án</h4>
+                                                                <div className="table-responsive portlet">
+                                                                    <table className="table">
+                                                                        <thead className="thead-light">
+                                                                            <tr>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+    
+                                                                                        <tr className={`table-row`} key={`semester_class_0`} onClick={() => {handleView()}}>
+                                                                                            <div className="row section-ele row-section mb-4 ml-2 mr-2">
+                                                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                                    <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
                                                                                                 </div>
-                                                                                                <div className="row">
-                                                                                                    <div className="col-md-3">
-                                                                                                        Gửi lúc:
+                                                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                                                    <div className="row">
+                                                                                                        <div className="col-md-3">
+                                                                                                            Tên:
+                                                                                                        </div>
+                                                                                                        <div className="col-md-7">
+                                                                                                            {section_name}
+                                                                                                        </div>
+                                                                                                        <div className="col-md-2">
+                                                                                                            <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                                e.stopPropagation();
+                                                                                                                
+                                                                                                                setPopup2(true)
+                                                                                                            }} />
+                                                                                                        </div>
                                                                                                     </div>
-                                                                                                    <div className="col-md-7">
-                                                                                                        {ele.update_time.replaceAll("T", " ").substring(0, 16)}
+                                                                                                    
+                                                                                                    <div className="row mb-2">
+                                                                                                        <div className="col-md-3">
+    
+                                                                                                        </div>
+                                                                                                        <div className="col-md-7 status-score">
+                                                                                                            Không được duyệt
+                                                                                                        </div>
+    
                                                                                                     </div>
-                                                                                                </div>
-                                                                                                <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
-
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7 status-score">
-                                                                                                        Chưa được duyệt
-                                                                                                    </div>
-
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                    </tr>
-                                                                                )
-                                                                            })
-                                                                        }
-                                                                    </tbody>
-                                                                </table>
+                                                                                        </tr>
+    
+    
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )
+                                    )
+                                }
+                                else if (is_tutorial_page == "Not approve now") {
+                                    return (
+                                        <div className="row">
+                                            <div className="col-xl-6 col-md-6 mb-4">
+                                                <div className="col-xl-12 col-md-12 mb-4">
+                                                    <div className={`card shadow h-100 py-2`} >
+                                                        <div className="card-body">
+                                                            <div className="row no-gutters justify-content-left">
+                                                                <h4 id="full-name">Yêu cầu giáo án</h4>
+                                                                <div className="table-responsive portlet">
+                                                                    <table className="table">
+                                                                        <thead className="thead-light">
+                                                                            <tr>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+    
+                                                                                        <tr className={`table-row`} key={`semester_class_0`} onClick={() => {handleView()}}>
+                                                                                            <div className="row section-ele row-section mb-4 ml-2 mr-2">
+                                                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                                    <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
+                                                                                                </div>
+                                                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                                                    <div className="row">
+                                                                                                        <div className="col-md-3">
+                                                                                                            Tên:
+                                                                                                        </div>
+                                                                                                        <div className="col-md-7">
+                                                                                                            {section_name}
+                                                                                                        </div>
+                                                                                                        <div className="col-md-2">
+                                                                                                            <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                                e.stopPropagation();
+                                                                                                                
+                                                                                                                setPopup2(true)
+                                                                                                            }} />
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    
+                                                                                                    <div className="row mb-2">
+                                                                                                        <div className="col-md-3">
+    
+                                                                                                        </div>
+                                                                                                        <div className="col-md-7 status-score">
+                                                                                                            Chưa được duyệt
+                                                                                                        </div>
+    
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </tr>
+    
+    
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
                             }
                             else {
                                 return (

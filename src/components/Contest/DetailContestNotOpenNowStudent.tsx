@@ -175,11 +175,7 @@ const DetailContestNotOpenNowStudent: React.FC = () => {
                                             <p className="birthday ml-4">Thể loại: {art_type_contest}</p>
                                         </div>
                                     </div>
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="text-xs">
-                                            <p className="birthday ml-4">Thời gian đăng kí: {registration_time.replaceAll("T", " ").substring(0,16)}</p>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
 
                                 <div className="col-xl-6 col-md-6">

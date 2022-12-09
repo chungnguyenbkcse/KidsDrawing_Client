@@ -16,7 +16,7 @@ function TopCardContest(props: PropsWithChildren<ICardProperties>): ReactElement
         localStorage.removeItem('art_type_name');
         localStorage.setItem('art_type_name', contest.art_type_name.toString())
         localStorage.removeItem('registration_time');
-        localStorage.setItem('registration_time', contest.registration_time.toString())
+        
         localStorage.removeItem('start_time');
         localStorage.setItem('start_time', contest.start_time.toString())
         localStorage.removeItem('end_time');
@@ -41,11 +41,11 @@ function TopCardContest(props: PropsWithChildren<ICardProperties>): ReactElement
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Độ tuổi:</span> <span className="header-card-course-value-teacher">{props.art_age_name}</span></p>
                     </div>
                     <div className="row">
-                        <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Thời gian đăng kí:</span> <span className="header-card-course-value-teacher">{props.registration_time}</span></p>
                         <p className="col-xl-6 col-md-6 col-xs-6" ><span className="header-card-course-teacher">Thời gian bắt đầu:</span> <span className="header-card-course-value-teacher">{props.start_time}</span></p>
+                        <p className="col-12" ><span className="header-card-course-teacher">Thời gian kết thúc:</span> <span className="header-card-course-value-teacher">{props.end_time}</span></p>
                     </div>
                     <div className="row">
-                        <p className="col-12" ><span className="header-card-course-teacher">Thời gian kết thúc:</span> <span className="header-card-course-value-teacher">{props.end_time}</span></p>
+                        
                         <p className="col-12" ><span className="header-card-course-teacher">Số lượng đăng kí:</span> <span className="header-card-course-value-teacher">{props.total_register_contest} / {props.max_participant}</span></p>
                     </div>
                     <div className="row">

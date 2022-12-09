@@ -16,6 +16,7 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
 import { postTutorialPageToast } from "../../common/service/TutorialPage/PostTutorialPageToast";
 import { postTutorialPage } from "../../common/service/TutorialPage/PostTutorialPage";
+import { deleteTutorialPageBySection } from "../../common/service/TutorialPage/DeleteTutorialPageBySection";
 
 export type SectionListProps = {
     children?: React.ReactNode;
@@ -34,7 +35,6 @@ type PageContent = {
 type TutorialPage = {
     id: any;
     section_id: number;
-    name: string;
     number: number;
     description: string;
 }
@@ -69,10 +69,12 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         initial_text = list_description.length !== 0 ? list_description[0].description: "";
     }
 
-    var id_h = localStorage.getItem('tutorial_name');
-    let tutorial_name: string = "";
+    console.log(list_description)
+
+    var id_h = localStorage.getItem('section_name');
+    let section_name: string = "";
     if (id_h !== null) {
-        tutorial_name = id_h
+        section_name = id_h
     }
 
     var id_k = localStorage.getItem('id');
@@ -81,40 +83,17 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         id = parseInt(id_k);
     }
 
+
+    var id_kk = localStorage.getItem('is_tutorial_page');
+    let is_tutorial_page = "";
+    if (id_kk !== null) {
+        is_tutorial_page = (id_kk);
+    }
+
     const { promiseInProgress } = usePromiseTracker();
 
 
-    let access_token = localStorage.getItem("access_token");
-    let refresh_token = localStorage.getItem("refresh_token");
-    useEffect(() => {
-        if (access_token !== null && refresh_token !== null && access_token !== undefined && refresh_token !== undefined){
-            let access_token_decode: any = jwt_decode(access_token)
-            let refresh_token_decode: any = jwt_decode(refresh_token)
-            let exp_access_token_decode = access_token_decode.exp;
-            let exp_refresh_token_decode = refresh_token_decode.exp;
-            let now_time = Date.now() / 1000;
-            console.log(exp_access_token_decode)
-            console.log(now_time)
-            if (exp_access_token_decode < now_time){
-                if (exp_refresh_token_decode < now_time){
-                    localStorage.removeItem('access_token') // Authorization
-                    localStorage.removeItem('refresh_token')
-                    localStorage.removeItem('username')
-                    localStorage.removeItem('role')
-                    localStorage.removeItem('id')
-                    localStorage.removeItem('contest_id')
-                    localStorage.removeItem('schedule_id')
-                    dispatch(logout())
-                }
-                else {
-                    trackPromise(getTutorialPageBySection(dispatch, section_id))      
-                }
-            }
-            else {
-                trackPromise(getTutorialPageBySection(dispatch, section_id))  
-            }
-        }
-    }, [dispatch, access_token, refresh_token, section_id])
+
 
     const history = useHistory();
     function routeHome() {
@@ -122,7 +101,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
         history.push(path);
     }
 
-    let [textHtml, setTextHtml] = useState(initial_text);
+    let [textHtml, setTextHtml] = useState(list_description.length !== 0 ? list_description[0].description: "");
 
     if (!section) {
         section = { id: 0, total_exercise_not_submit: 0,  name: "", number: 0,  class_id: 0, teach_form: false, recording: "", message: "", teacher_name: "" };
@@ -140,7 +119,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
 
 
     const [formState, setFormState] = useState({
-        name: { error: "", value: tutorial_name},
+        name: { error: "", value: section_name},
         number: { error: "", value: section.number },
         teach_form: { error: "", value: section.teach_form },
         class_id: { error: "", value: section.class_id },
@@ -187,23 +166,29 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                 if (tutorial_pages !== null) {
                     if (tutorial_pages.tutorialPages.length > 0) {
                         let total = tutorial_pages.tutorialPages.length;
-                        tutorial_pages.tutorialPages.map((value, index) => {
-                            if (index === total - 1){
-                                setTimeout(function () {
-                                    routeHome();
-                                }, 2000); 
-                                return dispatch(postTutorialPageToast({
+                        if (is_tutorial_page == "not") {
+                            tutorial_pages.tutorialPages.map((value, index) => {
+                                if (index === total - 1){
+                                    setTimeout(function () {
+                                        routeHome();
+                                    }, 2000); 
+                                    return dispatch(postTutorialPageToast({
+                                        section_id: section_id,
+                                        description: value.description,
+                                        number: value.number
+                                    }, idx))
+                                }
+                                return dispatch(postTutorialPage({
                                     section_id: section_id,
                                     description: value.description,
                                     number: value.number
-                                }, idx))
-                            }
-                            return dispatch(postTutorialPage({
-                                section_id: section_id,
-                                description: value.description,
-                                number: value.number
-                            }))
-                        }) 
+                                }))
+                            })
+                        
+                        }
+                        else {
+                            deleteTutorialPageBySection(dispatch, section_id, tutorial_pages.tutorialPages, routeHome, idx)
+                        }
                     }
                 }
             }
@@ -448,7 +433,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                     }))
                    console.log({
                         description: value,
-                        name: tutorial_name,
+                        name: section_name,
                         section_id: section_id,
                         number: k-1
                    })
@@ -463,7 +448,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     
                     console.log({
                         description: value,
-                        name: tutorial_name,
+                        name: section_name,
                         section_id: section_id,
                         number: tutorial_pages.tutorialPages.length
                    })
@@ -488,18 +473,7 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                     </div>
                     <div className="card-body">
                         <form onSubmit={saveUser}>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <TextInput id="input_name"
-                                        value={formState.name.value}
-                                        field="name"
-                                        onChange={hasFormValueChanged}
-                                        required={true}
-                                        maxLength={2000}
-                                        label="Tên giáo trình"
-                                        placeholder="" />
-                                </div>
-                            </div>
+                            
                             <div className="form-group">
                                 <label>Nội dung bước {currentPage} / {totalPage}</label>
                                 <Editor getValue={getValue} isCreate={checked} setValue={textHtml} />

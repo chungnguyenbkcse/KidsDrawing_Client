@@ -32,7 +32,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
         localStorage.removeItem('art_type_name');
         localStorage.setItem('art_type_name', contest.art_type_name.toString())
         localStorage.removeItem('registration_time');
-        localStorage.setItem('registration_time', contest.registration_time.toString())
+        
         localStorage.removeItem('start_time');
         localStorage.setItem('start_time', contest.start_time.toString())
         localStorage.removeItem('end_time');
@@ -216,7 +216,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ").substring(0,16)}</span>
                                         <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                        <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_time.replaceAll("T", " ").substring(0,16)}</span>
+                                        
                                         <span className="d-block mb-5">Trạng thái: {ele.status}</span>
                                         <div
                                             className="d-flex justify-content-between stats">

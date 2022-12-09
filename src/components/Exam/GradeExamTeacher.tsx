@@ -25,6 +25,17 @@ const GradeExamTeacher: React.FC = () => {
         feedback: "",
         score: 0
     }
+
+    const [count, setCount] = useState(0);
+    const [image_url, setImageUrl] = useState("");
+    const [student_name, setStudentName] = useState("");
+    const [student_id, setStudentId] = useState(exercise_submissions.exercise_not_gradeds.length > 0 ? exercise_submissions.exercise_not_gradeds[0].student_id : 0);
+    const [exercise_submission_id, setExerciseSubmissionId] = useState(0);
+    const [time_submit, setTimeSubmit] = useState("");
+
+
+
+
     var id_y = localStorage.getItem('exercise_id');
     let exercise_id = 0;
 
@@ -49,6 +60,14 @@ const GradeExamTeacher: React.FC = () => {
         });
 
         if (student_id === 0 ) {
+            dispatch(putExerciseSubmissionByTeacher({
+                student_id: exercise_submissions.exercise_not_gradeds[0].student_id,
+                exercise_id: exercise_id,
+                score: formState.score.value,
+                feedback: formState.feedback.value
+            }, id))
+        }
+        else {
             dispatch(putExerciseSubmissionByTeacher({
                 student_id: student_id,
                 exercise_id: exercise_id,
@@ -111,6 +130,11 @@ const GradeExamTeacher: React.FC = () => {
             setStudentId(student_id_);
             setExerciseSubmissionId(exercise_submission_id_);
         }
+
+        setFormState({
+            feedback: { error: "", value: user_grade_exercise_submission.feedback },
+            score: { error: "", value: user_grade_exercise_submission.score },
+        });
     }
 
     const routeChange1 = () => {
@@ -120,12 +144,7 @@ const GradeExamTeacher: React.FC = () => {
         });
     }
 
-    const [count, setCount] = useState(0);
-    const [image_url, setImageUrl] = useState("");
-    const [student_name, setStudentName] = useState("");
-    const [student_id, setStudentId] = useState(0);
-    const [exercise_submission_id, setExerciseSubmissionId] = useState(0);
-    const [time_submit, setTimeSubmit] = useState("");
+    
     return (
         promiseInProgress ?
             <div className="loader"></div> : <Fragment>

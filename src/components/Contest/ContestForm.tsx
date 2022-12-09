@@ -264,9 +264,9 @@ const ContestForm: React.FC = () => {
 
   function isFormInvalid(): boolean {
     return (formState.max_participant.error || formState.description.error
-      || formState.name.error || formState.registration_time.error || formState.start_time.error
+      || formState.name.error  || formState.start_time.error
       || formState.end_time.error || !formState.art_age_id.value || !formState.art_type_id.value
-      || !formState.name.value || !formState.registration_time.value || !formState.start_time.value
+      || !formState.name.value || !formState.start_time.value
       || !formState.end_time.value) as boolean;
   }
 
@@ -378,22 +378,11 @@ const ContestForm: React.FC = () => {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-md-6">
-                  <Checkbox
-                    id="input_is_enabled"
-                    field="is_enabled"
-                    value={formState.is_enabled.value}
-                    onChange={hasFormValueChanged}
-                    required={false}
-                    label="Mở"
-                  />
-                </div>
+                
                   <div className="form-group col-md-6">
                     <label>Giáo viên chấm</label>
                     <ReactSelect setValue={listTeachers} value={listTeacherGradeContests} changeValue={changeValueTeacher}/>
                   </div>
-              </div>
-              <div className="form-row">
                 <div className="form-group col-md-6">
                   <NumberInput id="input_max_participant"
                     value={formState.max_participant.value}
@@ -403,18 +392,7 @@ const ContestForm: React.FC = () => {
                     min={0}
                     label="Số người đăng kí tối đa" />
                 </div>
-                <div className="form-group col-md-6">
-                  <DateInput id="input_registration_time"
-                    field="registration_time"
-                    value={formState.registration_time.value}
-                    onChange={hasFormValueChanged}
-                    type="datetime-local"
-                    active={false}
-                    required={false}
-                    maxLength={time_now}
-                    label="Thời gian bắt đầu đăng kí"
-                    placeholder="" />
-                </div>
+                
               </div>
 
               <div className="form-row">
@@ -424,9 +402,9 @@ const ContestForm: React.FC = () => {
                     value={formState.start_time.value}
                     onChange={hasFormValueChanged}
                     type="datetime-local"
-                    active={formState.registration_time.value !== null && formState.registration_time.value !== "" ? false: true}
+                    active={false}
                     required={false}
-                    maxLength={formState.registration_time.value}
+                    maxLength={time_now}
                     label="Thời gian bắt đầu cuộc thi"
                     placeholder="" />
                 </div>

@@ -1,7 +1,8 @@
 import jwt_decode from "jwt-decode";
-import React, { Dispatch, Fragment, useEffect } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
 import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
 import { logout } from "../../store/actions/account.actions";
@@ -15,7 +16,7 @@ const ResultGradeExamTeacher: React.FC = () => {
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
     const exercise_submissions: IExerciseSubmissionState  = useSelector((state: IStateType) => state.exercise_submissions);
     const max = exercise_submissions.exercise_gradeds.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = exercise_submissions.exercise_gradeds.reduce((a, b) => Math.min(a, b.score), 0);
+    const min = exercise_submissions.exercise_gradeds.reduce((a, b) => Math.min(a, b.score), 10000000);
     var class_id = localStorage.getItem('class_id');
     var class_id_: number = 0;
     if (class_id !== null) {
@@ -28,6 +29,30 @@ const ResultGradeExamTeacher: React.FC = () => {
     if (id_y !== null) {
         exercise_id = parseInt(id_y);
     }
+
+    let student: string[] = []
+    let scores: number[] = []
+    if (exercise_submissions.exercise_gradeds.length > 0){
+        exercise_submissions.exercise_gradeds.map(ele => {
+            student.push(ele.student_name)
+            scores.push(ele.score)
+            return ele
+        })
+    }
+
+    
+    const labels = student;
+    let data = {
+        labels,
+        datasets: [
+            {
+                label: 'Điêm',
+                data: scores,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ],
+    };
 
 
     let access_token = localStorage.getItem("access_token");
@@ -75,6 +100,8 @@ const ResultGradeExamTeacher: React.FC = () => {
             pathname: path
         });
     }
+
+    const [checked, setChecked] = useState(true);
     return (
         <Fragment>
             
@@ -83,31 +110,79 @@ const ResultGradeExamTeacher: React.FC = () => {
                 <TopCard title="ĐIỂM THẤP NHẤT" text={`${min}`} icon="book" class="danger" />
             </div>
 
+
             <div className="row">
-
-                <div className="col-xl-8 col-md-8 mb-4">
-                    <h3 className=" mb-2" id="level-teacher">Danh sách học sinh</h3>
-                    <div className="col-xl-12 col-md-12 mb-4">
-                        <div className={`card shadow h-100 py-2`} id="topcard-user">
-                            <div className="card-body">
-                                <ResultGradeExamTeacher1 />
-                            </div>
-                        </div>
-                    </div>
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                        if (checked === false) {
+                            setChecked(true)
+                        }
+                    }} style={{
+                        color: checked ? "#F24E1E" : "#2F4F4F"
+                    }}>Bảng xếp hạng</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
-
-                <div className="col-xl-4 col-md-4 mb-4">
-                    <div className="row justify-content-center">
-                        <button className="btn btn-success btn-green" id="btn-into-class" onClick={() =>{
-                        onRouteChange()}}>
-                            Xem review
-                            <i className="fas fa fa-arrow-right"></i>
-                    </button>
-                    </div>
-                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
-                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
+                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked === true) {
+                            setChecked(false)
+                        }
+                    }}
+                        style={{
+                            color: checked ? "#2F4F4F" : "#F24E1E"
+                        }}>Biểu đồ</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "30%",
+                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
+                    }}></div>
                 </div>
             </div>
+
+            {
+                function () {
+                    if (checked === true) {
+                        return (
+                            <div className="row">
+
+                                <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                            <div className="card-body">
+                                                <ResultGradeExamTeacher1 />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                    else {
+                        return (
+                            <div className="row">
+
+                                <div className="col-xl-12 col-md-12 mb-4">
+                                    <div className="col-xl-12 col-md-12 mb-4">
+                                        <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                            <div className="card-body">
+                                                <ChartLine data={data} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                }()
+            }
 
         </Fragment>
     );

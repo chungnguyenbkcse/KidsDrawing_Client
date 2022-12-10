@@ -55,6 +55,7 @@ const ScoreContestAdminList = () => {
             localStorage.removeItem('time_submit');
             localStorage.setItem('time_submit', user_graded_contest_submission.update_time.toString())
             localStorage.setItem('student_id', user_graded_contest_submission.student_id.toString());
+            localStorage.setItem('teacher_name', user_graded_contest_submission.teacher_name)
             localStorage.removeItem('contest_id');
             localStorage.setItem('contest_id', user_graded_contest_submission.contest_id.toString());
             localStorage.setItem('url_conest_submission', user_graded_contest_submission.image_url.toString());
@@ -116,14 +117,14 @@ const ScoreContestAdminList = () => {
             return (
                 <button type="button" className="btn btn-primary" onClick={() => {
                     handleViewResult(row)
-                }}>Chi tiết</button>
+                }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
             )
         }
         else {
             return (
                 <button type="button" className="btn btn-primary" onClick={() => {
                     handleViewResult1(row)
-                }}>Chi tiết</button>
+                }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
             )
         }
         

@@ -89,7 +89,7 @@ function ExerciseStudentList(props) {
             if (props.onSelect) props.onSelect(row);
             onChangeRoute(row)
           }}
-          >Chi tiết</button>
+          ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
     )
   } */
 

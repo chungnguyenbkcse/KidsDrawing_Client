@@ -6,6 +6,8 @@ interface ContestSubmission {
     contest_id: number;
     student_name: string;
     contest_name: string;
+    teacher_id: number;
+    teacher_name: string;
     image_url: string;
     score: number;
     feedback: string;
@@ -53,6 +55,8 @@ export function getContestSubmissionByContest(dispatch: any, id: any) {
                         student_name: ele.student_name,
                         contest_name: ele.contest_name,
                         image_url: ele.image_url,
+                        teacher_id: ele.teacher_id,
+                        teacher_name: ele.teacher_name,
                         score: ele.score,
                         feedback: ele.feedback,
                         time: ele.time,
@@ -70,6 +74,8 @@ export function getContestSubmissionByContest(dispatch: any, id: any) {
                         student_name: ele.student_name,
                         contest_name: ele.contest_name,
                         image_url: ele.image_url,
+                        teacher_id: ele.teacher_id,
+                        teacher_name: ele.teacher_name,
                         score: ele.score,
                         feedback: ele.feedback,
                         time: ele.time,

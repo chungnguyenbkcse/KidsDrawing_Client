@@ -59,6 +59,8 @@ const DetailContestStudent: React.FC = () => {
     let submistions: IContestSubmission = {
         id: 0,
         student_id: 0,
+        teacher_id: 0,
+        teacher_name: "",
         student_name: '',
         contest_id: 0,
         contest_name: "",

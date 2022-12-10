@@ -56,7 +56,7 @@ const routeViewSchedule = (class_id: number, class_name: string) =>{
         <button type="button" className="btn btn-primary" onClick={() => {
           if(props.onSelect) props.onSelect(myclass);
           routeViewSchedule(myclass.id, myclass.name)}}
-        >Chi tiết</button>
+        ><i className="fa fa-info-circle" aria-hidden="true"></i></button>
       </td>
       <td>
       <button type="button" className="btn btn-primary" onClick={() => {

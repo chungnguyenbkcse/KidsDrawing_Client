@@ -121,7 +121,7 @@ const ScoreContestList1 = () => {
         return (
             <button type="button" className="btn btn-primary" onClick={() => {
                 handleViewResult(row)
-            }}>Chi tiết</button>
+            }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
         )
     }
 

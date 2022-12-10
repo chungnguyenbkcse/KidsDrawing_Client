@@ -73,7 +73,7 @@ const DetailScoreContestStudent: React.FC = () => {
         end_time = (id_e);
     }
 
-    var id_f = localStorage.getItem("contest_name");
+    var id_f = localStorage.getItem("student_name");
     let contest_name = "";
     if (id_f !== null) {
         contest_name = (id_f);

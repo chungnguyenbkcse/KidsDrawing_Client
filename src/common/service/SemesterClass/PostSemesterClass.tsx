@@ -37,24 +37,19 @@ export function postSemesterClass(dispatch: any, data: any, schedule_element: an
             .then (data_1 => {
                 schedule_element.map((ele: any, idxxx:any) => {
                     if (idxxx === schedule_element.length - 1) {
-                        dispatch(postSchedule1({
+                        return dispatch(postSchedule1({
                             lesson_time: ele.lesson_time,
                             date_of_week: ele.date_of_week,
                             semester_classes_id: data_1.id
                         }, idx))
                     }
                     else {
-                        dispatch(postSchedule({
+                        return dispatch(postSchedule({
                             lesson_time: ele.lesson_time,
                             date_of_week: ele.date_of_week,
                             semester_classes_id: data_1.id
                         }))
                     }
-                    return dispatch(postSchedule({
-                        lesson_time: ele.lesson_time,
-                        date_of_week: ele.date_of_week,
-                        semester_classes_id: data_1.id
-                    }))
                 })
             })
             .catch(error => {

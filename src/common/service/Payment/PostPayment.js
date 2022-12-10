@@ -1,6 +1,7 @@
 import * as crypto from 'crypto';
+import { toast } from "react-toastify";
 
-export function postMomo(total_price, ids) {
+export function postMomo(total_price, ids, idx) {
     //https://developers.momo.vn/#/docs/en/aiov2/?id=payment-method
     //parameters
     var partnerCode = "MOMOXF6D20220917";
@@ -65,6 +66,7 @@ export function postMomo(total_price, ids) {
         console.log(`Headers: ${JSON.stringify(res.headers)}`);
         res.setEncoding('utf8');
         res.on('data', (body) => {
+            toast.update(idx, { render: "Đang chuyển đán trang thanh toán MOMO!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             console.log('Body: ');
             console.log(body);
             console.log('payUrl: ');
@@ -72,11 +74,13 @@ export function postMomo(total_price, ids) {
             console.log(JSON.parse(body).payUrl);
         });
         res.on('end', () => {
+            toast.update(idx, { render: "Đang chuyển đán trang thanh toán MOMO!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             console.log('No more data in response.');
         });
     })
 
     req.on('error', (e) => {
+        toast.update(idx, { render: "Xảy ra lỗi yêu cầu thanh toán MOMO!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
         console.log(`problem with request: ${e.message}`);
     });
     // write data to request body

@@ -104,7 +104,10 @@ const CartForm: React.FC = () => {
             return ids.push(ele.id)
         })
         console.log("ids", ids)
-        postMomo(user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0), ids);
+        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
+        postMomo(user_register_join_semesters.waiting.reduce((prev, next) => prev + ((next.price * 1) || 0), 0), ids, idx);
     }
 
     if (roleUser === "PARENT") {

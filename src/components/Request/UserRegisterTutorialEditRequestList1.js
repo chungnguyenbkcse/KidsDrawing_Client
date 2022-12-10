@@ -18,7 +18,7 @@ function TutorialEditRequestList1(props) {
     function approvedTutorial(ele) {
       const id = toast.info("Chấp nhận giáo án giáo viên làm giáo chung hệ thống!", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000
+        autoClose: 1000
       });
       dispatch(deleteTutorialTemplatePageBySectionX(ele.id, id));
       /* dispatch(putUserRegisterTutorial(ele.id, {
@@ -70,7 +70,7 @@ function TutorialEditRequestList1(props) {
   function approvedTutorial(ele) {
     const id = toast.info("Chấp nhận giáo án giáo viên cho giáo án chung!", {
       position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000
+      autoClose: 1000
     });
     dispatch(deleteTutorialTemplatePageBySectionX(ele.id, id));
     /* dispatch(putUserRegisterTutorial(ele.id, {

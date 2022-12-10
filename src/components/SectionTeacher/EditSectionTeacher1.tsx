@@ -304,7 +304,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                     })
                     handleBackPage()
                 }
-                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             }
         }
     }
@@ -463,7 +463,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
             console.log(user_register_tutorial_pages.user_register_tutorial_pages)
             setCheckAfterCreate(true)
 
-            toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+            toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
         }
     }
 

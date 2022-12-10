@@ -208,10 +208,10 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
 
     return (
             <Fragment>
-            <div className="container mb-5">
+            <div className="container mb-2">
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="d-flex flex-row justify-content-between align-items-center filters mt-2">
+                        <div className="d-flex flex-row justify-content-between align-items-center filters">
                             <h6 className="ml-3">{/* Có {element.filter((val) => {
                                 if (props.value === "") {
                                     return val;
@@ -271,7 +271,7 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
                         </div>
                     </div>
                 </div>
-                <div className="row mt-1">
+                <div className="row">
                 {
                         function () {
                             var resArr: IContestParentX[] = [];
@@ -340,9 +340,8 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
                                                     )
                                             })}
                                             <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ").substring(0,16)}</span>
-                                            <span className="d-block">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
-                                            <span className="d-block mb-5">Số đăng kí tối đa: {ele.max_participant}</span>
-                                            
+                                            <span className="d-block md-2">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
+                                    
                                             <div
                                                 className="d-flex justify-content-between stats">
                                                     <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>

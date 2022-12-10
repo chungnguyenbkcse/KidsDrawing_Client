@@ -38,10 +38,10 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 localStorage.setItem('id', decoded.id)
                 localStorage.setItem('link_profile', decoded.profile_image_url)
                 dispatch(login(username));
-                toast.update(id, { render: "Đăng nhập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(id, { render: "Đăng nhập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 setTimeout(function () {
                     changeRouteHome(true);
-                }, 2000); 
+                }, 1000); 
                 let openRequest = indexedDB.open("firebase-messaging-database", 1);
                 openRequest.onerror = function() {
                     console.error("Error", openRequest.error);

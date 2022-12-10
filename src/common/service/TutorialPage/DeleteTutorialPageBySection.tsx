@@ -43,7 +43,7 @@ export function deleteTutorialPageBySection(dispatch: any, id: any, tutorial_pag
                     if (index === tutorial_pages.length - 1){
                         setTimeout(function () {
                             routeHome();
-                        }, 2000); 
+                        }, 1000); 
                         return dispatch(postTutorialPageToast({
                             section_id: id,
                             description: value.description,

@@ -48,7 +48,7 @@ export function deleteUserRegisterJoinSemesterBySemesterClassAndStudent(semester
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Hủy đăng kí thành công!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Hủy đăng kí thành công!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 if (roleUser === "PARENT") {
                     getUserRegisterJoinSemesterByPayer(dispatch, id)
                 }
@@ -57,7 +57,7 @@ export function deleteUserRegisterJoinSemesterBySemesterClassAndStudent(semester
                 }
                 setTimeout(function () {
                     routeChange();
-                }, 2000); 
+                }, 1000); 
             
             })
             .catch(error => {

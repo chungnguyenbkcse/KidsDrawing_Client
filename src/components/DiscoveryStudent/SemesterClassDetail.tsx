@@ -186,7 +186,7 @@ const SemesterClassDetailStudent: React.FC = () => {
 
     const history = useHistory();
     function routeHome() {
-        let path = '/discover/course';
+        let path = '/courses/semester-classes';
         history.push(path)
     }
 

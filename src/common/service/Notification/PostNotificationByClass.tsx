@@ -33,7 +33,7 @@ export function postNotificationByClass(id: any,data: any, idx: any) {
                 }
             })
             .then(data => {
-                toast.update(idx, { render: "Thông báo gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thông báo gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 console.log(data)
             })
             .catch(error => {

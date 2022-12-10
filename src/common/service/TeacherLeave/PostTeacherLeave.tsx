@@ -40,7 +40,7 @@ export function postTeacherLeave(dispatch: any, data: any, idx: any) {
                 }
             })
             .then (val => {
-                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu nghỉ dạy đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 console.log(val)
                 getTeacherLeaveByClass(dispatch, class_id)
             })

@@ -192,6 +192,12 @@ const ManageClassesDone: React.FC = () => {
         setFilter(e.target.value)
         let index = e.nativeEvent.target.selectedIndex;
         setText(e.nativeEvent.target[index].text)
+        trackPromise(getUserById(dispatch, filter))
+        trackPromise(getExerciseForClassStudent(dispatch, class_id, e.target.value))
+        trackPromise(getStudentLeaveByClassAndStudent(dispatch, class_id, e.target.value))
+        trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id, e.target.value))
+        trackPromise(getInfoFinalCourse(dispatch, e.target.value, class_id))
+        trackPromise(getInforClassHasRegisterJoinSemester(dispatch, class_id, e.target.value))
     }
 
     function handleFilter() {
@@ -229,7 +235,7 @@ const ManageClassesDone: React.FC = () => {
                                         })
                                     }
                                 </select>
-                                <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button" onClick={() => handleFilter()}>Lọc&nbsp;<i className="fa fa-flask"></i></button>
+                                
                             </div>
                         </div>
                     </div>
@@ -250,60 +256,75 @@ const ManageClassesDone: React.FC = () => {
                         }
                     </>
                 </Popup>
-                <div className="row">
-                    <div className="col-xl-4 col-md-4 mb-4">
-                        <h3 className=" mb-2" id="level-teacher">Điểm tổng kết</h3>
-                        <div className="card shadow mb-4">
-                            <div className="card-body">
-                                <CircularProgressbar value={percentage} text={`${percentage}`} />;
-                            </div>
-                        </div>
-                        {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
-                    <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
-                    </div>
-                    <div className="col-xl-8 col-md-8 mb-4">
-                        <div className="row">
-                            <h3 className=" mb-2" id="level-teacher">Thống kê điểm</h3>
-                            <div className="col-xl-12 col-md-12 mb-4">
-                                <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                    <div className="card-body">
-                                        <div className="row no-gutters">
-                                            <ChartLine data={data} />
-                                        </div>
-                                        <div className="row justify-content-center">
-                                            <button
-                                                className="btn btn-success btn-green"
-                                                id="btn-into-class-student"
-                                                onClick={() => { routeChange() }}
-                                            >
-                                                Xem chi tiết
-                                                <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
-                                            </button>
+                {
+                    function () {
+                        if (filter == 0) {
+                            return (
+                                <div className="row mx-auto justify-content-center">
+                                    <p className="text-notifi text-center mt-4 mb-4">Vui lòng chọn ít nhất một tài khoản học sinh!</p>
+                                </div>
+                            )
+                        }
+                        else {
+                            return (
+                                <div className="row">
+                                <div className="col-xl-4 col-md-4 mb-4">
+                                    <h3 className=" mb-2" id="level-teacher">Điểm tổng kết</h3>
+                                    <div className="card shadow mb-4">
+                                        <div className="card-body">
+                                            <CircularProgressbar value={percentage} text={`${final_grade}`} />;
                                         </div>
                                     </div>
+                                    {/* <TopCardLevel title="TRÌNH ĐỘ ĐÃ DUYỆT" text={`2`} icon="book" class="primary" />
+                                <TopCardLevel title="TRÌNH ĐỘ CHƯA DUYỆT" text={`1`} icon="book" class="danger" /> */}
+                                </div>
+                                <div className="col-xl-8 col-md-8 mb-4">
+                                    <div className="row">
+                                        <h3 className=" mb-2" id="level-teacher">Thống kê điểm</h3>
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                                <div className="card-body">
+                                                    <div className="row no-gutters">
+                                                        <ChartLine data={data} />
+                                                    </div>
+                                                    <div className="row justify-content-center">
+                                                        <button
+                                                            className="btn btn-success btn-green"
+                                                            id="btn-into-class-student"
+                                                            onClick={() => { routeChange() }}
+                                                        >
+                                                            Xem chi tiết
+                                                            <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-xl-12 col-md-12 mb-4">
+                                            <div className="row justify-content-center">
+                                                <button
+                                                    className="btn btn-success btn-green"
+                                                    id="btn-into-class-review"
+                                                    onClick={() => {
+                                                        dispatch(setModificationState(LessonModificationStatus.Create))
+                                                        onLessonRemove()
+                                                    }}
+                                                >
+                                                    Nhận xét
+                                                    <FcFeedback />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+            
                                 </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xl-12 col-md-12 mb-4">
-                                <div className="row justify-content-center">
-                                    <button
-                                        className="btn btn-success btn-green"
-                                        id="btn-into-class-review"
-                                        onClick={() => {
-                                            dispatch(setModificationState(LessonModificationStatus.Create))
-                                            onLessonRemove()
-                                        }}
-                                    >
-                                        Nhận xét
-                                        <FcFeedback />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                            )
+                        }
+                    }()
+                }
 
                 <div className="row justify-content-center">
                     <div className="col-xl-6 col-md-6 mb-4">
@@ -322,10 +343,7 @@ const ManageClassesDone: React.FC = () => {
                                         <p id="phone">Số điện thoại: {users.parents.length > 0 ? users.parents[0].phone : ""}</p>
                                     </div>
 
-                                    <div className="row no-gutters">
-                                        <i className={`fas fa-calendar fa-2x`} id="icon-phone"></i>
-                                        <p id="phone">Ngày sinh: {users.parents.length > 0 ? users.parents[0].dateOfBirth : ""}</p>
-                                    </div>
+                            
 
                                     <div className="row no-gutters">
                                         <i className={`fas fa-envelope fa-2x`} id="icon-phone"></i>

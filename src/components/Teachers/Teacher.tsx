@@ -36,7 +36,7 @@ const Teacher: React.FC = () => {
         if (data.length === 0) {
             toast.error("File không chưa dữ liệu", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+                autoClose: 1000
             });
         }
         else {
@@ -46,7 +46,7 @@ const Teacher: React.FC = () => {
                 if (ele.username === null || ele.username === "" || ele.email === null || ele.email === "")   {
                     toast.error(`Lỗi tại dòng ${index + 1}`, {
                         position: toast.POSITION.TOP_CENTER,
-                        autoClose: 2000
+                        autoClose: 1000
                     });
                     is_check = false;
                     break;

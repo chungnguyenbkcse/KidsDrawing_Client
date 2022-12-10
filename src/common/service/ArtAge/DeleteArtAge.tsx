@@ -32,7 +32,7 @@ export function deleteArtAge(id: any, idx: any) {
                 }
             })
             .then (data => {
-                toast.update(idx, { render: "Xóa độ tuổi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa độ tuổi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 console.log(data)
                 dispatch(removeArtAge(id))
             })

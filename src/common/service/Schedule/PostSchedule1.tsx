@@ -38,7 +38,7 @@ export function postSchedule1(data: any, foo: any) {
                 console.log(data)
                 getSchedule(dispatch)
                 getSemesterClass(dispatch)
-                toast.update(foo, { render: "Thêm lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(foo, { render: "Thêm lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

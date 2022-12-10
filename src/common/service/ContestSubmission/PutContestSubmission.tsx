@@ -36,10 +36,10 @@ export function putContestSubmission(id: number, data: any, idx: any, routeHome:
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(data))
-                toast.update(idx, { render: "Nộp bài thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Nộp bài thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 1000});
                 setTimeout(function () {
                     routeHome();
-                }, 2000); 
+                }, 1000); 
             })
             .catch(error => {
                 toast.update(idx, { render: "Nộp bài thi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

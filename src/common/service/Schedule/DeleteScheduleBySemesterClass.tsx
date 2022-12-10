@@ -41,7 +41,7 @@ export function deleteScheduleBySemesterClass(id: any, schedule_element: any, id
                         semester_classes_id: id
                     }))
                 })
-                toast.update(idx, { render: "Chỉnh lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

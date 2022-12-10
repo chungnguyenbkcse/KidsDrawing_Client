@@ -175,7 +175,7 @@ const CourseNomalFormEdit: React.FC = () => {
             dispatch(setModificationState(CourseModificationStatus.None));
             setTimeout(function () {
                 routeHome();
-            }, 2000); 
+            }, 1000); 
         }
     }
 

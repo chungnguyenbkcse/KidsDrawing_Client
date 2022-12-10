@@ -37,7 +37,7 @@ export function putUser(id: any, data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 console.log(id)
-                toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh thông tin tài khoản thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 getProfile(dispatch, id)
             })
             .catch(error => {

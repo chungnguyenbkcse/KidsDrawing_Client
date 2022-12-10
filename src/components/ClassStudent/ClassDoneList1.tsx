@@ -179,8 +179,6 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
         localStorage.setItem('class_id', classes_student.id.toString());
         localStorage.removeItem('course_name');
         localStorage.setItem('course_name', classes_student.course_name)
-        localStorage.removeItem('user_register_join_semester_id')
-        localStorage.setItem('user_register_join_semester_id', classes_student.user_register_join_semester_id.toString())
         history.push({
             pathname: path,
         });

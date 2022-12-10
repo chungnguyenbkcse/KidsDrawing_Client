@@ -26,7 +26,7 @@ export function postRegisterStudent(dispatch: any, data: any, idx: any) {
             })
             .then(data => {
                 getInforChildByParent(dispatch, id)
-                toast.update(idx, { render: "Đăng ký thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });           
+                toast.update(idx, { render: "Đăng ký thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });           
             })
             .catch(error => {
                 toast.update(idx, { render: "Đăng ký không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

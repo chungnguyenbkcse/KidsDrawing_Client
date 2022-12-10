@@ -19,7 +19,7 @@ function TutorialEditRequestList1(props: studentListProps): JSX.Element {
   function approvedTutorial(ele: IUserRegisterTutorial) {
     const id = toast.info("Chấp nhận giáo án giáo viên!", {
       position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000
+      autoClose: 1000
     });
     /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Approved",
@@ -32,7 +32,7 @@ function TutorialEditRequestList1(props: studentListProps): JSX.Element {
   function notApprovedTutorial(ele: IUserRegisterTutorial) {
     const id = toast.info("Chấp nhận giáo án giáo viên!", {
       position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000
+      autoClose: 1000
     });
     /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Not approved",

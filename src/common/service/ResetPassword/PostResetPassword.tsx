@@ -35,7 +35,7 @@ export function postResetPassword(email: string, idx: any) {
                 console.log(data)
                 localStorage.removeItem('token_reset_password') // Authorization
                 localStorage.setItem('token_reset_password', data.token)
-                toast.update(idx, { render: "Vui lòng đợi email!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Vui lòng đợi email!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

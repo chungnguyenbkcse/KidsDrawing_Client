@@ -151,7 +151,7 @@ const ReivewClassDone: React.FC = () => {
                                 <h6 className="m-0 font-weight-bold text-green"  id="level-teacher">Điểm tổng kết</h6>
                             </div>
                             <div className="card-body">
-                                <CircularProgressbar value={percentage} text={`${percentage}`} />;
+                                <CircularProgressbar value={percentage} text={`${final_grade}`} />;
                             </div>
                         </div>
                     </div>

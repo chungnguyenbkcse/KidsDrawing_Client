@@ -41,7 +41,7 @@ export function putExercise(id: number, data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Chỉnh bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Chỉnh bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 1000});
                 getExerciseTeacherBySection(dispatch, section_id);
             })
             .catch(error => {

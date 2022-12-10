@@ -36,7 +36,7 @@ export function putAttendance1(dispatch: any, data: any, id: any, idx: any) {
                 }
             })
             .then (xx => {
-                toast.update(idx, { render: "Gửi điểm danh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Gửi điểm danh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 getAttendanceBySection(dispatch, section_id)
             })
             .catch(error => {

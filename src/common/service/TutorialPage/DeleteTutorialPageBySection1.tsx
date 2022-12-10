@@ -41,7 +41,7 @@ export function deleteTutorialPageBySection1(dispatch: any, id: any, idx: any, f
             })
             .then (data => {
                 foo()
-                toast.update(idx, { render: "Yêu cầu chỉnh giáo án được gửi không thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu chỉnh giáo án được gửi không thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 localStorage.setItem('is_tutorial_page', 'not');
             })
             .catch(error => {

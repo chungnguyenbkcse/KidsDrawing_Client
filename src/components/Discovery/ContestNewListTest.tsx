@@ -54,7 +54,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
         localStorage.removeItem('art_type_name');
         localStorage.setItem('art_type_name', contest.art_type_name.toString())
         localStorage.removeItem('registration_time');
-        
+        localStorage.setItem('registration_time', contest.registration_time.toString())
         localStorage.removeItem('start_time');
         localStorage.setItem('start_time', contest.start_time.toString())
         localStorage.removeItem('end_time');
@@ -303,7 +303,8 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                         <div className="p-card bg-white p-2 rounded px-3 product-x">
                                             <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
                                             <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
-                                            {
+                                            <span className="d-block status-register">Đã đăng kí: {ele.student_ids.length} </span>
+                                            {/* {
                                                 ele.student_ids.length > 0 ? 
                                                 <>
                                                     <span className="d-block">Học sinh đã đăng kí:  </span>
@@ -316,7 +317,7 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                                     })}
                                                 </>
                                                  : ""
-                                            }
+                                            } */}
                                             
                                             <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ").substring(0,16)}</span>
                                             <span className="d-block">Ngày kết thúc: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>

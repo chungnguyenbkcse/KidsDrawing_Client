@@ -36,7 +36,7 @@ export function postContestSubmission(data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 dispatch(fetchDataSuccess(data))
-                toast.update(idx, { render: "Nộp bài thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Nộp bài thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 1000});
                 
             })
             .catch(error => {

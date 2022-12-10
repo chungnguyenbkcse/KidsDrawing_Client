@@ -49,7 +49,7 @@ export function deleteExerciseSubmissionParent(exercise_id: number, student_id: 
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Chỉnh bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Chỉnh bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 1000});
                 getExerciseSubmissionByClassAndParent(dispatch, class_id, idxx)
                 getExerciseForClassAndParent(dispatch, class_id, idxx)
             })

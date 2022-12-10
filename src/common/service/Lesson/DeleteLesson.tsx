@@ -31,7 +31,7 @@ export function deleteLesson(dispatch: any, id: any, idx: any) {
                 }
             })
             .then (data => {
-                toast.update(idx, { render: "Xóa tiết học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa tiết học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 console.log(data)
                 getLesson(dispatch)
             })

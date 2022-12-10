@@ -66,7 +66,7 @@ export function postStudentLeave(data: any, idx: any) {
                     getStudentLeaveByClassAndParent(dispatch, class_id, idxx)
                 }
                 
-                toast.update(idx, { render: "Yêu cầu nghỉ học đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu nghỉ học đã được gửi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Yêu cầu nghỉ học đã được gửi không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

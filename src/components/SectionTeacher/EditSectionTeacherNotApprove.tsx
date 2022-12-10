@@ -150,7 +150,7 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
 
@@ -171,7 +171,7 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
                                 if (index === total - 1){
                                     setTimeout(function () {
                                         routeHome();
-                                    }, 2000); 
+                                    }, 1000); 
                                     return dispatch(postTutorialPageToast({
                                         section_id: section_id,
                                         description: value.description,
@@ -201,7 +201,7 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
             else {
@@ -232,13 +232,13 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
             else {
@@ -259,13 +259,13 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
             else {
@@ -301,7 +301,7 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
                     })
                     handleBackPage()
                 }
-                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             }
         }
     }
@@ -321,13 +321,13 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 1000,
                 });
             }
             else {
@@ -457,7 +457,7 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
             console.log(tutorial_pages.user_register_tutorial_pages)
             setCheckAfterCreate(true)
 
-            toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+            toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
         }
     }
 

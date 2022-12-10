@@ -42,7 +42,7 @@ export function postTutorial(tutorial: any[], data: any, idx: any, routeHome: an
                     if (index === total - 1){
                         setTimeout(function () {
                             routeHome();
-                        }, 2000); 
+                        }, 1000); 
                         return dispatch(postTutorialPageToast({
                             section_id: data.id,
                             name: data.name,

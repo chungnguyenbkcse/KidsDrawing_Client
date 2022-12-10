@@ -19,7 +19,7 @@ function TutorialEditRequestList(props) {
     function approvedTutorial(ele) {
       const id = toast.info("Chấp nhận giáo án giáo viên!", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000
+        autoClose: 1000
       });
       (putSectionByAdmin(dispatch, ele.id, {
         status: "Approved"

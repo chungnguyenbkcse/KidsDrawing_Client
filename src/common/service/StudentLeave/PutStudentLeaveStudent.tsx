@@ -49,7 +49,7 @@ export function putStudentLeave(section_id: number, student_id: number, data: an
             .then (val => {
                 console.log(val)
                 getStudentLeaveByClassAndStudent(dispatch, class_id, idxx)
-                toast.update(idx, { render: "Chỉnh yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Chỉnh yêu cầu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

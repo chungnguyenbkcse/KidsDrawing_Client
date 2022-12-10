@@ -14,6 +14,21 @@ body {
     border-top: 20px !important;
 }
 
+.schedule-x {
+    overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 1; /* number of lines to show */
+           line-clamp: 1; 
+   -webkit-box-orient: vertical;
+  }
+
+
+.text-notifi {
+    font-weight: bold;
+    color: red;
+}
+
 .status-register {
     color: red;
     font-weight: bold;

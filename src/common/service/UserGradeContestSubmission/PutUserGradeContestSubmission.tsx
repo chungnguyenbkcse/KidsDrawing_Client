@@ -34,7 +34,7 @@ export function putUserGradeContestSubmission(teacher_id: number, submission_id:
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Chỉnh điểm bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh điểm bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Chỉnh điểm bài tập không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

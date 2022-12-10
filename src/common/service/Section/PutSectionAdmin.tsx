@@ -35,7 +35,7 @@ export function putSectionByAdmin(dispatch: any, id: any, data: any, idx: any) {
                 console.log(data)
                 console.log(id)
                 getSectionByAdmin(dispatch)
-                toast.update(idx, { render: "Gửi record thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Gửi record thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -40,7 +40,7 @@ export function deleteExercise(id: number, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Xóa bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Xóa bài tập thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 1000});
                 getExerciseBySection(dispatch, section_id);
             })
             .catch(error => {

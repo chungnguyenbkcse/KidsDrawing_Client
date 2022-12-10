@@ -46,7 +46,7 @@ export function putContest(id: any,data: any, valueTeacher: any[], idx: any, rou
                         number: index + 1
                     }))
                 })
-                toast.update(idx, { render: "Chỉnh cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Chỉnh cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 setTimeout(function () {
                     routeHome(true);
                 }, 2000);

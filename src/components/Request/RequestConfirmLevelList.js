@@ -28,7 +28,7 @@ function RequestConfirmLevelList(props) {
   function approvedTeacherLevel(ele) {
     const id = toast.info("Chấp nhận trình độ cho giáo viên", {
       position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000
+      autoClose: 1000
     });
     (putTeacherRegisterLevelAdmin(dispatch, ele.id, ele.teacher_id, {
       status: "Approved"
@@ -38,7 +38,7 @@ function RequestConfirmLevelList(props) {
   function notApprovedTeacherLevel(ele) {
     const id = toast.info("Không chấp nhận trình độ cho giáo viên", {
       position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000
+      autoClose: 1000
     });
     (putTeacherRegisterLevelAdmin(dispatch, ele.id, ele.teacher_id, {
       status: "Not approved"

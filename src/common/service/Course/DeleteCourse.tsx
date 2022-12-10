@@ -33,7 +33,7 @@ export function deleteCourse(dispatch: any, id: any, idx: any) {
             .then (data => {
                 console.log(data)
                 getCourse(dispatch)
-                toast.update(idx, { render: "Xóa khóa học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa khóa học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

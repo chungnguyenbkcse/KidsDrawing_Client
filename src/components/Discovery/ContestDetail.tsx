@@ -199,7 +199,7 @@ const ConestDetailParent: React.FC = () => {
         if (valueTeacher.length === 0) {
             toast.error("Vui lòng chọn ít nhất một bé!", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+                autoClose: 1000
             });
         }
         else {
@@ -227,7 +227,7 @@ const ConestDetailParent: React.FC = () => {
         if (valueTeacher1.length === 0) {
             toast.error("Vui lòng chọn ít nhất một bé!", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+                autoClose: 1000
             });
         }
         else {
@@ -287,23 +287,30 @@ const ConestDetailParent: React.FC = () => {
                         </div>
                         <div className="row">
                             <div className="col-xl-6 col-md-6">
-                                {
-                                    student_names.length > 0 ? <div className="row no-gutters align-items-center">
+                                {/* {
+                                    student_names.length > 0 ? <><div className="row no-gutters align-items-center">
                                         <div className="text-xs ">
-                                            <p className="birthday ml-4">Học sinh đã đăng kí: {
-                                                student_names.map((ele, idx) => {
-                                                    if (idx === student_names.length - 1) {
-                                                        return ele
-                                                    }
-                                                    else {
-                                                        return " " + ele + ","
-                                                    }
-                                                })
-                                            }</p>
+                                            <div className="birthday ml-4">Học sinh đã đăng kí: </div>
                                         </div>
-                                    </div>
+                                        {
+                                                student_names.map((ele, idx) => {
+                                                   
+                                                        return (
+                                                            <div className="row no-gutters align-items-center">
+                                                                <div className="text-xs ">
+                                                                    <div className="birthday ml-4">                                     
+                                                                        {ele}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    
+
+                                                })
+                                            }
+                                    </div></>
                                         : ""
-                                }
+                                } */}
                                 <div className="row no-gutters align-items-center">
                                     <div className="text-xs ">
                                         <p className="birthday ml-4">Độ tuổi đăng kí: {art_age_name}</p>
@@ -364,7 +371,7 @@ const ConestDetailParent: React.FC = () => {
                                     return (
                                         <>
                                             <div className="col-lg-6 col-md-6 col-xs-6 pl-4">
-                                                <div className="form-group">
+                                                <div className="form-group ml-4">
                                                     <label>Chọn học sinh</label>
                                                     <ReactSelect setValue={listTeachers2} value={[]} changeValue={changeValueTeacher1} />
                                                 </div>

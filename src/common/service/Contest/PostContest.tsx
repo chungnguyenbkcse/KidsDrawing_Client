@@ -44,10 +44,10 @@ export function postContest(lst: any[], contest: any, idx: any, routeHome: any) 
                         number: index + 1
                     }))
                 })
-                toast.update(idx, { render: "Thêm cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 setTimeout(function () {
                     routeHome(true);
-                }, 2000); 
+                }, 1000); 
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

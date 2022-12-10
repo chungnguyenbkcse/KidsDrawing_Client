@@ -34,7 +34,7 @@ export function deleteSemesterClass(id: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Xóa lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa lớp theo kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Xóa lớp theo kì không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

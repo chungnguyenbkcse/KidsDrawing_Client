@@ -70,7 +70,7 @@ function ContestEndList(props) {
     localStorage.setItem('contest_id', id)
       const idx = toast.info("Xếp thành công", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000
+        autoClose: 1000
       });
       dispatch(postGenerationContestSubmissionGrade(id, idx))
   }

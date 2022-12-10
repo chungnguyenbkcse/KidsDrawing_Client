@@ -48,7 +48,7 @@ export function putClassHasRegisterJoinSemesterTeacher(data: any, idx: any) {
             })
             .then (res => {
                 getInforClassHasRegisterJoinSemester(dispatch, class_id, student_id)
-                toast.update(idx, { render: "Gửi nhận xét thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Gửi nhận xét thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Gửi nhận xét không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

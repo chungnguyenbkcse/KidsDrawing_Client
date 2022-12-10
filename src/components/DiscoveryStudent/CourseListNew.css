@@ -9,10 +9,6 @@ body {
   #cars {
     margin-left: 5px !important;
   }
-
-  .schedule-x {
-    white-space: pre-line !important;
-  }
   
   .filter {
     border-top-right-radius: 10px;

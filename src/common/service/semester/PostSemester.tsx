@@ -35,7 +35,7 @@ export function postSemester(semester: any, idx: any) {
             })
             .then (data => {
                 dispatch(fetchDataSuccess(semester))
-                toast.update(idx, { render: "Thêm học kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm học kì thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 console.log(data)
                 getSemester(dispatch)
             })

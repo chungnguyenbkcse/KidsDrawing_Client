@@ -127,7 +127,7 @@ const CourseTeacherDetail: React.FC = () => {
     }
 
     function routeHome() {
-        let path = '/courses';
+        let path = '/courses/semester-classes';
         history.push(path)
     }
 

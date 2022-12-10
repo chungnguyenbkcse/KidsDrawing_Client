@@ -138,7 +138,7 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
         if (student_leave) {
             const id = toast.loading("Đang gửi yêu cầu. Vui lòng đợi trong giây lát...", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+                autoClose: 1000
             });
 
 

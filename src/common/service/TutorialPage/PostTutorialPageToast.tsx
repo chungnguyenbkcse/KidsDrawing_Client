@@ -34,7 +34,7 @@ export function postTutorialPageToast(tutorialtemplatepage: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Yêu cầu chỉnh giáo án được gửi không thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu chỉnh giáo án được gửi không thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

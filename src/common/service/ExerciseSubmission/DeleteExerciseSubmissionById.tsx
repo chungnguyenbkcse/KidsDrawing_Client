@@ -49,7 +49,7 @@ export function deleteExerciseSubmission(exercise_id: number, student_id: number
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Xóa bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 2000});
+                toast.update(idx, { render: "Xóa bài nộp thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER , autoClose: 1000});
                 getExerciseSubmissionByClassAndStudent(dispatch, class_id, idxx)
                 getExerciseForClassStudent(dispatch, class_id, idxx)
             })

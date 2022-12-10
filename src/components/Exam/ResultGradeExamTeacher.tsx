@@ -1,10 +1,12 @@
 import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ChartLine } from "../../common/components/CharLine";
 import TopCard from "../../common/components/TopCardUser";
 import { getExerciseSubmissionByClass } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByClass";
+import { getExerciseSubmissionByExercise } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExeercise";
 import { logout } from "../../store/actions/account.actions";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { IExerciseSubmissionState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
@@ -54,7 +56,8 @@ const ResultGradeExamTeacher: React.FC = () => {
         ],
     };
 
-
+    const { promiseInProgress } = usePromiseTracker();
+    
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -79,11 +82,11 @@ const ResultGradeExamTeacher: React.FC = () => {
                     dispatch(logout())
                 }
                 else {    
-                    
+                    trackPromise(getExerciseSubmissionByExercise(dispatch, exercise_id))
                 }
             }
             else {     
-                
+                trackPromise(getExerciseSubmissionByExercise(dispatch, exercise_id))
             }
         }
     }, [dispatch, access_token, refresh_token, class_id_, exercise_id]);
@@ -103,7 +106,8 @@ const ResultGradeExamTeacher: React.FC = () => {
 
     const [checked, setChecked] = useState(true);
     return (
-        <Fragment>
+        promiseInProgress ?
+        <div className="loader"></div> : <Fragment>
             
             <div className="row">
                 <TopCard title="ĐIỂM CAO NHẤT" text={`${max}`} icon="book" class="primary" />

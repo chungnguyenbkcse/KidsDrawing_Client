@@ -49,7 +49,7 @@ export function deleteUserRegisterJoinSemester1(user_register_join_semester_id: 
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Xóa thành công!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa thành công!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 if (roleUser === "PARENT") {
                     getUserRegisterJoinSemesterByPayer(dispatch, id)
                 }

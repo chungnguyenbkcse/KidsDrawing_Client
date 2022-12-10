@@ -34,7 +34,7 @@ export function deleteTutorialTemplatePageBySectionX(id: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Thay thế giáo trình chung thành công!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thay thế giáo trình chung thành công!", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 console.log(id)
             })
             .catch(error => {

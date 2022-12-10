@@ -44,7 +44,7 @@ export function deleteTeacherLevel(id: any, idx: any) {
                     name: `Xóa yêu cầu đăng kí trình độ!`,
                     description: `Giáo viên đã xóa yêu cầu đăng kí trình độ!`
                 }, id))
-                toast.update(idx, { render: "Xóa yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });           
+                toast.update(idx, { render: "Xóa yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });           
                 getTeacherRegisterQuantificationByTeacherId(dispatch, idxx)
                 console.log(data)
             })

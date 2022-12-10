@@ -17,7 +17,7 @@ function UserRegisterTutorialEditRequestList(props: studentListProps): JSX.Eleme
   function approvedTutorial(ele: IUserRegisterTutorial) {
     const id = toast.info("Chấp nhận giáo án giáo viên cho giáo án chung!", {
       position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000
+      autoClose: 1000
     });
     /* dispatch(putUserRegisterTutorial(ele.id, {
       status: "Approved to tutorial template",

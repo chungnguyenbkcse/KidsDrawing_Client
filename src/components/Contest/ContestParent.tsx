@@ -177,7 +177,7 @@ const ContestParent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card shadow mb-2" id="topcard-user">
                                                 <div className="card-body">
                                                     <ContestParentNotOpenNowList value={searchTerm}/>
                                                 </div>

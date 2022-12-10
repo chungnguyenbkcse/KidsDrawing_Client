@@ -36,7 +36,7 @@ export function putPassword(id: any, data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 console.log(id)
-                toast.update(idx, { render: "Thay đổi mật khẩu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thay đổi mật khẩu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 dispatch(fetchDataSuccess(data))
             })
             .catch(error => {

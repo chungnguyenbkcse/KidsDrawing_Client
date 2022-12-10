@@ -50,7 +50,7 @@ export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any
             })
             .then (data => {
                 console.log(data)
-                toast.update(idx, { render: "Đăng kí thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Đăng kí thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 if (roleUser === "PARENT") {
                     getUserRegisterJoinSemesterByPayer(dispatch, id)
                 }

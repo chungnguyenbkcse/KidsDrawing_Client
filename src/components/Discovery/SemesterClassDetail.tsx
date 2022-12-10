@@ -206,7 +206,7 @@ const SemesterClassDetail: React.FC = () => {
         if (valueTeacher.length === 0) {
             toast.error("Vui lòng chọn ít nhất một bé!", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+                autoClose: 1000
             });
         }
         else {
@@ -250,7 +250,7 @@ const SemesterClassDetail: React.FC = () => {
         if (valueTeacher1.length === 0) {
             toast.error("Vui lòng chọn ít nhất một bé!", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+                autoClose: 1000
             });
         }
         else {
@@ -264,7 +264,7 @@ const SemesterClassDetail: React.FC = () => {
         if (valueTeacher.length === 0) {
             toast.error("Vui lòng chọn ít nhất một bé!", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000
+                autoClose: 1000
             });
         }
         else {
@@ -309,7 +309,7 @@ const SemesterClassDetail: React.FC = () => {
     }
 
     function routeHome() {
-        let path = '/discover/course';
+        let path = '/courses/semester-classes';
         history.push(path)
     }
 

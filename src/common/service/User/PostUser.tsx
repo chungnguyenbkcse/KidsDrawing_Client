@@ -42,7 +42,7 @@ export function postUser(data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 getInforChildByParent(dispatch, id)
-                toast.update(idx, { render: "Thêm tài khoản con thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm tài khoản con thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 dispatch(fetchDataSuccess(data))
             })
             .catch(error => {

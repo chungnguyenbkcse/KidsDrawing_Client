@@ -13,10 +13,6 @@ body {
   .badge-danger {
     cursor: pointer;
   }
-
-  .schedule-x {
-    white-space: pre-line !important;
-  }
   
   .filter {
     border-top-right-radius: 10px;

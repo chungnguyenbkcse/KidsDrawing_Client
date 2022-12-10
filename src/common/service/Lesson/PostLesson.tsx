@@ -35,7 +35,7 @@ export function postLesson(data: any, idx: any) {
             })
             .then (val => {
                 console.log(val)
-                toast.update(idx, { render: "Thêm tiết học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Thêm tiết học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 dispatch(fetchDataSuccess(data))
                 getLesson(dispatch)
             })

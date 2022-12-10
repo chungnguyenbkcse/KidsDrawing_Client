@@ -1,5 +1,6 @@
 import { fetchDataSuccess, fetchDataError, removeChildsClassAll, addChildsClass } from "../../../store/actions/childs_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getExerciseSubmissionByClassAndStudent } from "../ExerciseSubmission/GetExerciseSubmissionByClassAndStudent";
 interface user {
     student_id: number,
     student_name: string,
@@ -46,6 +47,10 @@ export function getChildsClassByClassAndParent(dispatch: any, class_id: number, 
                     }
                     return dispatch(addChildsClass(user));
                 })
+
+                if (data.body.students.length == 1) {
+                    getExerciseSubmissionByClassAndStudent(dispatch, class_id,data.body.students[0])
+                }
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

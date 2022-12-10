@@ -36,7 +36,7 @@ export function putTutorialTemplatePage(id: any, tutorialtemplatepage: any, idx:
             .then (data => {
                 console.log(data)
                 dispatch(getTutorialTemplatePageBySectionTemplate(tutorialtemplatepage.section_template_id))
-                toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Điều chỉnh không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

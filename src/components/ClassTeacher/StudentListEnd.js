@@ -84,7 +84,7 @@ function StudentListEnd(props) {
             <button type="button" className="btn btn-primary" onClick={() => {
                 if(props.onSelect) props.onSelect(row);
                 routeChange(row.id, row.parents)}}
-              >Thống kê</button>
+              ><i class="fas fa-chart-bar"></i></button>
         )
     }
 

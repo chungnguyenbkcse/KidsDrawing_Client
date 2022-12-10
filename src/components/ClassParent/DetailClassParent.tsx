@@ -160,6 +160,7 @@ const DetailClassParent: React.FC = () => {
 
     function handleChange(e: any) {
         setFilter(e.target.value)
+        trackPromise(getExerciseSubmissionByClassAndStudent(dispatch, class_id,e.target.value))
     }
 
     function onAnonymousNotificationRemove() {
@@ -578,8 +579,15 @@ const DetailClassParent: React.FC = () => {
                                             </div>
                                         </div>
 
+
+                                        
+
                                         <div className="col-xl-6 col-md-6 mb-4">
-                                            <div className="row">
+                                        {
+                                            function () {
+                                                if (childs_classes.childs_class.length > 1) {
+                                                    return (
+                                                        <div className="row">
                                                 <div className="col-md-12">
                                                     <div className="right-sort float-right">
                                                         <div className="sort-by mr-3">
@@ -603,6 +611,11 @@ const DetailClassParent: React.FC = () => {
                                                     </div>
                                                 </div>
                                             </div>
+                                                    )
+                                                }
+                                            }()
+                                        }
+                                            
                                             <div className="row">
                                                 <h3 className=" mb-2" id="level-teacher">Thống kê điểm</h3>
                                                 <div className="col-xl-12 col-md-12 mb-4">

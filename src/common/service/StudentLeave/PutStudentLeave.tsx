@@ -41,7 +41,7 @@ export function putStudentLeaveStatus(id: any, data: any, idx: any) {
             .then (val => {
                 console.log(val)
                 getStudentLeaveByTeacher(dispatch, idy)
-                toast.update(idx, { render: "Yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 toast.update(idx, { render: "Không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

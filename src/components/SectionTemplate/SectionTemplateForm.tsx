@@ -209,7 +209,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     })
                     handleBackPage()
                 }
-                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             }
         }
     }
@@ -315,7 +315,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
             }
             setCheckAfterCreate(true)
 
-            toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 2000 });
+            toast.update(idx, { render: "Điều chỉnh thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
         }
     }
 

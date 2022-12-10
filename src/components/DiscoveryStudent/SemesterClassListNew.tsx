@@ -189,11 +189,11 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
                                         <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
                                         <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span>
-                                        <span className="d-block schedule-x">Lịch học: {ele.schedule}</span>
+                                        <div className="schedule-x">Lịch học: {ele.schedule}</div>
                                         <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
                                         <span className="d-block">Ngày bắt đầu đăng kí: {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}</span>
                                         <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_expiration_time.replaceAll("T", " ").substring(0,16)}</span>
-                                        <span className="d-block mb-5">Trạng thái: 
+                                        <span className="d-block mb-2 status-register">Trạng thái: 
                                             {
                                                 function() {
                                                     if (ele.status == "Registed") {
@@ -207,7 +207,7 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
                                         </span>
                                         <div
                                             className="d-flex justify-content-between stats">
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
+                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
                                             <div className="d-flex flex-row align-items-center">
                                                 <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
                                                 {ele.total_register} 

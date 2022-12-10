@@ -137,7 +137,7 @@ const TutorialEditRequest: React.FC = () => {
                         onClick={() => {
                           const idx = toast.info("Chấp nhận giáo án giáo viên!", {
                             position: toast.POSITION.TOP_CENTER,
-                            autoClose: 2000
+                            autoClose: 1000
                           });
 
                           /* dispatch(putUserRegisterTutorial(user_register_tutorials_id, {

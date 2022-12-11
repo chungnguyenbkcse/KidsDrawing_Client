@@ -3,6 +3,7 @@ export interface ISemester {
     number: number;
     year: number;
     name: string;
+    holiday: string[];
     checked_genaration: boolean;
     description: string;
     start_time: string;

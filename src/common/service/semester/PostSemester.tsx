@@ -23,7 +23,7 @@ export function postSemester(semester: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postSemester(semester, idx))
+                        dispatch(postSemester(semester,idx))
                     }
                     else {
                         throw Error(response.statusText);

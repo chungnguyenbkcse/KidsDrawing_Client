@@ -11,11 +11,15 @@ import { postSemester } from "../../common/service/semester/PostSemester";
 import { putSemester } from "../../common/service/semester/PutSemester";
 import { toast } from "react-toastify";
 import DateInput from "../../common/components/DateInput";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 export type semesterListProps = {
   isCheck: (value: boolean) => void;
   children?: React.ReactNode;
 };
+
+const format = "YYYY-MM-DD";
 
 function SemesterForm(props: semesterListProps): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
@@ -24,8 +28,22 @@ function SemesterForm(props: semesterListProps): JSX.Element {
   const isCreate: boolean = (semesters.modificationState === SemesterModificationStatus.Create);
 
   if (!semester || isCreate) {
-    semester = { id: 0, checked_genaration: false, name: "", description: "", number: 0, year: 0, start_time: "", end_time: "", create_time: "", update_time: "" };
+    semester = { id: 0, checked_genaration: false, name: "", holiday: [], description: "", number: 0, year: 0, start_time: "", end_time: "", create_time: "", update_time: "" };
   }
+
+  let holiday: any = [];
+  if (semester.holiday !== null && semester.holiday !== undefined) {
+    semester.holiday.map((ele, idx) => {
+      if (ele != undefined) {
+        holiday.push(new DateObject(ele))
+      }
+    })
+  }
+
+  console.log(semester.holiday)
+  
+
+  const [value, setValue] = useState<any>(holiday);
 
   const [formState, setFormState] = useState({
     name: { error: "", value: semester.name },
@@ -57,12 +75,18 @@ function SemesterForm(props: semesterListProps): JSX.Element {
       const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
         position: toast.POSITION.TOP_CENTER
       });
+
+      let time: String[] = [];
+       value.map((ele: any, index: any) => {
+           return time.push(ele.toString())
+       })
       
       if (saveFn === addSemester) {
         dispatch(postSemester({
           name: formState.name.value,
           year: formState.year.value,
           description: formState.description.value,
+          time: time,
           number: formState.number.value,
           start_time: formState.start_time.value
         }, idx));
@@ -71,6 +95,7 @@ function SemesterForm(props: semesterListProps): JSX.Element {
         dispatch(putSemester(semester.id, {
           name: formState.name.value,
           year: formState.year.value,
+          time: time,
           description: formState.description.value,
           number: formState.number.value,
           start_time: formState.start_time.value
@@ -163,6 +188,19 @@ function SemesterForm(props: semesterListProps): JSX.Element {
                     maxLength={time_now}
                     label="Thời gian bắt đầu"
                     placeholder="" />
+                </div>
+                <div className="form-group col-md-6">
+                    <label>Ngày nghỉ: </label>
+                    <DatePicker
+                        multiple
+                        id="date-picker-class"
+                        value={value}
+                        onChange={setValue}
+                        format={format}
+                        plugins={[
+                            <DatePanel />
+                        ]}
+                    />
                 </div>
               </div>
               <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>

@@ -5,6 +5,7 @@ interface semester {
     number: number;
     year: number;
     name: string;
+    holiday: string[];
     description: string;
     checked_genaration: boolean;
     start_time: string;
@@ -50,6 +51,7 @@ export function getSemesterNext(dispatch: any) {
                         id: ele.id,
                         number: ele.number,
                         year: ele.year,
+                        holiday: ele.holiday,
                         checked_genaration: ele.checked_genaration,
                         name: ele.name,
                         description: ele.description,

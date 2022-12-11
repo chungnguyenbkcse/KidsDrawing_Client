@@ -4,6 +4,7 @@ interface semester {
     id: any;
     number: number;
     year: number;
+    holiday: string[];
     name: string;
     description: string;
     start_time: string;
@@ -42,7 +43,7 @@ export function getSemester(dispatch: any) {
             .then (data => {
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeSemesterAll())
-                //console.log(data.body.semesters)
+                console.log(data.body.semesters)
                 data.body.semesters.map((ele: any, index: any) => {
                     var strDate_1 = ele.start_time;
                     var strDate_2 = ele.end_time;
@@ -50,6 +51,7 @@ export function getSemester(dispatch: any) {
                         id: ele.id,
                         number: ele.number,
                         year: ele.year,
+                        holiday: ele.holiday,
                         checked_genaration: ele.checked_genaration,
                         name: ele.name,
                         description: ele.description,

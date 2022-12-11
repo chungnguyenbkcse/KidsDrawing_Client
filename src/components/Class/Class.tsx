@@ -165,7 +165,7 @@ const Class: React.FC = () => {
             position: toast.POSITION.TOP_CENTER
         });
     
-        dispatch(postScheduleClass(semesterId, { time: time }, idx));
+        dispatch(postScheduleClass(semesterId, idx));
     }
 
     function onSemesterClassRemove() {
@@ -328,19 +328,7 @@ const Class: React.FC = () => {
                                                                                     options={listSemesters}
                                                                                 />
                                                                             </div>
-                                                                            <div className="form-group col-md-6">
-                                                                                <label>Ngày nghỉ: </label>
-                                                                                <DatePicker
-                                                                                    multiple
-                                                                                    id="date-picker-class"
-                                                                                    value={value}
-                                                                                    onChange={setValue}
-                                                                                    format={format}
-                                                                                    plugins={[
-                                                                                        <DatePanel />
-                                                                                    ]}
-                                                                                />
-                                                                            </div>
+                                                                    
                                                                         </div>
                                                                     </form>
                                                                     <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>

@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getMyClass } from "./GetMyClass";
 
-export function postScheduleClass(id: any, data: any, idx: any) {
+export function postScheduleClass(id: any, idx: any) {
     console.log("post ++")
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
@@ -12,15 +12,14 @@ export function postScheduleClass(id: any, data: any, idx: any) {
                     headers: {
                         'Authorization': bearer,
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
+                    }
                 }
             )
             .then( response => {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postScheduleClass(id, data, idx))
+                        dispatch(postScheduleClass(id, idx))
                     }
                     else {
                         throw Error(response.statusText);

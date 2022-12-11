@@ -45,7 +45,11 @@ function ClassTeacherDoingList(props) {
   }
 
 
-  const datas = class_teachers.class_doing;
+  let datas = [];
+
+  if (class_teachers.class_doing.length > 0 && class_teachers !== undefined && class_teachers !== null) {
+    datas = class_teachers.class_doing
+  }
 
   const options = {
     paginationSize: 5,

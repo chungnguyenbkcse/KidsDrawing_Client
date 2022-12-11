@@ -31,7 +31,12 @@ function ClassTeacherEndList(props) {
 
 
 
-  const datas = class_teachers.class_done;
+
+  let datas = [];
+
+  if (class_teachers.class_done.length > 0 && class_teachers !== undefined && class_teachers !== null) {
+    datas = class_teachers.class_done
+  }
 
   const options = {
     paginationSize: 5,

@@ -13,8 +13,9 @@ import { getScheduleTimeByChild } from "../../common/service/ScheduleTimeClass/G
 import TopCard from "../../common/components/TopCard";
 import ManageStudyChild from "./ManageStudyChild";
 import ScheduleForChild from "./ScheduleForChild";
-import { getUserGradeContestSubmissionByStudent } from "../../common/service/UserGradeContestSubmission/GetUserGradeContestSubmissionByStudent";
 import { getFinalScoreChild } from "../../common/service/FinalScoreChild/GetFinalScoreChild";
+import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
+import { getContestSubmissionByStudent } from "../../common/service/ContestSubmission/GetContestSubmissionByStudent";
 
 
 const ManageChild: React.FC = () => {
@@ -59,7 +60,7 @@ const ManageChild: React.FC = () => {
                     trackPromise(getScheduleTimeByChild(dispatch, student_id))
                     trackPromise(getContestByStudent(dispatch, student_id))
                     trackPromise(getClassesStudent(dispatch, student_id))
-                    trackPromise(getUserGradeContestSubmissionByStudent(dispatch, student_id))
+                    trackPromise(getContestSubmissionByStudent(dispatch, student_id))
                     trackPromise(getFinalScoreChild(dispatch, student_id))
                 }
             }
@@ -68,7 +69,7 @@ const ManageChild: React.FC = () => {
                 trackPromise(getScheduleTimeByChild(dispatch, student_id))
                 trackPromise(getContestByStudent(dispatch, student_id))
                 trackPromise(getClassesStudent(dispatch, student_id))
-                trackPromise(getUserGradeContestSubmissionByStudent(dispatch, student_id))
+                trackPromise(getContestSubmissionByStudent(dispatch, student_id))
                 trackPromise(getFinalScoreChild(dispatch, student_id))
             }
         }

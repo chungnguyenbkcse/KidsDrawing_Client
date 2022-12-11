@@ -197,7 +197,11 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
       let lesson_times: Option3s[] = listLessonId.filter((value, index) => value.key < formState.total_date_of_week.value)
       let date_of_weeks: Option2s[] = listScheduleItemId.filter((value, index) => value.key < formState.total_date_of_week.value)
       let schedule_element: ScheduleType[] = [];
+      let list_date_of_weeks: number[] = [];
+      let list_lesson_times: number [] = [];
       lesson_times.map((ele, idx) => {
+        list_date_of_weeks.push(date_of_weeks[idx].value);
+        list_lesson_times.push(ele.value)
         return schedule_element.push({
           lesson_time: ele.value,
           date_of_week: date_of_weeks[idx].value
@@ -213,6 +217,8 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
         (postSemesterClass(dispatch, {
           semester_id: formState.semester_id.value,
           name: formState.name.value,
+          date_of_weeks: list_date_of_weeks,
+          lesson_time_ids: list_lesson_times,
           registration_time: formState.registration_time.value,
           registration_expiration_time: formState.registration_expiration_time.value,
           course_id: formState.course_id.value
@@ -223,6 +229,8 @@ function ClassSemesterForm(props: semesterClassListProps): JSX.Element {
         dispatch(putSemesterClass(semester_classe.id, {
           semester_id: formState.semester_id.value,
           name: formState.name.value,
+          date_of_weeks: list_date_of_weeks,
+          lesson_time_ids: list_lesson_times,
           registration_time: formState.registration_time.value,
           registration_expiration_time: formState.registration_expiration_time.value,
           course_id: formState.course_id.value

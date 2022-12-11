@@ -8,7 +8,7 @@ import SelectKeyValueNotField from "../../common/components/SelectKeyValueNotFie
 import { OnChangeModelNotFiled } from "../../common/types/Form.types";
 import { IClassesStudent } from "../../store/models/classes_student.interface";
 import { IContestTeacher } from "../../store/models/contest_teacher.interface";
-import { IClassesStudentState, IContestTeacherState, IFinalScoreChildState, IStateType, IUserGradeContestSubmissionState, IUserState } from "../../store/models/root.interface";
+import { IClassesStudentState, IContestSubmissionState, IContestSubmissionTeacherState, IContestTeacherState, IFinalScoreChildState, IStateType, IUserGradeContestSubmissionState, IUserState } from "../../store/models/root.interface";
 
 export type classTeacherListProps = {
     onSelect?: (classTeacher: IClassesStudent) => void;
@@ -25,10 +25,10 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
     const [checked, setChecked] = useState<Boolean>(true);
     
     const classes_students: IClassesStudentState = useSelector((state: IStateType) => state.classes_students);
-    const contest_teachers: IContestTeacherState = useSelector((state: IStateType) => state.contest_teachers);
-    const user_grade_contest_submisson: IUserGradeContestSubmissionState = useSelector((state: IStateType) => state.user_grade_contest_submissions);
+    const contest_submisson: IContestSubmissionTeacherState = useSelector((state: IStateType) => state.contest_submission_teacher);
     const final_score_childs: IFinalScoreChildState = useSelector((state: IStateType) => state.final_score_childs);
 
+    console.log(contest_submisson.contest_submission_grade)
     var id_x = localStorage.getItem('student_id');
     var student_id: number = 0;
     if (id_x !== null) {
@@ -79,8 +79,8 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
 
     let list_score_user_grade_contest: number[] = [];
     let list_name_user_grade_contest: string[] = [];
-    console.log(user_grade_contest_submisson.userGradeContestSubmissions)
-    user_grade_contest_submisson.userGradeContestSubmissions.map((ele, idx) => {
+    console.log(contest_submisson.contest_submission_grade)
+    contest_submisson.contest_submission_grade.map((ele, idx) => {
         if (ele !== undefined && ele !== null ){
             list_score_user_grade_contest.push(ele.score)
             list_name_user_grade_contest.push(ele.contest_name)
@@ -88,79 +88,6 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
         }
         return null
     })
-
-    const [totalPage, setTotalPage] = useState(0)
-    const [element, setElement] = useState<IClassesStudent[]>([])
-    useEffect(() => {
-        let x = (classes_students.classes_done.length - classes_students.classes_done.length % 10) / 10;
-        if (x === 0) {
-            setElement(classes_students.classes_done)
-        }
-        else {
-            setElement(classes_students.classes_done.slice(0, 10))
-        }
-
-        setTotalPage((x + 1))
-    }, [classes_students.classes_done])
-
-    function handlePagination(count: number) {
-        console.log(count)
-        if (count === totalPage) {
-            setElement(classes_students.classes_done.slice(count * 10))
-        }
-        else {
-            setElement(classes_students.classes_done.slice(count * 10, count * 10 + 10))
-        }
-    }
-
-    const [totalPage1, setTotalPage1] = useState(0)
-    const [element1, setElement1] = useState<IContestTeacher[]>([])
-    useEffect(() => {
-        let x = (contest_teachers.contest_end.length - contest_teachers.contest_end.length % 10) / 10;
-        if (x === 0) {
-            setElement1(contest_teachers.contest_end)
-        }
-        else {
-            setElement1(contest_teachers.contest_end.slice(0, 10))
-        }
-
-        setTotalPage((x + 1))
-    }, [contest_teachers.contest_end])
-
-    function handlePagination1(count: number) {
-        console.log(count)
-        if (count === totalPage) {
-            setElement1(contest_teachers.contest_end.slice(count * 10))
-        }
-        else {
-            setElement1(contest_teachers.contest_end.slice(count * 10, count * 10 + 10))
-        }
-    }
-    const history = useHistory();
-    const routeChange = (classes_student: IClassesStudent) => {
-        let path = '/student/class';
-        localStorage.removeItem('teacher_id');
-        localStorage.setItem('teacher_id', classes_student.teacher_id.toString())
-        localStorage.removeItem('student_id');
-        localStorage.setItem('student_id', classes_student.student_id.toString())
-        localStorage.removeItem('class_id');
-        localStorage.setItem('class_id', classes_student.id.toString());
-        history.push({
-            pathname: path,
-        });
-    }
-
-    const routeChange1 = (contest: IContestTeacher) => {
-        let path = '/contest/result-grade';
-        localStorage.removeItem('contest_id');
-        localStorage.setItem('contest_id', contest.id.toString())
-        localStorage.removeItem('contest_name')
-        localStorage.setItem('contest_name', contest.name)
-        history.push({
-            pathname: path
-        });
-    }
-
 
     const labels = list_name_final;
     const datax = {
@@ -192,14 +119,6 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
 
     console.log(list_score_user_grade_contest)
 
-    function onChangeRoute2() {
-        let path = '/class/exercise-student';
-        localStorage.removeItem('class_id');
-        localStorage.setItem('class_id', value1.toString());
-        history.push({
-            pathname: path,
-        });
-    }
 
 
 

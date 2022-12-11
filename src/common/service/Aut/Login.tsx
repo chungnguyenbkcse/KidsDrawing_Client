@@ -46,6 +46,8 @@ export function postAut(username: string, password: string, changeRouteHome: any
                 openRequest.onerror = function() {
                     console.error("Error", openRequest.error);
                 };
+
+                localStorage.setItem('path', 'Trang chủ')
                 
                 openRequest.onsuccess = function() {
                     let db = openRequest.result;

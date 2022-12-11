@@ -101,9 +101,7 @@ const Account: React.FC = () => {
                     profile_image_url: url_x,
                     sex: sex,
                     phone: phone,
-                    address: address,
-                    parent_ids: user.parents,
-                    roleName: [userRole]
+                    address: address
                 }, id));
             }
 
@@ -118,9 +116,7 @@ const Account: React.FC = () => {
                     profile_image_url: url_x,
                     sex: sex,
                     phone: phone,
-                    address: address,
-                    parent_ids: user.parents,
-                    roleName: [userRole]
+                    address: address
                 }, id));
             }
 
@@ -282,7 +278,9 @@ const Account: React.FC = () => {
                                         label="Địa chỉ"
                                         placeholder="" />
                                 </div>
-                                <div className="form-row">
+
+                                {
+                                    userRole == "STUDENT" ? <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <TextInput id="input_dateOfBirth"
                                             field="dateOfBirth"
@@ -294,7 +292,9 @@ const Account: React.FC = () => {
                                             label="Ngày sinh"
                                             placeholder="" />
                                     </div>
-                                </div>
+                                    </div> : ""
+                                }
+                                
                                 <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
                                 <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
                             </form>

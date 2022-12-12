@@ -61,8 +61,9 @@ const SemesterClassStudentNew: React.FC = () => {
     }, [dispatch, id, access_token, refresh_token, course_id]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp mở", ""));
-    }, [dispatch, path.area])
+        dispatch(updateCurrentPath("Khóa học", "Lóp đang mở"));
+    }, [path.area, dispatch])
+    localStorage.setItem('path','/discover/course')
 
     const [searchTerm, setSearchTerm] = useState("");
 

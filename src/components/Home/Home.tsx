@@ -118,6 +118,7 @@ const Home: React.FC = () => {
 
   const dispatch: Dispatch<any> = useDispatch();
   dispatch(updateCurrentPath("Trang chủ", ""));
+  localStorage.setItem('path', '/')
 
   let access_token = localStorage.getItem("access_token");
   let refresh_token = localStorage.getItem("refresh_token");

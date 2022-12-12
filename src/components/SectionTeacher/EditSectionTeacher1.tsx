@@ -531,10 +531,11 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                             {
                                 function () {
                                     if (currentPage === totalPage) {
-                                        return (
-                                            <div className="row">
+                                        if (totalPage == 1) {
+                                            return (
+                                                <div className="row">
                                                 <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                
                                                     <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
                                                     <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
                                                 </div>
@@ -542,7 +543,23 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                                                     <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                 </div>
                                             </div>
-                                        )
+                                            )
+                                        }
+                                        else {
+                                            return (
+                                                <div className="row">
+                                                    <div className="col-xl-6 col-md-6 col-xs-6">
+                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                        <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
+                                                        <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
+                                                    </div>
+                                                    <div className="col-xl-6 col-md-6 col-xs-6">
+                                                        <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                        
                                     }
                                 }()
                             }

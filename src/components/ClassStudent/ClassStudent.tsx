@@ -69,8 +69,10 @@ const ClassStudent: React.FC = () => {
     }, [dispatch, id, access_token, refresh_token]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Khóa học", ""));
+        dispatch(updateCurrentPath("Khóa học của bé", ""));
     }, [path.area, dispatch])
+
+    localStorage.setItem('path','/classes')
 
     function onClassesStudentSelect(classes_student: IClassesStudent): void {
         dispatch(changeSelectedDoinglClass(classes_student));

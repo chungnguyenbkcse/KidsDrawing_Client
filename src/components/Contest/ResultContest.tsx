@@ -73,10 +73,16 @@ const ResultContest: React.FC = () => {
         }
     }, [dispatch, contest_id, access_token, refresh_token])
 
-    
+    var contest_name = localStorage.getItem('contest_name');
+    var contest_name_: string = "";
+    if (contest_name !== null) {
+        contest_name_ = contest_name;
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Cuộc thi", "danh sách"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath(contest_name_, "Kết quả"));
+    }, [path.area, dispatch, contest_name_])
+    localStorage.setItem('path','/contests')
 
     useEffect(() => {
         trackPromise(getTeacher(dispatch))

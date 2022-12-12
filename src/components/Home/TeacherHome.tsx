@@ -69,6 +69,8 @@ const TeacherHome: React.FC = () => {
 
     dispatch(updateCurrentPath("Trang chủ", ""));
 
+    localStorage.setItem('path', '/')
+
     return (
         promiseInProgress ?
       <div className="loader"></div> : <Fragment>

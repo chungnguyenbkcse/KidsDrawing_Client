@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
-import { IClassesStudentState, IExerciseStudentState, IExerciseSubmissionState, ISectionState, IStateType } from "../../store/models/root.interface";
+import { IClassesStudentState, IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType } from "../../store/models/root.interface";
 import "./SectionStudent.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -19,6 +19,7 @@ import { getStudentLeaveBySectionAndStudent } from "../../common/service/Student
 import { BsFillTrashFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
 import { deleteExerciseSubmission } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionById";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const SectionStudent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -28,6 +29,18 @@ const SectionStudent: React.FC = () => {
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
 
     const { promiseInProgress } = usePromiseTracker();
+
+    var id_y = localStorage.getItem('section_number');
+    let section_number = 0;
+    if (id_y !== null) {
+        section_number = parseInt(id_y);
+    }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    useEffect(() => {
+        dispatch(updateCurrentPath("Buổi học", "Buổi " + section_number));
+    }, [path.area, dispatch, section_number])
+    localStorage.setItem('path','/classes/detail-student')
 
 
     var id_y = localStorage.getItem('section_id');
@@ -83,17 +96,8 @@ const SectionStudent: React.FC = () => {
     console.log(class_id);
     console.log(class_students.classes_doing)
 
-    let link_jisti = "";
-    if (class_students.classes_doing.length > 0) {
-        class_students.classes_doing.map((ele, idx) => {
-            if (ele.id === class_id) {
-                link_jisti = ele.link_url;
-            }
-            return ele
-        })
-    }
 
-    console.log(link_jisti)
+    localStorage.setItem('path','/classes/detail-student')
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -147,6 +151,7 @@ const SectionStudent: React.FC = () => {
     }
 
     const routeChange4 = () => {
+        let link_jisti = "https://jitsi.kidsdrawing.site/" + class_id;
         if (link_jisti !== null) {
             window.open(link_jisti, '_blank');
         }

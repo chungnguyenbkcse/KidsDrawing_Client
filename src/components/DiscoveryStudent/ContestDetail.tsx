@@ -145,8 +145,9 @@ const ConestDetailStudent: React.FC = () => {
 
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Cuộc thi", ""));
-    }, [path.area, dispatch])
+        dispatch(updateCurrentPath("Cuộc thi", contest_name));
+    }, [path.area, dispatch, contest_name])
+    localStorage.setItem('path','/discover/contest')
 
     const history = useHistory();
     function routeHome() {
@@ -314,9 +315,7 @@ const ConestDetailStudent: React.FC = () => {
                         if (checked === true) {
                             return (
                                 <div className="col-xl-12 col-lg-12">
-                                    <div className="card-header py-3">
-                                        <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
-                                    </div>
+                                    
                                     <div className="card shadow mb-4">
                                         <div className="card-body" dangerouslySetInnerHTML={{ __html: description_contest }}>
                                         </div>

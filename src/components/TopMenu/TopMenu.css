@@ -7,6 +7,10 @@
     max-height: 350px;
 }
 
+#home-teacher  {
+    cursor: pointer;
+}
+
 #teacher_navbarx {
     background-color: #ffffff !important;
     width: 100%;

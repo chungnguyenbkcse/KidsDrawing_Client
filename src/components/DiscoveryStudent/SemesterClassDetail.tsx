@@ -162,9 +162,16 @@ const SemesterClassDetailStudent: React.FC = () => {
     }, [dispatch, id, access_token, refresh_token]);
 
 
+    var id_bx = localStorage.getItem('semester_class_name');
+    var semester_class_name  = "";
+    if (id_bx !== null) {
+        semester_class_name = (id_bx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp theo kì", ""));
-    }, [path.area, dispatch])
+        dispatch(updateCurrentPath("Lớp đang mở", semester_class_name));
+    }, [path.area, dispatch, semester_class_name])
+    localStorage.setItem('path','/courses/semester-classes')
 
     function handleRegister() {
         const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
@@ -317,9 +324,7 @@ const SemesterClassDetailStudent: React.FC = () => {
                         if (checked === true) {
                             return (
                                 <div className="col-xl-12 col-lg-12">
-                                    <div className="card-header py-3">
-                                        <h6 className="m-0 font-weight-bold text-green">Chi tiết</h6>
-                                    </div>
+                                    
                                     <div className="card shadow mb-4">
                                         <div className="card-body" dangerouslySetInnerHTML={{ __html: description_course }}>
                                         </div>

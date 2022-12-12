@@ -73,8 +73,19 @@ const ResultGradeContestStudent = () => {
                 trackPromise(getContestSubmissionByContest(dispatch, contest_id))
             }
         }
-        dispatch(updateCurrentPath("Cuoc thi", "Bảng xếp hạng"));
     }, [dispatch, access_token, refresh_token, contest_id, id]);
+
+    var contest_name = localStorage.getItem('contest_name');
+    var contest_name_ = "";
+    if (contest_name !== null) {
+        contest_name_ = contest_name;
+    }
+
+    const path = useSelector((state) => state.root.page);
+    useEffect(() => {
+        dispatch(updateCurrentPath("Cuộc thi", contest_name_));
+    }, [path.area, dispatch, contest_name_])
+    localStorage.setItem('path','/contests')
 
 
 

@@ -43,6 +43,8 @@ const StudentHome: React.FC = () => {
         total_contest_student = parseInt(id_y)
     }
 
+    localStorage.setItem('path', '/')
+
     var id_z = localStorage.getItem('total_course_student');
     if (id_z !== null) {
         total_course_student = parseInt(id_z)

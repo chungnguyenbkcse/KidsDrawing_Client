@@ -44,6 +44,8 @@ const ParentHome: React.FC = () => {
         id = parseInt(id_x);
     }
 
+    localStorage.setItem('path', '/')
+
     const [checked, setChecked] = useState(true);
 
     console.log(schedule_time_classes.schedule_time_classes)

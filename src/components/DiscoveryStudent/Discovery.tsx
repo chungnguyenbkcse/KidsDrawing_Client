@@ -64,9 +64,11 @@ const DiscoveryStudent: React.FC = () => {
 
     }, [dispatch, id, access_token, refresh_token]);
 
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Khám phá", ""));
+        dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch])
+    localStorage.setItem('path','/discover/course')
 
 
     const [checked, setChecked] = useState(true);

@@ -131,9 +131,13 @@ const DetailClassStudent: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
 
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp học", "Buổi học"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath("Khóa học của bé", "Buổi học"));
+    }, [path.area, dispatch])
+
+    localStorage.removeItem('path')
+    localStorage.setItem('path','/classes')
 
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);

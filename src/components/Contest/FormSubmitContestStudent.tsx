@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, IUserState } from "../../store/models/root.interface";
+import { IRootPageStateType, IStateType, IUserState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { IUser, UserModificationStatus } from "../../store/models/user.interface";
 import { addTeacher, editTeacher, setModificationState } from "../../store/actions/users.action";
@@ -17,6 +17,7 @@ import { getContestSubmissionByContestAndStudent } from "../../common/service/Co
 import jwt_decode from "jwt-decode";
 import Loading from "../../common/components/Loading";
 import { deleteContestSubmission } from "../../common/service/ContestSubmission/DeleteContestSubmission";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 function FormSubmitContestStudent(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
@@ -119,6 +120,13 @@ function FormSubmitContestStudent(): JSX.Element {
     }
 
     const { promiseInProgress } = usePromiseTracker();
+
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    useEffect(() => {
+        dispatch(updateCurrentPath("Cuộc thi của bé", contest_name_));
+    }, [path.area, dispatch, contest_name_])
+    localStorage.setItem('path','/contests')
 
 
     let access_token = localStorage.getItem("access_token");

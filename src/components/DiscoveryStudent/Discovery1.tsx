@@ -65,8 +65,9 @@ const DiscoveryStudentContest: React.FC = () => {
     }, [dispatch, id, access_token, refresh_token]);
 
     useEffect(() => {
-        dispatch(updateCurrentPath("Khám phá", ""));
+        dispatch(updateCurrentPath("Cuộc thi", ""));
     }, [path.area, dispatch])
+    localStorage.setItem('path','/discover/contest')
 
 
     const [checked, setChecked] = useState(true);

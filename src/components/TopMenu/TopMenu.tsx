@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { IStateType, IRootPageStateType } from "../../store/models/root.interface";
 import TopMenuNotification from "./TopNotification";
 import TopMenuCart from "./TopMenuCart";
+import { useHistory } from "react-router-dom";
 
 const TopMenu: React.FC = () => {
   const page: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -16,12 +17,29 @@ const TopMenu: React.FC = () => {
       roleUser = rolePrivilege[0]
   }
 
+  const history = useHistory();
+  function handleRoute () {
+    var idxxx = localStorage.getItem('path');
+    let path: string = "";
+    if (idxxx != null) {
+      path = idxxx
+    }
+    console.log('hello0')
+    if (page.subArea != null) {
+      console.log('hello')
+      history.push({
+        pathname: path
+      })
+    }
+    
+  }
+
   if (roleUser === "ADMIN"){
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top shadow">
         <ol className="breadcrumb dark-breadcrumb">
-          <li className="breadcrumb-item"><a href="# ">{page ? page.area : null}</a></li>
-          <li className="breadcrumb-item"><a href="# ">{page ? page.subArea : null}</a></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher" onClick={() => {handleRoute()}}>{page ? page.area : null}</p></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.subArea : null}</p></li>
         </ol>
   
         <ul className="navbar-nav ml-auto">
@@ -36,7 +54,7 @@ const TopMenu: React.FC = () => {
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">
-          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.area : null}</p></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher" onClick={() => {handleRoute()}}>{page ? page.area : null}</p></li>
           <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.subArea : null}</p></li>
         </ol>
   
@@ -53,7 +71,7 @@ const TopMenu: React.FC = () => {
     return (
       <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4" id="teacher_navbar">
         <ol className="breadcrumb dark-breadcrumb" id="teacher_breadcrumb">
-          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.area : null}</p></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher" onClick={() => {handleRoute()}}>{page ? page.area : null}</p></li>
           <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.subArea : null}</p></li>
         </ol>
   
@@ -70,8 +88,8 @@ const TopMenu: React.FC = () => {
   return (
     <nav className="navbar navbar-expand navbar-light bg-custom-dark topbar mb-4 static-top shadow">
       <ol className="breadcrumb dark-breadcrumb">
-        <li className="breadcrumb-item"><a href="# ">{page ? page.area : null}</a></li>
-        <li className="breadcrumb-item"><a href="# ">{page ? page.subArea : null}</a></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher" onClick={() => {handleRoute()}}>{page ? page.area : null}</p></li>
+          <li className="breadcrumb-item teacher-breadcrumb-item"><p className="mb-2 text-gray-400" id="home-teacher">{page ? page.subArea : null}</p></li>
       </ol>
 
       <ul className="navbar-nav ml-auto">

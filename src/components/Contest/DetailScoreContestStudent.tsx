@@ -74,15 +74,22 @@ const DetailScoreContestStudent: React.FC = () => {
     }
 
     var id_f = localStorage.getItem("student_name");
-    let contest_name = "";
+    let student_name = "";
     if (id_f !== null) {
-        contest_name = (id_f);
+        student_name = (id_f);
     }
 
 
+    var contest_name = localStorage.getItem('contest_name');
+    var contest_name_: string = "";
+    if (contest_name !== null) {
+        contest_name_ = contest_name;
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath(contest_name_, "Học sinh: " + student_name));
+    }, [path.area, dispatch, student_name, contest_name_])
+    localStorage.setItem('path','/contest/result-grade')
 
 
     return (
@@ -99,7 +106,7 @@ const DetailScoreContestStudent: React.FC = () => {
                                                 <h4 id="full-name">Thông tin chung</h4>
                                             </div>
                                             <div className="row no-gutters">
-                                                <p id="phone">Tên: {contest_name}</p>
+                                                <p id="phone">Tên: {student_name}</p>
                                             </div>
 
                                             <div className="row no-gutters">

@@ -130,9 +130,16 @@ const SectionForParent: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, class_id, id, total.length]);
 
+    var id_zx = localStorage.getItem('course_name');
+    var course_name = "";
+    if (id_zx !== null) {
+        course_name = (id_zx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp học", "Buổi học"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath(course_name, "Buổi học"));
+    }, [path.area, dispatch, course_name])
+    localStorage.setItem('path','/student/classes-doing')
 
     const [popup1, setPopup1] = useState(false);
     const [popup2, setPopup2] = useState(false);

@@ -149,9 +149,16 @@ const DetailClassParent: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
 
+    var id_zx = localStorage.getItem('course_name');
+    var course_name = "";
+    if (id_zx !== null) {
+        course_name = (id_zx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp học", "Chi tiết"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath("Khóa học", course_name));
+    }, [path.area, dispatch, course_name])
+    localStorage.setItem('path','/classes')
 
     const [popup1, setPopup1] = useState(false);
 

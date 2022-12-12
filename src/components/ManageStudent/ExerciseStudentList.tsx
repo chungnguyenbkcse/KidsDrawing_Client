@@ -83,9 +83,16 @@ const ExerciseStudentList: React.FC = () => {
 
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
+    var id_zx = localStorage.getItem('course_name');
+    var course_name = "";
+    if (id_zx !== null) {
+        course_name = (id_zx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Thống kê", "Bài tập"));
-    }, [dispatch, path.area])
+        dispatch(updateCurrentPath(course_name, "Bài tập"));
+    }, [path.area, dispatch, course_name])
+    localStorage.setItem('path','/student/classes-doing')
 
     const [checked1, setChecked1] = useState(true);
     const [checked2, setChecked2] = useState(false);

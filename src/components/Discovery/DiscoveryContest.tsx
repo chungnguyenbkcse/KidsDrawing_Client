@@ -65,6 +65,7 @@ const DiscoveryParentContest: React.FC = () => {
     useEffect(() => {
         dispatch(updateCurrentPath("Khám phá", ""));
     }, [path.area, dispatch])
+    localStorage.setItem('path','/discover/contest')
 
     const [searchTerm, setSearchTerm] = useState("");
 

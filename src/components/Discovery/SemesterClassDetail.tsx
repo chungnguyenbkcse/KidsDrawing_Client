@@ -198,9 +198,16 @@ const SemesterClassDetail: React.FC = () => {
 
     }, [dispatch, id, access_token, refresh_token]);
 
+    var id_zx = localStorage.getItem('semester_class_name');
+    var semester_class_name = "";
+    if (id_zx !== null) {
+        semester_class_name = (id_zx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp", ""));
-    }, [path.area, dispatch])
+        dispatch(updateCurrentPath("Lớp đang mở", semester_class_name));
+    }, [path.area, dispatch, semester_class_name])
+    localStorage.setItem('path','/courses/semester-classes')
 
     function handleRegister() {
         if (valueTeacher.length === 0) {

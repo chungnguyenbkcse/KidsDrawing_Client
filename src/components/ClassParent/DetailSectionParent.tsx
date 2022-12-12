@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
-import { IClassesStudentState, IExerciseStudentState, IExerciseSubmissionState, ISectionState, IStateType } from "../../store/models/root.interface";
+import { IClassesStudentState, IExerciseStudentState, IExerciseSubmissionState, IRootPageStateType, ISectionState, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { getExerciseForSectionStudent } from "../../common/service/ExerciseStudent/GetExerciseBySectionStudent";
 import { IExerciseStudent } from "../../store/models/exercise_student.interface";
@@ -16,6 +16,7 @@ import { BsFillTrashFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
 import { deleteExerciseSubmission } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionById";
 import { getAttendanceBySectionAndParent } from "../../common/service/Attendance/GetAttendanceBySectionAndParent";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const DetailSectionParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -113,6 +114,18 @@ const DetailSectionParent: React.FC = () => {
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
+
+    var id_zx = localStorage.getItem('section_number');
+    var section_number = 0;
+    if (id_zx !== null) {
+        section_number = parseInt(id_zx);
+    }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    useEffect(() => {
+        dispatch(updateCurrentPath("Buổi học", "Buổi " + section_number));
+    }, [path.area, dispatch, section_number])
+    localStorage.setItem('path','/classes/section')
 
     const history = useHistory();
     const routeChange2 = () => {

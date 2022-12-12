@@ -75,6 +75,7 @@ const ClassParent: React.FC = () => {
     useEffect(() => {
         dispatch(updateCurrentPath("Khóa học", ""));
     }, [path.area, dispatch])
+    localStorage.setItem('path','/classes')
 
     function onClassesParentSelect(classes_parent: IClassesParent): void {
         dispatch(changeSelectedDoinglClass(classes_parent));

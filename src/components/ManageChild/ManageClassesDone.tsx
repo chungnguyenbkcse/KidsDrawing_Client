@@ -127,6 +127,11 @@ const ManageClassesDone: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, teacher_id, class_id]);
 
+    useEffect(() => {
+        dispatch(updateCurrentPath(course_name, "Thống kê kết quả"));
+    }, [path.area, dispatch, course_name])
+    localStorage.setItem('path','/student/classes-doing')
+
     let list_score_user_grade_exercise: number[] = [];
     let list_name_user_grade_exercise: string[] = [];
     exercise_submission.exercise_gradeds.map((ele, idx) => {

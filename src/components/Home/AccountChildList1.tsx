@@ -18,10 +18,12 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
     const childs: IChildState = useSelector((state: IStateType) => state.childs);
     const dispatch: Dispatch<any> = useDispatch();
     const history = useHistory();
-    const routeChange = (student_id: number) => {
+    const routeChange = (student: IChild) => {
         let path = '/students/detail';
         localStorage.removeItem('student_id');
-        localStorage.setItem('student_id', student_id.toString())
+        localStorage.setItem('student_id', student.id.toString())
+        localStorage.removeItem('student_name');
+        localStorage.setItem('student_name', student.username + " - " + student.firstName + " " + student.lastName)
         history.push({
             pathname: path
         });
@@ -72,7 +74,7 @@ function AccountChildList1(props: accountChildListProps): JSX.Element {
                 childs.childs.map((ele, index) => {
                     if (!ele) { return null; }
                     return (
-                        <div className="col-md-8 col-xd-8 col-xs-8 mx-auto" onClick={() => { routeChange(ele.id) }}>
+                        <div className="col-md-8 col-xd-8 col-xs-8 mx-auto" onClick={() => { routeChange(ele) }}>
 
 
 

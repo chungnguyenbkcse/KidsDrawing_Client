@@ -113,10 +113,16 @@ const ViewExerciseSubmissionParent: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, exercise_id, id]);
 
-
+    var id_zx = localStorage.getItem('course_name');
+    var course_name = "";
+    if (id_zx !== null) {
+        course_name = (id_zx);
+    }
+    
     useEffect(() => {
-        dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath(course_name, "Bài tập: " + exercise_name));
+    }, [path.area, dispatch, course_name, exercise_name])
+    localStorage.setItem('path','/student/classes-doing')
 
     let users: IUserState = useSelector((state: IStateType) => state.users);
     let user: IUser | null = users.selectedUser;

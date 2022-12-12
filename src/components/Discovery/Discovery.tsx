@@ -64,9 +64,11 @@ const DiscoveryParent: React.FC = () => {
 
     }, [dispatch, id, access_token, refresh_token]);
 
+    
     useEffect(() => {
-        dispatch(updateCurrentPath("Khám phá", "Khóa học"));
+        dispatch(updateCurrentPath("Khám phá", ""));
     }, [path.area, dispatch])
+    localStorage.setItem('path','/discover/course')
 
     const [searchTerm, setSearchTerm] = useState("");
 

@@ -185,9 +185,11 @@ const ConestDetailParent: React.FC = () => {
     }, [dispatch, id, access_token, refresh_token]);
 
 
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Cuộc thi", ""));
-    }, [path.area, dispatch])
+        dispatch(updateCurrentPath("Cuộc thi", contest_name));
+    }, [path.area, dispatch, contest_name])
+    localStorage.setItem('path','/discover/contest')
 
     const history = useHistory();
     function routeHome() {

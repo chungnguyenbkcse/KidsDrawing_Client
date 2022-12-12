@@ -60,9 +60,16 @@ const SemesterClassParentNew: React.FC = () => {
         }
     }, [dispatch, id, access_token, refresh_token, course_id]);
 
+    var id_zx = localStorage.getItem('course_name');
+    var course_name = "";
+    if (id_zx !== null) {
+        course_name = (id_zx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp mở", ""));
-    }, [dispatch, path.area])
+        dispatch(updateCurrentPath(course_name, "Lớp đang mở"));
+    }, [path.area, dispatch, course_name])
+    localStorage.setItem('path','/discover/course')
 
     const [searchTerm, setSearchTerm] = useState("");
 

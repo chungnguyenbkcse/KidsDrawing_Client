@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/actions/account.actions";
-import { IClassesStudentState, IContestTeacherState, IStateType, IUserState } from "../../store/models/root.interface";
+import { IClassesStudentState, IContestTeacherState, IRootPageStateType, IStateType, IUserState } from "../../store/models/root.interface";
 import "./ManageChild.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
@@ -16,6 +16,7 @@ import ScheduleForChild from "./ScheduleForChild";
 import { getFinalScoreChild } from "../../common/service/FinalScoreChild/GetFinalScoreChild";
 import { getContestSubmissionByContest } from "../../common/service/ContestSubmission/GetContestSubmissionByContest";
 import { getContestSubmissionByStudent } from "../../common/service/ContestSubmission/GetContestSubmissionByStudent";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 
 const ManageChild: React.FC = () => {
@@ -74,6 +75,19 @@ const ManageChild: React.FC = () => {
             }
         }
     }, [dispatch, access_token, refresh_token, student_id]);
+
+    var id_zx = localStorage.getItem('student_name');
+    var student_name = "";
+    if (id_zx !== null) {
+        student_name = (id_zx);
+    }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+    
+    useEffect(() => {
+        dispatch(updateCurrentPath("Tài khoản con", student_name));
+    }, [path.area, dispatch, student_name])
+    localStorage.setItem('path','/')
 
 
     return (

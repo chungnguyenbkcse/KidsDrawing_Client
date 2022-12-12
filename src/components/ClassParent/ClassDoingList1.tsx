@@ -85,6 +85,8 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
         localStorage.setItem('student_ids', JSON.stringify(classes_parent.student_ids))
         localStorage.removeItem('class_id');
         localStorage.setItem('class_id', classes_parent.id.toString());
+        localStorage.removeItem('course_name');
+        localStorage.setItem('course_name', classes_parent.course_name)
         history.push({
             pathname: path,
         });

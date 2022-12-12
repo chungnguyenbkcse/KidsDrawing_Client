@@ -2,13 +2,13 @@ import { fetchDataRequest } from "../../../store/actions/art_type.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getAttendance } from "./GetAttendance";
 
-export function putAttendance(data: any, id: any) {
+export function putAttendance(data: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-                `${process.env.REACT_APP_API_URL}/user-attendance/${id}`, {
+                `${process.env.REACT_APP_API_URL}/user-attendance`, {
                     method: "PUT",
                     headers: {
                         'Authorization': bearer,
@@ -23,7 +23,7 @@ export function putAttendance(data: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putAttendance(data, id))
+                        dispatch(putAttendance(data))
                     }
                     else {
                         throw Error(response.statusText);

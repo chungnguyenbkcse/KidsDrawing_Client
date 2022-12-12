@@ -53,6 +53,12 @@ function AttendanceList(props: lessonListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
     const attendances: IAttendanceState = useSelector((state: IStateType) => state.attendances);
 
+    var id_k = localStorage.getItem('is_active');
+    var is_active = "";
+    if (id_k !== null) {
+        is_active = (id_k);
+    }
+
     let lst: Options[] = [];
 
     if (attendances.attendances.length > 0) {
@@ -61,15 +67,15 @@ function AttendanceList(props: lessonListProps): JSX.Element {
                 id: ele.id,
                 student_id: ele.student_id,
                 section_id: ele.section_id,
-                status: false
+                status: ele.status
             })
         })
     }
 
-    function onValueChanged(event: ChangeEvent<HTMLInputElement>, id: any): void {
+    function onValueChanged(event: ChangeEvent<HTMLInputElement>, student_id: number, section_id: number): void {
         lst.map((ele, idx) => {
-            if (ele.id === id) {
-                ele.status = !ele.status;
+            if (ele.student_id === student_id && ele.section_id === section_id) {
+                ele.status = event.target.checked;
             }
             return ele
         })
@@ -79,18 +85,34 @@ function AttendanceList(props: lessonListProps): JSX.Element {
 
     console.log(lst)
     
-    const lessonElements: (JSX.Element | null)[] = attendances.attendances.map((exercise, index) => {
+    const lessonElements: (JSX.Element | null)[] = attendances.attendances.map((attendance, index) => {
         //console.log(strDate.replaceAll("T", " ").substring(0,16))
-        if (!exercise) { return null; }
+        if (!attendance) { return null; }
         return (<tr className={`table-row `}
             key={`lesson_${index}`} >
             <th scope="row" className="data-table">{index + 1}</th>
-            <td className="data-table">{exercise.student_name}</td>
-            <td className="data-table">{exercise.email}</td>
-            <td className="data-table">{exercise.course_name}</td>
-            <td className="data-table">{exercise.section_number}</td>
+            <td className="data-table">{attendance.student_name}</td>
+            <td className="data-table">{attendance.email}</td>
+            <td className="data-table">{attendance.course_name}</td>
+            <td className="data-table">{attendance.section_number}</td>
             <td>
-                <input type="checkbox" defaultChecked={exercise.status} onChange={(e) => {onValueChanged(e, exercise.id)}}/>
+                <input type="checkbox" defaultChecked={attendance.status} onChange={(e) => {onValueChanged(e, attendance.student_id, attendance.section_id)}}/>
+            </td>
+        </tr>);
+    });
+
+    const lessonElement1s: (JSX.Element | null)[] = attendances.attendances.map((attendance, index) => {
+        //console.log(strDate.replaceAll("T", " ").substring(0,16))
+        if (!attendance) { return null; }
+        return (<tr className={`table-row `}
+            key={`lesson_${index}`} >
+            <th scope="row" className="data-table">{index + 1}</th>
+            <td className="data-table">{attendance.student_name}</td>
+            <td className="data-table">{attendance.email}</td>
+            <td className="data-table">{attendance.course_name}</td>
+            <td className="data-table">{attendance.section_number}</td>
+            <td>
+                <input type="checkbox" defaultChecked={attendance.status} disabled/>
             </td>
         </tr>);
     });
@@ -105,14 +127,14 @@ function AttendanceList(props: lessonListProps): JSX.Element {
                     student_id: ele.student_id,
                     section_id: ele.section_id,
                     status: ele.status
-                }, ele.id, idxx)
+                }, idxx)
             }
             else {
                 return dispatch(putAttendance({
                     student_id: ele.student_id,
                     section_id: ele.section_id,
                     status: ele.status
-                }, ele.id))
+                }))
             }
         })
     }
@@ -122,7 +144,7 @@ function AttendanceList(props: lessonListProps): JSX.Element {
         <Fragment>
             <div className="table-responsive portlet">
                 <table className="table">
-                    <thead id="table-thread-exercise-section">
+                    <thead id="table-thread-attendance-section">
                         <tr>
                             <th scope="col" className="name-row-table">#</th>
                             <th scope="col" className="name-row-table">Tên học sinh</th>
@@ -133,8 +155,12 @@ function AttendanceList(props: lessonListProps): JSX.Element {
                         </tr>
                     </thead>
                     <tbody>
-                        {lessonElements}
-                        <tr className={`table-row `}>
+                        {
+                            is_active == "not_active" ? lessonElement1s : lessonElements
+                        }
+                        
+                        {
+                            is_active == "not_active" ? "" : <tr className={`table-row `}>
                             <button
                                 className="btn btn-success ml-2"
                                 id="btn-into-room"
@@ -143,6 +169,8 @@ function AttendanceList(props: lessonListProps): JSX.Element {
                                 Gửi
                             </button>
                             </tr>
+                        }
+                        
                     </tbody>
                 </table>
             </div>

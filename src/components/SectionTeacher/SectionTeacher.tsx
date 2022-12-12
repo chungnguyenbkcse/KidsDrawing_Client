@@ -111,16 +111,6 @@ const SectionTeacher: React.FC = () => {
         is_tutorial_page = (id_kk);
     }
 
-    let link_jisti = "";
-    if (class_teachers.class_doing.length > 0) {
-        class_teachers.class_doing.map((ele, idx) => {
-            if (ele.id === class_id) {
-                link_jisti = ele.link_url;
-            }
-            return ele
-        })
-    }
-
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
     useEffect(() => {
@@ -171,6 +161,7 @@ const SectionTeacher: React.FC = () => {
     }
 
     const routeChange4 = () => {
+        let link_jisti = "https://jitsi.kidsdrawing.site/" + class_id;
         if (link_jisti !== null) {
             window.open(link_jisti, '_blank');
         }
@@ -486,16 +477,31 @@ const SectionTeacher: React.FC = () => {
                                                                 return ""
                                                             }
                                                             else {
-                                                                if (sections.sections[0].teach_form === true && (is_active === "pre_active_now" || is_active === "active_now")) {
-                                                                    return (
-                                                                        <button
-                                                                            className="btn btn-success ml-2"
-                                                                            id="btn-into-attendance"
-                                                                            onClick={routeChange5}
-                                                                        >
-                                                                            Điểm danh
-                                                                        </button>
-                                                                    )
+                                                                if (sections.sections[0].teach_form === true ) {
+                                                                    if (is_active === "not_active") {
+                                                                        return (
+                                                                            <button
+                                                                                className="btn btn-success"
+                                                                                id="btn-into-attendance"
+                                                                                onClick={routeChange5}
+                                                                            >
+                                                                                Điểm danh
+                                                                            </button>
+                                                                        )
+                                                                    }
+                                                                    else if (is_active === "pre_active_now" || is_active === "active_now") {
+                                                                        return (
+                                                                            <button
+                                                                                className="btn btn-success ml-2"
+                                                                                id="btn-into-attendance"
+                                                                                onClick={routeChange5}
+                                                                            >
+                                                                                Điểm danh
+                                                                            </button>
+                                                                        )
+                                                                    }
+                                                                    
+                                                                    
                                                                 }
                                                             }
                                                         }()

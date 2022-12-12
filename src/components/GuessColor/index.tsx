@@ -103,7 +103,7 @@ const GuessColor = () => {
   const resetGame = useCallback(() => {
     setCorrect(false);
     setGameColors(generateRandomColors(difficulty));
-    setPlayButtonMessage("NEW COLORS");
+    setPlayButtonMessage("MÀU MỚI");
     setMessage("");
   }, [generateRandomColors, difficulty]);
 
@@ -139,15 +139,15 @@ const GuessColor = () => {
   const difficultyButtons = [
     {
       difficulty: 3,
-      text: "EASY",
+      text: "DỄ",
     },
     {
       difficulty: 6,
-      text: "MEDIUM",
+      text: "TRUNG BÌNH",
     },
     {
       difficulty: 9,
-      text: "HARD",
+      text: "KHÓ",
     },
   ];
 

@@ -58,8 +58,8 @@ const Game: React.FC<Props> = ({
     if (divColor === correctColor) {
       changeColors(correctColor);
       handleCorrect(true);
-      handleMessage("CORRECT!");
-      handleButtonMessage("PLAY AGAIN?");
+      handleMessage("CHÍNH XÁC!");
+      handleButtonMessage("CHƠI LẠI?");
 
       let gamesWonArr: string[] = [];
       var id_x = localStorage.getItem("gamesWon");
@@ -84,7 +84,7 @@ const Game: React.FC<Props> = ({
 
       return "visible";
     } else {
-      handleMessage("TRY AGAIN");
+      handleMessage("THỬ LẠI NÀO!");
       return "hidden";
     }
   };

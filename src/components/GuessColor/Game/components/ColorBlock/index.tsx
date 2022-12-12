@@ -12,8 +12,8 @@ type Props = {
 
 const MotionBlock = styled(motion.div)<{ visible: string }>`
   border: 4px solid white;
-  width: 175px;
-  height: 175px;
+  width: 105px;
+  height: 105px;
   border-radius: 30px;
   margin: 40px;
   background: ${(props) => props.color};

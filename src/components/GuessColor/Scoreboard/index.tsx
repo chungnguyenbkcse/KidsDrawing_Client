@@ -31,7 +31,7 @@ const ScoreboardContainer = styled.div`
 `;
 
 const ScoreboardTitle = styled.h1`
-  font-size: 40px;
+  font-size: 20px;
   letter-spacing: 4px;
   text-align: center;
   margin-top: 0px;
@@ -57,21 +57,21 @@ const FlexWrap = styled.div`
 
 const StatTitle = styled.p`
   width: 70%;
-  font-size: 40px;
+  font-size: 20px;
   letter-spacing: 4px;
   color: rgba(199, 0, 205, 1);
   padding-left: 20px;
   padding-bottom: 12px;
   border-bottom: 4px solid black;
   @media (max-width: 768px) {
-    font-weight: 600;
-    font-size: 24px;
+    font-weight: 400;
+    font-size: 20px;
   }
 `;
 
 const StatValue = styled.p`
   width: 30%;
-  font-size: 40px;
+  font-size: 20px;
   letter-spacing: 4px;
   color: rgba(199, 0, 205, 1);
   text-align: center;
@@ -144,29 +144,29 @@ const Scoreboard = ({ correct }: Props) => {
 
   const difficultyMap = useMemo(() => {
     if (averageDifficulty === "3") {
-      return "Easy";
+      return "Dễ";
     } else if (averageDifficulty === "6") {
-      return "Medium";
+      return "Trung bình";
     } else if (averageDifficulty === "9") {
-      return "Hard";
+      return "Khó";
     }
   }, [averageDifficulty]);
 
   const scoreBoardStats: object[] = [
     {
-      title: "Games Won",
+      title: "Thắng",
       value: gamesWon,
     },
     {
-      title: "Favorite Difficulty",
-      value: difficultyMap ? difficultyMap : "Medium",
+      title: "Mức độ yêu thích",
+      value: difficultyMap ? difficultyMap : "Trung bình",
     },
   ];
 
   return (
     <PageBase>
       <ScoreboardContainer>
-        <ScoreboardTitle>SCOREBOARD</ScoreboardTitle>
+        <ScoreboardTitle>THỐNG KÊ</ScoreboardTitle>
         {scoreBoardStats.map((stat: any) => {
           return (
             <FlexWrap>

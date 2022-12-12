@@ -33,10 +33,10 @@ const Header: React.FC<Props> = ({ correct, pickedColor }: Props) => {
   return (
     <ContentHeader correct={correct} pickedColor={pickedColor}>
       <div>
-        <h1>Color Guessing Game</h1>
+        <h3>Trò chơi nhận biết mùa sắc</h3>
         <p>
           {/* Guess which block below is: <PickedColor>{pickedColor}</PickedColor> */}
-          Guess which block below is:
+          Các bé hãy nhận biết màu với hình bên dưới:
         </p>
       </div>
     </ContentHeader>

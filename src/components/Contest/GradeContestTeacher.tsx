@@ -114,9 +114,17 @@ const GradeContestTeacher: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);
 
+
+    var contest_name = localStorage.getItem('contest_name');
+    var contest_name_: string = "";
+    if (contest_name !== null) {
+        contest_name_ = contest_name;
+    }
+    
     useEffect(() => {
-        dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath(contest_name_, "Chấm bài"));
+    }, [path.area, dispatch, contest_name_])
+    localStorage.setItem('path','/contests/detail')
 
     const history = useHistory();
     const routeChange = () => {

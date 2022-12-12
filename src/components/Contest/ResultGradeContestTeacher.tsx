@@ -101,9 +101,16 @@ const ResultGradeContestTeacher: React.FC = () => {
 
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
+    var contest_name = localStorage.getItem('contest_name');
+    var contest_name_: string = "";
+    if (contest_name !== null) {
+        contest_name_ = contest_name;
+    }
+    
     useEffect(() => {
-        dispatch(updateCurrentPath("Cuộc thi", "kết quả"));
-    }, [path.area, dispatch])
+        dispatch(updateCurrentPath(contest_name_, "Kết quả"));
+    }, [path.area, dispatch, contest_name_])
+    localStorage.setItem('path','/contests/detail')
 
 
     const history = useHistory();

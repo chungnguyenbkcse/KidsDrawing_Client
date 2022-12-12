@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TopCard from "../../common/components/TopCardUser";
 import { logout } from "../../store/actions/account.actions";
-import { IContestSubmissionTeacherState, IStateType } from "../../store/models/root.interface";
+import { IContestSubmissionTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 import { getContestSubmissionByContestAndTeacher } from "../../common/service/ContestSubmission/GetContestSubmissonForTeacherAndContest";
 import { GrLinkDown } from "react-icons/gr";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const ContestDetailTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -120,7 +121,13 @@ const ContestDetailTeacher: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);
 
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
 
+    
+    useEffect(() => {
+        dispatch(updateCurrentPath("Cuộc thi", contest_name_));
+    }, [path.area, dispatch, contest_name_])
+    localStorage.setItem('path','/contests')
 
     const history = useHistory();
     const routeChange = () => {

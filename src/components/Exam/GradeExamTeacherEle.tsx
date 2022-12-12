@@ -90,9 +90,18 @@ const GradeExamTeacherEle: React.FC = () => {
 
 
 
+    var id_zx = localStorage.getItem('class_name');
+    var class_name = "";
+    if (id_zx !== null) {
+        class_name = (id_zx);
+    }
+
+
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Bài tập", "Chi tiết"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath(class_name, "Bài tập: " + exercise_name));
+    }, [path.area, dispatch, class_name, exercise_name])
+    localStorage.setItem('path','/student/classes-doing')
 
     const history = useHistory();
 

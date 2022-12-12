@@ -69,9 +69,16 @@ const ClassTeacherDetail: React.FC = () => {
         }
     }, [dispatch, class_id, access_token, refresh_token]);
 
+    var id_zx = localStorage.getItem('class_name');
+    var class_name = "";
+    if (id_zx !== null) {
+        class_name = (id_zx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp", "Chi tiết"));
-    }, [dispatch, path.area])
+        dispatch(updateCurrentPath(class_name, "Chi tiết"));
+    }, [path.area, dispatch, class_name])
+    localStorage.setItem('path','/student/classes-doing')
 
 
     const [popup1, setPopup1] = useState(false);

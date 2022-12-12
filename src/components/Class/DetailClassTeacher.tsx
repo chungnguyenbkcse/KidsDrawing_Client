@@ -132,9 +132,16 @@ const DetailClassTeacher: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, class_id, id]);
 
+    var id_zx = localStorage.getItem('class_name');
+    var class_name = "";
+    if (id_zx !== null) {
+        class_name = (id_zx);
+    }
+
     useEffect(() => {
-        dispatch(updateCurrentPath("Lớp học", "Buổi học"));
-    }, [path.area, dispatch]);
+        dispatch(updateCurrentPath("Lớp", class_name));
+    }, [path.area, dispatch, class_name])
+    localStorage.setItem('path','/student/classes-doing')
 
     const [popup1, setPopup1] = useState(false);
 

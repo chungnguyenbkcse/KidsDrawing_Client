@@ -128,6 +128,7 @@ import EditScoreContestStudent from "../components/Contest/EditScoreContestStude
 import SectionForParent from "../components/ClassParent/SectionForParent";
 import DetailSectionParent from "../components/ClassParent/DetailSectionParent";
 import EditSectionTeacherNotApprove from "../components/SectionTeacher/EditSectionTeacherNotApprove";
+import FormSubmit2Parent from "../components/ClassParent/FormSubmit2Student";
 
 //import LeftMenu from "../components/LeftMenu/LeftMenu";
 const LeftMenu = lazy(()=> import("../components/LeftMenu/LeftMenu"));
@@ -228,6 +229,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/classes/section`}><SectionForParent /></Route>
                                 <Route path={`/section/detail`}><DetailSectionParent /></Route>
                                 <Route path={`/contests/submit`}><FormSubmitContestParent /></Route>
+                                <Route path={`/exercise-parent/submit`}><FormSubmit2Parent /></Route>
                                 <Route path={`/contest/score`}><DetailScoreContestStudent /></Route>
                                 <Route path={`/courses/semester-classes`}><SemesterClassParentNew /></Route>
                                 <Route path={`/contests/detail`}><ContestDetailTeacher /></Route>

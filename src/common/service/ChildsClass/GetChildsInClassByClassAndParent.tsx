@@ -38,6 +38,8 @@ export function getChildsClassByClassAndParent(dispatch: any, class_id: number, 
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeChildsClassAll())
                 console.log(data.body.students)
+                let student_names: string[] = [];
+                let student_ids: number[] = []
                 data.body.students.map ((ele: any) => {
                     var user: user = {
                         student_id: ele.student_id,
@@ -45,8 +47,15 @@ export function getChildsClassByClassAndParent(dispatch: any, class_id: number, 
                         dateOfBirth: ele.dateOfBirth,
                         sex: ele.sex
                     }
+                    student_names.push(ele.student_name);
+                    student_ids.push(ele.student_id);
                     return dispatch(addChildsClass(user));
                 })
+
+                localStorage.removeItem('student_names');
+                localStorage.setItem('student_names', JSON.stringify(student_names))
+                localStorage.removeItem('student_ids');
+                localStorage.setItem('student_ids', JSON.stringify(student_ids))
 
                 if (data.body.students.length == 1) {
                     getExerciseSubmissionByClassAndStudent(dispatch, class_id,data.body.students[0])

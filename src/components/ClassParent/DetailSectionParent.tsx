@@ -153,7 +153,8 @@ const DetailSectionParent: React.FC = () => {
         localStorage.setItem('description', exercise_student.exercise_description.toString())
         localStorage.removeItem('deadline');
         localStorage.setItem('deadline', exercise_student.exercise_deadline);
-
+        localStorage.setItem('student_id', exercise_student.student_id.toString())
+        localStorage.setItem('student_name', exercise_student.student_name.toString())
         localStorage.setItem('exercise_name', exercise_student.exercise_name);
         localStorage.setItem('exercise_id', exercise_student.exercise_id.toString());
         history.push({
@@ -167,6 +168,7 @@ const DetailSectionParent: React.FC = () => {
         localStorage.removeItem('exercise_level_name');
         localStorage.removeItem('exercise_id');
         localStorage.removeItem('deadline');
+        
         localStorage.setItem('exercise_description', exercise_student.description);
         localStorage.setItem('exercise_name', exercise_student.name);
         localStorage.setItem('exercise_id', exercise_student.id.toString());
@@ -182,6 +184,8 @@ const DetailSectionParent: React.FC = () => {
         
         localStorage.removeItem('time_submit');
         localStorage.setItem('time_submit', exercise_student.update_time.toString())
+        localStorage.setItem('student_id', exercise_student.student_id.toString())
+        localStorage.setItem('student_name', exercise_student.student_name.toString())
         localStorage.removeItem('description');
         localStorage.setItem('exercise_description', exercise_student.exercise_description);
         localStorage.setItem('description', exercise_student.exercise_description.toString())
@@ -194,8 +198,8 @@ const DetailSectionParent: React.FC = () => {
         });
     }
 
-    const routeChange5 = (description: string, name: string, id: any) => {
-        let path = '/exercise/submit';
+    const routeChange10 = (description: string, name: string, id: any) => {
+        let path = '/exercise-parent/submit';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
         localStorage.removeItem('exercise_level_name');
@@ -208,10 +212,58 @@ const DetailSectionParent: React.FC = () => {
         });
     }
 
+    var id_ix = localStorage.getItem('student_ids');
+    let student_ids: number[] = [];
+    if (id_ix !== null) {
+        student_ids = JSON.parse(id_ix);
+    }
+
+    var id_iy = localStorage.getItem('student_names');
+    let student_names: string[] = [];
+    if (id_iy !== null) {
+        student_names = JSON.parse(id_iy);
+    }
+
+    const [filter, setFilter] = useState(0)
+
+    function handleChange(e: any) {
+        setFilter(e.target.value)
+        let index = e.nativeEvent.target.selectedIndex;
+       
+    }
+
     return (
         promiseInProgress ?
             <div className="loader"></div> : <Fragment>
                 <ToastContainer />
+                    {
+                        student_ids.length > 1 ? <div className="row mb-2">
+                        <div className="col-md-12">
+                            <div className="right-sort float-right">
+                                <div className="sort-by ml-4 mr-4">
+                                    <span className="mr-1">Vui lòng chọn học sinh:</span>
+    
+                                    <select name="cars" id="cars"
+                                        value={filter}
+                                        onChange={handleChange}
+                                    >
+                                        <option value={0} selected>Choose</option>
+                                        {
+                                            student_ids.map((ele, idx) => {
+                                                return (
+                                                    <option value={ele}>{student_names[idx]}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div> : ""
+                    }
+                     
+
                 {
                     function () {
                         if (requestId !== 0) {
@@ -354,7 +406,7 @@ const DetailSectionParent: React.FC = () => {
                                                                 }
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                        <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange5(ele.description, ele.name, ele.id) }}>
+                                                                        <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange10(ele.description, ele.name, ele.id) }}>
                                                                             <div className="col-xl-3 col-md-3 avatar-x">
                                                                                 <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
                                                                             </div>
@@ -365,6 +417,14 @@ const DetailSectionParent: React.FC = () => {
                                                                                     </div>
                                                                                     <div className="col-md-7">
                                                                                         {ele.name}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="row">
+                                                                                    <div className="col-md-5">
+                                                                                        Học sinh:
+                                                                                    </div>
+                                                                                    <div className="col-md-7">
+                                                                                        {ele.student_name}
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="row">
@@ -398,6 +458,59 @@ const DetailSectionParent: React.FC = () => {
                                                                 if (ele == undefined || ele == null) {
                                                                     return ""
                                                                 }
+                                                                if (filter !== 0) {
+                                                                    if (ele.student_id == filter) {
+                                                                        return (
+                                                                            <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                                <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2x(ele) }}>
+                                                                                    <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                        <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                                    </div>
+                                                                                    <div className="col-xl-9 col-md-9 mt-2">
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Tên:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.exercise_name}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Học sinh:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.student_name}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Nộp lúc:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.update_time.replaceAll("T", " ").substring(0, 16)}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+        
+                                                                                        <div className="row mb-2">
+                                                                                            <div className="col-md-5">
+                                                                                                Trạng thái:
+                                                                                            </div>
+                                                                                            <div className="col-md-7 status-score">
+                                                                                                Đã có điểm
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+        
+                                                                                </div>
+                                                                            </tr>
+                                                                        )
+                                                                    }
+                                                                    else {
+                                                                        return ""
+                                                                    }
+                                                                }
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                         <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2x(ele) }}>
@@ -411,6 +524,14 @@ const DetailSectionParent: React.FC = () => {
                                                                                     </div>
                                                                                     <div className="col-md-7">
                                                                                         {ele.exercise_name}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="row">
+                                                                                    <div className="col-md-5">
+                                                                                        Học sinh:
+                                                                                    </div>
+                                                                                    <div className="col-md-7">
+                                                                                        {ele.student_name}
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="row">
@@ -443,6 +564,63 @@ const DetailSectionParent: React.FC = () => {
                                                             exercise_submissions.exercise_not_gradeds.map((ele, index) => {
                                                                 if (ele == undefined || ele == null) {
                                                                     return ""
+                                                                }
+                                                                if (filter !== 0) {
+                                                                    if (ele.student_id == filter) {
+                                                                        return (
+                                                                            <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                                <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
+                                                                                    <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                        <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                                    </div>
+                                                                                    <div className="col-xl-9 col-md-9 mt-2">
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Tên:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                            <div className="row">
+                                                                                                <div className="col-md-9">
+                                                                                                    {ele.exercise_name}
+                                                                                                </div>
+                                                                                                <div className="col-md-3">
+                                                                                                    <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                        e.stopPropagation(); 
+                                                                                                        setRequestId(ele.exercise_id);
+                                                                                                        setStudentId(ele.student_id)
+                                                                                                        setPopup2(true)
+                                                                                                    }}/>
+                                                                                                </div>
+                                                                                            </div> 
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Nộp lúc:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.update_time.replaceAll("T", " ").substring(0, 16)}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+        
+                                                                                        <div className="row mb-2">
+                                                                                            <div className="col-md-5">
+                                                                                                Trạng thái:
+                                                                                            </div>
+                                                                                            <div className="col-md-7 status-score">
+                                                                                                Chưa có điểm
+                                                                                            </div>
+                                                                                        </div>
+        
+                                                                                    </div>
+                                                                                </div>
+                                                                            </tr>
+                                                                        )
+                                                                    }
+                                                                    else {
+                                                                        return ""
+                                                                    }
                                                                 }
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>

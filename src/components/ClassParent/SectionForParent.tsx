@@ -27,6 +27,7 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { deleteExerciseSubmission } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionById";
 import { deleteStudentLeave } from "../../common/service/StudentLeave/DeleteStudentLeaveById";
 import { getSectionByClassAndParent } from "../../common/service/Section/GetSectionByClassAndParent";
+import { getExerciseForClassAndParent } from "../../common/service/ExerciseParent/GetExerciseByClassAndParent";
 
 
 const SectionForParent: React.FC = () => {
@@ -119,11 +120,13 @@ const SectionForParent: React.FC = () => {
                     dispatch(logout())
                 }
                 else {
+                    trackPromise(getExerciseForClassAndParent(dispatch, class_id, id))
                     trackPromise(getInfoMyClass(dispatch, class_id))
                     trackPromise(getSectionByClassAndParent(dispatch, class_id, id, total.length))
                 }
             }
             else {
+                trackPromise(getExerciseForClassAndParent(dispatch, class_id, id))
                 trackPromise(getInfoMyClass(dispatch, class_id))
                 trackPromise(getSectionByClassAndParent(dispatch, class_id, id, total.length))
             }
@@ -369,7 +372,7 @@ const SectionForParent: React.FC = () => {
 
                 <div className="row">
                     <TopCard title="SỐ BUỔI ĐÃ HỌC" text={`${check_active.filter((ele, index) => ele === "Đã diễn ra").length}/${numberSectionCount}`} icon="book" class="primary" />
-                    
+                    <TopCard title="SỐ BÀI KIỂM TRA CHƯA LÀM" text={`${numberNotSubmitNowCount}`} icon="book" class="danger" />
                 </div>
 
 

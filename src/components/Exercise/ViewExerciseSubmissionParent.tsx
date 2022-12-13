@@ -36,6 +36,12 @@ const ViewExerciseSubmissionParent: React.FC = () => {
         id = parseInt(id_y);
     }
 
+    var id_yx = localStorage.getItem("student_name");
+    let student_name = "";
+    if (id_yx !== null) {
+        student_name = (id_yx);
+    }
+
     var id_y = localStorage.getItem('exercise_submission_id');
     var exercise_submission_id: number = 0;
     if (id_y !== null) {
@@ -243,7 +249,9 @@ const ViewExerciseSubmissionParent: React.FC = () => {
                                         <p id="phone">Nội dung: <span dangerouslySetInnerHTML={{ __html: exercise_description }}></span></p>
                                     </div>
 
-                                    
+                                    <div className="row no-gutters">
+                                        <p id="phone">Học sinh: {student_name}</p>
+                                    </div>
 
                                     <div className="row no-gutters">
                                         <p id="phone">Hạn nộp: {deadline.replaceAll("T", " ").substring(0,16)}</p>

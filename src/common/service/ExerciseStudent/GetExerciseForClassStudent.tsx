@@ -6,7 +6,8 @@ interface exercise {
     description: string;
     section_id: number;
     teacher_name: string;
-    
+    student_id: number;
+    student_name: string;
     time_submit: string;
     deadline: string;
     level_id: number;
@@ -56,7 +57,8 @@ export function getExerciseForClassStudent(dispatch: any, class_id: number, stud
                         description: ele.description,
                         section_id: ele.section_id,
                         level_id: ele.level_id,
-                        
+                        student_id: ele.student_id,
+                        student_name: ele.student_name,
                         teacher_name: ele.teacher_name,
                         time_submit: ele.time_submit,
                         deadline: ele.deadline,
@@ -78,7 +80,8 @@ export function getExerciseForClassStudent(dispatch: any, class_id: number, stud
                         description: ele.description,
                         section_id: ele.section_id,
                         level_id: ele.level_id,
-                        
+                        student_id: ele.student_id,
+                        student_name: ele.student_name,
                         teacher_name: ele.teacher_name,
                         time_submit: ele.time_submit,
                         deadline: ele.deadline,

@@ -1,7 +1,8 @@
 export interface IExerciseStudent {
     id: any;
     name: string;
-    
+    student_name: string;
+    student_id: number;
     description: string;
     section_id: number;
     deadline: string;

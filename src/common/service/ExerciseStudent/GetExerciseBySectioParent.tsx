@@ -3,10 +3,10 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 interface exercise {
     id: any;
     name: string;
-    student_id: number;
-    student_name: string;
     description: string;
     section_id: number;
+    student_id: number;
+    student_name: string;
     teacher_name: string;
     time_submit: string;
     deadline: string;
@@ -14,10 +14,10 @@ interface exercise {
     create_time: string;
     update_time: string;
 }
-export function getExerciseForSectionStudent(dispatch: any, section_id: number, student_id: number) {
+export function getExerciseForSectionParent(dispatch: any, section_id: number, parent_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/exercises/section-student/${section_id}/${student_id}`, {
+                `${process.env.REACT_APP_API_URL}/exercises/section-parent/${section_id}/${parent_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -31,7 +31,7 @@ export function getExerciseForSectionStudent(dispatch: any, section_id: number, 
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getExerciseForSectionStudent(dispatch, section_id, student_id))
+                        dispatch(getExerciseForSectionParent(dispatch, section_id, parent_id))
                     }
                     else {
                         throw Error(response.statusText);

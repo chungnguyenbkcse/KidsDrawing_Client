@@ -17,6 +17,8 @@ import Popup from "reactjs-popup";
 import { deleteExerciseSubmission } from "../../common/service/ExerciseSubmission/DeleteExerciseSubmissionById";
 import { getAttendanceBySectionAndParent } from "../../common/service/Attendance/GetAttendanceBySectionAndParent";
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import { getExerciseForSectionParent } from "../../common/service/ExerciseStudent/GetExerciseBySectioParent";
+import { getExerciseSubmissionBySectionAndParent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionBySectionAndParent";
 
 const DetailSectionParent: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -106,11 +108,15 @@ const DetailSectionParent: React.FC = () => {
                 else {
                     trackPromise(getAttendanceBySectionAndParent(dispatch, section_id, id))
                     trackPromise(getSectionById(dispatch, section_id))
+                    trackPromise(getExerciseForSectionParent(dispatch, section_id, id))
+                    trackPromise(getExerciseSubmissionBySectionAndParent(dispatch, section_id, id))
                 }
             }
             else {
                 trackPromise(getAttendanceBySectionAndParent(dispatch, section_id, id))
                 trackPromise(getSectionById(dispatch, section_id))
+                trackPromise(getExerciseForSectionParent(dispatch, section_id, id))
+                trackPromise(getExerciseSubmissionBySectionAndParent(dispatch, section_id, id))
             }
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
@@ -327,7 +333,7 @@ const DetailSectionParent: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* <div className="col-xl-6 col-md-6 mb-2">
+                    <div className="col-xl-6 col-md-6 mb-2">
                         <div className="row">
                             <div className="col-xl-12 col-md-12 mb-2">
                                 <div className={`card shadow py-2`} >
@@ -343,6 +349,9 @@ const DetailSectionParent: React.FC = () => {
                                                     <tbody>
                                                         {
                                                             exercise_student.exercise_not_submit.map((ele, index) => {
+                                                                if (ele == undefined || ele == null) {
+                                                                    return ""
+                                                                }
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                         <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange5(ele.description, ele.name, ele.id) }}>
@@ -386,6 +395,9 @@ const DetailSectionParent: React.FC = () => {
                                                         {
 
                                                             exercise_submissions.exercise_gradeds.map((ele, index) => {
+                                                                if (ele == undefined || ele == null) {
+                                                                    return ""
+                                                                }
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                         <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2x(ele) }}>
@@ -429,6 +441,9 @@ const DetailSectionParent: React.FC = () => {
 
                                                         {
                                                             exercise_submissions.exercise_not_gradeds.map((ele, index) => {
+                                                                if (ele == undefined || ele == null) {
+                                                                    return ""
+                                                                }
                                                                 return (
                                                                     <tr className={`table-row`} key={`semester_class_${index}`}>
                                                                         <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { routeChangeVIewExerciseSubmission(ele) }}>
@@ -489,7 +504,7 @@ const DetailSectionParent: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>*/}
+                    </div>
                 </div> 
                 {
                     function () {

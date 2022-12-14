@@ -38,6 +38,15 @@ function FormSubmitContestStudent(): JSX.Element {
         contest_submission_id = parseInt(id_jx);
     }
 
+    var id_mx = localStorage.getItem('total_register');
+    let total_register = 0;
+
+    if (id_mx !== null) {
+        total_register = parseInt(id_mx);
+    }
+
+
+
     const isCreate: boolean = (url_contest_submission === "");
 
     if (!user || isCreate) {
@@ -314,7 +323,9 @@ function FormSubmitContestStudent(): JSX.Element {
                                                 <p id="phone">Thể loại: {art_type_contest}</p>
                                             </div>
 
-                                            
+                                            <div className="row no-gutters">
+                                                <p id="phone">Đã đăng kí: {total_register}</p>
+                                            </div>
 
                                             <div className="row no-gutters">
                                                 <p id="phone">Thời gian bắt đầu: {start_time.replaceAll("T", " ").substring(0, 16)}</p>

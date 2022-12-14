@@ -88,6 +88,13 @@ const DetailContestNotOpenNowTeacher: React.FC = () => {
         end_time = id_m;
     }
 
+    var id_mx = localStorage.getItem('total_register');
+    let total_register = 0;
+
+    if (id_mx !== null) {
+        total_register = parseInt(id_mx);
+    }
+
     const [checked, setChecked] = useState(false);
 
     function handleClick() {
@@ -161,7 +168,11 @@ const DetailContestNotOpenNowTeacher: React.FC = () => {
                                             <p className="birthday ml-4">Thể loại: {art_type_contest}</p>
                                         </div>
                                     </div>
-                                    
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="text-xs">
+                                            <p className="birthday ml-4">Đã đăng kí: {total_register}</p>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="col-xl-6 col-md-6">

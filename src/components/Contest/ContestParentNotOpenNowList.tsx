@@ -56,6 +56,8 @@ function ContestParentNotOpenNowList(props: lessonListProps): JSX.Element {
         localStorage.setItem('contest_description', contest_parent.description)
         localStorage.removeItem("max_participant")
         localStorage.setItem('max_participant', contest_parent.max_participant.toString())
+        localStorage.removeItem('total_register')
+        localStorage.setItem('total_register', contest_parent.total_register_contest.toString())
         localStorage.removeItem("art_type_contest")
         localStorage.setItem('art_type_contest', contest_parent.art_type_name)
         localStorage.removeItem("art_age_contest")

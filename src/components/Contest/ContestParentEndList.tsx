@@ -390,10 +390,10 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
 
                                             <span className="d-block mb-2">
                                                 <span className="title-card">
-                                                    Đã đăng kí: 
+                                                    Đã nộp bài: 
                                                 </span>
                                                 <span className="content-card">
-                                                    {ele.total_register_contest}/{ele.max_participant}
+                                                    {ele.total_contest_submission}/{ele.total_register_contest}
                                                 </span>               
                                             </span>
                                            

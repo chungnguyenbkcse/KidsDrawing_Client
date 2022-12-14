@@ -66,6 +66,12 @@ function ContestParentDoingList(props: lessonListProps): JSX.Element {
         localStorage.setItem('start_time', contest_parent.start_time)
         localStorage.removeItem("end_time")
         localStorage.setItem('end_time', contest_parent.end_time)
+        localStorage.removeItem("total_register")
+        localStorage.setItem('total_register', contest_parent.total_register_contest.toString())
+        localStorage.removeItem("total_contest_submission")
+        localStorage.setItem('total_contest_submission', contest_parent.total_contest_submission.toString())
+        localStorage.removeItem("total_contest_submission_graded")
+        localStorage.setItem('total_contest_submission_graded', contest_parent.total_contest_submission_graded.toString())
         let path = '/contests/submit'; 
         history.push({
             pathname: path,

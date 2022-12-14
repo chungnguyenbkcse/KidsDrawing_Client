@@ -263,31 +263,60 @@ function SemesterClassNewList(props: semesterListProps): JSX.Element {
                                     <div className="col-md-4" onClick={() => { routeChange(ele) }}>
                                         <div className="p-card bg-white p-2 rounded px-3 product-x">
                                             <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
-                                            <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
-                                            <span className="d-block status-register">Đã đăng kí: {ele.student_ids.length} </span>
-                                            {/* {
-                                                ele.student_ids.length > 0 ? 
-                                                <>
-                                                    <span className="d-block">Đã đăng kí:  </span>
-                                                    {ele.student_names.map((elex, idxx) => {
-                                                        return(
-                                                            <div className="d-block ml-2">
-                                                                {elex}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </>
-                                                 : ""
-                                            } */}
-                                        <div className="schedule-x">Lịch học: {ele.schedule}</div>
-                                        <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                        <span className="d-block">Ngày bắt đầu đăng kí: {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}</span>
-                                        <span className="d-block mb-2">Ngày hết hạn đăng kí: {ele.registration_expiration_time.replaceAll("T", " ").substring(0,16)}</span>
+                                            <h5 className="mt-2" style={{color: "#3A7CFB"}}>{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
+                                            
+                                            <span className="d-block">
+                                                    <span className="title-card">
+                                                    Số tài khoản con đăng kí:  
+                                                    </span>
+                                                    <span className="status-register pl-2">
+                                                        {ele.student_ids.length}
+                                                    </span>               
+                                            </span>
+
+                                            <span className="schedule-x">
+                                                <span className="title-card">
+                                                    Lịch học: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.schedule}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.total_register}/{ele.max_participant}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Ngày bắt đầu đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block mb-2">
+                                                <span className="title-card">
+                                                    Ngày hết hạn đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.registration_expiration_time.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+                                            
+                                            
+                        
                                             <div
                                             className="d-flex justify-content-between stats">
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
                                             <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
+                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3 content-card">
                                                 {ele.total_register} 
                                                 </span></div>
                                         </div>

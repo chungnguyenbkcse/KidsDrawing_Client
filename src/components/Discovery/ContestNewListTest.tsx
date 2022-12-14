@@ -302,32 +302,50 @@ function ContestNewListTest(props: semesterListProps): JSX.Element {
                                     <div className="col-md-4" onClick={() => { routeChange(ele) }}>
                                         <div className="p-card bg-white p-2 rounded px-3 product-x">
                                             <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
-                                            <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
-                                            <span className="d-block status-register">Đã đăng kí: {ele.student_ids.length} </span>
-                                            {/* {
-                                                ele.student_ids.length > 0 ? 
-                                                <>
-                                                    <span className="d-block">Học sinh đã đăng kí:  </span>
-                                                    {ele.student_names.map((elex, idxx) => {
-                                                        return(
-                                                            <div className="d-block ml-2">
-                                                                {elex}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </>
-                                                 : ""
-                                            } */}
+                                            <h5 className="mt-2" style={{color: "#3A7CFB"}}>{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
                                             
-                                            <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ").substring(0,16)}</span>
-                                            <span className="d-block">Ngày kết thúc: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
-                                            <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
+                                            <span className="d-block">
+                                                    <span className="title-card">
+                                                    Số tài khoản con đăng kí:  
+                                                    </span>
+                                                    <span className="status-register pl-2">
+                                                        {ele.student_ids.length}
+                                                    </span>               
+                                            </span>
+                                            
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Ngày bắt đầu: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.start_time.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Ngày kết thúc: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.end_time.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Đã đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.total_register_contest}/{ele.max_participant}
+                                                </span>               
+                                            </span>
+
                                             
                                             <div
                                                 className="d-flex justify-content-between stats">
                                                     <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
                                                 <div className="d-flex flex-row align-items-center">
-                                                    <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
+                                                    <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3 content-card">
                                                         {ele.total_register_contest}
                                                     </span></div>
                                             </div>

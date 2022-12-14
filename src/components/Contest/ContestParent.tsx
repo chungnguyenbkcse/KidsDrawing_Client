@@ -96,7 +96,7 @@ const ContestParent: React.FC = () => {
                 </div>
 
                 <div className="row mt-2">
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <div className="col-xl-4 col-lg-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
                             if (checked1 === false) {
                                 setChecked1(true)
@@ -114,7 +114,7 @@ const ContestParent: React.FC = () => {
                             backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
                         }}></div>
                     </div>
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <div className="col-xl-4 col-lg-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                             if (checked2 === false) {
                                 setChecked2(true)
@@ -134,7 +134,7 @@ const ContestParent: React.FC = () => {
                         }}></div>
                     </div>
 
-                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <div className="col-xl-4 col-lg-4 col-xs-4 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                             if (checked3 === false) {
                                 setChecked3(true)
@@ -162,7 +162,7 @@ const ContestParent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card shadow" id="topcard-user">
                                                 <div className="card-body">
                                                     <ContestParentDoingList value={searchTerm}/>
                                                 </div>
@@ -177,7 +177,7 @@ const ContestParent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-2" id="topcard-user">
+                                            <div className="card shadow" id="topcard-user">
                                                 <div className="card-body">
                                                     <ContestParentNotOpenNowList value={searchTerm}/>
                                                 </div>
@@ -194,7 +194,7 @@ const ContestParent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card shadow " id="topcard-user">
                                                 <div className="card-body">
                                                     <ContestParentEndList value={searchTerm}/>
                                                 </div>

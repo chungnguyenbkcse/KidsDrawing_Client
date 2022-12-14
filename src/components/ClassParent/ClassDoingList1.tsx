@@ -326,10 +326,10 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
 
     return (
         <Fragment>
-            <div className="container mb-5">
+            <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="d-flex flex-row justify-content-between align-items-center filters mt-2">
+                        <div className="d-flex flex-row justify-content-between align-items-center filters">
                             <h6 className="ml-3">{/* Có {element.filter((val) => {
                             if (props.value === ""){
                               return val;
@@ -403,7 +403,7 @@ function ClassDoingList1(props: classTeacherListProps): JSX.Element {
                         </div>
                     </div>
                 </div>
-                <div className="row mt-1">
+                <div className="row">
                     {
                         function () {
                             var resArr: IClassesParentX[] = [];

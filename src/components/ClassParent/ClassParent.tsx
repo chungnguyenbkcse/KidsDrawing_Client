@@ -118,7 +118,7 @@ const ClassParent: React.FC = () => {
                 </div>
 
                 <div className="row">
-                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <div className="col-xl-6 col-lg-6 col-xs-6 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
                             if (checked === false) {
                                 setChecked(true)
@@ -134,7 +134,7 @@ const ClassParent: React.FC = () => {
                             backgroundColor: checked ? "#F24E1E" : "#ffffff"
                         }}></div>
                     </div>
-                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
+                    <div className="col-xl-6 col-lg-6 col-xs-6 text-center">
                         <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
                             if (checked === true) {
                                 setChecked(false)
@@ -161,7 +161,7 @@ const ClassParent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card shadow" id="topcard-user">
                                                 <div className="card-body">
                                                     <ClassDoingList1
                                                         onSelect={onClassesParentSelect} value={searchTerm}
@@ -178,7 +178,7 @@ const ClassParent: React.FC = () => {
                                 <Fragment>
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
-                                            <div className="card shadow mb-4" id="topcard-user">
+                                            <div className="card shadow" id="topcard-user">
                                                 
                                                 <div className="card-body">
                                                     <ClassDoneList1

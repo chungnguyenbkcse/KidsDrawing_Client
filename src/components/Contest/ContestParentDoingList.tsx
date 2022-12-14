@@ -221,7 +221,7 @@ function ContestParentDoingList(props: lessonListProps): JSX.Element {
 
     return (
         <Fragment>
-            <div className="container mb-2">
+            <div className="container">
                 <div className="row">
                     <div className="col-md-12">
                         <div className="d-flex flex-row justify-content-between align-items-center filters">
@@ -342,27 +342,73 @@ function ContestParentDoingList(props: lessonListProps): JSX.Element {
                                     <div className="col-md-4" onClick={() => { routeChange(ele) }}>
                                         <div className="p-card bg-white p-2 rounded px-3 product-x">
                                             <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
-                                            <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
-                                            <span className="d-block">Học sinh:  </span>
-                                            {ele.student_names.map((elex, idxx) => {
-                                                    return(
-                                                        <div className="d-block ml-2">
-                                                            {elex}
-                                                        </div>
-                                                    )
-                                            })}
-                                            <span className="d-block">Ngày bắt đầu: {ele.start_time.replaceAll("T", " ").substring(0,16)}</span>
-                                            <span className="d-block md-2">Ngày kết thúc đầu: {ele.end_time.replaceAll("T", " ").substring(0,16)}</span>
-                                           
+                                            <h5 className="mt-2 " style={{color: "#3A7CFB"}}>{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
+                        
+                                            {
+                                                function() {
+                                                    if (ele.student_ids.length > 0) {
+                                                        if (ele.student_ids.length ==1 ){
+                                                            return (
+                                                                <span className="d-block">
+                                                                    <span className="title-card">
+                                                                        Học sinh: 
+                                                                    </span>
+                                                                    <span className="content-card">
+                                                                        {ele.student_names[0]}
+                                                                    </span>               
+                                                                </span>
+                                                            )
+                                                        }
+                                                        else {
+                                                            return (
+                                                                <span className="d-block">
+                                                                    <span className="title-card">
+                                                                        Học sinh: 
+                                                                    </span>
+                                                                    <span className="content-card">
+                                                                        {ele.student_names.map((elex, idxx) => {
+                                                                                return(
+                                                                                    <div className="d-block ml-2">
+                                                                                        {elex}
+                                                                                    </div>
+                                                                                )
+                                                                        })}
+                                                                    </span>               
+                                                                </span>
+                                                            )
+                                                        }
+                                                    }
+                                                }()
+                                            }
                                             
-                                            <div
-                                                className="d-flex justify-content-between stats">
-                                                    <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
-                                                <div className="d-flex flex-row align-items-center">
-                                                    <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">
-                                                        {ele.total_register_contest}
-                                                    </span></div>
-                                            </div>
+                                            
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Ngày bắt đầu: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.start_time.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Ngày kết thúc đầu: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.end_time.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block mb-2">
+                                                <span className="title-card">
+                                                    Đã đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.total_register_contest}/{ele.max_participant}
+                                                </span>               
+                                            </span>
+                                           
                                         </div>
                                     </div>
                                 )

@@ -29,6 +29,17 @@ body {
     color: red;
 }
 
+.title-card {
+    font-weight: bold;
+    color: #7A67C7 ;
+}
+
+.content-card {
+    font-weight: 500;
+    color: #FF7701 ;
+    padding-left: 5px;
+}
+
 .sc-eDvSVe {
     margin-bottom: 20px !important;
 }

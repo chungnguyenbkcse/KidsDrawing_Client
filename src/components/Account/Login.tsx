@@ -103,13 +103,7 @@ const Login: React.FC = () => {
                           label="Mật khẩu"
                           placeholder="" />
                       </div>
-                      <div className="form-group">
-                        <div className="custom-control custom-checkbox small">
-                          <input type="checkbox" className="custom-control-input" id="customCheck" />
-                          <label className="custom-control-label"
-                            htmlFor="customCheck">Nhớ mật khẩu</label>
-                        </div>
-                      </div>
+                      
                       <button
                         className={`btn btn-primary btn-user btn-block ${getDisabledClass()}`}
                         type="submit">

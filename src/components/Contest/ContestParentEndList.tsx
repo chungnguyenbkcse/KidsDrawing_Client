@@ -334,8 +334,8 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
                         
                                             {
                                                 function() {
-                                                    if (ele.student_ids.length > 0) {
-                                                        if (ele.student_ids.length ==1 ){
+                                                    if (ele.student_names.length > 0) {
+                                                        if (ele.student_names.length ==1 ){
                                                             return (
                                                                 <span className="d-block">
                                                                     <span className="title-card">

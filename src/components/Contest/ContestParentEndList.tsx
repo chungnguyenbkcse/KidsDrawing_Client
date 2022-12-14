@@ -381,7 +381,7 @@ function ContestParentEndList(props: lessonListProps): JSX.Element {
 
                                             <span className="d-block">
                                                 <span className="title-card">
-                                                    Ngày kết thúc đầu: 
+                                                    Ngày kết thúc: 
                                                 </span>
                                                 <span className="content-card">
                                                     {ele.end_time.replaceAll("T", " ").substring(0,16)}

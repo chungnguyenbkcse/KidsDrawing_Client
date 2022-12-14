@@ -186,10 +186,10 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
 
     return (
         <Fragment>
-            <div className="container mb-5">
+            <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="d-flex flex-row justify-content-between align-items-center filters mt-2">
+                        <div className="d-flex flex-row justify-content-between align-items-center filters">
                             <h6 className="ml-3">Có {element.filter((val) => {
                                 if (props.value === "") {
                                     return val;
@@ -249,7 +249,7 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
                         </div>
                     </div>
                 </div>
-                <div className="row mt-1">
+                <div className="row">
                     {
                         element.filter((val) => {
                             if (props.value === "") {
@@ -264,13 +264,24 @@ function ClassDoneList1(props: classTeacherListProps): JSX.Element {
                                 <div className="col-md-4" onClick={() => { routeChange(ele) }}>
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
                                         <div className="d-flex align-items-center credits"><img src={ele.url_image_course} width="100%" alt="" /></div>
-                                        <h5 className="mt-2">{ele.course_name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span><span className="d-block mb-5">Đã học {ele.total_section}/{ele.total_section} buổi.</span>
-                                        <div
-                                            className="d-flex justify-content-between stats">
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>
-                                            <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">{ele.total_student}</span></div>
-                                        </div>
+                                        <h5 className="mt-2" style={{color: "#3A7CFB"}}>{ele.course_name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span>
+                                        <span className="d-block">
+                                                <span className="title-card">
+                                                    Đã học: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.total_section}/{ele.total_section} buổi
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Số học sinh: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.total_student}
+                                                </span>               
+                                            </span>
                                     </div>
                                 </div>
                             )

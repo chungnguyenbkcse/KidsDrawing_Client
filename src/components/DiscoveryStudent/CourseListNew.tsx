@@ -258,12 +258,33 @@ function CourseListNew(props: semesterListProps): JSX.Element {
                                 <div className="col-md-4" onClick={() => {routeChange(ele)}}>
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
                                         <div className="d-flex align-items-center credits"><img src={ele.image_url} width="100%" alt=""/></div>
-                                        <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span><span className="d-block mb-5">Hiện tại khóa học mở {ele.total} lớp.</span>
+                                        <h5 className="mt-2" style={{color: "#3A7CFB"}}>{ele.name}</h5>
+                                        <span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span>
+                                        
+                                        <span className="d-block">
+                                                <span className="title-card">
+                                                    Lớp đang mở: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.total}
+                                                </span>               
+                                            </span>
                                         <div
                                             className="d-flex justify-content-between stats">
-                                            <div><i className="fa fa-calendar-o"></i><span className="ml-2">Giá: {ele.price} VND</span></div>
+                                            <div><i className="fa fa-calendar-o"></i>
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                Giá: 
+                                                </span>
+                                                <span className="content-card">
+                                                {ele.price} VND
+                                                </span>               
+                                            </span>
+                                            </div>
+                                            
+                                        
                                             <div className="d-flex flex-row align-items-center">
-                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3">{ele.total_register}</span></div>
+                                                <div className="profiles"><img className="rounded-circle" src="https://i.imgur.com/4nUVGjW.jpg" alt="" width="30" /><img className="rounded-circle" src=" https://i.imgur.com/GHCtqgp.jpg" alt="" width="30" /><img className="rounded-circle" src="https://i.imgur.com/UL0GS75.jpg" alt="" width="30" /></div><span className="ml-3 content-card">{ele.total_register}</span></div>
                                         </div>
                                     </div>
                                 </div>

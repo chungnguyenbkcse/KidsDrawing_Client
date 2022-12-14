@@ -188,23 +188,72 @@ function SemesterClassListNew(props: semesterListProps): JSX.Element {
                                 <div className="col-md-4" onClick={() => { routeChange(ele) }}>
                                     <div className="p-card bg-white p-2 rounded px-3 product-x">
                                         <div className="d-flex align-items-center credits"><img src={ele.image_url} className="image-cardx" width="100%" alt="" /></div>
-                                        <h5 className="mt-2">{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name} &amp; {ele.art_level_name}</span>
-                                        <div className="schedule-x">Lịch học: {ele.schedule}</div>
-                                        <span className="d-block">Số đăng kí tối đa: {ele.max_participant}</span>
-                                        <span className="d-block">Ngày bắt đầu đăng kí: {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}</span>
-                                        <span className="d-block">Ngày hết hạn đăng kí: {ele.registration_expiration_time.replaceAll("T", " ").substring(0,16)}</span>
-                                        <span className="d-block mb-2 status-register">Trạng thái: 
+                                        <h5 className="mt-2" style={{color: "#3A7CFB"}}>{ele.name}</h5><span className="badge badge-danger py-1 mb-2">{ele.art_type_name} &amp; {ele.art_age_name}</span>
+                                        <span className="schedule-x">
+                                                <span className="title-card">
+                                                    Lịch học: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.schedule}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.total_register}/{ele.max_participant}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Ngày bắt đầu đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.registration_deadline.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+
+                                            <span className="d-block">
+                                                <span className="title-card">
+                                                    Ngày hết hạn đăng kí: 
+                                                </span>
+                                                <span className="content-card">
+                                                    {ele.registration_expiration_time.replaceAll("T", " ").substring(0,16)}
+                                                </span>               
+                                            </span>
+                                        
                                             {
                                                 function() {
                                                     if (ele.status == "Registed") {
-                                                        return "Đã đăng kí";
+                                                        return (
+                                                            <span className="d-block">
+                                                                <span className="title-card">
+                                                                Trạng thái:  
+                                                                </span>
+                                                                <span className="status-register pl-2">
+                                                                    Đã đăng kí
+                                                                </span>               
+                                                            </span>
+                                                        );
                                                     }
                                                     else {
-                                                        return "Chưa đăng kí";
+                                                        return (
+                                                            <span className="d-block">
+                                                                <span className="title-card">
+                                                                Trạng thái:  
+                                                                </span>
+                                                                <span className="status-register pl-2">
+                                                                    Chưa đăng kí
+                                                                </span>               
+                                                            </span>
+                                                        );
                                                     }
                                                 }()
                                             }
-                                        </span>
+                                        
                                         <div
                                             className="d-flex justify-content-between stats">
                                             <div><i className="fa fa-calendar-o"></i><span className="ml-2"></span></div>

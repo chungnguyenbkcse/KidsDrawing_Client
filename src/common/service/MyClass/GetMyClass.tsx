@@ -10,6 +10,7 @@ interface MyClass {
     user_register_teach_semester: number;
     security_code: string;
     name: string;
+    teacher_name: string;
     create_time: string;
     update_time: string;
 }
@@ -53,6 +54,7 @@ export function getMyClass(dispatch: any) {
                         security_code: ele.security_code,
                         course_id: ele.course_id,
                         course_name: ele.course_name,
+                        teacher_name: ele.teacher_name,
                         semester_name: ele.semester_name,
                         semester_id: ele.semester_id,
                         total_student: ele.total_student,

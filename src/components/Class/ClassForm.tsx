@@ -22,7 +22,7 @@ function  ClassForm (props: semesterClassListProps): JSX.Element {
   const isCreate: boolean = (products.modificationState === MyClassModificationStatus.Create);
   
   if (!product || isCreate) {
-    product = { id: 0, name: "", course_id: 0, course_name: "", semester_id: 0, semester_name: "", total_student: 0, create_time: "", user_register_teach_semester: 0, update_time: "", security_code: "" };
+    product = { id: 0, name: "", teacher_name: "", course_id: 0, course_name: "", semester_id: 0, semester_name: "", total_student: 0, create_time: "", user_register_teach_semester: 0, update_time: "", security_code: "" };
   }
 
   const [formState, setFormState] = useState({

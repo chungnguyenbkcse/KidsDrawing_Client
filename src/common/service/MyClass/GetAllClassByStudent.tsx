@@ -6,6 +6,7 @@ interface MyClass {
     course_name: string;
     semester_name: string;
     semester_id: number;
+    teacher_name: string;
     total_student: number;
     user_register_teach_semester: number;
     security_code: string;
@@ -55,6 +56,7 @@ export function getAllClassByStudent(dispatch: any, id: any) {
                         course_name: ele.course_name,
                         semester_name: ele.semester_name,
                         semester_id: ele.semester_id,
+                        teacher_name: ele.teacher_name,
                         total_student: ele.total_student,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         create_time: ele.create_time,

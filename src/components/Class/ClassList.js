@@ -125,6 +125,11 @@ function ClassList(props) {
       filter: textFilter()
     },
     {
+      dataField: 'teacher_name',
+      text: 'Giáo viên',
+      filter: textFilter()
+    },
+    {
         dataField: '',
         text: 'Hành động',
         formatter: detailClassButton

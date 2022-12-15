@@ -5,6 +5,7 @@ export interface IMyClass {
     semester_name: string;
     semester_id: number;
     total_student: number;
+    teacher_name: string;
     user_register_teach_semester: number;
     security_code: string;
     name: string;

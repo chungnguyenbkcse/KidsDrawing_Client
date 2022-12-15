@@ -110,6 +110,21 @@ function ClassList(props) {
       filter: textFilter()
     },
     {
+      dataField: 'course_name',
+      text: 'Thuộc khóa học',
+      filter: textFilter()
+    },
+    {
+      dataField: 'semester_name',
+      text: 'Học kì',
+      filter: textFilter()
+    },
+    {
+      dataField: 'total_student',
+      text: 'Số học sinh',
+      filter: textFilter()
+    },
+    {
         dataField: '',
         text: 'Hành động',
         formatter: detailClassButton

@@ -1,6 +1,10 @@
 export interface IMyClass {
     id: any;
-    
+    course_id: number;
+    course_name: string;
+    semester_name: string;
+    semester_id: number;
+    total_student: number;
     user_register_teach_semester: number;
     security_code: string;
     name: string;

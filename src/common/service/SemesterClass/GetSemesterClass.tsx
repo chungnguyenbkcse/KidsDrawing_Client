@@ -5,6 +5,7 @@ interface SemesterClass {
     name: string;
     semester_id: number;
     is_new: boolean;
+    total_register: number;
     registration_time: string;
     registration_expiration_time: string;
     semester_name: string;
@@ -49,6 +50,7 @@ export function getSemesterClass(dispatch: any) {
                         id: ele.id,
                         name: ele.name,
                         is_new: ele.is_new,
+                        total_register: ele.total_register,
                         semester_id: ele.semester_id,
                         registration_time: ele.registration_time,
                         registration_expiration_time: ele.registration_expiration_time,

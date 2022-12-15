@@ -2,7 +2,11 @@ import { fetchDataSuccess, fetchDataError, removeMyClassAll, initialMyClass, add
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface MyClass {
     id: any;
-    
+    course_id: number;
+    course_name: string;
+    semester_name: string;
+    semester_id: number;
+    total_student: number;
     user_register_teach_semester: number;
     security_code: string;
     name: string;
@@ -47,7 +51,11 @@ export function getMyClass(dispatch: any) {
                         id: ele.id,
                         name: ele.name,
                         security_code: ele.security_code,
-                        
+                        course_id: ele.course_id,
+                        course_name: ele.course_name,
+                        semester_name: ele.semester_name,
+                        semester_id: ele.semester_id,
+                        total_student: ele.total_student,
                         user_register_teach_semester: ele.user_register_teach_semester,
                         create_time: ele.create_time,
                         update_time: ele.update_time

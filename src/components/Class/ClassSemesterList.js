@@ -110,6 +110,10 @@ function ClassSemesterList(props) {
       filter: textFilter()
     },
     {
+      dataField: 'total_register',
+      text: 'Số hs đăng kí'
+    },
+    {
       dataField: 'max_participant',
       text: 'Số học sinh tối đa'
     },

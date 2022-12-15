@@ -9,6 +9,9 @@ interface user {
     firstName: string,
     lastName: string,
     dateOfBirth: string,
+    student_ids: number[];
+    student_names: string[];
+    parent: string,
     profile_image_url: string,
     sex: string,
     phone: string,
@@ -55,6 +58,9 @@ export function getTeacher(dispatch: any) {
                         email: ele.email,
                         password: ele.password,
                         status: ele.status,
+                        student_ids: ele.student_ids,
+                        student_names: ele.student_names,
+                        parent: ele.parent_name,
                         firstName: ele.firstName,
                         lastName: ele.lastName,
                         dateOfBirth: ele.dateOfBirth,

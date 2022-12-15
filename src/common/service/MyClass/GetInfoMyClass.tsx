@@ -26,6 +26,8 @@ interface user {
     parent: string,
     lastName: string,
     dateOfBirth: string,
+    student_ids: number[];
+    student_names: string[];
     profile_image_url: string,
     sex: string,
     phone: string,
@@ -78,6 +80,8 @@ export function getInfoMyClass(dispatch: any, id: any) {
                         sex: ele.sex,
                         parent: ele.parent,
                         phone: ele.phone,
+                        student_ids: ele.student_ids,
+                        student_names: ele.student_names,
                         address: ele.address,
                         parents: ele.parents,
                         createTime: ele.createTime

@@ -14,6 +14,9 @@ interface user {
     phone: string,
     address: string,
     parents: number,
+    parent: string;
+    student_ids: number[];
+    student_names: string[];
     createTime: string
 }
 export function getUserById(dispatch: any , id: any) {
@@ -60,6 +63,9 @@ export function getUserById(dispatch: any , id: any) {
                     profile_image_url: ele.profile_image_url,
                     sex: ele.sex,
                     phone: ele.phone,
+                    parent: ele.parent_name,
+                    student_ids: ele.student_ids,
+                    student_names: ele.student_names,
                     address: ele.address,
                     parents: ele.parents,
                     createTime: ele.createTime

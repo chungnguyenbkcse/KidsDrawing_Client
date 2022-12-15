@@ -26,6 +26,9 @@ interface user {
     lastName: string,
     dateOfBirth: string,
     profile_image_url: string,
+    student_ids: number[];
+    student_names: string[];
+    parent: string,
     sex: string,
     phone: string,
     address: string,
@@ -74,6 +77,9 @@ export function getInfoMyClassTeacher(dispatch: any, id: any) {
                         lastName: ele.lastName,
                         dateOfBirth: ele.dateOfBirth,
                         profile_image_url: ele.profile_image_url,
+                        student_ids: ele.student_ids,
+                        student_names: ele.student_names,
+                        parent: ele.parent_name,
                         sex: ele.sex,
                         phone: ele.phone,
                         address: ele.address,

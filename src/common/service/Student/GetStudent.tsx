@@ -14,6 +14,9 @@ interface user {
     phone: string,
     address: string,
     parents: number,
+    student_ids: number[];
+    student_names: string[];
+    parent: string,
     createTime: string
 }
 export function getStudent(dispatch: any) {
@@ -60,6 +63,9 @@ export function getStudent(dispatch: any) {
                         sex: ele.sex,
                         phone: ele.phone,
                         address: ele.address,
+                        student_ids: ele.student_ids,
+                        student_names: ele.student_names,
+                        parent: ele.parent_name,
                         parents: ele.parents,
                         createTime: ele.createTime
                     }

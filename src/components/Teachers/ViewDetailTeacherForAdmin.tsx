@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TopCard from "../../common/components/TopCardUser";
 import { getUserById } from "../../common/service/User/GetUserById";
 import { changeSelectedDoinglClass, setModificationState } from "../../store/actions/class_teacher.action";
-import { IClassTeacherState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
+import { IClassTeacherState, IRootPageStateType, IStateType, IUserState } from "../../store/models/root.interface";
 import { IClassTeacher, ClassTeacherModificationStatus } from "../../store/models/class_teacher.interface";
 import { updateCurrentPath } from "../../store/actions/root.actions";
 import { getClassTeacher } from "../../common/service/ClassTeacher/GetClassTeacher";
@@ -16,6 +16,8 @@ import Loading from "../../common/components/Loading";
 import ClassEndList from "./ClassEndList";
 import ClassDoingList from "./ClassDoingList";
 import { getClassTeacher1 } from "../../common/service/ClassTeacher/GetClassTeacher1";
+import TextInput from "../../common/components/TextInput";
+import { IUser } from "../../store/models/user.interface";
 
 const ViewDetailTeacherForAdmin: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -29,6 +31,24 @@ const ViewDetailTeacherForAdmin: React.FC = () => {
         id = parseInt(id_x);
     }
     const { promiseInProgress } = usePromiseTracker();
+
+    let users: IUserState = useSelector((state: IStateType) => state.users);
+    let user: IUser | null = users.teachers.length > 0 ? users.teachers[0] : null;
+    let student_ids: number[] = []
+    let student_names: string[] = []
+
+    if (!user) {
+        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0, parent: "", student_ids: [], student_names: [] }
+    }
+    else {
+        student_ids = user.student_ids;
+        student_names = user.student_names;
+    }
+
+
+    const src = user.profile_image_url;
+
+    const [preview, setPreview] = useState(src)
 
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -72,6 +92,9 @@ const ViewDetailTeacherForAdmin: React.FC = () => {
     }
 
     const [checked, setChecked] = useState(true);
+    const [checked1, setChecked1] = useState(true);
+    const [checked2, setChecked2] = useState(false);
+    const [checked3, setChecked3] = useState(false);
     return (
         promiseInProgress ?
       <div className="loader"></div> : <Fragment>
@@ -90,46 +113,181 @@ const ViewDetailTeacherForAdmin: React.FC = () => {
                 </div> */}
             </div>
 
-            <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                        if (checked === false) {
-                            setChecked(true)
-                        }
-                    }} style={{
-                        color: checked ? "#F24E1E" : "#2F4F4F"
-                    }}>Đang dạy</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#F24E1E" : "#ffffff"
-                    }}></div>
+                <div className="row">
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                            if (checked1 === false) {
+                                setChecked1(true)
+                                setChecked2(false)
+                                setChecked3(false)
+                            }
+                        }} style={{
+                            color: checked1 ? "#F24E1E" : "#2F4F4F"
+                        }}>Thông tin chung</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "50%",
+                            backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked2 === false) {
+                                setChecked2(true)
+                                setChecked1(false)
+                                setChecked3(false)
+                            }
+                        }}
+                            style={{
+                                color: checked2 ? "#F24E1E" : "#2F4F4F"
+                            }}>Lớp đang dạy</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "50%",
+                            backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
+
+                    <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                            if (checked3 === false) {
+                                setChecked3(true)
+                                setChecked1(false)
+                                setChecked2(false)
+                            }
+                        }}
+                            style={{
+                                color: checked3 ? "#F24E1E" : "#2F4F4F"
+                            }}>Lớp đã dạy</h6>
+                        <div style={{
+                            height: "5px",
+                            textAlign: "center",
+                            margin: "auto",
+                            width: "50%",
+                            backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                        }}></div>
+                    </div>
                 </div>
-                <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                        if (checked === true) {
-                            setChecked(false)
-                        }
-                    }}
-                        style={{
-                            color: checked ? "#2F4F4F" : "#F24E1E"
-                        }}>Đã dạy</h6>
-                    <div style={{
-                        height: "5px",
-                        textAlign: "center",
-                        margin: "auto",
-                        width: "30%",
-                        backgroundColor: checked ? "#ffffff" : "#F24E1E"
-                    }}></div>
-                </div>
-            </div>
 
 
             {
                 function () {
-                    if (checked === true) {
+                    if (checked1 == true) {
+                        return (
+                            <div className="row text-left">
+                                    <div className="col-xl-12 col-lg-12">
+                                        <div className="card shadow mb-4">
+                                            <div className="card-body">
+                                                <form>
+                                                    <div className="form-row">
+                                                        <div className="form-group col-md-6">
+                                                            Avatar
+                                                        </div>
+                                                        <div className="form-group col-md-6">
+                                                            <img src={preview} alt="Preview" id="avatar" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className="form-group col-md-6">
+                                                            <TextInput id="input_username"
+                                                                field="username"
+                                                                value={""}
+                                                                onChange={() => { }}
+                                                                required={true}
+                                                                maxLength={100}
+                                                                label="Tên đăng nhập"
+                                                                placeholder={user.username} />
+                                                        </div>
+                                                        <div className="form-group col-md-6">
+                                                            <TextInput id="input_email"
+                                                                field="email"
+                                                                value={""}
+                                                                onChange={() => { }}
+                                                                required={true}
+                                                                maxLength={200}
+                                                                label="Email"
+                                                                placeholder={user.email} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className="form-group col-md-6">
+                                                            <TextInput id="input_firstName"
+                                                                field="firstName"
+                                                                value={""}
+                                                                onChange={() => { }}
+                                                                required={false}
+                                                                maxLength={100}
+                                                                label="Họ"
+                                                                placeholder={user.firstName} />
+                                                        </div>
+                                                        <div className="form-group col-md-6">
+                                                            <TextInput id="input_lastName"
+                                                                field="lastName"
+                                                                value={""}
+                                                                onChange={() => { }}
+                                                                required={false}
+                                                                maxLength={200}
+                                                                label="Tên"
+                                                                placeholder={user.lastName} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className="form-group col-md-6">
+
+                                                            <TextInput id="input_category"
+                                                                field="sex"
+                                                                label="Giới tính"
+                                                                value={""}
+                                                                onChange={() => { }}
+                                                                required={false}
+                                                                maxLength={200}
+                                                                placeholder={user.sex} />
+                                                        </div>
+                                                        <div className="form-group col-md-6">
+                                                            <TextInput id="input_phone"
+                                                                field="phone"
+                                                                value={""}
+                                                                onChange={() => { }}
+                                                                required={false}
+                                                                maxLength={200}
+                                                                label="Số điện thoại"
+                                                                placeholder={user.phone} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <TextInput id="input_address"
+                                                            field="address"
+                                                            value={""}
+                                                            onChange={() => { }}
+                                                            required={false}
+                                                            maxLength={200}
+                                                            label="Địa chỉ"
+                                                            placeholder={user.address} />
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className="form-group col-md-6">
+                                                            <TextInput id="input_dateOfBirth"
+                                                                field="dateOfBirth"
+                                                                value={""}
+                                                                onChange={() => { }}
+                                                                required={false}
+                                                                maxLength={200}
+                                                                label="Ngày sinh"
+                                                                placeholder={user.dateOfBirth} />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        )
+                    }
+                    else if (checked2 === true) {
                         return (
                             <Fragment>
                                 <div className="row">

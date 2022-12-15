@@ -60,7 +60,7 @@ const DetailTeacher: React.FC = () => {
     }, [dispatch, access_token, refresh_token])
 
     const { state } = useLocation<any>();
-    let user: IUser = { id: 0, username: "", email: "", password: "", status: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 };
+    let user: IUser = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0, parent: "", student_ids: [], student_names: [] }
     if (typeof state !== undefined){
         user = state.user
     }

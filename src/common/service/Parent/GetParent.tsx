@@ -14,6 +14,9 @@ interface user {
     phone: string,
     address: string,
     parents: number,
+    student_ids: number[];
+    student_names: string[];
+    parent: string,
     createTime: string
 }
 export function getParent(dispatch: any) {
@@ -55,6 +58,9 @@ export function getParent(dispatch: any) {
                         status: ele.status,
                         firstName: ele.firstName,
                         lastName: ele.lastName,
+                        student_ids: ele.student_ids,
+                        student_names: ele.student_names,
+                        parent: ele.parent_name,
                         dateOfBirth: ele.dateOfBirth,
                         profile_image_url: ele.profile_image_url,
                         sex: ele.sex,

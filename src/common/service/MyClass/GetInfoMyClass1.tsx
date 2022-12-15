@@ -24,6 +24,8 @@ interface user {
     status: string,
     firstName: string,
     parent: string,
+    student_ids: number[];
+    student_names: string[];
     lastName: string,
     dateOfBirth: string,
     profile_image_url: string,
@@ -77,6 +79,8 @@ export function getInfoMyClass1(dispatch: any, id: any) {
                         profile_image_url: ele.profile_image_url,
                         sex: ele.sex,
                         parent: ele.parent,
+                        student_ids: ele.student_ids,
+                        student_names: ele.student_names,
                         phone: ele.phone,
                         address: ele.address,
                         parents: ele.parents,

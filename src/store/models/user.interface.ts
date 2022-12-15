@@ -12,7 +12,9 @@ export interface IUser {
     phone: string,
     address: string,
     parents: number,
-    parent?: string,
+    parent: string,
+    student_ids: number[];
+    student_names: string[];
     createTime: string
 }
 

@@ -50,7 +50,7 @@ function FormSubmitContestStudent(): JSX.Element {
     const isCreate: boolean = (url_contest_submission === "");
 
     if (!user || isCreate) {
-        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0 }
+        user = { id: 0, username: "", email: "", status: "", password: "", firstName: "", lastName: "", sex: "", phone: "", address: "", dateOfBirth: "", profile_image_url: "", createTime: "", parents: 0, parent: "", student_ids: [], student_names: [] }
     }
 
     var contest_description = localStorage.getItem('contest_description');

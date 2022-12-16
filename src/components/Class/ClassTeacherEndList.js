@@ -88,12 +88,14 @@ function ClassTeacherEndList(props) {
 
 
   function detailClassButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={() => {
-            if(props.onSelect) props.onSelect(row);
-            routeChange(row)}}
-          ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-    )
+    if (row.id != 0) {
+      return (
+          <button type="button" className="btn btn-primary" onClick={() => {
+              if(props.onSelect) props.onSelect(row);
+              routeChange(row)}}
+            ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+      )
+    }
   }
 
   function viewName(cell, row) {

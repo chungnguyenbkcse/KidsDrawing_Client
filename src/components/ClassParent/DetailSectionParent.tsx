@@ -198,15 +198,18 @@ const DetailSectionParent: React.FC = () => {
         });
     }
 
-    const routeChange10 = (description: string, name: string, id: any) => {
-        let path = '/exercise-parent/submit';
+    const routeChange10 = (exercise: IExerciseStudent) => {
+        let path = '/exercise-parent/submit1';
         localStorage.removeItem('exercise_description');
         localStorage.removeItem('exercise_name');
         localStorage.removeItem('exercise_level_name');
         localStorage.removeItem('exercise_id');
-        localStorage.setItem('exercise_description', description);
-        localStorage.setItem('exercise_name', name);
-        localStorage.setItem('exercise_id', id.toString());
+        localStorage.setItem('exercise_description', exercise.description);
+        localStorage.setItem('exercise_name', exercise.name);
+        localStorage.setItem('exercise_id', exercise.id.toString());
+        localStorage.setItem('student_id', exercise.student_id.toString());
+        localStorage.setItem('student_name', exercise.student_name.toString());
+        localStorage.setItem('deadline', exercise.deadline.toString());
         history.push({
             pathname: path
         });
@@ -404,51 +407,106 @@ const DetailSectionParent: React.FC = () => {
                                                                 if (ele == undefined || ele == null) {
                                                                     return ""
                                                                 }
-                                                                return (
-                                                                    <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                        <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange10(ele.description, ele.name, ele.id) }}>
-                                                                            <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                if (filter !== 0) {
+                                                                    if (ele.student_id == filter) {
+                                                                        return (
+                                                                            <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                                <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange10(ele) }}>
+                                                                                    <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                        <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                                    </div>
+                                                                                    <div className="col-xl-9 col-md-9 mt-2">
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Tên:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.name}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Học sinh:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.student_name}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
+                                                                                                Hạn nộp:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+                                                                                        <div className="row mb-2">
+                                                                                            <div className="col-md-5">
+                                                                                                Trạng thái:
+                                                                                            </div>
+                                                                                            <div className="col-md-7 status-score">
+                                                                                                Chưa nộp bài
+                                                                                            </div>
+                                                                                        </div>
+        
+                                                                                    </div>
+                                                                                </div>
+                                                                            </tr>
+                                                                        )
+                                                                    }
+                                                                    else {
+                                                                        return ""
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    return (
+                                                                        <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                            <div className="row section-ele row-section mb-2 ml-2 mr-2" onClick={() => { routeChange10(ele) }}>
+                                                                                <div className="col-xl-3 col-md-3 avatar-x">
+                                                                                    <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
+                                                                                </div>
+                                                                                <div className="col-xl-9 col-md-9 mt-2">
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Tên:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.name}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Học sinh:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.student_name}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div className="row">
+                                                                                        <div className="col-md-5">
+                                                                                            Hạn nộp:
+                                                                                        </div>
+                                                                                        <div className="col-md-7">
+                                                                                            {ele.deadline.replaceAll("T", " ").substring(0, 16)}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div className="row mb-2">
+                                                                                        <div className="col-md-5">
+                                                                                            Trạng thái:
+                                                                                        </div>
+                                                                                        <div className="col-md-7 status-score">
+                                                                                            Chưa nộp bài
+                                                                                        </div>
+                                                                                    </div>
+    
+                                                                                </div>
                                                                             </div>
-                                                                            <div className="col-xl-9 col-md-9 mt-2">
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Tên:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.name}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Học sinh:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.student_name}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className="row">
-                                                                                    <div className="col-md-5">
-                                                                                        Hạn nộp:
-                                                                                    </div>
-                                                                                    <div className="col-md-7">
-                                                                                        {ele.deadline.replaceAll("T", " ").substring(0, 16)}
-                                                                                    </div>
-                                                                                </div>
-                                                                                
-                                                                                <div className="row mb-2">
-                                                                                    <div className="col-md-5">
-                                                                                        Trạng thái:
-                                                                                    </div>
-                                                                                    <div className="col-md-7 status-score">
-                                                                                        Chưa nộp bài
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </tr>
-                                                                )
+                                                                        </tr>
+                                                                    )
+                                                                }
+                        
                                                             })
                                                         }
 

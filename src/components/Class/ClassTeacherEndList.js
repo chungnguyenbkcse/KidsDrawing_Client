@@ -34,7 +34,26 @@ function ClassTeacherEndList(props) {
 
 
 
-  let datas = [];
+      let datas = [
+        {
+          id: 0,
+          name: "",
+          course_id: 0,
+          review_star: 0,
+          link_url: "",
+          semester_class_id: 0,
+          user_register_teach_semester: 0,
+          security_code: "",
+          total_student: 0,
+          num_of_section: 0,
+          course_name: "",
+          semester_name: "",
+          art_type_name: "",
+          art_level_name: "",
+          art_age_name: "",
+          schedule: ""
+      }
+      ];
 
   if (class_teachers.class_done.length > 0 && class_teachers !== undefined && class_teachers !== null) {
     datas = class_teachers.class_done

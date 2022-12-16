@@ -74,10 +74,12 @@ const ViewDetailTeacherForAdmin: React.FC = () => {
                 }
                 else {
                     trackPromise(getClassTeacher1(dispatch, id))
+                    trackPromise(getUserById(dispatch, id))
                 }
             }
             else {
                 trackPromise(getClassTeacher1(dispatch,id))
+                trackPromise(getUserById(dispatch, id))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);

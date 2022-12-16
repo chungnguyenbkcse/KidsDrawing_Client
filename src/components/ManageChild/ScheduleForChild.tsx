@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { IClassesStudent } from "../../store/models/classes_student.interface";
 import { IScheduleTimeClassState, IStateType } from "../../store/models/root.interface";
 
-import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective } from "@syncfusion/ej2-react-schedule";
+import { ScheduleComponent, Day, Inject, ViewsDirective, ViewDirective, Week, Month } from "@syncfusion/ej2-react-schedule";
 
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
@@ -55,10 +55,12 @@ function ScheduleForChild(props: classTeacherListProps): JSX.Element {
                                 }
                             }}>
 
-                                <ViewsDirective>
-                                    <ViewDirective option='Day' startHour='00:00' endHour='23:59' />
-                                </ViewsDirective>
-                                <Inject services={[Day]} />
+                            <ViewsDirective>
+                                <ViewDirective option='Day'/>
+                                <ViewDirective option='Week'/>
+                                <ViewDirective option='Month'/>
+                            </ViewsDirective>
+                          <Inject services={[Day, Week, Month]}/>
                             </ScheduleComponent>
                         </div>
                     </div>

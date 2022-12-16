@@ -32,7 +32,9 @@ function ExerciseStudentList(props) {
       localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
       localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
       localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
-      localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
+      localStorage.setItem('time_submit', user_grade_exercise_submission.time)
+      localStorage.setItem('deadline', user_grade_exercise_submission.exercise_deadline)
+      localStorage.setItem('exercise_description', user_grade_exercise_submission.exercise_description.toString())
       let path = '/exercise/detail'; 
       history.push({
           pathname: path,
@@ -47,8 +49,10 @@ function ExerciseStudentList(props) {
     localStorage.setItem('image_url_exercise_submission', user_grade_exercise_submission.image_url)
     localStorage.setItem('exercise_name', user_grade_exercise_submission.exercise_name)
     localStorage.setItem('student_id', user_grade_exercise_submission.student_id.toString())
-    localStorage.setItem('time_submit', user_grade_exercise_submission.time_submit)
+    localStorage.setItem('time_submit', user_grade_exercise_submission.time)
+    localStorage.setItem('deadline', user_grade_exercise_submission.exercise_deadline)
     localStorage.setItem('exercise_id', user_grade_exercise_submission.exercise_id.toString())
+    localStorage.setItem('exercise_description', user_grade_exercise_submission.exercise_description.toString())
     history.push({
         pathname: path,
     });

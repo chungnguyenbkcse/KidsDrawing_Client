@@ -825,7 +825,7 @@ const DetailClassStudent: React.FC = () => {
                                     </div>
 
                                     <div className="col-xl-6 col-md-6 mb-4">
-                                        <h3 className=" mb-2" id="level-teacher">Bài kiểm tra đã nộp</h3>
+                                        <h3 className=" mb-2" id="level-teacher">Bài kiểm tra chưa chấm</h3>
                                         <div className="table-responsive portlet table-section">
                                             <table className="table">
                                                 <thead className="thead-light">

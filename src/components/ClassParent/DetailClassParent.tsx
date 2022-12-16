@@ -50,11 +50,22 @@ const DetailClassParent: React.FC = () => {
     const childs_classes: IChildsClassState = useSelector((state: IStateType) => state.childs_classes);
     let list_score_user_grade_exercise : number[] = [];
     let list_name_user_grade_exercise : string[] = [];
-    exercise_submission.exercise_gradeds.map((ele, idx) => {
-        list_score_user_grade_exercise.push(ele.score)
-        list_name_user_grade_exercise.push(ele.exercise_name)
-        return ele
-    })
+    if (exercise_submission.exercise_gradeds.length > 3) {
+        exercise_submission.exercise_gradeds.map((ele, idx) => {
+            if (idx < 3) {
+                list_score_user_grade_exercise.push(ele.score)
+                list_name_user_grade_exercise.push(ele.exercise_name)
+            }
+            return ele
+        })
+    }
+    else {
+        exercise_submission.exercise_gradeds.map((ele, idx) => {
+            list_score_user_grade_exercise.push(ele.score)
+            list_name_user_grade_exercise.push(ele.exercise_name)
+            return ele
+        })
+    }
 
 
     const labels = list_name_user_grade_exercise;
@@ -613,7 +624,7 @@ const DetailClassParent: React.FC = () => {
                                                                     })
                                                                 }
                                                             </select>
-                                                            <button className="btn btn-outline-dark btn-sm ml-3 filter" type="button" onClick={() => handleFilter()}>Lọc&nbsp;<i className="fa fa-flask"></i></button>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -625,25 +636,68 @@ const DetailClassParent: React.FC = () => {
                                             
                                             <div className="row">
                                                 <h3 className=" mb-2" id="level-teacher">Thống kê điểm</h3>
-                                                <div className="col-xl-12 col-md-12 mb-4">
-                                                    <div className={`card shadow h-100 py-2`} id="topcard-user">
-                                                        <div className="card-body">
-                                                            <div className="row no-gutters">
-                                                                <ChartLine data={data} />
-                                                            </div>
-                                                            <div className="row justify-content-center">
-                                                                <button
-                                                                    className="btn btn-success btn-green"
-                                                                    id="btn-into-class-student"
-                                                                    onClick={() => { routeChange() }}
-                                                                >
-                                                                    Xem chi tiết
-                                                                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                {
+                                                    function() {
+                                                        if ( childs_classes.childs_class.length > 1) {
+                                                            if (filter == 0) {
+                                                                return (
+                                                                    <div className="col-xl-12 col-md-12 mb-4">
+                                                                    <div className="row mx-auto justify-content-center">
+                                                                        <p className="text-notifi text-center mt-4 mb-4 mr-4" style={{paddingRight: "30px"}}>Vui lòng chọn ít nhất một tài khoản học sinh!</p>
+                                                                    </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            else {
+                                                                return (
+                                                                    <div className="col-xl-12 col-md-12 mb-4">
+                                                                        <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                                                            <div className="card-body">
+                                                                                <div className="row no-gutters">
+                                                                                    <ChartLine data={data} />
+                                                                                </div>
+                                                                                <div className="row justify-content-center">
+                                                                                    <button
+                                                                                        className="btn btn-success btn-green"
+                                                                                        id="btn-into-class-student"
+                                                                                        onClick={() => { routeChange() }}
+                                                                                    >
+                                                                                        Xem chi tiết
+                                                                                        <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        }
+                                                        else {
+                                                            return (
+                                                                <div className="col-xl-12 col-md-12 mb-4">
+                                                                    <div className={`card shadow h-100 py-2`} id="topcard-user">
+                                                                        <div className="card-body">
+                                                                            <div className="row no-gutters">
+                                                                                <ChartLine data={data} />
+                                                                            </div>
+                                                                            <div className="row justify-content-center">
+                                                                                <button
+                                                                                    className="btn btn-success btn-green"
+                                                                                    id="btn-into-class-student"
+                                                                                    onClick={() => { routeChange() }}
+                                                                                >
+                                                                                    Xem chi tiết
+                                                                                    <i className={`fas fa-arrow-right fa-1x`} id="icon-arrow-right"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        }
+                                                    }()
+                                                }
+                
                                             </div>
                                         </div>
                                     </div>

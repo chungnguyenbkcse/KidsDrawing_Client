@@ -151,9 +151,7 @@ const GradeExamTeacher: React.FC = () => {
                 <ToastContainer />
                 <div className="row">
                     <div className="col-xl-6 col-lg-6">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Bài làm của bé</h6>
-                        </div>
+                        <h6 className="font-weight-bold text-green mt-2" id="level-teacher">Bài làm của bé</h6>
                         <div className="card-body mx-auto">
                         {
                             function () {
@@ -240,9 +238,7 @@ const GradeExamTeacher: React.FC = () => {
                 <div className="row">
                     <div className="col-xl-12 col-lg-12">
                         <div className="card shadow mb-4">
-                            <div className="card-header py-3">
-                                <h6 className="m-0 font-weight-bold text-green" id="level-teacher">Nhận xét</h6>
-                            </div>
+                            <h6 className="m-0 font-weight-bold text-green mb-2" id="level-teacher">Nhận xét</h6>
                             <div className="card-body">
                                 <div className="form-group">
                                     <TextInput id="input_feedback"

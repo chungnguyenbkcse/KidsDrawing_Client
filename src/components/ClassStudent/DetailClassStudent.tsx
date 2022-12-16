@@ -833,48 +833,6 @@ const DetailClassStudent: React.FC = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {
-                                                        exercise_submissions.exercise_gradeds.map((ele, index) => {
-                                                            return (
-                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
-                                                                    <div className="row section-ele row-section-1 mb-4 ml-2 mr-2" onClick={() => { routeChange2(ele) }}>
-                                                                        <div className="col-xl-3 col-md-3 avatar-x">
-                                                                            <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667399202/ersndjmp6ppmvohvekpr.png" alt="" />
-                                                                        </div>
-                                                                        <div className="col-xl-9 col-md-9 mt-2">
-                                                                            <div className="row">
-                                                                                <div className="col-md-5">
-                                                                                    Tên:
-                                                                                </div>
-                                                                                <div className="col-md-7">
-                                                                                    {ele.exercise_name}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="row">
-                                                                                <div className="col-md-5">
-                                                                                    Nộp lúc:
-                                                                                </div>
-                                                                                <div className="col-md-7">
-                                                                                    {ele.update_time.replaceAll("T", " ").substring(0, 16)}
-                                                                                </div>
-                                                                            </div>
-                                                                            
-
-                                                                            <div className="row mb-2">
-                                                                                <div className="col-md-5">
-                                                                                    Trạng thái:
-                                                                                </div>
-                                                                                <div className="col-md-7 status-score">
-                                                                                    Đã có điểm
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                    }
 
                                                     {
                                                         exercise_submissions.exercise_not_gradeds.map((ele, index) => {

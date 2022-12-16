@@ -278,7 +278,7 @@ const DetailClassTeacher: React.FC = () => {
 
                 var start_time = ele.start_time.split("T");
                 var end_time = ele.end_time.split("T");
-                return data.push("Từ " + start_time[0] + " " + start_time[1] + " -> " + end_time[0] + " " + end_time[1])
+                return data.push(start_time[0])
             })
         }
 

@@ -70,6 +70,8 @@ function ClassTeacherDoingList(props) {
 
   if (class_teachers.class_doing.length > 0 && class_teachers !== undefined && class_teachers !== null) {
     datas = class_teachers.class_doing
+  }else {
+    datas = []
   }
 
   const options = {
@@ -117,28 +119,64 @@ function ClassTeacherDoingList(props) {
     )
   }
 
+  function viewName(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.name}</span>
+      )
+    }
+  }
+
+  function viewCourseName(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.course_name}</span>
+      )
+    }
+  }
+
+  function viewTotalStudent(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.total_student}</span>
+      )
+    }
+  }
+
+  function viewNumOfSection(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.num_of_section}</span>
+      )
+    }
+  }
+
 
 
   const columns = [
     {
       dataField: 'name',
       text: 'Tên',
-      filter: textFilter()
+      filter: textFilter(),
+      formatter: viewName
     },
     {
         dataField: 'course_name',
         text: 'Thuộc khóa học',
-        filter: textFilter()
+        filter: textFilter(),
+        formatter: viewCourseName
       },
       {
         dataField: 'total_student',
         text: 'Số học sinh',
-        filter: textFilter()
+        filter: textFilter(),
+        formatter: viewTotalStudent
       },
       {
         dataField: 'num_of_section',
         text: 'Số buổi học',
-        filter: textFilter()
+        filter: textFilter(),
+        formatter: viewNumOfSection
       },
     {
       dataField: '',

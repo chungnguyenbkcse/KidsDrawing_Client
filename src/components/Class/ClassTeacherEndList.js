@@ -96,32 +96,77 @@ function ClassTeacherEndList(props) {
     )
   }
 
+  function viewName(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.name}</span>
+      )
+    }
+  }
+
+  function viewCourseName(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.course_name}</span>
+      )
+    }
+  }
+
+  function viewTotalStudent(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.total_student}</span>
+      )
+    }
+  }
+
+  function viewNumOfSection(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.num_of_section}</span>
+      )
+    }
+  }
+
+  function viewReviewStar(cell, row) {
+    if (row.id != 0) {
+      return (
+        <span>{row.review_star}</span>
+      )
+    }
+  }
+
 
 
   const columns = [
     {
       dataField: 'name',
       text: 'Tên',
-      filter: textFilter()
+      filter: textFilter(),
+      formatter: viewName
     },
     {
         dataField: 'course_name',
         text: 'Thuộc khóa học',
-        filter: textFilter()
+        filter: textFilter(),
+        formatter: viewCourseName
       },
       {
         dataField: 'total_student',
         text: 'Số học sinh',
-        filter: textFilter()
+        filter: textFilter(),
+        formatter: viewTotalStudent
       },
       {
         dataField: 'num_of_section',
         text: 'Số buổi học',
-        filter: textFilter()
+        filter: textFilter(),
+        formatter: viewNumOfSection
       },
       {
         dataField: 'review_star',
         text: 'Điểm đánh giá (Thang điểm 100)',
+        formatter: viewReviewStar
       },
     {
       dataField: '',

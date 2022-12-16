@@ -1,0 +1,1 @@
+{"version":3,"sources":["LandingPage.css"],"names":[],"mappings":"AAAA,YACI,wBACJ,CAEA,qBACI,kBACJ","file":"13.619aa525.chunk.css","sourcesContent":["#login-page {\r\n    background-color: #5A47AB;\r\n}\r\n\r\n#content-landingpage {\r\n    margin-bottom: 50px;\r\n}"]}

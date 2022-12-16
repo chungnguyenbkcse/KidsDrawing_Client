@@ -1,0 +1,1 @@
+{"version":3,"sources":["Header.css"],"names":[],"mappings":"AAAA,6BACI,kCACJ,CAEA,8BACI,kCACJ","file":"12.b3406f3e.chunk.css","sourcesContent":["#btn-sigin-landingpage:hover{\r\n    background-color: #EBD510 !important;\r\n}\r\n\r\n#btn-sigup-langdingpage:hover{\r\n    background-color: #10eb3f !important;\r\n}"]}

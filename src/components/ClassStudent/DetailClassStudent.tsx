@@ -35,6 +35,7 @@ const DetailClassStudent: React.FC = () => {
     const exercise_submissions: IExerciseSubmissionState = useSelector((state: IStateType) => state.exercise_submissions);
     const tutorials: ITutorialState = useSelector((state: IStateType) => state.tutorials);
     const time_schedules: ITimeScheduleState = useSelector((state: IStateType) => state.time_schedules);
+    console.log(time_schedules.timeSchedules)
     const tutorial_pages: ITutorialPageState = useSelector((state: IStateType) => state.tutorial_pages);
     const anonymous_notifications: IAnonymousNotificationState | null = useSelector((state: IStateType) => state.anonymous_notifications);
     const student_leaves: IStudentLeaveState = useSelector((state: IStateType) => state.student_leaves);
@@ -528,7 +529,7 @@ const DetailClassStudent: React.FC = () => {
                                                                         Lịch học:
                                                                     </div>
                                                                     <div className="col-md-9 not-active-xx">
-                                                                        {data[index]}
+                                                                        {data[page * 6 + index]}
                                                                     </div>
                                                                 </div>
                                                                 
@@ -583,7 +584,7 @@ const DetailClassStudent: React.FC = () => {
                                                                         Lịch học:
                                                                     </div>
                                                                     <div className="col-md-9">
-                                                                        {data[index]}
+                                                                        {data[page * 6 + index]}
                                                                     </div>
                                                                 </div>
                                                                 
@@ -638,7 +639,7 @@ const DetailClassStudent: React.FC = () => {
                                                                         Lịch học:
                                                                     </div>
                                                                     <div className="col-md-9">
-                                                                        {data[index]}
+                                                                        {data[page * 6 + index]}
                                                                     </div>
                                                                 </div>
                                                                 
@@ -692,7 +693,7 @@ const DetailClassStudent: React.FC = () => {
                                                                     Lịch học:
                                                                 </div>
                                                                 <div className="col-md-9">
-                                                                    {data[index]}
+                                                                    {data[page * 6 + index]}
                                                                 </div>
                                                             </div>
                                                             <div className="row">

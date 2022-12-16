@@ -402,7 +402,7 @@ const SectionForParent: React.FC = () => {
                                                         Lịch học:
                                                     </div>
                                                     <div className="col-md-9 not-active-xx">
-                                                        {data[index]}
+                                                        {data[page * 6 + index]}
                                                     </div>
                                                 </div>
                     
@@ -457,7 +457,7 @@ const SectionForParent: React.FC = () => {
                                                         Lịch học:
                                                     </div>
                                                     <div className="col-md-9">
-                                                        {data[index]}
+                                                        {data[page * 6 + index]}
                                                     </div>
                                                 </div>
                                                 
@@ -512,7 +512,7 @@ const SectionForParent: React.FC = () => {
                                                         Lịch học:
                                                     </div>
                                                     <div className="col-md-9">
-                                                        {data[index]}
+                                                        {data[page * 6 + index]}
                                                     </div>
                                                 </div>
                                                 
@@ -566,7 +566,7 @@ const SectionForParent: React.FC = () => {
                                                     Lịch học:
                                                 </div>
                                                 <div className="col-md-9">
-                                                    {data[index]}
+                                                    {data[page * 6 + index]}
                                                 </div>
                                             </div>
                                             <div className="row">

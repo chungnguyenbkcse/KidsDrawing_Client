@@ -116,11 +116,6 @@ function ExerciseStudentNotGradeList(props) {
       filter: textFilter()
     },
     {
-        dataField: 'exercise_level_name',
-        text: 'Tỉ lệ',
-        sort: true
-      },
-    {
       dataField: 'exercise_deadline',
       text: 'Thời hạn nộp',
       formatter: deadlineButton

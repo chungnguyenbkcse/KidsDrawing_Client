@@ -87,11 +87,6 @@ function ExerciseStudentNotSubmitList(props) {
       filter: textFilter()
     },
     {
-        dataField: 'level_name',
-        text: 'Tỉ lệ',
-        sort: true
-      },
-    {
       dataField: 'deadline',
       text: 'Thời hạn nộp',
       formatter: deadlineButton

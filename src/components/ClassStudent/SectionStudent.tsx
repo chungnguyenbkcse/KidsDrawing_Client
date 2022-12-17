@@ -530,14 +530,28 @@ const SectionStudent: React.FC = () => {
                                                 }
                                                 else {
                                                     if (sections.sections[0].teach_form === true) {
-                                                        if ((is_active === "not_active" && is_attendance === "true") || (is_attendance === "false" && student_leave === "true")) {
-                                                            return (
-                                                                <>
-                                                                    <h4 id="full-name">Recording</h4>
-                                                                    <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                                                                </>
-                                                            )
+                                                        if (is_active === "not_active" ) {
+                                                            if ( is_attendance === "true" || (is_attendance === "false" && student_leave === "true")) {
+                                                                return (
+                                                                    <>
+                                                                        <h4 id="full-name">Recording</h4>
+                                                                        <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                                                    </>
+                                                                )
+                                                            }
+                                                            else {
+                                                                return (
+                                                                    <div className="col-xl-12 col-md-12 mb-4">
+                                                                    <div className="row mx-auto justify-content-center">
+                                                                        <p className="text-notifi text-center mt-4 mb-4 mr-4" style={{paddingRight: "30px"}}>Bạn không thể xem lại record buổi học vì không được điểm danh!</p>
+                                                                    </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            
                                                         }
+
+                
                                                     }
                                                 }
                                             }()

@@ -8,7 +8,7 @@ interface TutorialPage {
     description: string;
     number: number;
 }
-export function getTutorialPagex(dispatch: any, id: any) {
+export function getTutorialPageNotApproveNowBySection(dispatch: any, id: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return  fetch(
@@ -26,7 +26,7 @@ export function getTutorialPagex(dispatch: any, id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getTutorialPagex(dispatch, id))
+                        dispatch(getTutorialPageNotApproveNowBySection(dispatch, id))
                     }
                     else {
                         throw Error(response.statusText);

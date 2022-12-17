@@ -43,8 +43,8 @@ export function getSectionByAdmin(dispatch: any) {
                 console.log(data)
                 dispatch(fetchDataSuccess(data))
                 dispatch(removeUserRegisterTutorialApprovedAll())
-                dispatch(removeUserRegisterTutorialNotApprovedAll)
-                dispatch(removeUserRegisterTutorialNotApprovedNowAll)
+                dispatch(removeUserRegisterTutorialNotApprovedAll())
+                dispatch(removeUserRegisterTutorialNotApprovedNowAll())
                 console.log(data.body.Section)
                 data.body.section_approved.map((ele: any, index: any) => {
                     var section: Section = {

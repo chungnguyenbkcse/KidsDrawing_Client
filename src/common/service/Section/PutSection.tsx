@@ -35,11 +35,11 @@ export function putSection(id: any, data: any, idx: any) {
             .then (data => {
                 console.log(data)
                 console.log(id)
-                toast.update(idx, { render: "Gửi record thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+                toast.update(idx, { render: "Gửi yêu cầu thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
-                toast.update(idx, { render: "Gửi record không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+                toast.update(idx, { render: "Gửi yêu cầu không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
     };

@@ -35,11 +35,11 @@ export function putSectionByAdmin(dispatch: any, id: any, data: any, idx: any) {
                 console.log(data)
                 console.log(id)
                 getSectionByAdmin(dispatch)
-                toast.update(idx, { render: "Gửi record thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+                toast.update(idx, { render: "Thao tác thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             })
             .catch(error => {
                 dispatch(fetchDataError(error));
-                toast.update(idx, { render: "Gửi record không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+                toast.update(idx, { render: "Thao tác không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 console.log("error")
             });
 }

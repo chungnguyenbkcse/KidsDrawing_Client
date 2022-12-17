@@ -57,8 +57,6 @@ function ClassTeacherEndList(props) {
 
   if (class_teachers.class_done.length > 0 && class_teachers !== undefined && class_teachers !== null) {
     datas = class_teachers.class_done
-  }else {
-    datas = []
   }
 
   const options = {

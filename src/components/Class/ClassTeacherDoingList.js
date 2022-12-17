@@ -70,8 +70,6 @@ function ClassTeacherDoingList(props) {
 
   if (class_teachers.class_doing.length > 0 && class_teachers !== undefined && class_teachers !== null) {
     datas = class_teachers.class_doing
-  }else {
-    datas = []
   }
 
   const options = {

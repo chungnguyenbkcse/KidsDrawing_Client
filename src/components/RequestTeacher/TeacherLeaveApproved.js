@@ -14,7 +14,7 @@ function TeacherLeaveApprovedList(props) {
     const history = useHistory();
 
     const onChangeRoute = (section) => {
-      let path = "/classes/section";
+      let path = "/classes/section-sub";
       localStorage.removeItem('section_id')
       localStorage.setItem('section_id', section.section_id.toString())
       localStorage.removeItem('class_id')

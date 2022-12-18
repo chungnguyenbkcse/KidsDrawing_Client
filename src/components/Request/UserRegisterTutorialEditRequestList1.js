@@ -5,8 +5,9 @@ import { useHistory } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import { deleteTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/DeleteTutorialTemplatePage";
-import { deleteTutorialPageBySection1 } from "../../common/service/TutorialPage/DeleteTutorialPageBySection1";
+import { IoIosRemove } from 'react-icons/io'
+import { UserRegisterTutorialModificationStatus } from "../../store/models/user_register_tutorial.interface";
+import { setModificationState } from "../../store/actions/user_register_tutorial.action";
 import { deleteTutorialTemplatePageBySectionX } from "../../common/service/Section/DeleteTutorialTemplatePageBySection";
 
 function TutorialEditRequestList1(props) {
@@ -83,19 +84,30 @@ function TutorialEditRequestList1(props) {
 
   function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={() => {
+      <div className="row mt-2">
+        <div className="col-md-3 ml-2">
+          <button type="button" className="btn btn-primary" onClick={() => {
+            handleView(row)
+          }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+        </div>
+        <div className="col-md-3">
+          <button type="button" className="btn btn-primary" onClick={() => {
           approvedTutorial(row)
           }}><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div className="col-md-3"> 
+          <button type="button" className="btn btn-danger" onClick={() => {  
+            if (props.onSelect) props.onSelect(row.id)    
+            localStorage.removeItem('user_register_tutorials_id')
+            localStorage.setItem('user_register_tutorials_id', row.id.toString())
+            dispatch(setModificationState(UserRegisterTutorialModificationStatus.Remove))
+          }}><IoIosRemove className="icon-remove" /></button>
+        </div>
+      </div>
+        
     )
   }
 
-  function detailButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={() => {
-            handleView(row)
-          }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-    )
-  }
 
   function showStartTime(cell, row) {
     var strDate = row.create_time;
@@ -131,16 +143,14 @@ function TutorialEditRequestList1(props) {
         formatter: showStartTime,
       },
       
-    {
-      dataField: '',
-      text: 'Đặt giáo án chung',
-      formatter: editButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: detailButton
-    },
+      {
+        dataField: '',
+        text: 'Đặt giáo án chung',
+        style:{
+          width: '150px'
+        },
+        formatter: editButton
+      }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

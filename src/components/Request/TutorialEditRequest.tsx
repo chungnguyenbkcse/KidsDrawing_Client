@@ -62,6 +62,7 @@ const TutorialEditRequest: React.FC = () => {
 
   function onUserRegisterTutorialSelect(id: number){
     setSectionId(id)
+    setPopup(true);
     onUserRegisterTutorialRemove();
     dispatch(setModificationState(UserRegisterTutorialModificationStatus.None));
   }
@@ -190,7 +191,7 @@ const TutorialEditRequest: React.FC = () => {
                         <h6 className="m-0 font-weight-bold text-green">Danh sách giáo án đã duyệt</h6>
                       </div>
                       <div className="card-body">
-                        <UserRegisterTutorialEditRequestList1 />
+                        <UserRegisterTutorialEditRequestList1 onSelect={onUserRegisterTutorialSelect}/>
                       </div>
                     </div>
 

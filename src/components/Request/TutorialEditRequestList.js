@@ -64,38 +64,32 @@ function TutorialEditRequestList(props) {
     }
   };
 
-  function removeButton(cell, row) {
+  function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-danger" onClick={() => {  
+      <div className="row mt-2">
+        <div className="col-md-3 ml-2">
+          <button type="button" className="btn btn-primary" onClick={() => {
+            handleView(row)
+          }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+        </div>
+        <div className="col-md-3">
+          <button type="button" className="btn btn-primary" onClick={() => {
+          approvedTutorial(row)
+          }}><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div className="col-md-3"> 
+          <button type="button" className="btn btn-danger" onClick={() => {  
             if (props.onSelect) props.onSelect(row.id)    
             localStorage.removeItem('user_register_tutorials_id')
             localStorage.setItem('user_register_tutorials_id', row.id.toString())
-            localStorage.removeItem('section_user_register_tutorials_id')
-            localStorage.setItem('section_user_register_tutorials_id', row.section_id.toString())
-            localStorage.removeItem('name_user_register_tutorials')
-            localStorage.setItem('name_user_register_tutorials', row.name.toString())
-            localStorage.removeItem('creator_user_register_tutorials_id')
-            localStorage.setItem('creator_user_register_tutorials_id', row.creator_id.toString())
             dispatch(setModificationState(UserRegisterTutorialModificationStatus.Remove))
           }}><IoIosRemove className="icon-remove" /></button>
-    );
-  }
-
-  function editButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={() => {
-          approvedTutorial(row)
-          }}><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+      </div>
+        
     )
   }
 
-  function detailButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={() => {
-            handleView(row)
-          }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-    )
-  }
 
   function showStartTime(cell, row) {
     var strDate = row.create_time;
@@ -133,19 +127,12 @@ function TutorialEditRequestList(props) {
       
     {
       dataField: '',
-      text: 'Hành động',
+      text: '',
+      style:{
+        width: '150px'
+      },
       formatter: editButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: detailButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: removeButton
-    },
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

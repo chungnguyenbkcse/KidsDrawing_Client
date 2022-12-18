@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISectionState, IUserRegisterTutorialPageState, IRootPageStateType } from "../../store/models/root.interface";
+import { IStateType, ISectionState, IUserRegisterTutorialPageState, IRootPageStateType, ILessonState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISection } from "../../store/models/section.interface";
 import TextInput from "../../common/components/TextInput";
@@ -12,6 +12,9 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { addUserRegisterTutorialPage, editUserRegisterTutorialPage, removeUserRegisterTutorialPage } from "../../store/actions/user_register_tutorial_page.action";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import Popup from "reactjs-popup";
+import { setModificationState } from "../../store/actions/lesson.action";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
 
 
 export type SectionListProps = {
@@ -38,6 +41,7 @@ type TutorialPage = {
 
 function EditSectionTeacher1(props: SectionListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     const sections: ISectionState | null = useSelector((state: IStateType) => state.sections);
     const user_register_tutorial_pages: IUserRegisterTutorialPageState | null = useSelector((state: IStateType) => state.user_register_tutorial_pages);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -45,6 +49,7 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
     let section: ISection | null = sections.selectedSection;
 
     const [checked, setChecked] = useState(false);
+    const [popup, setPopup] = useState(false);
 
 
     var id_y = localStorage.getItem('section_number');
@@ -258,55 +263,8 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
 
 
     function handleRemove() {
-        if (user_register_tutorial_pages !== null){
-            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER,
-                    closeButton: true,
-                });
-            }
-            else if (checkCreateNew === true  && currentPage !== totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER,
-                    closeButton: true,
-                });
-            }
-            else {
-                const k = currentPage;
-                let x = totalPage - 1;
-                setTotalPage(x)
-
-                setCurrentPageOld(k-2)
-    
-                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                    position: toast.POSITION.TOP_CENTER
-                });
-                if (k === user_register_tutorial_pages.user_register_tutorial_pages.length) {
-                    let y = k - 1;
-                    setCurrentPage(y)
-                    dispatch(removeUserRegisterTutorialPage(user_register_tutorial_pages.user_register_tutorial_pages[k-1].id))
-                    handleBackPage()
-                }
-                else {
-                    user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).map((ele, idx) => {
-                        if (k -1 === ele.number) {
-                            dispatch(removeUserRegisterTutorialPage(ele.id));
-                        }
-                        else if (ele.number > k - 1 ) {
-                            dispatch(editUserRegisterTutorialPage({
-                                id: ele.id,
-                                description: ele.description,
-                                section_id: section_id,
-                                number: ele.number - 1
-                            }))
-                        }
-                        return 2
-                    })
-                    handleBackPage()
-                }
-                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
-            }
-        }
+        dispatch(setModificationState(LessonModificationStatus.Remove))
+        setPopup(true)
     }
 
     console.log('CurrentPage', currentPage);
@@ -471,6 +429,82 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
     return (
         promiseInProgress ? <div className="loader"></div> : <Fragment>
             <ToastContainer />
+            {
+                function () {
+                    if ((lessons.modificationState === LessonModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (user_register_tutorial_pages !== null){
+                                                    if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                            position: toast.POSITION.TOP_CENTER,
+                                                            closeButton: true,
+                                                        });
+                                                    }
+                                                    else if (checkCreateNew === true  && currentPage !== totalPage) {
+                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                            position: toast.POSITION.TOP_CENTER,
+                                                            closeButton: true,
+                                                        });
+                                                    }
+                                                    else {
+                                                        const k = currentPage;
+                                                        let x = totalPage - 1;
+                                                        setTotalPage(x)
+                                        
+                                                        setCurrentPageOld(k-2)
+                                            
+                                                        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                            position: toast.POSITION.TOP_CENTER
+                                                        });
+                                                        if (k === user_register_tutorial_pages.user_register_tutorial_pages.length) {
+                                                            let y = k - 1;
+                                                            setCurrentPage(y)
+                                                            dispatch(removeUserRegisterTutorialPage(user_register_tutorial_pages.user_register_tutorial_pages[k-1].id))
+                                                            handleBackPage()
+                                                        }
+                                                        else {
+                                                            user_register_tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).map((ele, idx) => {
+                                                                if (k -1 === ele.number) {
+                                                                    dispatch(removeUserRegisterTutorialPage(ele.id));
+                                                                }
+                                                                else if (ele.number > k - 1 ) {
+                                                                    dispatch(editUserRegisterTutorialPage({
+                                                                        id: ele.id,
+                                                                        description: ele.description,
+                                                                        section_id: section_id,
+                                                                        number: ele.number - 1
+                                                                    }))
+                                                                }
+                                                                return 2
+                                                            })
+                                                            handleBackPage()
+                                                        }
+                                                        toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+                                                    }
+                                                }
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">
@@ -500,11 +534,11 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                                         if (currentPage === 1) {
                                             return (
                                                 <div className="row">
-                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                <div className="col-xl-5 col-md-5 col-xs-5">
                                                     <button type="button" className="btn btn-info right-margin" onClick={handleSave}>Lưu tạm</button>
                                                     <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                 </div>
-                                                <div className="col-xl-8 col-md-8 col-xs-8">
+                                                <div className="col-xl-7 col-md-7 col-xs-7">
                                                     <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                 </div>
                                             </div>
@@ -513,12 +547,12 @@ function EditSectionTeacher1(props: SectionListProps): JSX.Element {
                                         else {
                                             return (
                                                 <div className="row">
-                                                    <div className="col-xl-4 col-md-4 col-xs-4">
+                                                    <div className="col-xl-5 col-md-5 col-xs-5">
                                                         <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                     </div>
-                                                    <div className="col-xl-8 col-md-8 col-xs-8">
+                                                    <div className="col-xl-7 col-md-7 col-xs-7">
                                                         <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
                                                         <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                     </div>

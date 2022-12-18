@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect, ChangeEvent } from "react";
-import { IStateType, ISectionTemplateState, ITutorialTemplatePageState, IRootPageStateType } from "../../store/models/root.interface";
+import { IStateType, ISectionTemplateState, ITutorialTemplatePageState, IRootPageStateType, ILessonState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISectionTemplate } from "../../store/models/section_template.interface";
 import TextInput from "../../common/components/TextInput";
@@ -18,6 +18,9 @@ import { postTutorialTemplatePage1 } from "../../common/service/TutorialTemplate
 import { putTutorialTemplatePage1 } from "../../common/service/TutorialTemplatePage/PutTutorialTemplatePage1";
 import { putSectionTemplate } from "../../common/service/SectionTemplate/PutSectionTemplate";
 import { getTutorialTemplatePageBySectionTemplate } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePageBySectionTemplate";
+import { setModificationState } from "../../store/actions/lesson.action";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
+import Popup from "reactjs-popup";
 
 
 export type SectionTemplateListProps = {
@@ -44,6 +47,7 @@ type TutorialPageTemplate = {
 
 function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     const section_templates: ISectionTemplateState | null = useSelector((state: IStateType) => state.section_templates);
     const tutorial_template_pages: ITutorialTemplatePageState | null = useSelector((state: IStateType) => state.tutorial_template_pages);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -51,6 +55,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     let section_template: ISectionTemplate | null = section_templates.selectedSectionTemplate;
 
     const [checked, setChecked] = useState(false);
+    const [popup, setPopup] = useState(false);
 
     var id_y = localStorage.getItem('section_number');
     let section_number: number = 0;
@@ -166,52 +171,8 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     }
 
     function handleRemove() {
-        if (tutorial_template_pages !== null) {
-            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER,
-                    closeButton: true,
-                });
-            }
-            else if (checkCreateNew === true  && currentPage !== totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER,
-                    closeButton: true,
-                });
-            }
-            else {
-                const k = currentPage;
-                let x = totalPage - 1;
-                setTotalPage(x)
-
-                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                    position: toast.POSITION.TOP_CENTER
-                });
-                if (k === tutorial_template_pages.tutorialTemplatePages.length) {
-                    let y = k - 1;
-                    setCurrentPage(y)
-                    dispatch(deleteTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages[k - 1].id))
-                    handleBackPage()
-                }
-                else {
-                    tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, idx) => {
-                        if (k - 1 === ele.number) {
-                            dispatch(deleteTutorialTemplatePage(ele.id));
-                        }
-                        else if (ele.number > k - 1) {
-                            dispatch(putTutorialTemplatePage1(ele.id, {
-                                description: ele.description,
-                                section_template_id: section_template_id,
-                                number: ele.number - 1
-                            }))
-                        }
-                        return 2
-                    })
-                    handleBackPage()
-                }
-                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
-            }
-        }
+        dispatch(setModificationState(LessonModificationStatus.Remove))
+        setPopup(true)
     }
 
     function handleSave() {
@@ -466,6 +427,80 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     return (
         <Fragment>
             <ToastContainer />
+            {
+                function () {
+                    if ((lessons.modificationState === LessonModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (tutorial_template_pages !== null) {
+                                                    if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                            position: toast.POSITION.TOP_CENTER,
+                                                            closeButton: true,
+                                                        });
+                                                    }
+                                                    else if (checkCreateNew === true  && currentPage !== totalPage) {
+                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                            position: toast.POSITION.TOP_CENTER,
+                                                            closeButton: true,
+                                                        });
+                                                    }
+                                                    else {
+                                                        const k = currentPage;
+                                                        let x = totalPage - 1;
+                                                        setTotalPage(x)
+                                        
+                                                        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                            position: toast.POSITION.TOP_CENTER
+                                                        });
+                                                        if (k === tutorial_template_pages.tutorialTemplatePages.length) {
+                                                            let y = k - 1;
+                                                            setCurrentPage(y)
+                                                            dispatch(deleteTutorialTemplatePage(tutorial_template_pages.tutorialTemplatePages[k - 1].id))
+                                                            handleBackPage()
+                                                        }
+                                                        else {
+                                                            tutorial_template_pages.tutorialTemplatePages.sort((a, b) => a.number - b.number).map((ele, idx) => {
+                                                                if (k - 1 === ele.number) {
+                                                                    dispatch(deleteTutorialTemplatePage(ele.id));
+                                                                }
+                                                                else if (ele.number > k - 1) {
+                                                                    dispatch(putTutorialTemplatePage1(ele.id, {
+                                                                        description: ele.description,
+                                                                        section_template_id: section_template_id,
+                                                                        number: ele.number - 1
+                                                                    }))
+                                                                }
+                                                                return 2
+                                                            })
+                                                            handleBackPage()
+                                                        }
+                                                        toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+                                                    }
+                                                }
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
+
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">
@@ -512,11 +547,11 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                         if (currentPage === 1) {
                                             return (
                                                 <div className="row">
-                                                    <div className="col-xl-4 col-md-4 col-xs-4">
+                                                    <div className="col-xl-5 col-md-5 col-xs-5">
                                                         <button type="button" className="btn btn-info right-margin" onClick={handleSave}>Lưu</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                     </div>
-                                                    <div className="col-xl-8 col-md-8 col-xs-8">
+                                                    <div className="col-xl-7 col-md-7 col-xs-7">
                                                         <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                     </div>
                                                 </div>
@@ -525,12 +560,12 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                         else {
                                             return (
                                                 <div className="row">
-                                                    <div className="col-xl-4 col-md-4 col-xs-4">
+                                                    <div className="col-xl-5 col-md-5 col-xs-5">
                                                         <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                     </div>
-                                                    <div className="col-xl-8 col-md-8 col-xs-8">
+                                                    <div className="col-xl-7 col-md-7 col-xs-7">
                                                         <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
                                                         <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                     </div>

@@ -284,7 +284,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
     function handleNextPage() {
         if (tutorial_template_pages !== null) {
             if (checkCreateNew === true || (currentPage === totalPage && checkAfterCreate === false)) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
@@ -326,25 +326,25 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
         console.log(checkAfterCreate)
         if (tutorial_template_pages !== null) {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === true) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage == totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
@@ -364,26 +364,26 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
 
     function handleNewPage() {
         if (currentPage === totalPage && checkEndCreate === false) {
-            toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+            toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                 position: toast.POSITION.TOP_CENTER,
                 closeButton: true,
             });
         }else {
             setCheckEndCreate(false)
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
             }
             else if (checkCreateNew === true  && currentPage == totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
                 });
@@ -458,13 +458,13 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                             onClick={() => {
                                                 if (tutorial_template_pages !== null) {
                                                     if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                        toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                                                             position: toast.POSITION.TOP_CENTER,
                                                             closeButton: true,
                                                         });
                                                     }
                                                     else if (checkCreateNew === true  && currentPage !== totalPage) {
-                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                        toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                                                             position: toast.POSITION.TOP_CENTER,
                                                             closeButton: true,
                                                         });

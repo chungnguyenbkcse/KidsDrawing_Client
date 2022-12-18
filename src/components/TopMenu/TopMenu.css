@@ -11,6 +11,10 @@
     cursor: pointer;
 }
 
+.breadcrumb-item {
+    cursor: pointer;
+}
+
 #teacher_navbarx {
     background-color: #ffffff !important;
     width: 100%;

@@ -1,5 +1,5 @@
 import React, { Fragment  } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { formatDate } from "../../common/components/ConverDate";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -8,8 +8,12 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import {MdAnalytics} from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import { IoIosRemove } from 'react-icons/io'
+import { ContestModificationStatus } from "../../store/models/contest.interface";
+import { setModificationState } from "../../store/actions/contest.action";
 
 function ContestNotOnYetList(props) {
+
+    const dispatch = useDispatch();
 
     const contests = useSelector((state) => state.contests);
     const history = useHistory();
@@ -52,22 +56,28 @@ function ContestNotOnYetList(props) {
     }
   };
 
-  function viewDetailButton(cell, row) {
+
+  function editButton(cell, row) {
     return (
-      <button type="button" className="btn btn-primary" onClick={() => {
+      <div className="row mt-2">
+        <div className="col-md-5 ml-2">
+        <button type="button" className="btn btn-primary" onClick={() => {
         if(props.onSelect) props.onSelect(row);
         routeChange(row.id)
       }}><FaEdit className="icon-edit"/></button>
+        </div>
+        <div className="col-md-5"> 
+        <button type="button" className="btn btn-danger" onClick={() => {
+        if (props.onSelect) props.onSelect(row);
+        dispatch(setModificationState(ContestModificationStatus.Remove));
+      }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
-  function removeButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-danger" onClick={() => {
-        if (props.onSelect) props.onSelect(row);
-      }}><IoIosRemove className="icon-remove"/></button>
-    );
-  }
+  
 
   function showStartTime(cell, row) {
     var strDate = row.start_time;
@@ -116,14 +126,12 @@ function ContestNotOnYetList(props) {
     },
     {
       dataField: '',
-      text: 'Hành động',
-      formatter: viewDetailButton
-    },
-    {
-      dataField: '',
       text: '',
-      formatter: removeButton
-    }
+      style:{
+        width: '120px'
+      },
+      formatter: editButton
+    },
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

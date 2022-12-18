@@ -64,27 +64,28 @@ function TeacherRequestList(props) {
     }
   };
 
-  function removeButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-danger" onClick={() => {
-          if(props.onSelect) props.onSelect();
-          localStorage.setItem('teacher_leave_id', row.id)
-          dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
-        }}><IoIosRemove className="icon-remove"/></button>
-    );
-  }
-
   function editButton(cell, row) {
     return (
+      <div className="row mt-2">
+        <div className="col-md-3 ml-2">
+          <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+        </div>
+        <div className="col-md-3">
         <button type="button" className="btn btn-primary" onClick={() => {handleTeacherLeave(row, "Admin approved")}}><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div className="col-md-3"> 
+          <button type="button" className="btn btn-danger" onClick={() => {
+            if(props.onSelect) props.onSelect();
+            localStorage.setItem('teacher_leave_id', row.id)
+            dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
+          }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
-  function viewButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-    )
-  }
+
 
   function showStartTime(cell, row) {
     var strDate = row.create_time;
@@ -120,21 +121,14 @@ function TeacherRequestList(props) {
         filter: textFilter()
       },
 
-    {
-      dataField: '',
-      text: 'Hành động',
-      formatter: viewButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: editButton
-    },
-    {
-      dataField: 'address',
-      text: '',
-      formatter: removeButton
-    },
+      {
+        dataField: '',
+        text: '',
+        style:{
+          width: '150px'
+        },
+        formatter: editButton
+      }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

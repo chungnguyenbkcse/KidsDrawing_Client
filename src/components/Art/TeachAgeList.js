@@ -43,21 +43,24 @@ function TeachAgeList(props) {
     }
   };
 
-  function removeButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-danger" onClick={() =>{
-            if(props.onSelect) props.onSelect(row);
-            dispatch(setModificationStateArtAge(ArtAgeModificationStatus.Remove))
-          }}><IoIosRemove className="icon-remove"/></button>
-    );
-  }
 
   function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary mx-auto" onClick={()=> {
+      <div className="row mt-2">
+        <div className="col-md-5 ml-2">
+          <button type="button" className="btn btn-primary mx-auto" onClick={()=> {
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationStateArtAge(ArtAgeModificationStatus.Edit))
           }}><FaEdit className="icon-edit"/></button>
+        </div>
+        <div className="col-md-5"> 
+          <button type="button" className="btn btn-danger" onClick={() =>{
+            if(props.onSelect) props.onSelect(row);
+            dispatch(setModificationStateArtAge(ArtAgeModificationStatus.Remove))
+          }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -73,14 +76,12 @@ function TeachAgeList(props) {
     },
     {
       dataField: '',
-      text: 'Hành động',
-      formatter: editButton
-    },
-    {
-      dataField: '',
       text: '',
-      formatter: removeButton
-    },
+      style:{
+        width: '120px'
+      },
+      formatter: editButton
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

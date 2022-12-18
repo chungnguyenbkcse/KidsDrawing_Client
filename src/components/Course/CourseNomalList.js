@@ -68,32 +68,33 @@ function CourseNomalList(props) {
     }
   };
 
+
+
   function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={() => {
-            if(props.onSelect) props.onSelect(row);
-            routeEdit(row)}}
-          ><FaEdit className="icon-edit"/></button>
-    );
-  }
-
-  function removeButton(cell, row) {
-    return (
-        <button type="button" className="btn btn-danger" onClick={() => {
-            if(props.onSelect) props.onSelect(row);
-            dispatch(setModificationState(CourseModificationStatus.Remove));
-           }}
-          ><IoIosRemove className="icon-remove"/></button>
-    );
-  }
-
-  function editTutorialButton(cell, row) {
-    return (
+      <div className="row mt-2">
+        <div className="col-md-3 ml-2">
         <button type="button" className="btn btn-warning" onClick={() => {
             if (props.onSelect) props.onSelect(row);
             routeChange(row)
           }}
           ><AiOutlineFileAdd   className="icon-remove"/></button>
+        </div>
+        <div className="col-md-3">
+        <button type="button" className="btn btn-primary" onClick={() => {
+            if(props.onSelect) props.onSelect(row);
+            routeEdit(row)}}
+          ><FaEdit className="icon-edit"/></button>  
+        </div>
+        <div className="col-md-3"> 
+        <button type="button" className="btn btn-danger" onClick={() => {
+            if(props.onSelect) props.onSelect(row);
+            dispatch(setModificationState(CourseModificationStatus.Remove));
+           }}
+          ><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -120,19 +121,12 @@ function CourseNomalList(props) {
     },
     {
       dataField: '',
-      text: 'Hành động',
+      text: '',
+      style:{
+        width: '150px'
+      },
       formatter: editButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: editTutorialButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: removeButton
-    },
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

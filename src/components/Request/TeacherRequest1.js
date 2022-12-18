@@ -7,6 +7,9 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { setModificationState } from "../../store/actions/student_leave.action";
+import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
+import { IoIosRemove } from 'react-icons/io'
 
 
 function TeacherRequestList2(props) {
@@ -62,9 +65,22 @@ function TeacherRequestList2(props) {
   };
 
 
-  function viewButton(cell, row) {
+
+  function editButton(cell, row) {
     return (
-        <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+      <div className="row mt-2">
+        <div className="col-md-5 ml-2">
+          <button type="button" className="btn btn-primary" onClick={() => {routeChange1(row)}}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+        </div>
+        <div className="col-md-5"> 
+          <button type="button" className="btn btn-danger" onClick={() => {
+            if(props.onSelect) props.onSelect();
+            localStorage.setItem('teacher_leave_id', row.id)
+            dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
+          }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -102,12 +118,16 @@ function TeacherRequestList2(props) {
         filter: textFilter()
       },
 
-    {
-      dataField: '',
-      text: 'Hành động',
-      formatter: viewButton
-    },
+      {
+        dataField: '',
+        text: '',
+        style:{
+          width: '120px'
+        },
+        formatter: editButton
+      }
   ];
+  
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
     <div>

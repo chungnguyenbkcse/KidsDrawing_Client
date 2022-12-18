@@ -55,20 +55,23 @@ function ParentList(props) {
     }
   };
 
-  function removeButton(cell, row) {
+
+  function editButton(cell, row) {
     return (
-      <button type="button" className="btn btn-danger" onClick={() => {
+      <div className="row mt-2">
+        <div className="col-md-5 ml-2">
+        <button type="button" className="btn btn-info" onClick={() => {
+        routeChange(row)
+      }}><MdAnalytics className="icon-remove"/></button>
+        </div>
+        <div className="col-md-5"> 
+        <button type="button" className="btn btn-danger" onClick={() => {
         if (props.onSelect) props.onSelect(row);
         dispatch(setModificationState(UserModificationStatus.Remove))
       }}><IoIosRemove className="icon-remove"/></button>
-    );
-  }
-
-  function analytisButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-info" onClick={() => {
-        routeChange(row)
-      }}><MdAnalytics className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -110,15 +113,13 @@ function ParentList(props) {
       filter: textFilter()
     },
     {
-      dataField: 'address',
-      text: 'Hành động',
-      formatter: removeButton
-    },
-    {
       dataField: '',
       text: '',
-      formatter: analytisButton
-    },
+      style:{
+        width: '120px'
+      },
+      formatter: editButton
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

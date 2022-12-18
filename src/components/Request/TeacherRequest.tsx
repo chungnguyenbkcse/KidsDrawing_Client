@@ -195,7 +195,7 @@ const TeacherRequest: React.FC = () => {
               <h6 className="m-0 font-weight-bold text-green">Danh sách yêu cầu</h6>
             </div>
             <div className="card-body">
-              <TeacherRequestList2 />
+              <TeacherRequestList2 onSelect={onRemoveTeacherLeave}/>
             </div>
           </div>
 

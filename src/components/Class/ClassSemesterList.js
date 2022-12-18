@@ -60,24 +60,34 @@ function ClassSemesterList(props) {
     }
   };
 
-  function editButton(cell, row) {
-    if (row.is_new == true) {
-      return (
-        <button type="button" className="btn btn-primary" onClick={()=> {
-            if(props.onSelect) props.onSelect(row);
-            dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Edit))
-          }}><FaEdit className="icon-edit"/></button>
-    );
-    }
-    return ""
-  }
 
-  function removeButton(cell, row) {
+
+  function editButton(cell, row) {
     return (
+      <div className="row mt-2">
+        <div className="col-md-5 ml-2">
+        {
+          function () {
+            if (row.is_new == true) {
+              return (
+                <button type="button" className="btn btn-primary" onClick={()=> {
+                    if(props.onSelect) props.onSelect(row);
+                    dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Edit))
+                  }}><FaEdit className="icon-edit"/></button>
+            );
+            }
+            return ""
+          }()
+        }
+        </div>
+        <div className="col-md-5"> 
         <button type="button" className="btn btn-danger" onClick={() =>{
             if(props.onSelect) props.onSelect(row);
             dispatch(setModificationStateSemesterClass(SemesterClassModificationStatus.Remove))
           }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -124,13 +134,11 @@ function ClassSemesterList(props) {
     },
     {
       dataField: '',
-      text: 'Hành động',
-      formatter: editButton
-    },
-    {
-      dataField: '',
       text: '',
-      formatter: removeButton
+      style:{
+        width: '120px'
+      },
+      formatter: editButton
     },
   ];
 

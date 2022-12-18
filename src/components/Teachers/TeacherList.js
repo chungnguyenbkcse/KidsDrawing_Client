@@ -56,29 +56,30 @@ function TeacherList(props) {
     }
   };
 
-  function removeButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-danger" onClick={() => {
-        if (props.onSelect) props.onSelect(row);
-        dispatch(setModificationState(UserModificationStatus.Remove))
-      }}><IoIosRemove className="icon-remove"/></button>
-    );
-  }
+
 
   function editButton(cell, row) {
     return (
-      <button type="button" className="btn btn-primary" onClick={() => {
+      <div className="row mt-2">
+        <div className="col-md-3 ml-2">
+        <button type="button" className="btn btn-info" onClick={() => {
+        routeChange(row)
+      }}><MdAnalytics className="icon-remove" /></button>
+        </div>
+        <div className="col-md-3">
+        <button type="button" className="btn btn-primary" onClick={() => {
         if(props.onSelect) props.onSelect(row);
         dispatch(setModificationState(UserModificationStatus.Edit))
       }}><FaEdit className="icon-edit"/></button>
-    )
-  }
-
-  function analytisButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-info" onClick={() => {
-        routeChange(row)
-      }}><MdAnalytics className="icon-remove" /></button>
+        </div>
+        <div className="col-md-3"> 
+        <button type="button" className="btn btn-danger" onClick={() => {
+        if (props.onSelect) props.onSelect(row);
+        dispatch(setModificationState(UserModificationStatus.Remove))
+      }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -140,17 +141,10 @@ function TeacherList(props) {
     {
       dataField: '',
       text: '',
+      style:{
+        width: '150px'
+      },
       formatter: editButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: analytisButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: removeButton
     }
   ];
 

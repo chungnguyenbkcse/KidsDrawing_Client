@@ -233,6 +233,9 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
     }
 
     function handleBackPage () {
+        console.log(checkCreateNew)
+        console.log(currentPage)
+        console.log(totalPage)
         if (tutorial_pages !== null) {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
@@ -241,6 +244,12 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage == totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
@@ -283,6 +292,12 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage == totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
@@ -564,18 +579,36 @@ function EditSectionTeacher(props: SectionListProps): JSX.Element {
                                             )
                                         }
                                         else {
-                                            return (
-                                                <div className="row">
-                                                    <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
-                                                        <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
-                                                        <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
+                                            if (tutorial_pages.tutorialPages.length == totalPage) {
+                                                return (
+                                                    <div className="row">
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                        <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                            <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
+                                                            <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
+                                                        </div>
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
+                                                            <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                        </div>
                                                     </div>
-                                                    <div className="col-xl-6 col-md-6 col-xs-6">
-                                                        <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                )
+                                            }
+                                            else {
+                                                return (
+                                                    <div className="row">
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                        <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                            <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
+                                                            <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
+                                                        </div>
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )
+                                                )
+                                            }
+                                            
                                         }
                                         
                                     }

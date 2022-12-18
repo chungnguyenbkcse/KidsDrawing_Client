@@ -343,6 +343,12 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                     closeButton: true,
                 });
             }
+            else if (checkCreateNew === true  && currentPage == totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeButton: true,
+                });
+            }
             else {
                 let x = currentPage - 1;
                 setCurrentPage(x)
@@ -371,6 +377,12 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeButton: true,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage == totalPage) {
                 toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
                     position: toast.POSITION.TOP_CENTER,
                     closeButton: true,
@@ -582,7 +594,7 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                             return (
                                                 <div className="row">
                                                     <div className="col-xl-6 col-md-6 col-xs-6">
-                                                        <button type="submit" className={`btn btn-primary left-margin ml-2`}>Hoàn thành</button>
+                                                        <button type="submit" className={`btn btn-primary left-margin ml-2`}>Lưu</button>
                                                     </div>
                                                     <div className="col-xl-6 col-md-6 col-xs-6">
                                                         <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
@@ -590,18 +602,36 @@ function SectionTemplateForm(props: SectionTemplateListProps): JSX.Element {
                                                 </div>
                                             )
                                         }
-                                        return (
-                                            <div className="row">
-                                                <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
-                                                    <button type="submit" className={`btn btn-primary left-margin ml-2`}>Hoàn thành</button>
-                                                </div>
-                                                <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
-                                                    <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
-                                                </div>
-                                            </div>
-                                        )
+                                        else {
+                                            if (tutorial_template_pages.tutorialTemplatePages.length == totalPage) {
+                                                return (
+                                                    <div className="row">
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                            <button type="submit" className={`btn btn-primary left-margin ml-2`}>Lưu</button>
+                                                        </div>
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
+                                                            <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                            else {
+                                                return (
+                                                    <div className="row">
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                            <button type="submit" className={`btn btn-primary left-margin ml-2`}>Lưu</button>
+                                                        </div>
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                        }
+                                        
                                     }
                                 }()
                             }

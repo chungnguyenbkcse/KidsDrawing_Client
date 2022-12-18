@@ -99,26 +99,40 @@ function ClassTeacherDoingList(props) {
 
 
 
-  function viewScheduleButton(cell, row) {
-    if (row.id != 0) {
-      return (
-          <button type="button" className="btn btn-primary" onClick={() => {
-              if(props.onSelect) props.onSelect(row);
-              routeViewSchedule(row)}}
-            ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-      )
-    }
-  }
-
-  function detailClassButton(cell, row) {
-    if (row.id != 0) {
-      return (
-          <button type="button" className="btn btn-info" onClick={() => {
-              if(props.onSelect) props.onSelect(row);
-              routeChange(row)}}
-            ><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-      )
-    }
+  function editButton(cell, row) {
+    return (
+      <div className="row mt-2">
+        <div className="col-md-5 ml-2">
+        {
+          function () {
+            if (row.id != 0) {
+              return (
+                  <button type="button" className="btn btn-primary" onClick={() => {
+                      if(props.onSelect) props.onSelect(row);
+                      routeViewSchedule(row)}}
+                    ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+              )
+            }
+          }()
+        }
+        </div>
+        <div className="col-md-5"> 
+          {
+            function (){
+              if (row.id != 0) {
+                return (
+                    <button type="button" className="btn btn-info" onClick={() => {
+                        if(props.onSelect) props.onSelect(row);
+                        routeChange(row)}}
+                      ><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                )
+              }
+            }()
+          }
+        </div>
+      </div>
+        
+    )
   }
 
   function viewName(cell, row) {
@@ -180,16 +194,14 @@ function ClassTeacherDoingList(props) {
         filter: textFilter(),
         formatter: viewNumOfSection
       },
-    {
-      dataField: '',
-      text: 'Hành động',
-      formatter: viewScheduleButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: detailClassButton
-    },
+      {
+        dataField: '',
+        text: '',
+        style:{
+          width: '120px'
+        },
+        formatter: editButton
+      }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

@@ -69,29 +69,29 @@ function TeacherLeaveList(props) {
     }
   };
 
-  function viewDetailButton(cell, row) {
+
+  function editButton(cell, row) {
     return (
-      <button type="button" className="btn btn-primary" onClick={() => {
+      <div className="row mt-2">
+        <div className="col-md-3 ml-2">
+        <button type="button" className="btn btn-primary" onClick={() => {
         onChangeRoute(row)
       }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-    )
-  }
-
-  function acceptLeaveButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-success" onClick={() => {
+        </div>
+        <div className="col-md-3">
+        <button type="button" className="btn btn-success" onClick={() => {
         updateStatusTeacherLeave(row, "Teacher approved")
       }}><i class="fa fa-check" aria-hidden="true"></i></button>
-    )
-  }
-
-  function removeLeaveButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-danger" onClick={() => {
+        </div>
+        <div className="col-md-3"> 
+        <button type="button" className="btn btn-danger" onClick={() => {
         if(props.onSelect) props.onSelect(row.id);
         localStorage.setItem('teacher_leave_id', row.id)
         dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
       }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -141,19 +141,12 @@ function TeacherLeaveList(props) {
     },
     {
       dataField: '',
-      text: 'Hành động',
-      formatter: viewDetailButton
-    },
-    {
-      dataField: '',
       text: '',
-      formatter: acceptLeaveButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: removeLeaveButton
-    },
+      style:{
+        width: '150px'
+      },
+      formatter: editButton
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

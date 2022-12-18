@@ -62,30 +62,31 @@ function StudentLeaveList(props) {
     }
   };
 
-  function viewDetailButton(cell, row) {
+
+
+  function editButton(cell, row) {
     return (
-      <button type="button" className="btn btn-primary" onClick={() => {
+      <div className="row mt-2">
+        <div className="col-md-3 ml-2">
+        <button type="button" className="btn btn-primary" onClick={() => {
         onChangeRoute(row)
       }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-    )
-  }
-
-  function acceptLeaveButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-success" onClick={() => {
+        </div>
+        <div className="col-md-3">
+        <button type="button" className="btn btn-success" onClick={() => {
         handleStudentLeave(row, "Approved")
       }}><i class="fa fa-check" aria-hidden="true"></i></button>
-    )
-  }
-
-  function removeLeaveButton(cell, row) {
-    return (
-      <button type="button" className="btn btn-danger" onClick={() =>{
+        </div>
+        <div className="col-md-3"> 
+        <button type="button" className="btn btn-danger" onClick={() =>{
         localStorage.setItem('student_leave_section_id', row.section_id.toString())
         localStorage.setItem('student_leave_student_id', row.student_id.toString())
         if(props.onSelect) props.onSelect(row);
         dispatch(setModificationState(StudentLeaveModificationStatus.Remove))
       }}><IoIosRemove className="icon-remove"/></button>
+        </div>
+      </div>
+        
     )
   }
 
@@ -113,19 +114,12 @@ function StudentLeaveList(props) {
     },
     {
       dataField: '',
-      text: 'Hành động',
-      formatter: viewDetailButton
-    },
-    {
-      dataField: '',
       text: '',
-      formatter: acceptLeaveButton
-    },
-    {
-      dataField: '',
-      text: '',
-      formatter: removeLeaveButton
-    },
+      style:{
+        width: '150px'
+      },
+      formatter: editButton
+    }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (

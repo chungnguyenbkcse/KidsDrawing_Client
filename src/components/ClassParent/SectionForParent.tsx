@@ -379,64 +379,12 @@ const SectionForParent: React.FC = () => {
 
 
                 <div className="row">
+                    
+
                     {
                         element.sort((a, b) => a.number - b.number).map((ele, index) => {
-                            if (checkActive(page * 6 + index) === "not_active_now") {
-                                return (
-                                    <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
-                                        <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
-                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
-                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                            </div>
-                                            <div className="col-xl-10 col-md-10">
-                                                <div className="row mt-2">
-                                                    <div className="col-md-3">
-                                                        Buổi {ele.number}
-                                                    </div>
-                                                    <div className="col-md-9 not-active-xx">
-                                                        {ele.name}
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Lịch học:
-                                                    </div>
-                                                    <div className="col-md-9 not-active-xx">
-                                                        {data[page * 6 + index]}
-                                                    </div>
-                                                </div>
-                    
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Hình thức:
-                                                    </div>
-                                                    <div className="col-md-9 not-active-xx">
-                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Giáo viên:
-                                                    </div>
-                                                    <div className="col-md-9 not-active-xx">
-                                                        {ele.teacher_name}
-                                                    </div>
-                                                </div>
-                                                <div className="row mb-2">
-                                                    <div className="col-md-3">
-
-                                                    </div>
-                                                    <div className="col-md-9 xs-centxxx">
-                                                        Chưa diễn ra
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                )
-                            }
-                            else if (checkActive(page * 6 + index) === "pre_active_now") {
+                            
+                            if (checkActive(page * 6 + index) === "active_now") {
                                 return (
                                     <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
                                         <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
@@ -460,6 +408,15 @@ const SectionForParent: React.FC = () => {
                                                         {data[page * 6 + index]}
                                                     </div>
                                                 </div>
+
+                                                <div className="row">
+                                                <div className="col-sm-4" style={{ color: "#7A67C7", fontWeight: "bold" }}>
+                                                    Bài chưa nộp:
+                                                </div>
+                                                <div className="col-sm-8 xs-cent" style={{ paddingRight: "200px" }}>
+                                                    {ele.total_exercise_not_submit}
+                                                </div>
+                                            </div>
                                                 
                                                 <div className="row">
                                                     <div className="col-md-3">
@@ -481,62 +438,7 @@ const SectionForParent: React.FC = () => {
                                                     <div className="col-md-3">
 
                                                     </div>
-                                                    <div className="col-md-9 xs-centxx">
-                                                        Chuẩn bị diễn ra
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                )
-                            }
-                            else if (checkActive(page * 6 + index) === "active_now") {
-                                return (
-                                    <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
-                                        <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
-                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
-                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
-                                            </div>
-                                            <div className="col-xl-10 col-md-10">
-                                                <div className="row mt-2">
-                                                    <div className="col-md-3">
-                                                        Buổi {ele.number}
-                                                    </div>
-                                                    <div className="col-md-9">
-                                                        {ele.name}
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Lịch học:
-                                                    </div>
-                                                    <div className="col-md-9">
-                                                        {data[page * 6 + index]}
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Hình thức:
-                                                    </div>
-                                                    <div className="col-md-9">
-                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-3">
-                                                        Giáo viên:
-                                                    </div>
-                                                    <div className="col-md-9">
-                                                        {ele.teacher_name}
-                                                    </div>
-                                                </div>
-                                                <div className="row mb-2">
-                                                    <div className="col-md-3">
-
-                                                    </div>
-                                                    <div className="col-md-9 xs-centx">
+                                                    <div className="col-md-9 xs-centx mt-2">
                                                         Đang diễn ra
                                                     </div>
                                                 </div>
@@ -546,7 +448,85 @@ const SectionForParent: React.FC = () => {
                                     </div>
                                 )
                             }
-                            return (
+                            
+                        })
+                    }
+
+
+                    {
+                        element.sort((a, b) => a.number - b.number).map((ele, index) => {
+                            if (checkActive(page * 6 + index) === "pre_active_now") {
+                                return (
+                                    <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
+                                        <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
+                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
+                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                            </div>
+                                            <div className="col-xl-10 col-md-10">
+                                                <div className="row mt-2">
+                                                    <div className="col-md-3">
+                                                        Buổi {ele.number}
+                                                    </div>
+                                                    <div className="col-md-9" style={{color: "#FFFFFF"}}>
+                                                        {ele.name}
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        Lịch học:
+                                                    </div>
+                                                    <div className="col-md-9" style={{color: "#FFFFFF"}}>
+                                                        {data[page * 6 + index]}
+                                                    </div>
+                                                </div>
+
+                                                <div className="row">
+                                                <div className="col-sm-4" style={{ color: "#7A67C7", fontWeight: "bold" }}>
+                                                    Bài chưa nộp:
+                                                </div>
+                                                <div className="col-sm-8 xs-cent" style={{ paddingRight: "200px" }}>
+                                                    {ele.total_exercise_not_submit}
+                                                </div>
+                                            </div>
+                                                
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        Hình thức:
+                                                    </div>
+                                                    <div className="col-md-9" style={{color: "#FFFFFF"}}>
+                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        Giáo viên:
+                                                    </div>
+                                                    <div className="col-md-9" style={{color: "#FFFFFF"}}>
+                                                        {ele.teacher_name}
+                                                    </div>
+                                                </div>
+                                                <div className="row mb-2">
+                                                    <div className="col-md-3">
+
+                                                    </div>
+                                                    <div className="col-md-9 xs-centxx mt-2">
+                                                        Chuẩn bị diễn ra
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                )
+                            }
+                        })
+                    }
+
+
+                    {
+                        element.sort((a, b) => a.number - b.number).map((ele, index) => {
+                            if (checkActive(page * 6 + index) === "not_active") {
+                                return (
                                 <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
                                     <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), list_link_record[index]) }}>
                                         <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
@@ -605,9 +585,82 @@ const SectionForParent: React.FC = () => {
                                     </div>
 
                                 </div>
-                            )
+                            )}
                         })
                     }
+
+
+{
+                        element.sort((a, b) => a.number - b.number).map((ele, index) => {
+                            if (checkActive(page * 6 + index) === "not_active_now") {
+                                return (
+                                    <div className="col-xl-6 col-md-6 mb-4 pr-4 pl-4">
+                                        <div className={`row section-ele row-section mb-2 ${checkActive(page * 6 + index)}`} onClick={() => { onChangeRoute(ele, checkActive(page * 6 + index), "") }}>
+                                            <div className="col-xl-2 col-md-2 pt-4 pb-4 avatar-x">
+                                                <img className="img-exam" src="http://res.cloudinary.com/djtmwajiu/image/upload/v1667395965/inl1eekblioz9s5iqed1.png" alt="" />
+                                            </div>
+                                            <div className="col-xl-10 col-md-10">
+                                                <div className="row mt-2">
+                                                    <div className="col-md-3">
+                                                        Buổi {ele.number}
+                                                    </div>
+                                                    <div className="col-md-9 not-active-xx">
+                                                        {ele.name}
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        Lịch học:
+                                                    </div>
+                                                    <div className="col-md-9 not-active-xx">
+                                                        {data[page * 6 + index]}
+                                                    </div>
+                                                </div>
+
+                                                <div className="row">
+                                                <div className="col-sm-4" style={{ color: "#7A67C7", fontWeight: "bold" }}>
+                                                    Bài chưa nộp:
+                                                </div>
+                                                <div className="col-sm-8 xs-cent" style={{ paddingRight: "200px" }}>
+                                                    {ele.total_exercise_not_submit}
+                                                </div>
+                                            </div>
+                    
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        Hình thức:
+                                                    </div>
+                                                    <div className="col-md-9 not-active-xx">
+                                                        {ele.teach_form === true ? "Dạy bằng jisti" : "Đọc hiểu giáo trình"}
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        Giáo viên:
+                                                    </div>
+                                                    <div className="col-md-9 not-active-xx">
+                                                        {ele.teacher_name}
+                                                    </div>
+                                                </div>
+                                                <div className="row mb-2">
+                                                    <div className="col-md-3">
+
+                                                    </div>
+                                                    <div className="col-md-9 xs-centxxx mt-2">
+                                                        Chưa diễn ra
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                )
+                            }
+                        })
+                    }
+
+
+                    
 
                     <div className="d-flex justify-content-end text-right mt-2 ml-4">
                         <nav>

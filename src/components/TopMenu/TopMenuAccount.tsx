@@ -5,6 +5,7 @@ import { logout } from "../../store/actions/account.actions";
 import { trackPromise } from "react-promise-tracker";
 import { IProfileState, IStateType } from "../../store/models/root.interface";
 import { getProfile } from "../../common/service/User/GetProfile";
+import { useHistory } from "react-router-dom";
 
 function TopMenuAccount(): JSX.Element {
   const dispatch: Dispatch<any> = useDispatch();
@@ -15,6 +16,22 @@ function TopMenuAccount(): JSX.Element {
     trackPromise(getProfile(dispatch, id))
   }, [dispatch, id])
   const [isShow, setShow] = useState(false);
+
+  const history = useHistory();
+
+  function changeRoute1(){
+    let path = '/account'; 
+      history.push({
+          pathname: path,
+      });
+  }
+
+  function changeRoute2(){
+    let path = '/change-password'; 
+      history.push({
+          pathname: path,
+      });
+  }
 
   console.log(profiles.profiles)
   let profile_image = ""
@@ -46,22 +63,20 @@ function TopMenuAccount(): JSX.Element {
 
       <div className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${(isShow) ? "show" : ""}`}
         aria-labelledby="userDropdown">
-        <a className="dropdown-item"
-        onClick={() =>{}}
-        href="/account" 
+        <p className="dropdown-item"
+        onClick={() =>{changeRoute1()}}
         data-toggle="modal"
         data-target="#logoutModal">
           <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
           Chỉnh thông tin các nhân
-        </a>
-        <a className="dropdown-item"
-        onClick={() =>{}}
-        href="/change-password" 
+        </p>
+        <p className="dropdown-item"
+        onClick={() =>{changeRoute2()}}
         data-toggle="modal"
         data-target="#change-password">
           <i className="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
           Thay đổi mật khẩu
-        </a>
+        </p>
         <p className="dropdown-item logout-btn"
         onClick={() => {
           let id = localStorage.getItem('id');

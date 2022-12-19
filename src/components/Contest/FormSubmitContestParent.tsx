@@ -155,11 +155,11 @@ function FormSubmitContestStudent(): JSX.Element {
                     dispatch(logout())
                 }
                 else {
-                    trackPromise(getChildsByContestAndParent(dispatch, contest_id, id))
+                    trackPromise(getChildsByContestAndParent(dispatch, contest_id, id, handleFilter))
                 }
             }
             else {
-                trackPromise(getChildsByContestAndParent(dispatch, contest_id, id))
+                trackPromise(getChildsByContestAndParent(dispatch, contest_id, id, handleFilter))
             }
         }
     }, [dispatch, access_token, refresh_token, contest_id, id]);
@@ -174,17 +174,25 @@ function FormSubmitContestStudent(): JSX.Element {
             position: toast.POSITION.TOP_CENTER
         });
 
-        if (filter === 0) {
-            dispatch(setModificationState(UserModificationStatus.None));
-            setImage(null)
-            setPreview("")
-            toast.update(idx, { render: "Vui lòng chọn học sinh trước khi nộp!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+        if (childs_classes.childs_class.length > 1) {
+            if (filter === 0) {
+                dispatch(setModificationState(UserModificationStatus.None));
+                setImage(null)
+                setPreview("")
+                toast.update(idx, { render: "Vui lòng chọn học sinh trước khi nộp!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+            }
+            else {
+                var url = await setImageAction();
+                let saveUserFn: Function = isCreate ? addTeacher : editTeacher;
+                saveForm(saveUserFn, url, idx);
+            }
         }
         else {
             var url = await setImageAction();
             let saveUserFn: Function = isCreate ? addTeacher : editTeacher;
             saveForm(saveUserFn, url, idx);
         }
+        
     }
 
     const history = useHistory();
@@ -196,19 +204,37 @@ function FormSubmitContestStudent(): JSX.Element {
 
     function saveForm(saveFn: Function, url: string, idx: any): void {
             if (user) {
-                if (saveFn === addTeacher) {
-                    dispatch(postContestSubmission({
-                        student_id: filter,
-                        contest_id: contest_id,
-                        image_url: url
-                    }, idx))
+                if (childs_classes.childs_class.length > 1) {
+                    if (saveFn === addTeacher) {
+                        dispatch(postContestSubmission({
+                            student_id: filter,
+                            contest_id: contest_id,
+                            image_url: url
+                        }, idx))
+                    }
+                    else {
+                        dispatch(deleteContestSubmission(contest_id,filter, {
+                            student_id: filter,
+                            contest_id: contest_id,
+                            image_url: url
+                        }, idx))
+                    }
                 }
                 else {
-                    dispatch(deleteContestSubmission(contest_id,filter, {
-                        student_id: filter,
-                        contest_id: contest_id,
-                        image_url: url
-                    }, idx))
+                    if (saveFn === addTeacher) {
+                        dispatch(postContestSubmission({
+                            student_id: childs_classes.childs_class[0].student_id,
+                            contest_id: contest_id,
+                            image_url: url
+                        }, idx))
+                    }
+                    else {
+                        dispatch(deleteContestSubmission(contest_id,filter, {
+                            student_id: childs_classes.childs_class[0].student_id,
+                            contest_id: contest_id,
+                            image_url: url
+                        }, idx))
+                    }
                 }
 
             }
@@ -287,11 +313,13 @@ function FormSubmitContestStudent(): JSX.Element {
         trackPromise(getContestSubmissionByContestAndStudent(dispatch, contest_id, e.target.value))
     }
 
-    function handleFilter() {
+    function handleFilter(student_id: number) {
         localStorage.removeItem('contest_submission_id')
         localStorage.removeItem('url_contest_submission')
-        trackPromise(getContestSubmissionByContestAndStudent(dispatch, contest_id, filter))
+        trackPromise(getContestSubmissionByContestAndStudent(dispatch, contest_id, student_id))
     }
+
+    
 
     return (
         promiseInProgress ?
@@ -355,31 +383,40 @@ function FormSubmitContestStudent(): JSX.Element {
                         </div>
                     </div>
 
+                    
                     <div className="col-xl-6 col-md-6 mb-4">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="right-sort float-right">
-                                    <div className="sort-by mr-3">
-                                        <span className="mr-1">Vui lòng chọn học sinh:</span>
-
-                                        <select name="cars" id="cars"
-                                            value={filter}
-                                            onChange={handleChange}
-                                        >
-                                            <option value={0} selected>Choose</option>
-                                            {
-                                                childs_classes.childs_class.map((ele, idx) => {
-                                                    return (
-                                                        <option value={ele.student_id}>{ele.student_name}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                        
+                    {
+                        function () {
+                            if (childs_classes.childs_class.length > 1) {
+                                return (
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="right-sort float-right mb-4">
+                                                <div className="sort-by mr-3">
+                                                    <span className="mr-1">Vui lòng chọn học sinh:</span>
+                                            
+                                                    <select name="cars" id="cars"
+                                                        value={filter}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value={0} selected>Choose</option>
+                                                        {
+                                                            childs_classes.childs_class.map((ele, idx) => {
+                                                                return (
+                                                                    <option value={ele.student_id}>{ele.student_name}</option>
+                                                                )
+                                                            })
+                                                        }
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                )
+                            }
+                        }()
+                    }
                         <div className="row">
                             <div className="col-xl-12 col-md-12 mb-4">
                                 <div className={`card shadow py-2`} >

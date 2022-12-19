@@ -33,8 +33,6 @@ export function getContestSubmissionByContestAndStudent(dispatch: any, contest_i
                 console.log(data)
                 localStorage.removeItem('url_contest_submission')
                 localStorage.setItem('url_contest_submission', data.image_url)
-                localStorage.removeItem('contest_submission_id')
-                localStorage.setItem('contest_submission_id', data.id.toString()) 
                 localStorage.removeItem('time_submit_contest_submission')
                 localStorage.setItem('time_submit_contest_submission', data.update_time.toString())          
             })

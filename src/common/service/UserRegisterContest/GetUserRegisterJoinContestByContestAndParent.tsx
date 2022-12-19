@@ -1,12 +1,13 @@
 import { fetchDataSuccess, fetchDataError, removeChildsClassAll, addChildsClass } from "../../../store/actions/childs_class.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { getContestSubmissionByContestAndStudent } from "../ContestSubmission/GetContestSubmissionByContestAndStudent";
 interface user {
     student_id: number,
     student_name: string,
     dateOfBirth: string,
     sex: string,
 }
-export function getChildsByContestAndParent(dispatch: any, contest_id: number, parent_id: number) {
+export function getChildsByContestAndParent(dispatch: any, contest_id: number, parent_id: number, foo: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return  fetch(
                 `${process.env.REACT_APP_API_URL}/user-register-join-contest/contest-parent/${contest_id}/${parent_id}`, {
@@ -23,7 +24,7 @@ export function getChildsByContestAndParent(dispatch: any, contest_id: number, p
                 if (!response.ok) {
                     if (response.status === 403) {
                         postRefreshToken()
-                        getChildsByContestAndParent(dispatch, contest_id, parent_id)
+                        getChildsByContestAndParent(dispatch, contest_id, parent_id, foo)
                     }
                     else {
                         throw Error(response.statusText);
@@ -48,6 +49,12 @@ export function getChildsByContestAndParent(dispatch: any, contest_id: number, p
                     }
                     return dispatch(addChildsClass(user));
                 })
+
+                if (data.body.students.length  == 1) {
+                    localStorage.removeItem('contest_submission_id')
+                    localStorage.removeItem('url_contest_submission')
+                    foo(data.body.students[0].student_id)
+                }
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

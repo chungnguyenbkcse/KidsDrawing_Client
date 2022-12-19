@@ -1,4 +1,5 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/tutorial_template.action";
+import { removeTutorialTemplatePage, removeTutorialTemplatePageAll } from "../../../store/actions/tutorial_template_page.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
 export function deleteTutorialTemplatePage(id: any) {
@@ -32,6 +33,7 @@ export function deleteTutorialTemplatePage(id: any) {
             })
             .then (data => {
                 console.log(data)
+                dispatch(removeTutorialTemplatePage(id))
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

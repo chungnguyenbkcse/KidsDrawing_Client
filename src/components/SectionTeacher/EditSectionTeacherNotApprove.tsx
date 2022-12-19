@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, Dispatch, Fragment, useEffect } from "react";
-import { IStateType, ISectionState, ITutorialPageState, IRootPageStateType, IUserRegisterTutorialPageState } from "../../store/models/root.interface";
+import { IStateType, ISectionState, ITutorialPageState, IRootPageStateType, IUserRegisterTutorialPageState, ILessonState } from "../../store/models/root.interface";
 import { useSelector, useDispatch } from "react-redux";
 import { ISection } from "../../store/models/section.interface";
 import TextInput from "../../common/components/TextInput";
@@ -17,6 +17,9 @@ import { postTutorial } from "../../common/service/Tutorial/PostTutorial";
 import { postTutorialPageToast } from "../../common/service/TutorialPage/PostTutorialPageToast";
 import { postTutorialPage } from "../../common/service/TutorialPage/PostTutorialPage";
 import { deleteTutorialPageBySection } from "../../common/service/TutorialPage/DeleteTutorialPageBySection";
+import Popup from "reactjs-popup";
+import { setModificationState } from "../../store/actions/lesson.action";
+import { LessonModificationStatus } from "../../store/models/lesson.interface";
 
 export type SectionListProps = {
     children?: React.ReactNode;
@@ -41,6 +44,7 @@ type TutorialPage = {
 
 function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
+    const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     const sections: ISectionState | null = useSelector((state: IStateType) => state.sections);
     const tutorial_pages: IUserRegisterTutorialPageState | null = useSelector((state: IStateType) => state.user_register_tutorial_pages);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -48,6 +52,7 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
     let section: ISection | null = sections.selectedSection;
 
     const [checked, setChecked] = useState(false);
+    const [popup, setPopup] = useState(false);
 
     var id_x = localStorage.getItem('section_id');
     let section_id: number = 0;
@@ -139,7 +144,7 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
         setFormState({ ...formState, [model.field]: { error: model.error, value: model.value } });
     }
 
-    //console.log(totalPage)
+    console.log(totalPage)
 
     function saveUser(e: FormEvent<HTMLFormElement>): void {
         e.preventDefault();     
@@ -230,13 +235,19 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
     function handleBackPage () {
         if (tutorial_pages !== null) {
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage == totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
                 });
@@ -255,55 +266,9 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
 
 
     function handleRemove() {
-        if (tutorial_pages !== null){
-            if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 1000,
-                });
-            }
-            else if (checkCreateNew === true  && currentPage !== totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 1000,
-                });
-            }
-            else {
-                const k = currentPage;
-                let x = totalPage - 1;
-                setTotalPage(x)
 
-                setCurrentPageOld(k-2)
-    
-                const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
-                    position: toast.POSITION.TOP_CENTER
-                });
-                if (k === tutorial_pages.user_register_tutorial_pages.length) {
-                    let y = k - 1;
-                    setCurrentPage(y)
-                    dispatch(removeUserRegisterTutorialPage(tutorial_pages.user_register_tutorial_pages[k-1].id))
-                    handleBackPage()
-                }
-                else {
-                    tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).map((ele, idx) => {
-                        if (k -1 === ele.number) {
-                            dispatch(removeUserRegisterTutorialPage(ele.id));
-                        }
-                        else if (ele.number > k - 1 ) {
-                            dispatch(editUserRegisterTutorialPage({
-                                id: ele.id,
-                                description: ele.description,
-                                section_id: section_id,
-                                number: ele.number - 1
-                            }))
-                        }
-                        return 2
-                    })
-                    handleBackPage()
-                }
-                toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
-            }
-        }
+        dispatch(setModificationState(LessonModificationStatus.Remove))
+        setPopup(true)
     }
 
     console.log('CurrentPage', currentPage);
@@ -319,13 +284,19 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
             });
         }else{
             if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
                 });
             }
             else if (checkCreateNew === true  && currentPage !== totalPage) {
-                toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1000,
+                });
+            }
+            else if (checkCreateNew === true  && currentPage == totalPage) {
+                toast.warning("Vui lòng lưu bước trước khi thực hiện!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
                 });
@@ -466,6 +437,82 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
         promiseInProgress ?
       <div className="loader"></div> :<Fragment>
             <ToastContainer />
+            {
+                function () {
+                    if ((lessons.modificationState === LessonModificationStatus.Remove)) {
+                        return (
+                            <Popup
+                                open={popup}
+                                onClose={() => setPopup(false)}
+                                closeOnDocumentClick
+                            >
+                                <div className="popup-modal" id="popup-modal">
+                                    <div className="popup-title">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div className="popup-content">
+                                        <button type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => {
+                                                if (tutorial_pages !== null){
+                                                    if (checkCreateNew === true  && currentPage === totalPage && checkAfterCreate === false) {
+                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                            position: toast.POSITION.TOP_CENTER,
+                                                            autoClose: 1000,
+                                                        });
+                                                    }
+                                                    else if (checkCreateNew === true  && currentPage !== totalPage) {
+                                                        toast.warning("Vui lòng lưu bước trước khi chuyển bước!", {
+                                                            position: toast.POSITION.TOP_CENTER,
+                                                            autoClose: 1000,
+                                                        });
+                                                    }
+                                                    else {
+                                                        const k = currentPage;
+                                                        let x = totalPage - 1;
+                                                        setTotalPage(x)
+                                        
+                                                        setCurrentPageOld(k-2)
+                                            
+                                                        const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
+                                                            position: toast.POSITION.TOP_CENTER
+                                                        });
+                                                        if (k === tutorial_pages.user_register_tutorial_pages.length) {
+                                                            let y = k - 1;
+                                                            setCurrentPage(y)
+                                                            dispatch(removeUserRegisterTutorialPage(tutorial_pages.user_register_tutorial_pages[k-1].id))
+                                                            handleBackPage()
+                                                        }
+                                                        else {
+                                                            tutorial_pages.user_register_tutorial_pages.sort((a, b) => a.number - b.number).map((ele, idx) => {
+                                                                if (k -1 === ele.number) {
+                                                                    dispatch(removeUserRegisterTutorialPage(ele.id));
+                                                                }
+                                                                else if (ele.number > k - 1 ) {
+                                                                    dispatch(editUserRegisterTutorialPage({
+                                                                        id: ele.id,
+                                                                        description: ele.description,
+                                                                        section_id: section_id,
+                                                                        number: ele.number - 1
+                                                                    }))
+                                                                }
+                                                                return 2
+                                                            })
+                                                            handleBackPage()
+                                                        }
+                                                        toast.update(idx, { render: "Xóa bước thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
+                                                    }
+                                                }
+                                                setPopup(false);
+                                            }}>Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </Popup>
+                        )
+                    }
+                }()
+            }
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">
@@ -484,11 +531,11 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
                                         if (currentPage === 1) {
                                             return (
                                                 <div className="row">
-                                                <div className="col-xl-4 col-md-4 col-xs-4">
+                                                <div className="col-xl-5 col-md-5 col-xs-5">
                                                     <button type="button" className="btn btn-info right-margin" onClick={handleSave}>Lưu tạm</button>
                                                     <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                 </div>
-                                                <div className="col-xl-8 col-md-8 col-xs-8">
+                                                <div className="col-xl-7 col-md-7 col-xs-7">
                                                     <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                 </div>
                                             </div>
@@ -497,12 +544,12 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
                                         else {
                                             return (
                                                 <div className="row">
-                                                    <div className="col-xl-4 col-md-4 col-xs-4">
+                                                    <div className="col-xl-5 col-md-5 col-xs-5">
                                                         <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
                                                         <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleNextPage}>Bước tiếp theo</button>
                                                     </div>
-                                                    <div className="col-xl-8 col-md-8 col-xs-8">
+                                                    <div className="col-xl-7 col-md-7 col-xs-7">
                                                         <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
                                                         <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                     </div>
@@ -515,10 +562,11 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
                             {
                                 function () {
                                     if (currentPage === totalPage) {
-                                        return (
-                                            <div className="row">
+                                        if (totalPage == 1) {
+                                            return (
+                                                <div className="row">
                                                 <div className="col-xl-6 col-md-6 col-xs-6">
-                                                <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                
                                                     <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
                                                     <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
                                                 </div>
@@ -526,10 +574,45 @@ function EditSectionTeacherNotApprove(props: SectionListProps): JSX.Element {
                                                     <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
                                                 </div>
                                             </div>
-                                        )
+                                            )
+                                        }
+                                        else {
+                                            if (tutorial_pages.user_register_tutorial_pages.length == totalPage) {
+                                                return (
+                                                    <div className="row">
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                        <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                            <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
+                                                            <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
+                                                        </div>
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-error right-margin add-step btn-remove ml-2" onClick={handleRemove}>Xóa bước</button>
+                                                            <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                            else {
+                                                return (
+                                                    <div className="row">
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                        <button type="button" className="btn btn-info right-margin" onClick={handleBackPage}>Trở về</button>
+                                                            <button type="button" className="btn left-margin ml-2 step-continue" onClick={handleSave}>Lưu tạm</button>
+                                                            <button type="button" className={`btn btn-primary left-margin ml-2 step-continue`} onClick={saveForm}>Hoàn thành</button>
+                                                        </div>
+                                                        <div className="col-xl-6 col-md-6 col-xs-6">
+                                                            <button type="button" className="btn btn-success right-margin add-step" onClick={handleNewPage}>Thêm bước</button>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                            
+                                        }
+                                        
                                     }
                                 }()
                             }
+                            
                         </form>
                     </div>
                 </div>

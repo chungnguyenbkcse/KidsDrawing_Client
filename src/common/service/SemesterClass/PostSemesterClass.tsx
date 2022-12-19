@@ -53,7 +53,7 @@ export function postSemesterClass(dispatch: any, data: any, schedule_element: an
                 })
             })
             .catch(error => {
-                toast.update(idx, { render: "Thêm lớp theo kì không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
+                toast.update(idx, { render: "Thêm lớp theo kì không thành công vì thời giản vượt ngoài học kì!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });
                 dispatch(fetchDataError(error));
                 console.log("error")
             });

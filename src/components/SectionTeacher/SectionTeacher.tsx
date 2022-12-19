@@ -687,7 +687,6 @@ const SectionTeacher: React.FC = () => {
                                 return ""
                             }
                             else {
-                                if (sections.sections[0].teach_form === true) {
                                     if ((is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now")) {
                                         if (is_tutorial_page == "Not approved") {
                                             return (
@@ -826,14 +825,13 @@ const SectionTeacher: React.FC = () => {
                                             </>
                                         )
                                     }
-                                 }
                             }
                         }
                     }()
                 }
-            
-            
-            
+
+
+
 
 
             </Fragment>

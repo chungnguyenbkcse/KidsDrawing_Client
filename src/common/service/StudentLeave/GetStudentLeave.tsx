@@ -8,6 +8,7 @@ interface StudentLeave {
     class_name: string;
     student_id: number;
     student_name: string;
+    time_approved: string;
     reviewer_id: number;
     section_number: number;
     description: string;
@@ -61,6 +62,7 @@ export function getStudentLeave() {
                         section_number: ele.section_number,
                         class_name: ele.class_name,
                         student_id: ele.student_id,
+                        time_approved: ele.time_approved,
                         reviewer_id: ele.reviewer_id,
                         status: ele.status,
                         student_name: ele.student_name,

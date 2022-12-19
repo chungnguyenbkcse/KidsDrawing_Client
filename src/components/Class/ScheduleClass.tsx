@@ -54,13 +54,10 @@ const ScheduleClass: React.FC = () => {
     return (
         promiseInProgress ?
       <div className="loader"></div> :<Fragment>
-            <h1 className="h3 mb-2 text-gray-800">{class_name}</h1>
             <div className="row">
                 <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-green">Lịch học chi tiết</h6>
-                        </div>
+                        
                         <div className="card-body">
                             <ScheduleForClassList />
                         </div>

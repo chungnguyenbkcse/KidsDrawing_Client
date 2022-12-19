@@ -9,16 +9,20 @@ function StudentList(): JSX.Element  {
   const history = useHistory();
 
   
-  const routeChange = () =>{ 
-    let path = '/class/lesson'; 
-    history.push(path);
+  const routeChange = (student_id: number) =>{ 
+    localStorage.removeItem("student_id");
+    localStorage.setItem("student_id", student_id.toString())
+    let path = '/student/detail';
+    history.push({
+        pathname: path
+    });
   }
 
 
   const studentElements: (JSX.Element | null)[] = students.students.map((student, idx) => {
     if (!student) { return null; }
     return (<tr className={`table-row ${(students.selectedUser && students.selectedUser.id === student.id) ? "selected" : ""}`}
-      key={`student_${idx}`} onClick={routeChange}>
+      key={`student_${idx}`} onClick={() => routeChange(student.id)}>
       <th scope="row">{idx + 1}</th>
       <td>{student.username}</td>
       <td>{student.dateOfBirth}</td>

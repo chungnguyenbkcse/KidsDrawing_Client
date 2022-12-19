@@ -2,6 +2,10 @@ export interface ISection {
     id: any;
     class_id: number;
     name: string;
+    status: string;
+    time_approved: string;
+    update_time: string;
+    create_time: string;
     number: number;
     teacher_name: string;
     teach_form: boolean;

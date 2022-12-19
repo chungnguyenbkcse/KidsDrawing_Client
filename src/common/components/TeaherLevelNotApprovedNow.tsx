@@ -27,6 +27,7 @@ function TopCardLevelNotApproveNow(props: PropsWithChildren<ICardProperties>): R
         teacher_name: "",
         reviewer_id: 0,
         course_id: 0,
+        time_approved: "",
         course_name: "",
         art_age_name: "",
         art_type_name: "",

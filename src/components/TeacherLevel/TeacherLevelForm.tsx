@@ -42,7 +42,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
   })
   console.log(listCourses)
   if (!teacher_register_not_approved || isCreate) {
-    teacher_register_not_approved = { id: 0, teacher_id: 0,teacher_name: "", reviewer_id: 0, course_id: 0, course_name: "", art_age_name: "", art_level_name: "", art_type_name: "", degree_photo_url: "", status: "Not approve now"};
+    teacher_register_not_approved = { id: 0, time_approved: "", teacher_id: 0,teacher_name: "", reviewer_id: 0, course_id: 0, course_name: "", art_age_name: "", art_level_name: "", art_type_name: "", degree_photo_url: "", status: "Not approve now"};
   }
 
   const [formState, setFormState] = useState({

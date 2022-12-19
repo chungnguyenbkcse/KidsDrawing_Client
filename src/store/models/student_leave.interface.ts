@@ -10,6 +10,7 @@ export interface IStudentLeave {
     reviewer_id: number;
     description: string;
     status: string;
+    time_approved: string;
     create_time: string;
     update_time: string;
 }

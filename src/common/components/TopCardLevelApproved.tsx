@@ -22,8 +22,12 @@ function TopCardLevelApproved(props: PropsWithChildren<ICardProperties>): ReactE
             <div className={`card shadow h-100 py-2`} id="topcard-user">
                 <div className="card-body">
                     <div className="row no-gutters align-items-center">
-                        <div className="col mr-2">
+                        <div className="col-md-6">
                             <div className="text-xs font-weight-bold text-green text-uppercase mb-1">{props.course_name}</div>
+                        </div>
+
+                        <div className="col-md-6">
+                            <div className="text-xs font-weight-bold text-green mb-1">Thời gian duyệt: {props.time_approved.replaceAll("T", " ").substring(0,16)}</div>
                         </div>
                     </div>
                 </div>

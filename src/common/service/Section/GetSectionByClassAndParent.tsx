@@ -4,6 +4,10 @@ interface Section {
     id: any;
     class_id: number;
     name: string;
+    status: string;
+    time_approved: string;
+    update_time: string;
+    create_time: string;
     description: string;
     number: number;
     total_exercise_not_submit: number;
@@ -50,6 +54,10 @@ export function getSectionByClassAndParent(dispatch: any, class_id: number, pare
                         id: ele.id,
                         class_id: ele.class_id,
                         name: ele.name,
+                        status: ele.status,
+                        time_approved: ele.time_approved,
+                        update_time: ele.update_time,
+                        create_time: ele.create_time,
                         teacher_name: ele.teacher_name,
                         description: ele.description,
                         number: ele.number,

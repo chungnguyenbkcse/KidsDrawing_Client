@@ -8,6 +8,7 @@ interface TeacherRegisterQuantification {
     course_id: number;
     course_name: string;
     art_age_name: string;
+    time_approved: string;
     art_type_name: string;
     art_level_name: string;
     degree_photo_url: string;
@@ -55,6 +56,7 @@ export function getTeacherRegisterQuantification(dispatch: any) {
                         teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
                         course_name:ele.course_name,
+                        time_approved: ele.time_approved,
                         art_age_name: ele.art_age_name,
                         art_level_name: ele.art_level_name,
                         art_type_name: ele.art_type_name,

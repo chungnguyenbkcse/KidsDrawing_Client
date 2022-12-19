@@ -4,6 +4,7 @@ export interface ITeacherRegisterQuantification {
     teacher_name: string;
     reviewer_id: number;
     course_id: number;
+    time_approved: string;
     course_name: string;
     art_age_name: string;
     art_type_name: string;

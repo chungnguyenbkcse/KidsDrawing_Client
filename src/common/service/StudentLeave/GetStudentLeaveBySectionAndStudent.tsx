@@ -7,6 +7,7 @@ interface StudentLeave {
     class_id: number;
     class_name: string;
     student_id: number;
+    time_approved: string;
     section_number: number;
     student_name: string;
     reviewer_id: number;

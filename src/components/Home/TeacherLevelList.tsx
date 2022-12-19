@@ -16,6 +16,7 @@ function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationL
         if (!ele) { return null; }
         return (
             <TopCardLevel 
+                time_approved={ele.time_approved}
                 course_name={ele.course_name} 
                 icon="book" class="primary" 
                 art_age_name={ele.art_age_name}

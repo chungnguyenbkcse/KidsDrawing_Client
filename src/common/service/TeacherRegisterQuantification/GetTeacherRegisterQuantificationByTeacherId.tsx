@@ -12,6 +12,7 @@ interface TeacherRegisterQuantification {
     course_id: number;
     course_name: string;
     art_age_name: string;
+    time_approved: string;
     art_type_name: string;
     art_level_name: string;
     degree_photo_url: string;
@@ -60,6 +61,7 @@ export function getTeacherRegisterQuantificationByTeacherId(dispatch: any, id: a
                         reviewer_id: ele.reviewer_id,
                         teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
+                        time_approved: ele.time_approved,
                         course_name:ele.course_name,
                         art_age_name: ele.art_age_name,
                         art_level_name: ele.art_level_name,
@@ -85,6 +87,7 @@ export function getTeacherRegisterQuantificationByTeacherId(dispatch: any, id: a
                         reviewer_id: ele.reviewer_id,
                         teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
+                        time_approved: ele.time_approved,
                         course_name:ele.course_name,
                         art_age_name: ele.art_age_name,
                         art_level_name: ele.art_level_name,
@@ -109,6 +112,7 @@ export function getTeacherRegisterQuantificationByTeacherId(dispatch: any, id: a
                         reviewer_id: ele.reviewer_id,
                         teacher_name: ele.teacher_name,
                         course_id: ele.course_id,
+                        time_approved: ele.time_approved,
                         course_name:ele.course_name,
                         art_age_name: ele.art_age_name,
                         art_level_name: ele.art_level_name,

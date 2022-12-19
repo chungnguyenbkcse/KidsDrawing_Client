@@ -16,6 +16,7 @@ function TeacherLevelNotApprovedNowList(props: teacherRegisterQuantificationList
         if (!ele) { return null; }
         return (
             <TopCardLevelNotApproveNow 
+                time_approved=""
                 course_name={ele.course_name} 
                 icon="edit" class="warning" 
                 art_age_name={ele.art_age_name}

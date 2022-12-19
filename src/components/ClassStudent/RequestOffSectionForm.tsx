@@ -59,10 +59,10 @@ function RequestOffSectionForm(props: artAgeListProps): JSX.Element {
     }
 
     if (isCreate) {
-        student_leave = { id: 0, section_id: 0, class_id: 0, section_number: 0, student_id: 0, description: "", section_name: "", class_name: "", student_name: "", reviewer_id: 0, status: "", create_time: "", update_time: "" }
+        student_leave = { id: 0, section_id: 0, time_approved: "", class_id: 0, section_number: 0, student_id: 0, description: "", section_name: "", class_name: "", student_name: "", reviewer_id: 0, status: "", create_time: "", update_time: "" }
     }
     else {
-        student_leave = { id: 0, section_id: section_id, class_id: classes_id, section_number: section_number, student_id: 0, description: resson, section_name: "", class_name: "", student_name: "", reviewer_id: 0, status: "", create_time: "", update_time: "" }
+        student_leave = { id: 0, section_id: section_id,time_approved: "", class_id: classes_id, section_number: section_number, student_id: 0, description: resson, section_name: "", class_name: "", student_name: "", reviewer_id: 0, status: "", create_time: "", update_time: "" }
     }
     const users: IUserState = useSelector((state: IStateType) => state.users);
     const listStudent: IUser[] = users.students

@@ -716,7 +716,16 @@ const SectionTeacher: React.FC = () => {
                                                                                                         Tên:
                                                                                                     </div>
                                                                                                     <div className="col-md-7">
-                                                                                                        {section_name}
+                                                                                                    {
+                                                                                                        function () {
+                                                                                                            if (sections.sections.length <= 0) {
+                                                                                                                return ""
+                                                                                                            }
+                                                                                                            else {
+                                                                                                                return sections.sections[0].name;
+                                                                                                            }
+                                                                                                        }()
+                                                                                                    }
                                                                                                     </div>
                                                                                                     <div className="col-md-2">
                                                                                                         <BsFillTrashFill color="#dc3545" onClick={(e) => {
@@ -725,6 +734,45 @@ const SectionTeacher: React.FC = () => {
                                                                                                             setPopup2(true)
                                                                                                         }} />
                                                                                                     </div>
+                                                                                                </div>
+
+                                                                                                <div className="row mb-2">
+                                                                                                    <div className="col-md-3">
+                                                                                                        Thời gian gửi:
+                                                                                                    </div>
+                                                                                                    <div className="col-md-7 status-score">
+                                                                                                    {
+                                                                                                        function () {
+                                                                                                            if (sections.sections.length <= 0) {
+                                                                                                                return ""
+                                                                                                            }
+                                                                                                            else {
+                                                                                                                return sections.sections[0].create_time.replaceAll("T", "").substring(0,16);
+                                                                                                            }
+                                                                                                        }()
+                                                                                                    }
+                                                                                                    </div>
+
+                                                                                                </div>
+
+
+                                                                                                <div className="row mb-2">
+                                                                                                    <div className="col-md-3">
+                                                                                                        Thời gian duyệt:
+                                                                                                    </div>
+                                                                                                    <div className="col-md-7 status-score">
+                                                                                                    {
+                                                                                                        function () {
+                                                                                                            if (sections.sections.length <= 0) {
+                                                                                                                return ""
+                                                                                                            }
+                                                                                                            else {
+                                                                                                                return sections.sections[0].time_approved.replaceAll("T", "").substring(0,16);
+                                                                                                            }
+                                                                                                        }()
+                                                                                                    }
+                                                                                                    </div>
+
                                                                                                 </div>
 
                                                                                                 <div className="row mb-2">
@@ -789,6 +837,25 @@ const SectionTeacher: React.FC = () => {
                                                                                                             setPopup2(true)
                                                                                                         }} />
                                                                                                     </div>
+                                                                                                </div>
+
+                                                                                                <div className="row mb-2">
+                                                                                                    <div className="col-md-3">
+                                                                                                        Thời gian gửi:
+                                                                                                    </div>
+                                                                                                    <div className="col-md-7 status-score">
+                                                                                                    {
+                                                                                                        function () {
+                                                                                                            if (sections.sections.length <= 0) {
+                                                                                                                return ""
+                                                                                                            }
+                                                                                                            else {
+                                                                                                                return sections.sections[0].create_time.replaceAll("T", "").substring(0,16);
+                                                                                                            }
+                                                                                                        }()
+                                                                                                    }
+                                                                                                    </div>
+
                                                                                                 </div>
 
                                                                                                 <div className="row mb-2">

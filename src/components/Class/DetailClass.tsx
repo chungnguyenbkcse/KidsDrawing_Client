@@ -19,6 +19,8 @@ import Loading from "../../common/components/Loading";
 import { getSectionByClass } from "../../common/service/Section/GetSectionByClass";
 import { getInfoMyClass1 } from "../../common/service/MyClass/GetInfoMyClass1";
 import ScheduleClass from "./ScheduleClass";
+import LessonList1 from "./LessonList1";
+import { useHistory } from "react-router-dom";
 
 
 const DetailClass: React.FC = () => {
@@ -82,7 +84,20 @@ const DetailClass: React.FC = () => {
         dispatch(setModificationState(ProductModificationStatus.None));
     }
 
+    const history = useHistory();
+    function handleViewParent(student_id: number) {
+        localStorage.removeItem("student_id");
+        localStorage.setItem("student_id", student_id.toString())
+        let path = '/student/detail';
+        history.push({
+            pathname: path
+        });
+    }
+
     const [checked, setChecked] = useState(true);
+    const [checked1, setChecked1] = useState(true);
+    const [checked2, setChecked2] = useState(false);
+    const [checked3, setChecked3] = useState(false);
 
     console.log(information_class.informationClasses)
 
@@ -96,53 +111,93 @@ const DetailClass: React.FC = () => {
                     <TopCard title="SỐ BUỔI" text={`${numberItemsCount1}`} icon="box" class="primary" />
                 </div>
                 <div className="row">
-                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                        <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
-                            if (checked === false) {
-                                setChecked(true)
-                            }
-                        }} style={{
-                            color: checked ? "#F24E1E" : "#2F4F4F"
-                        }}>Thông tin chung</h6>
-
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "30%",
-                            backgroundColor: checked ? "#F24E1E" : "#ffffff"
-                        }}></div>
-                    </div>
-                    <div className="col-xl-6 col-lg-6 mb-4 col-xs-6 text-center">
-                        <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
-                            if (checked === true) {
-                                setChecked(false)
-                            }
-                        }}
-                            style={{
-                                color: checked ? "#2F4F4F" : "#F24E1E"
-                            }}>Lịch học</h6>
-                        <div style={{
-                            height: "5px",
-                            textAlign: "center",
-                            margin: "auto",
-                            width: "30%",
-                            backgroundColor: checked ? "#ffffff" : "#F24E1E"
-                        }}></div>
-                    </div>
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-type" onClick={() => {
+                        if (checked1 === false) {
+                            setChecked1(true)
+                            setChecked2(false)
+                            setChecked3(false)
+                        }
+                    }} style={{
+                        color: checked1 ? "#F24E1E" : "#2F4F4F"
+                    }}>Thông tin chung</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "50%",
+                        backgroundColor: checked1 ? "#F24E1E" : "#ffffff"
+                    }}></div>
                 </div>
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked2 === false) {
+                            setChecked2(true)
+                            setChecked1(false)
+                            setChecked3(false)
+                        }
+                    }}
+                        style={{
+                            color: checked2 ? "#F24E1E" : "#2F4F4F"
+                        }}>Buổi học</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "50%",
+                        backgroundColor: checked2 ? "#F24E1E" : "#ffffff"
+                    }}></div>
+                </div>
+
+                <div className="col-xl-4 col-lg-4 mb-4 col-xs-4 text-center">
+                    <h6 className="m-0 font-weight-bold" id="btn-level" onClick={() => {
+                        if (checked3 === false) {
+                            setChecked3(true)
+                            setChecked1(false)
+                            setChecked2(false)
+                        }
+                    }}
+                        style={{
+                            color: checked3 ? "#F24E1E" : "#2F4F4F"
+                        }}>Lịch học</h6>
+                    <div style={{
+                        height: "5px",
+                        textAlign: "center",
+                        margin: "auto",
+                        width: "50%",
+                        backgroundColor: checked3 ? "#F24E1E" : "#ffffff"
+                    }}></div>
+                </div>
+            </div>
 
                 {
                     function () {
-                        if (checked === true) {
+
+                        if (checked2 === true) {
                             return (
                                 <>
+                                    
+
                                     <div className="row">
                                         <div className="col-xl-12 col-lg-12">
                                             <div className="card shadow mb-4">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green">Thông tin chi tiết</h6>
+                                                <div className="card-body">
+                                                    <LessonList1
+                                                        onSelect={onProductSelect}
+                                                    />
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            )
+                        }
+                        else if (checked1 == true) {
+                            return (
+                                <div className="row">
+                                        <div className="col-xl-12 col-lg-12">
+                                            <div className="card shadow mb-4">
+                                                
                                                 <div className="card-body">
                                                     <form>
                                                         <div className="form-row">
@@ -212,15 +267,23 @@ const DetailClass: React.FC = () => {
                                                             </div>
                                                         </div>
                                                         <div className="form-row">
-                                                            <div className="form-group col-md-6">
-                                                                <TextInput id="input_email"
-                                                                    value={''}
-                                                                    field="name"
-                                                                    onChange={() => { }}
-                                                                    required={true}
-                                                                    maxLength={20}
-                                                                    label="Số học sinh"
-                                                                    placeholder={information_class.informationClasses.length > 0 ? information_class.informationClasses[0].number_student.toString() : ""} />
+                                                            <div className="form-group col-md-12">
+                                                                <label htmlFor={"input_email"}>Học sinh</label>
+                                                                {   students.students.length > 0 ? students.students.map((ele, idx) => {
+                                                                                    if (idx == students.students.length - 1) {
+                                                                                        return (
+                                                                                            <p className="ml-2" style={{ cursor: "pointer", color: 'blue' }} onClick={() => { handleViewParent(ele.id) }}>
+                                                                                                {ele.username + " - " + ele.firstName + " " + ele.lastName}
+                                                                                            </p>
+                                                                                        )
+                                                                                    }
+                                                                                    return (
+                                                                                        <p className="ml-2" style={{ cursor: "pointer", color: 'blue' }} onClick={() => { handleViewParent(ele.id) }}>
+                                                                                            {ele.username + " - " + ele.firstName + " " + ele.lastName}
+                                                                                        </p>
+                                                                                    )
+                                                                                }) : ""
+                                                                            }
                                                             </div>
                                                         </div>
                                                     </form>
@@ -228,35 +291,9 @@ const DetailClass: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div className="row">
-                                        <div className="col-xl-6 col-lg-6">
-                                            <div className="card shadow mb-4">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green">Buổi học đã dạy</h6>
-                                                </div>
-                                                <div className="card-body">
-                                                    <LessonList
-                                                        onSelect={onProductSelect}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-xl-6 col-lg-6">
-                                            <div className="card shadow mb-4">
-                                                <div className="card-header py-3">
-                                                    <h6 className="m-0 font-weight-bold text-green">Học sinh</h6>
-                                                </div>
-                                                <div className="card-body">
-                                                    <StudentList />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
                             )
                         }
-                        else {
+                        else if (checked3 == true) {
                             return (
                                 <ScheduleClass />
                             )

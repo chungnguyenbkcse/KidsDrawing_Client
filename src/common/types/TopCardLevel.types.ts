@@ -6,6 +6,7 @@ export interface ICardProperties {
     art_level_name: string;
     course_name: string;
     degree_photo_url: string;
+    time_approved: string;
     icon: string;
     class: string;
     teacher_level: ITeacherRegisterQuantification;

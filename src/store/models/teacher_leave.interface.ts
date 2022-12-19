@@ -14,6 +14,7 @@ export interface ITeacherLeave {
     substitute_teacher_name: string;
     description: string;
     status: string;
+    time_approved: string;
     create_time: string;
     update_time: string;
 }

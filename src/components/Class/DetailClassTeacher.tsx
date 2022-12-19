@@ -901,6 +901,15 @@ const DetailClassTeacher: React.FC = () => {
                                                                                 </div>
                                                                             </div>
 
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Thời gian duyệt:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.time_approved.replaceAll("T", " ").substring(0, 16)}
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </tr>

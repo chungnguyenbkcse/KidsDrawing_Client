@@ -711,11 +711,9 @@ const SectionTeacher: React.FC = () => {
                                                                                                 <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
                                                                                             </div>
                                                                                             <div className="col-xl-9 col-md-9 mt-2">
-                                                                                                <div className="row">
-                                                                                                    <div className="col-md-3">
-                                                                                                        Tên:
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7">
+                                                                                                <div className="row mb-2">
+                                                                                                    <div className="col-md-10">
+                                                                            
                                                                                                     {
                                                                                                         function () {
                                                                                                             if (sections.sections.length <= 0) {
@@ -737,7 +735,7 @@ const SectionTeacher: React.FC = () => {
                                                                                                 </div>
 
                                                                                                 <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
+                                                                                                    <div className="col-md-5">
                                                                                                         Thời gian gửi:
                                                                                                     </div>
                                                                                                     <div className="col-md-7 status-score">
@@ -747,7 +745,7 @@ const SectionTeacher: React.FC = () => {
                                                                                                                 return ""
                                                                                                             }
                                                                                                             else {
-                                                                                                                return sections.sections[0].create_time.replaceAll("T", "").substring(0,16);
+                                                                                                                return sections.sections[0].create_time.replaceAll("T", " ").substring(0,16);
                                                                                                             }
                                                                                                         }()
                                                                                                     }
@@ -756,33 +754,37 @@ const SectionTeacher: React.FC = () => {
                                                                                                 </div>
 
 
-                                                                                                <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
+                                                                                                {
+                                                                                                    function () {
+                                                                                                        if (sections.sections.length <= 0 || sections.sections[0].time_approved == null || sections.sections[0].time_approved == undefined) {
+                                                                                                            return ""
+                                                                                                        }
+                                                                                                        else {
+                                                                                                            return (
+                                                                                                                <div className="row mb-2">
+                                                                                                    <div className="col-md-5">
                                                                                                         Thời gian duyệt:
                                                                                                     </div>
                                                                                                     <div className="col-md-7 status-score">
                                                                                                     {
-                                                                                                        function () {
-                                                                                                            if (sections.sections.length <= 0) {
-                                                                                                                return ""
-                                                                                                            }
-                                                                                                            else {
-                                                                                                                return sections.sections[0].time_approved.replaceAll("T", "").substring(0,16);
-                                                                                                            }
-                                                                                                        }()
+                                                                                                        sections.sections[0].time_approved.replaceAll("T", " ").substring(0,16)
                                                                                                     }
                                                                                                     </div>
 
                                                                                                 </div>
+                                                                                                            )
+                                                                                                        }
+                                                                                                    }()
+                                                                                                }
+                                                                                                
 
                                                                                                 <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
-
+                                                                                                    <div className="col-md-5">
+                                                                                                        Trạng thái:
                                                                                                     </div>
                                                                                                     <div className="col-md-7 status-score">
                                                                                                         Không được duyệt
                                                                                                     </div>
-
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -823,50 +825,81 @@ const SectionTeacher: React.FC = () => {
                                                                                                 <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
                                                                                             </div>
                                                                                             <div className="col-xl-9 col-md-9 mt-2">
-                                                                                                <div className="row">
-                                                                                                    <div className="col-md-3">
-                                                                                                        Tên:
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7">
-                                                                                                        {section_name}
-                                                                                                    </div>
-                                                                                                    <div className="col-md-2">
-                                                                                                        <BsFillTrashFill color="#dc3545" onClick={(e) => {
-                                                                                                            e.stopPropagation();
-
-                                                                                                            setPopup2(true)
-                                                                                                        }} />
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
-                                                                                                        Thời gian gửi:
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7 status-score">
-                                                                                                    {
-                                                                                                        function () {
-                                                                                                            if (sections.sections.length <= 0) {
-                                                                                                                return ""
-                                                                                                            }
-                                                                                                            else {
-                                                                                                                return sections.sections[0].create_time.replaceAll("T", "").substring(0,16);
-                                                                                                            }
-                                                                                                        }()
+                                                                                            <div className="row mb-2">
+                                                                                            <div className="col-md-10">
+                                                                    
+                                                                                            {
+                                                                                                function () {
+                                                                                                    if (sections.sections.length <= 0) {
+                                                                                                        return ""
                                                                                                     }
-                                                                                                    </div>
+                                                                                                    else {
+                                                                                                        return sections.sections[0].name;
+                                                                                                    }
+                                                                                                }()
+                                                                                            }
+                                                                                            </div>
+                                                                                            <div className="col-md-2">
+                                                                                                <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                                    e.stopPropagation();
 
-                                                                                                </div>
+                                                                                                    setPopup2(true)
+                                                                                                }} />
+                                                                                            </div>
+                                                                                        </div>
 
-                                                                                                <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
+                                                                                        <div className="row mb-2">
+                                                                                            <div className="col-md-5">
+                                                                                                Thời gian gửi:
+                                                                                            </div>
+                                                                                            <div className="col-md-7 status-score">
+                                                                                            {
+                                                                                                function () {
+                                                                                                    if (sections.sections.length <= 0) {
+                                                                                                        return ""
+                                                                                                    }
+                                                                                                    else {
+                                                                                                        return sections.sections[0].create_time.replaceAll("T", " ").substring(0,16);
+                                                                                                    }
+                                                                                                }()
+                                                                                            }
+                                                                                            </div>
 
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7 status-score">
-                                                                                                        Chưa được duyệt
-                                                                                                    </div>
+                                                                                        </div>
 
-                                                                                                </div>
+
+                                                                                        {
+                                                                                            function () {
+                                                                                                if (sections.sections.length <= 0 || sections.sections[0].time_approved == null || sections.sections[0].time_approved == undefined) {
+                                                                                                    return ""
+                                                                                                }
+                                                                                                else {
+                                                                                                    return (
+                                                                                                        <div className="row mb-2">
+                                                                                            <div className="col-md-5">
+                                                                                                Thời gian duyệt:
+                                                                                            </div>
+                                                                                            <div className="col-md-7 status-score">
+                                                                                            {
+                                                                                                sections.sections[0].time_approved.replaceAll("T", " ").substring(0,16)
+                                                                                            }
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                                    )
+                                                                                                }
+                                                                                            }()
+                                                                                        }
+                                                                                        
+
+                                                                                        <div className="row mb-2">
+                                                                                            <div className="col-md-5">
+                                                                                                Trạng thái:
+                                                                                            </div>
+                                                                                            <div className="col-md-7 status-score">
+                                                                                                Chưa được duyệt
+                                                                                            </div>
+                                                                                        </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </tr>

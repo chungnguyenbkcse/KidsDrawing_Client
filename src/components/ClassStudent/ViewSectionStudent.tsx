@@ -74,7 +74,7 @@ const ViewSectionStudent: React.FC = () => {
         }
 
         if (is_attendance === "false") {
-            if (y === TutorialPages.tutorialPages.length && (is_active === 'pre_active_now' || is_active === 'active_now')) {
+            if (y === TutorialPages.tutorialPages.length && (is_active === 'pre_active_now' || is_active === 'active_now' || is_active === "not_active_now")) {
                 const idx = toast.loading("Đang xử lý. Vui lòng đợi giây lát...", {
                     position: toast.POSITION.TOP_CENTER
                   });

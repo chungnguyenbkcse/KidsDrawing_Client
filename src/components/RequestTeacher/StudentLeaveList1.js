@@ -8,7 +8,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { IoIosRemove } from 'react-icons/io'
 import { setModificationState } from "../../store/actions/student_leave.action";
 import { StudentLeaveModificationStatus } from "../../store/models/student_leave.interface";
-import { putStudentLeaveParent } from "../../common/service/StudentLeave/PutStudentLeaveByParent";
+import { putStudentLeaveByTeacher } from "../../common/service/StudentLeave/PutStudentLeaveByTeacher";
 
 function StudentLeaveList(props) {
 
@@ -30,7 +30,7 @@ function StudentLeaveList(props) {
         const id = toast.loading("Đang xác thực. Vui lòng đợi giây lát...", {
             position: toast.POSITION.TOP_CENTER
         });
-        dispatch(putStudentLeaveParent(student_leave.section_id, student_leave.student_id, {
+        dispatch(putStudentLeaveByTeacher(student_leave.section_id, student_leave.student_id, {
             status: status
         }, id))
     }

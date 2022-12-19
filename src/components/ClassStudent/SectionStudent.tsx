@@ -328,7 +328,7 @@ const SectionStudent: React.FC = () => {
 
                                                                 }
                                                                 else {
-                                                                    if (is_active === "not_active" || is_active === "active_now" || is_active === "pre_active_now") {
+                                                                    if (is_active === "not_active" || is_active === "active_now" || is_active === "pre_active_now" || is_active === "not_active_now") {
                                                                         return (
                                                                             <button
                                                                                 className="btn btn-success ml-2"

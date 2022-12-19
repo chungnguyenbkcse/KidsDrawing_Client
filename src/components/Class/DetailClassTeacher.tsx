@@ -854,7 +854,66 @@ const DetailClassTeacher: React.FC = () => {
                                                                                     {ele.update_time.replaceAll("T", " ").substring(0, 16)}
                                                                                 </div>
                                                                             </div>
+                                                                            <div className="row mb-2">
+                                                                                <div className="col-md-5">
+                                                                                    Trạng thái:
+                                                                                </div>
+                                                                                <div className="col-md-7 status-score">
+                                                                                    Chưa được duyệt
+                                                                                </div>
+                                                                            </div>
 
+                                                                        </div>
+                                                                    </div>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+
+                                                    {
+                                                        teacher_leaves.removeLeaves.map((ele, index) => {
+                                                            return (
+                                                                <tr className={`table-row`} key={`semester_class_${index}`}>
+                                                                    <div className="row section-ele row-section mb-4 ml-2 mr-2" onClick={() => { handleRequestOff(ele) }}>
+                                                                        <div className="col-xl-3 col-md-3 avatar-x">
+                                                                            <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669002056/1497835_nexeoq.png" alt="" />
+                                                                        </div>
+                                                                        <div className="col-xl-9 col-md-9 mt-2">
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Buổi nghỉ:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                <div className="row">
+                                                                                    <div className="col-md-9">
+                                                                                        {ele.section_number}
+                                                                                    </div>
+                                                                                    <div className="col-md-3">
+                                                                                        <BsFillTrashFill color="#dc3545" onClick={(e) => {
+                                                                                            e.stopPropagation(); 
+                                                                                            setRequestId1(ele.id);
+                                                                                            setPopup3(true)
+                                                                                        }}/>
+                                                                                    </div>
+                                                                                </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row">
+                                                                                <div className="col-md-5">
+                                                                                    Thời gian gửi:
+                                                                                </div>
+                                                                                <div className="col-md-7">
+                                                                                    {ele.update_time.replaceAll("T", " ").substring(0, 16)}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="row mb-2">
+                                                                                <div className="col-md-5">
+                                                                                    Trạng thái:
+                                                                                </div>
+                                                                                <div className="col-md-7 status-score">
+                                                                                    Không được duyệt
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </tr>

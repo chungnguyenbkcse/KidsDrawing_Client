@@ -16,6 +16,7 @@ import Popup from "reactjs-popup";
 import { putStudentLeaveStatus } from "../../common/service/StudentLeave/PutStudentLeave";
 import { changeSelectedStudentLeaveNotApproved, changeSelectedStudentLeaveNotApprovedNow, clearSelectedStudentLeaveNotApproved, setModificationState } from "../../store/actions/student_leave.action";
 import { putStudentLeaveParent } from "../../common/service/StudentLeave/PutStudentLeaveByParent";
+import { putStudentLeaveByTeacher } from "../../common/service/StudentLeave/PutStudentLeaveByTeacher";
 
 const RequestTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -93,7 +94,7 @@ const RequestTeacher: React.FC = () => {
         if (idz !== null) {
             student_leave_student_id = parseInt(idz)
         }
-        dispatch(putStudentLeaveParent(student_leave_section_id, student_leave_student_id, {
+        dispatch(putStudentLeaveByTeacher(student_leave_section_id, student_leave_student_id, {
             status: status
         }, id))
 

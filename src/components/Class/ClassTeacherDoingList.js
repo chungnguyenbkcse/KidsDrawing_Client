@@ -209,14 +209,17 @@ function ClassTeacherDoingList(props) {
       {/* <PaginationListStandalone {...paginationProps} /> */}
       <div>
         <div>
-          <BootstrapTable
+          {
+            (datas.length > 0 && datas !== undefined && datas !== null) ? <BootstrapTable
             hover
             keyField="id"
             data={datas}
             columns={columns}
             filter={filterFactory()}
             {...paginationTableProps}
-          />
+          /> : ""
+          }
+          
         </div>
       </div>
       {/* <PaginationListStandalone {...paginationProps} /> */}

@@ -654,6 +654,14 @@ const DetailSectionParent: React.FC = () => {
                                                                                         </div>
                                                                                         <div className="row">
                                                                                             <div className="col-md-5">
+                                                                                                Học sinh:
+                                                                                            </div>
+                                                                                            <div className="col-md-7">
+                                                                                                {ele.student_name}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="row">
+                                                                                            <div className="col-md-5">
                                                                                                 Nộp lúc:
                                                                                             </div>
                                                                                             <div className="col-md-7">
@@ -705,6 +713,14 @@ const DetailSectionParent: React.FC = () => {
                                                                                             }}/>
                                                                                         </div>
                                                                                     </div> 
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="row">
+                                                                                    <div className="col-md-5">
+                                                                                        Học sinh:
+                                                                                    </div>
+                                                                                    <div className="col-md-7">
+                                                                                        {ele.student_name}
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="row">

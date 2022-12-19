@@ -52,9 +52,11 @@ const DetailClassParent: React.FC = () => {
     let list_name_user_grade_exercise : string[] = [];
     if (exercise_submission.exercise_gradeds.length > 3) {
         exercise_submission.exercise_gradeds.map((ele, idx) => {
-            if (idx < 3) {
-                list_score_user_grade_exercise.push(ele.score)
-                list_name_user_grade_exercise.push(ele.exercise_name)
+            if (ele != undefined) {
+                if (idx < 3) {
+                    list_score_user_grade_exercise.push(ele.score)
+                    list_name_user_grade_exercise.push(ele.exercise_name)
+                }
             }
             return ele
         })

@@ -98,11 +98,6 @@ function ParentList(props) {
       filter: textFilter()
     },
     {
-      dataField: 'dateOfBirth',
-      text: 'Ngày sinh',
-      filter: textFilter()
-    },
-    {
       dataField: 'sex',
       text: 'Giới tính',
       filter: textFilter()

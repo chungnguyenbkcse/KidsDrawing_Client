@@ -91,7 +91,7 @@ const Account: React.FC = () => {
             let url_x = url === "" ? user.profile_image_url : url;
 
             if (saveFn === addTeacher) {
-                dispatch(postTeacher({
+                postTeacher(dispatch, {
                     username: username,
                     email: email,
                     password: "",
@@ -102,7 +102,7 @@ const Account: React.FC = () => {
                     sex: sex,
                     phone: phone,
                     address: address
-                }, id));
+                }, id);
             }
 
             else if (saveFn === editTeacher) {

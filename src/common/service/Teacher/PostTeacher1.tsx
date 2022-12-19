@@ -48,11 +48,11 @@ export function postTeacher1(data: any, lst: any[], idx: any) {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleName: ["TEACHER"]
+                        roleName: "TEACHER"
                       }, lst.slice(1, lst.length), idx));
                 }
                 else if (lst.length === 1) {
-                    dispatch(postTeacher({
+                    postTeacher(dispatch, {
                         username: lst[0].username,
                         email: lst[0].email,
                         password: lst[0].password,
@@ -63,8 +63,8 @@ export function postTeacher1(data: any, lst: any[], idx: any) {
                         sex: null,
                         phone: null,
                         address: null,
-                        roleName: ["TEACHER"]
-                      }, idx));
+                        roleName: "TEACHER"
+                      }, idx);
                 }
             })
             .catch(error => {

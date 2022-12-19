@@ -39,10 +39,10 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
         sex: null,
         phone: null,
         address: null,
-        roleName: ["TEACHER"]
+        roleName: "TEACHER"
       })
       if (saveFn === addTeacher){
-        dispatch(postTeacher({
+        (postTeacher(dispatch,{
           username: formState.username,
           email: formState.email,
           password: null,
@@ -53,7 +53,7 @@ function TeacherImportForm(props: teacherListProps): JSX.Element {
           sex: null,
           phone: null,
           address: null,
-          roleName: ["TEACHER"]
+          roleName: "TEACHER"
         }, id));
       }
     }

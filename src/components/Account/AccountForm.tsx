@@ -73,7 +73,7 @@ function AccountForm(props: teacherListProps): JSX.Element {
             });
 
             if (saveFn === addTeacher) {
-                dispatch(postTeacher({
+                postTeacher(dispatch, {
                     username: formState.username.value,
                     email: formState.email.value,
                     password: formState.password.value,
@@ -86,7 +86,7 @@ function AccountForm(props: teacherListProps): JSX.Element {
                     address: formState.address.value,
                     parent_ids: user.parents,
                     roleName: [roleUser]
-                }, id));
+                }, id);
             }
 
             else if (saveFn === editTeacher) {

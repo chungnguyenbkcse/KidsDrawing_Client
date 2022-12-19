@@ -3,12 +3,10 @@ import { fetchDataRequest } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getTeacher } from "./GetTeacher";
 
-export function postTeacher(data: any, idx: any) {
+export function postTeacher(dispatch: any, data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
-    return (dispatch: any) => {
-        dispatch(fetchDataRequest());
-        fetch(
+    return  fetch(
                 `${process.env.REACT_APP_API_URL}/user/teacher`, {
                     method: "POST",
                     headers: {
@@ -24,7 +22,7 @@ export function postTeacher(data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postTeacher(data, idx))
+                        dispatch(postTeacher(dispatch, data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -42,5 +40,4 @@ export function postTeacher(data: any, idx: any) {
             .catch(error => {
                 toast.update(idx, { render: "Lỗi username hoặc email bị trùng!", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
             });
-    };
 }

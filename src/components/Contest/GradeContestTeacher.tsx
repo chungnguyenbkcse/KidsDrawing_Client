@@ -135,6 +135,12 @@ const GradeContestTeacher: React.FC = () => {
             let student_name_ = contest_submissions.contest_submission_not_grade[x].student_name;
             let time_submit_ = contest_submissions.contest_submission_not_grade[x].update_time;
             let student_id_ = contest_submissions.contest_submission_not_grade[x].student_id;
+            setFormState(
+                {
+                    feedback: { error: "", value: "" },
+                    score: { error: "", value: 0 },
+                }
+            )
             setImageUrl(image_url_);
             setStudentName(student_name_);
             setTimeSubmit(time_submit_);

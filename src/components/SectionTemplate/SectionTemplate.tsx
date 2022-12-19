@@ -16,6 +16,7 @@ import jwt_decode from "jwt-decode";
 import { getTutorialTemplatePage } from "../../common/service/TutorialTemplatePage/GetTutorialTemplatePage";
 import { ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import SectionTemplateList1 from "./SectionTemplate1";
 
 const SectionTemplate: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -111,7 +112,7 @@ const SectionTemplate: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green">Danh sách buổi học</h6>
                         </div>
                         <div className="card-body">
-                            <SectionTemplateList
+                            <SectionTemplateList1
                                 onSelect={onSectionTemplateSelect} value={searchTerm}
                             />
                         </div>

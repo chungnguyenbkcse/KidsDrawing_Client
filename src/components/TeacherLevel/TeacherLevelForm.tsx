@@ -90,6 +90,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
   }
 
   function saveForm(formState: ITeacherRegisterLevelFormState, saveFn: Function, url: string, idx: any): void {
+    props.isCheck(false);
     if (teacher_register_not_approved) {
       
       if (saveFn === addTeacherRegisterQuatificationNotApprovedNow) {
@@ -110,7 +111,6 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
       }
 
       console.log(saveFn)
-      props.isCheck(false);
       dispatch(clearSelectedTeacherRegisterNotQuatificationNow());
       dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
     }

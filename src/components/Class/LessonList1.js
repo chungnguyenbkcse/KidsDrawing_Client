@@ -157,7 +157,7 @@ function LessonList1(props) {
     if (row.teach_form == true && checkActive(rowIndex) === "not_active") {
         return (
         <button type="button" className="btn btn-primary" onClick={() => {
-                  localStorage.setItem('link_recording', list_link_record[rowIndex])
+                  localStorage.setItem('link_recording', "https://recording-jitsi-chung.s3.ap-southeast-1.amazonaws.com/recording/" + row.id + ".mp4")
                   routeChange(row)
         }} >Recording</button>
         )

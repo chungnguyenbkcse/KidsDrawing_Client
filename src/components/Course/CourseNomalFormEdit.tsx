@@ -21,7 +21,7 @@ import { getCourse } from "../../common/service/Course/GetCourse";
 
 import { postCourse } from "../../common/service/Course/PostCourse";
 import { putCourse } from "../../common/service/Course/PutCourse";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
 
@@ -241,7 +241,7 @@ const CourseNomalFormEdit: React.FC = () => {
     return (
         promiseInProgress ?
       <div className="loader"></div> : <Fragment>
-
+            <ToastContainer />
             <div className="col-xl-12 col-lg-12">
                 <div className="card shadow mb-4">
                     <div className="card-header py-3">
@@ -331,7 +331,7 @@ const CourseNomalFormEdit: React.FC = () => {
                                     />
                                 </div>
                             </div>
-                            
+
                             <div className="form-group">
                                 <label>Miêu tả</label>
                                 <Editor getValue={getValue} isCreate={isCreate} setValue={formState.description.value}/>

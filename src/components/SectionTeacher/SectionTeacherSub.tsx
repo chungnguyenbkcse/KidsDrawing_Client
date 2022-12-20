@@ -22,6 +22,7 @@ import { checkTutorialPageBySection } from "../../common/service/TutorialPage/Ge
 import { getTutorialPageNotApproveBySection } from "../../common/service/TutorialPage/GetTutorialPageNotApproveBySection";
 import { deleteTutorialPageBySection1 } from "../../common/service/TutorialPage/DeleteTutorialPageBySection1";
 import { removeTutorialPageAll } from "../../store/actions/tutorial_page.action";
+import { ISection } from "../../store/models/section.interface";
 
 const SectionTeacherSub: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -167,7 +168,9 @@ const SectionTeacherSub: React.FC = () => {
         }
     }
 
-    const routeChange5 = () => {
+    const routeChange5 = (section: ISection) => {
+        localStorage.removeItem('form_teaching')
+        localStorage.setItem('form_teaching', section.teach_form.toString())
         let path = "/attendance";
         history.push({
             pathname: path
@@ -374,9 +377,9 @@ const SectionTeacherSub: React.FC = () => {
                                                     }
                                                 </p>
                                             </div>
-                                            <div className="row">
-                                                <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    {
+                                            
+
+                                            {
                                                         function () {
                                                             if (sections.sections.length <= 0) {
                                                                 return ""
@@ -384,58 +387,50 @@ const SectionTeacherSub: React.FC = () => {
                                                             else {
                                                                 if (sections.sections[0].teach_form === true && (is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now")) {
                                                                     return (
-                                                                        <button
-                                                                            className="btn btn-success ml-2"
-                                                                            id="btn-into-room"
-                                                                            onClick={routeChange4}
-                                                                        >
-                                                                            Vào metting room
-                                                                        </button>
+                                                                        <div className="row">
+                                                                            <div className="col-xl-6 col-md-6 col-xs-6">
+                                                                                <button
+                                                                                    className="btn btn-success ml-2"
+                                                                                    id="btn-into-room"
+                                                                                    onClick={routeChange4}
+                                                                                >
+                                                                                    Vào metting room
+                                                                                </button>
+                                                                                
+                                                                            </div>
+
+                                                                            <div className="col-xl-6 col-md-6 col-xs-6">
+                                                                                <button
+                                                                                    className="btn btn-success mr-2 float-right"
+                                                                                    id="btn-into-attendance"
+                                                                                    onClick={() => routeChange5(sections.sections[0])}
+                                                                                >
+                                                                                    Điểm danh
+                                                                                </button>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                                else {
+                                                                    return (
+                                                                        <div className="row mx-auto">
+                                                                            <div className="col-xl-12 col-md-12 col-xs-12">
+                                                                               <button
+                                                                                   className="btn btn-success"
+                                                                                   id="btn-into-attendance"
+                                                                                   onClick={() => routeChange5(sections.sections[0])}
+                                                                               >
+                                                                                   Điểm danh
+                                                                               </button>
+
+                                                                            </div>
+                                                                        </div>
                                                                     )
                                                                 }
                                                             }
                                                         }()
                                                     }
-                                                </div>
-                                                <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    {
-                                                        function () {
-                                                            if (sections.sections.length <= 0) {
-                                                                return ""
-                                                            }
-                                                            else {
-                                                                if (sections.sections[0].teach_form === true) {
-                                                                    if (is_active === "not_active") {
-                                                                        return (
-                                                                            <button
-                                                                                className="btn btn-success"
-                                                                                id="btn-into-attendance"
-                                                                                onClick={routeChange5}
-                                                                            >
-                                                                                Điểm danh
-                                                                            </button>
-                                                                        )
-                                                                    }
-                                                                    else if (is_active === "pre_active_now" || is_active === "active_now") {
-                                                                        return (
-                                                                            <button
-                                                                                className="btn btn-success ml-2"
-                                                                                id="btn-into-attendance"
-                                                                                onClick={routeChange5}
-                                                                            >
-                                                                                Điểm danh
-                                                                            </button>
-                                                                        )
-                                                                    }
-
-
-                                                                }
-                                                            }
-                                                        }()
-                                                    }
-                                                </div>
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -603,161 +598,6 @@ const SectionTeacherSub: React.FC = () => {
                         </div>
                     </div>
                 </div>
-
-                {
-                    function () {
-                        if (sections.sections.length <= 0) {
-                            return ""
-                        }
-                        else {
-                            if (sections.sections.length <= 0) {
-                                return ""
-                            }
-                            else {
-                                if (sections.sections[0].teach_form === true) {
-                                    if ((is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now")) {
-                                        if (is_tutorial_page == "Not approved") {
-                                            return (
-                                                <div className="row">
-                                                    <div className="col-xl-6 col-md-6 mb-4">
-                                                        <div className="col-xl-12 col-md-12 mb-4">
-                                                            <div className={`card shadow h-100 py-2`} >
-                                                                <div className="card-body">
-                                                                    <div className="row no-gutters justify-content-left">
-                                                                        <h4 id="full-name">Yêu cầu giáo án</h4>
-                                                                        <div className="table-responsive portlet">
-                                                                            <table className="table">
-                                                                                <thead className="thead-light">
-                                                                                    <tr>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-
-                                                                                    <tr className={`table-row`} key={`semester_class_0`} onClick={() => { handleView() }}>
-                                                                                        <div className="row section-ele row-section mb-4 ml-2 mr-2">
-                                                                                            <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                                <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
-                                                                                            </div>
-                                                                                            <div className="col-xl-9 col-md-9 mt-2">
-                                                                                                <div className="row">
-                                                                                                    <div className="col-md-3">
-                                                                                                        Tên:
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7">
-                                                                                                        {section_name}
-                                                                                                    </div>
-                                                                                                    <div className="col-md-2">
-                                                                                                        <BsFillTrashFill color="#dc3545" onClick={(e) => {
-                                                                                                            e.stopPropagation();
-
-                                                                                                            setPopup2(true)
-                                                                                                        }} />
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
-
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7 status-score">
-                                                                                                        Không được duyệt
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </tr>
-
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
-                                        else if (is_tutorial_page == "Not approve now") {
-                                            return (
-                                                <div className="row">
-                                                    <div className="col-xl-6 col-md-6 mb-4">
-                                                        <div className="col-xl-12 col-md-12 mb-4">
-                                                            <div className={`card shadow h-100 py-2`} >
-                                                                <div className="card-body">
-                                                                    <div className="row no-gutters justify-content-left">
-                                                                        <h4 id="full-name">Yêu cầu giáo án</h4>
-                                                                        <div className="table-responsive portlet">
-                                                                            <table className="table">
-                                                                                <thead className="thead-light">
-                                                                                    <tr>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-
-                                                                                    <tr className={`table-row`} key={`semester_class_0`} onClick={() => { handleView() }}>
-                                                                                        <div className="row section-ele row-section mb-4 ml-2 mr-2">
-                                                                                            <div className="col-xl-3 col-md-3 avatar-x">
-                                                                                                <img className="img-exam" src="https://res.cloudinary.com/djtmwajiu/image/upload/v1669576857/videos_pfdoe3.png" alt="" />
-                                                                                            </div>
-                                                                                            <div className="col-xl-9 col-md-9 mt-2">
-                                                                                                <div className="row">
-                                                                                                    <div className="col-md-3">
-                                                                                                        Tên:
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7">
-                                                                                                        {section_name}
-                                                                                                    </div>
-                                                                                                    <div className="col-md-2">
-                                                                                                        <BsFillTrashFill color="#dc3545" onClick={(e) => {
-                                                                                                            e.stopPropagation();
-
-                                                                                                            setPopup2(true)
-                                                                                                        }} />
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div className="row mb-2">
-                                                                                                    <div className="col-md-3">
-
-                                                                                                    </div>
-                                                                                                    <div className="col-md-7 status-score">
-                                                                                                        Chưa được duyệt
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </tr>
-
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
-                                    }
-                                    else {
-                                        return (
-                                            <>
-                                                <h4 id="full-name">Recording</h4>
-                                                <iframe width="100%" className="mb-4" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                                            </>
-                                        )
-                                    }
-                                 }
-                            }
-                        }
-                    }()
-                }
             
             
             

@@ -21,11 +21,23 @@ import { IContestSubmission } from "../../store/models/contest_submission.interf
 const ResultGradeContestAdmin: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const contest_submissions: IContestSubmissionState = useSelector((state: IStateType) => state.contest_submissions);
-    let x: IContestSubmission[] = []
-    x.push(...contest_submissions.contest_gradeds)
-    x.push(...contest_submissions.contest_not_gradeds)
-    const max = x.reduce((a, b) => Math.max(a, b.score), -Infinity);
-    const min = x.reduce((a, b) => Math.min(a, b.score), 100);
+    
+    let max = 0;
+    let min = 100;
+    if (contest_submissions.contest_gradeds.length > 0) {
+        contest_submissions.contest_gradeds.forEach((ele, idx) => {
+            if (ele != undefined && ele != null) {
+                if (ele.score != undefined && ele.score != null) {
+                    if (ele.score > max) {
+                        max = ele.score;
+                    }
+                    if (ele.score < min) {
+                        min = ele.score;
+                    }
+                }
+            }
+        })
+    }
 
     var role = localStorage.getItem('role')
     var rolePrivilege: string[] = []

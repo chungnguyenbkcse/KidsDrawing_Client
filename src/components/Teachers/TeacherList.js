@@ -102,7 +102,7 @@ function TeacherList(props) {
       <span onClick={() => {
         onChangeRequest(row.id)
       }}>
-        <strong style={ { color: 'red', cursor: "pointer" } }>{teacher_level}/{total}</strong>
+        <strong style={ { color: 'red', cursor: "pointer" } }>{total}/{teacher_level}</strong>
       </span>
     );
   }

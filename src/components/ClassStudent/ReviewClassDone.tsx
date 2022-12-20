@@ -86,9 +86,13 @@ const ReivewClassDone: React.FC = () => {
     let list_score_user_grade_exercise: number[] = [];
     let list_name_user_grade_exercise: string[] = [];
     exercise_submission.exercise_gradeds.map((ele, idx) => {
-        list_score_user_grade_exercise.push(ele.score)
-        list_name_user_grade_exercise.push(ele.exercise_name)
-        return ele
+        if (ele != null && ele != undefined) {
+            if (ele.score != undefined && ele.score != null && ele.exercise_name != undefined && ele.exercise_name != null) {
+                list_score_user_grade_exercise.push(ele.score)
+                list_name_user_grade_exercise.push(ele.exercise_name)
+                return ele
+            }
+        }
     })
 
     const routeChangeReivewStart = () => {

@@ -58,16 +58,10 @@ const ClassTeacher: React.FC = () => {
                 }
                 else {
                     trackPromise(getClassTeacher(dispatch, id))
-                    trackPromise(getUserById(dispatch, id))
-                    trackPromise(getCourse(dispatch))
-                    trackPromise(getSemester(dispatch))
                 }
             }
             else {
                 trackPromise(getClassTeacher(dispatch, id))
-                trackPromise(getUserById(dispatch, id))
-                trackPromise(getCourse(dispatch))
-                trackPromise(getSemester(dispatch))
             }
         }
     }, [dispatch, id, access_token, refresh_token]);

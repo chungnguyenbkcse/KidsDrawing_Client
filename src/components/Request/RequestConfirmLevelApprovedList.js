@@ -10,7 +10,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { IoIosRemove } from 'react-icons/io'
 
 
-function RequestConfirmLevelList(props) {
+function RequestConfirmLevelApprovedList(props) {
 
   const dispatch = useDispatch();
   const teacher_register_quantifications = useSelector((state) => state.teacher_register_quantifications);
@@ -47,7 +47,7 @@ function RequestConfirmLevelList(props) {
   }
 
 
-  const datas = teacher_register_quantifications.not_approved_now;
+  const datas = teacher_register_quantifications.approveds;
 
   const options = {
     paginationSize: 5,
@@ -79,18 +79,13 @@ function RequestConfirmLevelList(props) {
   function editButton(cell, row) {
     return (
       <div className="row mt-2">
-        <div className="col-md-3 ml-2">
-          <button type="button" className="btn btn-primary" onClick={() => {
+        <div className="col-md-5 ml-2">
+            <button type="button" className="btn btn-primary" onClick={() => {
             routeChange(row.degree_photo_url)
           }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
         </div>
-        <div className="col-md-3">
-          <button type="button" className="btn btn-primary" onClick={() => {
-            approvedTeacherLevel(row)
-          }}><i class="fa fa-check" aria-hidden="true"></i></button>
-        </div>
-        <div className="col-md-3"> 
-          <button type="button" className="btn btn-danger" onClick={() => {
+        <div className="col-md-5"> 
+        <button type="button" className="btn btn-danger" onClick={() => {
             notApprovedTeacherLevel(row)
           }}><IoIosRemove className="icon-remove"/></button>
         </div>
@@ -112,13 +107,13 @@ function RequestConfirmLevelList(props) {
     },
 
     {
-      dataField: '',
-      text: '',
-      style:{
-        width: '150px'
-      },
-      formatter: editButton
-    }
+        dataField: '',
+        text: '',
+        style:{
+          width: '120px'
+        },
+        formatter: editButton
+      }
   ];
 
   const contentTable = ({ paginationProps, paginationTableProps }) => (
@@ -156,4 +151,4 @@ function RequestConfirmLevelList(props) {
   );
 }
 
-export default RequestConfirmLevelList;
+export default RequestConfirmLevelApprovedList;

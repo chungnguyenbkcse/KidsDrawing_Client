@@ -101,6 +101,11 @@ function TopCardLevelNotApproveNow(props: PropsWithChildren<ICardProperties>): R
                             }}/>
                         </div>
                     </div>
+                    <div className="row no-gutters align-items-center">
+                        <div className="col mr-4">
+                            <div style={{color: 'red', marginRight: '100px'}} className="text-xs font-weight-bold mb-1">{props.status}</div>
+                        </div>          
+                    </div>
                 </div>
             </div>
         </div>

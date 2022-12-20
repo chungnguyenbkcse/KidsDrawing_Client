@@ -18,6 +18,7 @@ function TeacherLevelList(props: teacherRegisterQuantificationListProps): JSX.El
             <tr className={`table-row`} key={`semester_class_${index}`}>
             <TopCardLevelApproved 
                 course_name={ele.course_name} 
+                status="Đã được duyệt"
                 time_approved={ele.time_approved}
                 icon="edit" class="warning" 
                 art_age_name={ele.art_age_name}

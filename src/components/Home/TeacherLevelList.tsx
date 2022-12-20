@@ -19,6 +19,7 @@ function TeacherRegisterQuantificationList(props: teacherRegisterQuantificationL
                 time_approved={ele.time_approved}
                 course_name={ele.course_name} 
                 icon="book" class="primary" 
+                status="Đã được duyệt"
                 art_age_name={ele.art_age_name}
                 art_level_name={ele.art_level_name}
                 art_type_name={ele.art_type_name}

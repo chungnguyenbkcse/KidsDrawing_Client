@@ -76,7 +76,16 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
       saveForm(formState, saveUserFn, url, id);
     }
     else {
-      saveForm(formState, saveUserFn, preview, id);
+      if (image == null || image == undefined || image == "") {
+        if (teacher_register_not_approved !== null) {
+          let url: string = teacher_register_not_approved.degree_photo_url;
+          saveForm(formState, saveUserFn, url, id);
+        }  
+      }
+      else {
+        var url = await setImageAction();
+        saveForm(formState, saveUserFn, url, id);
+      }
     }
   }
 
@@ -101,7 +110,7 @@ function TeacherLevelForm(props: lessonListProps): JSX.Element {
       }
 
       console.log(saveFn)
-
+      props.isCheck(false);
       dispatch(clearSelectedTeacherRegisterNotQuatificationNow());
       dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.None));
     }

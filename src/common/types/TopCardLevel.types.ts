@@ -8,6 +8,7 @@ export interface ICardProperties {
     degree_photo_url: string;
     time_approved: string;
     icon: string;
+    status: string;
     class: string;
     teacher_level: ITeacherRegisterQuantification;
 }

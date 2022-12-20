@@ -17,6 +17,24 @@ function TeacherLevelNotApprovedNowList(props: teacherRegisterQuantificationList
         return (
             <TopCardLevelNotApproveNow 
                 time_approved=""
+                status="Chưa được duyệt"
+                course_name={ele.course_name} 
+                icon="edit" class="warning" 
+                art_age_name={ele.art_age_name}
+                art_level_name={ele.art_level_name}
+                art_type_name={ele.art_type_name}
+                degree_photo_url={ele.degree_photo_url}
+                teacher_level={ele}
+             />
+        );
+    });
+
+    const teacherRegisterQuantificationNotApprovedElements: (JSX.Element | null)[] = teacherRegisterQuantifications.not_approves.map((ele, index) => {
+        if (!ele) { return null; }
+        return (
+            <TopCardLevelNotApproveNow 
+                time_approved=""
+                status="Không được duyệt"
                 course_name={ele.course_name} 
                 icon="edit" class="warning" 
                 art_age_name={ele.art_age_name}
@@ -33,7 +51,7 @@ function TeacherLevelNotApprovedNowList(props: teacherRegisterQuantificationList
         <>
             {
                 function () {
-                    if (teacherRegisterQuantificationElements.length === 0) {
+                    if (teacherRegisterQuantificationElements.length === 0 && teacherRegisterQuantificationNotApprovedElements.length == 0) {
                         return (
                             <div className="col-xl-12 col-md-12 mb-4">
                                 <p id="not-data-not-register-now">Không có dữ liệu!</p>
@@ -41,7 +59,12 @@ function TeacherLevelNotApprovedNowList(props: teacherRegisterQuantificationList
                         )
                     }
                     else {
-                        return teacherRegisterQuantificationElements
+                        return (
+                            <>
+                                {teacherRegisterQuantificationElements}
+                                {teacherRegisterQuantificationNotApprovedElements}
+                            </>
+                        )
                     } 
                 }()
             }

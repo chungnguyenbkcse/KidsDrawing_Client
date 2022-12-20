@@ -48,7 +48,7 @@ function RequestConfirmLevelList(props: productListProps): JSX.Element {
     dispatch(addNotification("Trình độ ", `${ele.course_name} - Đã được chấp nhận bởi bạn`));
   }
 
-  const productElements: (JSX.Element | null)[] = teacher_register_quantifications.not_approved_now.map((product, index) => {
+  const productElements: (JSX.Element | null)[] = teacher_register_quantifications.approveds.map((product, index) => {
     
     if (!product) { return null; }
     let course_name = "";

@@ -116,7 +116,8 @@ const RequestTeacher: React.FC = () => {
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
                 <ToastContainer />
                 <div className="row">
-                    <TopCard title="SỐ YÊU CẦU NGHỈ HỌC" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
+                    <TopCard title="CHƯA DUYỆT" text={`${numberTeacherRegisterSuccessfullCount}`} icon="book" class="primary" />
+                    <TopCard title="ĐÃ DUYỆT" text={`${student_leaves.acceptLeaves.length}`} icon="book" class="primary" />
                     {/* <div className="col-xl-6 col-md-4 mb-4" id="content-button-create-teacher-level">
                     <button className="btn btn-success btn-green" id="btn-create-teacher-level" onClick={() =>
                     dispatch(setModificationState(TeacherRegisterQuantificationModificationStatus.Create))}>

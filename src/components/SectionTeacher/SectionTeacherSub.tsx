@@ -162,7 +162,7 @@ const SectionTeacherSub: React.FC = () => {
     }
 
     const routeChange4 = () => {
-        let link_jisti = "https://jitsi.kidsdrawing.site/" + class_id;
+        let link_jisti = "https://jitsi.kidsdrawing.site/" + section_id;
         if (link_jisti !== null) {
             window.open(link_jisti, '_blank');
         }

@@ -48,25 +48,25 @@ function NotificationClassTeacher(props: artAgeListProps): JSX.Element {
         if (isFormInvalid()) {
             return;
         }
+        const idx = toast.loading("Đang gửi thông báo. Vui lòng đợi trong giây lát...", {
+            position: toast.POSITION.TOP_CENTER
+        });
         props.isCheck(false);
-        let saveUserFn: Function = (isCreate) ? addAnonymousNotification : editAnonymousNotification;
-        saveForm(formState, saveUserFn);
+        let saveUserFn: Function = addAnonymousNotification;
+        saveForm(formState, saveUserFn, idx);
     }
 
-    function saveForm(formState: IAnonymousNotificationFormState, saveFn: Function): void {
+    function saveForm(formState: IAnonymousNotificationFormState, saveFn: Function, idx: any): void {
         if (notification) {
-            const id = toast.loading("Đang gửi thông báo. Vui lòng đợi trong giây lát...", {
-                position: toast.POSITION.TOP_CENTER
-            });
             if (saveFn === addAnonymousNotification) {
                 if (props.data === undefined || props.data === null) {
                     return 
                 }
                 else {
                     dispatch(postNotificationByClass(class_id,{
-                        name: formState.name.value,
-                        description: formState.description.value
-                    }, id))
+                        subject: formState.name.value,
+                        msgBody: formState.description.value
+                    }, idx))
 
                     console.log({
                         name: formState.name.value,

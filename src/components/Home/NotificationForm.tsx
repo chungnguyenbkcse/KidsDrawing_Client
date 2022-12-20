@@ -8,6 +8,8 @@ import { OnChangeModel, IAnonymousNotificationFormState } from "../../common/typ
 import { postAnonymousNotification } from "../../common/service/AnonymousNotification/PostAnonymousNotification";
 import SelectKeyValue from "../../common/components/SelectKeyValue";
 import { toast } from "react-toastify";
+import { postAnonymousNotification1 } from "../../common/service/AnonymousNotification/PostAnonymousNotification1";
+import { postAnonymousNotification2 } from "../../common/service/AnonymousNotification/PostAnonymousNotification2";
 
 export type artAgeListProps = {
     isCheck: (value: boolean) => void;
@@ -52,11 +54,25 @@ function TeachAgeForm(props: artAgeListProps): JSX.Element {
             });
             
             if (saveFn === addAnonymousNotification) {
-                dispatch(postAnonymousNotification(formState.type_send.value, {
-                    subject: formState.name.value,
-                    msgBody: formState.description.value,
-                    attachment: ""
-                }, idx))
+                if (formState.type_send.value == "admin") {
+                    dispatch(postAnonymousNotification({
+                        subject: formState.name.value,
+                        msgBody: formState.description.value
+                    }, idx))
+                }
+                else if (formState.type_send.value == "teacher") {
+                    dispatch(postAnonymousNotification1( {
+                        subject: formState.name.value,
+                        msgBody: formState.description.value
+                    }, idx))
+                }
+                else {
+                    dispatch(postAnonymousNotification2({
+                        subject: formState.name.value,
+                        msgBody: formState.description.value
+                    }, idx))
+                }
+                
             }
 
             console.log({

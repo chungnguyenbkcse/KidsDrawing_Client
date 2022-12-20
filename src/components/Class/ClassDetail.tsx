@@ -15,6 +15,7 @@ import { setModificationStateAnonymousNotification } from "../../store/actions/a
 import { AnonymousNotificationModificationStatus } from "../../store/models/anonymous_notification.interface";
 import Popup from "reactjs-popup";
 import NotificationClassTeacher from "./NotificationClassTeacher";
+import { ToastContainer } from "react-toastify";
 
 const ClassDetail: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -89,6 +90,7 @@ const ClassDetail: React.FC = () => {
                 {/* <h1 className="h3 mb-2 text-gray-800" id="home-teacher">Trang chủ</h1> */}
                 {/* <p className="mb-4">Summary and overview of our admin stuff here</p> */}
 
+                <ToastContainer />
                 <div className="row">
                     <TopCard title="SỐ BUỔI" text={`${time_schedules.timeSchedules.length}`} icon="book" class="primary" />
 

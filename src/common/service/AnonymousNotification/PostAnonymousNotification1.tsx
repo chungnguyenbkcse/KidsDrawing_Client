@@ -2,12 +2,12 @@ import { toast } from "react-toastify";
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/art_age.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 
-export function postAnonymousNotification(data: any, idx: any) {
+export function postAnonymousNotification1(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
         fetch(
-            `${process.env.REACT_APP_API_URL}/sendEmail/admin`, {
+            `${process.env.REACT_APP_API_URL}/sendEmail/teacher`, {
             method: "POST",
             headers: {
                 'Authorization': bearer,
@@ -22,7 +22,7 @@ export function postAnonymousNotification(data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postAnonymousNotification(data, idx))
+                        dispatch(postAnonymousNotification1(data, idx))
                     }
                     else {
                         throw Error(response.statusText);

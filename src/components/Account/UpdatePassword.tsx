@@ -77,7 +77,7 @@ const UpdatePassword: React.FC = () => {
                           onChange={hasFormValueChanged}
                           required={true}
                           maxLength={100}
-                          type="password"
+                          type="text"
                           label="Mật khẩu mới"
                           placeholder="" />
                       </div>

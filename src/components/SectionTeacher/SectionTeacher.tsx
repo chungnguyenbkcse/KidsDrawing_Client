@@ -8,7 +8,7 @@ import { getSectionById } from "../../common/service/Section/GetSectionById";
 import { logout } from "../../store/actions/account.actions";
 import { changeSelectedExercise, setModificationState } from "../../store/actions/exercise.action";
 import { ExerciseModificationStatus, IExercise } from "../../store/models/exercise.interface";
-import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ILessonState, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserRegisterTutorialPageState, IUserRegisterTutorialState, IUserState } from "../../store/models/root.interface";
+import { IClassTeacherState, IExerciseState, IExerciseTeacherState, ILessonState, IRootPageStateType, ISectionState, IStateType, ITutorialPageState, ITutorialState, IUserRegisterTutorialPageState, IUserRegisterTutorialState, IUserState } from "../../store/models/root.interface";
 import ExerciseForm from "../Exercise/ExerciseForm";
 import "./SectionTeacher.css"
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
@@ -22,6 +22,7 @@ import { checkTutorialPageBySection } from "../../common/service/TutorialPage/Ge
 import { getTutorialPageNotApproveBySection } from "../../common/service/TutorialPage/GetTutorialPageNotApproveBySection";
 import { deleteTutorialPageBySection1 } from "../../common/service/TutorialPage/DeleteTutorialPageBySection1";
 import { removeTutorialPageAll } from "../../store/actions/tutorial_page.action";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -151,6 +152,25 @@ const SectionTeacher: React.FC = () => {
         }
     }, [dispatch, access_token, refresh_token, section_id, id]);
 
+    var id_zx = localStorage.getItem('class_name');
+    var class_name = "";
+    if (id_zx !== null) {
+        class_name = (id_zx);
+    }
+
+    var id_zy = localStorage.getItem('section_number');
+    var section_number = "";
+    if (id_zy !== null) {
+        section_number = (id_zy);
+    }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+
+    useEffect(() => {
+        dispatch(updateCurrentPath(class_name, "Buổi " + section_number));
+    }, [path.area, dispatch, class_name, section_number])
+    localStorage.setItem('path','/classes/detail-student')
+
     const history = useHistory();
     const routeChange2 = () => {
         let path = "/section/view";
@@ -161,7 +181,7 @@ const SectionTeacher: React.FC = () => {
     }
 
     const routeChange4 = () => {
-        let link_jisti = "https://jitsi.kidsdrawing.site/" + class_id;
+        let link_jisti = "https://jitsi.kidsdrawing.site/" + section_id;
         if (link_jisti !== null) {
             window.open(link_jisti, '_blank');
         }
@@ -921,7 +941,7 @@ const SectionTeacher: React.FC = () => {
                                         return (
                                             <>
                                                 <h4 id="full-name">Recording</h4>
-                                                <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                                <iframe width="100%" className="mb-4" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                                             </>
                                         )
                                     }

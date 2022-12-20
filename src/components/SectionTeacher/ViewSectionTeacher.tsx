@@ -3,9 +3,10 @@ import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTutorialPageBySection } from "../../common/service/TutorialPage/GetTutorialPageBySection";
 import { logout } from "../../store/actions/account.actions";
-import { IStateType, ITutorialPageState } from "../../store/models/root.interface";
+import { IRootPageStateType, IStateType, ITutorialPageState } from "../../store/models/root.interface";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import Loading from "../../common/components/Loading";
+import { updateCurrentPath } from "../../store/actions/root.actions";
 
 const ViewSectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -72,6 +73,19 @@ const ViewSectionTeacher: React.FC = () => {
             }
         }
     }, [dispatch, access_token, refresh_token, section_id]);
+
+    var id_zy = localStorage.getItem('section_number');
+    var section_number = "";
+    if (id_zy !== null) {
+        section_number = (id_zy);
+    }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+
+    useEffect(() => {
+        dispatch(updateCurrentPath("Buổi " + section_number, 'Nội dung'));
+    }, [path.area, dispatch, section_number])
+    localStorage.setItem('path','/classes/section')
     
     return (
         promiseInProgress ?

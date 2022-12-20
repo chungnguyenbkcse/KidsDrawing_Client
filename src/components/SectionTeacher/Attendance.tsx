@@ -11,7 +11,7 @@ import { updateCurrentPath } from "../../store/actions/root.actions";
 import jwt_decode from "jwt-decode";
 import { logout } from "../../store/actions/account.actions";
 import { getAttendanceBySection } from "../../common/service/Attendance/GetAttendanceBySection";
-import { IAttendanceState, IStateType } from "../../store/models/root.interface";
+import { IAttendanceState, IRootPageStateType, IStateType } from "../../store/models/root.interface";
 
 const Attendance: React.FC = () => {
   const { promiseInProgress } = usePromiseTracker();
@@ -57,6 +57,19 @@ const Attendance: React.FC = () => {
         }
         dispatch(updateCurrentPath("Điểm danh", ""));
     }, [dispatch, access_token, refresh_token, section_id]);
+
+    var id_zy = localStorage.getItem('section_number');
+    var section_number = "";
+    if (id_zy !== null) {
+        section_number = (id_zy);
+    }
+
+    const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
+
+    useEffect(() => {
+        dispatch(updateCurrentPath("Buổi " + section_number, 'Điểm danh'));
+    }, [path.area, dispatch, section_number])
+    localStorage.setItem('path','/classes/section')
 
   return (
     promiseInProgress ?

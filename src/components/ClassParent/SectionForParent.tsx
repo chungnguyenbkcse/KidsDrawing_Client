@@ -222,7 +222,7 @@ const SectionForParent: React.FC = () => {
         localStorage.removeItem('tutorial_name')
         localStorage.setItem('is_active', is_active)
         localStorage.removeItem('link_record')
-        localStorage.setItem('link_record', link_record)
+        localStorage.setItem('link_record', "https://recording-jitsi-chung.s3.ap-southeast-1.amazonaws.com/recording/" + section.id + ".mp4")
         tutorial_pages.tutorialPages.map(element => {
             if (element.section_id === section.id) {
                 tutorial_page_list.push({

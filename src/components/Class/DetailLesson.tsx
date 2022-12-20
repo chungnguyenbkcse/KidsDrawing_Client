@@ -55,7 +55,7 @@ const DetailLesson: React.FC = () => {
                             <h6 className="m-0 font-weight-bold text-green">Video buổi dạy học</h6>
                         </div>
                         <div className="card-body">
-                        <iframe width="100%" height="315" src={link_recording} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        <iframe width="100%" className="mb-4" height="315" src={link_recording} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                         </div>
                     </div>
                 </div>

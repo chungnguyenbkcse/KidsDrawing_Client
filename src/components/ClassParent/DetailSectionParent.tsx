@@ -776,7 +776,7 @@ const DetailSectionParent: React.FC = () => {
                                                                 return (
                                                                     <>
                                                                         <h4 id="full-name">Recording</h4>
-                                                                        <iframe width="100%" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                                                        <iframe width="100%" className="mb-4" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                                                                     </>
                                                                 )
                                                             }

@@ -179,7 +179,7 @@ const DetailClassTeacher: React.FC = () => {
         localStorage.removeItem('tutorial_name')
         localStorage.setItem('is_active', is_active)
         localStorage.removeItem('link_record')
-        localStorage.setItem('link_record', link_record)
+        localStorage.setItem('link_record', "https://recording-jitsi-chung.s3.ap-southeast-1.amazonaws.com/recording/" + section.id + ".mp4")
         tutorials.tutorials.map(ele => {
             if (ele.section_id === section.id) {
                 localStorage.setItem('tutorial_name', ele.name.toString())

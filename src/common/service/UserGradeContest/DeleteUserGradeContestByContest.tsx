@@ -1,7 +1,8 @@
 import { fetchDataRequest, fetchDataError } from "../../../store/actions/users.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
+import { postUserGradeContest } from "./PostUserGradeContest";
 
-export function deleteUserGradeContestByContest(id: any) {
+export function deleteUserGradeContestByContest(id: any, valueTeacher: any[], idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     
     return (dispatch: any) => {
@@ -21,7 +22,7 @@ export function deleteUserGradeContestByContest(id: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(deleteUserGradeContestByContest(id))
+                        dispatch(deleteUserGradeContestByContest(id, valueTeacher, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -33,6 +34,14 @@ export function deleteUserGradeContestByContest(id: any) {
             })
             .then (data => {
                 console.log(data)
+                valueTeacher.map((value, index) =>  {
+                    return dispatch(postUserGradeContest({
+                        contest_id: id,
+                        teacher_id: value.value,
+                        number: index + 1
+                    }))
+                })
+                
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

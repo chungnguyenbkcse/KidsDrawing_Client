@@ -38,14 +38,8 @@ export function putContest(id: any,data: any, valueTeacher: any[], idx: any, rou
             .then (data => {
                 console.log(data)
                 console.log(id)
-                dispatch(deleteUserGradeContestByContest(id));
-                valueTeacher.map((value, index) =>  {
-                    return dispatch(postUserGradeContest({
-                        contest_id: id,
-                        teacher_id: value.value,
-                        number: index + 1
-                    }))
-                })
+                dispatch(deleteUserGradeContestByContest(id, valueTeacher, idx));
+                
                 toast.update(idx, { render: "Chỉnh cuộc thi thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 setTimeout(function () {
                     routeHome(true);

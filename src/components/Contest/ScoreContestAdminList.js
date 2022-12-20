@@ -69,7 +69,42 @@ const ScoreContestAdminList = () => {
         }
     }
 
-    const datas = x;
+    const datas = [{
+        id: 0,
+        student_id: 0,
+        contest_id: 0,
+        student_name: "",
+        contest_name: "",
+        teacher_id: 0,
+        teacher_name: "",
+        image_url: "",
+        score: 0,
+        feedback: "",
+        time: "",
+        create_time: "",
+        update_time: ""
+    }];
+
+    let datax = []
+  if (x.length > 0) {
+    let check = true;
+    x.map((ele, idx) => {
+      if (ele != undefined && ele != null) {
+        if (ele.id != undefined && ele.id != null) {
+          datax.push(ele)
+        }
+        else {
+          check = false;
+        }
+      }
+      else {
+        check = false;
+      }
+    })
+    if (check == true) {
+      datas = datax
+    }
+  }
 
     const options = {
         paginationSize: 5,

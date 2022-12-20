@@ -69,7 +69,7 @@ const ScoreContestAdminList = () => {
         }
     }
 
-    const datas = [{
+    let datas = [{
         id: 0,
         student_id: 0,
         contest_id: 0,

@@ -54,8 +54,13 @@ const DetailClassParent: React.FC = () => {
         exercise_submission.exercise_gradeds.map((ele, idx) => {
             if (ele != undefined) {
                 if (idx < 3) {
-                    list_score_user_grade_exercise.push(ele.score)
-                    list_name_user_grade_exercise.push(ele.exercise_name)
+                    if (ele != null && ele != undefined) {
+                        if (ele.score != undefined && ele.score != null && ele.exercise_name != undefined && ele.exercise_name != null) {
+                            list_score_user_grade_exercise.push(ele.score)
+                            list_name_user_grade_exercise.push(ele.exercise_name)
+                            return ele
+                        }
+                    }
                 }
             }
             return ele
@@ -63,9 +68,13 @@ const DetailClassParent: React.FC = () => {
     }
     else {
         exercise_submission.exercise_gradeds.map((ele, idx) => {
-            list_score_user_grade_exercise.push(ele.score)
-            list_name_user_grade_exercise.push(ele.exercise_name)
-            return ele
+            if (ele != null && ele != undefined) {
+                if (ele.score != undefined && ele.score != null && ele.exercise_name != undefined && ele.exercise_name != null) {
+                    list_score_user_grade_exercise.push(ele.score)
+                    list_name_user_grade_exercise.push(ele.exercise_name)
+                    return ele
+                }
+            }
         })
     }
 

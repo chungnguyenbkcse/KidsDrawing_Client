@@ -96,9 +96,13 @@ const ResultContest: React.FC = () => {
     let scores: number[] = []
     if (user_gradee_contest_submissions.userGradeContestSubmissions.length > 0){
         user_gradee_contest_submissions.userGradeContestSubmissions.map(ele => {
-            student.push(ele.student_name)
-            scores.push(ele.score)
-            return ele
+            if (ele != null && ele != undefined) {
+                if (ele.score != undefined && ele.score != null && ele.student_name != undefined && ele.student_name != null) {
+                    student.push(ele.student_name)
+                    scores.push(ele.score)
+                    return ele
+                }
+            }
         })
     }
 

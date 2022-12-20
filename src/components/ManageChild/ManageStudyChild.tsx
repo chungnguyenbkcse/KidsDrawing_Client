@@ -82,9 +82,12 @@ function ManageStudyChild(props: classTeacherListProps): JSX.Element {
     console.log(contest_submisson.contest_submission_grade)
     contest_submisson.contest_submission_grade.map((ele, idx) => {
         if (ele !== undefined && ele !== null ){
-            list_score_user_grade_contest.push(ele.score)
-            list_name_user_grade_contest.push(ele.contest_name)
-            return ele
+            if (ele.score != undefined && ele.score != null && ele.contest_name != null && ele.contest_name != undefined) {
+                list_score_user_grade_contest.push(ele.score)
+                list_name_user_grade_contest.push(ele.contest_name)
+                return ele
+            }
+            
         }
         return null
     })

@@ -22,9 +22,13 @@ const AnalytisResultGradeExamTeacher: React.FC = () => {
     let scores: number[] = []
     if (exercise_submissions.exercise_gradeds.length > 0){
         exercise_submissions.exercise_gradeds.map(ele => {
-            student.push(ele.student_name)
-            scores.push(ele.score)
-            return ele
+            if (ele != null && ele != undefined) {
+                if (ele.score != undefined && ele.score != null && ele.student_name != undefined && ele.student_name != null) {
+                    student.push(ele.student_name)
+                    scores.push(ele.score)
+                    return ele
+                }
+            }
         })
     }
 

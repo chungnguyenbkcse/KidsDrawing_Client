@@ -31,9 +31,13 @@ const ResultGradeContestTeacher: React.FC = () => {
     let scores: number[] = []
     if (contest_submissions.contest_submission_grade.length > 0){
         contest_submissions.contest_submission_grade.map(ele => {
-            student.push(ele.student_name)
-            scores.push(ele.score)
-            return ele
+            if (ele != null && ele != undefined) {
+                if (ele.score != undefined && ele.score != null && ele.student_name != undefined && ele.student_name != null) {
+                    student.push(ele.student_name)
+                    scores.push(ele.score)
+                    return ele
+                }
+            }
         })
     }
 

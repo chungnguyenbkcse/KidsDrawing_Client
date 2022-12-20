@@ -68,8 +68,25 @@ function ClassTeacherDoingList(props) {
   }
   ];
 
+  let datax = []
   if (class_teachers.class_doing.length > 0 && class_teachers !== undefined && class_teachers !== null) {
-    datas = class_teachers.class_doing
+    let check = true;
+    class_teachers.class_doing.map((ele, idx) => {
+      if (ele != undefined && ele != null) {
+        if (ele.id != undefined && ele.id != null) {
+          datax.push(ele)
+        }
+        else {
+          check = false;
+        }
+      }
+      else {
+        check = false;
+      }
+    })
+    if (check == true) {
+      datas = datax
+    }
   }
 
   const options = {
@@ -209,11 +226,6 @@ function ClassTeacherDoingList(props) {
       {/* <PaginationListStandalone {...paginationProps} /> */}
       <div>
         <div>
-        {
-            function () {
-              if ((datas.length > 0 && datas !== undefined && datas !== null)) {
-                if (datas[0].id != undefined) {
-                  return (
                     <BootstrapTable
                       hover
                       keyField="id"
@@ -222,11 +234,6 @@ function ClassTeacherDoingList(props) {
                       filter={filterFactory()}
                       {...paginationTableProps}
                     />
-                  )
-                }
-              }
-            }()
-          }
           
         </div>
       </div>

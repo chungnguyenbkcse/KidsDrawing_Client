@@ -10,53 +10,70 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 function ClassTeacherEndList(props) {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const class_teachers = useSelector((state) => state.class_teachers);
-  
-    const history = useHistory();
-  
-    
-    const routeChange = (class_teacher) => {
-        let path = '/classes-end/detail';
-        localStorage.removeItem("class_id");
-        localStorage.setItem("class_id", class_teacher.id.toString())
-        localStorage.removeItem('class_end');
-        localStorage.setItem('class_end', 'true');
-        localStorage.removeItem('class_name');
-        localStorage.setItem('class_name', class_teacher.name);
-        history.push({
-          pathname: path,
-          state: { class_id: class_teacher.id }
-        });
-      }
+  const class_teachers = useSelector((state) => state.class_teachers);
+
+  const history = useHistory();
 
 
+  const routeChange = (class_teacher) => {
+    let path = '/classes-end/detail';
+    localStorage.removeItem("class_id");
+    localStorage.setItem("class_id", class_teacher.id.toString())
+    localStorage.removeItem('class_end');
+    localStorage.setItem('class_end', 'true');
+    localStorage.removeItem('class_name');
+    localStorage.setItem('class_name', class_teacher.name);
+    history.push({
+      pathname: path,
+      state: { class_id: class_teacher.id }
+    });
+  }
 
 
-      let datas = [
-        {
-          id: 0,
-          name: "",
-          course_id: 0,
-          review_star: 0,
-          link_url: "",
-          semester_class_id: 0,
-          user_register_teach_semester: 0,
-          security_code: "",
-          total_student: 0,
-          num_of_section: 0,
-          course_name: "",
-          semester_name: "",
-          art_type_name: "",
-          art_level_name: "",
-          art_age_name: "",
-          schedule: ""
-      }
-      ];
 
+
+  let datas = [
+    {
+      id: 0,
+      name: "",
+      course_id: 0,
+      review_star: 0,
+      link_url: "",
+      semester_class_id: 0,
+      user_register_teach_semester: 0,
+      security_code: "",
+      total_student: 0,
+      num_of_section: 0,
+      course_name: "",
+      semester_name: "",
+      art_type_name: "",
+      art_level_name: "",
+      art_age_name: "",
+      schedule: ""
+    }
+  ];
+
+  let datax = []
   if (class_teachers.class_done.length > 0 && class_teachers !== undefined && class_teachers !== null) {
-    datas = class_teachers.class_done
+    let check = true;
+    class_teachers.class_done.map((ele, idx) => {
+      if (ele != undefined && ele != null) {
+        if (ele.id != undefined && ele.id != null) {
+          datax.push(ele)
+        }
+        else {
+          check = false;
+        }
+      }
+      else {
+        check = false;
+      }
+    })
+    if (check == true) {
+      datas = datax
+    }
   }
 
   const options = {
@@ -90,10 +107,11 @@ function ClassTeacherEndList(props) {
   function detailClassButton(cell, row) {
     if (row.id != 0) {
       return (
-          <button type="button" className="btn btn-primary" onClick={() => {
-              if(props.onSelect) props.onSelect(row);
-              routeChange(row)}}
-            ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+        <button type="button" className="btn btn-primary" onClick={() => {
+          if (props.onSelect) props.onSelect(row);
+          routeChange(row)
+        }}
+        ><i class="fa fa-info-circle" aria-hidden="true"></i></button>
       )
     }
   }
@@ -148,28 +166,28 @@ function ClassTeacherEndList(props) {
       formatter: viewName
     },
     {
-        dataField: 'course_name',
-        text: 'Thuộc khóa học',
-        filter: textFilter(),
-        formatter: viewCourseName
-      },
-      {
-        dataField: 'total_student',
-        text: 'Số học sinh',
-        filter: textFilter(),
-        formatter: viewTotalStudent
-      },
-      {
-        dataField: 'num_of_section',
-        text: 'Số buổi học',
-        filter: textFilter(),
-        formatter: viewNumOfSection
-      },
-      {
-        dataField: 'review_star',
-        text: 'Điểm đánh giá (Thang điểm 100)',
-        formatter: viewReviewStar
-      },
+      dataField: 'course_name',
+      text: 'Thuộc khóa học',
+      filter: textFilter(),
+      formatter: viewCourseName
+    },
+    {
+      dataField: 'total_student',
+      text: 'Số học sinh',
+      filter: textFilter(),
+      formatter: viewTotalStudent
+    },
+    {
+      dataField: 'num_of_section',
+      text: 'Số buổi học',
+      filter: textFilter(),
+      formatter: viewNumOfSection
+    },
+    {
+      dataField: 'review_star',
+      text: 'Điểm đánh giá (Thang điểm 100)',
+      formatter: viewReviewStar
+    },
     {
       dataField: '',
       text: 'Hành động',
@@ -182,12 +200,7 @@ function ClassTeacherEndList(props) {
       {/* <PaginationListStandalone {...paginationProps} /> */}
       <div>
         <div>
-          {
-            function () {
-              if ((datas.length > 0 && datas !== undefined && datas !== null)) {
-                if (datas[0].id != undefined) {
-                  return (
-                    <BootstrapTable
+                <BootstrapTable
                       hover
                       keyField="id"
                       data={datas}
@@ -195,11 +208,6 @@ function ClassTeacherEndList(props) {
                       filter={filterFactory()}
                       {...paginationTableProps}
                     />
-                  )
-                }
-              }
-            }()
-          }
         </div>
       </div>
       {/* <PaginationListStandalone {...paginationProps} /> */}
@@ -208,7 +216,7 @@ function ClassTeacherEndList(props) {
 
 
   return (
-      <Fragment>
+    <Fragment>
       <div>
         <PaginationProvider
           pagination={

@@ -74,9 +74,17 @@ function StudentListEnd(props) {
                 <span>Nam</span>
             )
         }
-        return (
-            <span>Nữ</span>
-        )
+        else if (row.sex === "Famale") {
+            return (
+                <span>Nữ</span>
+            )
+        }
+        else {
+            return (
+                <span>Chưa xác định</span>
+            )
+        }
+        
     }
 
     function manageStudent(cell, row, rowIndex) {
@@ -107,11 +115,7 @@ function StudentListEnd(props) {
             text: 'Tên đăng nhập',
             filter: textFilter(),
         },
-        {
-            dataField: 'parent',
-            text: 'Phụ huynh',
-            filter: textFilter(),
-        },
+        
         {
             dataField: 'email',
             text: 'Email',

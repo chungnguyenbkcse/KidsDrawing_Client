@@ -752,7 +752,7 @@ const SectionTeacher: React.FC = () => {
 
                                                                                                 <div className="row mb-2">
                                                                                                     <div className="col-md-5">
-                                                                                                        Thời gian gửi:
+                                                                                                        Gửi lúc:
                                                                                                     </div>
                                                                                                     <div className="col-md-7 status-score">
                                                                                                     {
@@ -779,7 +779,7 @@ const SectionTeacher: React.FC = () => {
                                                                                                             return (
                                                                                                                 <div className="row mb-2">
                                                                                                     <div className="col-md-5">
-                                                                                                        Thời gian duyệt:
+                                                                                                        Duyệt lúc:
                                                                                                     </div>
                                                                                                     <div className="col-md-7 status-score">
                                                                                                     {
@@ -866,7 +866,7 @@ const SectionTeacher: React.FC = () => {
 
                                                                                         <div className="row mb-2">
                                                                                             <div className="col-md-5">
-                                                                                                Thời gian gửi:
+                                                                                                Gửi lúc:
                                                                                             </div>
                                                                                             <div className="col-md-7 status-score">
                                                                                             {
@@ -893,7 +893,7 @@ const SectionTeacher: React.FC = () => {
                                                                                                     return (
                                                                                                         <div className="row mb-2">
                                                                                             <div className="col-md-5">
-                                                                                                Thời gian duyệt:
+                                                                                                Duyệt lúc:
                                                                                             </div>
                                                                                             <div className="col-md-7 status-score">
                                                                                             {

@@ -318,18 +318,6 @@ const CourseNomalFormEdit: React.FC = () => {
                                 </div>
                                 
                             </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <NumberInput id="input_num_of_section"
-                                        value={formState.num_of_section.value}
-                                        field="num_of_section"
-                                        onChange={hasFormValueChanged}
-                                        max={36}
-                                        min={1}
-                                        label="Số buổi học" 
-                                    />
-                                </div>
-                            </div>
 
                             <div className="form-group">
                                 <label>Miêu tả</label>

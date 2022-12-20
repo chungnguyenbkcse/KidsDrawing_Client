@@ -23,6 +23,7 @@ import { getTutorialPageNotApproveBySection } from "../../common/service/Tutoria
 import { deleteTutorialPageBySection1 } from "../../common/service/TutorialPage/DeleteTutorialPageBySection1";
 import { removeTutorialPageAll } from "../../store/actions/tutorial_page.action";
 import { updateCurrentPath } from "../../store/actions/root.actions";
+import { ISection } from "../../store/models/section.interface";
 
 const SectionTeacher: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -187,7 +188,9 @@ const SectionTeacher: React.FC = () => {
         }
     }
 
-    const routeChange5 = () => {
+    const routeChange5 = (section: ISection) => {
+        localStorage.removeItem('form_teaching')
+        localStorage.setItem('form_teaching', section.teach_form.toString())
         let path = "/attendance";
         history.push({
             pathname: path
@@ -497,13 +500,12 @@ const SectionTeacher: React.FC = () => {
                                                                 return ""
                                                             }
                                                             else {
-                                                                if (sections.sections[0].teach_form === true) {
                                                                     if (is_active === "not_active") {
                                                                         return (
                                                                             <button
                                                                                 className="btn btn-success"
                                                                                 id="btn-into-attendance"
-                                                                                onClick={routeChange5}
+                                                                                onClick={() => routeChange5(sections.sections[0])}
                                                                             >
                                                                                 Điểm danh
                                                                             </button>
@@ -514,7 +516,7 @@ const SectionTeacher: React.FC = () => {
                                                                             <button
                                                                                 className="btn btn-success ml-2"
                                                                                 id="btn-into-attendance"
-                                                                                onClick={routeChange5}
+                                                                                onClick={() => routeChange5(sections.sections[0])}
                                                                             >
                                                                                 Điểm danh
                                                                             </button>
@@ -522,7 +524,7 @@ const SectionTeacher: React.FC = () => {
                                                                     }
 
 
-                                                                }
+                                                                
                                                             }
                                                         }()
                                                     }
@@ -938,12 +940,22 @@ const SectionTeacher: React.FC = () => {
                                         }
                                     }
                                     else {
-                                        return (
-                                            <>
-                                                <h4 id="full-name">Recording</h4>
-                                                <iframe width="100%" className="mb-4" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                                            </>
-                                        )
+                                        if (sections.sections.length <= 0) {
+                                            return ""
+                                        }
+                                        else {
+                                            if (sections.sections[0].teach_form === true) {
+                                                if (is_active === "not_active") {
+                                                    return (
+                                                        <>
+                                                            <h4 id="full-name">Recording</h4>
+                                                            <iframe width="100%" className="mb-4" height="500" src={link_record} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                                        </>
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        
                                     }
                             }
                         }

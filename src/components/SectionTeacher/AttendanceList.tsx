@@ -59,6 +59,12 @@ function AttendanceList(props: lessonListProps): JSX.Element {
         is_active = (id_k);
     }
 
+    var id_kx = localStorage.getItem('form_teaching');
+    var form_teaching = "";
+    if (id_kx !== null) {
+        form_teaching = (id_kx);
+    }
+
     let lst: Options[] = [];
 
     if (attendances.attendances.length > 0) {
@@ -156,11 +162,11 @@ function AttendanceList(props: lessonListProps): JSX.Element {
                     </thead>
                     <tbody>
                         {
-                            is_active == "not_active" ? lessonElement1s : lessonElements
+                            is_active == "not_active" || form_teaching == "false" ? lessonElement1s : lessonElements
                         }
                         
                         {
-                            is_active == "not_active" ? "" : <tr className={`table-row `}>
+                            is_active == "not_active" || form_teaching == "false" ? "" : <tr className={`table-row `}>
                             <button
                                 className="btn btn-success ml-2"
                                 id="btn-into-room"

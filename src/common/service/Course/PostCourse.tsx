@@ -4,7 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { postSectionTemplate1 } from "../SectionTemplate/PostSectionTemplate1";
 import { getCourse } from "./GetCourse";
 
-export function postCourse(course: any, idx: any) {
+export function postCourse(course: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -24,7 +24,7 @@ export function postCourse(course: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postCourse(course, idx))
+                        dispatch(postCourse(course, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -36,6 +36,9 @@ export function postCourse(course: any, idx: any) {
             })
             .then (data => {
                 console.log(data)
+                setTimeout(function () {
+                    routeHome();
+                }, 1000); 
                 toast.update(idx, { render: "Thêm khóa học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 getCourse(dispatch)
                 dispatch(postSectionTemplate1({

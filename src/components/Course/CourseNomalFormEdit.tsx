@@ -154,7 +154,7 @@ const CourseNomalFormEdit: React.FC = () => {
                     art_type_id: formState.art_type_id.value,
                     art_age_id: formState.art_age_id.value,
                     art_level_id: formState.art_level_id.value
-                }, id))
+                }, id, routeHome))
             }
 
             else if (saveFn === editCourse) {
@@ -168,14 +168,12 @@ const CourseNomalFormEdit: React.FC = () => {
                     art_type_id: formState.art_type_id.value,
                     art_age_id: formState.art_age_id.value,
                     art_level_id: formState.art_level_id.value
-                }, id))
+                }, id, routeHome))
             }
 
             dispatch(clearSelectedCourse());
             dispatch(setModificationState(CourseModificationStatus.None));
-            setTimeout(function () {
-                routeHome();
-            }, 1000); 
+            
         }
     }
 

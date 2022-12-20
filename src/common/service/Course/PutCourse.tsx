@@ -3,7 +3,7 @@ import { fetchDataRequest } from "../../../store/actions/course.action";
 import { postRefreshToken } from "../Aut/RefreshToken";
 import { getCourse } from "./GetCourse";
 
-export function putCourse(id: any,data: any, idx: any) {
+export function putCourse(id: any,data: any, idx: any, routeHome: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     return (dispatch: any) => {
         dispatch(fetchDataRequest());
@@ -23,7 +23,7 @@ export function putCourse(id: any,data: any, idx: any) {
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(putCourse(id, data, idx))
+                        dispatch(putCourse(id, data, idx, routeHome))
                     }
                     else {
                         throw Error(response.statusText);
@@ -38,6 +38,9 @@ export function putCourse(id: any,data: any, idx: any) {
                 console.log(id)
                 toast.update(idx, { render: "Chỉnh khóa học thành công", type: "success", isLoading: false, position: toast.POSITION.TOP_CENTER, autoClose: 1000 });
                 getCourse(dispatch)
+                setTimeout(function () {
+                    routeHome();
+                }, 1000); 
             })
             .catch(error => {
                 toast.update(idx, { render: "Chỉnh khóa học không thành công", type: "error", isLoading: false, position: toast.POSITION.TOP_CENTER, closeButton: true });

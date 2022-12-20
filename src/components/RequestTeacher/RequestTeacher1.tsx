@@ -144,7 +144,7 @@ const RequestTeacher1: React.FC = () => {
                             }
                         }} style={{
                             color: checked ? "#F24E1E" : "#2F4F4F"
-                        }}>Yêu cầu</h6>
+                        }}>Chưa duyệt</h6>
                         <div style={{
                             height: "5px",
                             textAlign: "center",

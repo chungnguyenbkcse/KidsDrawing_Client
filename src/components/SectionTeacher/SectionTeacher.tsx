@@ -470,8 +470,7 @@ const SectionTeacher: React.FC = () => {
                                                     }
                                                 </p>
                                             </div>
-                                            <div className="row">
-                                                <div className="col-xl-6 col-md-6 col-xs-6">
+                                            
                                                     {
                                                         function () {
                                                             if (sections.sections.length <= 0) {
@@ -480,57 +479,52 @@ const SectionTeacher: React.FC = () => {
                                                             else {
                                                                 if (sections.sections[0].teach_form === true && (is_active === "not_active_now" || is_active === "pre_active_now" || is_active === "active_now")) {
                                                                     return (
-                                                                        <button
-                                                                            className="btn btn-success ml-2"
-                                                                            id="btn-into-room"
-                                                                            onClick={routeChange4}
-                                                                        >
-                                                                            Vào metting room
-                                                                        </button>
+                                                                        <div className="row">
+                                                                            <div className="col-xl-6 col-md-6 col-xs-6">
+                                                                                <button
+                                                                                    className="btn btn-success ml-2"
+                                                                                    id="btn-into-room"
+                                                                                    onClick={routeChange4}
+                                                                                >
+                                                                                    Vào metting room
+                                                                                </button>
+                                                                                
+                                                                            </div>
+
+                                                                            <div className="col-xl-6 col-md-6 col-xs-6">
+                                                                                <button
+                                                                                    className="btn btn-success mr-2 float-right"
+                                                                                    id="btn-into-attendance"
+                                                                                    onClick={() => routeChange5(sections.sections[0])}
+                                                                                >
+                                                                                    Điểm danh
+                                                                                </button>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                                else {
+                                                                    return (
+                                                                        <div className="row mx-auto">
+                                                                            <div className="col-xl-12 col-md-12 col-xs-12">
+                                                                               <button
+                                                                                   className="btn btn-success"
+                                                                                   id="btn-into-attendance"
+                                                                                   onClick={() => routeChange5(sections.sections[0])}
+                                                                               >
+                                                                                   Điểm danh
+                                                                               </button>
+
+                                                                            </div>
+                                                                        </div>
                                                                     )
                                                                 }
                                                             }
                                                         }()
                                                     }
-                                                </div>
-                                                <div className="col-xl-6 col-md-6 col-xs-6">
-                                                    {
-                                                        function () {
-                                                            if (sections.sections.length <= 0) {
-                                                                return ""
-                                                            }
-                                                            else {
-                                                                    if (is_active === "not_active" || is_active == "not_active_now") {
-                                                                        return (
-                                                                            <button
-                                                                                className="btn btn-success"
-                                                                                id="btn-into-attendance"
-                                                                                onClick={() => routeChange5(sections.sections[0])}
-                                                                            >
-                                                                                Điểm danh
-                                                                            </button>
-                                                                        )
-                                                                    }
-                                                                    else if (is_active === "pre_active_now" || is_active === "active_now") {
-                                                                        return (
-                                                                            <button
-                                                                                className="btn btn-success ml-2"
-                                                                                id="btn-into-attendance"
-                                                                                onClick={() => routeChange5(sections.sections[0])}
-                                                                            >
-                                                                                Điểm danh
-                                                                            </button>
-                                                                        )
-                                                                    }
+                                                
 
-
-                                                                
-                                                            }
-                                                        }()
-                                                    }
-                                                </div>
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

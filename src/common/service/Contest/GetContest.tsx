@@ -54,7 +54,7 @@ export function getContest(dispatch: any) {
                 dispatch(removeContestEndAll())
                 dispatch(removeContestNotOpenNowAll())
                 dispatch(removeContestOpeningAll())
-                console.log(data.body.contest_not_open_now)
+                console.log(data.body.contest_end)
                 data.body.contest_not_open_now.map((ele: any, index: any) => {
                     var strDate1 = ele.start_time;
                     var strDate2 = ele.end_time;

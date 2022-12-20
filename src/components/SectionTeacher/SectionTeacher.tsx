@@ -500,7 +500,7 @@ const SectionTeacher: React.FC = () => {
                                                                 return ""
                                                             }
                                                             else {
-                                                                    if (is_active === "not_active") {
+                                                                    if (is_active === "not_active" || is_active == "not_active_now") {
                                                                         return (
                                                                             <button
                                                                                 className="btn btn-success"

@@ -182,15 +182,23 @@ function ClassTeacherEndList(props) {
       {/* <PaginationListStandalone {...paginationProps} /> */}
       <div>
         <div>
-        {
-            (datas.length > 0 && datas !== undefined && datas !== null) ? <BootstrapTable
-            hover
-            keyField="id"
-            data={datas}
-            columns={columns}
-            filter={filterFactory()}
-            {...paginationTableProps}
-          /> : ""
+          {
+            function () {
+              if ((datas.length > 0 && datas !== undefined && datas !== null)) {
+                if (datas[0].id != undefined) {
+                  return (
+                    <BootstrapTable
+                      hover
+                      keyField="id"
+                      data={datas}
+                      columns={columns}
+                      filter={filterFactory()}
+                      {...paginationTableProps}
+                    />
+                  )
+                }
+              }
+            }()
           }
         </div>
       </div>

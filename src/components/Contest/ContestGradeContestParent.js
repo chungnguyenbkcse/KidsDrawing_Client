@@ -198,24 +198,26 @@ const ResultGradeContestParent = () => {
 
     function nameButton(cell, row) {
         if (row != undefined) {
-            if (list_student_id.includes(row.student_id) && row.student_name != undefined) {
+            if (row.student_name != undefined) {
+                if (list_student_id.includes(row.student_id)) {
+                    return (
+                        <div className="avatar-table row-student-active table-text-size mx-auto top-text-color" onClick={() => {
+                            handleViewResult(row)
+                        }}>
+                            <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
+                                alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
+                            {row.student_name}
+                        </div>
+                    ); 
+                }
                 return (
-                    <div className="avatar-table row-student-active table-text-size mx-auto top-text-color" onClick={() => {
-                        handleViewResult(row)
-                    }}>
+                    <div className="avatar-table table-text-size mx-auto top-text-color">
                         <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
                             alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
                         {row.student_name}
                     </div>
-                ); 
+                );
             }
-            return (
-                <div className="avatar-table table-text-size mx-auto top-text-color">
-                    <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
-                        alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
-                    {row.student_name}
-                </div>
-            );
         }
     }
 

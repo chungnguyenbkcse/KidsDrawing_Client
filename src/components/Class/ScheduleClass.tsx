@@ -22,13 +22,17 @@ const ScheduleClass: React.FC = () => {
     let data: object[] = []
 
     time_schedules.timeSchedules.map((ele: any, index: any) => {
-        return data.push({
-            Id: index,
-            Subject: `Buổi học ${index + 1}`,
-            StartTime: new Date(ele.start_time),
-            EndTime: new Date(ele.end_time),
-            IsAllDay: false
-        })
+        if (ele != undefined && ele != null) {
+            if (ele.start_time != undefined && ele.end_time != undefined && ele.start_time != null && ele.end_time != null) {
+                return data.push({
+                    Id: index,
+                    Subject: `Buổi học ${index + 1}`,
+                    StartTime: new Date(ele.start_time),
+                    EndTime: new Date(ele.end_time),
+                    IsAllDay: false
+                })
+            }
+        }
     })
 
     var id_x = localStorage.getItem('class_id')

@@ -138,30 +138,40 @@ const ScoreContestAdminList = () => {
     }
 
     function nameButton(cell, row) {
-        return (
-            <div className="avatar-table table-text-size mx-auto top-text-color">
-                <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
-                    alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
-                {row.student_name}
-            </div>
-        );
+        if (row != undefined) {
+            if (row.student_name != undefined) {
+                return (
+                    <div className="avatar-table table-text-size mx-auto top-text-color">
+                        <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
+                            alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
+                        {row.student_name}
+                    </div>
+                );
+            }
+        }
+        
     }
 
     function viewDetailButton(cell, row) {
-        if (row.score != null) {
-            return (
-                <button type="button" className="btn btn-primary" onClick={() => {
-                    handleViewResult(row)
-                }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-            )
+        if (row != undefined) {
+            if (row.score != undefined) {
+                if (row.score != null) {
+                    return (
+                        <button type="button" className="btn btn-primary" onClick={() => {
+                            handleViewResult(row)
+                        }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                    )
+                }
+                else {
+                    return (
+                        <button type="button" className="btn btn-primary" onClick={() => {
+                            handleViewResult1(row)
+                        }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                    )
+                }
+            }
         }
-        else {
-            return (
-                <button type="button" className="btn btn-primary" onClick={() => {
-                    handleViewResult1(row)
-                }}><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-            )
-        }
+        
         
     }
 

@@ -85,7 +85,7 @@ const ResultGradeContestStudent = () => {
     useEffect(() => {
         dispatch(updateCurrentPath("Cuộc thi", contest_name_));
     }, [path.area, dispatch, contest_name_])
-    localStorage.setItem('path','/contests')
+    localStorage.setItem('path', '/contests')
 
 
 
@@ -101,7 +101,7 @@ const ResultGradeContestStudent = () => {
         if (contest_submissions !== null && contest_submissions !== undefined) {
             if (user_graded_contest_submission.student_id === id) {
                 localStorage.removeItem('contest_submission_id');
-                
+
                 localStorage.removeItem('time_submit');
                 localStorage.setItem('time_submit', user_graded_contest_submission.time.toString())
                 localStorage.removeItem('score')
@@ -127,7 +127,42 @@ const ResultGradeContestStudent = () => {
         }
     }
 
-    const datas = tail_score;
+    let datas = [{
+        id: 0,
+        student_id: 0,
+        contest_id: 0,
+        student_name: "",
+        contest_name: "",
+        teacher_id: 0,
+        teacher_name: "",
+        image_url: "",
+        score: 0,
+        feedback: "",
+        time: "",
+        create_time: "",
+        update_time: ""
+    }];
+
+    let datax = []
+    if (tail_score.length > 0) {
+        let check = true;
+        tail_score.map((ele, idx) => {
+            if (ele != undefined && ele != null) {
+                if (ele.id != undefined && ele.id != null) {
+                    datax.push(ele)
+                }
+                else {
+                    check = false;
+                }
+            }
+            else {
+                check = false;
+            }
+        })
+        if (check == true) {
+            datas = datax
+        }
+    }
 
     const options = {
         paginationSize: 5,
@@ -161,15 +196,19 @@ const ResultGradeContestStudent = () => {
     }
 
     function nameButton(cell, row) {
-        return (
-            <div className="avatar-table table-text-size mx-auto top-text-color" onClick={() => {
-                handleViewResult(row)
-            }}>
-                <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
-                    alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
-                {row.student_name}
-            </div>
-        );
+        if (row != undefined) {
+            if (row.student_name != undefined) {
+                return (
+                    <div className="avatar-table table-text-size mx-auto top-text-color" onClick={() => {
+                        handleViewResult(row)
+                    }}>
+                        <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
+                            alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
+                        {row.student_name}
+                    </div>
+                );
+            }
+        }
     }
 
     const columns = [
@@ -239,7 +278,7 @@ const ResultGradeContestStudent = () => {
                                     </div>
 
                                     <h4 className="text-center green-seven-one-text mt-2">
-                                        <p className="text-top">{top_score.length > 0 ? top_score[0].student_name : ""}</p>
+                                        <p className="text-top">{top_score.length > 0 && top_score[0].student_name != undefined ? top_score[0].student_name : ""}</p>
                                     </h4>
 
                                     <p className="text-muted mt-2 text-center">
@@ -261,7 +300,7 @@ const ResultGradeContestStudent = () => {
                                     </div>
 
                                     <h4 className="text-center green-seven-one-text mt-2">
-                                        <p className="text-top"> {top_score.length > 1 ? top_score[1].student_name : ""}</p>
+                                        <p className="text-top"> {top_score.length > 1 && top_score[1].student_name ? top_score[1].student_name : ""}</p>
                                     </h4>
 
                                     <p className="text-muted mt-2 text-center">
@@ -283,7 +322,7 @@ const ResultGradeContestStudent = () => {
                                     </div>
 
                                     <h4 className="text-center green-seven-one-text mt-2">
-                                        <p className="text-top">{top_score.length > 2 ? top_score[2].student_name : ""}</p>
+                                        <p className="text-top">{top_score.length > 2 && top_score[2].student_name ? top_score[2].student_name : ""}</p>
                                     </h4>
 
                                     <p className="text-muted mt-2 text-center">

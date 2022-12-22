@@ -96,11 +96,6 @@ function TeacherRequestList(props) {
 
   const columns = [
     {
-      dataField: 'teacher_name',
-      text: 'Giáo viên',
-      filter: textFilter()
-    },
-    {
       dataField: 'class_name',
       text: 'Lớp',
       filter: textFilter()

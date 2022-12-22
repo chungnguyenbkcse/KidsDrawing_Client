@@ -113,11 +113,6 @@ function TeacherLeaveApprovedList(props) {
       filter: textFilter()
     },
     {
-      dataField: 'teacher_name',
-      text: 'Giáo viên',
-      filter: textFilter()
-    },
-    {
       dataField: 'section_number',
       text: 'Buổi thứ',
       filter: textFilter()

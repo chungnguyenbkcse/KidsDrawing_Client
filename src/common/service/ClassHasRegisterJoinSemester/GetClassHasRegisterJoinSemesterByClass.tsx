@@ -8,11 +8,11 @@ interface ClassHasRegisterJoinSemester {
     student_feedback: string;
     teacher_feedback: string;
 }
-export function getInforClassHasRegisterJoinSemester(dispatch: any, classes_id: number, student_id: number) {
+export function getClassHasRegisterJoinSemesterByClass(dispatch: any, classes_id: number) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
 
     return  fetch(
-                `${process.env.REACT_APP_API_URL}/class-has-register-join-semester/${classes_id}/${student_id}`, {
+                `${process.env.REACT_APP_API_URL}/class-has-register-join-semester/classes/${classes_id}`, {
                     method: "GET",
                     headers: {
                         'Authorization': bearer,
@@ -26,7 +26,7 @@ export function getInforClassHasRegisterJoinSemester(dispatch: any, classes_id: 
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(getInforClassHasRegisterJoinSemester(dispatch, classes_id, student_id))
+                        dispatch(getClassHasRegisterJoinSemesterByClass(dispatch, classes_id))
                     }
                     else {
                         throw Error(response.statusText);
@@ -38,15 +38,20 @@ export function getInforClassHasRegisterJoinSemester(dispatch: any, classes_id: 
             })
             .then (data => {
                 dispatch(removeClassHasRegisterJoinSemesterAll())
-                var class_has_register_join_semester: ClassHasRegisterJoinSemester = {
-                    classes_id: data.classes_id,
-                    student_feedback: data.student_feedback,
-                    student_id: data.student_id,
-                    student_name: data.student_name,
-                    teacher_feedback: data.teacher_feedback,
-                    review_star: data.review_star
-                }
-                dispatch(addClassHasRegisterJoinSemester(class_has_register_join_semester))
+                console.log(data.body.class_has_register_join_semester_classs)
+                data.body.class_has_register_join_semester_classs.map((ele: any, index: any) => {
+                    var class_has_register_join_semester: ClassHasRegisterJoinSemester = {
+                        classes_id: ele.classes_id,
+                        student_feedback: ele.student_feedback,
+                        student_id: ele.student_id,
+                        student_name: ele.student_name,
+                        teacher_feedback: ele.teacher_feedback,
+                        review_star: ele.review_star
+                    }
+
+                    dispatch(addClassHasRegisterJoinSemester(class_has_register_join_semester))
+                })
+                
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

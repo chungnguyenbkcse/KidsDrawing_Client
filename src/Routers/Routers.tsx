@@ -133,6 +133,7 @@ import FormSubmit1Parent from "../components/ClassParent/FormSubmit1Student";
 import SectionTeacherSub from "../components/SectionTeacher/SectionTeacherSub";
 import Drawing from "../components/Drawing/Drawing";
 import Drawing1 from "../components/Drawing/Drawing1";
+import DetailClassEnd from "../components/Class/DetailClasEnd";
 
 //import LeftMenu from "../components/LeftMenu/LeftMenu";
 const LeftMenu = lazy(()=> import("../components/LeftMenu/LeftMenu"));
@@ -345,7 +346,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/contest/result-grade`}><ResultGradeContestAdmin /></Route>
                                 <Route path={`/contest/contest-submission`}><ViewContestSubmissionDetail /></Route>
                                 <Route path={`/parents`}><Parent /></Route>
-                                <Route path={`/classes-end/detail`}><DetailClass /></Route>
+                                <Route path={`/classes-end/detail`}><DetailClassEnd /></Route>
                                 <Route path={`/students/detail`}><DetailStudent /></Route>
                                 <Route path={`/students`}><Student /></Route>
                                 <Route path={`/semesters`}><Semester /></Route>

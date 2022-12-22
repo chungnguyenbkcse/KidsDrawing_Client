@@ -15,9 +15,10 @@ import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import DrawingBoard from "react-drawing-board"
 import { useHistory } from "react-router-dom";
 import { putExerciseSubmission } from "../../common/service/ExerciseSubmission/PutExerciseSubmissionById";
+import { postExerciseSubmission } from "../../common/service/ExerciseSubmission/PostExerciseSubmission";
 
 
-const Drawing: React.FC = () => {
+const Drawing1: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const lessons: ILessonState = useSelector((state: IStateType) => state.lessons);
     const path: IRootPageStateType = useSelector((state: IStateType) => state.root.page);
@@ -120,10 +121,10 @@ const Drawing: React.FC = () => {
 
     function saveForm(url: string, idx: any): void {
         if (url) {
-            dispatch(putExerciseSubmission({
-                image_url: url,
+            dispatch(postExerciseSubmission({
                 student_id: id,
-                exercise_id: exercise_id
+                exercise_id: exercise_id,
+                image_url: url
             }, idx, routeHome))
         }
     }
@@ -180,4 +181,4 @@ const Drawing: React.FC = () => {
     );
 };
 
-export default Drawing;
+export default Drawing1;

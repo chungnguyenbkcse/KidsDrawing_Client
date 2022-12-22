@@ -141,7 +141,7 @@ function FormSubmit(): JSX.Element {
     };
 
     function handleDrawing() {
-        let path = '/drawing'; 
+        let path = '/drawing-1'; 
         history.push({
             pathname: path
         });

@@ -173,7 +173,7 @@ const ViewExerciseSubmission: React.FC = () => {
     const history = useHistory();
     function routeHome() {
         history.push({
-            pathname: "/classes/detail-student"
+            pathname: "exercise-submission/view"
         });
     }
 

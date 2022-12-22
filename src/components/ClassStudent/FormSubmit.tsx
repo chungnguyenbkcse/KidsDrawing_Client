@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { postExerciseSubmission } from "../../common/service/ExerciseSubmission/PostExerciseSubmission";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { useHistory } from "react-router-dom";
+import { GrLinkNext } from "react-icons/gr";
 
 function FormSubmit(): JSX.Element {
     const dispatch: Dispatch<any> = useDispatch();
@@ -139,6 +140,13 @@ function FormSubmit(): JSX.Element {
 
     };
 
+    function handleDrawing() {
+        let path = '/drawing'; 
+        history.push({
+            pathname: path
+        });
+    }
+    
     return (
         <Fragment>
             <ToastContainer />
@@ -171,31 +179,42 @@ function FormSubmit(): JSX.Element {
                         </div>
                     </div>
 
-                    <div className="col-xl-6 col-md-6 mb-4">
-                        <div className="row">
-                            <div className="col-xl-12 col-md-12 mb-4">
-                                <div className={`card shadow py-2`} >
-                                    <div className="card-body">
-                                        <div className="row no-gutters justify-content-left exercise-list">
-                                            <h4 id="full-name">Nộp bài</h4>
+                    <div className="col-xl-3 col-md-3 mb-4">
+                <div className="row">
+                    <div className="col-xl-12 col-md-12 mb-4">
+                        <div className={`card shadow py-2`} >
+                            <div className="card-body">
+                                <div className="row no-gutters justify-content-left exercise-list">
+                                    <h4 id="full-name">Nộp bài</h4>
+                                </div>
+                                <div className="row mx-auto">
+                                    <form onSubmit={saveUser}>
+                                        <div className="form-row">
+                                            <div className="form-group pl-2">
+                                                <label htmlFor="profile_image">Chọn ảnh:</label>
+                                                <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
+                                            </div>
                                         </div>
-                                        <div className="row mx-auto">
-                                            <form onSubmit={saveUser}>
-                                                <div className="form-row">
-                                                    <div className="form-group pl-2">
-                                                        <label htmlFor="profile_image">Chọn ảnh:</label>
-                                                        <input type="file" id="profile_image" name="profile_image" onChange={uploadPicture} />
-                                                    </div>
-                                                </div>
-                                                <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
-                                                <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                        <button className="btn btn-danger" onClick={() => cancelForm()}>Hủy</button>
+                                        <button type="submit" className={`btn btn-success left-margin ${getDisabledClass()}`}>Lưu</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="col-xl-3 col-md-3 mb-4">
+                <div className="row mx-auto">
+                    <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
+                        <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleDrawing()}>
+                            <GrLinkNext id="btn-payment" color="#ffffff" />
+                            Vẽ online
+                        </button>
+                    </div>
+                </div>
+            </div>
             </div>
 
             <div className="row">

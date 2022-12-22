@@ -131,6 +131,7 @@ import EditSectionTeacherNotApprove from "../components/SectionTeacher/EditSecti
 import FormSubmit2Parent from "../components/ClassParent/FormSubmit2Student";
 import FormSubmit1Parent from "../components/ClassParent/FormSubmit1Student";
 import SectionTeacherSub from "../components/SectionTeacher/SectionTeacherSub";
+import Drawing from "../components/Drawing/Drawing";
 
 //import LeftMenu from "../components/LeftMenu/LeftMenu";
 const LeftMenu = lazy(()=> import("../components/LeftMenu/LeftMenu"));
@@ -228,6 +229,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/teacher-request/detail`}><DetailTeacherRequest /></Route>
                                 <Route path={`/change-password`}><ChangePassword /></Route>
                                 <Route path={`/account`}><Account /></Route>  
+                                <Route path={`/drawing`}><Drawing /></Route>
                                 <Route path={`/classes/review`}><ReivewClassDone /></Route>
                                 <Route path={`/classes/section`}><SectionForParent /></Route>
                                 <Route path={`/section/detail`}><DetailSectionParent /></Route>
@@ -282,6 +284,7 @@ const Routers: React.FC = () => {
                                 <Route path={`/account`}><Account /></Route>                            
                                 <Route path={`/notification/detail`}><NotificationDetail /></Route>
                                 <Route path={`/notification`}><Notification /></Route>
+                                <Route path={`/drawing`}><Drawing /></Route>
                                 <Route path={`/exercise-submission/view`}><ViewExerciseSubmission /></Route>
                                 <Route path={`/contests/submit`}><FormSubmitContestStudent /></Route>
                                 <Route path={`/contests/detail-contest`}><DetailContestNotOpenNowStudent /></Route>

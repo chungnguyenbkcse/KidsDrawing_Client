@@ -18,6 +18,7 @@ import { postExerciseSubmission } from "../../common/service/ExerciseSubmission/
 import { useHistory } from "react-router-dom";
 import { putExerciseSubmission } from "../../common/service/ExerciseSubmission/PutExerciseSubmissionById";
 import { getExerciseSubmissionByExerciseAndStudent } from "../../common/service/ExerciseSubmission/GetExerciseSubmissionByExerciseAndStudent";
+import { GrLinkNext } from "react-icons/gr";
 
 const ViewExerciseSubmission: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
@@ -213,6 +214,7 @@ const ViewExerciseSubmission: React.FC = () => {
             /* this contains the file we want to send */
             pictureAsFile: e.target.files[0]
         })
+        console.log(e.target.files[0])
         setPreview(URL.createObjectURL(e.target.files[0]))
     };
 
@@ -233,6 +235,13 @@ const ViewExerciseSubmission: React.FC = () => {
         return data.url_image
 
     };
+
+    function handleDrawing() {
+        let path = '/drawing'; 
+        history.push({
+            pathname: path
+        });
+    }
 
 
     return (
@@ -272,7 +281,7 @@ const ViewExerciseSubmission: React.FC = () => {
                 </div>
             </div>
 
-            <div className="col-xl-6 col-md-6 mb-4">
+            <div className="col-xl-3 col-md-3 mb-4">
                 <div className="row">
                     <div className="col-xl-12 col-md-12 mb-4">
                         <div className={`card shadow py-2`} >
@@ -294,6 +303,17 @@ const ViewExerciseSubmission: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="col-xl-3 col-md-3 mb-4">
+                <div className="row mx-auto">
+                    <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
+                        <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleDrawing()}>
+                            <GrLinkNext id="btn-payment" color="#ffffff" />
+                            Vẽ online
+                        </button>
                     </div>
                 </div>
             </div>

@@ -38,6 +38,7 @@
     "react-circular-progressbar": "^2.1.0",
     "react-csv-reader": "^3.5.2",
     "react-dom": "^16.10.2",
+    "react-drawing-board": "^0.3.6",
     "react-fontawesome": "^1.6.1",
     "react-icons": "^4.4.0",
     "react-loader-spinner": "^5.3.3",

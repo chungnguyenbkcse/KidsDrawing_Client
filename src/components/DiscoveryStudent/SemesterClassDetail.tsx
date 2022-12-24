@@ -183,7 +183,7 @@ const SemesterClassDetailStudent: React.FC = () => {
             "register_by_type": "STUDENT",
             "price": price,
             "status": "Waiting"
-        }, idx, routeHome))
+        }, idx))
     }
 
     function handleRemove() {

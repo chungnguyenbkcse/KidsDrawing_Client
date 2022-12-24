@@ -4,7 +4,7 @@ import { postRefreshToken } from "../Aut/RefreshToken";
 import { getUserRegisterJoinSemesterByPayer } from "./GetUserRegisterJoinSemesterByPayer";
 import { getUserRegisterJoinSemesterByStudent } from "./GetUserRegisterJoinSemesterStudent";
 
-export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any) {
+export function postUserRegisterJoinSemester(data: any, idx: any) {
     var bearer = 'Bearer ' + localStorage.getItem("access_token");
     var id_x = localStorage.getItem('id');
     var id: number = 0;
@@ -38,7 +38,7 @@ export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any
                 if (!response.ok) {
                     if (response.status === 403) {
                         dispatch(postRefreshToken())
-                        dispatch(postUserRegisterJoinSemester(data, idx, routeHome))
+                        dispatch(postUserRegisterJoinSemester(data, idx))
                     }
                     else {
                         throw Error(response.statusText);
@@ -58,9 +58,6 @@ export function postUserRegisterJoinSemester(data: any, idx: any, routeHome: any
                     getUserRegisterJoinSemesterByStudent(dispatch, id)
                 }
                 
-                setTimeout(() => {
-                    routeHome()
-                }, 2000)
             })
             .catch(error => {
                 dispatch(fetchDataError(error));

@@ -238,7 +238,7 @@ const SemesterClassDetail: React.FC = () => {
                         "register_by_type": "PARENT",
                         "price": price,
                         "status": "Waiting"
-                    }, idxx, routeHome))
+                    }, idxx))
                 }
                 return dispatch(addCart({
                     id: semester_class_id,
@@ -296,7 +296,7 @@ const SemesterClassDetail: React.FC = () => {
                         "register_by_type": "PARENT",
                         "price": price,
                         "status": "Waiting"
-                    }, idxx, routeHome))
+                    }, idxx))
                 }
                 return dispatch(addCart({
                     id: semester_class_id,

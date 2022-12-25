@@ -237,9 +237,6 @@ const Turnover: React.FC = () => {
 
                   <div className="col-xl-12 col-lg-12">
                     <div className="card shadow mb-4">
-                      <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-green">Phân tích giáo viên</h6>
-                      </div>
                       <div className="card-body">
                         <UserAnalytis />
                       </div>

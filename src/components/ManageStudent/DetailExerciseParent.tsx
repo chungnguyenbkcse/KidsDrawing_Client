@@ -143,9 +143,12 @@ const DetailExerciseParent: React.FC = () => {
                                             <div className="row no-gutters">
                                                 <p id="phone">Tên: {exercise_name}</p>
                                             </div>
-                                            <div className="row no-gutters">
+                                            {
+                                                (id == 21 || id == 1 || id == 22 || id == null || id == undefined || id == 0) ? "" : <div className="row no-gutters">
                                                 <p id="phone">Học sinh: {student_name}</p>
                                             </div>
+                                            }
+                                            
                                             <div className="row no-gutters">
                                                 <p id="phone">Nội dung: <span dangerouslySetInnerHTML={{ __html: exercise_description }}></span></p>
                                             </div>

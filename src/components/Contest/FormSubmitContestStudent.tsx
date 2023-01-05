@@ -352,16 +352,7 @@ function FormSubmitContestStudent(): JSX.Element {
                 </div>
             </div>
 
-            <div className="col-xl-3 col-md-3 mb-4">
-                <div className="row mx-auto">
-                    <div className="col-lg-6 col-md-6 col-xs-6 text-center justify-content-center">
-                        <button className="btn btn-success btn-green" id="btn-create-register-course2" onClick={() => handleDrawing()}>
-                            <GrLinkNext id="btn-payment" color="#ffffff" />
-                            Vẽ online
-                        </button>
-                    </div>
-                </div>
-            </div>
+            
             </div>
 
             <div className="row">

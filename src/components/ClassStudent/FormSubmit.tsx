@@ -179,7 +179,7 @@ function FormSubmit(): JSX.Element {
                         </div>
                     </div>
 
-                    <div className="col-xl-3 col-md-3 mb-4">
+                    <div className="col-xl-6 col-md-6 mb-4">
                 <div className="row">
                     <div className="col-xl-12 col-md-12 mb-4">
                         <div className={`card shadow py-2`} >

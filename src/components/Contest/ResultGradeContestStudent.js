@@ -129,6 +129,7 @@ const ResultGradeContestStudent = () => {
 
     let datas = [{
         id: 0,
+        avatar: "https://res.cloudinary.com/djtmwajiu/image/upload/v1672987980/avatar-default-icon_xj2sxl.png",
         student_id: 0,
         contest_id: 0,
         student_name: "",
@@ -202,7 +203,7 @@ const ResultGradeContestStudent = () => {
                     <div className="avatar-table table-text-size mx-auto top-text-color" onClick={() => {
                         handleViewResult(row)
                     }}>
-                        <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg"
+                        <img src={row.avatar}
                             alt="avatar mx-auto" className="rounded-circle img-fluid mr-3" />
                         {row.student_name}
                     </div>
@@ -273,7 +274,7 @@ const ResultGradeContestStudent = () => {
                                         className="top-img-1 " alt="" />
 
                                     <div className="avatar mx-auto flex-center">
-                                        <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg" alt="avatar mx-auto white"
+                                        <img src={top_score.length > 0 && top_score[0].avatar != undefined ? top_score[0].avatar : ""} alt="avatar mx-auto white"
                                             className="rounded-circle img-fluid " />
                                     </div>
 
@@ -295,7 +296,7 @@ const ResultGradeContestStudent = () => {
                                         className="top-img" alt="" />
 
                                     <div className="avatar mx-auto flex-center">
-                                        <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg" alt="avatar mx-auto white"
+                                        <img src={top_score.length > 1 && top_score[1].avatar != undefined ? top_score[1].avatar : ""} alt="avatar mx-auto white"
                                             className="rounded-circle img-fluid" />
                                     </div>
 
@@ -317,7 +318,7 @@ const ResultGradeContestStudent = () => {
                                         className="top-img" alt="" />
 
                                     <div className="avatar mx-auto flex-center">
-                                        <img src="https://cdn.imgbin.com/10/1/7/imgbin-avatar-child-computer-icons-user-profile-smiling-boy-9cW3FmLduX6iZNLs1pg3cA3YM.jpg" alt="avatar mx-auto"
+                                        <img src={top_score.length > 2 && top_score[2].avatar != undefined ? top_score[2].avatar : ""} alt="avatar mx-auto"
                                             className="rounded-circle img-fluid" />
                                     </div>
 

@@ -58,6 +58,7 @@ const DetailContestStudent: React.FC = () => {
 
     let submistions: IContestSubmission = {
         id: 0,
+        avatar: "https://res.cloudinary.com/djtmwajiu/image/upload/v1672987980/avatar-default-icon_xj2sxl.png",
         student_id: 0,
         teacher_id: 0,
         teacher_name: "",

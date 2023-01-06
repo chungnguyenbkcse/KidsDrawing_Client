@@ -2,6 +2,7 @@ import { fetchDataSuccess, fetchDataError, removeContestGradedAll, removeContest
 import { postRefreshToken } from "../Aut/RefreshToken";
 interface ContestSubmission {
     id: any;
+    avatar: string;
     student_id: number;
     contest_id: number;
     student_name: string;
@@ -50,6 +51,7 @@ export function getContestSubmissionByContest(dispatch: any, id: any) {
                 data.body.contest_not_graded.map((ele: any, index: any) => {
                     var contest_submission: ContestSubmission = {
                         id: 0,
+                        avatar: ele.avatar,
                         student_id: ele.student_id,
                         contest_id: ele.contest_id,
                         student_name: ele.student_name,
@@ -69,6 +71,7 @@ export function getContestSubmissionByContest(dispatch: any, id: any) {
                 data.body.contest_graded.map((ele: any, index: any) => {
                     var contest_submission: ContestSubmission = {
                         id: 0,
+                        avatar: ele.avatar == null || ele.avatar == undefined || ele.avatar == "" ? "https://res.cloudinary.com/djtmwajiu/image/upload/v1672987980/avatar-default-icon_xj2sxl.png" : ele.avatar,
                         student_id: ele.student_id,
                         contest_id: ele.contest_id,
                         student_name: ele.student_name,
